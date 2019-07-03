@@ -1,0 +1,18 @@
+{
+  "name": "gideon",
+  "version": "1.0.0",
+  "description": "Gideon will obey your command and guide you through the Arrowverse",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "adrifcastr",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.0.0",
+    "node-fetch": "^2.6.0",
+    "snekfetch": "^4.0.4"
+  }
+}
