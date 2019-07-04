@@ -15,7 +15,7 @@ module.exports.run = async (gideon, message, args) => {
         const wikiart = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle(type.title)
-        .setDescription(type.abstract + `\n\n**[Click here to read the full article](https://arrow.fandom.com${encodeURI(type.url)} 'https://arrow.fandom.com${(type.url)}')**`)
+        .setDescription(type.abstract + `\n\n**[Click here to read the full article](https://arrow.fandom.com${encodeURI(type.url)} 'https://arrow.fandom.com${encodeURI(type.url)}')**`)
 	    .setThumbnail(type.thumbnail)
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
