@@ -10,13 +10,12 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;
         const type = Object.values(body.items)[0];       
-        
-        
+    
         if (!Object.keys(body.items).length) message.channel.send(`There was no result for ${args.join(' ')} on the Arrowverse Wiki!`).catch(console.error);         
         const wikiart = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle(type.title)
-        .setDescription(type.abstract + `\n\n**[Click here to read the full article](https://arrow.fandom.com${encodeURIComponent(type.url)} 'https://arrow.fandom.com${encodeURIComponent(type.url)}')**`)
+        .setDescription(type.abstract + `\n\n**[Click here to read the full article](https://arrow.fandom.com${(type.url)} 'https://arrow.fandom.com${(type.url)}')**`)
 	    .setThumbnail(type.thumbnail)
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
