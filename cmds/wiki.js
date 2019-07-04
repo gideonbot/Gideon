@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;
         const type = Object.values(body.items)[0];       
-        const url = encodeURI(''type.url);
+        const url = encodeURI('https://arrow.fandom.com' + type.url);
 
         if (!Object.keys(body.items).length) message.channel.send(`There was no result for ${args.join(' ')} on the Arrowverse Wiki!`).catch(console.error);         
         const wikiart = new Discord.RichEmbed()
