@@ -1,4 +1,5 @@
 const Discord = module.require("discord.js");
+
 const eaeggtr = message.content.slice(eaegg.length).trim().split(" ");
 
 module.exports.run = async (gideon, message, args) => {
