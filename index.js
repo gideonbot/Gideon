@@ -37,12 +37,12 @@ gideon.on('message', async message => {
     let messageArray = message.content.split(" ");
     let command = messageArray[0];
     let args = messageArray.slice(1);
-    const eacmd = `Gideon, show me the future!`;
+    const ea = `Gideon, show me the future!`;
 
-    let cmd = gideon.commands.get(command.slice(prefix.length) && message.content.slice(eacmd.length).trim().split(" "));
+    let cmd = gideon.commands.get(command.slice(prefix.length) && message.content.slice(eaegg.length).trim().split(" "));
     if(cmd) cmd.run(gideon, message, args);
 
-   /* if (message.content === `Gideon, show me the future!`) {
+    if (message.content === `Gideon, show me the future!`) {
         
         message.channel.send('Yes Dr. Wells!');
 
@@ -56,6 +56,6 @@ gideon.on('message', async message => {
 
         message.channel.send(future);
     }     
-*/
+
 })
 gideon.login(process.env.TOKEN);
