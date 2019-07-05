@@ -1,5 +1,5 @@
 const Discord = module.require("discord.js");
-
+const eaeggtr
 
 module.exports.run = async (gideon, message, args) => {
 
