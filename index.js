@@ -38,8 +38,8 @@ gideon.on('message', async message => {
     let command = messageArray[0];
     let args = messageArray.slice(1);
     const eaegg = `Gideon, show me the future!`;
-    
-    let cmd = gideon.commands.get(command.slice(prefix.length) && message.content.slice(thingy.length).trim().split(" "));
+
+    let cmd = gideon.commands.get(command.slice(prefix.length) && message.content.slice(eaegg.length).trim().split(" "));
     if(cmd) cmd.run(gideon, message, args);
 
     if (message.content === `Gideon, show me the future!`) {
