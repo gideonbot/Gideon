@@ -17,7 +17,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!constantine', 'fetches the latest EP from arrowverse.info (coming soon)')
         .addField('Gideon, show me the future!', 'displays an easter egg')
         .addField('!donate', 'displays info to support maintainance and hosting of Gideon')
-        .addField(`\n\n**[Click here to read the full article](https://arrow.fandom.com${url} 'https://arrow.fandom.com${url}')**`)
+        .addField(`\n\n**[Click here to read the full article](https://arrow.fandom.com${url} 'https://arrow.fandom.com')**`)
         .addField(`\n\n**[Click here to suggest a feature](${fsurl})**`)
         .setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
