@@ -1,6 +1,6 @@
 const Discord = module.require("discord.js");
 const eaecmd = `Gideon, show me the future!`;
-const eaeggtr = message.content.slice(eaegg.length).trim().split(" ");
+const eaeggtr = message.content.slice(eaecmd.length).trim().split(" ");
 
 module.exports.run = async (gideon, message, args) => {
 
