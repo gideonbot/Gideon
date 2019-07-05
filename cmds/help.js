@@ -3,7 +3,7 @@ const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
     const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
-
+    
     const help = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__You can check the list of available commands below:__')
