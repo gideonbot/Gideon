@@ -56,6 +56,6 @@ gideon.on('message', async message => {
 
         message.channel.send(future);
     }     
-
+*/
 })
 gideon.login(process.env.TOKEN);
