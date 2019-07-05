@@ -18,7 +18,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Gideon, show me the future!', 'displays an easter egg')
         .addField('!donate', 'displays info to support maintainance and hosting of Gideon')
         .addField('!donate', '**[Click here to suggest a feature](${fsurl})**`')
-
         .setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
