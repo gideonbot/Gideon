@@ -2,7 +2,7 @@ const Discord = module.require("discord.js");
 const fs = require("fs");
 
 module.exports.run = async (gideon, message, args) => {  
-    var files = fs.readdirSync('Gideon/avm/')
+    var files = fs.readdirSync('../avm')
     let chosenFile = files[Math.floor(Math.random() * files.length)]
 
     const meme = new Discord.RichEmbed()
