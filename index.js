@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const config = require("./config.json");
+const dotenv = require('dotenv').config();
 const prefix = config.prefix;
 const prefix2 = config.prefix2;
 const fs = require("fs");
@@ -54,4 +55,4 @@ gideon.on('message', async message => {
   command.run(gideon, message, args);
 })
 
-gideon.login(process.env.TOKEN);
+gideon.login();
