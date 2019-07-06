@@ -4,7 +4,7 @@ const path = require("path");
 
 module.exports.run = async (gideon, message, args) => {  
     avmpath = path.join, __dirname + '/avm';
-    var files = fs.readdirSync(__parentDir + '/avm/');
+    var files = fs.readdirSync(av;
     let chosenFile = files[Math.floor(Math.random() * files.length)]
 
     const meme = new Discord.RichEmbed()
