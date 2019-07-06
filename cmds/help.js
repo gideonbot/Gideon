@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     const help = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__You can check the list of available commands below:__')
-        .addField('!help', 'displays this message')  
+        .addField('!help', 'Displays this message')  
         .addField('!wiki <term>', 'searches the Arrowverse Wiki for the given term')  
         .addField('!meme', 'searches the Arrowverse Wiki for the given term')  
         .addField('!flash | !arrow | !supergirl | !legends | !batwoman', 'fetches the latest EP from arrowverse.info (coming soon)')
