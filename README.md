@@ -15,16 +15,17 @@ Gideon's features are as follows:
 * !help - Displays a list of commands
 
 * !wiki <term> - Searches the Arrowverse Wiki for the given term
+  
+* !meme - Displays a random Arrowverse meme
 
-* Gideon, show me the future! - Displays the first paragraph of the 2024 CCC article including a picture of the full article
+* !quote - Displays a random Arrowverse quote (coming soon)
 
 * !flash | !arrow | !supergirl | !legends | !batwoman - Fetches the latest EP airdate | powered by [arrowverse.info](https://arrowverse.info/) (coming soon)
 
 * !flashep NxNN | !arrowep NxNN | !supergirlep NxNN | !legendsep NxNN | !batwomanep NxNN - Fetches the EP info (coming soon)
 
-* !meme - Displays a random Arrowverse meme (coming soon)
+* Gideon, show me the future! - Displays the first paragraph of the 2024 CCC article including a picture of the full article
 
-* !quote - Displays a random Arrowverse quote (coming soon)
 
 * !donate - Displays donation info
 
