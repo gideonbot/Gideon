@@ -10,7 +10,8 @@ module.exports.run = async (gideon, message, args) => {
 
     const meme = new Discord.RichEmbed()
 	    .setColor('#2791D3')
-	    .setImage(chsm)
+	    .attachFiles(['../assets/discordjs.png'])
+	.setImage('attachment://discordjs.png')
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
