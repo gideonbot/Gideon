@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 module.exports.run = async (gideon, message, args) => {  
-    avmpath = path.join, __dirname + ;
+    avmpath = path.join, __dirname + '/avm';
     var files = fs.readdirSync(__parentDir + '/avm/');
     let chosenFile = files[Math.floor(Math.random() * files.length)]
 
