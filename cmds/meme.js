@@ -6,7 +6,7 @@ module.exports.run = async (gideon, message, args) => {
      __parentDir = path.dirname(module.parent.filename);
     var files = fs.readdirSync(__parentDir + '/avm');
     let chosenFile = files[Math.floor(Math.random() * files.length)]
-
+    const attachment = new Discord.Attachment('./card_images/sample.png', 'sample.png');
     const meme = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setImage(chosenFile)
