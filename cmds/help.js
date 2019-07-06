@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!help', 'Displays this message')  
         .addField('!wiki <term>', 'Searches the Arrowverse Wiki for the given term')  
         .addField('!meme', 'Displays a random Arrowverse meme')  
-        .addField('!flash | !arrow | !supergirl | !legends | !batwoman', 'fetches the latest EP from arrowverse.info (coming soon)')
+        .addField('!flash | !arrow | !supergirl | !legends | !batwoman', 'etches the latest EP from arrowverse.info (coming soon)')
         .addField('Gideon, show me the future!', 'displays an easter egg')
         .addField('!donate', 'displays info to support maintainance and hosting of Gideon')
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
