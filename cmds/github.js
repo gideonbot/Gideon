@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
         .setDescription(body.description + `\n\nOwner: [adrifcastr](${body.owner.html_url} '${body.owner.html_url}') 
                                             Repo: [Gideon](${body.html_url} '${body.html_url}')
                                             Discord: [Time Vault](https://invite.gg/tmvt 'https://invite.gg/tmvt')
-                                            Last Update: `)
+                                            Last Update: ${}`)
 	    .setThumbnail(body.owner.avatar_url)
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
