@@ -18,6 +18,7 @@ module.exports.run = async (gideon, message, args) => {
                                             Language: \`${body.language}\`
                                             Last Update: \`${upDate.toUTCString()}\`
                                             Open Issues: \`${body.open_issues_count}\`
+                                            
                                             Git Clone: \`${body.clone_url}\``)
 	    .setThumbnail(body.owner.avatar_url)
     	.setTimestamp()
