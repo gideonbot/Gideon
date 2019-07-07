@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
              
         const github = new Discord.RichEmbed()
 	    .setColor('#2791D3')
-	    .setTitle(type.title)
+	    .setTitle()
         .setDescription(type.abstract + `\n\n**[Click here to read the full article](https://arrow.fandom.com${url} 'https://arrow.fandom.com${url}')**`)
 	    .setThumbnail(type.thumbnail)
     	.setTimestamp()
