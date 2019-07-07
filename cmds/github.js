@@ -7,7 +7,6 @@ module.exports.run = async (gideon, message, args) => {
     snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;   
-        
         let upDate = new Date(body.updated_at);
 
         const github = new Discord.RichEmbed()
