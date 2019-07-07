@@ -2,7 +2,7 @@ const Discord = module.require("discord.js");
 const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
-    const api = '';
+    const api = 'https://api.github.com/repos/adrifcastr/Gideon';
     let term = args[0];
     if(!term) return message.channel.send("You must supply a search term!");
 
