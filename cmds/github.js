@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
                                             Discord: [Time Vault](${body.homepage} '${body.homepage}')
                                             Last Update: \`${body.updated_at}\`
                                             Open Issues: \`${body.open_issues_count}\`
-                                            Git Clone: \``)
+                                            Git Clone: \`\``)
 	    .setThumbnail(body.owner.avatar_url)
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
