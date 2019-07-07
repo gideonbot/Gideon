@@ -7,7 +7,9 @@ module.exports.run = async (gideon, message, args) => {
     snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;   
-             
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
+        parser.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date parsed = parser.parse(utcDateString);     
         const github = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle(body.name)
