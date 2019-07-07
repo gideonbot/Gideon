@@ -8,7 +8,7 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;   
         gitupdate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        parser.setTimeZone(TimeZone.getTimeZone("UTC"));
+        gitupdate.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date gitupdate = parser.parse(utcDateString);
              
         const github = new Discord.RichEmbed()
