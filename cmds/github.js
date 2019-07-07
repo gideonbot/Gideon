@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
         const github = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle(body.name)
-        .setDescription()
+        .setDescription(type.des)
 	    .setThumbnail()
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
