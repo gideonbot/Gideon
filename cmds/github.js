@@ -18,7 +18,7 @@ module.exports.run = async (gideon, message, args) => {
                                             Language: \`${body.language}\`
                                             Last Update: \`${upDate.toUTCString()}\`
                                             Open Issues: \`${body.open_issues_count}\`
-                                            Stargazers: \`${body.open_issues_count}\` Watchers: Forks: 
+                                            Stargazers: \`${body.open_issues_count}\` Watchers: \`${body.open_issues_count}\` Forks: 
                                             Git Clone: \`${body.clone_url}\``)
 	    .setThumbnail(body.owner.avatar_url)
     	.setTimestamp()
