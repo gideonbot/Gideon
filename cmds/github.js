@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;   
-        const date = toDateString()(body.updated_at);
+        const date = toDateString(body.updated_at);
              
         const github = new Discord.RichEmbed()
 	    .setColor('#2791D3')
