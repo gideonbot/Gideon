@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
         .setDescription(body.description + `\n\nOwner: [adrifcastr](${body.owner.html_url} '${body.owner.html_url}') 
                                             Repo: [Gideon](${body.html_url} '${body.html_url}')
                                             Discord: [Time Vault](${body.homepage} '${body.homepage}')
-                                            Last Update: \`${body.updated_at.toDateString()}\`
+                                            Last Update: \`${up.toDateString()}\`
                                             Open Issues: \`${body.open_issues_count}\`
                                             Git Clone: \`${body.clone_url}\``)
 	    .setThumbnail(body.owner.avatar_url)
