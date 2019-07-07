@@ -9,7 +9,7 @@ module.exports.run = async (gideon, message, args) => {
         let body = r.body;   
         gitupdate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         gitupdate.setTimeZone(TimeZone.getTimeZone("UTC"));
-        Date gitupdate = parser.parse(utcDateString);
+      gitupdate = parser.parse(utcDateString);
              
         const github = new Discord.RichEmbed()
 	    .setColor('#2791D3')
