@@ -8,8 +8,8 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;   
         
-        let currentDate = new Date(timestamp);
-        
+        let upDate = new Date(timestamp);
+
         const github = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle(body.name)
