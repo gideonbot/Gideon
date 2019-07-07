@@ -12,8 +12,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!meme', 'Displays a random Arrowverse meme')  
         .addField('!flash | !arrow | !supergirl | !legends | !batwoman', 'Fetches the latest EP from arrowverse.info (coming soon)')
         .addField('Gideon, show me the future!', 'Displays an easter egg')
-        .addField('!donate', 'Displays info to support maintainance and hosting of Gideon')
-        .addField('!github', 'Displays Github repository info')
+        .addField('!donate', 'Displays info to support maintainance and hosting of Gideon')       
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
