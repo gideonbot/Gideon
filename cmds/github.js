@@ -11,7 +11,7 @@ module.exports.run = async (gideon, message, args) => {
              
         const github = new Discord.RichEmbed()
 	    .setColor('#2791D3')
-	    .setTitle(b)
+	    .setTitle(body.name)
         .setDescription()
 	    .setThumbnail()
     	.setTimestamp()
