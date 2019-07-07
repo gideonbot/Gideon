@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
 	    .setColor('#2791D3')
 	    .setTitle(body.name)
         .setDescription(body.description)
-	    .setThumbnail(type.)
+	    .setThumbnail(type.avatar_url)
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
