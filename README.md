@@ -26,6 +26,7 @@ Gideon's features are as follows:
 
 * Gideon, show me the future! - Displays the first paragraph of the 2024 CCC article including a picture of the full article
 
+* !github - Displays Github repository info
 
 * !donate - Displays donation info
 
