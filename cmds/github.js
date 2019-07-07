@@ -7,6 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;   
+        
         //const type = Object.values(body)[1];
              
         const github = new Discord.RichEmbed()
