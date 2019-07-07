@@ -15,7 +15,7 @@ module.exports.run = async (gideon, message, args) => {
                                             Repo: [Gideon](${body.html_url} '${body.html_url}')
                                             Discord: [Time Vault](${body.homepage} '${body.homepage}')
                                             Last Update: \`${body.updated_at}\`
-                                            Open Issues: \n`${body.open_issues_count}\n
+                                            Open Issues: \n`${body.open_issues_count}\`
                                             `)
 	    .setThumbnail(body.owner.avatar_url)
     	.setTimestamp()
