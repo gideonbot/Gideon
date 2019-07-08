@@ -20,8 +20,7 @@ module.exports.run = async (gideon, message, args) => {
                                             \nOpen Issues: \`${body.open_issues_count}\`
                                             \nStargazers: \`${body.stargazers_count}\`
                                             \nWatchers: \`${body.watchers_count}\`
-                                            \nForks: \`${body.forks_count}\`
-                                            \nGit Clone: \`${body.clone_url}\``)
+                                            \nForks: \`${body.forks_count}\`                                            \nGit Clone: \`${body.clone_url}\``)
 	    .setThumbnail(body.owner.avatar_url)
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
