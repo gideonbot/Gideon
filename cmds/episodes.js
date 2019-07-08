@@ -24,6 +24,7 @@ module.exports.run = async (gideon, message, args) => {
         cst = utc + (3600000*offset);
         nd = new Date(cst); 
         convdate = (nd.toLocaleString());  
+        newdate
 
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
