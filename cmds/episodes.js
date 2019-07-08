@@ -15,7 +15,7 @@ module.exports.run = async (gideon, message, args) => {
         let airdate = new Date(body.airstamp);
         let sum = body.summary.substring(3);
         let desc = sum.substring(0, sum.length - 4);
-        if (!Object.keys(body.items).length) message.channel.send(`There was no result for ${args.join(' ')} on the Arrowverse Wiki!`).catch(console.error);  
+        if (!Object.keys(body.id).length) message.channel.send(`There was no result for ${args.join(' ')} on the Arrowverse Wiki!`).catch(console.error);  
          
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
