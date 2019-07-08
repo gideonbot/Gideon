@@ -2,7 +2,7 @@ const Discord = module.require("discord.js");
 const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
-    let input = args.join(' ').substr(-4)
+    //let input = args.join(' ').substr(-4)
     let season = "5"//input[0];
     let episode = "22"//input[2] + args[3];
     const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
