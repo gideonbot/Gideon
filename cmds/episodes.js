@@ -22,6 +22,7 @@ module.exports.run = async (gideon, message, args) => {
         const json = JSON.parse(body.text);
             const name = json.name;
             resolve(name);
+            
         })
         .catch(reject);
 
