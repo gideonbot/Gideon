@@ -34,9 +34,9 @@ module.exports.run = async (gideon, message, args) => {
 
         // We then parse  the mdy into parts
         mdy = mdy.split('/');
-var month = parseInt(mdy[0]);
-var day = parseInt(mdy[1]);
-var year = parseInt(mdy[2]);
+        var month = parseInt(mdy[0]);
+        var day = parseInt(mdy[1]);
+        var year = parseInt(mdy[2]);
 
 // Putting it all together
 var formattedDate = year + '-' + month + '-' + day + ' ' + time;
