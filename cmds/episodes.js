@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(show.includes(ar)){
         showid = "";
     }   else if(show.includes(sg)){
-        
+        showid
     }
     
 
