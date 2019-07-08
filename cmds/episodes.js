@@ -2,11 +2,9 @@ const Discord = module.require("discord.js");
 const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
-    let input = input.substr(-4)
-    let inpstr = 
-    console.log(input)
-    let season = inpstr[0];
-    let episode = inpstr[2] + inpstr[3];
+    let input = args.join(' ').substr(-4)
+    let season = input[0];
+    let episode = input[2] + args[3];
     const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
     let sen = args[0];
     //if(!sen) return message.channel.send("You must supply the shows name, season and its episode number!");
