@@ -46,7 +46,7 @@ module.exports.run = async (gideon, message, args) => {
             desc = "No summary available."
             .catch(console.error);
         }   else{
-            let desc = sum.substring(0, sum.length -4);
+            desc = sum.substring(0, sum.length -4);
         }
 
         let localTime = airdate.getTime();
