@@ -51,7 +51,7 @@ module.exports.run = async (gideon, message, args) => {
         let cst = utc + (3600000*offset);
         let nd = new Date(cst); 
         let fairtdate = (nd.toDateString());
-        let csttime = (nd.toLocaleTimeString());  
+        let fairtime = (nd.toLocaleTimeString());  
 
         const epinfo = new Discord.RichEmbed()
         .setColor('#2791D3')
