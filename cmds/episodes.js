@@ -17,7 +17,7 @@ module.exports.run = async (gideon, message, args) => {
         let desc = sum.substring(0, sum.length - 4);
         //if (!Object.keys(body.id).length) message.channel.send(`There was no data for this episode!`).catch(console.error);  
 
-        let cstdate = new Date( airdate.getTime() + (airdate.getTimezoneOffset() * 60000));
+        let cstdate = new Date( airdate.getTime() + (airdate.getTimezoneOffset() * 70000));
 
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
