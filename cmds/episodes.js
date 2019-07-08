@@ -9,8 +9,8 @@ module.exports.run = async (gideon, message, args) => {
     let season = seip[0];
     let episode = seip[2] + seip[3];
     let fl = "flash"; let ar = "arrow"; let sg = "supergirl"; let lg = "legends"; let ct = "constantine "; let bw = "batwoman ";
-    let show = args.join().substring(5, args.length -5);
-    let showarg = Array.prototype.splice(show);
+    let show = args.join('').substring(5, args.length -5);
+    //let showarg = Array.prototype.splice(show);
     let showid = '';
     let showtitle = '';
 
