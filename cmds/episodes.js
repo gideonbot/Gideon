@@ -16,6 +16,7 @@ module.exports.run = async (gideon, message, args) => {
     if (agc.match(/(?:flash)/)){
         showid = "13";
         showtitle = "The Flash";
+        channel = 'The CW';
     }   else if(agc.match(/(?:arrow)/)){
         showid = "4";
         showtitle = "Arrow";
