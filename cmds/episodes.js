@@ -16,14 +16,7 @@ module.exports.run = async (gideon, message, args) => {
         let sum = body.summary.substring(3);
         let desc = sum.substring(0, sum.length - 4);
         //if (!Object.keys(body.id).length) message.channel.send(`There was no data for this episode!`).catch(console.error);  
-        
-        let localTime = airdate.getTime();
-        let localOffset = airdate.getTimezoneOffset() * 60000;  
-        let utc = localTime + localOffset;
-        let offset = -5;   
-        let cst = utc + (3600000*offset);
-        let nd = new Date(cst); 
-        let convdate = (nd.toLocaleString());  
+
         let newdate = new Date( airdate.getTime() + (airdate.getTimezoneOffset() * 60000));
 
         const flashep = new Discord.RichEmbed()
