@@ -32,6 +32,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(agc.match(/(?:batwoman)/)){
         showid = "37776";
         showtitle = "Batwoman"; 
+        channel = ''
     }   else{
         return message.channel.send(`"${show}" is not a valid argument!`)
     }  
