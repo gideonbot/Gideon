@@ -4,7 +4,7 @@ const snekfetch = require("snekfetch");
 module.exports.run = async (gideon, message, args) => {
     let season = args[0].join('%20');
     let episode = args[2].join('%20') + args[3].join('%20');
-    const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode.join('%20')}`;
+    const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
     let sen = args[0];
     if(!sen) return message.channel.send("You must supply the season and episode number!");
 
