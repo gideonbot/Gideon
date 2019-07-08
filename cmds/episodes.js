@@ -27,7 +27,7 @@ module.exports.run = async (gideon, message, args) => {
         if(season === 1){
             channel = 'CBS';
         }   else {
-            
+            channel = ''
         }
     }   else if(agc.match(/(?:legends)/)){
         showid = "1851"
