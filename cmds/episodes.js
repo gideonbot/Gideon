@@ -11,7 +11,7 @@ module.exports.run = async (gideon, message, args) => {
     let show = args.join(' ');
     let showid = '';
     let showtitle = '';
-    
+    let channel = '';
 
     if (agc.match(/(?:flash)/)){
         showid = "13";
