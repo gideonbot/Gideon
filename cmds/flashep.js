@@ -1,11 +1,12 @@
 const Discord = module.require("discord.js");
-const tvmaze = require('tvmaze-api-ts')
+const snekfetch = require("snekfetch");
 
-module.exports.run = async (gideon, message, args) => {  
-    tvmaze.shows.episodebynumber('13', '5', '14').then(result => {
-       // result.name
-        
-      })  
+module.exports.run = async (gideon, message, args) => {
+    const api = 'https://api.github.com/repos/adrifcastr/Gideon';
+
+    snekfetch.get(api).then(r => {
+        console.log(r.body);
+        let body = r.body;   
       const flashep = new Discord.RichEmbed()
         .setTitle(tvmaze.shows.result.name)
         //.setTitle(`The Flash ${result.season}x${result.number} - ${result.name}`)
