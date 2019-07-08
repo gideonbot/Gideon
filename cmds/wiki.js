@@ -10,6 +10,7 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;
         const type = Object.values(body.items)[0];       
+        if (!Object.keys(body.items).length) message.channel.send(`There was no result for ${args.join(' ')} on the Arrowverse Wiki!`).catch(console.error);
         const url = type.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
     
         //  
