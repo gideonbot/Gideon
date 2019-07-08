@@ -22,7 +22,6 @@ module.exports.run = async (gideon, message, args) => {
         utc = localTime + localOffset;
         offset = -5;   
         cst = utc + (3600000*offset);
-    
         nd = new Date(cst); 
     
         newdate = (nd.toLocaleString());  
