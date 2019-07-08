@@ -13,8 +13,8 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;   
         let airdate = new Date(body.airstamp);
-        let sums = body.summary.substring(3)
-        let sume = sums.substring(-3)
+        let sum1 = body.summary.substring(3)
+        let sum= sum1.substring(-3)
 
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
