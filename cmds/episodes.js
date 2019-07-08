@@ -20,8 +20,8 @@ module.exports.run = async (gideon, message, args) => {
         let localTime = airdate.getTime();
         let localOffset = airdate.getTimezoneOffset() * 60000;  
         let utc = localTime + localOffset;
-        offset = -5;   
-        cst = utc + (3600000*offset);
+        let offset = -5;   
+        let cst = utc + (3600000*offset);
         nd = new Date(cst); 
         convdate = (nd.toLocaleString());  
         newdate
