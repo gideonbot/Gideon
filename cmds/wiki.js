@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
         if (!Object.keys(body.items).length) return message.channel.send(`There was no result for ${args.join(' ')} on the Arrowverse Wiki!`).catch(console.error);
         const url = type.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
     
-        //  
+       
                
         const wikiart = new Discord.RichEmbed()
 	    .setColor('#2791D3')
