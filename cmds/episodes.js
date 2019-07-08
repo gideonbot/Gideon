@@ -5,7 +5,7 @@ module.exports.run = async (gideon, message, args) => {
     let seip = args.toString().substr(-4)
     let season = seip[0];
     let episode = seip[2] + seip[3];
-    let fl = "flash"; let ar = "arrow"; let sg = "supergirl"; let lo = "legends"; let ct = "constantine"; let bw = "batwoman";
+    let fl = "flash"; let ar = "arrow"; let sg = "supergirl"; let lg = "legends"; let ct = "constantine"; let bw = "batwoman";
     let show = args.toString().substring(4, args.length-5)
     let showid;
 
@@ -15,7 +15,9 @@ module.exports.run = async (gideon, message, args) => {
         showid = "";
     }   else if(show.includes(sg)){
         showid = "";
-    }   else if(show.includes(lo))
+    }   else if(show.includes(lg)){
+        
+    }
     
 
     const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
