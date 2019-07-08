@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
     let show = args.toString().substring(4, args.length-5)
     if (show.includes(fl)){
         
-    }else if(show.includes(ar))
+    }   else if(show.includes(ar))
     let showid;
     const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
     let sen = args[0];
