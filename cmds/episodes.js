@@ -41,9 +41,7 @@ module.exports.run = async (gideon, message, args) => {
         let body = r.body;   
         let airdate = new Date(body.airstamp);
         let sum = body.summary.substring(3).catch(() => { body.summary = null;;
-        let desc = sum.substring(0, sum.length -4);
-
-            
+        let desc = sum.substring(0, sum.length -4);           
 
         let localTime = airdate.getTime();
         let localOffset = airdate.getTimezoneOffset("America/New_York") * 60000;  
