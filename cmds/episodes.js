@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
     if (agc.match(/(?:flash)/)){
         showid = "13";
         showtitle = "The Flash";
-    }   else if(show.includes(ar)){
+   / }   else if(show.includes(ar)){
         showid = "4";
         showtitle = "Arrow";
     }   else if(show.includes(sg)){
