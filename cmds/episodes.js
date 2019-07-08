@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
     let episode = seip[2] + seip[3];
     let fl = "flash"; let ar = "arrow"; let sg = "supergirl"; let lg = "legends"; let ct = "constantine "; let bw = "batwoman ";
     let show = args.toString().substring(5, args.length -5)
-    let showarg = show.join(' ');
+    let showarg = showargs.join(' ');
     let showid = '';
     let showtitle = '';
 
@@ -33,7 +33,7 @@ module.exports.run = async (gideon, message, args) => {
         showid = "37776";
         showtitle = "Batwoman";
     }   else{
-        return message.channel.send(`"${showarg}" is not a valid argument!`)
+        return message.channel.send(`"${showargs}" is not a valid argument!`)
     }  
 
     const api = `http://api.tvmaze.com/shows/${showid}/episodebynumber?season=${season}&number=${episode}`;
