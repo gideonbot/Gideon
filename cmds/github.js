@@ -17,7 +17,7 @@ module.exports.run = async (gideon, message, args) => {
                                             \nDiscord: [Time Vault](${body.homepage} '${body.homepage}')
                                             \nLanguage: \`${body.language}\`
                                             \nLast Update: \`${upDate.toUTCString()}\`
-                                            Open Issues: \`${body.open_issues_count}\`
+                                            \nOpen Issues: \`${body.open_issues_count}\`
                                             Stargazers: \`${body.stargazers_count}\`
                                             Watchers: \`${body.watchers_count}\`
                                             Forks: \`${body.forks_count}\`
