@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(`The Flash ${body.season}x${body.number} - ${body.name}`)
-        .setDescription(body.summary + `\n\Airdate: ${airdate.toUTCString()} \nRuntime: `)
+        .setDescription(body.summary + `\n\`Airdate: ${airdate.toUTCString()} \nRuntime: `)
         .setImage(body.original)     
         .setTimestamp()
         .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
