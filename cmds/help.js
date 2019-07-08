@@ -9,7 +9,7 @@ module.exports.run = async (gideon, message, args) => {
 	    .setTitle('__You can check the list of available commands below:__')
         .addField('!help', 'Displays this message')  
         .addField('!wiki <term>', 'Searches the Arrowverse Wiki for the given term')  
-        .addField('!ep <show> NxNN', 'Fetches episode info (replace <show> with: flash, arrow, supergirl, lege)')  
+        .addField('!ep <show> NxNN', 'Fetches episode info (replace <show> with: flash, arrow, supergirl, legends, constantine, batwoman)')  
         .addField('!meme', 'Displays a random Arrowverse meme')  
         .addField('!flash | !arrow | !supergirl | !legends | !batwoman', 'Fetches the latest EP from arrowverse.info (coming soon)')
         .addField('Gideon, show me the future!', 'Displays an easter egg')
