@@ -23,10 +23,7 @@ module.exports.run = async (gideon, message, args) => {
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
         message.channel.send(wikiart); 
-    }, failed => { 
-        if (failed)
-        if (!Object.keys(body.items).length) message.channel.send(`There was no result for ${args.join(' ')} on the Arrowverse Wiki!`).catch(console.error);
-     });      
+    });      
 }
 
 module.exports.help = {
