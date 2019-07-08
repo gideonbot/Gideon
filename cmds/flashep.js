@@ -3,7 +3,7 @@ const tvmaze = require("fs");
 
 module.exports.run = async (gideon, message, args) => {  
     
-    const meme = new Discord.RichEmbed()
+    const flahsep = new Discord.RichEmbed()
         .setColor('#2791D3')
         .attachFile(attachment)
         .setImage(`attachment://${chosenFile}`)
