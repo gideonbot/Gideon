@@ -4,7 +4,7 @@ const snekfetch = require("snekfetch");
 module.exports.run = async (gideon, message, args) => {
     let sen = args[0];
     if(!sen) return message.channel.send("You must supply the shows name, season and its episode number!");
-    
+
     let seip = args.toString().substr(-4)
     let season = seip[0];
     let episode = seip[2] + seip[3];
@@ -30,7 +30,6 @@ module.exports.run = async (gideon, message, args) => {
 
     const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
     
-
     snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;   
