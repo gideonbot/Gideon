@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
         cst = utc + (3600000*offset);
         nd = new Date(cst); 
         newdate = (nd.toLocaleString());  
-
+            
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(`The Flash ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
