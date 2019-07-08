@@ -44,7 +44,7 @@ module.exports.run = async (gideon, message, args) => {
         let img = '';
         if (r.body.summary === null){
             desc = 'No summary available'
-            img
+            img = '';
         }   else {
             let sum = body.summary.substring(3);
             desc = sum.substring(0, sum.length -4); 
