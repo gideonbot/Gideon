@@ -6,7 +6,7 @@ module.exports.run = async (gideon, message, args) => {
     let inpstr = input.substr(-4)
     console.log(input)
     let season = inpstr[0];
-    let episode = input[2] + args[3];
+    let episode = inpstr[2] + args[3];
     const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
     let sen = args[0];
     //if(!sen) return message.channel.send("You must supply the shows name, season and its episode number!");
