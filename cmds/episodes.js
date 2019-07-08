@@ -28,7 +28,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(show.includes(ct)){
         showid = "15";
         showtitle = "Constantine";
-    }   else if(show.includes(bw)){
+    }   else if(agc.match(/(?:flash)/)){
         showid = "37776";
         showtitle = "Batwoman"; 
     }   else{
