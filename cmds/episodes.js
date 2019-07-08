@@ -38,8 +38,8 @@ module.exports.run = async (gideon, message, args) => {
         var day = parseInt(mdy[1]);
         var year = parseInt(mdy[2]);
 
-// Putting it all together
-var formattedDate = year + '-' + month + '-' + day + ' ' + time;
+        // Putting it all together
+        var formattedDate = year + '-' + month + '-' + day + ' ' + time;
 
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
