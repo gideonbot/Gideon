@@ -9,8 +9,8 @@ module.exports.run = async (gideon, message, args) => {
     let ar = ""
     let sg = ""
     let lo = ""
-    let ct
-    let bw
+    let ct = ""
+    let bw = ""
     let show = args.toString().substring(4, args.length-5)
     if (show.includes(substring))
     let showid;
