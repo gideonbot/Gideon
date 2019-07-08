@@ -43,7 +43,7 @@ module.exports.run = async (gideon, message, args) => {
         let sum = body.summary.substring(3);
         let desc = sum.substring(0, sum.length -4);
         if(desc == null){
-            desc = ""
+            desc = "No description available"
         }
 
         let localTime = airdate.getTime();
