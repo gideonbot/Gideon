@@ -28,7 +28,7 @@ module.exports.run = async (gideon, message, args) => {
         let cstdate = (nd.toDateString());
         let csttime = (nd.toLocaleTimeString());  
 
-        const flashep = new Discord.RichEmbed()
+        const epinfo = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(`The Flash ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
         .setDescription(desc + `\n\nAirdate: \`${cstdate}\` \nAirtime: \`${csttime + ' CST'}\` \nRuntime: \`${body.runtime} Minutes\``)
