@@ -43,7 +43,7 @@ module.exports.run = async (gideon, message, args) => {
         let desc = '';
         if (body.summary === null && body.original === null){
             desc = 'No summary available';
-            
+            .catch(console.error)
         }   else {
             let sum = body.summary.substring(3)
             desc = sum.substring(0, sum.length -4); 
