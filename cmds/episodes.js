@@ -41,7 +41,7 @@ module.exports.run = async (gideon, message, args) => {
         let body = r.body;   
         let airdate = new Date(body.airstamp);
         let desc = '';
-        if (r.body.summary === null && r.body.original === null){
+        if (r.body.summary === null){
             desc = 'No summary available'
         }   else {
             let sum = body.summary.substring(3);
