@@ -9,7 +9,7 @@ module.exports.run = async (gideon, message, args) => {
     let sen = args[0];
     if(!sen) return message.channel.send("You must supply the shows name, season and its episode number!");
 
-    snekfetch.get(api).then(r => {
+    snekfetch.get(flashapi).then(r => {
         console.log(r.body);
         let body = r.body;   
         let airdate = new Date(body.airstamp);
