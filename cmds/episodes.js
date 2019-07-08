@@ -22,7 +22,7 @@ module.exports.run = async (gideon, message, args) => {
         const json = JSON.parse(body.text);
             const name = json.name;
             resolve(name);
-            
+            message.channel.send(`There was no data for this episode!`)
         })
         .catch(reject);
 
