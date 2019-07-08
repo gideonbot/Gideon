@@ -10,11 +10,11 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;   
         let airdate = new Date(body.airstamp);
-        
+
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(`The Flash ${body.season}x${body.number} - ${body.name}`)
-        .setDescription(body.summary + `\nAirdate: ${airdate.toUTCString()}`)
+        .setDescription(body.summary + `\nAirdate: ${airdate.toUTCString()} `)
         .setImage(body.original)     
         .setTimestamp()
         .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
