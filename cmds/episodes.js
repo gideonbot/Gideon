@@ -38,7 +38,7 @@ module.exports.run = async (gideon, message, args) => {
 
         message.channel.send(epinfo);
     }, failed => { 
-        if (fai) return message.channel.send(`There was no data for this episode!`).catch(console.error);
+        if (failed) return message.channel.send(`There was no data for this episode!`).catch(console.error);
      });
 }
 module.exports.help = {
