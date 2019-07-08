@@ -3,7 +3,6 @@ const tvmaze = require('tvmaze-api-ts')
 
 module.exports.run = async (gideon, message, args) => {  
     tvmaze.shows.episodebynumber('13', '5', '14').then(result => {
-        // code
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTimestamp()
