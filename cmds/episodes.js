@@ -8,7 +8,7 @@ module.exports.run = async (gideon, message, args) => {
     let fl = "flash";
     let ar = "arrow";
     let sg = "supergirl";
-    let lo = "";
+    let lo = "legends";
     let ct = "";
     let bw = "";
     let show = args.toString().substring(4, args.length-5)
