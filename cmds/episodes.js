@@ -25,7 +25,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(agc.match(/(?:legends)/)){
         showid = "1851"
         showtitle = "DC's Legends of Tomorrow";
-    }   else if(agc.match(/(?:legends)/)){
+    }   else if(agc.match(/(?:constantine)/)){
         showid = "15";
         showtitle = "Constantine";
     }   else if(agc.match(/(?:flash)/)){
