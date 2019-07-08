@@ -16,7 +16,9 @@ module.exports.run = async (gideon, message, args) => {
         let sum = body.summary.substring(3);
         let desc = sum.substring(0, sum.length - 4);
         //if (!Object.keys(body.id).length) message.channel.send(`There was no data for this episode!`).catch(console.error);  
-         
+        
+
+        
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(`The Flash ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
