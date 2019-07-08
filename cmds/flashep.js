@@ -3,7 +3,7 @@ const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
     let input = args.join(' ').substr(-4)
-    let season = input[0];
+    let season = //input[0];
     let episode = input[2] + args[3];
     const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
     let sen = args[0];
