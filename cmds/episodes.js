@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
     if (agc.match(/(?:flash)/)){
         showid = "13";
         showtitle = "The Flash";
-    }   else if(agc.match(/(?:flash)/)){
+    }   else if(agc.match(/(?:arrow)/)){
         showid = "4";
         showtitle = "Arrow";
     }   else if(agc.match(/(?:flash)/)){
