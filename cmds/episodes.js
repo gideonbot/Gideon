@@ -34,7 +34,7 @@ module.exports.run = async (gideon, message, args) => {
 
         // We then parse  the mdy into parts
         mdy = mdy.split('/');
-        var month = parseInt(mdy[0]);
+        let month = parseInt(mdy[0]);
         var day = parseInt(mdy[1]);
         var year = parseInt(mdy[2]);
 
