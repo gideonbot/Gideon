@@ -12,7 +12,9 @@ module.exports.run = async (gideon, message, args) => {
     let ct = "constantine";
     let bw = "batwoman";
     let show = args.toString().substring(4, args.length-5)
-    if (show.includes(fl))
+    if (show.includes(fl)){
+        
+    }
     let showid;
     const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
     let sen = args[0];
