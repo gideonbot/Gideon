@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
     let showid;
 
     if (show.includes(fl)){
-        showid 
+        showid = "13";
     }   else if(show.includes(ar))
     
 
