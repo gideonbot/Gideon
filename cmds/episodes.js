@@ -22,8 +22,8 @@ module.exports.run = async (gideon, message, args) => {
         let utc = localTime + localOffset;
         let offset = -5;   
         let cst = utc + (3600000*offset);
-        nd = new Date(cst); 
-        convdate = (nd.toLocaleString());  
+        let nd = new Date(cst); 
+        let convdate = (nd.toLocaleString());  
         newdate
 
         const flashep = new Discord.RichEmbed()
