@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
 	    .setTitle(body.name)
         .setDescription(body.description + `\n\nOwner: [adrifcastr](${body.owner.html_url} '${body.owner.html_url}') 
                                             \nRepo: [Gideon](${body.html_url} '${body.html_url}')
-                                            Discord: [Time Vault](${body.homepage} '${body.homepage}')
+                                            \nDiscord: [Time Vault](${body.homepage} '${body.homepage}')
                                             Language: \`${body.language}\`
                                             Last Update: \`${upDate.toUTCString()}\`
                                             Open Issues: \`${body.open_issues_count}\`
