@@ -5,11 +5,11 @@ module.exports.run = async (gideon, message, args) => {
     let input = args.toString().substr(-4)
     let season = input[0];
     let episode = input[2] + input[3];
-    const flashapi = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
+    const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
     let sen = args[0];
     if(!sen) return message.channel.send("You must supply the shows name, season and its episode number!");
 
-    snekfetch.get(flashapi).then(r => {
+    snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;   
         let airdate = new Date(body.airstamp);
