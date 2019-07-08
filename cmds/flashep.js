@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
         let body = r.body;   
         let airdate = new Date(body.airstamp);
         let sum1 = body.summary.slice(0, 3);
-        let sum= sum1..slice(0, -1);
+        let sum= sum1.slice(0, -3);
 
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
