@@ -41,12 +41,6 @@ module.exports.run = async (gideon, message, args) => {
         let body = r.body;   
         let airdate = new Date(body.airstamp);
         let sum = body.summary.substring(3)
-
-    } catch (_) {
-        await get(url = `https://cdn.discordapp.com/emojis/${emoji}.png`).catch(() => {
-          url = null;
-        });
-
         let desc = sum.substring(0, sum.length -4);           
 
         let localTime = airdate.getTime();
