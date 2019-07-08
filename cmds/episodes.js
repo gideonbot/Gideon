@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
     let showid = '';
     let showtitle = '';
 
-    if (show.includes(fl)){
+    if (agc.mat(fl)){
         showid = "13";
         showtitle = "The Flash";
     }   else if(show.includes(ar)){
