@@ -6,6 +6,14 @@ module.exports.run = async (gideon, message, args) => {
        // result.name
         
       })  
+      const flashep = new Discord.RichEmbed()
+        .setTitle(result.name)
+        //.setTitle(`The Flash ${result.season}x${result.number} - ${result.name}`)
+        .setColor('#2791D3')
+        .setTimestamp()
+        .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+
+        message.channel.send(flashep);
 }
 
 module.exports.help = {
