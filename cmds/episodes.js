@@ -8,9 +8,9 @@ module.exports.run = async (gideon, message, args) => {
     let fl = "flash"; let ar = "arrow"; let sg = "supergirl"; let lo = "legends"; let ct = "constantine"; let bw = "batwoman";
     let show = args.toString().substring(4, args.length-5)
     let showid;
-    
+
     if (show.includes(fl)){
-        showid
+        showid 
     }   else if(show.includes(ar))
     
 
