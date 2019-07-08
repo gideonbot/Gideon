@@ -40,7 +40,8 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;   
         let airdate = new Date(body.airstamp);
-        let sum = body.summary.substring(3);
+        let sum = body.summary.substring(3).catch(() => {
+            url = null;;
         let desc = ('');
         if(!sum){
             desc = "No summary available."
