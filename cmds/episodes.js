@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
     let showid = '';
     let showtitle = '';
 
-    if (agc.mat(fl)){
+    if (agc.match(/(?:flash)/)){
         showid = "13";
         showtitle = "The Flash";
     }   else if(show.includes(ar)){
