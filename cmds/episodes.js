@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
     let episode = seip[2] + seip[3];
     let fl = "flash"; let ar = "arrow"; let sg = "supergirl"; let lg = "legends"; let ct = "constantine "; let bw = "batwoman ";
     let show = args.toString().substring(5, args.length -5);
-    let showarg 
+    let showarg = show!ep test 5x14
     let showid = '';
     let showtitle = '';
 
