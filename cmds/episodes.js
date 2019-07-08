@@ -45,7 +45,7 @@ module.exports.run = async (gideon, message, args) => {
         let desc = sum.substring(0, sum.length -4);
 
         let localTime = airdate.getTime();
-        let localOffset = airdate.getTimezoneOffset("America/New_York");) * 60000;  
+        let localOffset = airdate.getTimezoneOffset("America/New_York"); * 60000;  
         let utc = localTime + localOffset;
         let offset = -5;   
         let cst = utc + (3600000*offset);
