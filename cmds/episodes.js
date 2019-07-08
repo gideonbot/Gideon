@@ -13,7 +13,9 @@ module.exports.run = async (gideon, message, args) => {
         showid = "13";
     }   else if(show.includes(ar)){
         showid = "";
-    }   else if(show.includes(sg))
+    }   else if(show.includes(sg)){
+        
+    }
     
 
     const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
