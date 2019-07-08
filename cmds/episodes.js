@@ -3,7 +3,7 @@ const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
-    if(!sen) return message.channel.send("You must supply the shows name, season and its episode number!");
+    if(!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
 
     let seip = args.toString().substr(-4)
     let season = seip[0];
