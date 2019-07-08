@@ -17,7 +17,7 @@ module.exports.run = async (gideon, message, args) => {
         let desc = sum.substring(0, sum.length - 4);
         //if (!Object.keys(body.id).length) message.channel.send(`There was no data for this episode!`).catch(console.error);  
         
-        localTime = d.getTime();
+        localTime = airdate.getTime();
 
         localOffset = d.getTimezoneOffset() * 60000;
     
