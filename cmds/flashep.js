@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
 
         message.channel.send(flashep);
     });
-
+}
 module.exports.help = {
     name: "flashep"
 }
