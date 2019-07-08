@@ -7,7 +7,8 @@ module.exports.run = async (gideon, message, args) => {
     let episode = seip[2] + seip[3];
     let fl = "flash"; let ar = "arrow"; let sg = "supergirl"; let lo = "legends"; let ct = "constantine"; let bw = "batwoman";
     let show = args.toString().substring(4, args.length-5)
-
+    let showid;
+    
     if (show.includes(fl)){
         showid
     }   else if(show.includes(ar))
