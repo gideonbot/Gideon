@@ -32,7 +32,7 @@ module.exports.run = async (gideon, message, args) => {
         showid = "37776";
         showtitle = "Batwoman";
     }   else{
-        return message.channel.send(`"${show}" is not a valid argument!`)
+        return message.channel.send(`"${show.join(' ')}" is not a valid argument!`)
     }  
 
     const api = `http://api.tvmaze.com/shows/${showid}/episodebynumber?season=${season}&number=${episode}`;
