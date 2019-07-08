@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
         
       })  
       const flashep = new Discord.RichEmbed()
-        .setTitle(tvmaze.name)
+        .setTitle(tvmaze.shows.result.name)
         //.setTitle(`The Flash ${result.season}x${result.number} - ${result.name}`)
         .setColor('#2791D3')
         .setTimestamp()
