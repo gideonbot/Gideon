@@ -50,7 +50,7 @@ module.exports.run = async (gideon, message, args) => {
         let offset = -5;   
         let cst = utc + (3600000*offset);
         let nd = new Date(cst); 
-        let cstdate = (nd.toDateString());
+        let fairtdate = (nd.toDateString());
         let csttime = (nd.toLocaleTimeString());  
 
         const epinfo = new Discord.RichEmbed()
