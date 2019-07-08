@@ -9,6 +9,13 @@ module.exports.run = async (gideon, message, args) => {
     let sen = args[0];
     if(!sen) return message.channel.send("You must supply the shows name, season and its episode number!");
 
+    function convertUTCtoCDT() {
+        var timelagging = 6; // 5 or 6
+        var utc = new Date();
+        var cdt = new Date(utc.getTime()-((1 * 60 * 60 * 1000) * timelagging));
+        console.log("CDT: "+cdt);
+    }
+
     snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;   
