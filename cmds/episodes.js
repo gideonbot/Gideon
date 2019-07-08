@@ -8,7 +8,6 @@ module.exports.run = async (gideon, message, args) => {
     let seip = args.toString().substr(-4)
     let season = seip[0];
     let episode = seip[2] + seip[3];
-    let fl = "flash"; let ar = "arrow"; let sg = "supergirl"; let lg = "legends"; let ct = "constantine "; let bw = "batwoman ";
     let show = args.join(' ');
     let showid = '';
     let showtitle = '';
