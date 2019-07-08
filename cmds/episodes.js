@@ -11,6 +11,7 @@ module.exports.run = async (gideon, message, args) => {
     let show = args.join(' ');
     let showid = '';
     let showtitle = '';
+    
 
     if (agc.match(/(?:flash)/)){
         showid = "13";
@@ -42,7 +43,7 @@ module.exports.run = async (gideon, message, args) => {
         let airdate = new Date(body.airstamp);
         let desc = '';
         let img = '';
-        
+
         if (r.body.summary === null){
             desc = 'No summary available'
         }   else {
