@@ -42,6 +42,7 @@ module.exports.run = async (gideon, message, args) => {
         let airdate = new Date(body.airstamp);
         let desc = '';
         let img = '';
+        
         if (r.body.summary === null){
             desc = 'No summary available'
         }   else {
