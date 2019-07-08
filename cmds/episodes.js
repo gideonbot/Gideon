@@ -44,7 +44,7 @@ module.exports.run = async (gideon, message, args) => {
 
         }   else {
             let sum = body.summary.substring(3)
-        let desc = sum.substring(0, sum.length -4); 
+            let desc = sum.substring(0, sum.length -4); 
         }
                   
 
