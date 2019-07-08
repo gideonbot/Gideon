@@ -9,9 +9,9 @@ module.exports.run = async (gideon, message, args) => {
     let season = seip[0];
     let episode = seip[2] + seip[3];
     let fl = "flash"; let ar = "arrow"; let sg = "supergirl"; let lg = "legends"; let ct = "constantine"; let bw = "batwoman";
-    const show = args.toString().substring(4, args.length-5)
-    const showid = '';
-    const showtitle = '';
+    let show = args.toString().substring(4, args.length-5)
+    let showid = '';
+    let showtitle = '';
 
     if (show.includes(fl)){
         showid = "13";
