@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
 
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
-        .setTitle(`The Flash ${body.season}x${body.number.toFixed(2)} - ${body.name}`)
+        .setTitle(`The Flash ${body.season}x${body.number.toFixed()} - ${body.name}`)
         .setDescription(body.summary + `\n\`Airdate: ${airdate.toUTCString()}\` \n\`Runtime: \`${body.runtime} Minutes\``)
         .setImage(body.original)     
         .setTimestamp()
