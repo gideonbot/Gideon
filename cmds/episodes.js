@@ -23,7 +23,7 @@ module.exports.run = async (gideon, message, args) => {
         offset = -5;   
         cst = utc + (3600000*offset);
         nd = new Date(cst); 
-        newdate = (nd.toLocaleString('en-US',{hour12:false}).split(" ");  
+        newdate = (nd.toLocaleString('en-US',{hour12:false}).split(" "));  
 
         // Parse our locale string to [date, time]
         let date = new Date().toLocaleString('en-US',{hour12:false}).split(" ");
