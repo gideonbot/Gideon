@@ -16,13 +16,13 @@ Gideon's features are as follows:
 
 * !wiki <term> - Searches the Arrowverse Wiki for the given term
   
+* !ep <show> NxNN - Fetches episode info (replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)
+  
 * !meme - Displays a random Arrowverse meme
 
 * !quote - Displays a random Arrowverse quote (coming soon)
 
 * !flash | !arrow | !supergirl | !legends | !batwoman - Fetches the latest EP airdate | powered by [arrowverse.info](https://arrowverse.info/) (coming soon)
-
-* !flashep NxNN | !arrowep NxNN | !supergirlep NxNN | !legendsep NxNN | !batwomanep NxNN - Fetches the EP info (coming soon)
 
 * Gideon, show me the future! - Displays the first paragraph of the 2024 CCC article including a picture of the full article
 
