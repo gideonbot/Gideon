@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "node index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "adrifcastr",
   "license": "ISC",
@@ -13,6 +15,8 @@
     "discord.js": "^11.5.1",
     "dotenv": "^8.0.0",
     "snekfetch": "^4.0.4",
-    "tvmaze-api-ts": "^1.0.20"
-  }
+    "tvmaze-api-ts": "^1.0.20",
+    "snyk": "^1.192.3"
+  },
+  "snyk": true
 }
