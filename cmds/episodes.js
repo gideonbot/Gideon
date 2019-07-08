@@ -9,17 +9,12 @@ module.exports.run = async (gideon, message, args) => {
     let sen = args[0];
     if(!sen) return message.channel.send("You must supply the shows name, season and its episode number!");
 
-    function convertUTCtoCDT() {
-        var timelagging = 6; // 5 or 6
-        var utc = new Date();
-        var cdt = new Date(utc.getTime()-((1 * 60 * 60 * 1000) * timelagging));
-        console.log("CDT: "+cdt);
-    }
+    
 
     snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;   
-        let airdate = new Date(body.airstamp.toUTCString);
+        let airdate = new Date(body.airstamp);
         let sum = body.summary.substring(3);
         let desc = sum.substring(0, sum.length - 4);
         //if (!Object.keys(body.id).length) message.channel.send(`There was no data for this episode!`).catch(console.error);  
