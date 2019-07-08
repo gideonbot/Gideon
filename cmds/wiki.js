@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
 
         message.channel.send(wikiart); 
     }, failed => { 
-        if (failed) return message.channel.send(`There was no result for ${args.join(' ')} on the Arrowverse Wiki!`).catch(console.error);
+        if (!Object.keys(body.items).length) message.channel.send(`There was no result for ${args.join(' ')} on the Arrowverse Wiki!`).catch(console.error);
      });      
 }
 
