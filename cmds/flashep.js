@@ -2,7 +2,9 @@ const Discord = module.require("discord.js");
 const tvmaze = require('tvmaze-api-ts')
 
 module.exports.run = async (gideon, message, args) => {  
-    
+    tvmaze.shows.episodebynumber('1', '1', '1').then(result => {
+        // code
+      })
     const flahsep = new Discord.RichEmbed()
         .setColor('#2791D3')
         .attachFile(attachment)
