@@ -11,24 +11,31 @@ module.exports.run = async (gideon, message, args) => {
     let fl = "flash"; let ar = "arrow"; let sg = "supergirl"; let lg = "legends"; let ct = "constantine"; let bw = "batwoman";
     let show = args.toString().substring(4, args.length-5)
     let showid;
+    const showtitle;
 
     if (show.includes(fl)){
         showid = "13";
+        showtitle = "The Flash";
     }   else if(show.includes(ar)){
-        showid = "";
+        showid = "4";
+        showtitle = "Arrow";
     }   else if(show.includes(sg)){
-        showid = "";
+        showid = "1850";
+        showtitle = "Supergirl";
     }   else if(show.includes(lg)){
-        showid = ""
+        showid = "1851"
+        showtitle = "DC's Legends of Tomorrow";
     }   else if(show.includes(ct)){
-        showid = "";
+        showid = "15";
+        showtitle = "Constantine";
     }   else if(show.includes(bw)){
-        showid = "";
+        showid = "37776";
+        showtitle = "Batwoman";
     }   else{
         return message.channel.send(`"${show}" is not a valid argument!`)
     }  
 
-    const api = `http://api.tvmaze.com/shows/13/episodebynumber?season=${season}&number=${episode}`;
+    const api = `http://api.tvmaze.com/shows/${showid}/episodebynumber?season=${season}&number=${episode}`;
     
     snekfetch.get(api).then(r => {
         console.log(r.body);
@@ -48,7 +55,7 @@ module.exports.run = async (gideon, message, args) => {
 
         const epinfo = new Discord.RichEmbed()
         .setColor('#2791D3')
-        .setTitle(`The Flash ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
+        .setTitle(`${showtitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
         .setDescription(desc + `\n\nAirdate: \`${cstdate}\` \nAirtime: \`${csttime + ' CST'}\` \nRuntime: \`${body.runtime} Minutes\``)
         .setImage(body.image.original)     
         .setTimestamp()
