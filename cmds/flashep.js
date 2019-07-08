@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;   
-      const flashep = new Discord.RichEmbed()
+        const flashep = new Discord.RichEmbed()
         .setTitle(tvmaze.shows.result.name)
         //.setTitle(`The Flash ${result.season}x${result.number} - ${result.name}`)
         .setColor('#2791D3')
