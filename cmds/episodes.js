@@ -64,7 +64,7 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setTitle(`${showtitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
         .setDescription(desc + `\n\nAirdate: \`${fairdate}\`\nAirtime: \`${fairtime + ' EST'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel:\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`)
-        .setImage(body.image.original)     
+        .setImage(img)     
         .setTimestamp()
         .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
