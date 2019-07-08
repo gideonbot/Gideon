@@ -2,7 +2,7 @@ const Discord = module.require("discord.js");
 const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
-    let input = args.toString();
+    let input = input.substr(-4)
     let inpstr = 
     console.log(input)
     let season = inpstr[0];
