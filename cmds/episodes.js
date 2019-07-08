@@ -25,6 +25,22 @@ module.exports.run = async (gideon, message, args) => {
         nd = new Date(cst); 
         newdate = (nd.toLocaleString());  
 
+        // Parse our locale string to [date, time]
+var date = new Date().toLocaleString('en-US',{hour12:false}).split(" ");
+
+// Now we can access our time at date[1], and monthdayyear @ date[0]
+var time = date[1];
+var mdy = date[0];
+
+// We then parse  the mdy into parts
+mdy = mdy.split('/');
+var month = parseInt(mdy[0]);
+var day = parseInt(mdy[1]);
+var year = parseInt(mdy[2]);
+
+// Putting it all together
+var formattedDate = year + '-' + month + '-' + day + ' ' + time;
+
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(`The Flash ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
