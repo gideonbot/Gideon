@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;   
         let airdate = new Date(body.airstamp);
-        const epn
+        const epn = body.number
 
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
