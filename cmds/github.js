@@ -18,8 +18,8 @@ module.exports.run = async (gideon, message, args) => {
                                             \nLanguage: \`${body.language}\`
                                             \nLast Update: \`${upDate.toUTCString()}\`
                                             \nOpen Issues: \`${body.open_issues_count}\`
-                                            \Stargazers: \`${body.stargazers_count}\`
-                                            Watchers: \`${body.watchers_count}\`
+                                            \nStargazers: \`${body.stargazers_count}\`
+                                            \nWatchers: \`${body.watchers_count}\`
                                             Forks: \`${body.forks_count}\`
                                             Git Clone: \`${body.clone_url}\``)
 	    .setThumbnail(body.owner.avatar_url)
