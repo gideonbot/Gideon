@@ -48,7 +48,7 @@ module.exports.run = async (gideon, message, args) => {
         let localOffset = airdate.getTimezoneOffset("America/New_York") * 60000;  
         let utc = localTime + localOffset;
         let offset = -5;   
-        let stc = utc + (3600000*offset);
+        let cst = utc + (3600000*offset);
         let nd = new Date(cst); 
         let fairtdate = (nd.toDateString());
         let fairtime = (nd.toLocaleTimeString());  
