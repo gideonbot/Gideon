@@ -8,7 +8,7 @@ module.exports.run = async (gideon, message, args) => {
     let fl = ""
     let ar = ""
     let sg = ""
-    let lo
+    let lo = ""
     let ct
     let bw
     let show = args.toString().substring(4, args.length-5)
