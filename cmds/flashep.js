@@ -1,5 +1,5 @@
 const Discord = module.require("discord.js");
-const tvmaze = require("fs");
+const tvmaze = require('tvmaze-api-ts')
 
 module.exports.run = async (gideon, message, args) => {  
     
