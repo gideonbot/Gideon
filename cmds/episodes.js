@@ -23,25 +23,12 @@ module.exports.run = async (gideon, message, args) => {
         offset = -5;   
         cst = utc + (3600000*offset);
         nd = new Date(cst); 
-        newdate = (nd.toLocaleString('en-US',{hour12:false}).split(" "));  
-
-        // Now we can access our time at date[1], and monthdayyear @ date[0]
-        let time = newdate[1];
-        var mdy = newdate[0];
-
-        // We then parse  the mdy into parts
-        mdy = mdy.split('/');
-        let month = parseInt(mdy[0]);
-        let day = parseInt(mdy[1]);
-        let year = parseInt(mdy[2]);
-
-        // Putting it all together
-        let fmdairDate = year + '-' + month + '-' + day + ' ' + time;
+        newdate = (nd.toLocaleString());  
 
         const flashep = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(`The Flash ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
-        .setDescription(desc + `\n\nAirdate: \`${fmdairDate + ' CST'}\` \nRuntime: \`${body.runtime} Minutes\``)
+        .setDescription(desc + `\n\nAirdate: \`${newdate + ' CST'}\` \nRuntime: \`${body.runtime} Minutes\``)
         .setImage(body.image.original)     
         .setTimestamp()
         .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
