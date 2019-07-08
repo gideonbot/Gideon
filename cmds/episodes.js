@@ -26,7 +26,6 @@ module.exports.run = async (gideon, message, args) => {
         newdate = (nd.toLocaleString('en-US',{hour12:false}).split(" "));  
 
         // Parse our locale string to [date, time]
-        let date = new Date().toLocaleString('en-US',{hour12:false}).split(" ");
 
         // Now we can access our time at date[1], and monthdayyear @ date[0]
         let time = date[1];
