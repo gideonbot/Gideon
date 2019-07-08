@@ -27,7 +27,7 @@ module.exports.run = async (gideon, message, args) => {
 
         // Now we can access our time at date[1], and monthdayyear @ date[0]
         let time = newdate[1];
-        var mdy = date[0];
+        var mdy = newdate[0];
 
         // We then parse  the mdy into parts
         mdy = mdy.split('/');
