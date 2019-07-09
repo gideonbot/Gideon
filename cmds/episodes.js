@@ -62,6 +62,8 @@ module.exports.run = async (gideon, message, args) => {
             img = body.image.original;
         }                 
 
+        
+
         const epinfo = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(`${showtitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
