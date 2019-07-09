@@ -59,8 +59,7 @@ module.exports.run = async (gideon, message, args) => {
             let sum = body.summary.substring(3);
             desc = sum.substring(0, sum.length -4); 
             img = body.image.original;
-        }
-                  
+        }                 
 
         const epinfo = new Discord.RichEmbed()
         .setColor('#2791D3')
@@ -71,6 +70,7 @@ module.exports.run = async (gideon, message, args) => {
         .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
         message.channel.send(epinfo);
+        
     }, failed => { 
         if (failed) return message.channel.send(`There was no data for this episode!`).catch(console.error);
      });
