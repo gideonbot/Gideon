@@ -62,7 +62,7 @@ module.exports.run = async (gideon, message, args) => {
             img = body.image.original;
         }                 
 
-        var timeString = "18:00:00";
+        let timeString = "18:00:00";
         var H = +timeString.substr(0, 2);
         var h = H % 12 || 12;
         var ampm = (H < 12 || H === 24) ? "AM" : "PM";
