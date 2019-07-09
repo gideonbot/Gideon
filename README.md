@@ -33,8 +33,7 @@ Gideon's features are as follows:
 Too see Gideon in action, feel free to join my Arrowverse Discord Server: [Time Vault](https://invite.gg/tmvt) 
 ![Discord Banner](https://discordapp.com/api/guilds/595318490240385037/widget.png?style=banner2)
 
-<a href="https://i.imgur.com/9Pdixuy.png"><img src="https://i.imgur.com/9Pdixuy.png" width="473" height="237"/></a>
-![GideonScreenshot](https://i.imgur.com/9Pdixuy.png)t="50%" width="50%"}{:heigh
+<a href="https://i.imgur.com/9Pdixuy.png"><img src="https://i.imgur.com/9Pdixuy.png" width="286.5" height="168.5"/></a>
 
 ### Donations
 
