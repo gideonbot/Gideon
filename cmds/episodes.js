@@ -61,14 +61,6 @@ module.exports.run = async (gideon, message, args) => {
             img = body.image.original;
         }
                   
-        let localTime = airdate.getTime();
-        let localOffset = airdate.getTimezoneOffset("America/New_York") * 60000;  
-        let utc = localTime + localOffset;
-        let offset = -4;   
-        let est = utc + (3600000*offset);
-        let nd = new Date(est); 
-        let fairdate = (nd.toDateString());
-        let fairtime = (nd.toLocaleTimeString());  
 
         const epinfo = new Discord.RichEmbed()
         .setColor('#2791D3')
