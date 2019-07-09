@@ -49,7 +49,7 @@ module.exports.run = async (gideon, message, args) => {
     snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;   
-        let airdate = Date.parse(body.airdate + '−05:00');
+        let airdate = (body.airdate + '−05:00');
         let airtime = body.airtime;
         let desc = '';
         let img = '';
