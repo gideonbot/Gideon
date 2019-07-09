@@ -50,6 +50,7 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;   
         let airdate = new Date(body.airdate);
+        let airtime = new 
         let desc = '';
         let img = '';
 
@@ -70,7 +71,7 @@ module.exports.run = async (gideon, message, args) => {
         .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
         message.channel.send(epinfo);
-        
+
     }, failed => { 
         if (failed) return message.channel.send(`There was no data for this episode!`).catch(console.error);
      });
