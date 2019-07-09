@@ -64,8 +64,8 @@ module.exports.run = async (gideon, message, args) => {
 
         let timeString = "18:00:00";
         let H = +timeString.substr(0, 2);
-        var h = H % 12 || 12;
-        var ampm = (H < 12 || H === 24) ? "AM" : "PM";
+        let h = H % 12 || 12;
+        let ampm = (H < 12 || H === 24) ? "AM" : "PM";
         timeString = h + timeString.substr(2, 3) + ampm;
 
         const epinfo = new Discord.RichEmbed()
