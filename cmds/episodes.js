@@ -71,7 +71,7 @@ module.exports.run = async (gideon, message, args) => {
         const epinfo = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(`${showtitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
-        .setDescription(desc + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${tim + ' EST'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`)
+        .setDescription(desc + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' EST'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`)
         .setImage(img)     
         .setTimestamp()
         .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
