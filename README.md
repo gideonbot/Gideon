@@ -35,6 +35,7 @@ Too see Gideon in action, feel free to join my Arrowverse Discord Server: [Time 
 
 <a href="https://i.imgur.com/9Pdixuy.png"><img src="https://i.imgur.com/9Pdixuy.png" width="286.5" height="168.5"/></a>
 <a href="https://i.imgur.com/5e9uJpm.png"><img src="https://i.imgur.com/5e9uJpm.png" width="227.5" height="264"/></a>
+<a href="https://i.imgur.com/5e9uJpm.png"><img src="https://i.imgur.com/5e9uJpm.png" width="230" height="320"/></a>
 
 ### Donations
 
