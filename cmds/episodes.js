@@ -50,7 +50,7 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;   
         let airdate =body.airdate.substring(0, sum.length -6);
-        let airtime = body.airtime;
+        let airdt = body.airtime;
         let desc = '';
         let img = '';
 
