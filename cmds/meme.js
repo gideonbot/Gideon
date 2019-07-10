@@ -7,12 +7,6 @@ module.exports.run = async (gideon, message, args) => {
       
    // const attachment = new Discord.Attachment(`./avm/${chosenFile}`, chosenFile);
 
-    const api = `https://api.imgur.com/3/album/NVHwdNg/images`;
-    
-    snekfetch.get(api).then(r => {
-        console.log(r.body);
-        let body = r.body;   
-
     const meme = new Discord.RichEmbed()
         .setColor('#2791D3')
         //.attachFile(attachment)
