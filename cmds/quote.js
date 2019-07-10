@@ -17,7 +17,7 @@ module.exports.run = async (gideon, message, args) => {
                
         const quote = new Discord.RichEmbed()
         .setColor('#2791D3')
-        .setDescription(`**$**`)
+        .setDescription(`**${}**`)
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
