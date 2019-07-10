@@ -12,10 +12,10 @@ module.exports.run = async (gideon, message, args) => {
     const api = `https://dc.fandom.com/api/v1/Articles/AsSimpleJson?id=${id}`;
 
         snekfetch.get(api).then(r => {
-        console.log(r.body);
-        let body = r.body;
-        let rq = body.sections[0].content;
-        let min = 0;
+            console.log(r.body);
+            let body = r.body;
+            let rq = body.sections[0].content;
+            let min = 0;
         let max = rq.length - 1;
         console.log(rq);
         let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
