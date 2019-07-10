@@ -2,6 +2,7 @@ const Discord = module.require("discord.js");
 const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
+    
     snekfetch.get(api).then(r => {
     console.log(r.body);
     let body = r.body;
