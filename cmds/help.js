@@ -11,7 +11,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!wiki <term>', 'Searches the Arrowverse Wiki for the given term')  
         .addField('!ep <show> NxNN', 'Fetches episode info \n(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)')  
         .addField('!meme', 'Displays a random Arrowverse meme')  
-        .addField('!meme', 'Displays a random Arrowverse meme')  
+        .addField('!quote', 'Displays a random Arrowverse meme')  
         .addField('!flash | !arrow | !supergirl | !legends | !batwoman', 'Fetches the latest EP from arrowverse.info (coming soon)')
         .addField('Gideon, show me the future!', 'Displays an easter egg')
         .addField('!github', 'Displays Github repository info')
