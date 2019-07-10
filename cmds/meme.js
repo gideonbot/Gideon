@@ -8,7 +8,7 @@ module.exports.run = async (gideon, message, args) => {
       
    // const attachment = new Discord.Attachment(`./avm/${chosenFile}`, chosenFile);
 
-
+    
 
     const meme = new Discord.RichEmbed()
         .setColor('#2791D3')
