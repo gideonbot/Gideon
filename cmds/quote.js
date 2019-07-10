@@ -12,8 +12,8 @@ module.exports.run = async (gideon, message, args) => {
         let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
         let ravm = res.images[ranum].link;
         console.log(ravm);
-        
-        const type = body.sections[0].content;         
+
+                 
         console.log(type);
                
         const quote = new Discord.RichEmbed()
