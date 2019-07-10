@@ -7,8 +7,8 @@ module.exports.run = async (gideon, message, args) => {
     
     snekfetch.get(idapi).then(r => {
     console.log(r.body);
-        let body = r.body;
-        const type = Object.values(body.items)[0];
+    let body = r.body;
+    const type = Object.values(body.items)[0];
     
     let id = '';
     const api = `https://dc.fandom.com/api/v1/Articles/AsSimpleJson?id=${id}`;
