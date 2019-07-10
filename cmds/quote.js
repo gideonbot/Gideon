@@ -9,6 +9,11 @@ module.exports.run = async (gideon, message, args) => {
         let body = r.body;
         const type = body.sections[0].content;         
         console.log(type);
+        let min = 0;
+    let max = res.images.length - 1;
+    let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
+    let ravm = res.images[ranum].link;
+    console.log(ravm);
                
         const quote = new Discord.RichEmbed()
 	    .setColor('#2791D3')
