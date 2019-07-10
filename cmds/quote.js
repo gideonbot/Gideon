@@ -34,7 +34,6 @@ module.exports.run = async (gideon, message, args) => {
 
             message.channel.send(quote); 
         });      
-
     });  
 }
 
