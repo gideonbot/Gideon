@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     if (err) console.error(err);
     console.log(res);  
     let min = '';
-    let max = '';
+    let max = 'res';
     let ranum = Math.floor(Math.random()*126) + 1;
     let ravm = res.images[ranum].link;
     console.log(ravm);
