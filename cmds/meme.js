@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
       
     const attachment = new Discord.Attachment(`./avm/${chosenFile}`, chosenFile);
 
-    const api = `http://api.tvmaze.com/shows/${showid}/episodebynumber?season=${season}&number=${episode}`;
+    const api = `https://api.imgur.com/3/album/NVHwdNg/images`;
     
     snekfetch.get(api).then(r => {
         console.log(r.body);
