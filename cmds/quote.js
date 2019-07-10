@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;
-        const type = body.sections[0].;         
+        const type = body.sections[0].content;         
                
         const quote = new Discord.RichEmbed()
 	    .setColor('#2791D3')
