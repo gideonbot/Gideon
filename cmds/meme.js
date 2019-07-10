@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
 
     imgclient.album.get('NVHwdNg', (err, res) => {
     if (err) console.error(err);
-    //console.log(res);
+    console.log(res);
     let ravm = res.body;
     console.log(ravm);
    // const type = Object.values(body.items)[0];
