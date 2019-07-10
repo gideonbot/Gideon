@@ -3,9 +3,9 @@ const fs = require("fs");
 
 module.exports.run = async (gideon, message, args) => {  
     var files = fs.readdirSync('./avm');
-    let chosenFile = files[Math.floor(Math.random() * files.length)];
+    //let chosenFile = files[Math.floor(Math.random() * files.length)];
       
-    const attachment = new Discord.Attachment(`./avm/${chosenFile}`, chosenFile);
+   // const attachment = new Discord.Attachment(`./avm/${chosenFile}`, chosenFile);
 
     const api = `https://api.imgur.com/3/album/NVHwdNg/images`;
     
