@@ -7,6 +7,12 @@ module.exports.run = async (gideon, message, args) => {
       
     const attachment = new Discord.Attachment(`./avm/${chosenFile}`, chosenFile);
 
+    const api = `http://api.tvmaze.com/shows/${showid}/episodebynumber?season=${season}&number=${episode}`;
+    
+    snekfetch.get(api).then(r => {
+        console.log(r.body);
+        let body = r.body;   
+
     const meme = new Discord.RichEmbed()
         .setColor('#2791D3')
         .attachFile(attachment)
