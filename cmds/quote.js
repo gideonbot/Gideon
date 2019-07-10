@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
     let body = r.body;
     const type = Object.values(body.items)[0];
     
-    let id = '';
+    let id = type.id;
     const api = `https://dc.fandom.com/api/v1/Articles/AsSimpleJson?id=${id}`;
 
         snekfetch.get(api).then(r => {
