@@ -9,7 +9,7 @@ module.exports.run = async (gideon, message, args) => {
         let body = r.body;
         let rt = body.sections[0].content;
         let min = 0;
-        let max = rt.length - 1;
+        let max = rq.length - 1;
         console.log(rt);
         let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
         const title = rt[ranum].title;
@@ -20,8 +20,8 @@ module.exports.run = async (gideon, message, args) => {
         snekfetch.get(idapi).then(r => {
         console.log(r.body);
         let body = r.body;
-        const qart = Object.values(body.items)[0];
-        let id = qart.id;
+        const type = Object.values(body.items)[0];
+        let id = type.id;
         const api = `https://dc.fandom.com/api/v1/Articles/AsSimpleJson?id=${id}`;
 
             snekfetch.get(api).then(r => {
@@ -42,7 +42,7 @@ module.exports.run = async (gideon, message, args) => {
                 const quote = new Discord.RichEmbed()
                 .setColor('#2791D3')
                 .setDescription(`**${chosenQuote}\n\n~${qpb}**`)
-                .setThumbnail(qart.thumbnail)
+                .setThumbnail(type.thumbnail)
                 .setTimestamp()
                 .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
