@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
             console.log(rq);
             let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
             const chosenQuote = rq[ranum].text;
-        console.log(chosenQuote);               
+            console.log(chosenQuote);               
 
         let qp = body.sections[0].title;
         let qpe = qp.replace(/(?:\/Quotes)/,'');
