@@ -11,7 +11,7 @@ module.exports.run = async (gideon, message, args) => {
     let id = '';
     const api = `https://dc.fandom.com/api/v1/Articles/AsSimpleJson?id=${id}`;
 
-    snekfetch.get(api).then(r => {
+        snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;
         let rq = body.sections[0].content;
