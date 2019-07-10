@@ -2,7 +2,7 @@ const Discord = module.require("discord.js");
 const Imgur = require('imgur-node');
 const imgclient = new Imgur.Client('fbe1de02978b3b4');
 
-module.exports.run = async (gideon, message, args) => {     
+module.exports.run = async (gideon, message, args) => {      
     imgclient.album.get('NVHwdNg', (err, res) => {
     if (err) console.error(err);
     console.log(res);
