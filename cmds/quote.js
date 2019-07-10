@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
         let rq = body.sections[0].content;
         let min = 0;
         let max = rq.length - 1;
-        console.log(rq)
+        console.log(rq);
         let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
         let ravm = res.images[ranum].link;
         console.log(ravm);
