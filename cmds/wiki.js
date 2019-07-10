@@ -9,15 +9,15 @@ module.exports.run = async (gideon, message, args) => {
     snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;
-        const type = Object.values(body.items)[0];       
+        const article = Object.values(body.items)[0];       
         if (!Object.keys(body.items).length) return message.channel.send(`There was no result for ${args.join(' ')} on the Arrowverse Wiki!`).catch(console.error);
-        const url = type.url.replace(/\(/g, '%28').replace(/\)/g, '%29');       
+        const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');       
                
         const wikiart = new Discord.RichEmbed()
 	    .setColor('#2791D3')
-	    .setTitle(type.title)
-        .setDescription(type.abstract + `\n\n**[Click here to read the full article](https://arrow.fandom.com${url} 'https://arrow.fandom.com${url}')**`)
-	    .setThumbnail(type.thumbnail)
+	    .setTitle(article.title)
+        .setDescription(article.abstract + `\n\n**[Click here to read the full article](https://arrow.fandom.com${url} 'https://arrow.fandom.com${url}')**`)
+	    .setThumbnail(article.thumbnail)
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 

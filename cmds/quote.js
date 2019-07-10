@@ -12,8 +12,8 @@ module.exports.run = async (gideon, message, args) => {
         let max = rq.length - 1;
         console.log(rt);
         let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
-        const chosenTitle = rt[ranum].title;
-        console.log(chosenTitle); 
+        const title = rt[ranum].title;
+        console.log(title); 
 
     const idapi = `https://dc.fandom.com/api/v1/Articles/Details?ids=50&titles=${title}&abstract=100&width=200&height=200`;
         
