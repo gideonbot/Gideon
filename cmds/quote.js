@@ -38,6 +38,7 @@ snekfetch.get(api).then(r => {
                 message.channel.send(quote); 
             });      
         });  
+    
 }
 
 module.exports.help = {
