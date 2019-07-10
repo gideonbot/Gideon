@@ -1,5 +1,6 @@
 const Discord = module.require("discord.js");
 const imgur = require('imgur-node');
+const client = new Imgur.Client('<CLIENT_ID>');
 
 module.exports.run = async (gideon, message, args) => {  
     //var files = fs.readdirSync('./avm');
@@ -7,7 +8,7 @@ module.exports.run = async (gideon, message, args) => {
       
    // const attachment = new Discord.Attachment(`./avm/${chosenFile}`, chosenFile);
 
-    
+
 
     const meme = new Discord.RichEmbed()
         .setColor('#2791D3')
