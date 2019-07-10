@@ -7,6 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     if (err) console.error(err);
     console.log(res);  
     let ran = res.images.length;  
+    let chosenFile = files[Math.floor(Math.random() * files.length)];
     let ravm = res.images[ran].link;
     console.log(ravm);
 
