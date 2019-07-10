@@ -20,7 +20,7 @@ Gideon's features are as follows:
   
 * !meme - Displays a random Arrowverse meme
 
-* !quote - Displays a random Arrowverse quote (coming soon)
+* !quote - Displays a random Arrowverse quote
 
 * !flash | !arrow | !supergirl | !legends | !batwoman - Fetches the latest EP airdate | powered by [arrowverse.info](https://arrowverse.info/) (coming soon)
 
