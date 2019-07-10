@@ -8,7 +8,7 @@ module.exports.run = async (gideon, message, args) => {
       
    // const attachment = new Discord.Attachment(`./avm/${chosenFile}`, chosenFile);
 
-   client.album.get('hlF1z', (err, res) => {
+   imgclient.album.get('hlF1z', (err, res) => {
     if (err) console.error(err);
     console.log(res);
   });
