@@ -9,7 +9,7 @@ module.exports.run = async (gideon, message, args) => {
     let ran = res.images.length;  
     console.log(ran);
    // let chosenImage = ran[Math.floor(Math.random() * ran.length)];
-    let ravm = res.images[127].link;
+    let ravm = res.images[126].link;
     console.log(ravm);
 
     const meme = new Discord.RichEmbed()
