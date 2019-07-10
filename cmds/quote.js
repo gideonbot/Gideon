@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
         console.log(chosenQuote);               
 
         let qp = body.sections[0].title;
-        let qpe = qp.replace(/(?:/Quotes)/,'');
+        let qpe = qp.replace(/(?:batwoman)/,'');
                
         const quote = new Discord.RichEmbed()
         .setColor('#2791D3')
