@@ -12,12 +12,13 @@ module.exports.run = async (gideon, message, args) => {
     if (err) console.error(err);
     console.log(res);
     const ravm = res.images.id['ETHKmjx'].link;
+
   });
 
     const meme = new Discord.RichEmbed()
         .setColor('#2791D3')
         //.attachFile(attachment)
-        .setImage()
+        .setImage(ra)
         .setTimestamp()
         .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
