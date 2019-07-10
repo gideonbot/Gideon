@@ -9,6 +9,7 @@ module.exports.run = async (gideon, message, args) => {
     let body = r.body;
     let rntle = Math.floor(Math.random()*body.length)
     let titles = rntle;
+    
     const idapi = `https://dc.fandom.com/api/v1/Articles/Details?ids=50&titles=${titles}&abstract=100&width=200&height=200`;
         
         snekfetch.get(idapi).then(r => {
