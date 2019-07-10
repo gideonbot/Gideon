@@ -10,9 +10,9 @@ module.exports.run = async (gideon, message, args) => {
         let rt = body.sections[0].content;
         let min = 0;
         let max = rq.length - 1;
-        console.log(rq);
+        console.log(rt);
         let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
-        const chosenQuote = rq[ranum].text;
+        const chosenQuote = rt[ranum].text;
         console.log(chosenQuote); 
 
     const idapi = `https://dc.fandom.com/api/v1/Articles/Details?ids=50&titles=${titles}&abstract=100&width=200&height=200`;
