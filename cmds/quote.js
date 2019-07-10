@@ -24,11 +24,11 @@ module.exports.run = async (gideon, message, args) => {
 
             let qp = body.sections[0].title;
             let qpe = qp.replace(/(?:\/Quotes)/,'');
-        let qpb = qpe.replace(/(?:Arrow)/, 'Arrowverse') 
+            let qpb = qpe.replace(/(?:Arrow)/, 'Arrowverse') 
                
-        const quote = new Discord.RichEmbed()
-        .setColor('#2791D3')
-        .setDescription(`**${chosenQuote}\n\n~${qpb}**`)
+            const quote = new Discord.RichEmbed()
+            .setColor('#2791D3')
+            .setDescription(`**${chosenQuote}\n\n~${qpb}**`)
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
