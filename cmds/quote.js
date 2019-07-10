@@ -22,8 +22,8 @@ module.exports.run = async (gideon, message, args) => {
             const chosenQuote = rq[ranum].text;
             console.log(chosenQuote);               
 
-        let qp = body.sections[0].title;
-        let qpe = qp.replace(/(?:\/Quotes)/,'');
+            let qp = body.sections[0].title;
+            let qpe = qp.replace(/(?:\/Quotes)/,'');
         let qpb = qpe.replace(/(?:Arrow)/, 'Arrowverse') 
                
         const quote = new Discord.RichEmbed()
