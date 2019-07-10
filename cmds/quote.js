@@ -7,6 +7,12 @@ module.exports.run = async (gideon, message, args) => {
     snekfetch.get(api).then(r => {
         console.log(r.body);
         let body = r.body;
+        let min = 0;
+        let max = res.images.length - 1;
+        let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
+        let ravm = res.images[ranum].link;
+        console.log(ravm);
+        
         const type = body.sections[0].content;         
         console.log(type);
                
