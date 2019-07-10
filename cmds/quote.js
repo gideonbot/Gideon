@@ -13,10 +13,7 @@ module.exports.run = async (gideon, message, args) => {
         console.log(rq);
         let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
         const chosenQuote = rq[ranum].text;
-        console.log(chosenQuote);
-
-                 
-        console.log(type);
+        console.log(chosenQuote);               
                
         const quote = new Discord.RichEmbed()
         .setColor('#2791D3')
