@@ -1,5 +1,5 @@
 const Discord = module.require("discord.js");
-const imgur = require('imgur-node');
+const Imgur = require('imgur-node');
 const client = new Imgur.Client('fbe1de02978b3b4');
 
 module.exports.run = async (gideon, message, args) => {  
