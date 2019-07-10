@@ -4,7 +4,7 @@ const snekfetch = require("snekfetch");
 module.exports.run = async (gideon, message, args) => {
     const titlesapi = `https://api.myjson.com/bins/v2a9v`;
 
-    snekfetch.get(api).then(r => {
+    snekfetch.get(titlesapi).then(r => {
     console.log(r.body);
     let body = r.body;
     let titles = '';
