@@ -5,9 +5,8 @@ const imgclient = new Imgur.Client('fbe1de02978b3b4');
 module.exports.run = async (gideon, message, args) => {      
     imgclient.album.get('NVHwdNg', (err, res) => {
     if (err) console.error(err);
-    console.log(res);
-    
-    let ran = res.images.length;  //let chosenFile = files[Math.floor(Math.random() * files.length)];
+    console.log(res);  
+    let ran = res.images.length;  
     let ravm = res.images[ran].link;
     console.log(ravm);
 
