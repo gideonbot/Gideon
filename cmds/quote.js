@@ -5,7 +5,7 @@ module.exports.run = async (gideon, message, args) => {
 
     const idapi = `https://dc.fandom.com/api/v1/Articles/Details?ids=50&titles=Category%3ACaitlin_Snow_(Arrow)%2FQuotes&abstract=100&width=200&height=200`;
     
-    snekfetch.get(api).then(r => {
+    snekfetch.getid(api).then(r => {
     
     
     let id = '';
