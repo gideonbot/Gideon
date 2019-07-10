@@ -12,6 +12,7 @@ module.exports.run = async (gideon, message, args) => {
     if (err) console.error(err);
     console.log(res);
     let ravm = res.images.id[0].link;
+   // const type = Object.values(body.items)[0];
 
     const meme = new Discord.RichEmbed()
         .setColor('#2791D3')
