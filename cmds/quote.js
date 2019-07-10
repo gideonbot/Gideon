@@ -9,7 +9,6 @@ module.exports.run = async (gideon, message, args) => {
     console.log(r.body);
     let body = r.body;
     const type = Object.values(body.items)[0];
-    
     let id = type.id;
     const api = `https://dc.fandom.com/api/v1/Articles/AsSimpleJson?id=${id}`;
 
