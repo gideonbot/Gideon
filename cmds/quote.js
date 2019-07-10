@@ -2,6 +2,10 @@ const Discord = module.require("discord.js");
 const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
+    
+    
+    
+    
     let id = '';
     const api = `https://dc.fandom.com/api/v1/Articles/AsSimpleJson?id=${id}`;
 
