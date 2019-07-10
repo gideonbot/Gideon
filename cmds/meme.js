@@ -1,6 +1,6 @@
 const Discord = module.require("discord.js");
 const imgur = require('imgur-node');
-const client = new Imgur.Client('<CLIENT_ID>');
+const client = new Imgur.Client('fbe1de02978b3b4');
 
 module.exports.run = async (gideon, message, args) => {  
     //var files = fs.readdirSync('./avm');
