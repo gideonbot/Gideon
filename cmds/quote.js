@@ -3,7 +3,7 @@ const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
     let id = '';
-    const api = `https://dc.fandom.com/api/v1/Articles/AsSimpleJson?id=317389`;
+    const api = `https://dc.fandom.com/api/v1/Articles/AsSimpleJson?id=${id}`;
 
     snekfetch.get(api).then(r => {
         console.log(r.body);
