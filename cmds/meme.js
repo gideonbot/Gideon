@@ -1,5 +1,5 @@
 const Discord = module.require("discord.js");
-const fs = require("fs");
+const imgur = require('imgur-node');
 
 module.exports.run = async (gideon, message, args) => {  
     //var files = fs.readdirSync('./avm');
