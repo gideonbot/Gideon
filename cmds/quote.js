@@ -15,7 +15,7 @@ module.exports.run = async (gideon, message, args) => {
         const chosenQuote = rq[ranum].text;
         console.log(chosenQuote);               
 
-        let qp = body.sections
+        let qp = body.sections[0]
                
         const quote = new Discord.RichEmbed()
         .setColor('#2791D3')
