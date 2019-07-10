@@ -11,7 +11,7 @@ module.exports.run = async (gideon, message, args) => {
     imgclient.album.get('NVHwdNg', (err, res) => {
     if (err) console.error(err);
     console.log(res);
-    const meme = res.images.id['ETHKmjx'].link;
+    const rm = res.images.id['ETHKmjx'].link;
   });
 
     const meme = new Discord.RichEmbed()
