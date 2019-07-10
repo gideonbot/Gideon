@@ -2,7 +2,7 @@ const Discord = module.require("discord.js");
 const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
-    const titlesapi = `https://api.myjson.com/bins/v2a9v`;
+    const titlesapi = `https://api.myjson.com/bins/l583v`;
 
     snekfetch.get(titlesapi).then(r => {
     console.log(r.body);
