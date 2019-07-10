@@ -12,7 +12,7 @@ module.exports.run = async (gideon, message, args) => {
         let max = rq.length - 1;
         console.log(rq);
         let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
-        const chosenQuote = rq[];
+        const chosenQuote = rq[ranum].text;
         console.log(ravm);
 
                  
