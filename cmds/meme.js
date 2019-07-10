@@ -6,7 +6,7 @@ module.exports.run = async (gideon, message, args) => {
     imgclient.album.get('NVHwdNg', (err, res) => {
     if (err) console.error(err);
     console.log(res);  
-    let ranum = ran[Math.floor(Math.random() * ran.length)];
+    let ranum = Math.floor(Math.random()*100) + 1;
     let ravm = res.images[126].link;
     console.log(ravm);
 
