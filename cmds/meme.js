@@ -12,7 +12,7 @@ module.exports.run = async (gideon, message, args) => {
     if (err) console.error(err);
     console.log(res);
     let ran = res.images.length;
-    let ravm = res.images[.length].link;
+    let ravm = res.images[ran].link;
     console.log(ravm);
    // const type = Object.values(body.items)[0];
 
