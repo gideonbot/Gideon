@@ -28,7 +28,8 @@ module.exports.run = async (gideon, message, args) => {
     let chosendesc = '';
 
     if(atc.match(/(?:iceblast)/)){
-        chosenattack
+        chosenattack = '';
+        
     }
 
     const attack = new Discord.RichEmbed()
