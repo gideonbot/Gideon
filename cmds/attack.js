@@ -42,7 +42,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(atc.match(/(?:reverseflash)/)){
         chosenattack = 'you reverse-flashed';
         chosendesc = 'I\'m sorry.';
-        emote = ':wave:skin-tone-2:';
+        emote = ':wave::skin-tone-2:';
         attackgif = 'https://i.imgur.com/h7orTAQ.gif';
     }   else if(atc.match(/(?:vibeblast)/)){
         chosenattack = 'you vibe-blasted';
