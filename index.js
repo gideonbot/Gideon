@@ -36,7 +36,7 @@ gideon.on('message', async message => {
   const msg = message.content.toLowerCase();
   if (
     !msg.startsWith(prefix.toLowerCase()) &&
-    !msg.startsWith(prefix2.toLowerCase())
+    !msg.startsWith(prefix2.toLowerCase()) &&
     !msg.startsWith(prefix2.toLowerCase())
   )
     return;
