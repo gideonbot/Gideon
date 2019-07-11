@@ -6,7 +6,6 @@ module.exports.run = async (gideon, message, args) => {
 
         const future = new Discord.RichEmbed()
 	    .setColor('#2791D3')
-	    
 	    .setImage('https://i.imgur.com/cS3fZZv.jpg')
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
