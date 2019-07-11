@@ -4,6 +4,7 @@ module.exports.run = async (gideon, message, args) => {
 
     message.channel.send('Yes Captain Lance!');
 
+        
         const future = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setImage('https://i.imgur.com/cS3fZZv.jpg')
