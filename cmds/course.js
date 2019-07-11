@@ -20,8 +20,8 @@ module.exports.run = async (gideon, message, args) => {
         });              
 }
 
-const cmd = 'plot a course!'
-const cmsl = cmd.content.split(' ').splice(1).join(' ')
+const cmd = 
+
 module.exports.help = {
-    name: cmsl
+    name: "plot a course!"
 }
