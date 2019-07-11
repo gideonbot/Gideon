@@ -3,8 +3,8 @@ const Discord = module.require("discord.js");
 module.exports.run = async (gideon, message, args) => {
     const auth = message.author;
     let atc = args[0];
-    if(!term) return message.channel.send("You must supply a search term!");
-    
+    if(!atc) return message.channel.send("You must supply a search term!");
+
     function getUserFromMention(mention) {
         if (!mention) return;
     
