@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
         }
     }
 
-    const user = getUserFromMention(args);
+    const user = getUserFromMention(args[0]);
 		if (!user) {
 			return message.channel.send('You must use a proper mention if you want to cuddle someone!');
 		}
