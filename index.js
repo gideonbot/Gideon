@@ -47,19 +47,14 @@ gideon.on('message', async message => {
   const prefix = message.content.match(prefixRegex);
 
   const args = msg.startsWith(prefix.toLowerCase())
-    ? message.content
+   /* ? message.content
         .slice(prefix.length)
         .trim()
         .split(" ")
     : message.content
         .slice(prefix2.length)
         .trim()
-        .split(" ")
-    : message.content
-        .slice(prefix2.length)
-        .trim()
-        .split(" ");
-    
+        .split(" "); */
   const cmd = args.shift().toLowerCase();
   const command = gideon.commands.get(cmd);
   if (!command) return;
