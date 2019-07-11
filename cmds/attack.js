@@ -42,7 +42,9 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(atc.match(/(?:heatvision)/)){
         chosenattack = '';
         chosendesc = '';
-    }   else 
+    }   else {
+        
+    }
 
     const attack = new Discord.RichEmbed()
 	.setColor('#2791D3')
