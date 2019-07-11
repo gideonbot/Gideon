@@ -26,6 +26,7 @@ module.exports.run = async (gideon, message, args) => {
         
     let chosenattack = '';
     let chosendesc = '';
+    
 
     if(atc.match(/(?:iceblast)/)){
         chosenattack = 'you ice-blasted';
