@@ -3,7 +3,7 @@ const Discord = module.require("discord.js");
 module.exports.run = async (gideon, message, args) => {
     const auth = message.author;
     let atc = args[0];
-    if(!atc) return message.channel.send("You must supply an attack!");
+    if(!atc) return message.channel.send("You must supply an attack and a victim!");
 
     function getUserFromMention(mention) {
         if (!mention) return;
