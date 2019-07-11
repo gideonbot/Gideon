@@ -2,8 +2,10 @@ const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
     const user = message.author;
-    let cudus = args[0];
-    if(!cudus) return message.channel.send("You must supply a user!");
+    const user = getUserFromMention(args[0]);
+		if (!user) {
+			return message.reply('Please use a proper mention if you want to see someone else\'s avatar.');
+		}
 
     function getUserFromMention(mention) {
         if (!mention) return;
