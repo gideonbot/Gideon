@@ -25,7 +25,7 @@ module.exports.run = async (gideon, message, args) => {
     const cuddle = new Discord.RichEmbed()
 	.setColor('#2791D3')
 	.setTitle(`${auth} you have cuddled ${user}!`)
-    .setDescription(``)
+    .setDescription(`A Beebo-tastic cuddle always brigthens the mood!`)
 	.setImage('https://i.imgur.com/IOpmt2j.gif')
     .setTimestamp()
     .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
