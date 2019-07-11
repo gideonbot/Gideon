@@ -31,7 +31,7 @@ module.exports.run = async (gideon, message, args) => {
     if(atc.match(/(?:iceblast)/)){
         chosenattack = 'you ice-blasted';
         chosendesc = '';
-        attackgif = '';
+        attackgif = 'https://i.imgur.com/IOpmt2j.gif';
     }   else if(atc.match(/(?:lthrow)/)){
         chosenattack = 'you threw a lightning bolt at';
         chosendesc = '';
