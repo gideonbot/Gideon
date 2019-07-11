@@ -22,7 +22,7 @@ module.exports.run = async (gideon, message, args) => {
 			return message.channel.send('Please use a proper mention if you want to cuddle someone.');
 		}
 
-    const cuddle = new Discord.RichEmbed()
+    const attack = new Discord.RichEmbed()
 	.setColor('#2791D3')
     .setDescription(`**${auth} you have cuddled ${user}!**\n\nA Beebo-tastic cuddle always brigthens the mood!`)
 	.setImage('https://i.imgur.com/IOpmt2j.gif')
