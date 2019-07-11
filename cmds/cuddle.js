@@ -7,20 +7,6 @@ module.exports.run = async (gideon, message, args) => {
 			return message.reply('Please use a proper mention if you want to cuddle someone.');
 		}
 
-    function getUserFromMention(mention) {
-        if (!mention) return;
-    
-        if (mention.startsWith('<@') && mention.endsWith('>')) {
-            mention = mention.slice(2, -1);
-    
-            if (mention.startsWith('!')) {
-                mention = mention.slice(1);
-            }
-    
-            return client.users.get(mention);
-        }
-    }
-
     const cuddle = new Discord.RichEmbed()
 	.setColor('#2791D3')
 	.setTitle('Donations')
