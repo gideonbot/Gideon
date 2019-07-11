@@ -1,8 +1,9 @@
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
+    const user = message.author;
     let cu = args[0];
-    if(!user) return message.channel.send("You must supply a user!");
+    if(!cu) return message.channel.send("You must supply a user!");
 
     function getUserFromMention(mention) {
         if (!mention) return;
