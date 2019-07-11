@@ -4,7 +4,7 @@ module.exports.run = async (gideon, message, args) => {
     const user = message.author;
     const user = getUserFromMention(args[0]);
 		if (!user) {
-			return message.reply('Please use a proper mention if you want to see someone else\'s avatar.');
+			return message.reply('Please use a proper mention if you want to see someone.');
 		}
 
     function getUserFromMention(mention) {
