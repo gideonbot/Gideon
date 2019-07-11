@@ -40,6 +40,7 @@ gideon.on('message', async message => {
   )
     return;
 
+    
   const args = msg.startsWith(prefix.toLowerCase())
     ? message.content
         .slice(prefix.length)
