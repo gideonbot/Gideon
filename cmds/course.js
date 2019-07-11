@@ -9,7 +9,6 @@ module.exports.run = async (gideon, message, args) => {
         snekfetch.get(dateapi).then(r => {
             console.log(r.body);
             let body = r.body;   
-            let upDate = new Date(body.updated_at);
     
             const future = new Discord.RichEmbed()
             .setColor('#2791D3')
