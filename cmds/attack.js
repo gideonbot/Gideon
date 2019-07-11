@@ -20,7 +20,9 @@ module.exports.run = async (gideon, message, args) => {
     const user = getUserFromMention(args[0]);
 		if (!user) {
 			return message.channel.send('Please use a proper mention if you want to cuddle someone.');
-		}
+        }
+        
+    
 
     const attack = new Discord.RichEmbed()
 	.setColor('#2791D3')
