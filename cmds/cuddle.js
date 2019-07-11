@@ -2,7 +2,6 @@ const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
     const auth = message.author;
-    let cus = args[0];
     function getUserFromMention(mention) {
         if (!mention) return;
     
