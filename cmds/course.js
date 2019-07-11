@@ -21,7 +21,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 const cmd = 'plot a course!'
-
+const 
 module.exports.help = {
     name: "plot a course!"
 }
