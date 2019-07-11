@@ -40,7 +40,8 @@ module.exports.run = async (gideon, message, args) => {
         chosenattack = '';
         chosendesc = '';
     }   else if(atc.match(/(?:heatvision)/)){
-        chosenattack = ''
+        chosenattack = '';
+        chosendesc = ''
     }
 
     const attack = new Discord.RichEmbed()
