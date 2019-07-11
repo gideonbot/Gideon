@@ -40,7 +40,9 @@ gideon.on('message', async message => {
   )
     return;
 
-    
+  const prefixRegex = new RegExp(`^(${prefixes.join('|')})`);
+  const prefix = message.content.match(prefixRegex);
+
   const args = msg.startsWith(prefix.toLowerCase())
     ? message.content
         .slice(prefix.length)
