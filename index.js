@@ -42,7 +42,7 @@ gideon.on('message', async message => {
   )
     return;
   
-  const prefixes = ['!', '?', '/'];
+  const prefixes = [prefix1, '?', '/'];
   const prefixRegex = new RegExp(`^(${prefixes.join('|')})`);
   const prefix = message.content.match(prefixRegex);
 
