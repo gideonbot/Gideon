@@ -52,7 +52,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(atc.match(/(?:shootarrow)/)){
         chosenattack = 'you shot an arrow through';
         chosendesc = 'You have failed this omelette!';
-        emote = '';
+        emote = ':oliverqueen:';
         attackgif = 'https://i.imgur.com/De98uf0.gif';
     }   else if(atc.match(/(?:heatvision)/)){
         chosenattack = 'you used your heat vision on';
