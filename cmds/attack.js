@@ -31,7 +31,8 @@ module.exports.run = async (gideon, message, args) => {
         chosenattack = '';
         chosendesc = '';
     }   else if(atc.match(/(?:lthrow)/)){
-        chosenattack = ''
+        chosenattack = '';
+        
     }
 
     const attack = new Discord.RichEmbed()
