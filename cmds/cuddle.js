@@ -19,7 +19,7 @@ module.exports.run = async (gideon, message, args) => {
 
     const user = getUserFromMention(cus);
 		if (!user) {
-			return message.channel.send('Please use a proper mention if you want to cuddle someone.');
+			return message.channel.send('You must use a proper mention if you want to cuddle someone!');
 		}
 
     const cuddle = new Discord.RichEmbed()
