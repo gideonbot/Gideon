@@ -6,8 +6,8 @@ module.exports.run = async (gideon, message, args) => {
 
         const dateapi = 'https://api.myjson.com/bins/p4zc7';
 
-
         
+
         const future = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setImage('https://i.imgur.com/cS3fZZv.jpg')
