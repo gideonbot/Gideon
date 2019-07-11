@@ -29,7 +29,7 @@ module.exports.run = async (gideon, message, args) => {
 
     const attack = new Discord.RichEmbed()
 	.setColor('#2791D3')
-    .setDescription(`**${auth} ${} ${user}!**\n\nA Beebo-tastic cuddle always brigthens the mood!`)
+    .setDescription(`**${auth} ${chosenattack} ${user}!**\n\nA Beebo-tastic cuddle always brigthens the mood!`)
 	.setImage('https://i.imgur.com/IOpmt2j.gif')
     .setTimestamp()
     .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
