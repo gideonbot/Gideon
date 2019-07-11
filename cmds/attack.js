@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
 			return message.channel.send('You must use a proper mention if you want to attack someone!');
         }
         
-    let chosenattack = ''
+    let chosenattack = '';
 
     const attack = new Discord.RichEmbed()
 	.setColor('#2791D3')
