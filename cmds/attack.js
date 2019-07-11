@@ -38,8 +38,8 @@ module.exports.run = async (gideon, message, args) => {
         chosendesc = '';
     }   else if(atc.match(/(?:vibeblast)/)){
         chosenattack = '';
-        chose
-    }
+        chosendesc = '';
+    }   
 
     const attack = new Discord.RichEmbed()
 	.setColor('#2791D3')
