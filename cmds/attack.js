@@ -25,7 +25,7 @@ module.exports.run = async (gideon, message, args) => {
         }
         
     let chosenattack = '';
-    let chosendesc ''
+    let chosendesc = '';
 
     const attack = new Discord.RichEmbed()
 	.setColor('#2791D3')
