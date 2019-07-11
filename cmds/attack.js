@@ -23,7 +23,7 @@ module.exports.run = async (gideon, message, args) => {
 		if (!user) {
 			return message.channel.send('You must use a proper mention if you want to attack someone!');
         }else if(user === auth){
-            return
+            return message.channel.send()
         }
         
     let chosenattack = '';
