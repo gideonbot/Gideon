@@ -47,7 +47,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(atc.match(/(?:heatvision)/)){
         chosenattack = 'you used your heat vision on';
         chosendesc = '';
-        attackgif = '';
+        attackgif = 'https://i.imgur.com/0WxrvMp.gif';
     }   else {
         return message.channel.send('You must supply a valid attack!');
     }
