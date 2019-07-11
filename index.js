@@ -48,11 +48,11 @@ gideon.on('message', async message => {
         .trim()
         .split(" ")
     : message.content
-        .slice(prefix.length)
+        .slice(prefix2.length)
         .trim()
         .split(" ")
     : message.content
-        .slice(prefix2.length)
+        .slice(prefix3.length)
         .trim()
         .split(" ");
   const cmd = args.shift().toLowerCase();
