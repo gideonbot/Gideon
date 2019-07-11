@@ -34,7 +34,7 @@ module.exports.run = async (gideon, message, args) => {
         attackgif = 'https://i.imgur.com/4snHPC9.gif';
     }   else if(atc.match(/(?:lthrow)/)){
         chosenattack = 'you threw a lightning bolt at';
-        chosendesc = '';
+        chosendesc = 'Maybe this'll give you abs;
         attackgif = 'https://i.imgur.com/6ECd0ty.gif';
     }   else if(atc.match(/(?:reverseflash)/)){
         chosenattack = 'you reverse-flashed';
