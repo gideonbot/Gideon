@@ -1,7 +1,8 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const config = require("./config.json");
-const prefix = config.prefix;
+const prefix1 = config.prefix;
+const prefix2 = config.prefix2;
 const prefix2 = config.prefix2;
 const fs = require("fs");
 const gideon = new Discord.Client();
