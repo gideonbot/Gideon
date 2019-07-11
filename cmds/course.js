@@ -23,5 +23,5 @@ module.exports.run = async (gideon, message, args) => {
 const cmd = 'plot a course!'
 const cmsl = cmd.content.split(' ').splice(1).join(' ')
 module.exports.help = {
-    name: "plot a course!"
+    name: cms
 }
