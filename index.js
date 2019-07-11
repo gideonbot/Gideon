@@ -37,7 +37,7 @@ gideon.on('message', async message => {
   if (
     !msg.startsWith(prefix.toLowerCase()) &&
     !msg.startsWith(prefix2.toLowerCase()) &&
-    !msg.startsWith(prefix2.toLowerCase())
+    !msg.startsWith(prefix3.toLowerCase())
   )
     return;
 
