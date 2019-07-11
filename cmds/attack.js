@@ -35,9 +35,11 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(atc.match(/(?:lthrow)/)){
         chosenattack = 'you threw a lightning bolt at';
         chosendesc = '';
+        attackgif = '';
     }   else if(atc.match(/(?:reverseflash)/)){
         chosenattack = 'you reverse-flashed';
         chosendesc = '';
+        attackgif = '';
     }   else if(atc.match(/(?:vibeblast)/)){
         chosenattack = 'you vibe-blasted';
         chosendesc = '';
