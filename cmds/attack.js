@@ -33,7 +33,9 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(atc.match(/(?:lthrow)/)){
         chosenattack = '';
         chosendesc = '';
-    }   else if(atc.match(/(?:reverseflash)/))
+    }   else if(atc.match(/(?:reverseflash)/)){
+        
+    }
 
     const attack = new Discord.RichEmbed()
 	.setColor('#2791D3')
