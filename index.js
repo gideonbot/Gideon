@@ -36,7 +36,7 @@ gideon.on('message', async message => {
     if (message.author.bot || !message.guild) return;
   const msg = message.content.toLowerCase();
   if (
-    !msg.startsWith(prefix.toLowerCase()) &&
+    !msg.startsWith(prefix1.toLowerCase()) &&
     !msg.startsWith(prefix2.toLowerCase())
   )
     return;
