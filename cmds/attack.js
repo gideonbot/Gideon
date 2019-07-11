@@ -30,7 +30,7 @@ module.exports.run = async (gideon, message, args) => {
     if(atc.match(/(?:iceblast)/)){
         chosenattack = '';
         chosendesc = '';
-    }   el
+    }   else if()
 
     const attack = new Discord.RichEmbed()
 	.setColor('#2791D3')
