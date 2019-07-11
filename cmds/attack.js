@@ -27,6 +27,8 @@ module.exports.run = async (gideon, message, args) => {
     let chosenattack = '';
     let chosendesc = '';
 
+    
+
     const attack = new Discord.RichEmbed()
 	.setColor('#2791D3')
     .setDescription(`**${auth} ${chosenattack} ${user}**\n\n${chosendesc}`)
