@@ -6,7 +6,7 @@ module.exports.run = async (gideon, message, args) => {
 
         const dateapi = 'https://api.myjson.com/bins/p4zc7';
 
-        snekfetch.get(api).then(r => {
+        snekfetch.get(dateapi).then(r => {
             console.log(r.body);
             let body = r.body;   
             let upDate = new Date(body.updated_at);
