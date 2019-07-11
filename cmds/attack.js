@@ -37,7 +37,8 @@ module.exports.run = async (gideon, message, args) => {
         chosenattack = '';
         chosendesc = '';
     }   else if(atc.match(/(?:vibeblast)/)){
-        chosenattack = ''
+        chosenattack = '';
+        chose
     }
 
     const attack = new Discord.RichEmbed()
