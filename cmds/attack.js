@@ -32,6 +32,7 @@ module.exports.run = async (gideon, message, args) => {
     if(atc.match(/(?:iceblast)/)){
         chosenattack = 'you ice-blasted';
         chosendesc = 'Hey, stranger. Well, we sure have a lot to talk about.';
+        emote 
         attackgif = 'https://i.imgur.com/4snHPC9.gif';
     }   else if(atc.match(/(?:lthrow)/)){
         chosenattack = 'you threw a lightning bolt at';
