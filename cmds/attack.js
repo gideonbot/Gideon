@@ -31,7 +31,7 @@ module.exports.run = async (gideon, message, args) => {
         chosenattack = 'you ice-blasted';
         chosendesc = '';
     }   else if(atc.match(/(?:lthrow)/)){
-        chosenattack = '';
+        chosenattack = 'you threw';
         chosendesc = '';
     }   else if(atc.match(/(?:reverseflash)/)){
         chosenattack = '';
