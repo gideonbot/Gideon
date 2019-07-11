@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
 
     const cuddle = new Discord.RichEmbed()
 	.setColor('#2791D3')
-	.addField(`${auth} you have cuddled ${user}!`)
+	.addField(``)
     .setDescription(`A Beebo-tastic cuddle always brigthens the mood!`)
 	.setImage('https://i.imgur.com/IOpmt2j.gif')
     .setTimestamp()
