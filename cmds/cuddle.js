@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
                 mention = mention.slice(1);
             }
     
-            return client.users.get(mention);
+            return gideon.users.get(mention);
         }
     }
 
