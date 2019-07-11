@@ -43,7 +43,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(atc.match(/(?:vibeblast)/)){
         chosenattack = 'you vibe-blasted';
         chosendesc = '';
-        attackgif = '';
+        attackgif = 'https://i.imgur.com/n5Is19c.gif';
     }   else if(atc.match(/(?:heatvision)/)){
         chosenattack = 'you used your heat vision on';
         chosendesc = '';
