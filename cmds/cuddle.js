@@ -22,7 +22,7 @@ module.exports.run = async (gideon, message, args) => {
 	.setColor('#2791D3')
 	.setTitle('Donations')
     .setDescription(``)
-	.setImage('https://i.imgur.com/lWSoZQB.png')
+	.setImage('https://i.imgur.com/IOpmt2j.gif')
     .setTimestamp()
     .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
