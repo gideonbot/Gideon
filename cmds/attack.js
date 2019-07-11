@@ -40,7 +40,7 @@ module.exports.run = async (gideon, message, args) => {
         chosenattack = 'you vibe-blasted';
         chosendesc = '';
     }   else if(atc.match(/(?:heatvision)/)){
-        chosenattack = 'you used your heat vis';
+        chosenattack = 'you used your heat vision on';
         chosendesc = '';
     }   else {
         return message.channel.send('You must supply a valid attack!');
