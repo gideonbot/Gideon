@@ -47,7 +47,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(atc.match(/(?:vibeblast)/)){
         chosenattack = 'you vibe-blasted';
         chosendesc = 'Nothing.';
-        emote = ':flashemblem:';
+        emote = ':raised_hand_with_fingers_splayed::skin-tone-4:';
         attackgif = 'https://i.imgur.com/n5Is19c.gif';
     }   else if(atc.match(/(?:shootarrow)/)){
         chosenattack = 'you shot an arrow through';
