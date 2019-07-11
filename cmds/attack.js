@@ -46,7 +46,7 @@ module.exports.run = async (gideon, message, args) => {
         attackgif = 'https://i.imgur.com/n5Is19c.gif';
     }   else if(atc.match(/(?:shootarrow)/)){
         chosenattack = 'you shot an arrow through';
-        chosendesc = 'You have failed ';
+        chosendesc = 'You have failed this omelett';
         attackgif = 'https://i.imgur.com/De98uf0.gif';
     }   else if(atc.match(/(?:heatvision)/)){
         chosenattack = 'you used your heat vision on';
