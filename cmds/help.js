@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!meme', 'Displays a random Arrowverse meme')  
         .addField('!quote', 'Displays a random Arrowverse quote')  
         .addField('!cuddle <user>', 'Gives the selected user a Beebo-tastic cuddle')
-        .addField('!at <user>', 'Gives the selected user a Beebo-tastic cuddle')
+        .addField('!at <attack> <user>', 'Gives the selected user a Beebo-tastic cuddle')
         .addField('Gideon, show me the future!', 'Displays an easter egg')
         .addField('!github', 'Displays Github repository info')
         .addField('!donate', 'Displays info to support maintainance and hosting of Gideon')       
