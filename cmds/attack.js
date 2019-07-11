@@ -43,7 +43,7 @@ module.exports.run = async (gideon, message, args) => {
         chosenattack = '';
         chosendesc = '';
     }   else {
-        
+        return message.channel.send();
     }
 
     const attack = new Discord.RichEmbed()
