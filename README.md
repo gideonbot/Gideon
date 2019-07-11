@@ -25,7 +25,7 @@ Gideon's features are as follows:
 
 * !cuddle <user> - Gives the selected user a Beebo-tastic cuddle
 
-* !at <attack> <user> - Attacks the selected user with the selected attack 
+* !at <attack> `<user>` - Attacks the selected user with the selected attack 
   (replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision)
 
 * Gideon, show me the future! - Displays the first paragraph of the 2024 CCC article including a picture of the full article
