@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
             return client.users.get(mention);
         }
     }
-    
+
     const user = getUserFromMention(args[0]);
 		if (!user) {
 			return message.reply('Please use a proper mention if you want to cuddle someone.');
@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
 
     const cuddle = new Discord.RichEmbed()
 	.setColor('#2791D3')
-	.setTitle('Donations')
+	.setTitle(``)
     .setDescription(``)
 	.setImage('https://i.imgur.com/IOpmt2j.gif')
     .setTimestamp()
