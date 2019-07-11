@@ -2,7 +2,7 @@ const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
     let user = args[0];
-    if(!term) return message.channel.send("You must supply a search term!");
+    if(!user) return message.channel.send("You must supply a search term!");
 
     const donate = new Discord.RichEmbed()
 	.setColor('#2791D3')
