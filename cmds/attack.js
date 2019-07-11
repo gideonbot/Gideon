@@ -28,7 +28,7 @@ module.exports.run = async (gideon, message, args) => {
     let chosendesc = '';
 
     if(atc.match(/(?:iceblast)/)){
-        chosenattack = 'you Ice';
+        chosenattack = 'you ice-blasted';
         chosendesc = '';
     }   else if(atc.match(/(?:lthrow)/)){
         chosenattack = '';
