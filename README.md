@@ -12,27 +12,27 @@
 
 Gideon's features are as follows:
 
-* !help - Displays a list of commands
+* `!help - Displays a list of commands`
 
-* !wiki <term> - Searches the Arrowverse Wiki for the given term
+* `!wiki <term> - Searches the Arrowverse Wiki for the given term`
   
-* !ep <show> NxNN - Fetches episode info 
-  (replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)
+* `!ep <show> NxNN - Fetches episode info`
+  `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)`
   
-* !meme - Displays a random Arrowverse meme
+* `!meme - Displays a random Arrowverse meme`
 
-* !quote - Displays a random Arrowverse quote
+* `!quote - Displays a random Arrowverse quote`
 
-* !cuddle <user> - Gives the selected user a Beebo-tastic cuddle
+* `!cuddle <user> - Gives the selected user a Beebo-tastic cuddle`
 
-* !at <attack> `<user>` - Attacks the selected user with the selected attack 
-  (replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision)
+* `!at <attack> <user> - Attacks the selected user with the selected attack`
+  `(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision)`
 
-* Gideon, show me the future! - Displays the first paragraph of the 2024 CCC article including a picture of the full article
+* `Gideon, show me the future! - Displays the first paragraph of the 2024 CCC article including a picture of the full article`
 
-* !github - Displays Github repository info
+* `!github - Displays Github repository info`
 
-* !donate - Displays donation info
+* `!donate - Displays donation info`
 
 Too see Gideon in action, feel free to join my Arrowverse Discord Server: [Time Vault](https://invite.gg/tmvt) 
 ![Discord Banner](https://discordapp.com/api/guilds/595318490240385037/widget.png?style=banner2)
