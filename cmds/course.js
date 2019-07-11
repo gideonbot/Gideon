@@ -21,7 +21,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    let cmd = "plot a course";
+    let cmd = "plot a course",
     let 
     name: "course!"
 }
