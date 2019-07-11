@@ -47,6 +47,7 @@ gideon.on('message', async message => {
         .slice(prefix.length)
         .trim()
         .split(" ")
+      message.
     : message.content
         .slice(prefix2.length)
         .trim()
