@@ -32,7 +32,7 @@ module.exports.run = async (gideon, message, args) => {
         chosendesc = '';
     }   else if(atc.match(/(?:lthrow)/)){
         chosenattack = '';
-        
+        chosendesc
     }
 
     const attack = new Discord.RichEmbed()
