@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
         });              
 }
 
-const cmd = ''
+const cmd = 'plot a course!'
 
 module.exports.help = {
     name: "plot a course!"
