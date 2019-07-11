@@ -4,6 +4,20 @@ module.exports.run = async (gideon, message, args) => {
     let user = args[0];
     if(!user) return message.channel.send("You must supply a user!");
 
+    function getUserFromMention(mention) {
+        if (!mention) return;
+    
+        if (mention.startsWith('<@') && mention.endsWith('>')) {
+            mention = mention.slice(2, -1);
+    
+            if (mention.startsWith('!')) {
+                mention = mention.slice(1);
+            }
+    
+            return client.users.get(mention);
+        }
+    }
+
     const donate = new Discord.RichEmbed()
 	.setColor('#2791D3')
 	.setTitle('Donations')
