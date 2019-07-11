@@ -38,7 +38,7 @@ module.exports.run = async (gideon, message, args) => {
         attackgif = 'https://i.imgur.com/6ECd0ty.gif';
     }   else if(atc.match(/(?:reverseflash)/)){
         chosenattack = 'you reverse-flashed';
-        chosendesc = '';
+        chosendesc = 'I am sorry.';
         attackgif = 'https://i.imgur.com/h7orTAQ.gif';
     }   else if(atc.match(/(?:vibeblast)/)){
         chosenattack = 'you vibe-blasted';
