@@ -35,7 +35,7 @@ module.exports.run = async (gideon, message, args) => {
         chosendesc = '';
     }   else if(atc.match(/(?:reverseflash)/)){
         chosenattack = '';
-        chosen
+        chosendesc = '';
     }
 
     const attack = new Discord.RichEmbed()
