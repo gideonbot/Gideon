@@ -47,10 +47,12 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(atc.match(/(?:vibeblast)/)){
         chosenattack = 'you vibe-blasted';
         chosendesc = 'Nothing.';
+        emote = '';
         attackgif = 'https://i.imgur.com/n5Is19c.gif';
     }   else if(atc.match(/(?:shootarrow)/)){
         chosenattack = 'you shot an arrow through';
         chosendesc = 'You have failed this omelette!';
+        emote = '';
         attackgif = 'https://i.imgur.com/De98uf0.gif';
     }   else if(atc.match(/(?:heatvision)/)){
         chosenattack = 'you used your heat vision on';
