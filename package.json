@@ -10,6 +10,7 @@
   "author": "adrifcastr",
   "license": "ISC",
   "dependencies": {
+    "delay": "^4.3.0",
     "discord.js": "^11.5.1",
     "dotenv": "^8.0.0",
     "imgur-node": "^0.2.0",
