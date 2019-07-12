@@ -1,14 +1,7 @@
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {      
-    imgclient.album.get('NVHwdNg', (err, res) => {
-    if (err) console.error(err);
-    console.log(res);  
-    let min = 0;
-    let max = res.images.length - 1;
-    let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
-    let ravm = res.images[ranum].link;
-    console.log(ravm);
+    
 
     const explosion = new Discord.RichEmbed()
         .setColor('#2791D3')
