@@ -38,10 +38,12 @@ module.exports.run = async (gideon, message, args) => {
     let vbrdesc = 'Congratulations! You are a Viber now!';
     let vbrgif = 'https://i.imgur.com/gmqggYB.gif';
     
+    let pwrtitle;
+    
     let chosenpw = Math.floor(Math.random()*(4-1+1)+1);
 
     if(chosenpw === 1){
-        
+
     }
 
     const power = new Discord.RichEmbed()
