@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
             
             let min = 0;
             let max = body.length - 1;
-            //let radest = Math.floor(Math.random()*(max - min + 1)) + min;
+            let radest = Math.floor(Math.random()*(max - min + 1)) + min;
             const destination = `${body[1].city} ${body[1].country}`;
             
             const timeapi = 'https://api.myjson.com/bins/p4zc7';
