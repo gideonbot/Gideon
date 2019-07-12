@@ -39,7 +39,7 @@ module.exports.run = async (gideon, message, args) => {
     let vbrgif = 'https://i.imgur.com/gmqggYB.gif';
     
     let pwrtitle;
-    let 
+    let pwrdesc
     let chosenpw = Math.floor(Math.random()*(4-1+1)+1);
 
     if(chosenpw === 1){
