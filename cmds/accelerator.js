@@ -28,7 +28,7 @@ module.exports.run = async (gideon, message, args) => {
 
     let kftle = 'It appears, that you have developed Frost powers!';
     let kfdesc = 'Congratulations! You are now part of the Snow Pack!';
-    let kfgif = 'https://i.imgur.com/w9eLDty.gif';
+    let kfgif = '';
 
     let fsstle = 'It appears, that you have merged with the Firestorm Matrix!';
     let fsdesc = 'Congratulations! You are now a part of Firestorm!';
