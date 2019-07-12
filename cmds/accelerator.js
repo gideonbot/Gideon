@@ -34,7 +34,7 @@ module.exports.run = async (gideon, message, args) => {
     let fsdesc = 'Congratulations! You are now a part of Firestorm!';
     let fsgif = '';
 
-    let vbrtle = 'It appears, that you have aquired a connection to the Multiverse\'s intradin!';
+    let vbrtle = 'It appears, that you have aquired a connection to the Multiverse\'s intradimensional !';
     let vbrdesc = 'Congratulations! You are a Speedster now!';
     let vbrgif = '';
 
