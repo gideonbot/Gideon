@@ -9,7 +9,14 @@ module.exports.run = async (gideon, message, args) => {
     message.channel.send("ALERT SYSTEM FAILURE")
     ];
 
-    
+    function sendMsgs(msgs, delay) {
+        if (msgs.length < 1) return; // we're done
+        var remain = msgs.slice(1);
+        var sendRemain = sendMsgs.bind(null, remain, delay);
+        msg.channel.send(msgs[0]).then(function() {
+            setTimeout(sendRemain, delay);
+        });
+    }
 
     const explosion = new Discord.RichEmbed()
         .setColor('#2791D3')
