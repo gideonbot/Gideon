@@ -36,7 +36,7 @@ module.exports.run = async (gideon, message, args) => {
 
     let vbrtle = 'It appears, that you have developed a connection to the Speed Force!';
     let vbrdesc = 'Congratulations! You are a Speedster now!';
-    let spdsgif = 'https://i.imgur.com/w9eLDty.gif';
+    let vbrgif = 'https://i.imgur.com/w9eLDty.gif';
 
     const pwrtitle = '';
     const pwrdesc = '';
