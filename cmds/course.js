@@ -11,7 +11,7 @@ module.exports.run = async (gideon, message, args) => {
             console.log(r.body);
             let body = r.body;   
             
-            let 
+            let destination
             const future = new Discord.RichEmbed()
             .setColor('#2791D3')
             .setTitle(`Course set to ${destination}, ${time}`)
