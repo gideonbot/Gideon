@@ -7,6 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     message.channel.send("3");
     await delay (1000);
     message.channel.send("2");
+    await delay (1000);
     message.channel.send("1");
     message.channel.send("ALERT SYSTEM FAILURE");
 
