@@ -30,7 +30,7 @@ module.exports.run = async (gideon, message, args) => {
     let kfdesc = 'Congratulations! You are now part of the Snow Pack!';
     let kfgif = '';
 
-    let fsstle = 'It appears, that you have merged with the Firestorm Matrix!';
+    let fstle = 'It appears, that you have merged with the Firestorm Matrix!';
     let fsdesc = 'Congratulations! You are now a part of Firestorm!';
     let fsgif = '';
 
