@@ -18,8 +18,6 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send("1");
     }
     
-    message.channel.send("2");
-    message.channel.send("1");
     message.channel.send("ALERT SYSTEM FAILURE");
 
     const explosion = new Discord.RichEmbed()
