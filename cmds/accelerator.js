@@ -58,8 +58,8 @@ module.exports.run = async (gideon, message, args) => {
         pwrgif = fsgif;
     }   else if(chosenpw === 4){
         pwrtitle = vbrtle;
-        pwrdesc = spdsdesc;
-        pwrgif = spdsgif;
+        pwrdesc = vbrdesc;
+        pwrgif = vbrgif;
     }
 
     const power = new Discord.RichEmbed()
