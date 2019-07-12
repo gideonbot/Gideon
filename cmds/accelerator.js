@@ -2,6 +2,8 @@ const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {      
     message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...")
+    message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...")
+    message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...")
 
     const explosion = new Discord.RichEmbed()
         .setColor('#2791D3')
