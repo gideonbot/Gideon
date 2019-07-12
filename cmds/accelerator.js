@@ -54,8 +54,8 @@ module.exports.run = async (gideon, message, args) => {
         pwrgif = kfgif;
     }   else if(chosenpw === 3){
         pwrtitle = fstle;
-        pwrdesc = spdsdesc;
-        pwrgif = spdsgif;
+        pwrdesc = fsdesc;
+        pwrgif = fsgif;
     }   else if(chosenpw === 4){
         pwrtitle = spdstle;
         pwrdesc = spdsdesc;
