@@ -5,7 +5,7 @@ module.exports.run = async (gideon, message, args) => {
         countDown(); 
     }, 1000);
 
-    message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...");
+    message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...").then;
     message.channel.send("3");
     message.channel.send("2");
     message.channel.send("1");
