@@ -10,7 +10,9 @@ module.exports.run = async (gideon, message, args) => {
         snekfetch.get(dateapi).then(r => {
             console.log(r.body);
             let body = r.body;   
+            
 
+            
             const timeapi = 'https://api.myjson.com/bins/p4zc7';
 
             snekfetch.get(dateapi).then(r => {
