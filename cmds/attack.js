@@ -26,8 +26,8 @@ module.exports.run = async (gideon, message, args) => {
             return message.channel.send('My protocols forbid any kind of self-harm!');
         }
         
-    let chosenattack = '';
-    let chosendesc = '';
+    let chosenattack;
+    let chosendesc;
     let attackgif = '';
     let emote = '';
 
