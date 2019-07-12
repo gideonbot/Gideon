@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
     ];
 
     function sendMsgs(msgs, delay) {
-        if (msgs.length < 1) return; // we're done
+        if (msgs.length < 1) return; 
         var remain = msgs.slice(1);
         var sendRemain = sendMsgs.bind(null, remain, delay);
         msg.channel.send(msgs[0]).then(function() {
