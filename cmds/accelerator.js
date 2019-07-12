@@ -1,13 +1,13 @@
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {    
-    setDelay(function(){ 
+    setTimeout(function(){ 
         countDown3(); 
         countDown2(); 
         countDown1(); 
         alert();
     }, 1000);
-    message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...").then(setDelay());
+    message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...").then(setTimeout());
     function countDown3(){
         message.channel.send("3");
     }
