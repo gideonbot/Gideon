@@ -38,7 +38,7 @@ module.exports.run = async (gideon, message, args) => {
     let vbrdesc = 'Congratulations! You are a Viber now!';
     let vbrgif = 'https://i.imgur.com/gmqggYB.gif';
     
-    
+    let chspw
     const power = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(pwrtitle)
