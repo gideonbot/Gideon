@@ -51,8 +51,8 @@ module.exports.run = async (gideon, message, args) => {
         let body = r.body;   
         let airdate = new Date(body.airdate);
         let airtime = body.airtime;
-        let desc = '';
-        let img = '';
+        let desc;
+        let img;
 
         if (r.body.summary === null){
             desc = 'No summary available'
