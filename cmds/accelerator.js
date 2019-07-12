@@ -30,7 +30,7 @@ module.exports.run = async (gideon, message, args) => {
     let kfdesc = 'Congratulations! You are now part of the Snow Pack!';
     let kfgif = 'https://i.imgur.com/w9eLDty.gif';
 
-    let fsstle = 'It appears, that you have developed a connection to the Speed Force!';
+    let fsstle = 'It appears, that you have merged with the Firestorm Matrix!';
     let fsdesc = 'Congratulations! You are a Speedster now!';
     let fsgif = 'https://i.imgur.com/w9eLDty.gif';
 
