@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
 
     message.channel.send(explosion);  
 
-    await delay (8000);
+    await delay (10000);
 
     let spdstle = 'It appears, that you have developed a connection to the Speed Force!';
     let spdsdesc = 'Congratulations! You are a Speedster now!';
