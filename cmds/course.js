@@ -19,7 +19,8 @@ module.exports.run = async (gideon, message, args) => {
             //let max = body.length - 1;
             //console.log(rt);
             //let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
-
+            const timeapi = 'https://api.myjson.com/bins/p4zc7';
+            
             snekfetch.get(timeapi).then(r => {
                 console.log(r.body);
                 let body = r.body;   
