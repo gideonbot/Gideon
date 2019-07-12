@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
 
     message.channel.send(explosion);  
 
-    await delay (5000);
+    await delay (8000);
 
     const power = new Discord.RichEmbed()
         .setColor('#2791D3')
