@@ -5,7 +5,7 @@ module.exports.run = async (gideon, message, args) => {
         if (accstart.length < 1) return; 
         var remain = accstart.slice(1);
         var sendRemain = sendMsgs.bind(null, remain, delay);
-        msg.channel.send(accstart[0]).then(function() {
+        message.channel.send(accstart[0]).then(function() {
             setTimeout(sendRemain, delay);
         });
     }
