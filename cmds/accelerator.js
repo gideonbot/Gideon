@@ -1,7 +1,7 @@
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {      
-    message.channel.send()
+    message.channel.send("")
 
     const explosion = new Discord.RichEmbed()
         .setColor('#2791D3')
