@@ -35,7 +35,7 @@ module.exports.run = async (gideon, message, args) => {
     let fsgif = '';
 
     let vbrtle = 'It appears, that you have developed a connection to the Multiverse\'s intradimensional energy!';
-    let vbrdesc = 'Congratulations! You are a Speedster now!';
+    let vbrdesc = 'Congratulations! You are a Viber now!';
     let vbrgif = '';
 
     const pwrtitle = '';
