@@ -22,7 +22,7 @@ module.exports.run = async (gideon, message, args) => {
 
     await delay (8000);
     let spdstle = 'It appears, that you have developed a connection to the Speed Force!';
-    
+    let spdtdesc
     const power = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(``)
