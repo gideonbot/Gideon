@@ -48,7 +48,7 @@ module.exports.run = async (gideon, message, args) => {
         pwrtitle = spdstle;
         pwrdesc = spdsdesc;
         pwrgif = spdsgif;
-    }
+    }   
 
     const power = new Discord.RichEmbed()
         .setColor('#2791D3')
