@@ -12,7 +12,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!ep <show> NxNN', 'Fetches episode info\n(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)')  
         .addField('!meme', 'Displays a random Arrowverse meme')  
         .addField('!quote', 'Displays a random Arrowverse quote')  
-        .addField('!accelerator', 'Blow up the S.T.A.R. labs particle accel)  
+        .addField('!accelerator', 'Blow up the S.T.A.R. labs particle accelerator)  
         .addField('!cuddle <user>', 'Gives the selected user a Beebo-tastic cuddle')
         .addField('!at <attack> <user>', 'Attacks the selected user with the selected attack\n(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision)')
         .addField('Gideon, show me the future!', 'Displays an easter egg')
