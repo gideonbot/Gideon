@@ -28,8 +28,8 @@ module.exports.run = async (gideon, message, args) => {
         
     let chosenattack;
     let chosendesc;
-    let attackgif = '';
-    let emote = '';
+    let attackgif;
+    let emote;
 
     if(atc.match(/(?:iceblast)/)){
         chosenattack = 'you ice-blasted';
