@@ -46,8 +46,8 @@ module.exports.run = async (gideon, message, args) => {
 
     if(chosenpw === 1){
         pwrtitle;
-         pwrdesc;
-    let pwrgif;
+        pwrdesc;
+        pwrgif;
     }
 
     const power = new Discord.RichEmbed()
