@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
         countDown1(); 
         alert();
     }, 1000);
-    message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...").then(setTimeout());
+    message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...").then(setTimeout()).catch;
     function countDown3(){
         message.channel.send("3");
     }
