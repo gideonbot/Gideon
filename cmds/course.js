@@ -32,7 +32,7 @@ module.exports.run = async (gideon, message, args) => {
             .setTimestamp()
             .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
     
-            message.channel.send(future);
+            message.channel.send(course);
             });
         });       
     }       
