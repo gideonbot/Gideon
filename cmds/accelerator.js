@@ -1,4 +1,5 @@
 const Discord = module.require("discord.js");
+const delay = require('delay');
 
 module.exports.run = async (gideon, message, args) => {      
     message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...");
