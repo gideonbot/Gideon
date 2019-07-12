@@ -18,6 +18,7 @@ module.exports.run = async (gideon, message, args) => {
 
             const timeapi = 'https://api.myjson.com/bins/p4zc7';
             const destination = `${body[1].city} ${body[1].country}`;
+            
             snekfetch.get(timeapi).then(r => {
                 console.log(r.body);
                 let body = r.body;   
