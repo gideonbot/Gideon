@@ -17,7 +17,9 @@ module.exports.run = async (gideon, message, args) => {
     function countDown1(){
         message.channel.send("1");
     }
-    function alert()
+    function alert(){
+        
+    }
     message.channel.send("ALERT SYSTEM FAILURE");
 
     const explosion = new Discord.RichEmbed()
