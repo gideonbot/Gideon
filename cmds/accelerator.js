@@ -39,7 +39,8 @@ module.exports.run = async (gideon, message, args) => {
     let vbrgif = 'https://i.imgur.com/gmqggYB.gif';
     
     let ptra = '':
-    let pdra = ''
+    let pdra = '';
+    
     const pwrtitle = '';
     const pwrdesc = '';
     const pwrgif = '';
