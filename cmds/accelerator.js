@@ -1,7 +1,7 @@
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {    
-    setTimeout(function(){ 
+    setDelay(function(){ 
         countDown3(); 
         countDown2(); 
         countDown1(); 
