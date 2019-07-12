@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
 
         message.channel.send(future);
     }   else{
-        
+        return message.channel.send
     }
 }
 
