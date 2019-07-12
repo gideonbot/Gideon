@@ -32,7 +32,7 @@ Gideon's features are as follows:
 
 * `Gideon, show me the future! - Displays the first paragraph of the 2024 CCC article including a picture of the full article`
 
-* `Gideon, plot a course! - Takes you on a ride on the Waverider to random location at a random time`
+* `Gideon, plot a course! - Takes you on a ride on the Waverider to a random location at a random time`
 
 * `!github - Displays Github repository info`
 
