@@ -2,9 +2,6 @@ const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {      
     message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...");
-    setTimeout(function(){ 
-        doSomething(); 
-    }, 3000);
     message.channel.send("3");
     message.channel.send("2");
     message.channel.send("1");
