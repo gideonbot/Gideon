@@ -38,10 +38,6 @@ module.exports.run = async (gideon, message, args) => {
     let vbrdesc = 'Congratulations! You are a Viber now!';
     let vbrgif = 'https://i.imgur.com/gmqggYB.gif';
     
-    let ptra = spdstle, kftle, fsstle, vbrtle;
-    let pdra = spdsdesc, ;
-    let pgra = '';
-
     const pwrtitle = '';
     const pwrdesc = '';
     const pwrgif = '';
