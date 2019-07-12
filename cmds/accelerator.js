@@ -3,8 +3,8 @@ const Discord = module.require("discord.js");
 module.exports.run = async (gideon, message, args) => {    
     setTimeout(function(){ 
         countDown3(); 
-        countDown3(); 
-        countDown3(); 
+        countDown2(); 
+        countDown1(); 
     }, 1000);
     message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...").then(setTimeout());
     function countDown3(){
