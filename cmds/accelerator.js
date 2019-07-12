@@ -52,7 +52,6 @@ module.exports.run = async (gideon, message, args) => {
         pwrtitle = spdstle;
         pwrdesc = spdsdesc;
         pwrgif = spdsgif;
-    }
     }   else if(chosenpw === 3){
         pwrtitle = spdstle;
         pwrdesc = spdsdesc;
