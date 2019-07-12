@@ -12,7 +12,7 @@ module.exports.run = async (gideon, message, args) => {
             let body = r.body;   
             
             
-            const timeapi = 'https://api.myjson.com/bins/p4zc7';
+            
             const destination = `${body[1].city} ${body[1].country}`;
 
             //let min = 0;
