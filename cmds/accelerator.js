@@ -25,7 +25,7 @@ module.exports.run = async (gideon, message, args) => {
     let spdsdesc = 'Congratulations! You are a Speedster now!';
     let spdsgif = 'https://i.imgur.com/w9eLDty.gif';
 
-    
+    const pw
 
     const power = new Discord.RichEmbed()
         .setColor('#2791D3')
