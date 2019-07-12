@@ -11,7 +11,7 @@ module.exports.run = async (gideon, message, args) => {
             console.log(r.body);
             let body = r.body;   
             
-            let min = 0;
+            //let min = 0;
             let max = body.length - 1;
             console.log(rt);
             let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
