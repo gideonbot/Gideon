@@ -25,13 +25,13 @@ module.exports.run = async (gideon, message, args) => {
                 let min = 0;
                 let max = body.length - 1;
                 let radest = Math.floor(Math.random()*(max - min + 1)) + min;
-                
+
                 const time = `${body[1].date}`;
 
-            const course = new Discord.RichEmbed()
-            .setColor('#2791D3')
-            .setTitle(`Course set to ${destination} ${time}`)
-            .setImage('https://i.imgur.com/I3UQhVu.gif')
+                const course = new Discord.RichEmbed()
+                .setColor('#2791D3')
+                .setTitle(`Course set to ${destination} ${time}`)
+                .setImage('https://i.imgur.com/I3UQhVu.gif')
             .setTimestamp()
             .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
     
