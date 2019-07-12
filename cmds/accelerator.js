@@ -26,7 +26,7 @@ module.exports.run = async (gideon, message, args) => {
     let spdsdesc = 'Congratulations! You are a Speedster now!';
     let spdsgif = 'https://i.imgur.com/w9eLDty.gif';
 
-    let kftle = 'It appears, that you have developed a connection to the Speed Force!';
+    let kftle = 'It appears, that you have developed Frost pow!';
     let kfdesc = 'Congratulations! You are a Speedster now!';
     let kfgif = 'https://i.imgur.com/w9eLDty.gif';
 
