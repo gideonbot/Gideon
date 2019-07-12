@@ -18,7 +18,7 @@ module.exports.run = async (gideon, message, args) => {
         });
     }
 
-    
+    sendMsgs(msgs, 1000);
 
     const explosion = new Discord.RichEmbed()
         .setColor('#2791D3')
