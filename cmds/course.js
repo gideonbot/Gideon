@@ -27,11 +27,11 @@ module.exports.run = async (gideon, message, args) => {
                 let ratime = Math.floor(Math.random()*(max - min + 1)) + min;
 
                 const time = `${body[1].date}`;
-                const time = `${body[1].date}`;
+                const year = `${body[1].date}`;
 
                 const course = new Discord.RichEmbed()
                 .setColor('#2791D3')
-                .setTitle(`Course set to ${destination} ${time}`)
+                .setTitle(`Course set to ${destination} ${year}`)
                 .setImage('https://i.imgur.com/I3UQhVu.gif')
                 .setTimestamp()
                 .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
