@@ -38,8 +38,8 @@ module.exports.run = async (gideon, message, args) => {
     let vbrdesc = 'Congratulations! You are a Viber now!';
     let vbrgif = 'https://i.imgur.com/gmqggYB.gif';
     
-    let chosenpw = Math.floor(Math.random()*(max-min+1)+min);
-    
+    let chosenpw = Math.floor(Math.random()*(4-min+1)+min);
+
     const power = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(pwrtitle)
