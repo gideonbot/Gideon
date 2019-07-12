@@ -27,7 +27,7 @@ module.exports.run = async (gideon, message, args) => {
                 let ratime = Math.floor(Math.random()*(max - min + 1)) + min;
 
                 const time = `${body[ratime].date}`;
-                const year = time[time.length -4];
+                const year = time.substr(-4);
 
                 const course = new Discord.RichEmbed()
                 .setColor('#2791D3')
