@@ -40,7 +40,7 @@ module.exports.run = async (gideon, message, args) => {
     
     let ptra = '':
     let pdra = '';
-    
+    let 
     const pwrtitle = '';
     const pwrdesc = '';
     const pwrgif = '';
