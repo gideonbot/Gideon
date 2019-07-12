@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
 
         const destapi = 'https://api.myjson.com/bins/ca0o7';
 
-        snekfetch.get(dateapi).then(r => {
+        snekfetch.get(destapi).then(r => {
             console.log(r.body);
             let body = r.body;   
             
