@@ -2,24 +2,14 @@ const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {    
     setTimeout(function(){ 
-        countDown3(); 
-        countDown2(); 
-        countDown1(); 
-        alert();
+        countDown(); 
     }, 1000);
-    message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...").then(setTimeout());
-    function countDown3(){
-        message.channel.send("3");
-    }
-    function countDown2(){
-        message.channel.send("2");
-    }
-    function countDown1(){
-        message.channel.send("1");
-    }
-    function alert(){
-        message.channel.send("ALERT SYSTEM FAILURE");
-    }
+
+    message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...").then;
+    message.channel.send("3");
+    message.channel.send("2");
+    message.channel.send("1");
+    message.channel.send("ALERT SYSTEM FAILURE");
 
     const explosion = new Discord.RichEmbed()
         .setColor('#2791D3')
