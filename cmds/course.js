@@ -23,7 +23,7 @@ module.exports.run = async (gideon, message, args) => {
                 let body = r.body;   
             
             let destination = `${body[1].city} ${body[1].country}`;
-            let time = ``;
+            let time = `${}`;
 
             const future = new Discord.RichEmbed()
             .setColor('#2791D3')
