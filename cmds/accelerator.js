@@ -21,7 +21,7 @@ module.exports.run = async (gideon, message, args) => {
     message.channel.send(explosion);  
 
     await delay (8000);
-    letspdstle = '';
+    letspdstle = 'It appears, that you have developed a connection to the Speed Force!';
 
     const power = new Discord.RichEmbed()
         .setColor('#2791D3')
