@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
                 let body = r.body;   
             
             
-            const time = `${body[1].time}`;
+            const time = `${body[1].date}`;
 
             const future = new Discord.RichEmbed()
             .setColor('#2791D3')
