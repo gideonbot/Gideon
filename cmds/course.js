@@ -22,6 +22,7 @@ module.exports.run = async (gideon, message, args) => {
                 console.log(r.body);
                 let body = r.body;   
             
+                
             const time = `${body[1].date}`;
 
             const course = new Discord.RichEmbed()
