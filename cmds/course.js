@@ -2,7 +2,7 @@ const Discord = module.require("discord.js");
 const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
-    
+    if(args.join("") === 'methefuture!'){
     message.channel.send('Yes Captain Lance!');
 
         const dateapi = 'https://api.myjson.com/bins/p4zc7';
