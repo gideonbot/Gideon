@@ -22,7 +22,7 @@ module.exports.run = async (gideon, message, args) => {
                 console.log(r.body);
                 let body = r.body;   
             
-            let destination = `${body[1].city;
+            let destination = `${body[1].city} `;
             let time = '';
 
             const future = new Discord.RichEmbed()
