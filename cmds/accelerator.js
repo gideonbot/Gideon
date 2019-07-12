@@ -32,11 +32,11 @@ module.exports.run = async (gideon, message, args) => {
 
     let fsstle = 'It appears, that you have merged with the Firestorm Matrix!';
     let fsdesc = 'Congratulations! You are now a part of Firestorm!';
-    let fsgif = 'https://i.imgur.com/w9eLDty.gif';
+    let fsgif = '';
 
     let vbrtle = 'It appears, that you have developed a connection to the Speed Force!';
     let vbrdesc = 'Congratulations! You are a Speedster now!';
-    let vbrgif = 'https://i.imgur.com/w9eLDty.gif';
+    let vbrgif = '';
 
     const pwrtitle = '';
     const pwrdesc = '';
