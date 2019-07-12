@@ -1,7 +1,7 @@
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
-    if(args.join("") = 'me the future!'){
+    if(args.join("") = 'methefuture!'){
     message.channel.send('Yes Dr. Wells!');
 
         const future = new Discord.RichEmbed()
