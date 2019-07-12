@@ -31,7 +31,7 @@ module.exports.run = async (gideon, message, args) => {
     let kfgif = 'https://i.imgur.com/w9eLDty.gif';
 
     let fsstle = 'It appears, that you have merged with the Firestorm Matrix!';
-    let fsdesc = 'Congratulations! You are now a part of Fire!';
+    let fsdesc = 'Congratulations! You are now a part of Firestorm!';
     let fsgif = 'https://i.imgur.com/w9eLDty.gif';
 
     let vbrtle = 'It appears, that you have developed a connection to the Speed Force!';
