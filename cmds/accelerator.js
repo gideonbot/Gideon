@@ -25,7 +25,7 @@ module.exports.run = async (gideon, message, args) => {
     const power = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(`It appears, that you have developed a connection to the Speed Force!`)
-        .setDescription(`Congratulations! You are`)
+        .setDescription(`Congratulations! You are a Speedster now!`)
         .setImage('https://i.imgur.com/w9eLDty.gif')
         .setTimestamp()
         .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
