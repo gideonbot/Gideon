@@ -1,7 +1,7 @@
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
-    //if(args.join(" ") = 'methefuture!'){
+    if(args.join(" ") = 'methefuture!'){
     message.channel.send('Yes Dr. Wells!');
 
         const future = new Discord.RichEmbed()
@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
         message.channel.send(future);
-    //}   
+    }   
 }
 
 module.exports.help = {
