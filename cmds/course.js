@@ -5,7 +5,7 @@ module.exports.run = async (gideon, message, args) => {
     if(args.join("") === 'acourse!'){
     message.channel.send('Yes Captain Lance!');
 
-        const destapi = 'https://api.myjson.com/bins/p4zc7';
+        const destapi = 'https://api.myjson.com/bins/ca0o7';
 
         snekfetch.get(dateapi).then(r => {
             console.log(r.body);
