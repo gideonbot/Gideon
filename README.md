@@ -23,6 +23,8 @@ Gideon's features are as follows:
 
 * `!quote - Displays a random Arrowverse quote`
 
+* `!accelerator - Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability`
+
 * `!cuddle <user> - Gives the selected user a Beebo-tastic cuddle`
 
 * `!at <attack> <user> - Attacks the selected user with the selected attack`\
