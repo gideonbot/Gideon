@@ -3,7 +3,7 @@ const delay = require('delay');
 
 module.exports.run = async (gideon, message, args) => {      
     message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...");
-    awa
+    await delay (1000)
     message.channel.send("3");
     message.channel.send("2");
     message.channel.send("1");
