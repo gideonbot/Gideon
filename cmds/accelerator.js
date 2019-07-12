@@ -40,7 +40,7 @@ module.exports.run = async (gideon, message, args) => {
     
     let chosenpw = Math.floor(Math.random()*(4-1+1)+1);
 
-    if
+    if(chosenpw ===)
 
     const power = new Discord.RichEmbed()
         .setColor('#2791D3')
