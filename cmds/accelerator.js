@@ -46,7 +46,7 @@ module.exports.run = async (gideon, message, args) => {
 
     if(chosenpw === 1){
         pwrtitle = spdstle;
-        pwrdesc;
+        pwrdesc = spds;
         pwrgif;
     }
 
