@@ -1,24 +1,11 @@
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {      
-    function sendMsgs(accstart, delay) {
-        if (accstart.length < 1) return; 
-        var remain = accstart.slice(1);
-        var sendRemain = sendMsgs.bind(null, remain, delay);
-        message.channel.send(accstart[0]).then(function() {
-            setTimeout(sendRemain, delay);
-        });
-    }
-
-    let accstart = [
-        message.channel.send("Engaging S.T.A.R. Labs. particle accelerator..."),
-        message.channel.send("3"),
-        message.channel.send("2"),
-        message.channel.send("1"),
-        message.channel.send("ALERT SYSTEM FAILURE")
-        ];    
-
-    sendMsgs(accstart, 1000).catch(console.error);
+    message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...");
+    message.channel.send("3");
+    message.channel.send("2");
+    message.channel.send("1");
+    message.channel.send("ALERT SYSTEM FAILURE");
 
     const explosion = new Discord.RichEmbed()
         .setColor('#2791D3')
