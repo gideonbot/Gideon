@@ -50,8 +50,11 @@ gideon.on('message', async message => {
         .slice(prefix2.length)
         .trim()
         .split(" ")
-        https://twitter.com/adrifcastr/status/1149599149546852352;
+        ;
   const cmd = args.shift().toLowerCase();
   const command = gideon.commands.get(cmd);
   if (!command) return;
-  c
+  command.run(gideon, message, args);
+})
+
+gideon.login();
