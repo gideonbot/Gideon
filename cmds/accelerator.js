@@ -11,6 +11,12 @@ module.exports.run = async (gideon, message, args) => {
     function countDown3(){
         message.channel.send("3");
     }
+    function countDown3(){
+        message.channel.send("3");
+    }
+    function countDown3(){
+        message.channel.send("3");
+    }
     
     message.channel.send("2");
     message.channel.send("1");
