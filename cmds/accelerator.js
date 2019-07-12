@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
 
     const power = new Discord.RichEmbed()
         .setColor('#2791D3')
-        .setTitle(``)
+        .setTitle(`It appea`)
         .setDescription(``)
         .setImage('https://i.imgur.com/w9eLDty.gif')
         .setTimestamp()
