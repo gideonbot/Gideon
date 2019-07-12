@@ -41,11 +41,13 @@ module.exports.run = async (gideon, message, args) => {
     let pwrtitle;
     let pwrdesc;
     let pwrgif;
-    
+
     let chosenpw = Math.floor(Math.random()*(4-1+1)+1);
 
     if(chosenpw === 1){
-
+        pwrtitle;
+         pwrdesc;
+    let pwrgif;
     }
 
     const power = new Discord.RichEmbed()
