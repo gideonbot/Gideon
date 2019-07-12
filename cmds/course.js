@@ -25,6 +25,7 @@ module.exports.run = async (gideon, message, args) => {
                 let min = 0;
                 let max = body.length - 1;
                 let radest = Math.floor(Math.random()*(max - min + 1)) + min;
+                
                 const time = `${body[1].date}`;
 
             const course = new Discord.RichEmbed()
