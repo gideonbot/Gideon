@@ -25,7 +25,7 @@ module.exports.run = async (gideon, message, args) => {
             
             const time = `${body[1].date}`;
 
-            const future = new Discord.RichEmbed()
+            const course = new Discord.RichEmbed()
             .setColor('#2791D3')
             .setTitle(`Course set to ${destination} ${time}`)
             .setImage('https://i.imgur.com/I3UQhVu.gif')
