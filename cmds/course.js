@@ -12,7 +12,7 @@ module.exports.run = async (gideon, message, args) => {
             let body = r.body;   
             
             let min = 0;
-            let max = rt.length - 1;
+            let max = body.length - 1;
             console.log(rt);
             let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
 
