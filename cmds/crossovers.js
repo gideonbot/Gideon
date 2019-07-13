@@ -15,11 +15,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Crisis on Earth-X', 'Supergirl 3x08 - Crisis on Earth-X, Part 1\nArrow 6x08 - Crisis on Earth-X, Part 2\nThe Flash 4x08 - Crisis on Earth-X, Part 3\nDC\'s Legends of Tomorrow 3x08 - Crisis on Earth-X, Part 4')  
         .addField('!cuddle <user>', 'Gives the selected user a Beebo-tastic cuddle')
         .addField('!at <attack> <user>', 'Attacks the selected user with the selected attack\n(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision)')
-        .addField('Gideon, show me the future!', 'Displays an easter egg')
-        .addField('Gideon, plot a course!', 'Displays an easter egg')
-        .addField('!github', 'Displays Github repository info')
-        .addField('!donate', 'Displays info to support maintainance and hosting of Gideon')       
-        .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
