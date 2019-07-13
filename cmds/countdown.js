@@ -23,8 +23,6 @@ module.exports.run = async (gideon, message, args) => {
         const flanumber = body._embedded.number;
         const flaepname = body._embedded.name;
         let fladate = body._embedded.airdate;
-
-        const dateStr = '1400796000';
         const fladay = getDayName(dateStr, "en-US");
 
         
