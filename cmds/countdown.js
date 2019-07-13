@@ -24,7 +24,8 @@ module.exports.run = async (gideon, message, args) => {
         const flaepname = body._embedded.name;
         const fladate = body._embedded.airdate;
         const fladay = getDayName(fladate, "en-US");
-        
+
+        var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
 
         const countdown = new Discord.RichEmbed()
 	    .setColor('#2791D3')
