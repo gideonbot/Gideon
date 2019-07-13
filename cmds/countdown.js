@@ -5,7 +5,7 @@ module.exports.run = async (gideon, message, args) => {
     const flashapi = 'https://api.github.com/repos/adrifcastr/Gideon';
     const arrowapi = 'https://api.github.com/repos/adrifcastr/Gideon';
     const supergirlapi = 'https://api.github.com/repos/adrifcastr/Gideon';
-    const api = 'https://api.github.com/repos/adrifcastr/Gideon';
+    const legendsapi = 'https://api.github.com/repos/adrifcastr/Gideon';
     const api = 'https://api.github.com/repos/adrifcastr/Gideon';
 
     snekfetch.get(api).then(r => {
