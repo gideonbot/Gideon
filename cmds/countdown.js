@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
         }
 
         let dateStr = '1400796000';
-        const fladay = getDayName(dateStr, "en-NL");
+        const fladay = getDayName(dateStr, "en-US");
 
         const countdown = new Discord.RichEmbed()
 	    .setColor('#2791D3')
