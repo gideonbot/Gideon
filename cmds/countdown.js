@@ -23,7 +23,6 @@ module.exports.run = async (gideon, message, args) => {
         const flanumber = body._embedded.number;
         const flaepname = body._embedded.name;
         const fladate = body._embedded.airdate;
-        const fladay = getDayName(fladate, "en-US");
 
         let oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
         let today = new Date().format('m-d-Y h:i:s');
