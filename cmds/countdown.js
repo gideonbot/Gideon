@@ -5,8 +5,8 @@ module.exports.run = async (gideon, message, args) => {
     const flashapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
     const arrowapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
     const supergirlapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
-    const legendsapi = 'https://api.github.com/repos/adrifcastr/Gideon';
-    const bwomanapi = 'https://api.github.com/repos/adrifcastr/Gideon';
+    const legendsapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
+    const bwomanapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
 
     snekfetch.get(api).then(r => {
         console.log(r.body);
