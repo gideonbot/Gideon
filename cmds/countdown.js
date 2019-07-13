@@ -23,7 +23,7 @@ module.exports.run = async (gideon, message, args) => {
         return date.toLocaleDateString(locale, { weekday: 'long' });        
         }
 
-        var dateStr = '1400796000';
+        let dateStr = '1400796000';
         var day = getDayName(dateStr, "nl-NL");
 
         const countdown = new Discord.RichEmbed()
