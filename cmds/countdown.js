@@ -18,7 +18,7 @@ module.exports.run = async (gideon, message, args) => {
         .addTitle(`${flaeptitle} ${flaseason}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
         .addTitle(`${areptitle} ${areason}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
         .addTitle(`${sgeptitle} ${sgeason}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
-        .addTitle(`${lgeptitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
+        .addTitle(`${lgeptitle} ${lgseason}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
         .addTitle(`${bweptitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
 	    .setThumbnail()
     	.setTimestamp()
