@@ -27,7 +27,7 @@ module.exports.run = async (gideon, message, args) => {
 
         let oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
         let today = new Date().format('m-d-Y h:i:s');
-        const diffDays = Math.round(Math.abs((today.getTime() - secondDate.getTime())/(oneDay)));
+        const diffDays = Math.round(Math.abs((today.getTime() - fladate.getTime())/(oneDay)));
 
         const countdown = new Discord.RichEmbed()
 	    .setColor('#2791D3')
