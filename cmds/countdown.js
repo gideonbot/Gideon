@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
 
         function getDayName(dateStr, locale)
         {
-        let date = new Date(dateStr);
+        let date = new Date(fladate);
         return date.toLocaleDateString(locale, { weekday: 'long' });        
         }
 
