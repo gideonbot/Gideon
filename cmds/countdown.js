@@ -3,7 +3,7 @@ const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
     const flashapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
-    const arrowapi = 'https://api.github.com/repos/adrifcastr/Gideon';
+    const arrowapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
     const supergirlapi = 'https://api.github.com/repos/adrifcastr/Gideon';
     const legendsapi = 'https://api.github.com/repos/adrifcastr/Gideon';
     const bwomanapi = 'https://api.github.com/repos/adrifcastr/Gideon';
