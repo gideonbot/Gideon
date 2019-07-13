@@ -12,7 +12,7 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;   
 
-        const flptitle = body.name;
+        const fltitle = body.name;
         const flaseason = body._embedded.season;
         const flanumber = body._embedded.number;
         const flaepname = body._embedded.name;
@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
         const countdown = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__Upcoming episodes:__')
-        .addTitle(`${flptitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`)
+        .addTitle(`${fltitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`)
         //.addTitle(`${artitle} ${areason}x${arnumber<10?"0"+arnumber:arnumber} - ${arepname}`)
         //.addTitle(`${sgtitle} ${sgeason}x${sgnumber<10?"0"+sgnumber:sgnumber} - ${sgepname}`)
         //.addTitle(`${lgtitle} ${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`)
