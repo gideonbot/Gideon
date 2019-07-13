@@ -12,7 +12,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Worlds Finest', 'The Flash 2x18 - Versus Zoom\nSupergirl 1x18 - Worlds Finest')  
         .addField('Invasion!', 'Supergirl 2x08 - Medusa\nThe Flash 3x08 Invasion!\nArrow 5x08 - Invasion!\nDC\'s Legends of Tomorrow - Invasion!')  
         .addField('Musical Crossover', 'Supergirl 2x16 - Star-Crossed\nThe Flash 3x17 - Duet')  
-        .addField('!accelerator', 'Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability')  
+        .addField('Crisis on Earth-X', 'Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability')  
         .addField('!cuddle <user>', 'Gives the selected user a Beebo-tastic cuddle')
         .addField('!at <attack> <user>', 'Attacks the selected user with the selected attack\n(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision)')
         .addField('Gideon, show me the future!', 'Displays an easter egg')
