@@ -30,6 +30,8 @@ Gideon's features are as follows:
 
 * `!at <attack> <user> - Attacks the selected user with the selected attack`\
   `(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision)`
+  
+* `!crossovers - Displays a list of all Arrowverse crossover episodes in their respective watching order`
 
 * `Gideon, show me the future! - Displays the first paragraph of the 2024 CCC article including a picture of the full article`
 
