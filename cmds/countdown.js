@@ -17,6 +17,8 @@ module.exports.run = async (gideon, message, args) => {
         const flanumber = body._embedded.number;
         const flaepname = body._embedded.name;
 
+        
+
         function getDayName(dateStr, locale)
         {
         let date = new Date(dateStr);
