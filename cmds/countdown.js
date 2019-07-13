@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     const supergirlapi = 'http://api.tvmaze.com/shows/1850?embed=nextepisode';
     const legendsapi = 'http://api.tvmaze.com/shows/1851?embed=nextepisode';
     const bwomanapi = 'http://api.tvmaze.com/shows/37776?embed=nextepisode';
-    
+
     snekfetch.get(flashapi).then(r => {
         console.log(r.body);
         let body = r.body;   
@@ -18,7 +18,7 @@ module.exports.run = async (gideon, message, args) => {
         const flaepname = body._embedded.name;
         const fladate = body._embedded.airdate;
 
-        let oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+        let oneDay = 24*60*60*1000;
         let today = new Date().format('m-d-Y h:i:s');
         const fladiffDays = Math.round(Math.abs((today.getTime() - fladate.getTime())/(oneDay)));
 
