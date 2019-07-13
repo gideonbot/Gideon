@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
 	    .setColor('#2791D3')
 	    .setTitle('__Upcoming episodes:__')
         .addTitle(`${flaeptitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`)
-        .addTitle(`${areptitle} ${areason}x${arnumber<10?"0"+arnumber:arnumber} - ${body.name}`)
+        .addTitle(`${areptitle} ${areason}x${arnumber<10?"0"+arnumber:arnumber} - ${arepname}`)
         .addTitle(`${sgeptitle} ${sgeason}x${sgnumber<10?"0"+sgnumber:sgnumber} - ${body.name}`)
         .addTitle(`${lgeptitle} ${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${body.name}`)
         .addTitle(`${bweptitle} ${bwseason}x${bwnumber<10?"0"+bwnumber:bwnumber} - ${body.name}`)
