@@ -18,7 +18,7 @@ module.exports.run = async (gideon, message, args) => {
         const flaepname = body._embedded.name;
         let fladate = body._embedded.airdate;
 
-        function getDayName(dateStr, locale)
+        function getDayName(fladate, locale)
         {
         let date = new Date(fladate);
         return date.toLocaleDateString(locale, { weekday: 'long' });        
