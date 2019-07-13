@@ -22,9 +22,9 @@ module.exports.run = async (gideon, message, args) => {
 	    .setTitle('__Upcoming episodes:__')
         .addTitle(`${flptitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`)
         //.addTitle(`${artitle} ${areason}x${arnumber<10?"0"+arnumber:arnumber} - ${arepname}`)
-        //.addTitle(`${sgptitle} ${sgeason}x${sgnumber<10?"0"+sgnumber:sgnumber} - ${sgepname}`)
-        //.addTitle(`${lgeptitle} ${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`)
-        //.addTitle(`${bweptitle} ${bwseason}x${bwnumber<10?"0"+bwnumber:bwnumber} - ${bwname}`)
+        //.addTitle(`${sgtitle} ${sgeason}x${sgnumber<10?"0"+sgnumber:sgnumber} - ${sgepname}`)
+        //.addTitle(`${lgtitle} ${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`)
+        //.addTitle(`${bwtitle} ${bwseason}x${bwnumber<10?"0"+bwnumber:bwnumber} - ${bwname}`)
 	    .setThumbnail()
     	.setTimestamp()
     	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
