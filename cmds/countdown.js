@@ -15,7 +15,7 @@ module.exports.run = async (gideon, message, args) => {
         const countdown = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__Upcoming episodes:__')
-        .addTitle(`${showtitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
+        .addTitle(`${flaeptitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
         .addTitle(`${showtitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
         .addTitle(`${showtitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
         .addTitle(`${showtitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
