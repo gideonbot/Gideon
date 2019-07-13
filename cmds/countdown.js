@@ -25,8 +25,6 @@ module.exports.run = async (gideon, message, args) => {
         let fladate = body._embedded.airdate;
         const fladay = getDayName(fladate, "en-US");
 
-        
-
         const countdown = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__Upcoming episodes:__')
