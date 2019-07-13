@@ -19,7 +19,7 @@ module.exports.run = async (gideon, message, args) => {
 
         function getDayName(dateStr, locale)
         {
-        var date = new Date(dateStr);
+        let date = new Date(dateStr);
         return date.toLocaleDateString(locale, { weekday: 'long' });        
         }
 
