@@ -6,7 +6,7 @@ module.exports.run = async (gideon, message, args) => {
 
     const crossovers = new Discord.RichEmbed()
 	    .setColor('#2791D3')
-	    .setTitle('__Below you\'ll find a list of all Arrowverse crossover episode:__')
+	    .setTitle('__Below you\'ll find a list of all Arrowverse crossover episodes in:__')
         .addField('!help', 'Displays this message')  
         .addField('!wiki <term>', 'Searches the Arrowverse Wiki for the given term')  
         .addField('!ep <show> NxNN', 'Fetches episode info\n(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)')  
