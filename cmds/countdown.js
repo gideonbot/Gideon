@@ -15,7 +15,8 @@ module.exports.run = async (gideon, message, args) => {
         const flaeptitle
         const flaseason
         const flanumber
-        const 
+        const flaepname
+        
         const countdown = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__Upcoming episodes:__')
