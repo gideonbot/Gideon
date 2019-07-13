@@ -2,7 +2,7 @@ const Discord = module.require("discord.js");
 const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
-    const flashapi = 'https://http://api.tvmaze.com/shows/13?embed=nextepisode';
+    const flashapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
     const arrowapi = 'https://api.github.com/repos/adrifcastr/Gideon';
     const supergirlapi = 'https://api.github.com/repos/adrifcastr/Gideon';
     const legendsapi = 'https://api.github.com/repos/adrifcastr/Gideon';
