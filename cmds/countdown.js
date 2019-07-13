@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
 
         const flaeptitle = body._embedded.name;
         const flaseason = body._embedded.season;
-        const flanumber 
+        const flanumber body._embedded
         const flaepname
 
         const countdown = new Discord.RichEmbed()
