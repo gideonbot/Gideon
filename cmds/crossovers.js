@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     const crossovers = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__Below you\'ll find a list of all Arrowverse crossover episodes in ther respective watching order:__')
-        .addField('Flash vs. Arrow', 'The Flash 1x08 - Flash vs. Arrow        Arrow 3x08 - The Brave and the Bold')  
+        .addField('Flash vs. Arrow', 'The Flash 1x08 - Flash vs. Arrow\nArrow 3x08 - The Brave and the Bold')  
         .addField('!wiki <term>', 'Searches the Arrowverse Wiki for the given term')  
         .addField('!ep <show> NxNN', 'Fetches episode info\n(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)')  
         .addField('!meme', 'Displays a random Arrowverse meme')  
