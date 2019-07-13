@@ -9,7 +9,7 @@ module.exports.run = async (gideon, message, args) => {
 	    .setTitle('__Below you\'ll find a list of all Arrowverse crossover episodes in ther respective watching order:__')
         .addField('Flash vs. Arrow', 'The Flash 1x08 - Flash vs. Arrow\nArrow 3x08 - The Brave and the Bold')  
         .addField('Heroes Join Forces', 'The Flash 2x08 - Legends of Today\nArrow 4x08 - Legends of Yesterday')  
-        .addField('Worlds Finest', 'Fetches episode info\n(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)')  
+        .addField('Worlds Finest', 'rgirl | legends | constantine | batwoman)')  
         .addField('!meme', 'Displays a random Arrowverse meme')  
         .addField('!quote', 'Displays a random Arrowverse quote')  
         .addField('!accelerator', 'Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability')  
