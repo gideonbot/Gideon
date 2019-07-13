@@ -13,6 +13,8 @@ module.exports.run = async (gideon, message, args) => {
     let date = new Date(dateStr);
     return date.toLocaleDateString(locale, { weekday: 'long' });        
     }
+    let dateStr = '1400796000';
+        const fladay = getDayName(dateStr, "en-US");
 
     snekfetch.get(flashapi).then(r => {
         console.log(r.body);
@@ -26,8 +28,7 @@ module.exports.run = async (gideon, message, args) => {
 
        
 
-        let dateStr = '1400796000';
-        const fladay = getDayName(dateStr, "en-US");
+        
 
         const countdown = new Discord.RichEmbed()
 	    .setColor('#2791D3')
