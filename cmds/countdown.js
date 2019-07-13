@@ -7,6 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     const supergirlapi = 'http://api.tvmaze.com/shows/1850?embed=nextepisode';
     const legendsapi = 'http://api.tvmaze.com/shows/1851?embed=nextepisode';
     const bwomanapi = 'http://api.tvmaze.com/shows/37776?embed=nextepisode';
+    
     snekfetch.get(flashapi).then(r => {
         console.log(r.body);
         let body = r.body;   
