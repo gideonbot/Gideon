@@ -13,6 +13,7 @@ module.exports.run = async (gideon, message, args) => {
         let body = r.body;   
 
         const flaeptitle
+        const flaseason
         const fla
         const countdown = new Discord.RichEmbed()
 	    .setColor('#2791D3')
