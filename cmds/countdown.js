@@ -29,7 +29,7 @@ module.exports.run = async (gideon, message, args) => {
         var firstDate = new Date().format('m-d-Y h:i:s');
         var secondDate = new Date(2008,01,22);
 
-var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+        var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
 
         const countdown = new Discord.RichEmbed()
 	    .setColor('#2791D3')
