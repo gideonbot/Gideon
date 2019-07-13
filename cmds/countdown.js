@@ -12,7 +12,7 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;   
 
-        const flaeptitle 
+        const flaeptitle = body
         const flaseason
         const flanumber
         const flaepname
