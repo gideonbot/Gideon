@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Flash vs. Arrow', 'The Flash 1x08 - Flash vs. Arrow\nArrow 3x08 - The Brave and the Bold')  
         .addField('Heroes Join Forces', 'The Flash 2x08 - Legends of Today\nArrow 4x08 - Legends of Yesterday')  
         .addField('Worlds Finest', 'The Flash 2x18 - Versus Zoom\nSupergirl 1x18 - Worlds Finest')  
-        .addField('Invasion!', 'Supergirl 2x08 - Medusa\nThe Flash 3x08 Invasion!\nArrow 5x08 - Invasion!DC's Legends of Tomorrow - Invasion!')  
+        .addField('Invasion!', 'Supergirl 2x08 - Medusa\nThe Flash 3x08 Invasion!\nArrow 5x08 - Invasion!DC\'s Legends of Tomorrow - Invasion!')  
         .addField('!quote', 'Displays a random Arrowverse quote')  
         .addField('!accelerator', 'Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability')  
         .addField('!cuddle <user>', 'Gives the selected user a Beebo-tastic cuddle')
