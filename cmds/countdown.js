@@ -22,7 +22,7 @@ module.exports.run = async (gideon, message, args) => {
         const flaseason = body._embedded.season;
         const flanumber = body._embedded.number;
         const flaepname = body._embedded.name;
-        let fladate = body._embedded.airdate;
+        const fladate = body._embedded.airdate;
         const fladay = getDayName(fladate, "en-US");
 
         const countdown = new Discord.RichEmbed()
