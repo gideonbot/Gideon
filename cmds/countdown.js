@@ -3,6 +3,10 @@ const snekfetch = require("snekfetch");
 
 module.exports.run = async (gideon, message, args) => {
     const api = 'https://api.github.com/repos/adrifcastr/Gideon';
+    const api = 'https://api.github.com/repos/adrifcastr/Gideon';
+    const api = 'https://api.github.com/repos/adrifcastr/Gideon';
+    const api = 'https://api.github.com/repos/adrifcastr/Gideon';
+    const api = 'https://api.github.com/repos/adrifcastr/Gideon';
 
     snekfetch.get(api).then(r => {
         console.log(r.body);
