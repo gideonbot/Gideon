@@ -18,10 +18,10 @@ module.exports.run = async (gideon, message, args) => {
         const flaepname = body._embedded.name;
 
         function getDayName(dateStr, locale)
-{
+        {
         var date = new Date(dateStr);
         return date.toLocaleDateString(locale, { weekday: 'long' });        
-}
+        }
 
         var dateStr = '1400796000';
         var day = getDayName(dateStr, "nl-NL");
