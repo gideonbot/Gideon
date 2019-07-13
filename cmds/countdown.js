@@ -13,7 +13,6 @@ module.exports.run = async (gideon, message, args) => {
     let date = new Date(dateStr);
     return date.toLocaleDateString(locale, { weekday: 'long' });        
     }
-   
 
     snekfetch.get(flashapi).then(r => {
         console.log(r.body);
