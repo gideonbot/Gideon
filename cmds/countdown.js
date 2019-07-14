@@ -165,8 +165,8 @@ module.exports.run = async (gideon, message, args) => {
                         console.log(r.body);
                         let body = r.body;   
                         const bwtitle = body.name;
-                        const nxbwep1
-                        const nxbwep2
+                        const nxbwep1 = '';
+                        const nxbwep2 = '';
 
                         if (r.body._embedded.nextepisode === null){
                             nxbwep1 = '';
