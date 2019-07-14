@@ -1,6 +1,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const config = require("./config.json");
+
 const ogprefix = config.prefix;
 const prefix2 = config.prefix2;
 const fs = require("fs");
