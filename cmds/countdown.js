@@ -135,8 +135,8 @@ module.exports.run = async (gideon, message, args) => {
                         const bwdate = body._embedded.nextepisode.airdate;
                         const bwad = new Date(bwdate);
                         console.log(bwdate);
-                        let flatime = body._embedded.nextepisode.airtime;
-                        const flachannel = body.network.name;
+                        let bwime = body._embedded.nextepisode.airtime;
+                        const bwchannel = body.network.name;
                 
                         let flatimeString = flatime;
                         let H = +flatimeString.substr(0, 2);
