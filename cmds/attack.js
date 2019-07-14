@@ -62,7 +62,7 @@ module.exports.run = async (gideon, message, args) => {
         emote = ':hotsprings:';
         attackgif = 'https://i.imgur.com/0WxrvMp.gif';
     }   else if(atc.match(/(?:stretchpunch)/)){
-        chosenattack = 'you used your heat vision on';
+        chosenattack = 'you stretch-punched';
         chosendesc = 'HAVE A GOOD NIGHT!';
         emote = ':punch::skin-tone-1:';
         attackgif = 'http://i.imgur.com/8suYrKa.gif';
