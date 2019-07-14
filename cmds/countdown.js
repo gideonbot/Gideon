@@ -20,7 +20,6 @@ module.exports.run = async (gideon, message, args) => {
         const flanumber = body._embedded.nextepisode.number;
         const flaepname = body._embedded.nextepisode.name;
         const fladate = body._embedded.nextepisode.airdate;
-        console.log(flatime);
         let flatime = body._embedded.nextepisode.airtime;
         const flachannel = body.network.name;
 /*
