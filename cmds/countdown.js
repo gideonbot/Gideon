@@ -1,7 +1,6 @@
 const Discord = module.require("discord.js");
 const snekfetch = require("snekfetch");
 const moment = require('moment');
-moment().format();
 
 module.exports.run = async (gideon, message, args) => {
     const flashapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
@@ -10,7 +9,8 @@ module.exports.run = async (gideon, message, args) => {
     const legendsapi = 'http://api.tvmaze.com/shows/1851?embed=nextepisode';
     const bwomanapi = 'http://api.tvmaze.com/shows/37776?embed=nextepisode';
     const oneDay = 24*60*60*1000;
-    const today = new Date().format('m-d-Y h:i:s');
+    const today = new Date()moment().format();
+    ('m-d-Y h:i:s');
     let d;
 
     snekfetch.get(flashapi).then(r => {
