@@ -188,7 +188,7 @@ module.exports.run = async (gideon, message, args) => {
                             d = 'days';
                         }
                         
-                        nxbwep1 = `${bwseason}x${bwnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`;
+                        nxbwep1 = `${bwseason}x${bwnumber<10?"0"+bwnumber:bwnumber} - ${bwepname}`;
                         nxbwep2 = `Will air in ${lgdiffDays} ${d} on ${lgad.toDateString()} at ${lgtimeString} ET on ${lgchannel}`;
 
                         const countdown = new Discord.RichEmbed()
