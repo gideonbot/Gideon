@@ -27,7 +27,7 @@ module.exports.run = async (gideon, message, args) => {
         let H = +flatimeString.substr(0, 2);
         let h = H % 12 || 12;
         let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-        flatimeString = h + flatimeString.substr(2, 3) + ampm;
+        flatimeString = h + flatimeString.substr(2, 3) + ampm;*/
 
         const fladiffDays = Math.round(Math.abs((today.getTime() - fladate.getTime())/(oneDay)));
 
