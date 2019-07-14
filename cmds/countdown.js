@@ -19,7 +19,7 @@ module.exports.run = async (gideon, message, args) => {
         var nxflaep1 = '';
         var nxflaep2 = '';
         
-        if(r.body._embedded == "undefined"){
+        if(!r.body.hasOwnProperty('_embedded')){
             nxflaep2 = 'No Episode data available yet';
         }   else{
         
