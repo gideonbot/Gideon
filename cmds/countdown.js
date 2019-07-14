@@ -157,8 +157,8 @@ module.exports.run = async (gideon, message, args) => {
 	                    .setTitle('__Next upcoming Arrowverse episodes:__')
                         .addField(`${flatitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`, `Airs in ${fladiffDays} ${d} on ${ad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
 	                    .setThumbnail()
-    	.setTimestamp()
-    	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+    	                .setTimestamp()
+    	                .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
         message.channel.send(countdown);
                     });
