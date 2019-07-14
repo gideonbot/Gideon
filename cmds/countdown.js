@@ -9,7 +9,7 @@ module.exports.run = async (gideon, message, args) => {
     const bwomanapi = 'http://api.tvmaze.com/shows/37776?embed=nextepisode';
     const oneDay = 24*60*60*1000;
     const today = new Date()
-    console.log(today)
+    console.log(today);
     let d;
 
     snekfetch.get(flashapi).then(r => {
