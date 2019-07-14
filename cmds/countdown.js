@@ -151,7 +151,7 @@ module.exports.run = async (gideon, message, args) => {
                         d = 'days';
                     }
 
-                    nxlgep = `${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`;
+                    nxlgep1 = `${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`;
                     nxlgep2 = `Will air in ${lgdiffDays} ${d} on ${lgad.toDateString()} at ${lgtimeString} ET on ${lgchannel}`;
             
                     snekfetch.get(bwomanapi).then(r => {
