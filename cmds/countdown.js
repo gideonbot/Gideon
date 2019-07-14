@@ -23,7 +23,7 @@ module.exports.run = async (gideon, message, args) => {
         let today = new Date().format('m-d-Y h:i:s');
         const fladiffDays = Math.round(Math.abs((today.getTime() - fladate.getTime())/(oneDay)));
         if(fladiffDays === 1){
-            
+            d = ''
         }
         const countdown = new Discord.RichEmbed()
 	    .setColor('#2791D3')
