@@ -201,10 +201,8 @@ module.exports.run = async (gideon, message, args) => {
                         const countdown = new Discord.RichEmbed()
 	                    .setColor('#2791D3')
 	                    .setTitle('__Next upcoming Arrowverse episodes:__')
-                         ${sgdiffDays} ${d} on ${sgad.toDateString()} at ${sgtimeString} ET on ${sgchannel}`)
                         .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
-                        .addField(`${bwtitle} ${bwseason}x${bwnumber<10?"0"+bwnumber:bwnumber} - ${bwepname}`, `Will air in ${bwdiffDays} ${d} on ${bwad.toDateString()} at ${bwtimeString} ET on ${bwchannel}`)
-    	                .setTimestamp()
+                        .setTimestamp()
     	                .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
                         message.channel.send(countdown);
