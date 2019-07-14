@@ -119,6 +119,7 @@ module.exports.run = async (gideon, message, args) => {
 
                     if (r.body._embedded.nextepisode === null){
                         nxlgep = 'No Episode data available yet'
+                        nxlgep = 'No Episode data available yet'
                     }   else {
                     const lgseason = body._embedded.nextepisode.season;
                     const lgnumber = body._embedded.nextepisode.number;
