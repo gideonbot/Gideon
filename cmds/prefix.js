@@ -9,7 +9,6 @@ module.exports.run = async (gideon, message, args) => {
             message.channel.send(`Successfully set the prefix ${i}`)
         })
     }
-
 }
 
 module.exports.help = {
