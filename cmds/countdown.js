@@ -157,7 +157,7 @@ module.exports.run = async (gideon, message, args) => {
 	                    .setTitle('__Next upcoming Arrowverse episodes:__')
                         .addField(`${flatitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`, `Will air in ${fladiffDays} ${d} on ${flaad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
                         .addField(`${artitle} ${arseason}x${arnumber<10?"0"+arnumber:arnumber} - ${arepname}`, `Will air in ${ardiffDays} ${d} on ${arad.toDateString()} at ${artimeString} ET on ${archannel}`)
-                        .addField(`${sgtitle} ${sgseason}x${sganumber<10?"0"+flanumber:flanumber} - ${flaepname}`, `Will air in ${fladiffDays} ${d} on ${flaad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
+                        .addField(`${sgtitle} ${sgseason}x${sganumber<10?"0"+sgnumber:sgnumber} - ${flaepname}`, `Will air in ${fladiffDays} ${d} on ${flaad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
                         .addField(`${flatitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`, `Will air in ${fladiffDays} ${d} on ${flaad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
                         .addField(`${flatitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`, `Will air in ${fladiffDays} ${d} on ${flaad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
 	                    .setThumbnail()
