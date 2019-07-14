@@ -23,7 +23,7 @@ module.exports.run = async (gideon, message, args) => {
         let flatime = body._embedded.airtime;
         const flachannel = body.network.name;
 
-        let flatimeString = flatime;
+       /* let flatimeString = flatime;
         let H = +flatimeString.substr(0, 2);
         let h = H % 12 || 12;
         let ampm = (H < 12 || H === 24) ? " AM" : " PM";
