@@ -1,6 +1,6 @@
 const Discord = module.require("discord.js");
 const snekfetch = require("snekfetch");
-var moment = require('moment');
+const moment = require('moment');
 moment().format();
 
 module.exports.run = async (gideon, message, args) => {
