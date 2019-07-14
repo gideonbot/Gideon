@@ -1,4 +1,5 @@
 const Discord = module.require("discord.js");
+const db = require('quick.db');
 
 module.exports.run = async (gideon, message, args) => {
     if(!message.member.hasPermission('ADMINISTRATOR')){
