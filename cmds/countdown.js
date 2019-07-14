@@ -7,6 +7,8 @@ module.exports.run = async (gideon, message, args) => {
     const supergirlapi = 'http://api.tvmaze.com/shows/1850?embed=nextepisode';
     const legendsapi = 'http://api.tvmaze.com/shows/1851?embed=nextepisode';
     const bwomanapi = 'http://api.tvmaze.com/shows/37776?embed=nextepisode';
+    const oneDay = 24*60*60*1000;
+    let today = new Date().format('m-d-Y h:i:s');
     const d;
 
     snekfetch.get(flashapi).then(r => {
