@@ -21,6 +21,7 @@ module.exports.run = async (gideon, message, args) => {
         const flanumber = body._embedded.nextepisode.number;
         const flaepname = body._embedded.nextepisode.name;
         const fladate = Date.parse(body._embedded.nextepisode.airdate);
+        console.log(fladate)
         let flatime = body._embedded.nextepisode.airtime;
         const flachannel = body.network.name;
 
