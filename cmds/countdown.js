@@ -101,6 +101,9 @@ module.exports.run = async (gideon, message, args) => {
                     let body = r.body;   
             
                     const lgtitle = body.name;
+                    if (r.body.summary === null){
+                        desc = 'No summary available'
+                    }   else {
                     const lgseason = body._embedded.nextepisode.season;
                     const lgnumber = body._embedded.nextepisode.number;
                     const lgepname = body._embedded.nextepisode.name;
