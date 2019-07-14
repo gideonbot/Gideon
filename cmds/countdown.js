@@ -146,7 +146,7 @@ module.exports.run = async (gideon, message, args) => {
                 
                         const bwdiffDays = Math.round(Math.abs((today.getTime() - bwad.getTime())/(oneDay)));
                 
-                        if(fladiffDays === 1){
+                        if(bwdiffDays === 1){
                             d = 'day';
                         }   else{
                             d = 'days';
