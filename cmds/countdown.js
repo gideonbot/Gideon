@@ -22,12 +22,12 @@ module.exports.run = async (gideon, message, args) => {
         const fladate = body._embedded.airdate;
         let flatime = body._embedded.airtime;
 
-        let timeString = airtime;
+        let flatimeString = airtime;
         let H = +timeString.substr(0, 2);
         let h = H % 12 || 12;
         let ampm = (H < 12 || H === 24) ? " AM" : " PM";
         timeString = h + timeString.substr(2, 3) + ampm;
-        
+
         const fladiffDays = Math.round(Math.abs((today.getTime() - fladate.getTime())/(oneDay)));
 
         if(fladiffDays === 1){
