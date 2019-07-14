@@ -187,7 +187,9 @@ module.exports.run = async (gideon, message, args) => {
                         }   else{
                             d = 'days';
                         }
-
+                        
+                        nxlgep = `${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`;
+                    nxlgep2 = `Will air in ${lgdiffDays} ${d} on ${lgad.toDateString()} at ${lgtimeString} ET on ${lgchannel}`;
                         const countdown = new Discord.RichEmbed()
 	                    .setColor('#2791D3')
 	                    .setTitle('__Next upcoming Arrowverse episodes:__')
