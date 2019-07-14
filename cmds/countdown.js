@@ -60,7 +60,7 @@ module.exports.run = async (gideon, message, args) => {
             let ampm = (H < 12 || H === 24) ? " AM" : " PM";
             artimeString = h + artimeString.substr(2, 3) + ampm;
     
-            const ardiffDays = Math.round(Math.abs((today.getTime() - ad.getTime())/(oneDay)));
+            const ardiffDays = Math.round(Math.abs((today.getTime() - arad.getTime())/(oneDay)));
     
             if(ardiffDays === 1){
                 d = 'day';
