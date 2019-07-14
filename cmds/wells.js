@@ -26,7 +26,7 @@ module.exports.run = async (gideon, message, args) => {
     let wggif = 'http://i.imgur.com/1uJUIj5.gif';
 
     let twtle = 'Wells 2.0';
-    let twdesc = 'Congratulations Baby Giraffe! You are quite stretchy now!';
+    let twdesc = 'I wanna to smash something into bits!';
     let twgif = 'https://i.imgur.com/fKIsABO.gif';
 
     let hptle = 'Harrison "H.P." Wells';
