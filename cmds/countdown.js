@@ -47,7 +47,9 @@ module.exports.run = async (gideon, message, args) => {
             console.log(r.body);
             let body = r.body;   
             
-            
+            if (r.body._embedded.nextepisode === null){
+                nxflaep = 'No Episode data available yet'
+            }   else {
             const artitle = body.name;
             const arseason = body._embedded.nextepisode.season;
             const arnumber = body._embedded.nextepisode.number;
