@@ -118,7 +118,7 @@ module.exports.run = async (gideon, message, args) => {
                 }
                 
                 nxsgep1 = `${sgseason}x${sgnumber<10?"0"+sgnumber:sgnumber} - ${sgepname}`;
-                nxsgep2 = `Will air in ${sgdiffDays} ${d} on ${sgad.toDateString()} at ${lgtimeString} ET on ${lgchannel}`;
+                nxsgep2 = `Will air in ${sgdiffDays} ${d} on ${sgad.toDateString()} at ${sgtimeString} ET on ${sgchannel}`;
 
                 snekfetch.get(legendsapi).then(r => {
                     console.log(r.body);
