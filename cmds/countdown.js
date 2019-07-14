@@ -138,7 +138,7 @@ module.exports.run = async (gideon, message, args) => {
                         let bwime = body._embedded.nextepisode.airtime;
                         const bwchannel = body.network.name;
                 
-                        let flatimeString = flatime;
+                        let bwtimeString = bwtime;
                         let H = +flatimeString.substr(0, 2);
                         let h = H % 12 || 12;
                         let ampm = (H < 12 || H === 24) ? " AM" : " PM";
