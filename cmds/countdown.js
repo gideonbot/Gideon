@@ -43,7 +43,7 @@ module.exports.run = async (gideon, message, args) => {
         const countdown = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__Next upcoming Arrowverse episodes:__')
-        .addField(`${flatitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}\nairs in ${fladiffDays} ${d} on ${ad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
+        .addField(`${flatitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}``\n``airs in ${fladiffDays} ${d} on ${ad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
         //.addTitle(`${artitle} ${areason}x${arnumber<10?"0"+arnumber:arnumber} - ${arepname}`)
         //.addTitle(`${sgtitle} ${sgeason}x${sgnumber<10?"0"+sgnumber:sgnumber} - ${sgepname}`)
         //.addTitle(`${lgtitle} ${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`)
