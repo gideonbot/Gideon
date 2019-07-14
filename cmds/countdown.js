@@ -19,9 +19,9 @@ module.exports.run = async (gideon, message, args) => {
         const nxflaep1 = '';
         const nxflaep2 = '';
         
-        if (r.body._embedded.nextepisode === null){
+        if(r.body._embedded.nextepisode === null){
             nxflaep2 = 'No Episode data available yet';
-        }   else {
+        }   else{
         
         const flaseason = body._embedded.nextepisode.season;
         const flanumber = body._embedded.nextepisode.number;
@@ -85,7 +85,7 @@ module.exports.run = async (gideon, message, args) => {
             nxarep1 = `${arseason}x${arnumber<10?"0"+arnumber:arnumber} - ${arepname}`;
             nxarep2 = `Will air in ${ardiffDays} ${d} on ${arad.toDateString()} at ${artimeString} ET on ${archannel}`;
             }
-            
+
             snekfetch.get(supergirlapi).then(r => {
                 console.log(r.body);
                 let body = r.body;  
