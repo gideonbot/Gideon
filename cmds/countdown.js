@@ -62,7 +62,7 @@ module.exports.run = async (gideon, message, args) => {
     
             const aradiffDays = Math.round(Math.abs((today.getTime() - ad.getTime())/(oneDay)));
     
-            if(fladiffDays === 1){
+            if(ardiffDays === 1){
                 d = 'day';
             }   else{
                 d = 'days';
