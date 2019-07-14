@@ -17,7 +17,7 @@ module.exports.run = async (gideon, message, args) => {
 
         const flatitle = body.name;
         const flaseason = body._embedded.nextepisode.season;
-        const flanumber = body._embedded.number;
+        const flanumber = body._embedded.nextepisode.number;
         const flaepname = body._embedded.name;
         const fladate = body._embedded.airdate;
         console.log(flatime);
