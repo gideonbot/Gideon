@@ -127,8 +127,8 @@ module.exports.run = async (gideon, message, args) => {
                 snekfetch.get(legendsapi).then(r => {
                     console.log(r.body);
                     let body = r.body;   
-                    const nxlgep1 = '';
-                    const nxlgep2 = '';
+                    var nxlgep1 = '';
+                    var nxlgep2 = '';
                     const lgtitle = body.name;
 
                     if(r.body._embedded.nextepisode === null){
