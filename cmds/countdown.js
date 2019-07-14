@@ -54,7 +54,7 @@ module.exports.run = async (gideon, message, args) => {
             console.log(r.body);
             let body = r.body;   
             const artitle = body.name;
-            const nxarep1 = '';
+            var nxarep1 = '';
             const nxarep2 = '';
 
             if(r.body._embedded.nextepisode === null){
