@@ -127,6 +127,7 @@ module.exports.run = async (gideon, message, args) => {
                 snekfetch.get(legendsapi).then(r => {
                     console.log(r.body);
                     let body = r.body;   
+                    const lgtitle = body.name;
                     var nxlgep1 = '';
                     var nxlgep2 = '';
 
