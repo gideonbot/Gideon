@@ -111,10 +111,10 @@ module.exports.run = async (gideon, message, args) => {
                     const lgchannel = body.network.name;
             
                     let lgtimeString = lgtime;
-                    let H = +flatimeString.substr(0, 2);
+                    let H = +lgtimeString.substr(0, 2);
                     let h = H % 12 || 12;
                     let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-                    flatimeString = h + flatimeString.substr(2, 3) + ampm;
+                    lgtimeString = h + flatimeString.substr(2, 3) + ampm;
             
                     const fladiffDays = Math.round(Math.abs((today.getTime() - ad.getTime())/(oneDay)));
             
