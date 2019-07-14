@@ -49,8 +49,8 @@ module.exports.run = async (gideon, message, args) => {
             const arnumber = body._embedded.nextepisode.number;
             const arepname = body._embedded.nextepisode.name;
             const ardate = body._embedded.nextepisode.airdate;
-            const ad = new Date(fladate);
-            console.log(fladate);
+            const ad = new Date(ardate);
+            console.log(ardate);
             let flatime = body._embedded.nextepisode.airtime;
             const flachannel = body.network.name;
     
