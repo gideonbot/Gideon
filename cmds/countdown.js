@@ -52,9 +52,9 @@ module.exports.run = async (gideon, message, args) => {
             const ad = new Date(ardate);
             console.log(ardate);
             let artime = body._embedded.nextepisode.airtime;
-            const flachannel = body.network.name;
+            const archannel = body.network.name;
     
-            let flatimeString = flatime;
+            let artimeString = flatime;
             let H = +flatimeString.substr(0, 2);
             let h = H % 12 || 12;
             let ampm = (H < 12 || H === 24) ? " AM" : " PM";
