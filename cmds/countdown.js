@@ -76,12 +76,13 @@ module.exports.run = async (gideon, message, args) => {
     
             snekfetch.get(supergirlapi).then(r => {
                 console.log(r.body);
-                let body = r.body;   
+                let body = r.body;  
+                 
                 
                 if (r.body._embedded.nextepisode === null){
                     nxsgep = 'No Episode data available yet'
                 }   else {
-                const sgtitle = body.name;
+                
                 const sgseason = body._embedded.nextepisode.season;
                 const sgnumber = body._embedded.nextepisode.number;
                 const sgepname = body._embedded.nextepisode.name;
