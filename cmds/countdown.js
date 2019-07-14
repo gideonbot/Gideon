@@ -54,8 +54,8 @@ module.exports.run = async (gideon, message, args) => {
             let artime = body._embedded.nextepisode.airtime;
             const archannel = body.network.name;
     
-            let artimeString = flatime;
-            let H = +flatimeString.substr(0, 2);
+            let artimeString = artime;
+            let H = +artimeString.substr(0, 2);
             let h = H % 12 || 12;
             let ampm = (H < 12 || H === 24) ? " AM" : " PM";
             flatimeString = h + flatimeString.substr(2, 3) + ampm;
