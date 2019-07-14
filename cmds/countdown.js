@@ -142,7 +142,10 @@ module.exports.run = async (gideon, message, args) => {
                     snekfetch.get(bwomanapi).then(r => {
                         console.log(r.body);
                         let body = r.body;   
-                
+                        
+                        if (r.body._embedded.nextepisode === null){
+                            nxflaep = 'No Episode data available yet'
+                        }   else {
                         const bwtitle = body.name;
                         const bwseason = body._embedded.nextepisode.season;
                         const bwnumber = body._embedded.nextepisode.number;
