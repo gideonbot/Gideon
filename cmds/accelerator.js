@@ -37,12 +37,16 @@ module.exports.run = async (gideon, message, args) => {
     let vbrtle = 'It appears, that you have developed a connection to the Multiverse\'s intradimensional energy!';
     let vbrdesc = 'Congratulations! You are a Viber now!';
     let vbrgif = 'https://i.imgur.com/gmqggYB.gif';
+
+    let rdtle = 'It appears, that your cells are now fully polymerized!';
+    let rddesc = 'Congratulations Baby Giraffe! You are quite stretchy now!';
+    let rdgif = 'https://i.imgur.com/7tb6t8v.gif';
     
     let pwrtitle;
     let pwrdesc;
     let pwrgif;
 
-    let chosenpw = Math.floor(Math.random()*(4-1+1)+1);
+    let chosenpw = Math.floor(Math.random()*(5-1+1)+1);
 
     if(chosenpw === 1){
         pwrtitle = spdstle;
@@ -60,6 +64,10 @@ module.exports.run = async (gideon, message, args) => {
         pwrtitle = vbrtle;
         pwrdesc = vbrdesc;
         pwrgif = vbrgif;
+    }   else if(chosenpw === 5){
+        pwrtitle = rdtle;
+        pwrdesc = rddesc;
+        pwrgif = rdgif;
     }
 
     const power = new Discord.RichEmbed()
