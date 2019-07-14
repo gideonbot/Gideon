@@ -129,7 +129,6 @@ module.exports.run = async (gideon, message, args) => {
                     let body = r.body;   
                     var nxlgep1 = '';
                     var nxlgep2 = '';
-                    const lgtitle = body.name;
 
                     if(r.body._embedded.nextepisode === null){
                         nxlgep2 = 'No Episode data available yet';
