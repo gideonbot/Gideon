@@ -115,6 +115,7 @@ module.exports.run = async (gideon, message, args) => {
                     console.log(r.body);
                     let body = r.body;   
                     const nxlgep
+                    const nxlgep
                     const lgtitle = body.name;
 
                     if (r.body._embedded.nextepisode === null){
