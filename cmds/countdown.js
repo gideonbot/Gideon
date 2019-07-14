@@ -21,9 +21,8 @@ module.exports.run = async (gideon, message, args) => {
         const flaepname = body._embedded.nextepisode.name;
         const fladate = body._embedded.nextepisode.airdate;
         let flatime = body._embedded.nextepisode.airtime;
-        console.log(flatime);
         const flachannel = body.network.name;
-/*
+
         let flatimeString = flatime;
         let H = +flatimeString.substr(0, 2);
         let h = H % 12 || 12;
