@@ -1,6 +1,5 @@
 const Discord = module.require("discord.js");
 const snekfetch = require("snekfetch");
-const moment = require('moment');
 
 module.exports.run = async (gideon, message, args) => {
     const flashapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
