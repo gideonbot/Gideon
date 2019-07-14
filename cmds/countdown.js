@@ -203,6 +203,9 @@ module.exports.run = async (gideon, message, args) => {
 	                    .setTitle('__Next upcoming Arrowverse episodes:__')
                         .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
                         .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
+                        .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
+                        .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
+                        .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
                         .setTimestamp()
     	                .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
