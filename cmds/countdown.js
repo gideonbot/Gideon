@@ -22,7 +22,7 @@ module.exports.run = async (gideon, message, args) => {
         const fladate = body._embedded.airdate;
         let flatime = body._embedded.airtime;
 
-        let flatimeString = airtime;
+        let flatimeString = flatime;
         let H = +flatimeString.substr(0, 2);
         let h = H % 12 || 12;
         let ampm = (H < 12 || H === 24) ? " AM" : " PM";
