@@ -15,6 +15,7 @@
     "dotenv": "^8.0.0",
     "imgur-node": "^0.2.0",
     "moment": "^2.24.0",
+    "quick.db": "^7.0.0-b22",
     "snekfetch": "^4.0.4"
   }
 }
