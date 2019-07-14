@@ -159,7 +159,7 @@ module.exports.run = async (gideon, message, args) => {
                         .addField(`${artitle} ${arseason}x${arnumber<10?"0"+arnumber:arnumber} - ${arepname}`, `Will air in ${ardiffDays} ${d} on ${arad.toDateString()} at ${artimeString} ET on ${archannel}`)
                         .addField(`${sgtitle} ${sgseason}x${sganumber<10?"0"+sgnumber:sgnumber} - ${sgepname}`, `Will air in ${sgdiffDays} ${d} on ${sgad.toDateString()} at ${sgtimeString} ET on ${sgchannel}`)
                         .addField(`${lgtitle} ${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`, `Will air in ${lgdiffDays} ${d} on ${lgad.toDateString()} at ${lgtimeString} ET on ${lgchannel}`)
-                        .addField(`${bwtitle} ${bwseason}x${bwnumber<10?"0"+bwnumber:bwnumber} - ${bwepname}`, `Will air in ${bwdiffDays} ${d} on ${bwad.toDateString()} at ${bwtimeString} ET on ${flachannel}`)
+                        .addField(`${bwtitle} ${bwseason}x${bwnumber<10?"0"+bwnumber:bwnumber} - ${bwepname}`, `Will air in ${bwdiffDays} ${d} on ${bwad.toDateString()} at ${bwtimeString} ET on ${bwchannel}`)
 	                    .setThumbnail()
     	                .setTimestamp()
     	                .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
