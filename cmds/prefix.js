@@ -6,7 +6,7 @@ module.exports.run = async (gideon, message, args) => {
         return message.channel.send('You do not have the required permissions to use this command!')
     }   else{
         db.set(`prefix_${message.guild.id}`).then(i => {
-            message.channel.send(**)
+            message.channel.send(`Successfully set the prefix ${i}`)
         })
     }
 
