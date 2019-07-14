@@ -94,7 +94,7 @@ module.exports.run = async (gideon, message, args) => {
                 
                 if(r.body._embedded.nextepisode === null){
                     nxsgep2 = 'No Episode data available yet';
-                }   else {
+                }   else{
                 const sgseason = body._embedded.nextepisode.season;
                 const sgnumber = body._embedded.nextepisode.number;
                 const sgepname = body._embedded.nextepisode.name;
@@ -120,7 +120,7 @@ module.exports.run = async (gideon, message, args) => {
                 
                 nxsgep1 = `${sgseason}x${sgnumber<10?"0"+sgnumber:sgnumber} - ${sgepname}`;
                 nxsgep2 = `Will air in ${sgdiffDays} ${d} on ${sgad.toDateString()} at ${sgtimeString} ET on ${sgchannel}`;
-
+            }
                 snekfetch.get(legendsapi).then(r => {
                     console.log(r.body);
                     let body = r.body;   
