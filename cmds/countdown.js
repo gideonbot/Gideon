@@ -118,7 +118,7 @@ module.exports.run = async (gideon, message, args) => {
             
                     const lgdiffDays = Math.round(Math.abs((today.getTime() - lgad.getTime())/(oneDay)));
             
-                    if(fladiffDays === 1){
+                    if(lgdiffDays === 1){
                         d = 'day';
                     }   else{
                         d = 'days';
