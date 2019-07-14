@@ -86,7 +86,7 @@ module.exports.run = async (gideon, message, args) => {
                 let H = +sgtimeString.substr(0, 2);
                 let h = H % 12 || 12;
                 let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-                gtimeString = h + sgtimeString.substr(2, 3) + ampm;
+                sgtimeString = h + sgtimeString.substr(2, 3) + ampm;
         
                 const sgdiffDays = Math.round(Math.abs((today.getTime() - sgad.getTime())/(oneDay)));
         
