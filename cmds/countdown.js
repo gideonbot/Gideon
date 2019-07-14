@@ -79,8 +79,8 @@ module.exports.run = async (gideon, message, args) => {
                 const sgdate = body._embedded.nextepisode.airdate;
                 const sgad = new Date(sgdate);
                 console.log(sgdate);
-                let flatime = body._embedded.nextepisode.airtime;
-                const flachannel = body.network.name;
+                let sgtime = body._embedded.nextepisode.airtime;
+                const sgchannel = body.network.name;
         
                 let flatimeString = flatime;
                 let H = +flatimeString.substr(0, 2);
