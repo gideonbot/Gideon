@@ -128,7 +128,7 @@ module.exports.run = async (gideon, message, args) => {
                     const nxlgep2 = '';
                     const lgtitle = body.name;
 
-                    if (r.body._embedded.nextepisode === null){
+                    if(r.body._embedded.nextepisode === null){
                         nxlgep2 = 'No Episode data available yet';
                     }   else {
                     const lgseason = body._embedded.nextepisode.season;
@@ -157,7 +157,7 @@ module.exports.run = async (gideon, message, args) => {
                     nxlgep1 = `${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`;
                     nxlgep2 = `Will air in ${lgdiffDays} ${d} on ${lgad.toDateString()} at ${lgtimeString} ET on ${lgchannel}`;
                     }
-                    
+
                     snekfetch.get(bwomanapi).then(r => {
                         console.log(r.body);
                         let body = r.body;   
