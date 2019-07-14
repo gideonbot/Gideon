@@ -21,6 +21,7 @@ module.exports.run = async (gideon, message, args) => {
         const flaepname = body._embedded.name;
         const fladate = body._embedded.airdate;
         let flatime = body._embedded.airtime;
+        const flachannel =
 
         let flatimeString = flatime;
         let H = +flatimeString.substr(0, 2);
