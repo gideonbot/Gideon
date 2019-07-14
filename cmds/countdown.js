@@ -141,7 +141,7 @@ module.exports.run = async (gideon, message, args) => {
                         const bwdate = body._embedded.nextepisode.airdate;
                         const bwad = new Date(bwdate);
                         console.log(bwdate);
-                        let bwime = body._embedded.nextepisode.airtime;
+                        let bwtime = body._embedded.nextepisode.airtime;
                         const bwchannel = body.network.name;
                 
                         let bwtimeString = bwtime;
