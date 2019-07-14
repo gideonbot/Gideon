@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
         const flanumber = body._embedded.number;
         const flaepname = body._embedded.name;
         const fladate = body._embedded.airdate;
-        let flatime = body
+        let flatime = body._embedded
 
         const fladiffDays = Math.round(Math.abs((today.getTime() - fladate.getTime())/(oneDay)));
 
