@@ -15,11 +15,11 @@ module.exports.run = async (gideon, message, args) => {
     snekfetch.get(flashapi).then(r => {
         console.log(r.body);
         let body = r.body;   
-
+        const flatitle = body.name;
         if (r.body._embedded.nextepisode === null){
             nxflaep = 'No Episode data available yet'
         }   else {
-        const flatitle = body.name;
+        
         const flaseason = body._embedded.nextepisode.season;
         const flanumber = body._embedded.nextepisode.number;
         const flaepname = body._embedded.nextepisode.name;
@@ -48,7 +48,7 @@ module.exports.run = async (gideon, message, args) => {
             let body = r.body;   
             const artitle = body.name;
             const nxarep
-            
+
             if (r.body._embedded.nextepisode === null){
                 nxarep = 'No Episode data available yet'
             }   else {
