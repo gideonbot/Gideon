@@ -22,7 +22,6 @@ module.exports.run = async (gideon, message, args) => {
         if(!r.body.hasOwnProperty('_embedded')){
             nxflaep2 = 'No Episode data available yet';
         }   else{
-        
         const flaseason = body._embedded.nextepisode.season;
         const flanumber = body._embedded.nextepisode.number;
         const flaepname = body._embedded.nextepisode.name;
