@@ -155,6 +155,7 @@ module.exports.run = async (gideon, message, args) => {
                             d = 'days';
                         }
                         
+                        const nxflaep
                         const nx
                         const countdown = new Discord.RichEmbed()
 	                    .setColor('#2791D3')
