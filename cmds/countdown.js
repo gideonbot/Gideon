@@ -130,7 +130,7 @@ module.exports.run = async (gideon, message, args) => {
 
                     if(r.body._embedded.nextepisode === null){
                         nxlgep2 = 'No Episode data available yet';
-                    }   else {
+                    }   else{
                     const lgseason = body._embedded.nextepisode.season;
                     const lgnumber = body._embedded.nextepisode.number;
                     const lgepname = body._embedded.nextepisode.name;
@@ -165,9 +165,9 @@ module.exports.run = async (gideon, message, args) => {
                         const nxbwep1 = '';
                         const nxbwep2 = '';
 
-                        if (r.body._embedded.nextepisode === null){
+                        if(r.body._embedded.nextepisode === null){
                             nxbwep2 = 'No Episode data available yet';
-                        }   else { 
+                        }   else{ 
                         const bwseason = body._embedded.nextepisode.season;
                         const bwnumber = body._embedded.nextepisode.number;
                         const bwepname = body._embedded.nextepisode.name;
