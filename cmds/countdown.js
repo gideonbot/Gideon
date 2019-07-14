@@ -116,7 +116,7 @@ module.exports.run = async (gideon, message, args) => {
                     let ampm = (H < 12 || H === 24) ? " AM" : " PM";
                     lgtimeString = h + lgtimeString.substr(2, 3) + ampm;
             
-                    const fladiffDays = Math.round(Math.abs((today.getTime() - ad.getTime())/(oneDay)));
+                    const lgdiffDays = Math.round(Math.abs((today.getTime() - lgad.getTime())/(oneDay)));
             
                     if(fladiffDays === 1){
                         d = 'day';
