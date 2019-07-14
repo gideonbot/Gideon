@@ -156,7 +156,8 @@ module.exports.run = async (gideon, message, args) => {
 
                     nxlgep1 = `${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`;
                     nxlgep2 = `Will air in ${lgdiffDays} ${d} on ${lgad.toDateString()} at ${lgtimeString} ET on ${lgchannel}`;
-            
+                    }
+                    
                     snekfetch.get(bwomanapi).then(r => {
                         console.log(r.body);
                         let body = r.body;   
@@ -193,7 +194,7 @@ module.exports.run = async (gideon, message, args) => {
                         nxbwep1 = `${bwseason}x${bwnumber<10?"0"+bwnumber:bwnumber} - ${bwepname}`;
                         nxbwep2 = `Will air in ${bwdiffDays} ${d} on ${bwad.toDateString()} at ${bwtimeString} ET on ${bwchannel}`;
                         }
-                        
+
                         const countdown = new Discord.RichEmbed()
 	                    .setColor('#2791D3')
 	                    .setTitle('__Next upcoming Arrowverse episodes:__')
