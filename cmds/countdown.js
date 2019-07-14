@@ -105,8 +105,8 @@ module.exports.run = async (gideon, message, args) => {
                     const lgnumber = body._embedded.nextepisode.number;
                     const lgepname = body._embedded.nextepisode.name;
                     const lgdate = body._embedded.nextepisode.airdate;
-                    const lgad = new Date(fladate);
-                    console.log(fladate);
+                    const lgad = new Date(lgdate);
+                    console.log(lgdate);
                     let lgtime = body._embedded.nextepisode.airtime;
                     const flachannel = body.network.name;
             
