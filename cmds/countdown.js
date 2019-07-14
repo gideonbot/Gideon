@@ -20,6 +20,7 @@ module.exports.run = async (gideon, message, args) => {
         const flanumber = body._embedded.number;
         const flaepname = body._embedded.name;
         const fladate = body._embedded.airdate;
+        console.log(r.body);
         let flatime = body._embedded.airtime;
         const flachannel = body.network.name;
 /*
