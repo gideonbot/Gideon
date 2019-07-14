@@ -186,7 +186,7 @@ module.exports.run = async (gideon, message, args) => {
                         .addField(`${flatitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`, `Will air in ${fladiffDays} ${d} on ${flaad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
                         .addField(`${artitle} ${arseason}x${arnumber<10?"0"+arnumber:arnumber} - ${arepname}`, `Will air in ${ardiffDays} ${d} on ${arad.toDateString()} at ${artimeString} ET on ${archannel}`)
                         .addField(`${sgtitle} ${sgseason}x${sganumber<10?"0"+sgnumber:sgnumber} - ${sgepname}`, `Will air in ${sgdiffDays} ${d} on ${sgad.toDateString()} at ${sgtimeString} ET on ${sgchannel}`)
-                        .addField(`${lgtitle} ${lgn}`)
+                        .addField(`${lgtitle} ${lgne}`)
                         .addField(`${bwtitle} ${bwseason}x${bwnumber<10?"0"+bwnumber:bwnumber} - ${bwepname}`, `Will air in ${bwdiffDays} ${d} on ${bwad.toDateString()} at ${bwtimeString} ET on ${bwchannel}`)
     	                .setTimestamp()
     	                .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
