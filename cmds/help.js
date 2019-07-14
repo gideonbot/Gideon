@@ -19,6 +19,8 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!crossovers', 'Displays a list of all Arrowverse crossover episodes in their respective watching order')
         .addField('Gideon, show me the future!', 'Displays an easter egg')
         .addField('Gideon, plot a course!', 'Displays an easter egg')
+        .addField('!ping', 'Displays the bot\'s uptime')
+        .addField('!uptime', 'Displays the bot\'s uptime')
         .addField('!github', 'Displays Github repository info')
         .addField('!donate', 'Displays info to support maintainance and hosting of Gideon')       
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)

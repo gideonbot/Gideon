@@ -1,7 +1,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const config = require("./config.json");
-var prefix = config.prefix;
+const prefix = config.prefix;
 const prefix2 = config.prefix2;
 const fs = require("fs");
 const gideon = new Discord.Client();
@@ -34,26 +34,26 @@ gideon.once('ready', async () => {
 gideon.on('message', async message => {
     if (message.author.bot || !message.guild) return;
 
-  const msg = message.content.toLowerCase();
-  if (
-    !msg.startsWith(prefix.toLowerCase()) &&
-    !msg.startsWith(prefix2.toLowerCase())
-  )
-    return;
+    const msg = message.content.toLowerCase();
+    if (
+      !msg.startsWith(prefix.toLowerCase()) &&
+      !msg.startsWith(prefix2.toLowerCase())
+    )
+      return;
 
-  const args = msg.startsWith(prefix.toLowerCase())
-    ? message.content
-        .slice(prefix.length)
-        .trim()
-        .split(" ")
-    : message.content
-        .slice(prefix2.length)
-        .trim()
-        .split(" ");
-  const cmd = args.shift().toLowerCase();
-  const command = gideon.commands.get(cmd);
-  if (!command) return;
-  command.run(gideon, message, args);
+    const args = msg.startsWith(prefix.toLowerCase())
+      ? message.content
+          .slice(prefix.length)
+          .trim()
+          .split(" ")
+      : message.content
+          .slice(prefix2.length)
+          .trim()
+          .split(" ");
+    const cmd = args.shift().toLowerCase();
+    const command = gideon.commands.get(cmd);
+    if (!command) return;
+    command.run(gideon, message, args);
 })
 
 gideon.login();
