@@ -47,7 +47,7 @@ module.exports.run = async (gideon, message, args) => {
             d = 'days';
         }
         
-        nxflaep1 = `${flaseason}x${flanumber<10?"0"+flanumber:lgnumber} - ${lgepname}`;
+        nxflaep1 = `${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`;
         nxflaep2 = `Will air in ${lgdiffDays} ${d} on ${lgad.toDateString()} at ${lgtimeString} ET on ${lgchannel}`;
 
         snekfetch.get(arrowapi).then(r => {
