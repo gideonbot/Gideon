@@ -36,6 +36,7 @@ gideon.on('message', async message => {
     if (message.author.bot || !message.guild) return;
 
   let fetched = await db.fetch(`prefix_${message.guild.id}`);
+  
   const msg = message.content.toLowerCase();
   if (
     !msg.startsWith(prefix.toLowerCase()) &&
