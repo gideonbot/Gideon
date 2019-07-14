@@ -72,7 +72,7 @@ module.exports.run = async (gideon, message, args) => {
                 console.log(r.body);
                 let body = r.body;   
         
-                const flatitle = body.name;
+                const sgtitle = body.name;
                 const flaseason = body._embedded.nextepisode.season;
                 const flanumber = body._embedded.nextepisode.number;
                 const flaepname = body._embedded.nextepisode.name;
