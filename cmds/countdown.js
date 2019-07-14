@@ -82,7 +82,7 @@ module.exports.run = async (gideon, message, args) => {
                 d = 'days';
             }
             
-            nxarep1 = `${arseason}x${arnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`;
+            nxarep1 = `${arseason}x${arnumber<10?"0"+arnumber:arnumber} - ${lgepname}`;
             nxarep2 = `Will air in ${lgdiffDays} ${d} on ${lgad.toDateString()} at ${lgtimeString} ET on ${lgchannel}`;
 
             snekfetch.get(supergirlapi).then(r => {
