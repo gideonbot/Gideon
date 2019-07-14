@@ -20,6 +20,8 @@ Gideon's features are as follows:
 * `!ep <show> NxNN - Fetches episode info`\
   `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)`
   
+* `!nxeps - Displays a countdown to the next airing Arrowverse episodes`
+  
 * `!meme - Displays a random Arrowverse meme`
 
 * `!quote - Displays a random Arrowverse quote`
