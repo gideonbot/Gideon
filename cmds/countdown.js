@@ -20,7 +20,6 @@ module.exports.run = async (gideon, message, args) => {
         const nxflaep2 = '';
         
         if (r.body._embedded.nextepisode === null){
-            nxflaep1 = '';
             nxflaep2 = 'No Episode data available yet';
         }   else {
         
@@ -58,7 +57,6 @@ module.exports.run = async (gideon, message, args) => {
             const nxarep2 = '';
 
             if (r.body._embedded.nextepisode === null){
-                nxarep1 = '';
                 nxarep2 = 'No Episode data available yet';
             }   else {
             const arseason = body._embedded.nextepisode.season;
