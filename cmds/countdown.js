@@ -83,10 +83,10 @@ module.exports.run = async (gideon, message, args) => {
                 const sgchannel = body.network.name;
         
                 let sgtimeString = sgtime;
-                let H = +flatimeString.substr(0, 2);
+                let H = +sgtimeString.substr(0, 2);
                 let h = H % 12 || 12;
                 let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-                sgtimeString = h + sgtimeString.substr(2, 3) + ampm;
+                gtimeString = h + sgtimeString.substr(2, 3) + ampm;
         
                 const sgdiffDays = Math.round(Math.abs((today.getTime() - sgad.getTime())/(oneDay)));
         
