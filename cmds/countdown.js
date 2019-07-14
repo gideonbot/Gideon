@@ -129,7 +129,7 @@ module.exports.run = async (gideon, message, args) => {
                         let body = r.body;   
                 
                         const bwtitle = body.name;
-                        const flaseason = body._embedded.nextepisode.season;
+                        const bwseason = body._embedded.nextepisode.season;
                         const flanumber = body._embedded.nextepisode.number;
                         const flaepname = body._embedded.nextepisode.name;
                         const fladate = body._embedded.nextepisode.airdate;
