@@ -94,7 +94,7 @@ module.exports.run = async (gideon, message, args) => {
                 var nxsgep1 = '';
                 var nxsgep2  = '';
                 
-                if(r.body._embedded.nextepisode == "undefined"){
+                if(r.body._embedded.nextepisode !== 'undefined'){
                     nxsgep2 = 'No Episode data available yet';
                 }   else{
                 const sgseason = body._embedded.nextepisode.season;
@@ -131,7 +131,7 @@ module.exports.run = async (gideon, message, args) => {
                     var nxlgep1 = '';
                     var nxlgep2 = '';
 
-                    if(r.body._embedded.nextepisode == "undefined"){
+                    if(r.body._embedded.nextepisode !== 'undefined'){
                         nxlgep2 = 'No Episode data available yet';
                     }   else{
                     const lgseason = body._embedded.nextepisode.season;
