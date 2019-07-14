@@ -205,7 +205,7 @@ module.exports.run = async (gideon, message, args) => {
                         .addField(`${artitle} ${nxarep1}`, `${nxarep2}`)
                         .addField(`${sgtitle} ${nxsgep1}`, `${nxsgep2}`)
                         .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
-                        .addField(`${bwtitle} ${nxbwep1}`, `${nxlgep2}`)
+                        .addField(`${bwtitle} ${nxbwep1}`, `${nxbwep2}`)
                         .setTimestamp()
     	                .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
