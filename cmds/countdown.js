@@ -143,6 +143,7 @@ module.exports.run = async (gideon, message, args) => {
                         console.log(r.body);
                         let body = r.body;   
                         
+                        
                         if (r.body._embedded.nextepisode === null){
                             nxbwep = 'No Episode data available yet'
                         }   else {
