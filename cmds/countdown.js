@@ -202,7 +202,7 @@ module.exports.run = async (gideon, message, args) => {
 	                    .setColor('#2791D3')
 	                    .setTitle('__Next upcoming Arrowverse episodes:__')
                         .addField(`${flatitle} ${nxflaep1}`, `${nxflaep2}`)
-                        .addField(`${artitle} ${nxarep1}`, `${nxlgep2}`)
+                        .addField(`${artitle} ${nxarep1}`, `${nxarep2}`)
                         .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
                         .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
                         .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
