@@ -17,7 +17,7 @@ module.exports.run = async (gideon, message, args) => {
         let body = r.body;   
         const flatitle = body.name;
         const nxflaep
-        
+
         if (r.body._embedded.nextepisode === null){
             nxflaep = 'No Episode data available yet'
         }   else {
@@ -143,7 +143,7 @@ module.exports.run = async (gideon, message, args) => {
                         d = 'days';
                     }
 
-                    nxlgep = `${lgtitle} ${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`, `Will air in ${lgdiffDays} ${d} on ${lgad.toDateString()} at ${lgtimeString} ET on ${lgchannel}`;
+                    nxlgep = `${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`, `Will air in ${lgdiffDays} ${d} on ${lgad.toDateString()} at ${lgtimeString} ET on ${lgchannel}`;
             
                     snekfetch.get(bwomanapi).then(r => {
                         console.log(r.body);
