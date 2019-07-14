@@ -127,6 +127,8 @@ module.exports.run = async (gideon, message, args) => {
                     }   else{
                         d = 'days';
                     }
+
+                    
             
                     snekfetch.get(bwomanapi).then(r => {
                         console.log(r.body);
