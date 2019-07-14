@@ -139,10 +139,10 @@ module.exports.run = async (gideon, message, args) => {
                         const bwchannel = body.network.name;
                 
                         let bwtimeString = bwtime;
-                        let H = +flatimeString.substr(0, 2);
+                        let H = +bwtimeString.substr(0, 2);
                         let h = H % 12 || 12;
                         let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-                        flatimeString = h + flatimeString.substr(2, 3) + ampm;
+                        bwtimeString = h + bwtimeString.substr(2, 3) + ampm;
                 
                         const fladiffDays = Math.round(Math.abs((today.getTime() - ad.getTime())/(oneDay)));
                 
