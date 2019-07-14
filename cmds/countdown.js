@@ -124,7 +124,7 @@ module.exports.run = async (gideon, message, args) => {
                         d = 'days';
                     }
             
-                    snekfetch.get(flashapi).then(r => {
+                    snekfetch.get(bwomanapi).then(r => {
                         console.log(r.body);
                         let body = r.body;   
                 
