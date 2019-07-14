@@ -83,7 +83,7 @@ module.exports.run = async (gideon, message, args) => {
                 let body = r.body;  
                 const sgtitle = body.name;
                 const nxsgep1
-                const nxsgep 
+                const nxsgep2 
                 
                 if (r.body._embedded.nextepisode === null){
                     nxsgep = 'No Episode data available yet'
