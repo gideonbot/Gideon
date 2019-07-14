@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
         let body = r.body;   
 
         const flatitle = body.name;
-        const flaseason = body._embedded.season;
+        const flaseason = body._embedded.nextepisode.season;
         const flanumber = body._embedded.number;
         const flaepname = body._embedded.name;
         const fladate = body._embedded.airdate;
