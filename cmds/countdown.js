@@ -19,10 +19,9 @@ module.exports.run = async (gideon, message, args) => {
         const flaepname = body._embedded.name;
         const fladate = body._embedded.airdate;
 
-        let oneDay = 24*60*60*1000;
-        let today = new Date().format('m-d-Y h:i:s');
+
         const fladiffDays = Math.round(Math.abs((today.getTime() - fladate.getTime())/(oneDay)));
-        
+
         if(fladiffDays === 1){
             d = 'day';
         }   else{
