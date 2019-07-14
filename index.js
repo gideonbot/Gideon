@@ -36,7 +36,7 @@ gideon.on('message', async message => {
     if (message.author.bot || !message.guild) return;
 
   let fetched = await db.fetch(`prefix_${message.guild.id}`);
-  if(fetched === null) prefix = ogprefix;
+  if(fetched === null) prefix = prefix;
   else prefix = fetched;
 
   const msg = message.content.toLowerCase();
