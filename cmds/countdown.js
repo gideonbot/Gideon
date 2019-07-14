@@ -102,8 +102,8 @@ module.exports.run = async (gideon, message, args) => {
             
                     const lgtitle = body.name;
                     const lgseason = body._embedded.nextepisode.season;
-                    const flanumber = body._embedded.nextepisode.number;
-                    const flaepname = body._embedded.nextepisode.name;
+                    const lgnumber = body._embedded.nextepisode.number;
+                    const lgepname = body._embedded.nextepisode.name;
                     const fladate = body._embedded.nextepisode.airdate;
                     const ad = new Date(fladate);
                     console.log(fladate);
