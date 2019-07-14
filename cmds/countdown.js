@@ -50,6 +50,158 @@ module.exports.run = async (gideon, message, args) => {
 
         message.channel.send(countdown); 
     });       
+    snekfetch.get(flashapi).then(r => {
+        console.log(r.body);
+        let body = r.body;   
+
+        const flatitle = body.name;
+        const flaseason = body._embedded.nextepisode.season;
+        const flanumber = body._embedded.nextepisode.number;
+        const flaepname = body._embedded.nextepisode.name;
+        const fladate = body._embedded.nextepisode.airdate;
+        const ad = new Date(fladate);
+        console.log(fladate);
+        let flatime = body._embedded.nextepisode.airtime;
+        const flachannel = body.network.name;
+
+        let flatimeString = flatime;
+        let H = +flatimeString.substr(0, 2);
+        let h = H % 12 || 12;
+        let ampm = (H < 12 || H === 24) ? " AM" : " PM";
+        flatimeString = h + flatimeString.substr(2, 3) + ampm;
+
+        const fladiffDays = Math.round(Math.abs((today.getTime() - ad.getTime())/(oneDay)));
+
+        if(fladiffDays === 1){
+            d = 'day';
+        }   else{
+            d = 'days';
+        }
+
+        const countdown = new Discord.RichEmbed()
+	    .setColor('#2791D3')
+	    .setTitle('__Next upcoming Arrowverse episodes:__')
+        .addField(`${flatitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`, `Airs in ${fladiffDays} ${d} on ${ad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
+	    .setThumbnail()
+    	.setTimestamp()
+    	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+
+        message.channel.send(countdown); 
+    });       
+    snekfetch.get(flashapi).then(r => {
+        console.log(r.body);
+        let body = r.body;   
+
+        const flatitle = body.name;
+        const flaseason = body._embedded.nextepisode.season;
+        const flanumber = body._embedded.nextepisode.number;
+        const flaepname = body._embedded.nextepisode.name;
+        const fladate = body._embedded.nextepisode.airdate;
+        const ad = new Date(fladate);
+        console.log(fladate);
+        let flatime = body._embedded.nextepisode.airtime;
+        const flachannel = body.network.name;
+
+        let flatimeString = flatime;
+        let H = +flatimeString.substr(0, 2);
+        let h = H % 12 || 12;
+        let ampm = (H < 12 || H === 24) ? " AM" : " PM";
+        flatimeString = h + flatimeString.substr(2, 3) + ampm;
+
+        const fladiffDays = Math.round(Math.abs((today.getTime() - ad.getTime())/(oneDay)));
+
+        if(fladiffDays === 1){
+            d = 'day';
+        }   else{
+            d = 'days';
+        }
+
+        const countdown = new Discord.RichEmbed()
+	    .setColor('#2791D3')
+	    .setTitle('__Next upcoming Arrowverse episodes:__')
+        .addField(`${flatitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`, `Airs in ${fladiffDays} ${d} on ${ad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
+	    .setThumbnail()
+    	.setTimestamp()
+    	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+
+        message.channel.send(countdown); 
+    });       
+    snekfetch.get(flashapi).then(r => {
+        console.log(r.body);
+        let body = r.body;   
+
+        const flatitle = body.name;
+        const flaseason = body._embedded.nextepisode.season;
+        const flanumber = body._embedded.nextepisode.number;
+        const flaepname = body._embedded.nextepisode.name;
+        const fladate = body._embedded.nextepisode.airdate;
+        const ad = new Date(fladate);
+        console.log(fladate);
+        let flatime = body._embedded.nextepisode.airtime;
+        const flachannel = body.network.name;
+
+        let flatimeString = flatime;
+        let H = +flatimeString.substr(0, 2);
+        let h = H % 12 || 12;
+        let ampm = (H < 12 || H === 24) ? " AM" : " PM";
+        flatimeString = h + flatimeString.substr(2, 3) + ampm;
+
+        const fladiffDays = Math.round(Math.abs((today.getTime() - ad.getTime())/(oneDay)));
+
+        if(fladiffDays === 1){
+            d = 'day';
+        }   else{
+            d = 'days';
+        }
+
+        const countdown = new Discord.RichEmbed()
+	    .setColor('#2791D3')
+	    .setTitle('__Next upcoming Arrowverse episodes:__')
+        .addField(`${flatitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`, `Airs in ${fladiffDays} ${d} on ${ad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
+	    .setThumbnail()
+    	.setTimestamp()
+    	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+
+        message.channel.send(countdown); 
+    });       
+    snekfetch.get(flashapi).then(r => {
+        console.log(r.body);
+        let body = r.body;   
+
+        const flatitle = body.name;
+        const flaseason = body._embedded.nextepisode.season;
+        const flanumber = body._embedded.nextepisode.number;
+        const flaepname = body._embedded.nextepisode.name;
+        const fladate = body._embedded.nextepisode.airdate;
+        const ad = new Date(fladate);
+        console.log(fladate);
+        let flatime = body._embedded.nextepisode.airtime;
+        const flachannel = body.network.name;
+
+        let flatimeString = flatime;
+        let H = +flatimeString.substr(0, 2);
+        let h = H % 12 || 12;
+        let ampm = (H < 12 || H === 24) ? " AM" : " PM";
+        flatimeString = h + flatimeString.substr(2, 3) + ampm;
+
+        const fladiffDays = Math.round(Math.abs((today.getTime() - ad.getTime())/(oneDay)));
+
+        if(fladiffDays === 1){
+            d = 'day';
+        }   else{
+            d = 'days';
+        }
+
+        const countdown = new Discord.RichEmbed()
+	    .setColor('#2791D3')
+	    .setTitle('__Next upcoming Arrowverse episodes:__')
+        .addField(`${flatitle} ${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`, `Airs in ${fladiffDays} ${d} on ${ad.toDateString()} at ${flatimeString} ET on ${flachannel}`)
+	    .setThumbnail()
+    	.setTimestamp()
+    	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+
+        message.channel.send(countdown); 
+    });       
 }
 
 module.exports.help = {
