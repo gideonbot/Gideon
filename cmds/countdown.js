@@ -16,8 +16,8 @@ module.exports.run = async (gideon, message, args) => {
         console.log(r.body);
         let body = r.body;   
         const flatitle = body.name;
-        const nxflaep1
-        const nxflaep2
+        const nxflaep1 = '';
+        const nxflaep2 = '';
         
         if (r.body._embedded.nextepisode === null){
             nxflaep1 = '';
