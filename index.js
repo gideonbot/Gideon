@@ -2,7 +2,7 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const config = require("./config.json");
 const db = require('quick.db');
-const ogprefix = config.prefix;
+const prefix = config.prefix;
 const prefix2 = config.prefix2;
 const fs = require("fs");
 const gideon = new Discord.Client();
@@ -38,7 +38,7 @@ gideon.on('message', async message => {
   let fetched = await db.fetch(`prefix_${message.guild.id}`);
   if(fetched === null) prefix = ogprefix;
   else prefix = fetched;
-  
+
   const msg = message.content.toLowerCase();
   if (
     !msg.startsWith(prefix.toLowerCase()) &&
