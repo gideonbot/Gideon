@@ -91,8 +91,8 @@ module.exports.run = async (gideon, message, args) => {
                 console.log(r.body);
                 let body = r.body;  
                 const sgtitle = body.name;
-                const nxsgep1
-                const nxsgep2 
+                const nxsgep1 = '';
+                const nxsgep2  = '';
                 
                 if (r.body._embedded.nextepisode === null){
                     nxsgep1 = '';
