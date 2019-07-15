@@ -18,6 +18,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!at <attack> <user>', 'Attacks the selected user with the selected attack\n(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision | stretchpunch)')
         .addField('!crossovers', 'Displays a list of all Arrowverse crossover episodes in their respective watching order')
         .addField('!wells', 'Calls a random Wells')
+        .addField('!suit <character>', 'Displays newly revealed suits (currently: killer forst | supergirl)')
         .addField('Gideon, show me the future!', 'Displays an easter egg')
         .addField('Gideon, plot a course!', 'Displays an easter egg')
         .addField('!ping', 'Displays the bot\'s ping')
