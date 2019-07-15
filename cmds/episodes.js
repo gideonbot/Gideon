@@ -13,15 +13,15 @@ module.exports.run = async (gideon, message, args) => {
     let showtitle;
     let channel;
 
-    if (agc.match(/(?:flash)/)){
+    if (agc.match(/(?:flash)/i)){
         showid = "13";
         showtitle = "The Flash";
         channel = 'The CW';
-    }   else if(agc.match(/(?:arrow)/)){
+    }   else if(agc.match(/(?:arrow)/i)){
         showid = "4";
         showtitle = "Arrow";
         channel = 'The CW'
-    }   else if(agc.match(/(?:supergirl)/)){
+    }   else if(agc.match(/(?:supergirl)/i)){
         showid = "1850";
         showtitle = "Supergirl";
         if(season === '1'){
@@ -29,14 +29,14 @@ module.exports.run = async (gideon, message, args) => {
         }   else {
             channel = 'The CW';
         }
-    }   else if(agc.match(/(?:legends)/)){
+    }   else if(agc.match(/(?:legends)/i)){
         showid = "1851"
         showtitle = "DC's Legends of Tomorrow";
-    }   else if(agc.match(/(?:constantine)/)){
+    }   else if(agc.match(/(?:constantine)/i)){
         showid = "15";
         showtitle = "Constantine";
         channel = 'NBC';
-    }   else if(agc.match(/(?:batwoman)/)){
+    }   else if(agc.match(/(?:batwoman)/i)){
         showid = "37776";
         showtitle = "Batwoman"; 
         channel = 'The CW';

@@ -31,37 +31,37 @@ module.exports.run = async (gideon, message, args) => {
     let attackgif;
     let emote;
 
-    if(atc.match(/(?:iceblast)/)){
+    if(atc.match(/(?:iceblast)/i)){
         chosenattack = 'you ice-blasted';
         chosendesc = 'Hey, stranger. Well, we sure have a lot to talk about.';
         emote = ':snowflake:';
         attackgif = 'https://i.imgur.com/4snHPC9.gif';
-    }   else if(atc.match(/(?:lthrow)/)){
+    }   else if(atc.match(/(?:lthrow)/i)){
         chosenattack = 'you threw a lightning bolt at';
         chosendesc = 'Maybe this\'ll give you abs.';
         emote = ':zap:';
         attackgif = 'https://i.imgur.com/6ECd0ty.gif';
-    }   else if(atc.match(/(?:reverseflash)/)){
+    }   else if(atc.match(/(?:reverseflash)/i)){
         chosenattack = 'you reverse-flashed';
         chosendesc = 'I\'m sorry.';
         emote = ':wave::skin-tone-2:';
         attackgif = 'https://i.imgur.com/h7orTAQ.gif';
-    }   else if(atc.match(/(?:vibeblast)/)){
+    }   else if(atc.match(/(?:vibeblast)/i)){
         chosenattack = 'you vibe-blasted';
         chosendesc = 'Nothing.';
         emote = ':raised_hand_with_fingers_splayed::skin-tone-4:';
         attackgif = 'https://i.imgur.com/n5Is19c.gif';
-    }   else if(atc.match(/(?:shootarrow)/)){
+    }   else if(atc.match(/(?:shootarrow)/i)){
         chosenattack = 'you shot an arrow through';
         chosendesc = 'You have failed this omelette!';
         emote = ':bow_and_arrow:';
         attackgif = 'https://i.imgur.com/De98uf0.gif';
-    }   else if(atc.match(/(?:heatvision)/)){
+    }   else if(atc.match(/(?:heatvision)/i)){
         chosenattack = 'you used your heat vision on';
         chosendesc = 'NJAAARRRRGHHHHHH!';
         emote = ':hotsprings:';
         attackgif = 'https://i.imgur.com/0WxrvMp.gif';
-    }   else if(atc.match(/(?:stretchpunch)/)){
+    }   else if(atc.match(/(?:stretchpunch)/i)){
         chosenattack = 'you stretch-punched';
         chosendesc = 'HAVE A GOOD NIGHT!';
         emote = ':punch::skin-tone-1:';

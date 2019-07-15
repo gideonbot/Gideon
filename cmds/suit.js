@@ -17,11 +17,11 @@ module.exports.run = async (gideon, message, args) => {
     let suittle;
     let suitdesc;
 
-    if(args[0].match(/(?:killer)/) && args[1].match(/(?:frost)/)){
+    if(args[0].match(/(?:killer)/i) && args[1].match(/(?:frost)/i)){
         suitimg = kfsuit;
         suittle = kftitle;
         suitdesc = kfdesc;
-    }   else if(args[0].match(/(?:supergirl)/)){
+    }   else if(args[0].match(/(?:supergirl)/i)){
         suitimg = sgsuit;
         suittle = sgtitle;
         suitdesc = sgdesc;
