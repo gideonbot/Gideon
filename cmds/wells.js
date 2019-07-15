@@ -10,8 +10,8 @@ module.exports.run = async (gideon, message, args) => {
     await delay (1000);
 
     let hytle = 'Harrison "Harry" Wells';
-    let hydesc = 'Congratulations! You are a Speedster now!';
-    let hygif = 'Ugh. Seriously? You can\'t handle that yourself?';
+    let hydesc = 'Ugh. Seriously? You can\'t handle that yourself?';
+    let hygif = 'http://i.imgur.com/boHkX5C.gif';
 
     let sttle = 'Harrison Wells';
     let stdesc = 'Good day my friends!';
