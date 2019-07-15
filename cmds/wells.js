@@ -100,6 +100,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     message.channel.send(`You have reached out to Earth-${en}`)
+    
     const wells = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(wlstitle)

@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!wells', 'Calls a random Wells')
         .addField('Gideon, show me the future!', 'Displays an easter egg')
         .addField('Gideon, plot a course!', 'Displays an easter egg')
-        .addField('!ping', 'Displays the bot\'s uptime')
+        .addField('!ping', 'Displays the bot\'s ping')
         .addField('!uptime', 'Displays the bot\'s uptime')
         .addField('!github', 'Displays Github repository info')
         .addField('!donate', 'Displays info to support maintainance and hosting of Gideon')       
