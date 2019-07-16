@@ -75,7 +75,7 @@ module.exports.run = async (gideon, message, args) => {
     .setDescription(`**${emote}${auth} ${chosenattack} ${user}${emote}**\n\n${chosendesc}`)
 	.setImage(attackgif)
     .setTimestamp()
-    .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
     message.channel.send(attack);
 }

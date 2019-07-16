@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Elseworlds', 'The Flash 5x09 - Elseworlds, Part 1\nArrow 7x09 - Elseworlds, Part 2\nSupergirl 4x09 - Elseworlds, Part 3')
         .addField('Crisis On Infinite Earths', 'The Flash 6x09 - Crisis on Infinite Earths, Part 1\nArrow 8x09 - Crisis on Infinite Earths, Part 2\nDC\'s Legends of Tomorrow 5x09 - Crisis on Infinite Earths, Part 3\nSupergirl 5x09 - Crisis on Infinite Earths, Part 4\nBatwoman 1x09 - Crisis on Infinite Earths, Part 5')
         .setTimestamp()
-    	.setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+    	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
         message.channel.send(crossovers);
 }

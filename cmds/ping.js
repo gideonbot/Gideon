@@ -6,7 +6,7 @@ module.exports.run = async (gideon, message, args) => {
         .setTitle('The fastest bot alive!')
         .setDescription(`${gideon.ping} ms`)
         .setTimestamp()
-        .setFooter('Gideon - The Arrowverse Bot | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
         message.channel.send(ping);  
 }
