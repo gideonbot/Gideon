@@ -32,6 +32,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(agc.match(/(?:legends)/i)){
         showid = "1851"
         showtitle = "DC's Legends of Tomorrow";
+        channel = 'The CW';
     }   else if(agc.match(/(?:constantine)/i)){
         showid = "15";
         showtitle = "Constantine";
