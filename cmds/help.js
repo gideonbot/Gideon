@@ -19,7 +19,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!rarbg <show> NxNN', 'Searches rarbg.to for the specified episode \n(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)')
         .addField('!crossovers', 'Displays a list of all Arrowverse crossover episodes in their respective watching order')
         .addField('!wells', 'Calls a random Wells')
-        .addField('!suit <character>', 'Displays newly revealed suits (currently: killer frost | supergirl)')
+        .addField('!suit <character>', 'Displays newly revealed suits\n(currently: killer frost | supergirl | arrow | flash)')
         .addField('Gideon, show me the future!', 'Displays an easter egg')
         .addField('Gideon, plot a course!', 'Displays an easter egg')
         .addField('!ping', 'Displays the bot\'s ping')
