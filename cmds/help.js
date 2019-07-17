@@ -17,6 +17,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!cuddle <user>', 'Gives the selected user a Beebo-tastic cuddle')
         .addField('!at <attack> <user>', 'Attacks the selected user with the selected attack\n(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision | stretchpunch)')
         .addField('!rarbg <show> NxNN', 'Searches rarbg.to for the specified episode \n(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)')
+        .addField('!subs <lang> <show> NxNN', 'Searches opensubtitles.org for the specified episode \n(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)')
         .addField('!crossovers', 'Displays a list of all Arrowverse crossover episodes in their respective watching order')
         .addField('!wells', 'Calls a random Wells')
         .addField('!suit <character>', 'Displays newly revealed suits\n(currently: killer frost | supergirl | arrow | flash)')
