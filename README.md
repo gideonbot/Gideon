@@ -42,7 +42,7 @@ Gideon's features are as follows:
 * `!wells - Calls a random Wells`
 
 * `!suit <character> - Displays newly revealed suits`\
-   `(currently: killer frost | supergirl | arrow | flash)`
+   `(currently: killer frost | supergirl | arrow | flash | batwoman)`
   
 * `!crossovers - Displays a list of all Arrowverse crossover episodes in their respective watching order`
 
