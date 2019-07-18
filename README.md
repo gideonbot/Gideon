@@ -33,6 +33,17 @@ Gideon's features are as follows:
 * `!at <attack> <user> - Attacks the selected user with the selected attack`\
   `(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision)`
   
+* `!rarbg <show> NxNN - Searches rarbg.to for the specified episode`\
+   `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)`
+  
+* `!subs <lang> <show> NxNN - Searches opensubtitles.org for the specified episode`\
+  `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)`
+   
+* `!wells - Calls a random Wells`
+
+* `!suit <character> - Displays newly revealed suits`\
+   `(currently: killer frost | supergirl | arrow | flash)`
+  
 * `!crossovers - Displays a list of all Arrowverse crossover episodes in their respective watching order`
 
 * `Gideon, show me the future! - Displays the first paragraph of the 2024 CCC article including a picture of the full article`
