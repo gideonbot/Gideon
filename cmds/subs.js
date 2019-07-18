@@ -3,9 +3,9 @@ const OpenSubtitles = require('opensubtitles-api');
 
 module.exports.run = async (gideon, message, args) => {
     const OS = new OpenSubtitles({
-        useragent:'TemporaryUserAgent',
-        username: 'adrifcastr',
-        password: '1080d24f4c941f0bbef30adec47e686e',
+        useragent: process.env.OPS_UA,
+        username: process.env.OPS_USER,
+        password: process.env.OPS_PASS,
         ssl: true
     });
 
