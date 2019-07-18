@@ -69,7 +69,7 @@ module.exports.run = async (gideon, message, args) => {
         
     }).catch(err => {
         console.log(err)
-        if(err) return message.channel.send(`There were no results for this episode on opensubtitles.org!`)
+        if(err) return message.channel.send(`There were no results for this episode on opensubtitles.org!\nTry another episode or another language code!`)
     });
 }
 
