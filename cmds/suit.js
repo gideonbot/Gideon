@@ -5,22 +5,28 @@ module.exports.run = async (gideon, message, args) => {
     if(!args[0]) return message.channel.send("You must supply a character!");
 
     let kfsuit = 'https://i.imgur.com/0XI5gxr.jpg';
-    let sgsuit = 'https://i.imgur.com/fZ5iQ9A.jpg';
-    let flasuit = 'https://i.imgur.com/2JDfNlE.jpg';
-    let arsuit = 'https://i.imgur.com/NsnDVC1.jpg';
+    let sgsuit = 'https://i.imgur.com/FU2mzws.jpg';
+    let flasuit = 'https://i.imgur.com/Bb6GbWV.jpg';
+    let arsuit = 'https://i.imgur.com/bgJmu8c.jpg';
     let bwsuit = 'https://i.imgur.com/2vkMLrp.jpg';
+    let cnsuit = 'https://i.imgur.com/yeGZG8e.jpg';
+    let snsuit = 'https://i.imgur.com/EduRbe4.jpg';
 
     let kftitle = 'Killer Frost';
     let sgtitle = 'Supergirl';
     let flatitle = 'The Flash';
     let artitle = 'The Green Arrow';
     let bwtitle = 'Batwoman';
+    let cntitle = 'The Black Canary';
+    let sntitle = 'Sparton';
 
     let kfdesc = 'This is Danielle Panabaker\'s new suit for The Flash Season 6!';
     let sgdesc = 'This is Melissa Benoist\'s new suit for Supergirl Season 5!';
     let fladesc = 'This is Grant Gustin\'s new suit for The Flash Season 6!';
     let ardesc = 'This is Stephen Amell\'s new suit for Arrow Season 8!';
     let bwdesc = 'This is Ruby Rose\'s new suit for Batwoman Season 1!';
+    let cndesc = 'This is Katie Cassidy-Rodgers\' new suit for Arrow Season 8!';
+    let sndesc = 'This is David Ramsey\'s new suit for Arrow Season 8!';
 
     let suitimg;
     let suittle;
@@ -46,6 +52,14 @@ module.exports.run = async (gideon, message, args) => {
         suitimg = bwsuit;
         suittle = bwtitle;
         suitdesc = bwdesc;
+    }   else if(args[0].match(/(?:black)/i) && args[1].match(/(?:canary)/i)){
+        suitimg = cnsuit;
+        suittle = cntitle;
+        suitdesc = cndesc;
+    }   else if(args[0].match(/(?:sparton)/i)){
+        suitimg = snsuit;
+        suittle = sntitle;
+        suitdesc = sndesc;
     }   else{
         return message.channel.send('You must supply a valid character!');
     }
