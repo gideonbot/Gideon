@@ -11,6 +11,7 @@ module.exports.run = async (gideon, message, args) => {
 
     let agc = args[1];
     if(!args[0]) return message.channel.send("You must supply a lang code, the shows name, season and its episode number!\nYou can find ISO 639-2 codes at: https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes");
+    if(args[0].length !== 3) return message.channel.send("You must supply a valid ISO 639-2 code!\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes");
 
     let seip = args.toString().substr(-4)
     let season = seip[0];
