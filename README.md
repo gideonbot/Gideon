@@ -31,7 +31,7 @@ Gideon's features are as follows:
 * `!cuddle <user> - Gives the selected user a Beebo-tastic cuddle`
 
 * `!at <attack> <user> - Attacks the selected user with the selected attack`\
-  `(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision)`
+  `(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision | stretchpunch | canarycry | batarang | sendtohell)`
   
 * `!rarbg <show> NxNN - Searches rarbg.to for the specified episode`\
    `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)`
