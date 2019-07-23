@@ -9,12 +9,12 @@ module.exports.run = async (gideon, message, args) => {
     let min = 0;
     let max = res.images.length - 1;
     let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
-    let ravm = res.images[ranum].link;
-    console.log(ravm);
+    let rjpk = res.images[ranum].link;
+    console.log(rjpk);
 
     const jpk = new Discord.RichEmbed()
         .setColor('#2791D3')
-        .setImage(ravm)
+        .setImage(rajpk)
         .setTimestamp()
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
