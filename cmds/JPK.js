@@ -3,7 +3,7 @@ const Imgur = require('imgur-node');
 const imgclient = new Imgur.Client('fbe1de02978b3b4');
 
 module.exports.run = async (gideon, message, args) => {      
-    imgclient.album.get('ZU6IgLo', (err, res) => {
+    imgclient.album.get('3mBphmr', (err, res) => {
     if (err) console.error(err);
     console.log(res);  
     let min = 0;
@@ -12,16 +12,16 @@ module.exports.run = async (gideon, message, args) => {
     let ravm = res.images[ranum].link;
     console.log(ravm);
 
-    const pmt = new Discord.RichEmbed()
+    const jpk = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setImage(ravm)
         .setTimestamp()
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
-        message.channel.send(pmt);
+        message.channel.send(jpk);
   });   
 }
 
 module.exports.help = {
-    name: "prometheus"
+    name: "jpk"
 }
