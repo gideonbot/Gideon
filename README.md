@@ -43,6 +43,8 @@ Gideon's features are as follows:
 
 * `!suit <character> - Displays newly revealed suits`\
    `(currently: killer frost | supergirl | arrow | flash | batwoman | black canary | sparton)`
+   
+* `!sp <name/alter ego> eN - Fetches Speedster info`
   
 * `!crossovers - Displays a list of all Arrowverse crossover episodes in their respective watching order`
 
