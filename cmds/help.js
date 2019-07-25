@@ -62,7 +62,7 @@ module.exports.run = async (gideon, message, args) => {
 	    .setColor('#2791D3')
 	    .setTitle('__You can check the list of available commands below:__')
         .addField('!edm', 'News Team can use this to enable the DCTV roles\' mentionability')  
-        .addField('!ddm', 'News Team can use this to disnable the DCTV roles\' mentionability')        
+        .addField('!ddm', 'News Team can use this to disable the DCTV roles\' mentionability')        
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
     	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
