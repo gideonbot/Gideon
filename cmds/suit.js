@@ -56,7 +56,7 @@ module.exports.run = async (gideon, message, args) => {
         suitimg = cnsuit;
         suittle = cntitle;
         suitdesc = cndesc;
-    }   else if(args[0].match(/(?:sparton)/i)){
+    }   else if(args[0].match(/(?:spartan)/i)){
         suitimg = snsuit;
         suittle = sntitle;
         suitdesc = sndesc;
