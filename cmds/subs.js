@@ -39,7 +39,7 @@ module.exports.run = async (gideon, message, args) => {
         showid = "tt8712204";
         showtitle = "Batwoman"; 
     }   else{
-        return message.channel.send(`"${show}" is not a valid argument!`)
+        return message.channel.send(`"${show}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman`)
     }
 
     OS.search({

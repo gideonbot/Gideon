@@ -45,7 +45,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(ssd.match(/(?:XS)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:nora)/i) && ssd.match(/(?:e1)/i)){
         spnum = 17;
     }   else{
-        return message.channel.send(`"${ssd}" is not a valid argument!`)
+        return message.channel.send(`"${ssd}" is not a valid argument!\nCheck the command's syntax and retry!`)
     }  
     
     snekfetch.get(api).then(r => {

@@ -61,7 +61,7 @@ module.exports.run = async (gideon, message, args) => {
         suittle = sntitle;
         suitdesc = sndesc;
     }   else{
-        return message.channel.send('You must supply a valid character!');
+        return message.channel.send('You must supply a valid character!\nCurrently available: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan');
     }
 
     const suit = new Discord.RichEmbed()

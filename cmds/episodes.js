@@ -42,7 +42,7 @@ module.exports.run = async (gideon, message, args) => {
         showtitle = "Batwoman"; 
         channel = 'The CW';
     }   else{
-        return message.channel.send(`"${show}" is not a valid argument!`)
+        return message.channel.send(`"${show}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman`)
     }  
 
     const api = `http://api.tvmaze.com/shows/${showid}/episodebynumber?season=${season}&number=${episode}`;

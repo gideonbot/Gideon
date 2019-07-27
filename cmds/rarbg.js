@@ -27,7 +27,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(agc.match(/(?:batwoman)/i)){
         showtitle = "Batwoman"; 
     }   else{
-        return message.channel.send(`"${show}" is not a valid argument!`)
+        return message.channel.send(`"${show}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman`)
     }
         
     rbs = `${showtitle} S${season<10?"0"+season:season}E${episode}`;
