@@ -86,6 +86,7 @@ module.exports.run = async (gideon, message, args) => {
 	    .setTitle('__You can check the list of available commands below:__')
         .addField('!JPK', 'Displays a random JPK gif')
         .addField('!prometheus', 'Displays a random Prometheus gif')
+        .addField('!st', 'Displays a random ST gif')
         .addField('!ping', 'Displays the bot\'s ping')
         .addField('!uptime', 'Displays the bot\'s uptime')
         .addField('!github', 'Displays Github repository info')

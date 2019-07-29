@@ -10,7 +10,6 @@ module.exports.run = async (gideon, message, args) => {
     let max = res.images.length - 1;
     let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
     let rjpk = res.images[ranum].link;
-    console.log(rjpk);
 
     const jpk = new Discord.RichEmbed()
         .setColor('#2791D3')
