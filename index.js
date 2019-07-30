@@ -26,7 +26,7 @@ fs.readdir("./cmds", (err, files) => {
 });
 
 gideon.once('ready', async () => {
-    gideon.user.setActivity("!help | invite.gg/tmvt");
+    gideon.user.setActivity("!help | invite.gg/tmvt", { type: 'PLAYING' });
     console.log('Ready!');
     console.log(gideon.commands);
 })
