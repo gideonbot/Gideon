@@ -2,8 +2,12 @@ const Discord = module.require("discord.js");
 const Imgur = require('imgur-node');
 const imgclient = new Imgur.Client(process.env.IMG_CL);
 
-module.exports.run = async (gideon, message, args) => {      
-    imgclient.album.get('3mBphmr', (err, res) => {
+module.exports.run = async (gideon, message, args) => {     
+    const jpkArray = ["FqCwt1J", "8bFXk0z", "2yz4RWt", "kxpGHYM", "f8mENXa", "Xy2SoEw", "UcPxCV5", "JhTWxoJ"];
+      
+    let rjpka = jpkArray[Math.floor(Math.random()*jpkArray.length)]; 
+
+    imgclient.album.get(rjpka, (err, res) => {
     if (err) console.error(err);
     console.log(res);  
     let min = 0;
