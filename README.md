@@ -71,3 +71,6 @@ to support the development, maintenance and hosting of this project. Thank you!
 ### Credits
 
 Gideon is currently being developed and maintained by __adrifcastr__.<br>
+In no particular order, I credit the following for their invaluable contributions:
+
+* __MBR#0001__ for the help on various topics.
