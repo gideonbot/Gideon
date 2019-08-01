@@ -64,7 +64,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField(sub[3].filename, `**[Download SRT](${sub[3].url} '${sub[3].url}')** Lang: \`${sub[3].lang}\` Score: \`${sub[3].score}\``)
         .addField(sub[4].filename, `**[Download SRT](${sub[4].url} '${sub[4].url}')** Lang: \`${sub[4].lang}\` Score: \`${sub[4].score}\``)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
             
         message.channel.send(subs);
         

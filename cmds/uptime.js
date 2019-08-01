@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle('Enter Flashtime!')
     .setDescription(uptime)
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
     message.channel.send(uptme);
 }

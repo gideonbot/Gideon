@@ -61,6 +61,7 @@ module.exports.run = async (gideon, message, args) => {
         const admin = new Discord.RichEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__You can check the list of available commands below:__')
+        .addField('!news', 'News Team can use this to post news')  
         .addField('!edm', 'News Team can use this to enable the DCTV roles\' mentionability')  
         .addField('!ddm', 'News Team can use this to disable the DCTV roles\' mentionability')        
         .addField('?warn', 'Warns a user')        
@@ -75,7 +76,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('?slowmode', 'Enables slowmode')        
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
-    	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+    	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
         message.channel.send(admin);
     }
@@ -89,11 +90,12 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!st', 'Displays a random ST gif')
         .addField('!ping', 'Displays the bot\'s ping')
         .addField('!uptime', 'Displays the bot\'s uptime')
+        .addField('!invite', 'Sends an invite link to the Time Vault')
         .addField('!github', 'Displays Github repository info')
         .addField('!donate', 'Displays info to support maintainance and hosting of Gideon')       
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
-    	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+    	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
         message.channel.send(misc);
     }

@@ -70,7 +70,7 @@ module.exports.run = async (gideon, message, args) => {
         .setDescription(suitdesc)
         .setImage(suitimg)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
     message.channel.send(suit);  
 }

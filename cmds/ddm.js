@@ -1,6 +1,5 @@
 const Discord = module.require("discord.js");
 
-
 module.exports.run = async (gideon, message, args) => {
     if(!message.member.roles.has('602311948809273344')){
         return message.channel.send('You don\'t have the required permissions to use this command!')

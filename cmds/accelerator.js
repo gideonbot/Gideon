@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setImage('https://i.imgur.com/opCbZTn.gif')
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
     message.channel.send(explosion);  
 
@@ -76,7 +76,7 @@ module.exports.run = async (gideon, message, args) => {
         .setDescription(pwrdesc)
         .setImage(pwrgif)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
     message.channel.send(power);  
 }
