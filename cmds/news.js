@@ -20,10 +20,6 @@ module.exports.run = async (gideon, message, args) => {
     let sgping = '';
     const filter = m => m.author.id === message.author.id
     const collector = new Discord.MessageCollector(message.channel, filter, { time: 120000, errors: ['time'] });
-    const rfilter = (reaction, user) => {
-        return ['⚡', '🏹', '🌌', '⌛', '🦇', '🔥'].includes(reaction.emoji.name) && user.id === auth;
-    };
-    const rcollector = message.createReactionCollector(rfilter, { time: 120000 });
     let avnews;
     let ping = false;
     
@@ -88,6 +84,12 @@ module.exports.run = async (gideon, message, args) => {
 			.then(() => message.react('🦇'))
 			.then(() => message.react('🔥'))
             .catch(() => console.error);       
+            
+            const rfilter = (reaction, user) => {
+                return ['⚡', '🏹', '🌌', '⌛', '🦇', '🔥'].includes(reaction.emoji.name) && user.id === auth;
+            };
+            
+            const rcollector = message.createReactionCollector(rfilter, { time: 120000 });
         
             rcollector.on('collect', (reaction, reactionCollector) => {
                 if(reaction) ping = true;
@@ -124,14 +126,11 @@ module.exports.run = async (gideon, message, args) => {
         if (message.content === 'cancel' || message.content === 'stop'){
             message.delete(); 
             collector.stop();
-            rcollector.stop();
             return message.channel.send('News post cancelled!:white_check_mark:');
         }
         if (!avnews) {
             avnews = message.content;
         }
-
-        message.delete();
         
         const news = new Discord.RichEmbed()
         .setColor('#2791D3')
@@ -141,7 +140,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('News posted by:', message.author)   
         .setTimestamp()
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
-        if (message.attachments.size > 0) news.setImage(message.attachments.first().url)  
+        if (message.attachments.size > 0) news.setImage(message.attachments.first().url);  
 
         gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(news)
         .then(function(message) {
@@ -154,7 +153,6 @@ module.exports.run = async (gideon, message, args) => {
         
         message.channel.send(`Your news post has been sent to ${message.guild.channels.get('595944027208024085').toString()}!:white_check_mark:`);
         collector.stop();
-        rcollector.stop();
     })
 
     collector.on('end', (collected, reason) => {
