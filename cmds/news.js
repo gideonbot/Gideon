@@ -6,11 +6,11 @@ module.exports.run = async (gideon, message, args) => {
         return message.channel.send('You don\'t have the required permissions to use this command!');
     }   else{
     const auth = message.author.id;
-    let flash = message.guild.roles.get('596074712682070061');
-    let arrow = message.guild.roles.get('596075000151277568');
-    let batwoman = message.guild.roles.get('596075415898947584');
-    let constantine = message.guild.roles.get('596075638285139988');
-    let legends = message.guild.roles.get('596075305861513246');
+    const flash = message.guild.roles.get('596074712682070061');
+    const arrow = message.guild.roles.get('596075000151277568');
+    const batwoman = message.guild.roles.get('596075415898947584');
+    const constantine = message.guild.roles.get('596075638285139988');
+    const legends = message.guild.roles.get('596075305861513246');
     let supergirl = message.guild.roles.get('596075165780017172');
     let flaping = '';
     let arping = '';
@@ -22,32 +22,6 @@ module.exports.run = async (gideon, message, args) => {
     const collector = new Discord.MessageCollector(message.channel, filter, { time: 120000, errors: ['time'] });
     let avnews;
     let ping = false;
-    
-    function edm() {
-        flash.edit({ mentionable: true })
-        .then(r => console.log(r.mentionable))
-        .catch(console.error);
-
-        arrow.edit({ mentionable: true })
-        .then(r => console.log(r.mentionable))
-        .catch(console.error);
-
-        batwoman.edit({ mentionable: true })
-        .then(r => console.log(r.mentionable))
-        .catch(console.error);
-
-        constantine.edit({ mentionable: true })
-        .then(r => console.log(r.mentionable))
-        .catch(console.error);
-
-        legends.edit({ mentionable: true })
-        .then(r => console.log(r.mentionable))
-        .catch(console.error);
-
-        supergirl.edit({ mentionable: true })
-        .then(r => console.log(r.mentionable))
-        .catch(console.error); 
-     } 
 
     function ddm() {
         flash.edit({ mentionable: false })
@@ -98,26 +72,44 @@ module.exports.run = async (gideon, message, args) => {
                 if (reaction.emoji.name === '⚡') {
                     console.log('flash');
                     flaping = flash;
+                    flash.edit({ mentionable: true })
+                    .then(r => console.log(r.mentionable))
+                    .catch(console.error);
                 }
                 if (reaction.emoji.name === '🏹') {
                     console.log('arrow');
                     arping = arrow;
+                    arrow.edit({ mentionable: true })
+                    .then(r => console.log(r.mentionable))
+                    .catch(console.error);
                 }
                 if (reaction.emoji.name === '🌌') {
                     console.log('supergirl');
                     sgping = supergirl;
+                    supergirl.edit({ mentionable: true })
+                    .then(r => console.log(r.mentionable))
+                    .catch(console.error); 
                 }
                 if (reaction.emoji.name === '⌛') {
                     console.log('legends');
                     lgping = legends;
+                    legends.edit({ mentionable: true })
+                    .then(r => console.log(r.mentionable))
+                    .catch(console.error);
                 }
                 if (reaction.emoji.name === '🦇') {
                     console.log('batwoman');
                     bwping = batwoman;
+                    batwoman.edit({ mentionable: true })
+                    .then(r => console.log(r.mentionable))
+                    .catch(console.error);
                 }
                 if (reaction.emoji.name === '🔥') {
                     console.log('constantine');
                     ctping = constantine;
+                    constantine.edit({ mentionable: true })
+                    .then(r => console.log(r.mentionable))
+                    .catch(console.error);
                 }
             });
         }); 
@@ -141,16 +133,15 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
         if (message.attachments.size > 0) news.setImage(message.attachments.first().url);  
-        edm();
         gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(news)
         .then(function(msgdl) {message.channel.bulkDelete(3);})
         .then(function(message) {
         if(ping === true){
-            gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}`)
-            .then(ddm());
+            gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}`);
             };
         } ).then(function(sdmsg) {
             message.reply(`your news post has been sent to ${message.guild.channels.get('595944027208024085').toString()}!:white_check_mark:`);
+            ddm();
             collector.stop();
         });
     })
