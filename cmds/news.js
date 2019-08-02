@@ -120,18 +120,18 @@ module.exports.run = async (gideon, message, args) => {
                     ctping = constantine;
                 }
             });
-    }); 
+        }); 
 
     collector.on('collect', message => {
         if (message.content === 'cancel' || message.content === 'stop'){
-            message.delete(); 
+            message.channel.bulkDelete(3); 
             collector.stop();
-            return message.channel.send('News post cancelled!:white_check_mark:');
+            return message.reply('your news post has been cancelled!:white_check_mark:');
         }
         if (!avnews) {
             avnews = message.content;
         }
-        
+
         const news = new Discord.RichEmbed()
         .setColor('#2791D3')
         .setTitle(`Arrowverse News`)
@@ -141,18 +141,18 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
         if (message.attachments.size > 0) news.setImage(message.attachments.first().url);  
-
+        edm();
         gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(news)
+        .then(function(msgdl) {message.channel.bulkDelete(3);})
         .then(function(message) {
         if(ping === true){
-            edm();
-            gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(`${flaping}${arping}${bwping}${ctping}${lgping}${sgping}`);
-            ddm();
+            gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}`)
+            .then(ddm());
             };
-        } );
-        
-        message.channel.send(`Your news post has been sent to ${message.guild.channels.get('595944027208024085').toString()}!:white_check_mark:`);
-        collector.stop();
+        } ).then(function(sdmsg) {
+            message.reply(`your news post has been sent to ${message.guild.channels.get('595944027208024085').toString()}!:white_check_mark:`);
+            collector.stop();
+        });
     })
 
     collector.on('end', (collected, reason) => {
