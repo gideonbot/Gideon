@@ -26,7 +26,21 @@ fs.readdir("./cmds", (err, files) => {
 });
 
 gideon.once('ready', async () => {
-    gideon.user.setActivity("!help | invite.gg/tmvt", { type: 'PLAYING' });
+    const tmvt = gideon.guilds.get('595318490240385037');
+    let mbc = tmvt.memberCount;
+    let st1 = `!help | invite.gg/tmvt`;
+    let st2 = `${mbc} Time Vault members`;
+    let statuses = [st1, st2];
+    let type;
+    setInterval(() => {
+        let status = statuses[Math.floor(Math.random()*statuses.length)];
+        if(status == st1){
+            type = 'PLAYING';
+        }else if(status == st2){
+            type = 'WATCHING';
+        }
+        gideon.user.setActivity(status, { type: type }); 
+    }, 5000);
     console.log('Ready!');
     console.log(gideon.commands);
 })
