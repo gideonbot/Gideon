@@ -41,8 +41,12 @@ module.exports.run = async (gideon, message, args) => {
         showid = "37776";
         showtitle = "Batwoman"; 
         channel = 'The CW';
+    }   else if(agc.match(/(?:blacklightning)/i)){
+        showid = "20683";
+        showtitle = "Black Lightning"; 
+        channel = 'The CW';
     }   else{
-        return message.channel.send(`"${show}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman`)
+        return message.channel.send(`"${show}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning`)
     }  
 
     const api = `http://api.tvmaze.com/shows/${showid}/episodebynumber?season=${season}&number=${episode}`;

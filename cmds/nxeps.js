@@ -7,6 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     const supergirlapi = 'http://api.tvmaze.com/shows/1850?embed=nextepisode';
     const legendsapi = 'http://api.tvmaze.com/shows/1851?embed=nextepisode';
     const bwomanapi = 'http://api.tvmaze.com/shows/37776?embed=nextepisode';
+    const blightningapi = 'http://api.tvmaze.com/shows/20683?embed=nextepisode';
     const oneDay = 24*60*60*1000;
     const today = new Date()
     console.log(today);
@@ -196,19 +197,59 @@ module.exports.run = async (gideon, message, args) => {
                         nxbwep1 = `${bwseason}x${bwnumber<10?"0"+bwnumber:bwnumber} - ${bwepname}`;
                         nxbwep2 = `Will air in ${bwdiffDays} ${d} on ${bwad.toDateString()} at ${bwtimeString} ET on ${bwchannel}`;
                         }
+                        
+                        snekfetch.get(blightningapi).then(r => {
+                            console.log(r.body);
+                            let body = r.body;   
+                            const bltitle = body.name;
+                            var nxblep1 = '';
+                            var nxblep2 = '';
 
-                        const countdown = new Discord.RichEmbed()
-	                    .setColor('#2791D3')
-	                    .setTitle('__Next upcoming Arrowverse episodes:__')
-                        .addField(`${flatitle} ${nxflaep1}`, `${nxflaep2}`)
-                        .addField(`${artitle} ${nxarep1}`, `${nxarep2}`)
-                        .addField(`${sgtitle} ${nxsgep1}`, `${nxsgep2}`)
-                        .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
-                        .addField(`${bwtitle} ${nxbwep1}`, `${nxbwep2}`)
-                        .setTimestamp()
-    	                .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
+                            if(!r.body.hasOwnProperty('_embedded')){
+                                nxblep2 = 'No Episode data available yet';
+                            }   else{ 
+                            const blseason = body._embedded.nextepisode.season;
+                            const blnumber = body._embedded.nextepisode.number;
+                            const blepname = body._embedded.nextepisode.name;
+                            const bldate = body._embedded.nextepisode.airdate;
+                            const blad = new Date(bldate);
+                            console.log(bldate);
+                            let bltime = body._embedded.nextepisode.airtime;
+                            const blchannel = body.network.name;
+                    
+                            let bltimeString = bltime;
+                            let H = +bltimeString.substr(0, 2);
+                            let h = H % 12 || 12;
+                            let ampm = (H < 12 || H === 24) ? " AM" : " PM";
+                            bltimeString = h + bltimeString.substr(2, 3) + ampm;
+                    
+                            const bldiffDays = Math.round(Math.abs((today.getTime() - blad.getTime())/(oneDay)));
+                    
+                            if(bldiffDays === 1){
+                                d = 'day';
+                            }   else{
+                                d = 'days';
+                            }
+                            
+                            nxblep1 = `${blseason}x${blnumber<10?"0"+blnumber:blnumber} - ${blepname}`;
+                            nxblep2 = `Will air in ${bldiffDays} ${d} on ${blad.toDateString()} at ${bltimeString} ET on ${blchannel}`;
+                            }
+                        
 
-                        message.channel.send(countdown);
+                            const countdown = new Discord.RichEmbed()
+                            .setColor('#2791D3')
+                            .setTitle('__Next upcoming Arrowverse episodes:__')
+                            .addField(`${flatitle} ${nxflaep1}`, `${nxflaep2}`)
+                            .addField(`${artitle} ${nxarep1}`, `${nxarep2}`)
+                            .addField(`${sgtitle} ${nxsgep1}`, `${nxsgep2}`)
+                            .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
+                            .addField(`${bwtitle} ${nxbwep1}`, `${nxbwep2}`)
+                            .addField(`${bltitle} ${nxblep1}`, `${nxblep2}`)
+                            .setTimestamp()
+                            .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
+
+                            message.channel.send(countdown);
+                        });
                     });
                 });
             });
