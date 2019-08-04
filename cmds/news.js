@@ -11,13 +11,15 @@ module.exports.run = async (gideon, message, args) => {
     const batwoman = message.guild.roles.get('596075415898947584');
     const constantine = message.guild.roles.get('596075638285139988');
     const legends = message.guild.roles.get('596075305861513246');
-    let supergirl = message.guild.roles.get('596075165780017172');
+    const supergirl = message.guild.roles.get('596075165780017172');
+    const blacklightning = message.guild.roles.get('607633853527359488');
     let flaping = '';
     let arping = '';
     let bwping = '';
     let ctping = '';
     let lgping = '';
     let sgping = '';
+    let blping = '';
     const filter = m => m.author.id === message.author.id
     const collector = new Discord.MessageCollector(message.channel, filter, { time: 120000, errors: ['time'] });
     let avnews;
@@ -47,20 +49,31 @@ module.exports.run = async (gideon, message, args) => {
         supergirl.edit({ mentionable: false })
         .then(r => console.log(r.mentionable))
         .catch(console.error); 
+
+        blacklightning.edit({ mentionable: false })
+        .then(r => console.log(r.mentionable))
+        .catch(console.error);
      } 
 
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL\nYou\'ve got 120 seconds.')
     .then(function(message) {
-        message.react('⚡')
-			.then(() => message.react('🏹'))
-			.then(() => message.react('🌌'))
-			.then(() => message.react('⌛'))
-			.then(() => message.react('🦇'))
-			.then(() => message.react('🔥'))
+        message.react('598886586284900354')
+			.then(() => message.react('607658682246758445'))
+			.then(() => message.react('598886597244485654'))
+			.then(() => message.react('598886605641613353'))
+			.then(() => message.react('598886588545499186'))
+			.then(() => message.react('598886601476800513'))
+			.then(() => message.react('607657873534746634'))
             .catch(() => console.error);       
             
             const rfilter = (reaction, user) => {
-                return ['⚡', '🏹', '🌌', '⌛', '🦇', '🔥'].includes(reaction.emoji.name) && user.id === auth;
+                return ['flashemblem',
+                        'arrowlogo',
+                        'houseofel',
+                        'lotlogo',
+                        'batwoman',
+                        'constantineseal',
+                        'blacklightning'].includes(reaction.emoji.name) && user.id === auth;
             };
             
             const rcollector = message.createReactionCollector(rfilter, { time: 120000 });
@@ -69,45 +82,52 @@ module.exports.run = async (gideon, message, args) => {
                 if(reaction) ping = true;
                 console.log(ping);
                 console.log(`Collected ${reaction.emoji.name}`);
-                if (reaction.emoji.name === '⚡') {
+                if (reaction.emoji.name === 'flashemblem') {
                     console.log('flash');
                     flaping = flash;
                     flash.edit({ mentionable: true })
                     .then(r => console.log(r.mentionable))
                     .catch(console.error);
                 }
-                if (reaction.emoji.name === '🏹') {
+                if (reaction.emoji.name === 'arrowlogo') {
                     console.log('arrow');
                     arping = arrow;
                     arrow.edit({ mentionable: true })
                     .then(r => console.log(r.mentionable))
                     .catch(console.error);
                 }
-                if (reaction.emoji.name === '🌌') {
+                if (reaction.emoji.name === 'houseofel') {
                     console.log('supergirl');
                     sgping = supergirl;
                     supergirl.edit({ mentionable: true })
                     .then(r => console.log(r.mentionable))
                     .catch(console.error); 
                 }
-                if (reaction.emoji.name === '⌛') {
+                if (reaction.emoji.name === 'lotlogo') {
                     console.log('legends');
                     lgping = legends;
                     legends.edit({ mentionable: true })
                     .then(r => console.log(r.mentionable))
                     .catch(console.error);
                 }
-                if (reaction.emoji.name === '🦇') {
+                if (reaction.emoji.name === 'batwoman') {
                     console.log('batwoman');
                     bwping = batwoman;
                     batwoman.edit({ mentionable: true })
                     .then(r => console.log(r.mentionable))
                     .catch(console.error);
                 }
-                if (reaction.emoji.name === '🔥') {
+                if (reaction.emoji.name === 'constantineseal') {
                     console.log('constantine');
                     ctping = constantine;
                     constantine.edit({ mentionable: true })
+                    .then(r => console.log(r.mentionable))
+                    .catch(console.error);
+                }
+                if (reaction.emoji.name === 'blacklightning') {
+                    console.log('blacklightning');
+                    blping = blacklightning;
+                    blacklightning.edit({ mentionable: true })
                     .then(r => console.log(r.mentionable))
                     .catch(console.error);
                 }
@@ -136,8 +156,8 @@ module.exports.run = async (gideon, message, args) => {
         gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(news)
         .then(function(msgdl) {message.channel.bulkDelete(3);})
         .then(function(message) {
-        if(ping === true){
-            gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}`);
+        if(ping == true){
+            gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}${blping}`);
             };
         } ).then(function(sdmsg) {
             message.reply(`your news post has been sent to ${message.guild.channels.get('595944027208024085').toString()}!:white_check_mark:`);

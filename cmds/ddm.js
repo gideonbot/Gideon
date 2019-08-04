@@ -12,6 +12,7 @@ module.exports.run = async (gideon, message, args) => {
     let constantine = message.guild.roles.get('596075638285139988');
     let legends = message.guild.roles.get('596075305861513246');
     let supergirl = message.guild.roles.get('596075165780017172');
+    let blacklightning = message.guild.roles.get('607633853527359488');
 
     flash.edit({ mentionable: false })
     .then(r => console.log(r.mentionable))
@@ -34,6 +35,10 @@ module.exports.run = async (gideon, message, args) => {
     .catch(console.error);
 
     supergirl.edit({ mentionable: false })
+    .then(r => console.log(r.mentionable))
+    .catch(console.error);
+
+    blacklightning.edit({ mentionable: true })
     .then(r => console.log(r.mentionable))
     .catch(console.error);
 
