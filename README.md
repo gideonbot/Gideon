@@ -20,7 +20,7 @@ Gideon's features are as follows:
 * `!wikibl <term> - Searches the Black Lightning Wiki for the given term`
   
 * `!ep <show> NxNN - Fetches episode info`\
-  `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)`
+  `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning)`
   
 * `!nxeps - Displays a countdown to the next airing Arrowverse episodes`
   
@@ -36,10 +36,10 @@ Gideon's features are as follows:
   `(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision | stretchpunch | canarycry | batarang | sendtohell)`
   
 * `!rarbg <show> NxNN - Searches rarbg.to for the specified episode`\
-   `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)`
+   `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning)`
   
 * `!subs <lang> <show> NxNN - Searches opensubtitles.org for the specified episode`\
-  `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)`
+  `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning)`
    
 * `!wells - Calls a random Wells`
 

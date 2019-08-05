@@ -38,6 +38,9 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(agc.match(/(?:batwoman)/i)){
         showid = "tt8712204";
         showtitle = "Batwoman"; 
+    }   else if(agc.match(/(?:blacklightning)/i)){
+        showid = "tt6045840";
+        showtitle = "Black Lightning"; 
     }   else{
         return message.channel.send(`"${show}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman`)
     }
