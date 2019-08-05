@@ -16,6 +16,8 @@ Gideon's features are as follows:
 * `!help - Displays a list of commands`
 
 * `!wiki <term> - Searches the Arrowverse Wiki for the given term`
+
+* `!wikibl <term> - Searches the Black Lightning Wiki for the given term`
   
 * `!ep <show> NxNN - Fetches episode info`\
   `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)`
