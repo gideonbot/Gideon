@@ -54,7 +54,7 @@ module.exports.run = async (gideon, message, args) => {
 
         const sub = Object.values(subtitles)[0]
 
-        const subs = new Discord.RichEmbed()
+        const subs = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`Subtitles for: ${showtitle} ${season}x${episode}`)
         .setDescription(`Here are the 5 best results from opensubtitles.org:`)

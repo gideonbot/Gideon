@@ -144,7 +144,7 @@ module.exports.run = async (gideon, message, args) => {
             avnews = message.content;
         }
 
-        const news = new Discord.RichEmbed()
+        const news = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`Arrowverse News`)
         .setDescription(avnews)

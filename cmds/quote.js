@@ -33,7 +33,7 @@ module.exports.run = async (gideon, message, args) => {
                 let qpe = qp.replace(/(?:\/Quotes)/,'');
                 let qpb = qpe.replace(/(?:Arrow)/, 'Arrowverse') 
                 
-                const quote = new Discord.RichEmbed()
+                const quote = new Discord.MessageEmbed()
                 .setColor('#2791D3')
                 .setDescription(`**${chosenQuote}\n\n~${qpb}**`)
                 .setThumbnail(type.thumbnail)

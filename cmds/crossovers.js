@@ -1,7 +1,7 @@
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
-    const crossovers = new Discord.RichEmbed()
+    const crossovers = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__All Arrowverse crossover episodes in their respective watching order:__')
         .addField('Flash vs. Arrow', 'The Flash 1x08 - Flash vs. Arrow\nArrow 3x08 - The Brave and the Bold')  

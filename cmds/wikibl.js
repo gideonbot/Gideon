@@ -12,7 +12,7 @@ module.exports.run = async (gideon, message, args) => {
         if (!Object.keys(body.items).length) return message.channel.send(`There was no result for ${args.join(' ')} on the Arrowverse Wiki!\nPlease note that this command is case sensitive!`).catch(console.error);
         const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');       
                
-        const wikiart = new Discord.RichEmbed()
+        const wikiart = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle(article.title)
         .setDescription(article.abstract + `\n\n**[Click here to read the full article](https://arrow.fandom.com${url} 'https://arrow.fandom.com${url}')**`)

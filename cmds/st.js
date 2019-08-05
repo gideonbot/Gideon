@@ -11,7 +11,7 @@ module.exports.run = async (gideon, message, args) => {
     let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
     let rst = res.images[ranum].link;
 
-    const st = new Discord.RichEmbed()
+    const st = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setImage(rst)
         .setTimestamp()

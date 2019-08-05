@@ -4,7 +4,7 @@ module.exports.run = async (gideon, message, args) => {
     const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
 
     if(!args[0]){
-    const help = new Discord.RichEmbed()
+    const help = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__Use !help <module> to get a list of commands\nYou can check the list of available modules below:__')
         .addField('general', 'General helpful Arrowverse commands')  
@@ -19,7 +19,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     if(args[0].match(/(?:general)/i)){
-        const general = new Discord.RichEmbed()
+        const general = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__You can check the list of available commands below:__')
         .addField('!wiki <term>', 'Searches the Arrowverse Wiki for the given term')  
@@ -39,7 +39,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     if(args[0].match(/(?:fun)/i)){
-        const fun = new Discord.RichEmbed()
+        const fun = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__You can check the list of available commands below:__') 
         .addField('!meme', 'Displays a random Arrowverse meme')  
@@ -58,8 +58,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     if(args[0].match(/(?:admin)/i)){
-        const admin = new Discord.RichEmbed()
-	    .setColor('#2791D3')
+        const admin = new Discord.MessageEmbed()
 	    .setTitle('__You can check the list of available commands below:__')
         .addField('!news', 'News Team can use this to post news')  
         .addField('!edm', 'News Team can use this to enable the DCTV roles\' mentionability')  
@@ -82,7 +81,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     if(args[0].match(/(?:misc)/i)){
-        const misc = new Discord.RichEmbed()
+        const misc = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__You can check the list of available commands below:__')
         .addField('!JPK', 'Displays a random JPK gif')

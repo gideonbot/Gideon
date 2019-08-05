@@ -12,7 +12,7 @@ module.exports.run = async (gideon, message, args) => {
     await delay (1000);
     message.channel.send("ALERT SYSTEM FAILURE");
 
-    const explosion = new Discord.RichEmbed()
+    const explosion = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setImage('https://i.imgur.com/opCbZTn.gif')
         .setTimestamp()
@@ -70,7 +70,7 @@ module.exports.run = async (gideon, message, args) => {
         pwrgif = rdgif;
     }
 
-    const power = new Discord.RichEmbed()
+    const power = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(pwrtitle)
         .setDescription(pwrdesc)

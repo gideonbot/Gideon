@@ -43,7 +43,6 @@ module.exports.run = async (gideon, message, args) => {
     .catch(console.error);
 
     message.channel.send('The DCTV roles are now mentionable!:white_check_mark: ');
-
     }
 }
 

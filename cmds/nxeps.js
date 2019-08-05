@@ -223,7 +223,7 @@ module.exports.run = async (gideon, message, args) => {
     nxblep2 = `Will air in ${bldiffDays} ${d} on ${blad.toDateString()} at ${bltimeString} ET on ${blchannel}`;
     }
 
-    const countdown = new Discord.RichEmbed()
+    const countdown = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('__Next upcoming Arrowverse episodes:__')
     .addField(`${flatitle} ${nxflaep1}`, `${nxflaep2}`)

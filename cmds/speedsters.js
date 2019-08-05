@@ -50,7 +50,7 @@ module.exports.run = async (gideon, message, args) => {
 
         const body = await fetch(api).then(res => res.json());
 
-        const speedster = new Discord.RichEmbed()
+        const speedster = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`${body[spnum].speedster}`)
         .addField(`*Lightning Color(s) (Electrokinesis)*`, `${body[spnum].lightningColorsElectrokinesis}`)

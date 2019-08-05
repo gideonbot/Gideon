@@ -85,7 +85,7 @@ module.exports.run = async (gideon, message, args) => {
         return message.channel.send('You must supply a valid attack!');
     }
 
-    const attack = new Discord.RichEmbed()
+    const attack = new Discord.MessageEmbed()
 	.setColor('#2791D3')
     .setDescription(`**${emote}${auth} ${chosenattack}${emote}**\n\n${chosendesc}`)
 	.setImage(attackgif)

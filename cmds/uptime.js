@@ -9,7 +9,7 @@ module.exports.run = async (gideon, message, args) => {
     let seconds = totalSeconds % 60;
     let uptime = `${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
 
-    const uptme = new Discord.RichEmbed()
+    const uptme = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('Enter Flashtime!')
     .setDescription(uptime)

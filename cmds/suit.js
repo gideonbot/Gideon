@@ -64,7 +64,7 @@ module.exports.run = async (gideon, message, args) => {
         return message.channel.send('You must supply a valid character!\nCurrently available: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan');
     }
 
-    const suit = new Discord.RichEmbed()
+    const suit = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(suittle)
         .setDescription(suitdesc)

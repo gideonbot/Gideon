@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
     const time = `${tbody[ratime].date}`;
     const year = time.substr(-4);
 
-    const course = new Discord.RichEmbed()
+    const course = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`Course set to ${destination} ${year}`)
     .setImage('https://i.imgur.com/I3UQhVu.gif')

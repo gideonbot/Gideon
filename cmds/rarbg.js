@@ -41,7 +41,7 @@ module.exports.run = async (gideon, message, args) => {
     }).then(response => {
     console.log(response);
     
-    const epdwn = new Discord.RichEmbed()
+    const epdwn = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(rbs)
     .setDescription(`:warning:Always enable a VPN before downloading!:warning:`)
