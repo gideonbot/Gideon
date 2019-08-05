@@ -11,7 +11,7 @@
   "license": "GPLv2",
   "dependencies": {
     "delay": "^4.3.0",
-    "discord.js": "^11.5.1",
+    "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.0.0",
     "imgur-node": "^0.2.0",
     "node-fetch": "^2.6.0",

@@ -70,4 +70,4 @@ gideon.on('message', async message => {
     command.run(gideon, message, args);
 })
 
-gideon.login();
+gideon.login(process.env.CLIENT_TOKEN);
