@@ -24,6 +24,7 @@ module.exports.run = async (gideon, message, args) => {
 	    .setColor('#2791D3')
 	    .setTitle('__You can check the list of available commands below:__')
         .addField('!wiki <term>', 'Searches the Arrowverse Wiki for the given term')  
+        .addField('!wikibl <term>', 'Searches the Black Lightning Wiki for the given term')  
         .addField('!ep <show> NxNN', 'Fetches episode info\n(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)')  
         .addField('!nxeps', 'Displays a countdown to the next airing Arrowverse episodes')  
         .addField('!rarbg <show> NxNN', 'Searches rarbg.to for the specified episode \n(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)')
