@@ -1,13 +1,11 @@
 const Discord = module.require("discord.js");
-const snekfetch = require("snekfetch");
+const fetch = require('node-fetch');
 
 module.exports.run = async (gideon, message, args) => {
     const titlesapi = `https://api.myjson.com/bins/l583v`;
 
-    snekfetch.get(titlesapi).then(r => {
-        console.log(r.body);
-        let body = r.body;
-        let rt = body.sections[0].content;
+    const tbody = await fetch(titlesapi).then(res => res.json());
+        let rt = tbody.sections[0].content;
         let min = 0;
         let max = rt.length - 1;
         console.log(rt);
@@ -16,26 +14,22 @@ module.exports.run = async (gideon, message, args) => {
         console.log(title); 
 
         const idapi = `https://dc.fandom.com/api/v1/Articles/Details?ids=50&titles=${title}&abstract=100&width=200&height=200`;
-        
-        snekfetch.get(idapi).then(r => {
-        console.log(r.body);
-        let body = r.body;
-        const type = Object.values(body.items)[0];
+
+        const idbody = await fetch(idapi).then(res => res.json());
+        const type = Object.values(idbody.items)[0];
         let id = type.id;
         const api = `https://dc.fandom.com/api/v1/Articles/AsSimpleJson?id=${id}`;
 
-            snekfetch.get(api).then(r => {
-                console.log(r.body);
-                let body = r.body;
-                let rq = body.sections[0].content;
-                let min = 0;
-                let max = rq.length - 1;
+            const qbody = await fetch(api).then(res => res.json());            
+                let rq = qbody.sections[0].content;
+                let qmin = 0;
+                let qmax = rq.length - 1;
                 console.log(rq);
-                let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
-                const chosenQuote = rq[ranum].text;
+                let qranum = Math.floor(Math.random()*(qmax - qmin + 1)) + min;
+                const chosenQuote = rq[qranum].text;
                 console.log(chosenQuote);               
 
-                let qp = body.sections[0].title;
+                let qp = qbody.sections[0].title;
                 let qpe = qp.replace(/(?:\/Quotes)/,'');
                 let qpb = qpe.replace(/(?:Arrow)/, 'Arrowverse') 
                 
@@ -47,9 +41,7 @@ module.exports.run = async (gideon, message, args) => {
                 .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
                 message.channel.send(quote); 
-            });      
-        });  
-    });
+                
 }
 
 module.exports.help = {

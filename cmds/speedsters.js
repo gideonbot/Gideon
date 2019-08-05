@@ -1,5 +1,5 @@
 const Discord = module.require("discord.js");
-const snekfetch = require("snekfetch");
+const fetch = require('node-fetch');
 
 module.exports.run = async (gideon, message, args) => {
     if(!args[0]) return message.channel.send("You must supply a speedsters name or alter ego and their home universe!");
@@ -47,10 +47,8 @@ module.exports.run = async (gideon, message, args) => {
     }   else{
         return message.channel.send(`"${ssd}" is not a valid argument!\nCheck the command's syntax and retry!`)
     }  
-    
-    snekfetch.get(api).then(r => {
-        console.log(r.body);
-        let body = r.body;          
+
+        const body = await fetch(api).then(res => res.json());
 
         const speedster = new Discord.RichEmbed()
         .setColor('#2791D3')
@@ -65,8 +63,6 @@ module.exports.run = async (gideon, message, args) => {
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
         message.channel.send(speedster);
-
-    });
 }
 module.exports.help = {
     name: "sp"

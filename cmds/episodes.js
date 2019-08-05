@@ -1,5 +1,5 @@
 const Discord = module.require("discord.js");
-const snekfetch = require("snekfetch");
+const fetch = require('node-fetch');
 
 module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
@@ -51,21 +51,22 @@ module.exports.run = async (gideon, message, args) => {
 
     const api = `http://api.tvmaze.com/shows/${showid}/episodebynumber?season=${season}&number=${episode}`;
     
-    snekfetch.get(api).then(r => {
-        console.log(r.body);
-        let body = r.body;   
+    const body = await fetch(api).then(res => res.json()).then(function(res) {
+        if (res.status == 404) {
+            return message.channel.send(`There was no data for this episode!`).catch(console.error);
+        }});
         let airdate = new Date(body.airdate);
         let airtime = body.airtime;
         let desc;
         let img;
 
-        if (r.body.summary === null){
+        if (body.summary === null){
             desc = 'No summary available'
         }   else {
             let sum = body.summary.substring(3);
             desc = sum.substring(0, sum.length -4); 
             img = body.image.original;
-        }                 
+        }             
 
         let timeString = airtime;
         let H = +timeString.substr(0, 2);
@@ -82,10 +83,6 @@ module.exports.run = async (gideon, message, args) => {
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
         message.channel.send(epinfo);
-
-    }, failed => { 
-        if (failed) return message.channel.send(`There was no data for this episode!`).catch(console.error);
-     });
 }
 module.exports.help = {
     name: "ep"

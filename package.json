@@ -14,8 +14,8 @@
     "discord.js": "^11.5.1",
     "dotenv": "^8.0.0",
     "imgur-node": "^0.2.0",
+    "node-fetch": "^2.6.0",
     "opensubtitles-api": "^5.0.1",
-    "rarbg": "^1.2.7",
-    "snekfetch": "^4.0.4"
+    "rarbg": "^1.2.7"
   }
 }
