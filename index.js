@@ -28,7 +28,7 @@ fs.readdir("./cmds", (err, files) => {
 gideon.once('ready', async () => {
     setInterval(() => {
         const tmvt = gideon.guilds.get('595318490240385037');
-        let mbc = tmvt.memberCount;
+        let mbc = tmvt.members.filter(member => !member.user.bot).size;
         let st1 = `!help | invite.gg/tmvt`;
         let st2 = `${mbc} Time Vault members`;
         let statuses = [st1, st2];
