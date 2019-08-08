@@ -29,6 +29,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!rarbg <show> NxNN', 'Searches rarbg.to for the specified episode \n(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)')
         .addField('!subs <lang> <show> NxNN', 'Searches opensubtitles.org for the specified episode \n(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman)')
         .addField('!sp <name/alter ego> eN', 'Fetches Speedster info')
+        .addField('!abilites <term>', 'Fetches abilities')
         .addField('!crossovers', 'Displays a list of all Arrowverse crossover episodes in their respective watching order')
         .addField('!suit <character>', 'Displays newly revealed suits\n(currently: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan)') 
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)

@@ -47,6 +47,8 @@ Gideon's features are as follows:
    `(currently: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan)`
    
 * `!sp <name/alter ego> eN - Fetches Speedster info`
+
+* `!abilites <term> - Fetches abilities`
   
 * `!crossovers - Displays a list of all Arrowverse crossover episodes in their respective watching order`
 
