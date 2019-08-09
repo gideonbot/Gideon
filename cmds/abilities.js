@@ -88,7 +88,7 @@ module.exports.run = async (gideon, message, args) => {
         .setPage(1)
         .build();
     }else if(args[0].match(/(?:viber)/i)){
-        const fun = new Discord.MessageEmbed()
+        const viber = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__Vibers posess the following abilities:__') 
         .addField('Meta-human physiology', 'Vibers posess altered DNA and physiology to access dimensional energy.')  
@@ -100,7 +100,7 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
     	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
-        message.channel.send(fun);
+        message.channel.send(viber);
     }else if(args[0].match(/(?:kryptonian)/i)){
         const kr1 = new Discord.MessageEmbed()
 	    .setTitle('__Kryptonians posess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
