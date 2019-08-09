@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 module.exports.run = async (gideon, message, args) => {
     const api = 'https://api.github.com/repos/adrifcastr/Gideon';
 
-    const body = await fetch(destapi).then(res => res.json()); 
+    const body = await fetch(api).then(res => res.json()); 
     let upDate = new Date(body.updated_at);
 
     const github = new Discord.MessageEmbed()

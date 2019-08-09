@@ -27,31 +27,24 @@ module.exports.run = async (gideon, message, args) => {
 
     function ddm() {
         flash.edit({ mentionable: false })
-        .then(r => console.log(r.mentionable))
         .catch(console.error);
 
         arrow.edit({ mentionable: false })
-        .then(r => console.log(r.mentionable))
         .catch(console.error);
 
         batwoman.edit({ mentionable: false })
-        .then(r => console.log(r.mentionable))
         .catch(console.error);
 
         constantine.edit({ mentionable: false })
-        .then(r => console.log(r.mentionable))
         .catch(console.error);
 
         legends.edit({ mentionable: false })
-        .then(r => console.log(r.mentionable))
         .catch(console.error);
 
         supergirl.edit({ mentionable: false })
-        .then(r => console.log(r.mentionable))
         .catch(console.error); 
 
         blacklightning.edit({ mentionable: false })
-        .then(r => console.log(r.mentionable))
         .catch(console.error);
      } 
 
@@ -80,48 +73,40 @@ module.exports.run = async (gideon, message, args) => {
         
             rcollector.on('collect', (reaction, reactionCollector) => {
                 if(reaction) ping = true;
-                console.log(ping);
                 console.log(`Collected ${reaction.emoji.name}`);
                 if (reaction.emoji.name === 'flashemblem') {
                     flaping = flash;
                     flash.edit({ mentionable: true })
-                    .then(r => console.log(r.mentionable))
                     .catch(console.error);
                 }
                 if (reaction.emoji.name === 'arrowlogo') {
                     arping = arrow;
                     arrow.edit({ mentionable: true })
-                    .then(r => console.log(r.mentionable))
                     .catch(console.error);
                 }
                 if (reaction.emoji.name === 'houseofel') {
                     sgping = supergirl;
                     supergirl.edit({ mentionable: true })
-                    .then(r => console.log(r.mentionable))
                     .catch(console.error); 
                 }
                 if (reaction.emoji.name === 'lotlogo') {
                     lgping = legends;
                     legends.edit({ mentionable: true })
-                    .then(r => console.log(r.mentionable))
                     .catch(console.error);
                 }
                 if (reaction.emoji.name === 'batwoman') {
                     bwping = batwoman;
                     batwoman.edit({ mentionable: true })
-                    .then(r => console.log(r.mentionable))
                     .catch(console.error);
                 }
                 if (reaction.emoji.name === 'constantineseal') {
                     ctping = constantine;
                     constantine.edit({ mentionable: true })
-                    .then(r => console.log(r.mentionable))
                     .catch(console.error);
                 }
                 if (reaction.emoji.name === 'blacklightning') {
                     blping = blacklightning;
                     blacklightning.edit({ mentionable: true })
-                    .then(r => console.log(r.mentionable))
                     .catch(console.error);
                 }
             });

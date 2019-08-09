@@ -15,31 +15,24 @@ module.exports.run = async (gideon, message, args) => {
     let blacklightning = message.guild.roles.get('607633853527359488');
 
     flash.edit({ mentionable: false })
-    .then(r => console.log(r.mentionable))
     .catch(console.error);
 
     arrow.edit({ mentionable: false })
-    .then(r => console.log(r.mentionable))
     .catch(console.error);
 
     batwoman.edit({ mentionable: false })
-    .then(r => console.log(r.mentionable))
     .catch(console.error);
 
     constantine.edit({ mentionable: false })
-    .then(r => console.log(r.mentionable))
     .catch(console.error);
 
     legends.edit({ mentionable: false })
-    .then(r => console.log(r.mentionable))
     .catch(console.error);
 
     supergirl.edit({ mentionable: false })
-    .then(r => console.log(r.mentionable))
     .catch(console.error);
 
     blacklightning.edit({ mentionable: true })
-    .then(r => console.log(r.mentionable))
     .catch(console.error);
 
     message.channel.send('The DCTV roles are now no longer mentionable!:white_check_mark: ');

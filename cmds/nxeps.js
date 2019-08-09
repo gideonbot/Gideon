@@ -9,8 +9,7 @@ module.exports.run = async (gideon, message, args) => {
     const bwomanapi = 'http://api.tvmaze.com/shows/37776?embed=nextepisode';
     const blightningapi = 'http://api.tvmaze.com/shows/20683?embed=nextepisode';
     const oneDay = 24*60*60*1000;
-    const today = new Date()
-    console.log(today);
+    const today = new Date();
     let d;
 
     const flabody = await fetch(flashapi).then(res => res.json());
@@ -26,7 +25,6 @@ module.exports.run = async (gideon, message, args) => {
     const flaepname = flabody._embedded.nextepisode.name;
     const fladate = flabody._embedded.nextepisode.airdate;
     const flaad = new Date(fladate);
-    console.log(fladate);
     let flatime = flabody._embedded.nextepisode.airtime;
     const flachannel = flabody.network.name;
 
@@ -61,7 +59,6 @@ module.exports.run = async (gideon, message, args) => {
     const arepname = arbody._embedded.nextepisode.name;
     const ardate = arbody._embedded.nextepisode.airdate;
     const arad = new Date(ardate);
-    console.log(ardate);
     let artime = arbody._embedded.nextepisode.airtime;
     const archannel = arbody.network.name;
 
@@ -96,7 +93,6 @@ module.exports.run = async (gideon, message, args) => {
     const sgepname = sgbody._embedded.nextepisode.name;
     const sgdate = sgbody._embedded.nextepisode.airdate;
     const sgad = new Date(sgdate);
-    console.log(sgdate);
     let sgtime = sgbody._embedded.nextepisode.airtime;
     const sgchannel = sgbody.network.name;
 
@@ -131,7 +127,6 @@ module.exports.run = async (gideon, message, args) => {
     const lgepname = lgbody._embedded.nextepisode.name;
     const lgdate = lgbody._embedded.nextepisode.airdate;
     const lgad = new Date(lgdate);
-    console.log(lgdate);
     let lgtime = lgbody._embedded.nextepisode.airtime;
     const lgchannel = lgbody.network.name;
 
@@ -166,7 +161,6 @@ module.exports.run = async (gideon, message, args) => {
     const bwepname = bwbody._embedded.nextepisode.name;
     const bwdate = bwbody._embedded.nextepisode.airdate;
     const bwad = new Date(bwdate);
-    console.log(bwdate);
     let bwtime = bwbody._embedded.nextepisode.airtime;
     const bwchannel = bwbody.network.name;
 
@@ -201,7 +195,6 @@ module.exports.run = async (gideon, message, args) => {
     const blepname = blbody._embedded.nextepisode.name;
     const bldate = blbody._embedded.nextepisode.airdate;
     const blad = new Date(bldate);
-    console.log(bldate);
     let bltime = blbody._embedded.nextepisode.airtime;
     const blchannel = blbody.network.name;
 

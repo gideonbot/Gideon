@@ -9,7 +9,6 @@ module.exports.run = async (gideon, message, args) => {
 
     imgclient.album.get(rjpka, (err, res) => {
     if (err) console.error(err);
-    console.log(res);  
     let min = 0;
     let max = res.images.length - 1;
     let ranum = Math.floor(Math.random()*(max - min + 1)) + min;

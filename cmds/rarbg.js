@@ -6,8 +6,7 @@ module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
     if(!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
 
-    let seip = args.toString().substr(-4)
-    console.log(seip);
+    let seip = args.toString().substr(-4);
     let season = seip[0];
     let episode = seip[2] + seip[3];
     let show = args.join(' ');
@@ -39,7 +38,6 @@ module.exports.run = async (gideon, message, args) => {
     sort: 'last',
     category: [rarbg.categories.TV_HD_EPISODES, rarbg.categories.TV_EPISODES],
     }).then(response => {
-    console.log(response);
     
     const epdwn = new Discord.MessageEmbed()
     .setColor('#2791D3')

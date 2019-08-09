@@ -15,7 +15,7 @@ module.exports.run = async (gideon, message, args) => {
         const wikiart = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle(article.title)
-        .setDescription(article.abstract + `\n\n**[Click here to read the full article](https://arrow.fandom.com${url} 'https://arrow.fandom.com${url}')**`)
+        .setDescription(article.abstract + `\n\n**[Click here to read the full article](https://blacklightning.fandom.com${url} 'https://blacklightning.fandom.com${url}')**`)
 	    .setThumbnail(article.thumbnail)
     	.setTimestamp()
     	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')

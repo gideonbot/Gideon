@@ -1,5 +1,4 @@
 const Discord = module.require("discord.js");
-const delay = require('delay');
 
 module.exports.run = async (gideon, message, args) => {      
     if(!args[0]) return message.channel.send("You must supply a character!");

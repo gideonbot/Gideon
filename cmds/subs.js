@@ -53,7 +53,6 @@ module.exports.run = async (gideon, message, args) => {
         imdbid: showid,           
 
     }).then(subtitles => {
-        console.log(subtitles);
 
         const sub = Object.values(subtitles)[0]
 
