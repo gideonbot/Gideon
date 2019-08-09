@@ -14,9 +14,7 @@ module.exports.run = async (gideon, message, args) => {
     	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
         message.channel.send(cmdinfo);
-    }
-
-    if(args[0].match(/(?:speedster)/i)){
+    }else if(args[0].match(/(?:speedster)/i)){
         const sp1 = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__Speedsters posess the following abilities:__')
@@ -89,9 +87,7 @@ module.exports.run = async (gideon, message, args) => {
         .setPageIndicator(true)
         .setPage(1)
         .build();
-    }
-
-    if(args[0].match(/(?:viber)/i)){
+    }else if(args[0].match(/(?:viber)/i)){
         const fun = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__Vibers posess the following abilities:__') 
@@ -105,9 +101,7 @@ module.exports.run = async (gideon, message, args) => {
     	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
         message.channel.send(fun);
-    }
-
-    if(args[0].match(/(?:kryptonian)/i)){
+    }else if(args[0].match(/(?:kryptonian)/i)){
         const kr1 = new Discord.MessageEmbed()
 	    .setTitle('__Kryptonians posess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
         .addField('Kryptonian physiology', 'A kryptonians capabilities are no greater than those of a human. However, once charged by the energy spectrum of a yellow sun, they become able to perform various inhuman feats.')  
@@ -176,6 +170,8 @@ module.exports.run = async (gideon, message, args) => {
         .setPageIndicator(true)
         .setPage(1)
         .build();
+    }else{
+        return message.channel.send(`${args[0]} is not a valid argument!`);
     }
 }   
 

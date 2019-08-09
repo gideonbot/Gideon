@@ -16,9 +16,7 @@ module.exports.run = async (gideon, message, args) => {
     	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
         message.channel.send(help);
-    }
-
-    if(args[0].match(/(?:general)/i)){
+    }else if(args[0].match(/(?:general)/i)){
         const general = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__You can check the list of available commands below:__')
@@ -37,9 +35,7 @@ module.exports.run = async (gideon, message, args) => {
     	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
         message.channel.send(general);
-    }
-
-    if(args[0].match(/(?:fun)/i)){
+    }else if(args[0].match(/(?:fun)/i)){
         const fun = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__You can check the list of available commands below:__') 
@@ -56,9 +52,7 @@ module.exports.run = async (gideon, message, args) => {
     	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png');
 
         message.channel.send(fun);
-    }
-
-    if(args[0].match(/(?:admin)/i)){
+    }else if(args[0].match(/(?:admin)/i)){
         const admin = new Discord.MessageEmbed()
 	    .setTitle('__You can check the list of available commands below:__')
         .addField('!news', 'News Team can use this to post news')  
@@ -79,9 +73,7 @@ module.exports.run = async (gideon, message, args) => {
     	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
         message.channel.send(admin);
-    }
-
-    if(args[0].match(/(?:misc)/i)){
+    }else if(args[0].match(/(?:misc)/i)){
         const misc = new Discord.MessageEmbed()
 	    .setColor('#2791D3')
 	    .setTitle('__You can check the list of available commands below:__')
@@ -98,6 +90,8 @@ module.exports.run = async (gideon, message, args) => {
     	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
         message.channel.send(misc);
+    }else{
+        return message.channel.send(`${args[0]} is not a valid argument!`);
     }
 }   
 
