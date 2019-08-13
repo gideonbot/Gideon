@@ -156,7 +156,7 @@ module.exports.run = async (gideon, message, args) => {
     })
 
     collector.on('end', (collected, reason) => {
-        if(reason === 'time') message.channel.send("You ran out of time!");
+        if(reason === 'time') return message.channel.send("You ran out of time!");
       });
     }
 
