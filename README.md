@@ -44,7 +44,7 @@ Gideon's features are as follows:
 * `!wells - Calls a random Wells`
 
 * `!suit <character> - Displays newly revealed suits`\
-   `(currently: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan)`
+   `(currently: killer frost | supergirl | arrow | flash | batwoman | black siren | spartan)`
    
 * `!sp <name/alter ego> eN - Fetches Speedster info`
 
