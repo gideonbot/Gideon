@@ -3,7 +3,7 @@ const Discord = module.require("discord.js");
 module.exports.run = async (gideon, message, args) => {
     const auth = message.author;
     let atc = args[0];
-    if(!atc) return message.channel.send("You must supply an attack and a victim!\nAvailable attacks: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision | stretchpunch | canarycry | batarang | sendtohell");
+    if(!atc) return message.channel.send("You must supply an attack and a victim!\nAvailable attacks: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision | stretchpunch | canarycry | batarang | sendtohell | thunderclap | elblast | fireblast");
 
     function getUserFromMention(mention) {
         if (!mention) return;
@@ -81,6 +81,21 @@ module.exports.run = async (gideon, message, args) => {
         chosendesc = 'Show yourself, \'cause I\'m a nasty piece of work!';
         emote = ':fire:';
         attackgif = 'https://i.imgur.com/KvVXuyj.gif';
+    }   else if(atc.match(/(?:thunderclap)/i)){
+        chosenattack = `you used your thunderclap on ${user}`;
+        chosendesc = 'BANGARANG!';
+        emote = ':clap::skin-tone-1:';
+        attackgif = 'https://i.imgur.com/4euvzox.gif';
+    }   else if(atc.match(/(?:elblast)/i)){
+        chosenattack = `you electro-blasted ${user}`;
+        chosendesc = 'It\'s time that people know, that Black Lightning is back!';
+        emote = ':zap:';
+        attackgif = 'https://i.imgur.com/3Rj426N.gif';
+    }   else if(atc.match(/(?:fireblast)/i)){
+        chosenattack = `you fire-blasted ${user}`;
+        chosendesc = 'FHOOM!';
+        emote = ':fire:';
+        attackgif = 'https://i.imgur.com/SNuMve9.gif';
     }   else {
         return message.channel.send('You must supply a valid attack!');
     }
