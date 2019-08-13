@@ -13,6 +13,7 @@ module.exports.run = async (gideon, message, args) => {
     let legends = message.guild.roles.get('596075305861513246');
     let supergirl = message.guild.roles.get('596075165780017172');
     let blacklightning = message.guild.roles.get('607633853527359488');
+    const AV2020 = message.guild.roles.get('610867040961560625');
 
     flash.edit({ mentionable: true })
     .catch(console.error);
@@ -33,6 +34,9 @@ module.exports.run = async (gideon, message, args) => {
     .catch(console.error);
 
     blacklightning.edit({ mentionable: true })
+    .catch(console.error);
+
+    AV2020.edit({ mentionable: true })
     .catch(console.error);
 
     message.channel.send('The DCTV roles are now mentionable!:white_check_mark: ');

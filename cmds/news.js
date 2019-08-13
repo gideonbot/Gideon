@@ -12,6 +12,7 @@ module.exports.run = async (gideon, message, args) => {
     const legends = message.guild.roles.get('596075305861513246');
     const supergirl = message.guild.roles.get('596075165780017172');
     const blacklightning = message.guild.roles.get('607633853527359488');
+    const AV2020 = message.guild.roles.get('610867040961560625');
     let flaping = '';
     let arping = '';
     let bwping = '';
@@ -19,6 +20,7 @@ module.exports.run = async (gideon, message, args) => {
     let lgping = '';
     let sgping = '';
     let blping = '';
+    let AV2020ping = '';
     const filter = m => m.author.id === message.author.id
     const collector = new Discord.MessageCollector(message.channel, filter, { time: 120000, errors: ['time'] });
     let avnews;
@@ -45,6 +47,9 @@ module.exports.run = async (gideon, message, args) => {
 
         blacklightning.edit({ mentionable: false })
         .catch(console.error);
+
+        AV2020.edit({ mentionable: false })
+        .catch(console.error);
      } 
 
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.')
@@ -56,6 +61,7 @@ module.exports.run = async (gideon, message, args) => {
 			.then(() => message.react('598886588545499186'))
 			.then(() => message.react('598886601476800513'))
 			.then(() => message.react('607657873534746634'))
+			//.then(() => message.react(''))
             .catch(() => console.error);       
             
             const rfilter = (reaction, user) => {
@@ -65,7 +71,8 @@ module.exports.run = async (gideon, message, args) => {
                         'lotlogo',
                         'batwoman',
                         'constantineseal',
-                        'blacklightning'].includes(reaction.emoji.name) && user.id === auth;
+                        'blacklightning',
+                        'AV2020'].includes(reaction.emoji.name) && user.id === auth;
             };
             
             const rcollector = message.createReactionCollector(rfilter, { time: 120000 });
@@ -106,6 +113,11 @@ module.exports.run = async (gideon, message, args) => {
                 if (reaction.emoji.name === 'blacklightning') {
                     blping = blacklightning;
                     blacklightning.edit({ mentionable: true })
+                    .catch(console.error);
+                }
+                if (reaction.emoji.name === 'AV2020') {
+                    AV2020ping = AV2020;
+                    AV2020.edit({ mentionable: true })
                     .catch(console.error);
                 }
             });

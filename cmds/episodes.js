@@ -45,6 +45,10 @@ module.exports.run = async (gideon, message, args) => {
         showid = "20683";
         showtitle = "Black Lightning"; 
         channel = 'The CW';
+    }   else if(agc.match(/(?:av2020)/i)){
+        showid = "av2020";
+        showtitle = "av2020"; 
+        channel = 'The CW';
     }   else{
         return message.channel.send(`"${show}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning`)
     }  

@@ -8,6 +8,7 @@ module.exports.run = async (gideon, message, args) => {
     const legendsapi = 'http://api.tvmaze.com/shows/1851?embed=nextepisode';
     const bwomanapi = 'http://api.tvmaze.com/shows/37776?embed=nextepisode';
     const blightningapi = 'http://api.tvmaze.com/shows/20683?embed=nextepisode';
+    const AV2020api = 'http://api.tvmaze.com/shows/AV2020?embed=nextepisode';
     const oneDay = 24*60*60*1000;
     const today = new Date();
     let d;
@@ -216,6 +217,40 @@ module.exports.run = async (gideon, message, args) => {
     nxblep2 = `Will air in ${bldiffDays} ${d} on ${blad.toDateString()} at ${bltimeString} ET on ${blchannel}`;
     }
 
+    const AV2020body = await fetch(AV2020api).then(res => res.json());
+    const AV2020title = AV2020body.name;
+    var nxAV2020ep1 = '';
+    var nxAV2020ep2 = '';
+
+    if(!AV2020body.hasOwnProperty('_embedded')){
+        nxAV2020ep2 = 'No Episode data available yet';
+    }   else{ 
+    const AV2020season = AV2020body._embedded.nextepisode.season;
+    const AV2020number = AV2020body._embedded.nextepisode.number;
+    const AV2020epname = AV2020body._embedded.nextepisode.name;
+    const AV2020date = AV2020body._embedded.nextepisode.airdate;
+    const AV2020ad = new Date(AV2020date);
+    let AV2020time = AV2020body._embedded.nextepisode.airtime;
+    const AV2020channel = AV2020body.network.name;
+
+    let AV2020timeString = AV2020time;
+    let H = +AV2020timeString.substr(0, 2);
+    let h = H % 12 || 12;
+    let ampm = (H < 12 || H === 24) ? " AM" : " PM";
+    AV2020timeString = h + AV2020timeString.substr(2, 3) + ampm;
+
+    const AV2020diffDays = Math.round(Math.abs((today.getTime() - AV2020ad.getTime())/(oneDay)));
+
+    if(AV2020diffDays === 1){
+        d = 'day';
+    }   else{
+        d = 'days';
+    }
+    
+    nxAV2020ep1 = `${AV2020season}x${AV2020number<10?"0"+AV2020number:AV2020number} - ${AV2020epname}`;
+    nxAV2020ep2 = `Will air in ${AV2020diffDays} ${d} on ${AV2020ad.toDateString()} at ${AV2020timeString} ET on ${AV2020channel}`;
+    }
+
     const countdown = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('__Next upcoming Arrowverse episodes:__')
@@ -225,6 +260,7 @@ module.exports.run = async (gideon, message, args) => {
     .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
     .addField(`${bwtitle} ${nxbwep1}`, `${nxbwep2}`)
     .addField(`${bltitle} ${nxblep1}`, `${nxblep2}`)
+    //.addField(`${AV2020title} ${nxAV2020ep1}`, `${nxAV2020ep2}`)
     .setTimestamp()
     .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
