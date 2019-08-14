@@ -26,31 +26,59 @@ module.exports.run = async (gideon, message, args) => {
     let avnews;
     let ping = false;
 
-    function ddm() {
-        flash.edit({ mentionable: false })
-        .catch(console.error);
+    async function edm() {
+    flash.edit({ mentionable: true })
+    .catch(console.error);
 
-        arrow.edit({ mentionable: false })
-        .catch(console.error);
+    arrow.edit({ mentionable: true })
+    .catch(console.error);
 
-        batwoman.edit({ mentionable: false })
-        .catch(console.error);
+    batwoman.edit({ mentionable: true })
+    .catch(console.error);
 
-        constantine.edit({ mentionable: false })
-        .catch(console.error);
+    constantine.edit({ mentionable: true })
+    .catch(console.error);
 
-        legends.edit({ mentionable: false })
-        .catch(console.error);
+    legends.edit({ mentionable: true })
+    .catch(console.error);
 
-        supergirl.edit({ mentionable: false })
-        .catch(console.error); 
+    supergirl.edit({ mentionable: true })
+    .catch(console.error);
 
-        blacklightning.edit({ mentionable: false })
-        .catch(console.error);
+    blacklightning.edit({ mentionable: true })
+    .catch(console.error);
 
-        AV2020.edit({ mentionable: false })
-        .catch(console.error);
-     } 
+    AV2020.edit({ mentionable: true })
+    .catch(console.error);
+    } 
+
+    async function ddm() {
+    flash.edit({ mentionable: false })
+    .catch(console.error);
+
+    arrow.edit({ mentionable: false })
+    .catch(console.error);
+
+    batwoman.edit({ mentionable: false })
+    .catch(console.error);
+
+    constantine.edit({ mentionable: false })
+    .catch(console.error);
+
+    legends.edit({ mentionable: false })
+    .catch(console.error);
+
+    supergirl.edit({ mentionable: false })
+    .catch(console.error); 
+
+    blacklightning.edit({ mentionable: false })
+    .catch(console.error);
+
+    AV2020.edit({ mentionable: false })
+    .catch(console.error);
+    } 
+
+    await edm();
 
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.')
     .then(function(message) {
@@ -79,46 +107,31 @@ module.exports.run = async (gideon, message, args) => {
         
             rcollector.on('collect', (reaction, reactionCollector) => {
                 if(reaction) ping = true;
+
                 console.log(`Collected ${reaction.emoji.name}`);
                 if (reaction.emoji.name === 'flashemblem') {
                     flaping = flash;
-                    flash.edit({ mentionable: true })
-                    .catch(console.error);
                 }
                 if (reaction.emoji.name === 'arrowlogo') {
                     arping = arrow;
-                    arrow.edit({ mentionable: true })
-                    .catch(console.error);
                 }
                 if (reaction.emoji.name === 'houseofel') {
                     sgping = supergirl;
-                    supergirl.edit({ mentionable: true })
-                    .catch(console.error); 
                 }
                 if (reaction.emoji.name === 'lotlogo') {
                     lgping = legends;
-                    legends.edit({ mentionable: true })
-                    .catch(console.error);
                 }
                 if (reaction.emoji.name === 'batwoman') {
                     bwping = batwoman;
-                    batwoman.edit({ mentionable: true })
-                    .catch(console.error);
                 }
                 if (reaction.emoji.name === 'constantineseal') {
                     ctping = constantine;
-                    constantine.edit({ mentionable: true })
-                    .catch(console.error);
                 }
                 if (reaction.emoji.name === 'blacklightning') {
                     blping = blacklightning;
-                    blacklightning.edit({ mentionable: true })
-                    .catch(console.error);
                 }
                 if (reaction.emoji.name === 'AV2020') {
                     AV2020ping = AV2020;
-                    AV2020.edit({ mentionable: true })
-                    .catch(console.error);
                 }
             });
         }); 
@@ -142,11 +155,11 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
         if (message.attachments.size > 0) news.setImage(message.attachments.first().url);  
-        gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(news)
+        gideon.guilds.get('595318490240385037').channels.get('610860046108327946').send(news)
         .then(function(msgdl) {message.channel.bulkDelete(3);})
-        .then(function(message) {
+        .then(async function(message) {
         if(ping == true){
-            gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}${blping}`);
+            await gideon.guilds.get('595318490240385037').channels.get('610860046108327946').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}${blping}`);
             };
         } ).then(function(sdmsg) {
             message.reply(`your news post has been sent to ${message.guild.channels.get('595944027208024085').toString()}!:white_check_mark:`);
