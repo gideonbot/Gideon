@@ -155,11 +155,11 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
         if (message.attachments.size > 0) news.setImage(message.attachments.first().url);  
-        gideon.guilds.get('595318490240385037').channels.get('610860046108327946').send(news)
+        gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(news)
         .then(function(msgdl) {message.channel.bulkDelete(3);})
         .then(async function(message) {
         if(ping == true){
-            await gideon.guilds.get('595318490240385037').channels.get('610860046108327946').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}${blping}`);
+            await gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}${blping}`);
             };
         } ).then(function(sdmsg) {
             message.reply(`your news post has been sent to ${message.guild.channels.get('595944027208024085').toString()}!:white_check_mark:`);
