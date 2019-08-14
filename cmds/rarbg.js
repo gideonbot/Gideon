@@ -28,9 +28,7 @@ module.exports.run = async (gideon, message, args) => {
     }   else if(agc.match(/(?:blacklightning)/i)){
         showtitle = "Black Lightning"; 
     }   else if(agc.match(/(?:av2020)/i)){
-        showid = "av2020";
         showtitle = "av2020"; 
-        channel = 'The CW';
     }   else{
         return message.channel.send(`"${show}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning`)
     }
@@ -53,7 +51,7 @@ module.exports.run = async (gideon, message, args) => {
     .addField(response[3].filename, `**[Magnet URI](https://${response[3].download} '${response[3].download}')**`)
     .addField(response[4].filename, `**[Magnet URI](https://${response[4].download} '${response[4].download}')**`)
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
         
     message.channel.send(epdwn);
 

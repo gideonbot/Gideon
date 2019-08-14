@@ -102,14 +102,14 @@ module.exports.run = async (gideon, message, args) => {
     message.channel.send(`You have reached out to Earth-${en}`);
 
     const wells = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(wlstitle)
-        .setDescription(wlsdesc)
-        .setImage(wlsgif)
-        .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
+    .setColor('#2791D3')
+    .setTitle(wlstitle)
+    .setDescription(wlsdesc)
+    .setImage(wlsgif)
+    .setTimestamp()
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
 
-        message.channel.send(wells);  
+    message.channel.send(wells);  
 }
 
 module.exports.help = {

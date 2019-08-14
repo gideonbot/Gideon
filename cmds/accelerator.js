@@ -13,10 +13,10 @@ module.exports.run = async (gideon, message, args) => {
     message.channel.send("ALERT SYSTEM FAILURE");
 
     const explosion = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setImage('https://i.imgur.com/opCbZTn.gif')
-        .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
+    .setColor('#2791D3')
+    .setImage('https://i.imgur.com/opCbZTn.gif')
+    .setTimestamp()
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
 
     message.channel.send(explosion);  
 
@@ -71,12 +71,12 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     const power = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(pwrtitle)
-        .setDescription(pwrdesc)
-        .setImage(pwrgif)
-        .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
+    .setColor('#2791D3')
+    .setTitle(pwrtitle)
+    .setDescription(pwrdesc)
+    .setImage(pwrgif)
+    .setTimestamp()
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
 
     message.channel.send(power);  
 }

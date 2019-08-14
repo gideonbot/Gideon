@@ -26,7 +26,7 @@ module.exports.run = async (gideon, message, args) => {
     .setDescription(`**${auth} you have cuddled ${user}!**\n\nA Beebo-tastic cuddle always brightens the mood!`)
 	.setImage('https://i.imgur.com/IOpmt2j.gif')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
     
     message.channel.send(cuddle);
 }

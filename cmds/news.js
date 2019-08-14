@@ -153,7 +153,7 @@ module.exports.run = async (gideon, message, args) => {
         .setThumbnail(message.author.avatarURL)
         .addField('News posted by:', message.author)   
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
         if (message.attachments.size > 0) news.setImage(message.attachments.first().url);  
         gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(news)
         .then(function(msgdl) {message.channel.bulkDelete(3);})
