@@ -15,12 +15,12 @@ module.exports.run = async (gideon, message, args) => {
     let rjpk = res.images[ranum].link;
 
     const jpk = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setImage(rjpk)
-        .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
+    .setColor('#2791D3')
+    .setImage(rjpk)
+    .setTimestamp()
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
-        message.channel.send(jpk);
+    message.channel.send(jpk);
   });   
 }
 

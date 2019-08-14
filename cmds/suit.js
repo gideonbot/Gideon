@@ -64,12 +64,12 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     const suit = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(suittle)
-        .setDescription(suitdesc)
-        .setImage(suitimg)
-        .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
+    .setColor('#2791D3')
+    .setTitle(suittle)
+    .setDescription(suitdesc)
+    .setImage(suitimg)
+    .setTimestamp()
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', 'https://i.imgur.com/3RihwQS.png')
 
     message.channel.send(suit);  
 }
