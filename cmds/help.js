@@ -78,6 +78,7 @@ module.exports.run = async (gideon, message, args) => {
 	    .setColor('#2791D3')
 	    .setTitle('__You can check the list of available commands below:__')
         .addField('!JPK', 'Displays a random JPK gif')
+        .addField('!ec', 'Displays a random EC gif')
         .addField('!prometheus', 'Displays a random Prometheus gif')
         .addField('!st', 'Displays a random ST gif')
         .addField('!ping', 'Displays the bot\'s ping')
