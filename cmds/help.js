@@ -85,6 +85,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!uptime', 'Displays the bot\'s uptime')
         .addField('!invite', 'Sends an invite link to the Time Vault')
         .addField('!github', 'Displays Github repository info')
+        .addField('!docs', 'Displays Gideon\'s Github Wiki link')
         .addField('!donate', 'Displays info to support maintainance and hosting of Gideon')       
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()

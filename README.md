@@ -9,6 +9,9 @@
 # Gideon  
 ### The Open Source Arrowverse Discord Bot
 
+Documentation:
+[GitHub Wiki](https://github.com/adrifcastr/Gideon/wiki)
+
 ### About
 
 Gideon's features are as follows:
