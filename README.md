@@ -46,6 +46,8 @@ Gideon's features are as follows:
    
 * `!wells - Calls a random Wells`
 
+* `!timeline - Scans for changes in the timeline`
+
 * `!suit <character> - Displays newly revealed suits`\
    `(currently: killer frost | supergirl | arrow | flash | batwoman | black siren | spartan)`
    

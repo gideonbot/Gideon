@@ -45,6 +45,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!cuddle <user>', 'Gives the selected user a Beebo-tastic cuddle')
         .addField('!at <attack> <user>', 'Attacks the selected user with the selected attack\n(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision | stretchpunch | canarycry | batarang | sendtohell)')
         .addField('!wells', 'Calls a random Wells')
+        .addField('!timeline', 'Scans for changes in the timeline')
         .addField('Gideon, show me the future!', 'Displays an easter egg')
         .addField('Gideon, plot a course!', 'Displays an easter egg')    
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
