@@ -83,58 +83,58 @@ module.exports.run = async (gideon, message, args) => {
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.')
     .then(function(message) {
         message.react('598886586284900354')
-			.then(() => message.react('607658682246758445'))
-			.then(() => message.react('598886597244485654'))
-			.then(() => message.react('598886605641613353'))
-			.then(() => message.react('598886588545499186'))
-			.then(() => message.react('598886601476800513'))
-			.then(() => message.react('607657873534746634'))
-			//.then(() => message.react(''))
-            .catch(() => console.error);       
-            
-            const rfilter = (reaction, user) => {
-                return ['flashemblem',
-                        'arrowlogo',
-                        'houseofel',
-                        'lotlogo',
-                        'batwoman',
-                        'constantineseal',
-                        'blacklightning',
-                        'AV2020'].includes(reaction.emoji.name) && user.id === auth;
-            };
-            
-            const rcollector = message.createReactionCollector(rfilter, { time: 120000 });
+        .then(() => message.react('607658682246758445'))
+        .then(() => message.react('598886597244485654'))
+        .then(() => message.react('598886605641613353'))
+        .then(() => message.react('598886588545499186'))
+        .then(() => message.react('598886601476800513'))
+        .then(() => message.react('607657873534746634'))
+        //.then(() => message.react(''))
+        .catch(() => console.error);       
         
-            rcollector.on('collect', (reaction, reactionCollector) => {
-                if(reaction) ping = true;
+        const rfilter = (reaction, user) => {
+            return ['flashemblem',
+                    'arrowlogo',
+                    'houseofel',
+                    'lotlogo',
+                    'batwoman',
+                    'constantineseal',
+                    'blacklightning',
+                    'AV2020'].includes(reaction.emoji.name) && user.id === auth;
+        };
+            
+        const rcollector = message.createReactionCollector(rfilter, { time: 120000 });
+    
+        rcollector.on('collect', (reaction, reactionCollector) => {
+            if(reaction) ping = true;
 
-                console.log(`Collected ${reaction.emoji.name}`);
-                if (reaction.emoji.name === 'flashemblem') {
-                    flaping = flash;
-                }
-                if (reaction.emoji.name === 'arrowlogo') {
-                    arping = arrow;
-                }
-                if (reaction.emoji.name === 'houseofel') {
-                    sgping = supergirl;
-                }
-                if (reaction.emoji.name === 'lotlogo') {
-                    lgping = legends;
-                }
-                if (reaction.emoji.name === 'batwoman') {
-                    bwping = batwoman;
-                }
-                if (reaction.emoji.name === 'constantineseal') {
-                    ctping = constantine;
-                }
-                if (reaction.emoji.name === 'blacklightning') {
-                    blping = blacklightning;
-                }
-                if (reaction.emoji.name === 'AV2020') {
-                    AV2020ping = AV2020;
-                }
-            });
-        }); 
+            console.log(`Collected ${reaction.emoji.name}`);
+            if (reaction.emoji.name === 'flashemblem') {
+                flaping = flash;
+            }
+            if (reaction.emoji.name === 'arrowlogo') {
+                arping = arrow;
+            }
+            if (reaction.emoji.name === 'houseofel') {
+                sgping = supergirl;
+            }
+            if (reaction.emoji.name === 'lotlogo') {
+                lgping = legends;
+            }
+            if (reaction.emoji.name === 'batwoman') {
+                bwping = batwoman;
+            }
+            if (reaction.emoji.name === 'constantineseal') {
+                ctping = constantine;
+            }
+            if (reaction.emoji.name === 'blacklightning') {
+                blping = blacklightning;
+            }
+            if (reaction.emoji.name === 'AV2020') {
+                AV2020ping = AV2020;
+            }
+        });
+    }); 
 
     collector.on('collect', message => {
         if (message.content === 'cancel' || message.content === 'stop'){
