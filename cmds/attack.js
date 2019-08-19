@@ -3,7 +3,15 @@ const Discord = module.require("discord.js");
 module.exports.run = async (gideon, message, args) => {
     const auth = message.author;
     let atc = args[0];
-    if(!atc) return message.channel.send("You must supply an attack and a victim!\nAvailable attacks: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision | stretchpunch | canarycry | batarang | sendtohell | thunderclap | elblast | fireblast");
+
+    const at = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('You must supply an attack and a victim!')
+    .setDescription('Available attacks:\n**iceblast**\n**lthrow**\n**reverseflash**\n**vibeblast**\n**shootarrow**\n**heatvision**\n**stretchpunch**\n**canarycry**\n**batarang**\n**sendtohell**\n**thunderclap**\n**elblast**\n**fireblast**')
+    .setTimestamp()
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+
+    if(!atc) return message.channel.send(at);
 
     function getUserFromMention(mention) {
         if (!mention) return;

@@ -1,7 +1,14 @@
 const Discord = module.require("discord.js");
 
-module.exports.run = async (gideon, message, args) => {      
-    if(!args[0]) return message.channel.send("Currently available:\nkiller frost | supergirl | arrow | flash | batwoman | black siren | spartan");
+module.exports.run = async (gideon, message, args) => {     
+    const st = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('You must choose a character!')
+    .setDescription('Curently available:\n**killer frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**')
+    .setTimestamp()
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+
+    if(!args[0]) return message.channel.send(st);
 
     let kfsuit = 'https://i.imgur.com/0XI5gxr.jpg';
     let sgsuit = 'https://i.imgur.com/FU2mzws.jpg';
