@@ -32,13 +32,13 @@ gideon.once('ready', async () => {
         let mbc = tmvt.members.filter(member => !member.user.bot).size;
         const st1 = `!help | invite.gg/tmvt`;
         let st2 = `${mbc} Time Vault members`;
-        const st3 = '!demo | AVIH Demo';
+        const st3 = '!demo | AVIH Demo DL';
 
-        gideon.user.setActivity(st1, { type: 'PLAYING' }); 
+        await gideon.user.setActivity(st1, { type: 'PLAYING' }); 
         await delay (10000);
-        gideon.user.setActivity(st2, { type: 'WATCHING' }); 
+        await gideon.user.setActivity(st2, { type: 'WATCHING' }); 
         await delay (10000);
-        gideon.user.setActivity(st3, { type: 'PLAYING' });
+        await gideon.user.setActivity(st3, { type: 'PLAYING' });
     }
     setInterval(() => {
         status();
