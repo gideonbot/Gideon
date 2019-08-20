@@ -4,6 +4,7 @@ const config = require("./config.json");
 const prefix = config.prefix;
 const prefix2 = config.prefix2;
 const fs = require("fs");
+const delay = require('delay');
 const gideon = new Discord.Client();
 gideon.commands = new Discord.Collection();
 
@@ -26,21 +27,23 @@ fs.readdir("./cmds", (err, files) => {
 });
 
 gideon.once('ready', async () => {
-    setInterval(() => {
+    async function status() {
         const tmvt = gideon.guilds.get('595318490240385037');
         let mbc = tmvt.members.filter(member => !member.user.bot).size;
-        let st1 = `!help | invite.gg/tmvt`;
+        const st1 = `!help | invite.gg/tmvt`;
         let st2 = `${mbc} Time Vault members`;
-        let statuses = [st1, st2];
-        let type;
-        let status = statuses[Math.floor(Math.random()*statuses.length)];
-        if(status == st1){
-            type = 'PLAYING';
-        }else if(status == st2){
-            type = 'WATCHING';
-        }
-        gideon.user.setActivity(status, { type: type }); 
-    }, 5000);
+        const st3 = '!demo | AVIH Demo';
+
+        gideon.user.setActivity(st1, { type: 'PLAYING' }); 
+        await delay (10000);
+        gideon.user.setActivity(st2, { type: 'WATCHING' }); 
+        await delay (10000);
+        gideon.user.setActivity(st3, { type: 'PLAYING' });
+    }
+    setInterval(() => {
+        status();
+    }, 30000);
+    
     console.log('Ready!');
     console.log(gideon.commands);
 })
