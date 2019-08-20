@@ -39,6 +39,7 @@ gideon.once('ready', async () => {
         gideon.user.setActivity(st2, { type: 'WATCHING' }); 
         await delay (10000);
         gideon.user.setActivity(st3, { type: 'PLAYING' });
+        await delay (10000);
     }
     setInterval(() => {
         status();
