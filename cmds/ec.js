@@ -3,8 +3,11 @@ const Imgur = require('imgur-node');
 const imgclient = new Imgur.Client(process.env.IMG_CL);
 
 module.exports.run = async (gideon, message, args) => {     
+    const ecArray = ["SaHLa7c", "3Z3I82h"];
+        
+    let reca = ecArray[Math.floor(Math.random()*ecArray.length)];
 
-    imgclient.album.get('SaHLa7c', (err, res) => {
+    imgclient.album.get(reca, (err, res) => {
     if (err) console.error(err);
     let min = 0;
     let max = res.images.length - 1;
