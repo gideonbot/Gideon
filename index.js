@@ -34,11 +34,11 @@ gideon.once('ready', async () => {
         let st2 = `${mbc} Time Vault members`;
         const st3 = '!demo | AVIH Demo DL';
 
-        await gideon.user.setActivity(st1, { type: 'PLAYING' }); 
+        gideon.user.setActivity(st1, { type: 'PLAYING' }); 
         await delay (10000);
-        await gideon.user.setActivity(st2, { type: 'WATCHING' }); 
+        gideon.user.setActivity(st2, { type: 'WATCHING' }); 
         await delay (10000);
-        await gideon.user.setActivity(st3, { type: 'PLAYING' });
+        gideon.user.setActivity(st3, { type: 'PLAYING' });
     }
     setInterval(() => {
         status();
