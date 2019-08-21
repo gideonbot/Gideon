@@ -160,7 +160,7 @@ module.exports.run = async (gideon, message, args) => {
         .then(async function(avihmessage) {
             await gideon.guilds.get('474179239068041237').channels.get('511627290996637727').send(news);
             gideon.guilds.get('474179239068041237').channels.get('511627290996637727').send('This news was brought to you by:\nhttps://discord.gg/h9SEQaU');
-        }.then(async function(message) {
+        }).then(async function(pingmsg) {
         if(ping == true){
             await gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}${blping}`);
             };
@@ -168,7 +168,7 @@ module.exports.run = async (gideon, message, args) => {
             message.reply(`your news post has been sent to ${message.guild.channels.get('595944027208024085').toString()} & ${gideon.guilds.get('474179239068041237').channels.get('511627290996637727').toString()}!:white_check_mark:`);
             ddm();
             collector.stop();
-        }));
+        });
     })
 
     collector.on('end', (collected, reason) => {
