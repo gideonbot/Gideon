@@ -55,38 +55,37 @@ module.exports.run = async (gideon, message, args) => {
 
     const api = `http://api.tvmaze.com/shows/${showid}/episodebynumber?season=${season}&number=${episode}`;
     
-    const body = await fetch(api).then(res => res.json()).then(function(res) {
-        if (res.status == 404) {
-            return message.channel.send(`There was no data for this episode!`).catch(console.error);
-        }});
-        let airdate = new Date(body.airdate);
-        let airtime = body.airtime;
-        let desc;
-        let img;
+    const body = await fetch(api).then(res => res.json());
+    if (body.status == 404) return message.channel.send(`There was no data for this episode!`).catch(console.error);
 
-        if (body.summary === null){
-            desc = 'No summary available'
-        }   else {
-            let sum = body.summary.substring(3);
-            desc = sum.substring(0, sum.length -4); 
-            img = body.image.original;
-        }             
+    let airdate = new Date(body.airdate);
+    let airtime = body.airtime;
+    let desc;
+    let img;
 
-        let timeString = airtime;
-        let H = +timeString.substr(0, 2);
-        let h = H % 12 || 12;
-        let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-        timeString = h + timeString.substr(2, 3) + ampm;
+    if (body.summary === null){
+        desc = 'No summary available'
+    }   else {
+        let sum = body.summary.substring(3);
+        desc = sum.substring(0, sum.length -4); 
+        img = body.image.original;
+    }             
 
-        const epinfo = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`${showtitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
-        .setDescription(desc + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`)
-        .setImage(img)     
-        .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+    let timeString = airtime;
+    let H = +timeString.substr(0, 2);
+    let h = H % 12 || 12;
+    let ampm = (H < 12 || H === 24) ? " AM" : " PM";
+    timeString = h + timeString.substr(2, 3) + ampm;
 
-        message.channel.send(epinfo);
+    const epinfo = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle(`${showtitle} ${body.season}x${body.number<10?"0"+body.number:body.number} - ${body.name}`)
+    .setDescription(desc + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`)
+    .setImage(img)     
+    .setTimestamp()
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+
+    message.channel.send(epinfo);
 }
 module.exports.help = {
     name: "ep"
