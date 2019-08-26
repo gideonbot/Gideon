@@ -17,7 +17,7 @@ module.exports.run = async (gideon, message, args) => {
     .setThumbnail(avih.iconURL())
     .addField('Windows x64:', `**[[Direct Download](${wdurl} '${wdurl}')] [[Torrent Download](${wturl} '${wturl}')]**`)
     .addField('Linux x64:', `**[[Direct Download](${ldurl} '${ldurl}')] [[Torrent Download](${lturl} '${lturl}')]**`)
-    .addField('Android ARM:', `**as soon as I ported it. -A**`)
+    .addField('Android ARM64:', `**[[Direct Download](${adurl} '${adurl}')] [[Torrent Download](${aturl} '${aturl}')]**`)
     .addField('AVIH Discord:', `**[Join Server](${surl} '${surl}')**`)
     .setTimestamp()
     .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
