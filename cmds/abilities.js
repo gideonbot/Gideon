@@ -103,6 +103,7 @@ module.exports.run = async (gideon, message, args) => {
     message.channel.send(viber);
     }else if(args[0].match(/(?:kryptonian)/i)){
     const kr1 = new Discord.MessageEmbed()
+    .setColor('#2791D3')
     .setTitle('__Kryptonians posess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
     .addField('Kryptonian physiology', 'A kryptonians capabilities are no greater than those of a human. However, once charged by the energy spectrum of a yellow sun, they become able to perform various inhuman feats.')  
     .addField('Solar energy absorption', 'Kryptonian powers are dependent on the energy spectrum from a yellow sun, their body is able to constantly and passively absorb such energy while exposed to it, essentially keeping their reserves fully charged near-constantly.')  
@@ -113,6 +114,7 @@ module.exports.run = async (gideon, message, args) => {
     .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
 
     const kr2 = new Discord.MessageEmbed()
+    .setColor('#2791D3')
     .setTitle('__Kryptonians posess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
     .addField('Flight', 'Kryptonians are able to manipulate their own gravitational field to generate thrust and propel themselves through the air, often at hyper-sonic speeds, much faster than they can travel by foot.')  
     .addField('Sleep flight', 'Kryptonians have the ability to float in the air while they sleep.')  
@@ -123,6 +125,7 @@ module.exports.run = async (gideon, message, args) => {
     .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
 
     const kr3 = new Discord.MessageEmbed()
+    .setColor('#2791D3')
     .setTitle('__Kryptonians posess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
     .addField('Extreme heat resistance', 'Kryptonians feel no pain when exposed to extreme heat.')  
     .addField('Self-sustenance', 'Due to the effects of a yellow sun, a kryptonians physical needs are greatly reduced.')  
@@ -133,6 +136,7 @@ module.exports.run = async (gideon, message, args) => {
     .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
 
     const kr4 = new Discord.MessageEmbed()
+    .setColor('#2791D3')
     .setTitle('__Kryptonians posess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
     .addField('X-ray vision', 'Kryptonians posess the ability to see through objects, except for lead.')  
     .addField('Super breath', 'Kryptonians are able to exhale powerful gusts of air from their mouth which are similar to force winds. They can also cause the temperature of their breath to drop, therefore able to freeze nearly anything.')  
@@ -143,6 +147,7 @@ module.exports.run = async (gideon, message, args) => {
     .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
 
     const kr5 = new Discord.MessageEmbed()
+    .setColor('#2791D3')
     .setTitle('__Kryptonians posess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
     .addField('Super reflexes', 'A kryptonians reflexes are so fast, that they can respond to attacks within seconds.')  
     .addField('Time deceleration', 'When a kryptonian and a speedster (or another kryptonian) run/fly around the Earth in opposite directions, they are able to slow the Earth\'s rotation, along with time itself.')  
@@ -153,6 +158,7 @@ module.exports.run = async (gideon, message, args) => {
     .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
 
     const kr6 = new Discord.MessageEmbed()
+    .setColor('#2791D3')
     .setTitle('__Kryptonians posess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
     .addField('Super stamina', 'Kryptonians can run, fight or fly for long periods of time, without getting tired.')  
     .addField('Extended longevity', 'A Kryptonians life span is considerably longer than a humans and they likewise age much slower.')  
