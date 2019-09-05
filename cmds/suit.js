@@ -12,7 +12,7 @@ module.exports.run = async (gideon, message, args) => {
 
     let kfsuit = 'https://i.imgur.com/0XI5gxr.jpg';
     let sgsuit = 'https://i.imgur.com/FU2mzws.jpg';
-    let flasuit = 'https://i.imgur.com/Bb6GbWV.jpg';
+    let flasuit = 'https://i.imgur.com/8C14JtU.png';
     let arsuit = 'https://i.imgur.com/bgJmu8c.jpg';
     let bwsuit = 'https://i.imgur.com/2vkMLrp.jpg';
     let bssuit = 'https://i.imgur.com/yeGZG8e.jpg';
