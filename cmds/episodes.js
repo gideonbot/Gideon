@@ -5,6 +5,13 @@ module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
     if(!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
 
+    const as = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('You must supply a valid show!')
+    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**')
+    .setTimestamp()
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+
     let seip = args.toString().substr(-4)
     let season = seip[0];
     let episode = seip[2] + seip[3];
@@ -50,7 +57,7 @@ module.exports.run = async (gideon, message, args) => {
         showtitle = "av2020"; 
         channel = 'The CW';
     }   else{
-        return message.channel.send(`"${show}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning`)
+        return message.channel.send(as);
     }  
 
     const api = `http://api.tvmaze.com/shows/${showid}/episodebynumber?season=${season}&number=${episode}`;
