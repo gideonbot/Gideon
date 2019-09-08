@@ -22,8 +22,9 @@ Gideon's features are as follows:
 
 * `!wikibl <term> - Searches the Black Lightning Wiki for the given term`
   
-* `!ep <show> NxNN - Fetches episode info`\
-  `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning)`
+* `!ep <show> NxNN - Fetches episode info`
+
+* `!next <show> <NxNN/SXXEXX> - Fetches next episode in watching order`
   
 * `!nxeps - Displays a countdown to the next airing Arrowverse episodes`
   
@@ -35,21 +36,17 @@ Gideon's features are as follows:
 
 * `!cuddle <user> - Gives the selected user a Beebo-tastic cuddle`
 
-* `!at <attack> <user> - Attacks the selected user with the selected attack`\
-  `(replace <attack> with: iceblast | lthrow | reverseflash | vibeblast | shootarrow | heatvision | stretchpunch | canarycry | batarang | sendtohell | thunderclap | elblast | fireblast)`
+* `!at <attack> <user> - Attacks the selected user with the selected attack`
+
+* `!rarbg <show> NxNN - Searches rarbg.to for the specified episode`
   
-* `!rarbg <show> NxNN - Searches rarbg.to for the specified episode`\
-   `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning)`
-  
-* `!subs <lang> <show> NxNN - Searches opensubtitles.org for the specified episode`\
-  `(replace <show> with: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning)`
+* `!subs <lang> <show> NxNN - Searches opensubtitles.org for the specified episode`
    
 * `!wells - Calls a random Wells`
 
 * `!timeline - Scans for changes in the timeline`
 
-* `!suit <character> - Displays newly revealed suits`\
-   `(currently: killer frost | supergirl | arrow | flash | batwoman | black siren | spartan)`
+* `!suit <character> - Displays newly revealed suits`
    
 * `!sp <name/alter ego> eN - Fetches Speedster info`
 
@@ -82,4 +79,5 @@ to support the development, maintenance and hosting of this project. Thank you!
 Gideon is currently being developed and maintained by __adrifcastr__.<br>
 In no particular order, I credit the following for their invaluable contributions:
 
-* __MBR#0001__ for the help on various topics.
+* __MBR#0001__ for the help on various topics & for providing his episode parser.
+* __AceFire6__ for [arrowverse.info](https://arrowverse.info) and its [API](https://arrowverse.info/api).
