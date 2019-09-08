@@ -2,9 +2,9 @@ const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
     const avih = gideon.guilds.get('474179239068041237');
-    //const wdurl ='https://mega.nz/#!PCJ3hSTI!HrEFBfvjmi2DoOvNcU0PgTUbsHc9NkQMf9h5aF8iJjA';
+    const wdurl ='';
     const wturl = 'https://cdn.discordapp.com/attachments/599917281379876893/614969846249160880/AVIH_Demo_Version.7z.torrent';
-    //const ldurl = 'https://mega.nz/#!LKhBBSYb!20i46WHIbKrLt3eTs_QTGl6mvW80Hcu1q0CXCXJcCUM';
+    const ldurl = '';
     const lturl = 'https://cdn.discordapp.com/attachments/525341082435715085/615155299036430337/AVIH_Demo_Version_LNX.7z.torrent';
     const adurl = '';
     const aturl = '';
