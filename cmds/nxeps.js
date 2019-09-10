@@ -18,7 +18,7 @@ module.exports.run = async (gideon, message, args) => {
     var nxflaep1 = '';
     var nxflaep2 = '';
     
-    if (!flabody.hasOwnProperty('_embedded')) nxflaep2 = 'No Episode data available yet';
+    if (!flabody._embedded) nxflaep2 = 'No Episode data available yet';
     else {
         const flaseason = flabody._embedded.nextepisode.season;
         const flanumber = flabody._embedded.nextepisode.number;
@@ -48,7 +48,7 @@ module.exports.run = async (gideon, message, args) => {
     var nxarep1 = '';
     var nxarep2 = '';
 
-    if (!arbody.hasOwnProperty('_embedded')) nxarep2 = 'No Episode data available yet';
+    if (!arbody._embedded) nxarep2 = 'No Episode data available yet';
     else {
         const arseason = arbody._embedded.nextepisode.season;
         const arnumber = arbody._embedded.nextepisode.number;
@@ -78,7 +78,7 @@ module.exports.run = async (gideon, message, args) => {
     var nxsgep1 = '';
     var nxsgep2  = '';
     
-    if (!sgbody.hasOwnProperty('_embedded')) nxsgep2 = 'No Episode data available yet';
+    if (!sgbody._embedded) nxsgep2 = 'No Episode data available yet';
     else {
         const sgseason = sgbody._embedded.nextepisode.season;
         const sgnumber = sgbody._embedded.nextepisode.number;
@@ -108,7 +108,7 @@ module.exports.run = async (gideon, message, args) => {
     var nxlgep1 = '';
     var nxlgep2 = '';
 
-    if (!lgbody.hasOwnProperty('_embedded')) nxlgep2 = 'No Episode data available yet';
+    if (!lgbody._embedded) nxlgep2 = 'No Episode data available yet';
     else {
         const lgseason = lgbody._embedded.nextepisode.season;
         const lgnumber = lgbody._embedded.nextepisode.number;
@@ -138,7 +138,7 @@ module.exports.run = async (gideon, message, args) => {
     var nxbwep1 = '';
     var nxbwep2 = '';
 
-    if (!bwbody.hasOwnProperty('_embedded')) nxbwep2 = 'No Episode data available yet';
+    if (!bwbody._embedded) nxbwep2 = 'No Episode data available yet';
     else { 
         const bwseason = bwbody._embedded.nextepisode.season;
         const bwnumber = bwbody._embedded.nextepisode.number;
@@ -168,7 +168,7 @@ module.exports.run = async (gideon, message, args) => {
     var nxblep1 = '';
     var nxblep2 = '';
 
-    if (!blbody.hasOwnProperty('_embedded')) nxblep2 = 'No Episode data available yet';
+    if (!blbody._embedded) nxblep2 = 'No Episode data available yet';
     else { 
         const blseason = blbody._embedded.nextepisode.season;
         const blnumber = blbody._embedded.nextepisode.number;
@@ -198,7 +198,7 @@ module.exports.run = async (gideon, message, args) => {
     var nxAV2020ep1 = '';
     var nxAV2020ep2 = '';
 
-    if (!AV2020body.hasOwnProperty('_embedded')) nxAV2020ep2 = 'No Episode data available yet';
+    if (!AV2020body._embedded) nxAV2020ep2 = 'No Episode data available yet';
     else { 
         const AV2020season = AV2020body._embedded.nextepisode.season;
         const AV2020number = AV2020body._embedded.nextepisode.number;

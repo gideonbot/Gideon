@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
