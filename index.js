@@ -9,7 +9,10 @@ const gideon = new Discord.Client();
 gideon.commands = new Discord.Collection();
 
 fs.readdir("./cmds", (err, files) => {
-    if (err) console.error(err);
+    if (err) {
+        console.error(err);
+        return;
+    }
 
     let jsfiles = files.filter(f => f.split(".").pop() === "js");
     if (jsfiles.length <= 0) {
@@ -29,6 +32,8 @@ fs.readdir("./cmds", (err, files) => {
 gideon.once('ready', async () => {
     async function status() {
         const tmvt = gideon.guilds.get('595318490240385037');
+        if (!tmvt) return;
+
         let mbc = tmvt.members.filter(member => !member.user.bot).size;
         const st1 = `!help | invite.gg/tmvt`;
         let st2 = `${mbc} Time Vault members`;
@@ -40,10 +45,9 @@ gideon.once('ready', async () => {
         await delay (10000);
         gideon.user.setActivity(st3, { type: 'PLAYING' });
     }
-    setInterval(status, 30000);
     
     console.log('Ready!');
-    console.log(gideon.commands);
+    setInterval(status, 30000);
 })
 
 gideon.on('message', async message => {

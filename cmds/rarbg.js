@@ -1,6 +1,6 @@
 const Discord = module.require("discord.js");
-const RarbgApi = require('rarbg')
-const rarbg = new RarbgApi()
+const RarbgApi = require('rarbg');
+const rarbg = new RarbgApi();
 
 module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
@@ -13,23 +13,14 @@ module.exports.run = async (gideon, message, args) => {
     let showtitle;
     let rbs;
 
-    if (agc.match(/(?:flash)/i)) {
-        showtitle = "The Flash";
-    } else if (agc.match(/(?:arrow)/i)) {
-        showtitle = "Arrow";
-    } else if (agc.match(/(?:supergirl)/i)) {
-        showtitle = "Supergirl";
-    } else if (agc.match(/(?:legends)/i)) {
-        showtitle = "DC's Legends of Tomorrow";
-    } else if (agc.match(/(?:constantine)/i)) {
-        showtitle = "Constantine";
-    } else if (agc.match(/(?:batwoman)/i)) {
-        showtitle = "Batwoman"; 
-    } else if (agc.match(/(?:blacklightning)/i)) {
-        showtitle = "Black Lightning"; 
-    } else if (agc.match(/(?:av2020)/i)) {
-        showtitle = "av2020"; 
-    }
+    if (agc.match(/(?:flash)/i)) showtitle = "The Flash";
+    else if (agc.match(/(?:arrow)/i)) showtitle = "Arrow";
+    else if (agc.match(/(?:supergirl)/i)) showtitle = "Supergirl";
+    else if (agc.match(/(?:legends)/i)) showtitle = "DC's Legends of Tomorrow";
+    else if (agc.match(/(?:constantine)/i)) showtitle = "Constantine";
+    else if (agc.match(/(?:batwoman)/i)) showtitle = "Batwoman"; 
+    else if (agc.match(/(?:blacklightning)/i)) showtitle = "Black Lightning";
+    else if (agc.match(/(?:av2020)/i)) showtitle = "av2020"; 
 
     else return message.channel.send(`"${show}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning`);
         
@@ -54,7 +45,10 @@ module.exports.run = async (gideon, message, args) => {
             
         message.channel.send(epdwn);
 
-    }).catch(err => message.channel.send(`There was no result for ${rbs} on rarbg.to\nPlease try another episode instead!`));
+    }).catch(err => {
+        console.log(err);
+        message.channel.send(`There was no result for ${rbs} on rarbg.to\nPlease try another episode instead!`);
+    });
 }
 
 module.exports.help = {

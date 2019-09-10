@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
     .setColor('#2791D3')
     .setTitle('Arrowverse: Infinite Heroes - Demo Version')
     .setDescription('Click one of the links below to download the Arrowverse: Infinite Heroes demo version!')
-    .setThumbnail(avih.iconURL())
+    .setThumbnail(avih ? avih.iconURL() : undefined)
     .addField('Windows x64:', `**[[Direct Download](${wdurl} '${wdurl}')] [[Torrent Download](${wturl} '${wturl}')]**`)
     .addField('Linux x64:', `**[[Direct Download](${ldurl} '${ldurl}')] [[Torrent Download](${lturl} '${lturl}')]**`)
     .addField('Android ARM64 (NVIDIA Tegra Exclusive):', `**[[Direct Download](${adurl} '${adurl}')] [[Torrent Download](${aturl} '${aturl}')]**`)

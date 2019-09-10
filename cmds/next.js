@@ -71,7 +71,9 @@ module.exports.run = async (gideon, message, args) => {
 
     let filtered = body.filter(x => x.series == showtitle);
 
-    let rownum = filtered.find(x => x.episode_id == fiep).row_number;
+    let f = filtered.find(x => x.episode_id == fiep);
+    if (!f) return message.channel.send(`${showtitle} ${fiep} is not a valid episode!`);
+    let rownum = f.row_number;
     let next = body.find(x => x.row_number == rownum + 1);
 
     if (!next) return message.channel.send('Couldn\'t find that episode. Try again.');

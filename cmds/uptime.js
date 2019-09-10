@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     totalSeconds %= 3600;
     let minutes = Math.floor(totalSeconds / 60);
     let seconds = totalSeconds % 60;
-    let uptime = `${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
+    let uptime = `${days} days, ${hours} hours, ${minutes} minutes and ${seconds.toFixed(2)} seconds`;
 
     const uptime_embed = new Discord.MessageEmbed()
     .setColor('#2791D3')
