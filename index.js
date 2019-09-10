@@ -26,7 +26,7 @@ fs.readdir("./cmds", (err, files) => {
         let props = require(`./cmds/${f}`);
         console.log(`${i + 1}: ${f} loaded!`)
         gideon.commands.set(props.help.name, props);
-    })
+    });
 });
 
 gideon.once('ready', async () => {
