@@ -176,9 +176,8 @@ module.exports.run = async (gideon, message, args) => {
         .setPageIndicator(true)
         .setPage(1)
         .build();
-    } else {
-        return message.channel.send(`${args[0]} is not a valid argument!`);
     }
+    else return message.channel.send(`${args[0]} is not a valid argument!`);
 }   
 
 module.exports.help = {

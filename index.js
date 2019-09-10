@@ -48,7 +48,15 @@ gideon.once('ready', async () => {
     
     console.log('Ready!');
     setInterval(status, 30000);
-})
+});
+
+process.on("uncaughtException", err => {
+    console.log("Uncaught Exception: " + err);
+});
+
+process.on("unhandledRejection", err => {
+    console.log("Unhandled Rejection: " + err);
+});
 
 gideon.on('message', async message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
@@ -63,6 +71,6 @@ gideon.on('message', async message => {
 
     if (!command) return;
     command.run(gideon, message, args);
-})
+});
 
 gideon.login(process.env.CLIENT_TOKEN);

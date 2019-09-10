@@ -38,7 +38,7 @@ module.exports.run = async (gideon, message, args) => {
     else return message.channel.send(as);
 
     const body = await fetch(api).then(res => res.json());
-    const fiep = Util.ParseEpisodeId(args[1]);
+    const fiep = Util.ParseStringToId(args[1]);
     if (!fiep) return message.channel.send(es);
 
     let filtered = body.filter(x => x.series == showtitle);
