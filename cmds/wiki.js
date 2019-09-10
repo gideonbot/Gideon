@@ -2,9 +2,9 @@ const Discord = module.require("discord.js");
 const fetch = require('node-fetch');
 
 module.exports.run = async (gideon, message, args) => {
-    const api = `https://arrow.fandom.com/api/v1/Articles/Details?ids=50&titles=${args.join('%20')}&abstract=500&width=200&height=200`;
+    const api = encodeURI(`https://arrow.fandom.com/api/v1/Articles/Details?ids=50&titles=${args.join(' ')}&abstract=500&width=200&height=200`);
     let term = args[0];
-    if(!term) return message.channel.send("You must supply a search term!");
+    if (!term) return message.channel.send("You must supply a search term!");
 
     const body = await fetch(api).then(res => res.json());
     const article = Object.values(body.items)[0];       

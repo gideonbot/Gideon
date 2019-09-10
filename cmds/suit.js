@@ -8,7 +8,7 @@ module.exports.run = async (gideon, message, args) => {
     .setTimestamp()
     .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
 
-    if(!args[0]) return message.channel.send(st);
+    if (!args[0]) return message.channel.send(st);
 
     let kfsuit = 'https://i.imgur.com/0XI5gxr.jpg';
     let sgsuit = 'https://i.imgur.com/FU2mzws.jpg';
@@ -38,37 +38,36 @@ module.exports.run = async (gideon, message, args) => {
     let suittle;
     let suitdesc;
 
-    if(args[0].match(/(?:killer)/i) && args[1].match(/(?:frost)/i)){
+    if (args[0].match(/(?:killer)/i) && args[1].match(/(?:frost)/i)) {
         suitimg = kfsuit;
         suittle = kftitle;
         suitdesc = kfdesc;
-    }   else if(args[0].match(/(?:supergirl)/i)){
+    } else if (args[0].match(/(?:supergirl)/i)) {
         suitimg = sgsuit;
         suittle = sgtitle;
         suitdesc = sgdesc;
-    }   else if(args[0].match(/(?:flash)/i)){
+    } else if (args[0].match(/(?:flash)/i)) {
         suitimg = flasuit;
         suittle = flatitle;
         suitdesc = fladesc;
-    }   else if(args[0].match(/(?:arrow)/i)){
+    } else if (args[0].match(/(?:arrow)/i)) {
         suitimg = arsuit;
         suittle = artitle;
         suitdesc = ardesc;
-    }   else if(args[0].match(/(?:batwoman)/i)){
+    } else if (args[0].match(/(?:batwoman)/i)) {
         suitimg = bwsuit;
         suittle = bwtitle;
         suitdesc = bwdesc;
-    }   else if(args[0].match(/(?:black)/i) && args[1].match(/(?:siren)/i)){
+    } else if (args[0].match(/(?:black)/i) && args[1].match(/(?:siren)/i)) {
         suitimg = bssuit;
         suittle = bstitle;
         suitdesc = bsdesc;
-    }   else if(args[0].match(/(?:spartan)/i)){
+    } else if (args[0].match(/(?:spartan)/i)) {
         suitimg = snsuit;
         suittle = sntitle;
         suitdesc = sndesc;
-    }   else{
-        return message.channel.send('You must supply a valid character!\nCurrently available: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan');
-    }
+    } 
+    else return message.channel.send('You must supply a valid character!\nCurrently available: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan');
 
     const suit = new Discord.MessageEmbed()
     .setColor('#2791D3')

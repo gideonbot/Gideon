@@ -1,8 +1,8 @@
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
-    if(message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
-    if(!message.member.roles.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
+    if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
+    if (!message.member.roles.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
   
     const auth = message.author.id;
     const flash = message.guild.roles.get('596074712682070061');
@@ -27,61 +27,61 @@ module.exports.run = async (gideon, message, args) => {
     let ping = false;
 
     async function edm() {
-    flash.edit({ mentionable: true })
-    .catch(console.error);
+        flash.edit({ mentionable: true })
+        .catch(console.error);
 
-    arrow.edit({ mentionable: true })
-    .catch(console.error);
+        arrow.edit({ mentionable: true })
+        .catch(console.error);
 
-    batwoman.edit({ mentionable: true })
-    .catch(console.error);
+        batwoman.edit({ mentionable: true })
+        .catch(console.error);
 
-    constantine.edit({ mentionable: true })
-    .catch(console.error);
+        constantine.edit({ mentionable: true })
+        .catch(console.error);
 
-    legends.edit({ mentionable: true })
-    .catch(console.error);
+        legends.edit({ mentionable: true })
+        .catch(console.error);
 
-    supergirl.edit({ mentionable: true })
-    .catch(console.error);
+        supergirl.edit({ mentionable: true })
+        .catch(console.error);
 
-    blacklightning.edit({ mentionable: true })
-    .catch(console.error);
+        blacklightning.edit({ mentionable: true })
+        .catch(console.error);
 
-    AV2020.edit({ mentionable: true })
-    .catch(console.error);
+        AV2020.edit({ mentionable: true })
+        .catch(console.error);
     } 
 
     async function ddm() {
-    flash.edit({ mentionable: false })
-    .catch(console.error);
+        flash.edit({ mentionable: false })
+        .catch(console.error);
 
-    arrow.edit({ mentionable: false })
-    .catch(console.error);
+        arrow.edit({ mentionable: false })
+        .catch(console.error);
 
-    batwoman.edit({ mentionable: false })
-    .catch(console.error);
+        batwoman.edit({ mentionable: false })
+        .catch(console.error);
 
-    constantine.edit({ mentionable: false })
-    .catch(console.error);
+        constantine.edit({ mentionable: false })
+        .catch(console.error);
 
-    legends.edit({ mentionable: false })
-    .catch(console.error);
+        legends.edit({ mentionable: false })
+        .catch(console.error);
 
-    supergirl.edit({ mentionable: false })
-    .catch(console.error); 
+        supergirl.edit({ mentionable: false })
+        .catch(console.error); 
 
-    blacklightning.edit({ mentionable: false })
-    .catch(console.error);
+        blacklightning.edit({ mentionable: false })
+        .catch(console.error);
 
-    AV2020.edit({ mentionable: false })
-    .catch(console.error);
+        AV2020.edit({ mentionable: false })
+        .catch(console.error);
     } 
 
     await edm();
 
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.')
-    .then(function(message) {
+    .then(message => {
         message.react('598886586284900354')
         .then(() => message.react('607658682246758445'))
         .then(() => message.react('598886597244485654'))
@@ -89,7 +89,6 @@ module.exports.run = async (gideon, message, args) => {
         .then(() => message.react('598886588545499186'))
         .then(() => message.react('598886601476800513'))
         .then(() => message.react('607657873534746634'))
-        //.then(() => message.react(''))
         .catch(() => console.error);       
         
         const rfilter = (reaction, user) => {
@@ -106,7 +105,7 @@ module.exports.run = async (gideon, message, args) => {
         const rcollector = message.createReactionCollector(rfilter, { time: 120000 });
     
         rcollector.on('collect', (reaction, reactionCollector) => {
-            if(reaction) ping = true;
+            if (reaction) ping = true;
 
             console.log(`Collected ${reaction.emoji.name}`);
             if (reaction.emoji.name === 'flashemblem') {
@@ -137,14 +136,13 @@ module.exports.run = async (gideon, message, args) => {
     }); 
 
     collector.on('collect', message => {
-        if (message.content === 'cancel' || message.content === 'stop'){
+        if (message.content === 'cancel' || message.content === 'stop') {
             message.channel.bulkDelete(3); 
             collector.stop();
             return message.reply('your news post has been cancelled!:white_check_mark:');
         }
-        if (!avnews) {
-            avnews = message.content;
-        }
+
+        if (!avnews) avnews = message.content;
 
         const news = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -153,26 +151,26 @@ module.exports.run = async (gideon, message, args) => {
         .setThumbnail(message.author.avatarURL)
         .addField('News posted by:', message.author)   
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
-        if (message.attachments.size > 0) news.setImage(message.attachments.first().url);  
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+
+        if (message.attachments.size > 0) news.setImage(message.attachments.first().url);
+
         gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(news)
-        .then(function(msgdl) {message.channel.bulkDelete(3);})
-        .then(async function(avihmessage) {
+        .then(msgdl => message.channel.bulkDelete(3))
+        .then(async avihmessage => {
             await gideon.guilds.get('474179239068041237').channels.get('511627290996637727').send(news);
             gideon.guilds.get('474179239068041237').channels.get('511627290996637727').send('This news was brought to you by:\nhttps://discord.gg/h9SEQaU');
-        }).then(async function(pingmsg) {
-        if(ping == true){
-            await gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}${blping}`);
-            };
-        } ).then(function(sdmsg) {
+        }).then(async pingmsg => {
+            if (ping) await gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}${blping}`);
+        }).then(sdmsg => {
             message.reply(`your news post has been sent to ${message.guild.channels.get('595944027208024085').toString()} & ${gideon.guilds.get('474179239068041237').channels.get('511627290996637727').toString()}!:white_check_mark:`);
             ddm();
             collector.stop();
         });
-    })
+    });
 
     collector.on('end', (collected, reason) => {
-        if(reason === 'time') return message.channel.send("You ran out of time!");
+        if (reason === 'time') return message.channel.send("You ran out of time!");
       });
     }
 

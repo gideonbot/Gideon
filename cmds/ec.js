@@ -5,10 +5,14 @@ const imgclient = new Imgur.Client(process.env.IMG_CL);
 module.exports.run = async (gideon, message, args) => {     
     const ecArray = ["SaHLa7c", "3Z3I82h"];
         
-    let reca = ecArray[Math.floor(Math.random()*ecArray.length)];
+    let reca = ecArray[Math.floor(Math.random() * ecArray.length)];
 
     imgclient.album.get(reca, (err, res) => {
-    if (err) console.error(err);
+    if (err) {
+        console.error(err);
+        return message.channel.send("An error occurred, please try again later");
+    }
+    
     let min = 0;
     let max = res.images.length - 1;
     let ranum = Math.floor(Math.random()*(max - min + 1)) + min;
