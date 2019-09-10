@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
     .addField('Android ARM64 (NVIDIA Tegra Exclusive):', `**[[Direct Download](${adurl} '${adurl}')] [[Torrent Download](${aturl} '${aturl}')]**`)
     .addField('AVIH Discord:', `**[Join Server](${surl} '${surl}')**`)
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
     message.channel.send(github);       
 }

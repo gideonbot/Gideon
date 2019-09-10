@@ -41,7 +41,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField(response[3].filename, `**[Magnet URI](https://${response[3].download} '${response[3].download}')**`)
         .addField(response[4].filename, `**[Magnet URI](https://${response[4].download} '${response[4].download}')**`)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
             
         message.channel.send(epdwn);
 

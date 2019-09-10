@@ -234,7 +234,7 @@ module.exports.run = async (gideon, message, args) => {
     .addField(`${bltitle} ${nxblep1}`, `${nxblep2}`)
     //.addField(`${AV2020title} ${nxAV2020ep1}`, `${nxAV2020ep2}`)
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
     message.channel.send(countdown);
              

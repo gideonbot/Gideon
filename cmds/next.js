@@ -97,7 +97,7 @@ module.exports.run = async (gideon, message, args) => {
     .addField(nxep, nxepard)
     .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
     message.channel.send(nextmsg);
 }

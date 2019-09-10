@@ -19,7 +19,7 @@ module.exports.run = async (gideon, message, args) => {
     .addField('!JPK ILBAL', 'I Love Bekka & Lucy')
     .addField('!JPK FS5GR', 'The Flash - S5 Gag Reel')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
     let rjpka;  
 
@@ -51,7 +51,7 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setImage(rjpk)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
     
         message.channel.send(jpk);
     });  

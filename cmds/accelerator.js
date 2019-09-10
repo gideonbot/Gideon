@@ -1,28 +1,34 @@
 const Discord = module.require("discord.js");
 const delay = require('delay');
 
-module.exports.run = async (gideon, message, args) => {      
-    message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...");
-    await delay (1000);
-    message.channel.send("3");
-    await delay (1000);
-    message.channel.send("2");
-    await delay (1000);
-    message.channel.send("1");
-    await delay (1000);
-    message.channel.send("ALERT SYSTEM FAILURE");
+module.exports.run = async (gideon, message, args) => {
+    try {
+        let sent = await message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...");
+        await delay(1000);
+        await sent.edit(sent.content + "\n3");
+        await delay(1000);
+        await sent.edit(sent.content + "\n2");
+        await delay(1000);
+        await sent.edit(sent.content + "\n1");
+        await delay(1000);
+        await sent.edit(sent.content + "\nALERT SYSTEM FAILURE");
+    }
+    catch (ex) {
+        console.log("Exception occurred while starting up the particle accelerator " + ex);
+        message.channel.send("An error occurred while trying to start the particle accelerator, please try again later");
+    }
 
     const explosion = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setImage('https://i.imgur.com/opCbZTn.gif')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
     message.channel.send(explosion);  
 
-    await delay (10000);
+    await delay(10000);
 
-    const arr = [
+    const abilities = [
         {
             title: 'It appears, that you have developed a connection to the Speed Force!',
             desc: 'Congratulations! You are a Speedster now!',
@@ -50,7 +56,7 @@ module.exports.run = async (gideon, message, args) => {
         }
     ]
     
-    let result = arr[Math.floor(Math.random() * arr.length)];
+    let result = abilities[Math.floor(Math.random() * abilities.length)];
 
     const power = new Discord.MessageEmbed()
     .setColor('#2791D3')
@@ -58,7 +64,7 @@ module.exports.run = async (gideon, message, args) => {
     .setDescription(result.desc)
     .setImage(result.gif)
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
     message.channel.send(power);  
 }

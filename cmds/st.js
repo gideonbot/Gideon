@@ -18,7 +18,7 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setImage(rst)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
         message.channel.send(st);
     });   

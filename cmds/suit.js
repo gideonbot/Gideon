@@ -10,74 +10,65 @@ module.exports.run = async (gideon, message, args) => {
 
     if (!args[0]) return message.channel.send(st);
 
-    let kfsuit = 'https://i.imgur.com/0XI5gxr.jpg';
-    let sgsuit = 'https://i.imgur.com/FU2mzws.jpg';
-    let flasuit = 'https://i.imgur.com/8C14JtU.png';
-    let arsuit = 'https://i.imgur.com/bgJmu8c.jpg';
-    let bwsuit = 'https://i.imgur.com/2vkMLrp.jpg';
-    let bssuit = 'https://i.imgur.com/yeGZG8e.jpg';
-    let snsuit = 'https://i.imgur.com/EduRbe4.jpg';
+    const suits = [
+        {
+            image: 'https://i.imgur.com/0XI5gxr.jpg',
+            title: 'Killer Frost',
+            desc: 'This is Danielle Panabaker\'s new suit for The Flash Season 6!'
+        },
+        {
+            image: 'https://i.imgur.com/FU2mzws.jpg',
+            title: 'Supergirl',
+            desc: 'This is Melissa Benoist\'s new suit for Supergirl Season 5!'
+        },
+        {
+            image: 'https://i.imgur.com/8C14JtU.png',
+            title: 'The Flash',
+            desc: 'This is Grant Gustin\'s new suit for The Flash Season 6!'
+        },
+        {
+            image: 'https://i.imgur.com/bgJmu8c.jpg',
+            title: 'The Green Arrow',
+            desc: 'This is Stephen Amell\'s new suit for Arrow Season 8!'
+        },
+        {
+            image: 'https://i.imgur.com/2vkMLrp.jpg',
+            title: 'Batwoman',
+            desc: 'This is Ruby Rose\'s new suit for Batwoman Season 1!'
+        },
+        {
+            image: 'https://i.imgur.com/yeGZG8e.jpg',
+            title: 'The Black Siren',
+            desc: 'This is Katie Cassidy-Rodgers\' new suit for Arrow Season 8!'
+        },
+        {
+            image: 'https://i.imgur.com/EduRbe4.jpg',
+            title: 'Sparton',
+            desc: 'This is David Ramsey\'s new suit for Arrow Season 8!'
+        },
+    ]
 
-    let kftitle = 'Killer Frost';
-    let sgtitle = 'Supergirl';
-    let flatitle = 'The Flash';
-    let artitle = 'The Green Arrow';
-    let bwtitle = 'Batwoman';
-    let bstitle = 'The Black Siren';
-    let sntitle = 'Sparton';
+    let suit = suits[-1];
 
-    let kfdesc = 'This is Danielle Panabaker\'s new suit for The Flash Season 6!';
-    let sgdesc = 'This is Melissa Benoist\'s new suit for Supergirl Season 5!';
-    let fladesc = 'This is Grant Gustin\'s new suit for The Flash Season 6!';
-    let ardesc = 'This is Stephen Amell\'s new suit for Arrow Season 8!';
-    let bwdesc = 'This is Ruby Rose\'s new suit for Batwoman Season 1!';
-    let bsdesc = 'This is Katie Cassidy-Rodgers\' new suit for Arrow Season 8!';
-    let sndesc = 'This is David Ramsey\'s new suit for Arrow Season 8!';
-
-    let suitimg;
-    let suittle;
-    let suitdesc;
-
-    if (args[0].match(/(?:killer)/i) && args[1].match(/(?:frost)/i)) {
-        suitimg = kfsuit;
-        suittle = kftitle;
-        suitdesc = kfdesc;
-    } else if (args[0].match(/(?:supergirl)/i)) {
-        suitimg = sgsuit;
-        suittle = sgtitle;
-        suitdesc = sgdesc;
-    } else if (args[0].match(/(?:flash)/i)) {
-        suitimg = flasuit;
-        suittle = flatitle;
-        suitdesc = fladesc;
-    } else if (args[0].match(/(?:arrow)/i)) {
-        suitimg = arsuit;
-        suittle = artitle;
-        suitdesc = ardesc;
-    } else if (args[0].match(/(?:batwoman)/i)) {
-        suitimg = bwsuit;
-        suittle = bwtitle;
-        suitdesc = bwdesc;
-    } else if (args[0].match(/(?:black)/i) && args[1].match(/(?:siren)/i)) {
-        suitimg = bssuit;
-        suittle = bstitle;
-        suitdesc = bsdesc;
-    } else if (args[0].match(/(?:spartan)/i)) {
-        suitimg = snsuit;
-        suittle = sntitle;
-        suitdesc = sndesc;
-    } 
+    if (args[0].match(/(?:killer)/i) && args[1].match(/(?:frost)/i)) suit = suits[0];
+    else if (args[0].match(/(?:supergirl)/i)) suit = suits[1];
+    else if (args[0].match(/(?:flash)/i)) suit = suits[2];
+    else if (args[0].match(/(?:arrow)/i)) suit = suits[3];
+    else if (args[0].match(/(?:batwoman)/i)) suit = suits[4];
+    else if (args[0].match(/(?:black)/i) && args[1].match(/(?:siren)/i)) suit = suits[5];
+    else if (args[0].match(/(?:spartan)/i)) suit = suits[6]; 
     else return message.channel.send('You must supply a valid character!\nCurrently available: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan');
+    if (!suit) return message.channel.send('You must supply a valid character!\nCurrently available: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan');
 
-    const suit = new Discord.MessageEmbed()
+    const suit_embed = new Discord.MessageEmbed()
     .setColor('#2791D3')
-    .setTitle(suittle)
-    .setDescription(suitdesc)
-    .setImage(suitimg)
+    .setTitle(suit.title)
+    .setDescription(suit.desc)
+    .setImage(suit.image)
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
-    message.channel.send(suit);  
+    message.channel.send(suit_embed);  
 }
 
 module.exports.help = {
