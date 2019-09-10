@@ -11,20 +11,19 @@ module.exports.run = async (gideon, message, args) => {
         await delay(1000);
         await sent.edit(sent.content + "\n1");
         await delay(1000);
-        await sent.edit(sent.content + "\nALERT SYSTEM FAILURE");
+        
+        const explosion = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setImage('https://i.imgur.com/opCbZTn.gif')
+        .setTimestamp()
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+
+        sent.edit(sent.content + "\nALERT SYSTEM FAILURE", {embed: explosion});
     }
     catch (ex) {
         console.log("Exception occurred while starting up the particle accelerator " + ex);
         message.channel.send("An error occurred while trying to start the particle accelerator, please try again later");
     }
-
-    const explosion = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setImage('https://i.imgur.com/opCbZTn.gif')
-    .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
-
-    message.channel.send(explosion);  
 
     await delay(10000);
 

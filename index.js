@@ -14,8 +14,8 @@ fs.readdir("./cmds", (err, files) => {
         return;
     }
 
-    let jsfiles = files.filter(f => f.split(".").pop() === "js");
-    if (jsfiles.length <= 0) {
+    let jsfiles = files.filter(f => f.endsWith(".js"));
+    if (jsfiles.length < 1) {
         console.log("No commands to load!");
         return;
     }
