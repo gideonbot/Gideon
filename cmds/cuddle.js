@@ -1,22 +1,10 @@
 const Discord = module.require("discord.js");
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     const auth = message.author;
-    function getUserFromMention(mention) {
-        if (!mention) return;
-    
-        if (mention.startsWith('<@') && mention.endsWith('>')) {
-            mention = mention.slice(2, -1);
-    
-            if (mention.startsWith('!')) {
-                mention = mention.slice(1);
-            }
-    
-            return gideon.users.get(mention);
-        }
-    }
 
-    const user = getUserFromMention(args[0]);
+    const user = gideon.users.get(Util.GetIdFromString(args[0]));
     if (!user) return message.channel.send('You must use a proper mention if you want to cuddle someone!');
 
     const cuddle = new Discord.MessageEmbed()

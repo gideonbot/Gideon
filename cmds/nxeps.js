@@ -1,6 +1,7 @@
 const Discord = module.require("discord.js");
 const fetch = require('node-fetch');
 
+//this needs so much working
 module.exports.run = async (gideon, message, args) => {
     const flashapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
     const arrowapi = 'http://api.tvmaze.com/shows/4?embed=nextepisode';
@@ -9,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
     const bwomanapi = 'http://api.tvmaze.com/shows/37776?embed=nextepisode';
     const blightningapi = 'http://api.tvmaze.com/shows/20683?embed=nextepisode';
     const AV2020api = 'http://api.tvmaze.com/shows/AV2020?embed=nextepisode';
-    const oneDay = 24*60*60*1000;
+    const oneDay = 24 * 60 * 60 * 1000;
     const today = new Date();
     let d;
 
@@ -39,7 +40,7 @@ module.exports.run = async (gideon, message, args) => {
         if(fladiffDays === 1) d = 'day';
         else d = 'days';
         
-        nxflaep1 = `${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`;
+        nxflaep1 = `${flaseason}x${flanumber< 10 ? "0" + flanumber : flanumber} - ${flaepname}`;
         nxflaep2 = `Will air in ${fladiffDays} ${d} on ${flaad.toDateString()} at ${flatimeString} ET on ${flachannel}`;
     }
 
@@ -214,12 +215,12 @@ module.exports.run = async (gideon, message, args) => {
         let ampm = (H < 12 || H === 24) ? " AM" : " PM";
         AV2020timeString = h + AV2020timeString.substr(2, 3) + ampm;
 
-        const AV2020diffDays = Math.round(Math.abs((today.getTime() - AV2020ad.getTime())/(oneDay)));
+        const AV2020diffDays = Math.round(Math.abs((today.getTime() - AV2020ad.getTime()) / (oneDay)));
 
         if(AV2020diffDays === 1) d = 'day';
         else d = 'days';
         
-        nxAV2020ep1 = `${AV2020season}x${AV2020number<10?"0"+AV2020number:AV2020number} - ${AV2020epname}`;
+        nxAV2020ep1 = `${AV2020season}x${AV2020number < 10 ? "0" + AV2020number : AV2020number} - ${AV2020epname}`;
         nxAV2020ep2 = `Will air in ${AV2020diffDays} ${d} on ${AV2020ad.toDateString()} at ${AV2020timeString} ET on ${AV2020channel}`;
     }
 

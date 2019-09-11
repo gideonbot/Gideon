@@ -1,3 +1,5 @@
+const Discord = require("discord.js");
+
 class Util {
     constructor() {
         throw new Error("This class cannot be instantiated!");
@@ -67,6 +69,15 @@ class Util {
         if (isNaN(s_num) || isNaN(e_num)) return null;
     
         return {season: s_num, episode: e_num};
+    }
+
+    /**
+     * @param {string} input 
+     */
+    static GetIdFromString(input) {
+        if (!input) return null;
+
+        return input.replace("<@", "").replace(">", "").replace("!").replace("<@!", "").replace("<#", "");
     }
 
     //more methods to come
