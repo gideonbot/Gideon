@@ -5,7 +5,9 @@ class Util {
         throw new Error("This class cannot be instantiated!");
     }
 
-    static roles = ['596074712682070061', '596075000151277568', '596075415898947584', '596075638285139988', '596075305861513246', '596075165780017172', '607633853527359488', '610867040961560625'];
+    static get roles() {
+        return ['596074712682070061', '596075000151277568', '596075415898947584', '596075638285139988', '596075305861513246', '596075165780017172', '607633853527359488', '610867040961560625'];
+    }
 
     /**
      * @summary An overly complicated and low-level method for parsing episode stuff
@@ -77,7 +79,7 @@ class Util {
      * @param {Discord.Guild} guild
      * @param {boolean} mentionable
      */
-    async static TDM(guild, mentionable) {
+    static async TDM(guild, mentionable) {
         if (!guild) return;
 
         for (let role_id of this.roles) {
