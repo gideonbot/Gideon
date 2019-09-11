@@ -55,7 +55,7 @@ process.on("uncaughtException", err => {
 });
 
 process.on("unhandledRejection", err => {
-    console.log("Unhandled Rejection: " + err);
+    console.log("Unhandled Rejection: " + err + "\n\nJSON: " + JSON.stringify(err, null, 2));
 });
 
 gideon.on('message', async message => {

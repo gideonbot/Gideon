@@ -20,7 +20,10 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send(tli);
     }
     
-    catch (ex) { return message.channel.send("Failed to fetch a timeline change, please try again later!"); }
+    catch (ex) {
+        console.log(ex);
+        return message.channel.send("Failed to fetch a timeline change, please try again later!");
+    }
 }
 
 module.exports.help = {
