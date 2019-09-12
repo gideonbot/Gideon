@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
 
     const filter = m => m.author.id === message.author.id;
     const collector = new Discord.MessageCollector(message.channel, filter, { time: 120000, errors: ['time'] });
-    let avnews;
+    let roles_to_ping = [];
 
     await Util.TDM(message.guild, true);
 
@@ -32,8 +32,6 @@ module.exports.run = async (gideon, message, args) => {
         const rfilter = (reaction, user) => emoji_ids.includes(reaction.emoji.id) && user.id == auth;
             
         const rcollector = message.createReactionCollector(rfilter, { time: 120000 });
-
-        let roles_to_ping = [];
     
         rcollector.on('collect', (reaction, reactionCollector) => {
             console.log(`Collected ${reaction.emoji.name}`);
@@ -55,12 +53,10 @@ module.exports.run = async (gideon, message, args) => {
             return message.reply('your news post has been cancelled!:white_check_mark:');
         }
 
-        if (!avnews) avnews = message.content;
-
         const news = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`Arrowverse News`)
-        .setDescription(avnews)
+        .setDescription(message.content)
         .setThumbnail(message.author.avatarURL)
         .addField('News posted by:', message.author)   
         .setTimestamp()
