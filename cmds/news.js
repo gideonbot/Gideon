@@ -6,8 +6,7 @@ module.exports.run = async (gideon, message, args) => {
     if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
     if (!message.member.roles.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
 
-    const role_ids = [ '596074712682070061', '596075000151277568', '596075415898947584', '596075638285139988', '596075305861513246', '596075165780017172', '607633853527359488', '610867040961560625' ];
-    const emoji_ids = [ '598886586284900354', '607658682246758445', '598886597244485654', '598886605641613353', '598886588545499186', '598886601476800513', '607657873534746634' ];
+    const emoji_ids = ['598886586284900354', '607658682246758445', '598886597244485654', '598886605641613353', '598886588545499186', '598886601476800513', '607657873534746634'];
 
     const auth = message.author.id;
     const flash = '596074712682070061';
@@ -18,18 +17,10 @@ module.exports.run = async (gideon, message, args) => {
     const supergirl = '596075165780017172';
     const blacklightning = '607633853527359488';
     const AV2020 = '610867040961560625';
-    let flaping = '';
-    let arping = '';
-    let bwping = '';
-    let ctping = '';
-    let lgping = '';
-    let sgping = '';
-    let blping = '';
-    let AV2020ping = '';
+
     const filter = m => m.author.id === message.author.id;
     const collector = new Discord.MessageCollector(message.channel, filter, { time: 120000, errors: ['time'] });
     let avnews;
-    let ping = false;
 
     await Util.TDM(message.guild, true);
 
@@ -38,16 +29,7 @@ module.exports.run = async (gideon, message, args) => {
             message.react(emoji).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
         }
         
-        const rfilter = (reaction, user) => {
-            return ['flashemblem',
-                    'arrowlogo',
-                    'houseofel',
-                    'lotlogo',
-                    'batwoman',
-                    'constantineseal',
-                    'blacklightning',
-                    'AV2020'].includes(reaction.emoji.name) && user.id === auth;
-        };
+        const rfilter = (reaction, user) => emoji_ids.includes(reaction.emoji.id) && user.id == auth;
             
         const rcollector = message.createReactionCollector(rfilter, { time: 120000 });
 
