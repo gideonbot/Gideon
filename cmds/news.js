@@ -1,19 +1,23 @@
 /* eslint-disable no-unused-vars */
 const Discord = module.require("discord.js");
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
     if (!message.member.roles.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
-  
+
+    const role_ids = [ '596074712682070061', '596075000151277568', '596075415898947584', '596075638285139988', '596075305861513246', '596075165780017172', '607633853527359488', '610867040961560625' ];
+    const emoji_ids = [ '598886586284900354', '607658682246758445', '598886597244485654', '598886605641613353', '598886588545499186', '598886601476800513', '607657873534746634' ];
+
     const auth = message.author.id;
-    const flash = message.guild.roles.get('596074712682070061');
-    const arrow = message.guild.roles.get('596075000151277568');
-    const batwoman = message.guild.roles.get('596075415898947584');
-    const constantine = message.guild.roles.get('596075638285139988');
-    const legends = message.guild.roles.get('596075305861513246');
-    const supergirl = message.guild.roles.get('596075165780017172');
-    const blacklightning = message.guild.roles.get('607633853527359488');
-    const AV2020 = message.guild.roles.get('610867040961560625');
+    const flash = '596074712682070061';
+    const arrow = '596075000151277568';
+    const batwoman = '596075415898947584';
+    const constantine = '596075638285139988';
+    const legends = '596075305861513246';
+    const supergirl = '596075165780017172';
+    const blacklightning = '607633853527359488';
+    const AV2020 = '610867040961560625';
     let flaping = '';
     let arping = '';
     let bwping = '';
@@ -22,75 +26,17 @@ module.exports.run = async (gideon, message, args) => {
     let sgping = '';
     let blping = '';
     let AV2020ping = '';
-    const filter = m => m.author.id === message.author.id
+    const filter = m => m.author.id === message.author.id;
     const collector = new Discord.MessageCollector(message.channel, filter, { time: 120000, errors: ['time'] });
     let avnews;
     let ping = false;
 
-    async function edm() {
-        flash.edit({ mentionable: true })
-        .catch(console.error);
+    await Util.TDM(message.guild, true);
 
-        arrow.edit({ mentionable: true })
-        .catch(console.error);
-
-        batwoman.edit({ mentionable: true })
-        .catch(console.error);
-
-        constantine.edit({ mentionable: true })
-        .catch(console.error);
-
-        legends.edit({ mentionable: true })
-        .catch(console.error);
-
-        supergirl.edit({ mentionable: true })
-        .catch(console.error);
-
-        blacklightning.edit({ mentionable: true })
-        .catch(console.error);
-
-        AV2020.edit({ mentionable: true })
-        .catch(console.error);
-    } 
-
-    async function ddm() {
-        flash.edit({ mentionable: false })
-        .catch(console.error);
-
-        arrow.edit({ mentionable: false })
-        .catch(console.error);
-
-        batwoman.edit({ mentionable: false })
-        .catch(console.error);
-
-        constantine.edit({ mentionable: false })
-        .catch(console.error);
-
-        legends.edit({ mentionable: false })
-        .catch(console.error);
-
-        supergirl.edit({ mentionable: false })
-        .catch(console.error); 
-
-        blacklightning.edit({ mentionable: false })
-        .catch(console.error);
-
-        AV2020.edit({ mentionable: false })
-        .catch(console.error);
-    } 
-
-    await edm();
-
-    message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.')
-    .then(message => {
-        message.react('598886586284900354')
-        .then(() => message.react('607658682246758445'))
-        .then(() => message.react('598886597244485654'))
-        .then(() => message.react('598886605641613353'))
-        .then(() => message.react('598886588545499186'))
-        .then(() => message.react('598886601476800513'))
-        .then(() => message.react('607657873534746634'))
-        .catch(() => console.error);       
+    message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.').then(message => {
+        for (let emoji of emoji_ids) {
+            message.react(emoji).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
+        }
         
         const rfilter = (reaction, user) => {
             return ['flashemblem',
@@ -104,35 +50,19 @@ module.exports.run = async (gideon, message, args) => {
         };
             
         const rcollector = message.createReactionCollector(rfilter, { time: 120000 });
+
+        let roles_to_ping = [];
     
         rcollector.on('collect', (reaction, reactionCollector) => {
-            if (reaction) ping = true;
-
             console.log(`Collected ${reaction.emoji.name}`);
-            if (reaction.emoji.name === 'flashemblem') {
-                flaping = flash;
-            }
-            if (reaction.emoji.name === 'arrowlogo') {
-                arping = arrow;
-            }
-            if (reaction.emoji.name === 'houseofel') {
-                sgping = supergirl;
-            }
-            if (reaction.emoji.name === 'lotlogo') {
-                lgping = legends;
-            }
-            if (reaction.emoji.name === 'batwoman') {
-                bwping = batwoman;
-            }
-            if (reaction.emoji.name === 'constantineseal') {
-                ctping = constantine;
-            }
-            if (reaction.emoji.name === 'blacklightning') {
-                blping = blacklightning;
-            }
-            if (reaction.emoji.name === 'AV2020') {
-                AV2020ping = AV2020;
-            }
+            if (reaction.emoji.name === 'flashemblem') roles_to_ping.push(flash);
+            if (reaction.emoji.name === 'arrowlogo') roles_to_ping.push(arrow);
+            if (reaction.emoji.name === 'houseofel') roles_to_ping.push(supergirl);
+            if (reaction.emoji.name === 'lotlogo') roles_to_ping.push(legends);
+            if (reaction.emoji.name === 'batwoman') roles_to_ping.push(batwoman);
+            if (reaction.emoji.name === 'constantineseal') roles_to_ping.push(constantine);
+            if (reaction.emoji.name === 'blacklightning') roles_to_ping.push(blacklightning);
+            if (reaction.emoji.name === 'AV2020') roles_to_ping.push(AV2020);
         });
     }); 
 
@@ -154,18 +84,13 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
-        if (message.attachments.size > 0) news.setImage(message.attachments.first().url);
+        if (message.attachments.size > 0) news.setImage(message.attachments.first().proxyURL);
 
-        gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(news)
-        .then(msgdl => message.channel.bulkDelete(3))
-        .then(async avihmessage => {
-            await gideon.guilds.get('474179239068041237').channels.get('511627290996637727').send(news);
-            gideon.guilds.get('474179239068041237').channels.get('511627290996637727').send('This news was brought to you by:\nhttps://discord.gg/h9SEQaU');
-        }).then(async pingmsg => {
-            if (ping) await gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(`${flaping}${arping}${sgping}${lgping}${ctping}${bwping}${blping}`);
-        }).then(sdmsg => {
-            message.reply(`your news post has been sent to ${message.guild.channels.get('595944027208024085').toString()} & ${gideon.guilds.get('474179239068041237').channels.get('511627290996637727').toString()}!:white_check_mark:`);
-            ddm();
+        gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(news).then(async msgdl => {
+            message.channel.bulkDelete(3);
+            if (roles_to_ping.length > 0) await gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(roles_to_ping.map(x => "<@&" + x + ">").join(" "));
+            message.reply(`your news post has been sent to ${message.guild.channels.get('595944027208024085').toString()} & ${gideon.guilds.get('474179239068041237').channels.get('511627290996637727').toString()}! :white_check_mark:`);
+            Util.TDM(message.guild, false);
             collector.stop();
         });
     });

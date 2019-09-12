@@ -92,8 +92,8 @@ module.exports.run = async (gideon, message, args) => {
     let timeString = airtime;
     let H = timeString.split(":")[0];
     let h = H % 12 || 12;
-    let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-    timeString = h + ":" + timeString.split(":")[1] + ampm;
+    let am_pm = (H < 12 || H === 24) ? " AM" : " PM";
+    timeString = h + ":" + timeString.split(":")[1] + am_pm;
 
     const epinfo = new Discord.MessageEmbed()
     .setColor('#2791D3')
