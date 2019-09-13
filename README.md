@@ -76,8 +76,9 @@ to support the development, maintenance and hosting of this project. Thank you!
 
 ### Credits
 
-Gideon is currently being developed and maintained by __adrifcastr__.<br>
+Gideon is currently being hosted and maintained by __adrifcastr__.<br>
+Gideon is being developed by __adrifcastr__ and __MBR#0001__..
 In no particular order, I credit the following for their invaluable contributions:
 
-* __MBR#0001__ for the help on various topics & for providing his episode parser.
+* __MBR#0001__ for the help on various topics & for participating in general development.
 * __AceFire6__ for [arrowverse.info](https://arrowverse.info) and its [API](https://arrowverse.info/api).
