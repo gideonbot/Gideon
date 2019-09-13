@@ -30,7 +30,7 @@ module.exports.run = async (gideon, message, args) => {
         }
         
         const rfilter = (reaction, user) => emoji_ids.includes(reaction.emoji.id) && user.id == auth;
-            
+
         const rcollector = message.createReactionCollector(rfilter, { time: 120000 });
     
         rcollector.on('collect', (reaction, reactionCollector) => {
@@ -50,7 +50,7 @@ module.exports.run = async (gideon, message, args) => {
         if (message.content === 'cancel' || message.content === 'stop') {
             message.channel.bulkDelete(3); 
             collector.stop();
-            return message.reply('your news post has been cancelled!:white_check_mark:');
+            return message.reply('your news post has been cancelled! :white_check_mark:');
         }
 
         const news = new Discord.MessageEmbed()
@@ -64,10 +64,33 @@ module.exports.run = async (gideon, message, args) => {
 
         if (message.attachments.size > 0) news.setImage(message.attachments.first().proxyURL);
 
-        gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(news).then(async msgdl => {
+        const tmvt = gideon.guilds.get('595318490240385037');
+        if (!tmvt) {
+            console.log('Couldn\'t get TV server when running news!');
+            return message.channel.send('An error occurred, please try again later');
+        }
+
+        const news_channel = tmvt.channels.get('595944027208024085');
+        if (!news_channel) {
+            console.log('Couldn\'t get news channel when running news!');
+            return message.channel.send('An error occurred, please try again later');
+        }
+
+        news_channel.send(news).then(async x => {
             message.channel.bulkDelete(3);
-            if (roles_to_ping.length > 0) await gideon.guilds.get('595318490240385037').channels.get('595944027208024085').send(roles_to_ping.map(x => "<@&" + x + ">").join(" "));
-            message.reply(`your news post has been sent to ${message.guild.channels.get('595944027208024085').toString()} & ${gideon.guilds.get('474179239068041237').channels.get('511627290996637727').toString()}! :white_check_mark:`);
+            if (roles_to_ping.length > 0) await news_channel.send(roles_to_ping.map(x => "<@&" + x + ">").join(" "));
+
+            const g = gideon.guilds.get('474179239068041237');
+            let sent = false;
+            if (g) {
+                try { 
+                    await g.channels.get('511627290996637727').send(news);
+                    sent = true;
+                }
+                catch (ex) { console.log("An error occurred while sending news to other server"); }
+            }
+            
+            message.reply(`Your news post has been sent to ${news_channel.toString()}${sent ? ' & ' + g.channels.get('511627290996637727').toString() : ''}! :white_check_mark:`);
             Util.TDM(message.guild, false);
             collector.stop();
         });

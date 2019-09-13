@@ -35,8 +35,10 @@ module.exports.run = async (gideon, message, args) => {
     else return message.channel.send(as);
 
     try {
-        const fiep = Util.ParseStringToId(args[1]);
+        const fiep = Util.ParseStringToObj(args[1]);
         if (!fiep) return message.channel.send(es);
+
+        fiep = "S" + (fiep.season < 10 ? "0" + fiep.season : fiep.season) + "E" + (fiep.episode < 10 ? "0" + fiep.episode : fiep.episode);
 
         const body = await fetch(api).then(res => res.json());
 
