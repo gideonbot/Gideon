@@ -70,9 +70,9 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:batwoman)/i)) show = shows[5];
     else if (agc.match(/(?:blacklightning)/i)) show = shows[6];
     else if (agc.match(/(?:av2020)/i)) show = shows[7];
-    else return message.channel.send(`"${show_a}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman`);
+    else return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman`);
     
-    if (!show) return message.channel.send(`"${show_a}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman`);
+    if (!show) return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman`);
 
     OS.search({
         sublanguageid: args[0],       

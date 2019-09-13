@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const Discord = module.require("discord.js");
 const fetch = require('node-fetch');
 
