@@ -1,45 +1,11 @@
-const Discord = module.require("discord.js");
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
-    if(message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
-    if(!message.member.roles.has('602311948809273344')){
-        return message.channel.send('You don\'t have the required permissions to use this command!')
-    }   else{
-
-    let flash = message.guild.roles.get('596074712682070061');
-    let arrow = message.guild.roles.get('596075000151277568');
-    let batwoman = message.guild.roles.get('596075415898947584');
-    let constantine = message.guild.roles.get('596075638285139988');
-    let legends = message.guild.roles.get('596075305861513246');
-    let supergirl = message.guild.roles.get('596075165780017172');
-    let blacklightning = message.guild.roles.get('607633853527359488');
-    const AV2020 = message.guild.roles.get('610867040961560625');
-
-    flash.edit({ mentionable: true })
-    .catch(console.error);
-
-    arrow.edit({ mentionable: true })
-    .catch(console.error);
-
-    batwoman.edit({ mentionable: true })
-    .catch(console.error);
-
-    constantine.edit({ mentionable: true })
-    .catch(console.error);
-
-    legends.edit({ mentionable: true })
-    .catch(console.error);
-
-    supergirl.edit({ mentionable: true })
-    .catch(console.error);
-
-    blacklightning.edit({ mentionable: true })
-    .catch(console.error);
-
-    AV2020.edit({ mentionable: true })
-    .catch(console.error);
-
-    message.channel.send('The DCTV roles are now mentionable!:white_check_mark: ');
+    if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
+    if (!message.member.roles.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
+    else {
+        await Util.TDM(message.guild, true);
+        message.channel.send('The DCTV roles are now mentionable! :white_check_mark:');
     }
 }
 

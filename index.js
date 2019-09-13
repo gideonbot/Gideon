@@ -1,18 +1,21 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const config = require("./config.json");
-const prefix = config.prefix;
-const prefix2 = config.prefix2;
+const prefix = config.prefix.toLowerCase();
+const prefix2 = config.prefix2.toLowerCase();
 const fs = require("fs");
 const delay = require('delay');
 const gideon = new Discord.Client();
 gideon.commands = new Discord.Collection();
 
 fs.readdir("./cmds", (err, files) => {
-    if(err) console.error(err);
+    if (err) {
+        console.error(err);
+        return;
+    }
 
-    let jsfiles = files.filter(f => f.split(".").pop() === "js");
-    if(jsfiles.length <= 0) {
+    let jsfiles = files.filter(f => f.endsWith(".js"));
+    if (jsfiles.length < 1) {
         console.log("No commands to load!");
         return;
     }
@@ -23,54 +26,51 @@ fs.readdir("./cmds", (err, files) => {
         let props = require(`./cmds/${f}`);
         console.log(`${i + 1}: ${f} loaded!`)
         gideon.commands.set(props.help.name, props);
-    })
+    });
 });
 
 gideon.once('ready', async () => {
     async function status() {
         const tmvt = gideon.guilds.get('595318490240385037');
+        if (!tmvt) return;
+
         let mbc = tmvt.members.filter(member => !member.user.bot).size;
         const st1 = `!help | invite.gg/tmvt`;
         let st2 = `${mbc} Time Vault members`;
         const st3 = '!demo | AVIH Demo DL';
 
         gideon.user.setActivity(st1, { type: 'PLAYING' }); 
-        await delay (10000);
+        await delay(10000);
         gideon.user.setActivity(st2, { type: 'WATCHING' }); 
-        await delay (10000);
+        await delay(10000);
         gideon.user.setActivity(st3, { type: 'PLAYING' });
     }
-    setInterval(() => {
-        status();
-    }, 30000);
     
     console.log('Ready!');
-    console.log(gideon.commands);
-})
+    setInterval(status, 30000);
+});
+
+process.on("uncaughtException", err => {
+    console.log("Uncaught Exception: " + err);
+});
+
+process.on("unhandledRejection", err => {
+    console.log("Unhandled Rejection: " + err + "\n\nJSON: " + JSON.stringify(err, null, 2));
+});
 
 gideon.on('message', async message => {
-    if (message.author.bot || !message.guild) return;
+    if (!message || !message.author || message.author.bot || !message.guild) return;
 
     const msg = message.content.toLowerCase();
-    if (
-      !msg.startsWith(prefix.toLowerCase()) &&
-      !msg.startsWith(prefix2.toLowerCase())
-    )
-      return;
+    if (!msg.startsWith(prefix) && !msg.startsWith(prefix2)) return;
 
-    const args = msg.startsWith(prefix.toLowerCase())
-      ? message.content
-          .slice(prefix.length)
-          .trim()
-          .split(" ")
-      : message.content
-          .slice(prefix2.length)
-          .trim()
-          .split(" ");
-    const cmd = args.shift().toLowerCase();
+    const args = message.content.slice(msg.startsWith(prefix) ? prefix.length : prefix2.length).trim().split(" ");
+
+    const cmd = args.shift();
     const command = gideon.commands.get(cmd);
+
     if (!command) return;
     command.run(gideon, message, args);
-})
+});
 
 gideon.login(process.env.CLIENT_TOKEN);

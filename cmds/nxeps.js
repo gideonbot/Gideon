@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const Discord = module.require("discord.js");
 const fetch = require('node-fetch');
 
@@ -9,263 +10,86 @@ module.exports.run = async (gideon, message, args) => {
     const bwomanapi = 'http://api.tvmaze.com/shows/37776?embed=nextepisode';
     const blightningapi = 'http://api.tvmaze.com/shows/20683?embed=nextepisode';
     const AV2020api = 'http://api.tvmaze.com/shows/AV2020?embed=nextepisode';
-    const oneDay = 24*60*60*1000;
+    const oneDay = 24 * 60 * 60 * 1000;
     const today = new Date();
-    let d;
 
-    const flabody = await fetch(flashapi).then(res => res.json());
-    const flatitle = flabody.name;
-    var nxflaep1 = '';
-    var nxflaep2 = '';
+    /**
+     * @returns {Promise<{title: string, name: string, value: string, error: null}>}
+     * @param {string} api_url 
+     */
+    function GetNextEpisodeInfo(api_url) {
+        return new Promise((resolve, reject) => {
+            if (!api_url) return reject({error: "Missing API URL"});
+            
+            fetch(api_url).then(res => {
+                if (res.status != 200) return reject({error: "404: Not Found"});
+
+                res.json().then(body => {
+                    let title = body.name;
     
-    if(!flabody.hasOwnProperty('_embedded')){
-        nxflaep2 = 'No Episode data available yet';
-    }   else{
-    const flaseason = flabody._embedded.nextepisode.season;
-    const flanumber = flabody._embedded.nextepisode.number;
-    const flaepname = flabody._embedded.nextepisode.name;
-    const fladate = flabody._embedded.nextepisode.airdate;
-    const flaad = new Date(fladate);
-    let flatime = flabody._embedded.nextepisode.airtime;
-    const flachannel = flabody.network.name;
-
-    let flatimeString = flatime;
-    let H = +flatimeString.substr(0, 2);
-    let h = H % 12 || 12;
-    let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-    flatimeString = h + flatimeString.substr(2, 3) + ampm;
-
-    const fladiffDays = Math.round(Math.abs((today.getTime() - flaad.getTime())/(oneDay)));
-
-    if(fladiffDays === 1){
-        d = 'day';
-    }   else{
-        d = 'days';
-    }
+                    let result = { title: title, name: null, value: null, error: null };
     
-    nxflaep1 = `${flaseason}x${flanumber<10?"0"+flanumber:flanumber} - ${flaepname}`;
-    nxflaep2 = `Will air in ${fladiffDays} ${d} on ${flaad.toDateString()} at ${flatimeString} ET on ${flachannel}`;
-    }
-
-    const arbody = await fetch(arrowapi).then(res => res.json());
-    const artitle = arbody.name;
-    var nxarep1 = '';
-    var nxarep2 = '';
-
-    if(!arbody.hasOwnProperty('_embedded')){
-        nxarep2 = 'No Episode data available yet';
-    }   else{
-    const arseason = arbody._embedded.nextepisode.season;
-    const arnumber = arbody._embedded.nextepisode.number;
-    const arepname = arbody._embedded.nextepisode.name;
-    const ardate = arbody._embedded.nextepisode.airdate;
-    const arad = new Date(ardate);
-    let artime = arbody._embedded.nextepisode.airtime;
-    const archannel = arbody.network.name;
-
-    let artimeString = artime;
-    let H = +artimeString.substr(0, 2);
-    let h = H % 12 || 12;
-    let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-    artimeString = h + artimeString.substr(2, 3) + ampm;
-
-    const ardiffDays = Math.round(Math.abs((today.getTime() - arad.getTime())/(oneDay)));
-
-    if(ardiffDays === 1){
-        d = 'day';
-    }   else{
-        d = 'days';
-    }
+                    if (!body._embedded) {
+                        result.name = 'No Episode data available yet';
+                        result.value = 'No Episode data available yet';
+                    }
     
-    nxarep1 = `${arseason}x${arnumber<10?"0"+arnumber:arnumber} - ${arepname}`;
-    nxarep2 = `Will air in ${ardiffDays} ${d} on ${arad.toDateString()} at ${artimeString} ET on ${archannel}`;
-    }
-
-    const sgbody = await fetch(supergirlapi).then(res => res.json());
-    const sgtitle = sgbody.name;
-    var nxsgep1 = '';
-    var nxsgep2  = '';
+                    else {
+                        let season = body._embedded.nextepisode.season;
+                        let number = body._embedded.nextepisode.number;
+                        let name = body._embedded.nextepisode.name;
+                        let date = new Date(body._embedded.nextepisode.airdate);
+                        let time = body._embedded.nextepisode.airtime;
+                        let channel = body.network.name;
     
-    if(!sgbody.hasOwnProperty('_embedded')){
-        nxsgep2 = 'No Episode data available yet';
-    }   else{
-    const sgseason = sgbody._embedded.nextepisode.season;
-    const sgnumber = sgbody._embedded.nextepisode.number;
-    const sgepname = sgbody._embedded.nextepisode.name;
-    const sgdate = sgbody._embedded.nextepisode.airdate;
-    const sgad = new Date(sgdate);
-    let sgtime = sgbody._embedded.nextepisode.airtime;
-    const sgchannel = sgbody.network.name;
-
-    let sgtimeString = sgtime;
-    let H = +sgtimeString.substr(0, 2);
-    let h = H % 12 || 12;
-    let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-    sgtimeString = h + sgtimeString.substr(2, 3) + ampm;
-
-    const sgdiffDays = Math.round(Math.abs((today.getTime() - sgad.getTime())/(oneDay)));
-
-    if(sgdiffDays === 1){
-        d = 'day';
-    }   else{
-        d = 'days';
-    }
-    
-    nxsgep1 = `${sgseason}x${sgnumber<10?"0"+sgnumber:sgnumber} - ${sgepname}`;
-    nxsgep2 = `Will air in ${sgdiffDays} ${d} on ${sgad.toDateString()} at ${sgtimeString} ET on ${sgchannel}`;
-    }
-    
-    const lgbody = await fetch(legendsapi).then(res => res.json());
-    const lgtitle = lgbody.name;
-    var nxlgep1 = '';
-    var nxlgep2 = '';
-
-    if(!lgbody.hasOwnProperty('_embedded')){
-        nxlgep2 = 'No Episode data available yet';
-    }   else{
-    const lgseason = lgbody._embedded.nextepisode.season;
-    const lgnumber = lgbody._embedded.nextepisode.number;
-    const lgepname = lgbody._embedded.nextepisode.name;
-    const lgdate = lgbody._embedded.nextepisode.airdate;
-    const lgad = new Date(lgdate);
-    let lgtime = lgbody._embedded.nextepisode.airtime;
-    const lgchannel = lgbody.network.name;
-
-    let lgtimeString = lgtime;
-    let H = +lgtimeString.substr(0, 2);
-    let h = H % 12 || 12;
-    let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-    lgtimeString = h + lgtimeString.substr(2, 3) + ampm;
-
-    const lgdiffDays = Math.round(Math.abs((today.getTime() - lgad.getTime())/(oneDay)));
-
-    if(lgdiffDays === 1){
-        d = 'day';
-    }   else{
-        d = 'days';
-    }
-
-    nxlgep1 = `${lgseason}x${lgnumber<10?"0"+lgnumber:lgnumber} - ${lgepname}`;
-    nxlgep2 = `Will air in ${lgdiffDays} ${d} on ${lgad.toDateString()} at ${lgtimeString} ET on ${lgchannel}`;
-    }
-
-    const bwbody = await fetch(bwomanapi).then(res => res.json());
-    const bwtitle = bwbody.name;
-    var nxbwep1 = '';
-    var nxbwep2 = '';
-
-    if(!bwbody.hasOwnProperty('_embedded')){
-        nxbwep2 = 'No Episode data available yet';
-    }   else{ 
-    const bwseason = bwbody._embedded.nextepisode.season;
-    const bwnumber = bwbody._embedded.nextepisode.number;
-    const bwepname = bwbody._embedded.nextepisode.name;
-    const bwdate = bwbody._embedded.nextepisode.airdate;
-    const bwad = new Date(bwdate);
-    let bwtime = bwbody._embedded.nextepisode.airtime;
-    const bwchannel = bwbody.network.name;
-
-    let bwtimeString = bwtime;
-    let H = +bwtimeString.substr(0, 2);
-    let h = H % 12 || 12;
-    let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-    bwtimeString = h + bwtimeString.substr(2, 3) + ampm;
-
-    const bwdiffDays = Math.round(Math.abs((today.getTime() - bwad.getTime())/(oneDay)));
-
-    if(bwdiffDays === 1){
-        d = 'day';
-    }   else{
-        d = 'days';
-    }
-    
-    nxbwep1 = `${bwseason}x${bwnumber<10?"0"+bwnumber:bwnumber} - ${bwepname}`;
-    nxbwep2 = `Will air in ${bwdiffDays} ${d} on ${bwad.toDateString()} at ${bwtimeString} ET on ${bwchannel}`;
-    }
+                        let timeString = time;
+                        let H = timeString.split(":")[0];
+                        let h = H % 12 || 12;
+                        let am_pm = (H < 12 || H == 24) ? " AM" : " PM";
+                        timeString = h + ":" + timeString.split(":")[1] + am_pm;
                         
-    const blbody = await fetch(blightningapi).then(res => res.json());
-    const bltitle = blbody.name;
-    var nxblep1 = '';
-    var nxblep2 = '';
-
-    if(!blbody.hasOwnProperty('_embedded')){
-        nxblep2 = 'No Episode data available yet';
-    }   else{ 
-    const blseason = blbody._embedded.nextepisode.season;
-    const blnumber = blbody._embedded.nextepisode.number;
-    const blepname = blbody._embedded.nextepisode.name;
-    const bldate = blbody._embedded.nextepisode.airdate;
-    const blad = new Date(bldate);
-    let bltime = blbody._embedded.nextepisode.airtime;
-    const blchannel = blbody.network.name;
-
-    let bltimeString = bltime;
-    let H = +bltimeString.substr(0, 2);
-    let h = H % 12 || 12;
-    let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-    bltimeString = h + bltimeString.substr(2, 3) + ampm;
-
-    const bldiffDays = Math.round(Math.abs((today.getTime() - blad.getTime())/(oneDay)));
-
-    if(bldiffDays === 1){
-        d = 'day';
-    }   else{
-        d = 'days';
-    }
+                        let diff_days = Math.round(Math.abs((today.getTime() - date.getTime()) / oneDay));
+                        let d = diff_days == 1 ? 'day' : 'days';
     
-    nxblep1 = `${blseason}x${blnumber<10?"0"+blnumber:blnumber} - ${blepname}`;
-    nxblep2 = `Will air in ${bldiffDays} ${d} on ${blad.toDateString()} at ${bltimeString} ET on ${blchannel}`;
-    }
-
-    const AV2020body = await fetch(AV2020api).then(res => res.json());
-    const AV2020title = AV2020body.name;
-    var nxAV2020ep1 = '';
-    var nxAV2020ep2 = '';
-
-    if(!AV2020body.hasOwnProperty('_embedded')){
-        nxAV2020ep2 = 'No Episode data available yet';
-    }   else{ 
-    const AV2020season = AV2020body._embedded.nextepisode.season;
-    const AV2020number = AV2020body._embedded.nextepisode.number;
-    const AV2020epname = AV2020body._embedded.nextepisode.name;
-    const AV2020date = AV2020body._embedded.nextepisode.airdate;
-    const AV2020ad = new Date(AV2020date);
-    let AV2020time = AV2020body._embedded.nextepisode.airtime;
-    const AV2020channel = AV2020body.network.name;
-
-    let AV2020timeString = AV2020time;
-    let H = +AV2020timeString.substr(0, 2);
-    let h = H % 12 || 12;
-    let ampm = (H < 12 || H === 24) ? " AM" : " PM";
-    AV2020timeString = h + AV2020timeString.substr(2, 3) + ampm;
-
-    const AV2020diffDays = Math.round(Math.abs((today.getTime() - AV2020ad.getTime())/(oneDay)));
-
-    if(AV2020diffDays === 1){
-        d = 'day';
-    }   else{
-        d = 'days';
-    }
+                        result.name = `${season}x${number < 10 ? "0" + number : number} - ${name}`;
+                        result.value = `Will air in ${diff_days} ${d} on ${date.toDateString()} at ${timeString} ET on ${channel}`;
+                    }
     
-    nxAV2020ep1 = `${AV2020season}x${AV2020number<10?"0"+AV2020number:AV2020number} - ${AV2020epname}`;
-    nxAV2020ep2 = `Will air in ${AV2020diffDays} ${d} on ${AV2020ad.toDateString()} at ${AV2020timeString} ET on ${AV2020channel}`;
+                    return resolve(result);
+                }, failed => reject({error: failed}));
+            }, failed => reject({error: failed}));
+        });
     }
 
-    const countdown = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('__Next upcoming Arrowverse episodes:__')
-    .addField(`${flatitle} ${nxflaep1}`, `${nxflaep2}`)
-    .addField(`${artitle} ${nxarep1}`, `${nxarep2}`)
-    .addField(`${sgtitle} ${nxsgep1}`, `${nxsgep2}`)
-    .addField(`${lgtitle} ${nxlgep1}`, `${nxlgep2}`)
-    .addField(`${bwtitle} ${nxbwep1}`, `${nxbwep2}`)
-    .addField(`${bltitle} ${nxblep1}`, `${nxblep2}`)
-    //.addField(`${AV2020title} ${nxAV2020ep1}`, `${nxAV2020ep2}`)
-    .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+    try {
+        const countdown = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('__Next upcoming Arrowverse episodes:__')
+        .setTimestamp()
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        
+        //wtf
+        GetNextEpisodeInfo(flashapi).then(flash => countdown.addField(`${flash.title} ${flash.name}`, `${flash.value}`), failed => {}).finally(x => {
+            GetNextEpisodeInfo(arrowapi).then(arrow => countdown.addField(`${arrow.title} ${arrow.name}`, `${arrow.value}`), failed => {}).finally(x => {
+                GetNextEpisodeInfo(supergirlapi).then(supergirl => countdown.addField(`${supergirl.title} ${supergirl.name}`, `${supergirl.value}`), failed => {}).finally(x => {
+                    GetNextEpisodeInfo(legendsapi).then(legends => countdown.addField(`${legends.title} ${legends.name}`, `${legends.value}`), failed => {}).finally(x => {
+                        GetNextEpisodeInfo(bwomanapi).then(bwoman => countdown.addField(`${bwoman.title} ${bwoman.name}`, `${bwoman.value}`), failed => {}).finally(x => {
+                            GetNextEpisodeInfo(blightningapi).then(blightning => countdown.addField(`${blightning.title} ${blightning.name}`, `${blightning.value}`), failed => {}).finally(x => {
+                                GetNextEpisodeInfo(AV2020api).then(AV2020 => countdown.addField(`${AV2020.title} ${AV2020.name}`, `${AV2020.value}`), failed => {}).finally(x => {
+                                    message.channel.send(countdown);
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
 
-    message.channel.send(countdown);
-             
+    catch (ex) {
+        console.log("nxeps: " + ex);
+        message.channel.send("Failed to fetch episode list, please try again later!");
+    }
 }
 
 module.exports.help = {

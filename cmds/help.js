@@ -3,23 +3,23 @@ const Discord = module.require("discord.js");
 module.exports.run = async (gideon, message, args) => {
     const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
 
-    if(!args[0]){
-    const help = new Discord.MessageEmbed()
-	    .setColor('#2791D3')
-	    .setTitle('__Use !help <module> to get a list of commands\nYou can check the list of available modules below:__')
+    if (!args[0]) {
+        const help = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('__Use !help <module> to get a list of commands\nYou can check the list of available modules below:__')
         .addField('general', 'General helpful Arrowverse commands')  
         .addField('fun', 'Fun and interactive Arrowverse commands')  
         .addField('admin', 'Commands for people with higher roles then the average Metahuman')  
         .addField('misc', 'Miscellaneous commands')    
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
-    	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
         message.channel.send(help);
-    }else if(args[0].match(/(?:general)/i)){
+    } else if (args[0].match(/(?:general)/i)) {
         const general = new Discord.MessageEmbed()
-	    .setColor('#2791D3')
-	    .setTitle('__You can check the list of available commands below:__')
+        .setColor('#2791D3')
+        .setTitle('__You can check the list of available commands below:__')
         .addField('!wiki <term>', 'Searches the Arrowverse Wiki for the given term')  
         .addField('!wikibl <term>', 'Searches the Black Lightning Wiki for the given term')  
         .addField('!ep <show> NxNN', 'Fetches episode info')  
@@ -33,13 +33,13 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!suit <character>', 'Displays newly revealed suits') 
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
-    	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
         message.channel.send(general);
-    }else if(args[0].match(/(?:fun)/i)){
+    } else if (args[0].match(/(?:fun)/i)) {
         const fun = new Discord.MessageEmbed()
-	    .setColor('#2791D3')
-	    .setTitle('__You can check the list of available commands below:__') 
+        .setColor('#2791D3')
+        .setTitle('__You can check the list of available commands below:__') 
         .addField('!meme', 'Displays a random Arrowverse meme')  
         .addField('!quote', 'Displays a random Arrowverse quote')  
         .addField('!accelerator', 'Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability')  
@@ -51,12 +51,12 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Gideon, plot a course!', 'Displays an easter egg')    
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
-    	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
         message.channel.send(fun);
-    }else if(args[0].match(/(?:admin)/i)){
+    } else if (args[0].match(/(?:admin)/i)) {
         const admin = new Discord.MessageEmbed()
-	    .setTitle('__You can check the list of available commands below:__')
+        .setTitle('__You can check the list of available commands below:__')
         .addField('!news', 'News Team can use this to post news')  
         .addField('!edm', 'News Team can use this to enable the DCTV roles\' mentionability')  
         .addField('!ddm', 'News Team can use this to disable the DCTV roles\' mentionability')        
@@ -72,13 +72,13 @@ module.exports.run = async (gideon, message, args) => {
         .addField('?slowmode', 'Enables slowmode')        
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
-    	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
         message.channel.send(admin);
-    }else if(args[0].match(/(?:misc)/i)){
+    } else if (args[0].match(/(?:misc)/i)) {
         const misc = new Discord.MessageEmbed()
-	    .setColor('#2791D3')
-	    .setTitle('__You can check the list of available commands below:__')
+        .setColor('#2791D3')
+        .setTitle('__You can check the list of available commands below:__')
         .addField('!JPK', 'Displays a random JPK gif')
         .addField('!ec', 'Displays a random EC gif')
         .addField('!prometheus', 'Displays a random Prometheus gif')
@@ -91,12 +91,11 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!donate', 'Displays info to support maintainance and hosting of Gideon')       
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
-    	.setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
         message.channel.send(misc);
-    }else{
-        return message.channel.send(`${args[0]} is not a valid argument!`);
     }
+    else return message.channel.send(`${args[0]} is not a valid argument!`);
 }   
 
 module.exports.help = {
