@@ -1,5 +1,6 @@
 const Discord = module.require("discord.js");
 const fetch = require('node-fetch');
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     const api = 'https://api.myjson.com/bins/zixur';
@@ -22,6 +23,7 @@ module.exports.run = async (gideon, message, args) => {
     
     catch (ex) {
         console.log(ex);
+        Util.log(ex);
         return message.channel.send("Failed to fetch a timeline change, please try again later!");
     }
 }

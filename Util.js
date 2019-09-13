@@ -67,6 +67,25 @@ class Util {
         return input.replace("<@", "").replace(">", "").replace("!").replace("<@!", "").replace("<#", "");
     }
 
+    /**
+     * @param {string} message 
+     */
+    static log(message) {
+        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
+        const url = process.env.LOG_WEBHOOK_URL;
+
+        if (!url) return false;
+
+        url = url.replace("https://discordapp.com/api/webhooks/", "");
+        var split = url.split("/");
+
+        if (split.length < 2) return false;
+
+        var client = new Discord.WebhookClient(split[0], split[1]);
+        for (var msg of Discord.Util.splitMessage(message, {maxLength: 1980})) client.send(msg, { avatarURL: avatar, username: "Gideon-Logs" });
+        return true;
+    }
+
     //more methods to come
 }
 

@@ -1,6 +1,7 @@
 const Discord = module.require("discord.js");
 const Imgur = require('imgur-node');
 const imgclient = new Imgur.Client(process.env.IMG_CL);
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {     
     const ecArray = ["SaHLa7c", "3Z3I82h"];
@@ -9,7 +10,8 @@ module.exports.run = async (gideon, message, args) => {
 
     imgclient.album.get(reca, (err, res) => {
     if (err) {
-        console.error(err);
+        console.log(err);
+        Util.log(err);
         return message.channel.send("An error occurred, please try again later");
     }
     

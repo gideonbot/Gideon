@@ -1,5 +1,6 @@
 const Discord = module.require("discord.js");
 const fetch = require('node-fetch');
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     if (args.join("").toLowerCase() === 'acourse!') {
@@ -31,6 +32,7 @@ module.exports.run = async (gideon, message, args) => {
         
         catch (ex) {
             console.log("Caught an exception while plotting a course: " + ex);
+            Util.log("Caught an exception while plotting a course: " + ex);
             message.channel.send("An error occured while trying to plot a course, try again later");
         }
     }       

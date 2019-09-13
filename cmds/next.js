@@ -76,6 +76,7 @@ module.exports.run = async (gideon, message, args) => {
 
     catch (ex) {
         console.log(ex);
+        Util.log(ex);
         return message.channel.send("Failed to fetch data, please try again later!");
     }
 }

@@ -1,5 +1,6 @@
-const Discord = module.require("discord.js");
 const delay = require('delay');
+const Discord = module.require("discord.js");
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     try {
@@ -20,8 +21,10 @@ module.exports.run = async (gideon, message, args) => {
 
         sent.edit(sent.content + "\nALERT SYSTEM FAILURE", {embed: explosion});
     }
+    
     catch (ex) {
         console.log("Exception occurred while starting up the particle accelerator " + ex);
+        Util.log("Exception occurred while starting up the particle accelerator " + ex);
         message.channel.send("An error occurred while trying to start the particle accelerator, please try again later");
     }
 

@@ -1,5 +1,6 @@
 const Discord = module.require("discord.js");
 const fetch = require('node-fetch');
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     const api = encodeURI(`https://arrow.fandom.com/api/v1/Articles/Details?ids=50&titles=${args.join(' ')}&abstract=500&width=200&height=200`);
@@ -23,7 +24,11 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send(wikiart); 
     }
 
-    catch (ex) { return message.channel.send("Failed to fetch info from wiki, please try again later!"); }
+    catch (ex) {
+        console.log("Failed to get data from wiki: " + ex);
+        Util.log("Failed to get data from wiki: " + ex);
+        return message.channel.send("Failed to fetch info from wiki, please try again later!");
+    }
 }
 
 module.exports.help = {
