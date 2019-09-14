@@ -1,6 +1,7 @@
 const Discord = module.require("discord.js");
 const Imgur = require('imgur-node');
 const imgclient = new Imgur.Client(process.env.IMG_CL);
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {     
     const jpkArray = ["FqCwt1J", "8bFXk0z", "2yz4RWt", "kxpGHYM", "f8mENXa", "Xy2SoEw", "UcPxCV5", "JhTWxoJ", "eLugrZD"];
@@ -38,7 +39,8 @@ module.exports.run = async (gideon, message, args) => {
 
     imgclient.album.get(rjpka, (err, res) => {
         if (err) {
-            console.error(err);
+            console.log(err);
+            Util.log(err);
             return message.channel.send("An error occurred, please try again later");
         }
 

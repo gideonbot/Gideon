@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 const Discord = module.require("discord.js");
 const fetch = require('node-fetch');
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     const flashapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
@@ -87,7 +88,8 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     catch (ex) {
-        console.log("nxeps: " + ex);
+        console.log("Error while processing nxeps: " + ex);
+        Util.log("Error while processing nxeps: " + ex);
         message.channel.send("Failed to fetch episode list, please try again later!");
     }
 }

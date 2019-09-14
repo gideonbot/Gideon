@@ -1,6 +1,7 @@
 const Discord = module.require("discord.js");
 const RarbgApi = require('rarbg');
 const rarbg = new RarbgApi();
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
@@ -47,6 +48,7 @@ module.exports.run = async (gideon, message, args) => {
 
     }).catch(err => {
         console.log(err);
+        Util.log(err);
         message.channel.send(`There was no result for ${rbs} on rarbg.to\nPlease try another episode instead!`);
     });
 }

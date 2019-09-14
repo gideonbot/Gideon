@@ -80,30 +80,38 @@ module.exports.run = async (gideon, message, args) => {
     if (!show) return message.channel.send(as);
 
     const api = `http://api.tvmaze.com/shows/${show.id}/episodebynumber?season=${info.season}&number=${info.episode}`;
+
+    try {
+        const body = await fetch(api).then(res => res.json());
+        if (body.status == 404) return message.channel.send(`There was no data for this episode!`).catch(console.error);
     
-    const body = await fetch(api).then(res => res.json());
-    if (body.status == 404) return message.channel.send(`There was no data for this episode!`).catch(console.error);
-
-    let airdate = new Date(body.airdate);
-    let airtime = body.airtime;
-    let desc = !body.summary ? 'No summary available' : body.summary.replace("<p>", "").replace("</p>", "");
-    let img = body.image.original;           
-
-    let timeString = airtime;
-    let H = timeString.split(":")[0];
-    let h = H % 12 || 12;
-    let am_pm = (H < 12 || H === 24) ? " AM" : " PM";
-    timeString = h + ":" + timeString.split(":")[1] + am_pm;
-
-    const epinfo = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle(`${show.title} ${body.season}x${body.number < 10 ? "0" + body.number : body.number} - ${body.name}`)
-    .setDescription(desc + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`)
-    .setImage(img)     
-    .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
-
-    message.channel.send(epinfo);
+        let airdate = new Date(body.airdate);
+        let airtime = body.airtime;
+        let desc = !body.summary ? 'No summary available' : body.summary.replace("<p>", "").replace("</p>", "");
+        let img = body.image.original;           
+    
+        let timeString = airtime;
+        let H = timeString.split(":")[0];
+        let h = H % 12 || 12;
+        let am_pm = (H < 12 || H === 24) ? " AM" : " PM";
+        timeString = h + ":" + timeString.split(":")[1] + am_pm;
+    
+        const epinfo = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle(`${show.title} ${body.season}x${body.number < 10 ? "0" + body.number : body.number} - ${body.name}`)
+        .setDescription(desc + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`)
+        .setImage(img)     
+        .setTimestamp()
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    
+        message.channel.send(epinfo);
+    }
+    
+    catch (ex) {
+        console.log("Exception occurred while starting up the particle accelerator " + ex);
+        Util.log("Exception occurred while starting up the particle accelerator " + ex);
+        message.channel.send("An error occurred while trying to start the particle accelerator, please try again later");
+    }
 }
 module.exports.help = {
     name: "ep"

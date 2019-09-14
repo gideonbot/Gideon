@@ -1,16 +1,19 @@
 require('dotenv').config();
-const Discord = require('discord.js');
 const config = require("./config.json");
+const delay = require('delay');
+const Discord = require('discord.js');
+const fs = require("fs");
+const gideon = new Discord.Client();
 const prefix = config.prefix.toLowerCase();
 const prefix2 = config.prefix2.toLowerCase();
-const fs = require("fs");
-const delay = require('delay');
-const gideon = new Discord.Client();
+const Util = require("./Util");
+
 gideon.commands = new Discord.Collection();
 
 fs.readdir("./cmds", (err, files) => {
     if (err) {
-        console.error(err);
+        Util.log("Error while reading commands:\n" + err);
+        console.log(err);
         return;
     }
 
@@ -47,15 +50,18 @@ gideon.once('ready', async () => {
     }
     
     console.log('Ready!');
+    Util.log(`${gideon.user.tag} ready`);
     setInterval(status, 30000);
 });
 
 process.on("uncaughtException", err => {
     console.log("Uncaught Exception: " + err);
+    Util.log("Uncaught Exception: " + err);
 });
 
 process.on("unhandledRejection", err => {
     console.log("Unhandled Rejection: " + err + "\n\nJSON: " + JSON.stringify(err, null, 2));
+    Util.log("Unhandled Rejection: " + err + "\n\nJSON: " + JSON.stringify(err, null, 2));
 });
 
 gideon.on('message', async message => {

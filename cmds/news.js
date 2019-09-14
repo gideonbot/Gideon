@@ -85,9 +85,13 @@ module.exports.run = async (gideon, message, args) => {
             if (g) {
                 try { 
                     await g.channels.get('511627290996637727').send(news);
+                    await g.channels.get('511627290996637727').send('This news was brought to you by:\nhttps://discord.gg/h9SEQaU');
                     sent = true;
                 }
-                catch (ex) { console.log("An error occurred while sending news to other server"); }
+                catch (ex) {
+                    console.log("An error occurred while sending news to other server: " + ex);
+                    Util.log("An error occurred while sending news to other server: " + ex);
+                }
             }
             
             message.reply(`Your news post has been sent to ${news_channel.toString()}${sent ? ' & ' + g.channels.get('511627290996637727').toString() : ''}! :white_check_mark:`);
