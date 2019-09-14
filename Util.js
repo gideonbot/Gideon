@@ -72,7 +72,7 @@ class Util {
      */
     static log(message) {
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
-        const url = process.env.LOG_WEBHOOK_URL;
+        let url = process.env.LOG_WEBHOOK_URL;
 
         if (!url) return false;
 
