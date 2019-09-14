@@ -7,12 +7,19 @@ module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
     if (!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
 
-    let seip = args.toString().substr(-4);
-    let season = seip[0];
-    let episode = seip[2] + seip[3];
-    let show = args.join(' ');
-    let showtitle;
-    let rbs;
+    let season_and_ep = Util.ParseStringToObj(args[1]);
+    if (!season_and_ep) {
+        const es = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('You must supply a valid episode and season!')
+        .setDescription('Acceptable formats: S00E00 and 00x00')
+        .setTimestamp()
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        
+        return message.channel.send(es);
+    }
+
+    let showtitle = "";
 
     if (agc.match(/(?:flash)/i)) showtitle = "The Flash";
     else if (agc.match(/(?:arrow)/i)) showtitle = "Arrow";
@@ -23,9 +30,9 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:blacklightning)/i)) showtitle = "Black Lightning";
     else if (agc.match(/(?:av2020)/i)) showtitle = "av2020"; 
 
-    else return message.channel.send(`"${show}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning`);
+    else return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning`);
         
-    rbs = `${showtitle} S${season<10?"0"+season:season}E${episode}`;
+    let rbs = `${showtitle} S${season_and_ep.season < 10 ? "0" + season_and_ep.season : season_and_ep.season}E${season_and_ep.episode < 10 ? "0" + season_and_ep.episode : season_and_ep.episode}`;
 
     rarbg.search({
         search_string: rbs,
@@ -47,8 +54,8 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send(epdwn);
 
     }).catch(err => {
-        console.log(err);
-        Util.log(err);
+        console.log("Failed to fetch data from rarbg: " + err);
+        Util.log("Failed to fetch data from rarbg: " + err);
         message.channel.send(`There was no result for ${rbs} on rarbg.to\nPlease try another episode instead!`);
     });
 }

@@ -88,9 +88,9 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     catch (ex) {
-        console.log("Error while processing nxeps: " + ex);
-        Util.log("Error while processing nxeps: " + ex);
-        message.channel.send("Failed to fetch episode list, please try again later!");
+        console.log("Error while fetching nxeps: " + ex);
+        Util.log("Error while fetching nxeps: " + ex);
+        message.channel.send("Failed to fetch episode list, please try again later");
     }
 }
 

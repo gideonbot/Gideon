@@ -1,5 +1,6 @@
 const Discord = module.require("discord.js");
 const fetch = require('node-fetch');
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     if (!args[0]) return message.channel.send("You must supply a speedsters name or alter ego and their home universe!");
@@ -28,21 +29,29 @@ module.exports.run = async (gideon, message, args) => {
     else if (ssd.match(/(?:XS)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:nora)/i) && ssd.match(/(?:e1)/i)) spnum = 17;
     else return message.channel.send(`"${ssd}" is not a valid argument!\nCheck the command's syntax and retry!`);
 
-    const body = await fetch(api).then(res => res.json());
+    try {
+        const body = await fetch(api).then(res => res.json());
 
-    const speedster = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle(`${body[spnum].speedster}`)
-    .addField(`*Lightning Color(s) (Electrokinesis)*`, `${body[spnum].lightningColorsElectrokinesis}`)
-    .addField(`*Universe*`, `${body[spnum].universe}`)
-    .addField(`*Actor/Actress*`, `${body[spnum].actoractress}`)
-    .addField(`*First Appearance*`, `${body[spnum].firstAppearance}`)
-    .addField(`*First Appearance as Speedster*`, `${body[spnum].firstAppearanceAsSpeedster}`)
-    .setThumbnail(body[spnum].image)
-    .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
-
-    message.channel.send(speedster);
+        const speedster = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle(`${body[spnum].speedster}`)
+        .addField(`*Lightning Color(s) (Electrokinesis)*`, `${body[spnum].lightningColorsElectrokinesis}`)
+        .addField(`*Universe*`, `${body[spnum].universe}`)
+        .addField(`*Actor/Actress*`, `${body[spnum].actoractress}`)
+        .addField(`*First Appearance*`, `${body[spnum].firstAppearance}`)
+        .addField(`*First Appearance as Speedster*`, `${body[spnum].firstAppearanceAsSpeedster}`)
+        .setThumbnail(body[spnum].image)
+        .setTimestamp()
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    
+        message.channel.send(speedster);
+    }
+    
+    catch (ex) {
+        console.log("An error occurred while trying to fetch speedsters: " + err);
+        Util.log("An error occurred while trying to fetch speedsters: " + err);
+        message.channel.send("Failed to fetch speedsters data, please try again later");
+    }
 }
 module.exports.help = {
     name: "sp"

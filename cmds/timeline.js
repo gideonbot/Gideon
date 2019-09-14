@@ -22,9 +22,9 @@ module.exports.run = async (gideon, message, args) => {
     }
     
     catch (ex) {
-        console.log(ex);
-        Util.log(ex);
-        return message.channel.send("Failed to fetch a timeline change, please try again later!");
+        console.log("An error occurred while trying to fetch a timeline change: " + ex);
+        Util.log("An error occurred while trying to fetch a timeline change: " + ex);
+        return message.channel.send("Failed to fetch a timeline change, please try again later");
     }
 }
 

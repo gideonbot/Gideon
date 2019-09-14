@@ -33,7 +33,7 @@ module.exports.run = async (gideon, message, args) => {
         catch (ex) {
             console.log("Caught an exception while plotting a course: " + ex);
             Util.log("Caught an exception while plotting a course: " + ex);
-            message.channel.send("An error occured while trying to plot a course, try again later");
+            message.channel.send("An error occurred while trying to plot a course, try again later");
         }
     }       
 }
