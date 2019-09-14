@@ -50,6 +50,7 @@ gideon.once('ready', async () => {
     }
     
     console.log('Ready!');
+    Util.log(`${gideon.user.tag} ready`);
     setInterval(status, 30000);
 });
 
