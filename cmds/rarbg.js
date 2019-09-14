@@ -25,7 +25,7 @@ module.exports.run = async (gideon, message, args) => {
 
     else return message.channel.send(`"${show}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning`);
         
-    rbs = `${showtitle} S${season<10?"0"+season:season}E${episode}`;
+    rbs = `${showtitle} S${season < 10 ? "0" + season : season}E${episode}`;
 
     rarbg.search({
         search_string: rbs,
@@ -47,8 +47,8 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send(epdwn);
 
     }).catch(err => {
-        console.log(err);
-        Util.log(err);
+        console.log("Failed to fetch data from rarbg: " + err);
+        Util.log("Failed to fetch data from rarbg: " + err);
         message.channel.send(`There was no result for ${rbs} on rarbg.to\nPlease try another episode instead!`);
     });
 }

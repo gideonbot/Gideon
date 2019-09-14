@@ -25,9 +25,9 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     catch (ex) {
-        console.log("Error while fetching data from wiki: " + ex);
-        Util.log("Error while fetching data from wiki: " + ex);
-        return message.channel.send("Failed to fetch info from wiki, please try again later!");
+        console.log("Error occurred while fetching data from wiki: " + ex);
+        Util.log("Error occurred while fetching data from wiki: " + ex);
+        return message.channel.send("Failed to fetch info from wiki, please try again later");
     }
 }
 

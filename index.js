@@ -64,6 +64,11 @@ process.on("unhandledRejection", err => {
     Util.log("Unhandled Rejection: " + err + "\n\nJSON: " + JSON.stringify(err, null, 2));
 });
 
+gideon.on("error", err => {
+    console.log("Bot error: " + err);
+    Util.log("Bot error: " + err);
+});
+
 gideon.on('message', async message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
 
@@ -72,7 +77,7 @@ gideon.on('message', async message => {
 
     const args = message.content.slice(msg.startsWith(prefix) ? prefix.length : prefix2.length).trim().split(" ");
 
-    const cmd = args.shift();
+    const cmd = args.shift().toLowerCase();
     const command = gideon.commands.get(cmd);
 
     if (!command) return;

@@ -98,8 +98,8 @@ module.exports.run = async (gideon, message, args) => {
             
         message.channel.send(subs);
     }).catch(err => {
-        console.log(err);
-        Util.log(err);
+        console.log("An error occurred while trying to fetch subtitles: " + err);
+        Util.log("An error occurred while trying to fetch subtitles: " + err);
         return message.channel.send(`There were no results for this episode on opensubtitles.org!\nTry another episode or another language code!`);
     });
 }
