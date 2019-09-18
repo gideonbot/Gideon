@@ -1,4 +1,4 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const Util = require("../Util");
 
@@ -35,43 +35,99 @@ module.exports.run = async (gideon, message, args) => {
     else return message.channel.send(as);
 
     try {
+        const body = await fetch(api).then(res => res.json());
+
+        message.channel.messages.fetch({limit: 50}).then(messages => {
+            let filtered = messages.filter(x => x && x.author.id == gideon.user.id && x.nextCollector);
+
+            filtered.each(msg => {
+                if (msg.reactions.size > 0) msg.reactions.removeAll();
+                msg.reactions.removeAll();
+                msg.nextCollector.stop();
+                msg.nextCollector = null;
+            });
+        });
+
         let fiep = Util.ParseStringToObj(args[1]);
         if (!fiep) return message.channel.send(es);
 
         fiep = "S" + (fiep.season < 10 ? "0" + fiep.season : fiep.season) + "E" + (fiep.episode < 10 ? "0" + fiep.episode : fiep.episode);
 
-        const body = await fetch(api).then(res => res.json());
-
         let shows = body.filter(x => x.series != 'Vixen' && x.series != 'Freedom Fighters: The Ray');
-    
-        let f = shows.find(x => x.series == showtitle && x.episode_id == fiep);
-        if (!f) return message.channel.send(`${showtitle} ${fiep} is not a valid episode!`);
 
-        let next = shows[shows.indexOf(f) + 1];
-        if (!next) return message.channel.send('Couldn\'t find that episode. Try again.');
+        function GetNextEmbed(show, season_and_episode) {
+            let f = shows.find(x => x.series == show && x.episode_id == season_and_episode);
+            if (!f) return `${show} ${season_and_episode} is not a valid episode!`;
+
+            let next = shows[shows.indexOf(f) + 1];
+            if (!next) return 'Couldn\'t find that episode. Try again.';
+        
+            const nxep = `${next.series} ${next.episode_id} - ${next.episode_name}`;
+            const nxepard = `Airdate: ${next.air_date}`;
+        
+            if (next.series.match(/(?:flash)/i)) thimg = 'https://i.ytimg.com/vi/ghPatoChvV0/maxresdefault.jpg';
+            else if (next.series.match(/(?:arrow)/i)) thimg = 'http://www.greenarrowtv.com/wp-content/uploads/2017/10/Screen-Shot-2017-10-19-at-6.50.41-PM.jpg';
+            else if (next.series.match(/(?:supergirl)/i)) thimg = 'https://i0.wp.com/thegameofnerds.com/wp-content/uploads/2018/01/supergirl-title-card1.png?resize=560%2C315&ssl=1';
+            else if (next.series.match(/(?:legends)/i)) thimg = 'https://i.imgur.com/FLqwOYv.png';
+            else if (next.series.match(/(?:constantine)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/b/b1/Constantine_TV_show_logo.jpg';
+            else if (next.series.match(/(?:batwoman)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/c/c3/Batwoman_TV_series_logo.png';
+            else if (next.series.match(/(?:blacklightning)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/e/ef/Black_Lightning_%28TV_series%29.png';
+            else if (next.series.match(/(?:av2020)/i)) thimg = '';
+        
+            const nextmsg = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setTitle('Your next episode:')
+            .setThumbnail(thimg)
+            .addField(nxep, nxepard)
+            .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
+            .setTimestamp()
+            .setFooter('Click on the button below to view the next episode (works every 5 minutes)', gideon.user.avatarURL());
+
+            return nextmsg;
+        }
     
-        const nxep = `${next.series} ${next.episode_id} - ${next.episode_name}`;
-        const nxepard = `Airdate: ${next.air_date}`;
-    
-        if (next.series.match(/(?:flash)/i)) thimg = 'https://i.ytimg.com/vi/ghPatoChvV0/maxresdefault.jpg';
-        else if (next.series.match(/(?:arrow)/i)) thimg = 'http://www.greenarrowtv.com/wp-content/uploads/2017/10/Screen-Shot-2017-10-19-at-6.50.41-PM.jpg';
-        else if (next.series.match(/(?:supergirl)/i)) thimg = 'https://i0.wp.com/thegameofnerds.com/wp-content/uploads/2018/01/supergirl-title-card1.png?resize=560%2C315&ssl=1';
-        else if (next.series.match(/(?:legends)/i)) thimg = 'https://i.imgur.com/FLqwOYv.png';
-        else if (next.series.match(/(?:constantine)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/b/b1/Constantine_TV_show_logo.jpg';
-        else if (next.series.match(/(?:batwoman)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/c/c3/Batwoman_TV_series_logo.png';
-        else if (next.series.match(/(?:blacklightning)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/e/ef/Black_Lightning_%28TV_series%29.png';
-        else if (next.series.match(/(?:av2020)/i)) thimg = '';
-    
-        const nextmsg = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('Your next episode:')
-        .setThumbnail(thimg)
-        .addField(nxep, nxepard)
-        .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-        .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
-    
-        message.channel.send(nextmsg);
+        let embed = GetNextEmbed(showtitle, fiep);
+
+        message.channel.send(embed).then(sent => {
+            //don't react with ▶ to error messages
+            if (typeof(embed) == "string") return;
+            sent.react("▶");
+            let LastEdit = Date.now();
+            let filter = (reaction, user) => user.id == message.author.id && reaction.emoji.name == "▶";
+            let collector = sent.createReactionCollector(filter);
+            sent.nextCollector = collector;
+
+            collector.on("collect", async (reaction, user) => {
+                let now = Date.now();
+                let diff = (now - LastEdit) / 1000;
+
+                if (diff >= /*60 */ 5) {
+                    LastEdit = Date.now();
+
+                    let embed = collector.message.embeds[0];
+
+                    //Arrow S01E02 - Honor Thy Father
+                    let name = embed.fields[0].name;
+
+                    // we split using " - " to get the tv show & season+ep (Arrow S01E02)
+                    let data = name.split(" - ")[0];
+                    
+                    //then we split using " " to get the ep info (last item of array) and tv show name (what is left of the array)
+                    
+                    let data_split = data.split(" ");
+                    //we get the last item of array using array.pop()
+                    let ep_info = data_split.pop();
+                    //what's left is the TV show name
+                    let tv_show_name = data_split.join(" ");
+
+                    //with data we have we just request the next episode, easy
+                    await collector.message.edit(GetNextEmbed(tv_show_name, ep_info));
+                }
+
+                //we remove the reaction even when the user is rate limited... I guess
+                reaction.message.reactions.find(x => x.emoji.name == "▶").users.remove(user.id);
+            });
+        });
     }
 
     catch (ex) {

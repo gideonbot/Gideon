@@ -54,8 +54,8 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send(epdwn);
 
     }).catch(err => {
-        console.log("Failed to fetch data from rarbg: " + err);
-        Util.log("Failed to fetch data from rarbg: " + err);
+        //console.log("Failed to fetch data from rarbg: " + err);
+        //Util.log("Failed to fetch data from rarbg: " + err);
         message.channel.send(`There was no result for ${rbs} on rarbg.to\nPlease try another episode instead!`);
     });
 }
