@@ -37,12 +37,13 @@ module.exports.run = async (gideon, message, args) => {
     try {
         const body = await fetch(api).then(res => res.json());
 
+        //remove previous !next collectors for that specific user (found by searching for embeds with users name#discriminator in title)
         message.channel.messages.fetch({limit: 50}).then(messages => {
-            let filtered = messages.filter(x => x && x.author.id == gideon.user.id && x.nextCollector);
+            //really big filter
+            let filtered = messages.filter(x => x && x.author && x.author.id == gideon.user.id && x.nextCollector && x.embeds && x.embeds.length > 0 && x.embeds[0] && x.embeds[0].title && x.embeds[0].title.endsWith(message.author.tag + ":"));
 
             filtered.each(msg => {
                 if (msg.reactions.size > 0) msg.reactions.removeAll();
-                msg.reactions.removeAll();
                 msg.nextCollector.stop();
                 msg.nextCollector = null;
             });
@@ -76,7 +77,7 @@ module.exports.run = async (gideon, message, args) => {
         
             const nextmsg = new Discord.MessageEmbed()
             .setColor('#2791D3')
-            .setTitle('Your next episode:')
+            .setTitle(`Next episode for ${message.author.tag}:`)
             .setThumbnail(thimg)
             .addField(nxep, nxepard)
             .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
