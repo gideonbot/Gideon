@@ -102,7 +102,9 @@ module.exports.run = async (gideon, message, args) => {
                 let now = Date.now();
                 let diff = (now - LastEdit) / 1000;
 
+                console.log("Check");
                 if (diff >= /*60 */ 5) {
+                    console.log("Passed");
                     LastEdit = Date.now();
 
                     let embed = collector.message.embeds[0];
@@ -125,6 +127,7 @@ module.exports.run = async (gideon, message, args) => {
                     await collector.message.edit(GetNextEmbed(tv_show_name, ep_info));
                 }
 
+                console.log("Removing reaction");
                 //we remove the reaction even when the user is rate limited... I guess
                 reaction.message.reactions.find(x => x.emoji.name == "▶").users.remove(user.id);
             });
