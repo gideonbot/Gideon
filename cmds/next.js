@@ -98,6 +98,7 @@ module.exports.run = async (gideon, message, args) => {
             sent.nextCollector = collector;
 
             collector.on("collect", async (reaction, user) => {
+                console.log("Collector collected");
                 let now = Date.now();
                 let diff = (now - LastEdit) / 1000;
 
