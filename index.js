@@ -69,8 +69,6 @@ gideon.on("error", err => {
     Util.log("Bot error: " + err);
 });
 
-gideon.on("rateLimit", console.log);
-
 gideon.on('message', async message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
 

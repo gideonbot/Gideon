@@ -98,12 +98,10 @@ module.exports.run = async (gideon, message, args) => {
             sent.nextCollector = collector;
 
             collector.on("collect", async (reaction, user) => {
-                console.log("Collector collected");
                 let now = Date.now();
                 let diff = (now - LastEdit) / 1000;
 
-                if (diff >= /*60 */ 5) {
-                    console.log("Passed");
+                if (diff >= 60 * 5) {
                     LastEdit = Date.now();
 
                     let embed = collector.message.embeds[0];
@@ -126,11 +124,8 @@ module.exports.run = async (gideon, message, args) => {
                     collector.message.edit(GetNextEmbed(tv_show_name, ep_info));
                 }
 
-                console.log("Removing reaction");
                 //we remove the reaction even when the user is rate limited... I guess
-                reaction.message.reactions.find(x => x.emoji.name == "▶").users.remove(user.id).then(removed => {
-                    console.log("Successfully removed the reaction");
-                }, failed => console.log("Failed to remove reaction: " + failed));
+                reaction.message.reactions.find(x => x.emoji.name == "▶").users.remove(user.id);
             });
         });
     }
