@@ -124,7 +124,7 @@ module.exports.run = async (gideon, message, args) => {
                     let tv_show_name = data_split.join(" ");
 
                     //with data we have we just request the next episode, easy
-                    await collector.message.edit(GetNextEmbed(tv_show_name, ep_info));
+                    collector.message.edit(GetNextEmbed(tv_show_name, ep_info));
                 }
 
                 console.log("Removing reaction");
