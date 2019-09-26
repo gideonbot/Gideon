@@ -3,14 +3,22 @@ const fetch = require('node-fetch');
 const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
-    const api = encodeURI(`https://arrow.fandom.com/api/v1/Articles/Details?ids=50&titles=${args.join(' ')}&abstract=500&width=200&height=200`);
-    let term = args[0];
-    if (!term) return message.channel.send("You must supply a search term!");
+    let search_term = args.join(' ');
+
+    if (!search_term) return message.channel.send("You must supply a search term!");
+
+    const search_api = encodeURI(`https://arrow.fandom.com/api/v1/SearchSuggestions/List?query=${search_term}`);
 
     try {
+        const search = await fetch(search_api).then(res => res.json());
+
+        if (search && search.items && search.items.length == 1) search_term = search.items[0].title;
+
+        const api = encodeURI(`https://arrow.fandom.com/api/v1/Articles/Details?ids=50&titles=${search_term}&abstract=500&width=200&height=200`);
+
         const body = await fetch(api).then(res => res.json());
         const article = Object.values(body.items)[0];       
-        if (!Object.keys(body.items).length) return message.channel.send(`There was no result for ${args.join(' ')} on the Arrowverse Wiki!\nPlease note that this command is case sensitive!`).catch(console.error);
+        if (!Object.keys(body.items).length) return message.channel.send(`There was no result for ${search_term} on the Arrowverse Wiki!\nPlease note that this command is case sensitive!`).catch(console.error);
         const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');       
                 
         const wikiart = new Discord.MessageEmbed()
