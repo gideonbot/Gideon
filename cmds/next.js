@@ -72,13 +72,13 @@ module.exports.run = async (gideon, message, args) => {
             else if (next.series.match(/(?:legends)/i)) thimg = 'https://i.imgur.com/FLqwOYv.png';
             else if (next.series.match(/(?:constantine)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/b/b1/Constantine_TV_show_logo.jpg';
             else if (next.series.match(/(?:batwoman)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/c/c3/Batwoman_TV_series_logo.png';
-            else if (next.series.match(/(?:blacklightning)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/e/ef/Black_Lightning_%28TV_series%29.png';
+            else if (next.series.match(/(?:black lightning)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/e/ef/Black_Lightning_%28TV_series%29.png';
             else if (next.series.match(/(?:av2020)/i)) thimg = '';
         
             const nextmsg = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setTitle(`Next episode for ${message.author.tag}:`)
-            .setThumbnail(thimg)
+            .setThumbnail(thimg ? thimg : null)
             .addField(nxep, nxepard)
             .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
             .setTimestamp()
@@ -102,10 +102,12 @@ module.exports.run = async (gideon, message, args) => {
                 let now = Date.now();
                 let diff = (now - LastEdit) / 1000;
 
-                if (diff >= 60 * 5) {
+                let embed = collector.message.embeds[0];
+
+                if (diff >= 60 * 5 || embed.fields[0].name.toLowerCase().includes("black lightning")) {
                     LastEdit = Date.now();
 
-                    let embed = collector.message.embeds[0];
+                    
 
                     //Arrow S01E02 - Honor Thy Father
                     let name = embed.fields[0].name;
