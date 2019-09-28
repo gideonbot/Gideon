@@ -1,7 +1,8 @@
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
-    if (args.join("").toLowerCase() === 'methefuture!') {
+    let agm = args.join("").toLowerCase();
+    if (agm.match(/(?:me)/i) && agm.match(/(?:the)/i) && agm.match(/(?:future)/i)) {
         message.channel.send('Yes Dr. Wells!');
 
         const future = new Discord.MessageEmbed()

@@ -3,7 +3,8 @@ const fetch = require('node-fetch');
 const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
-    if (args.join("").toLowerCase() === 'acourse!') {
+    let agm = args.join("").toLowerCase();
+    if (agm.match(/(?:course)/i)) {
         message.channel.send('Yes Captain Lance!');
 
         try {
