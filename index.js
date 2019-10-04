@@ -81,7 +81,7 @@ gideon.on('message', async message => {
         if (message.content.match(apm[i])) {
             message.delete();
             message.reply('Anti-Pagey-Mode is enabled!\nFuck this bitch.');
-          break;
+          return;
         }
     }
 
