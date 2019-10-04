@@ -4,7 +4,7 @@ const imgclient = new Imgur.Client(process.env.IMG_CL);
 const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {     
-    if (message.author.id == '353222476664143874') return message.reply('fuck you.');
+    if (message.author.id == '353222476664143874') return message.reply('not today.');
 
     const ecArray = ["SaHLa7c", "3Z3I82h"];
         
