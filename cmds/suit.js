@@ -4,7 +4,7 @@ module.exports.run = async (gideon, message, args) => {
     const st = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must choose a character!')
-    .setDescription('Currently available:\n**killer frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**')
+    .setDescription('Currently available:\n**killer frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**\n**kingdom come superman**')
     .setTimestamp()
     .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
 
@@ -46,6 +46,16 @@ module.exports.run = async (gideon, message, args) => {
             title: 'Sparton',
             desc: 'This is David Ramsey\'s new suit for Arrow Season 8!'
         },
+        {
+            image: 'https://i.imgur.com/vcZcD8R.jpg',
+            title: 'Kingdom Come Superman',
+            desc: 'This is Brandon Routh\'s new suit for COIE!'
+        },
+        {
+            image: 'https://i.imgur.com/IXs05KD.jpg',
+            title: 'Harbinger',
+            desc: 'This is Audrey Marie Anderson\'s new suit for COIE!'
+        },
     ]
 
     let suit = suits[-1];
@@ -57,8 +67,10 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:batwoman)/i)) suit = suits[4];
     else if (args[0].match(/(?:black)/i) && args[1].match(/(?:siren)/i)) suit = suits[5];
     else if (args[0].match(/(?:spartan)/i)) suit = suits[6]; 
-    else return message.channel.send('You must supply a valid character!\nCurrently available: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan');
-    if (!suit) return message.channel.send('You must supply a valid character!\nCurrently available: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan');
+    else if (args[0].match(/(?:kingdom)/i) && args[1].match(/(?:come)/i) && args[2].match(/(?:superman)/i)) suit = suits[7];
+    else if (args[0].match(/(?:harbinger)/i)) suit = suits[8];
+    else return message.channel.send('You must supply a valid character!\nCurrently available: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan | kingdom come superman | harbinger');
+    if (!suit) return message.channel.send('You must supply a valid character!\nCurrently available: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan | kingdom come superman | harbinger');
 
     const suit_embed = new Discord.MessageEmbed()
     .setColor('#2791D3')

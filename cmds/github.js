@@ -21,8 +21,8 @@ module.exports.run = async (gideon, message, args) => {
     }
     
     catch (ex) {
-        console.log("Caught an exception while plotting a course: " + ex);
-        Util.log("Caught an exception while plotting a course: " + ex);
+        console.log("Caught an exception while fetching github data: " + ex);
+        Util.log("Caught an exception while fetching github data: " + ex);
         message.channel.send("An error occurred while fetching github data, please try again later");
     }
 }

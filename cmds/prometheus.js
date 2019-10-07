@@ -3,7 +3,9 @@ const Imgur = require('imgur-node');
 const imgclient = new Imgur.Client(process.env.IMG_CL);
 const Util = require("../Util");
 
-module.exports.run = async (gideon, message, args) => {      
+module.exports.run = async (gideon, message, args) => {    
+    if (message.author.id == '353222476664143874') return message.reply('not today.');
+      
     imgclient.album.get('ZU6IgLo', (err, res) => {
         if (err) {
             console.log(err);

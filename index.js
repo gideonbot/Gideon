@@ -3,6 +3,7 @@ const config = require("./config.json");
 const delay = require('delay');
 const Discord = require('discord.js');
 const fs = require("fs");
+const fetch = require('node-fetch');
 const gideon = new Discord.Client();
 const prefix = config.prefix.toLowerCase();
 const prefix2 = config.prefix2.toLowerCase();
@@ -40,13 +41,13 @@ gideon.once('ready', async () => {
         let mbc = tmvt.members.filter(member => !member.user.bot).size;
         const st1 = `!help | invite.gg/tmvt`;
         let st2 = `${mbc} Time Vault members`;
-        const st3 = '!demo | AVIH Demo DL';
+        const st3 = 'over Queen JPK!';
 
         gideon.user.setActivity(st1, { type: 'PLAYING' }); 
         await delay(10000);
         gideon.user.setActivity(st2, { type: 'WATCHING' }); 
         await delay(10000);
-        gideon.user.setActivity(st3, { type: 'PLAYING' });
+        gideon.user.setActivity(st3, { type: 'WATCHING' });
     }
     
     console.log('Ready!');
@@ -72,6 +73,33 @@ gideon.on("error", err => {
 gideon.on('message', async message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
 
+    const apm = [/(?:pagey)/i, /(?:https\:\/\/twitter\.com\/Pagmyst)/i,
+                 /(?:https\:\/\/www\.instagram\.com\/pageyyt)/i,
+                 /(?:https\:\/\/www\.youtube\.com\/user\/SmallScreenYT)/i];
+
+    for (var i = 0; i < apm.length; i++) {
+        if (message.content.match(apm[i])) {
+            message.delete();
+            message.reply('Anti-Pagey-Mode is enabled!\nFuck this bitch.');
+          return;
+        }
+    }
+
+    const ytrg = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+
+    if (message.content.match(ytrg)){
+        const id = message.content.match(ytrg);
+        const google_api_key = process.env.GOOGLE_API_KEY;
+        const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
+        const body = await fetch(api).then(res => res.json()); 
+        const channelid = body.items[0].snippet.channelId;
+
+        if (channelid == 'UCTbT2FgB9oMpi4jB9gNPadQ') {
+            message.delete();
+            message.reply('Anti-Pagey-Mode is enabled!\nFuck this bitch.');
+        }
+    }
+
     const msg = message.content.toLowerCase();
     if (!msg.startsWith(prefix) && !msg.startsWith(prefix2)) return;
 
@@ -82,6 +110,7 @@ gideon.on('message', async message => {
 
     if (!command) return;
     command.run(gideon, message, args);
+
 });
 
 gideon.login(process.env.CLIENT_TOKEN);
