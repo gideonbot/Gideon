@@ -68,6 +68,40 @@ class Util {
     }
 
     /**
+     * @param {number} seconds_input 
+     * @param {boolean} seconds 
+     */
+    static Timespan(seconds_input, _seconds = true) {
+        if (!seconds_input || typeof(seconds_input) != "number") return "Unknown";
+
+        let seconds = Math.floor(seconds_input % 60);
+        seconds_input = seconds_input / 60;
+        let minutes = Math.floor(seconds_input % 60);
+        seconds_input = seconds_input / 60;
+        let hours = Math.floor(seconds_input % 24);
+        let days = Math.floor(seconds_input / 24);
+
+        let day_s = days + " day" + (days != 1 ? "s" : "");
+        let hour_s = hours + " hour" + (hours != 1 ? "s" : "");
+        let mins_s = minutes + " minute" + (minutes != 1 ? "s" : "");
+        let sec_s = seconds + " second" + (seconds != 1 ? "s" : "");
+
+        let arr = [];
+        if (days > 0) arr.push(day_s);
+        if (hours > 0) arr.push(hour_s);
+        if (minutes > 0) arr.push(mins_s);
+        if (seconds > 0 && _seconds) arr.push(sec_s);
+
+        if (arr.length < 1) return "Unknown";
+        if (arr.length < 2) return arr[0];
+
+        let last = arr[arr.length - 1];
+        arr.pop();
+
+        return arr.join(", ") + " and " + last;
+    }
+
+    /**
      * @param {string} message 
      */
     static log(message) {
@@ -77,12 +111,12 @@ class Util {
         if (!url) return false;
 
         url = url.replace("https://discordapp.com/api/webhooks/", "");
-        var split = url.split("/");
+        let split = url.split("/");
 
         if (split.length < 2) return false;
 
-        var client = new Discord.WebhookClient(split[0], split[1]);
-        for (var msg of Discord.Util.splitMessage(message, {maxLength: 1980})) client.send(msg, { avatarURL: avatar, username: "Gideon-Logs" });
+        let client = new Discord.WebhookClient(split[0], split[1]);
+        for (let msg of Discord.Util.splitMessage(message, {maxLength: 1980})) client.send(msg, { avatarURL: avatar, username: "Gideon-Logs" });
         return true;
     }
 
