@@ -72,33 +72,8 @@ gideon.on("error", err => {
 
 gideon.on('message', async message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
-
-    const apm = [/(?:pagey)/i, /(?:https\:\/\/twitter\.com\/Pagmyst)/i,
-                 /(?:https\:\/\/www\.instagram\.com\/pageyyt)/i,
-                 /(?:https\:\/\/www\.youtube\.com\/user\/SmallScreenYT)/i];
-
-    for (var i = 0; i < apm.length; i++) {
-        if (message.content.match(apm[i])) {
-            message.delete();
-            message.reply('Anti-Pagey-Mode is enabled!\nFuck this bitch.');
-          return;
-        }
-    }
-
-    const ytrg = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
-
-    if (message.content.match(ytrg)){
-        const id = message.content.match(ytrg);
-        const google_api_key = process.env.GOOGLE_API_KEY;
-        const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
-        const body = await fetch(api).then(res => res.json()); 
-        const channelid = body.items[0].snippet.channelId;
-
-        if (channelid == 'UCTbT2FgB9oMpi4jB9gNPadQ') {
-            message.delete();
-            message.reply('Anti-Pagey-Mode is enabled!\nFuck this bitch.');
-        }
-    }
+    
+    //Util.ABM(message);
 
     const msg = message.content.toLowerCase();
     if (!msg.startsWith(prefix) && !msg.startsWith(prefix2)) return;
