@@ -86,6 +86,54 @@ class Util {
         return true;
     }
 
+    static async ABM(message) {
+        const auth = message.author;
+        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
+        const abmembed = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle(`:rotating_light:Anti-Bitch-Mode is enabled!:rotating_light:`)
+        .setDescription('You posted a link to a forbidden social media account!\nFuck that bitch!')
+        .setTimestamp()
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', avatar);
+
+        const abm = [/(?:https\:\/\/twitter\.com\/Pagmyst)/i,
+        /(?:https\:\/\/www\.instagram\.com\/pageyyt)/i,
+        /(?:https\:\/\/www\.youtube\.com\/user\/SmallScreenYT)/i,
+        /[https\:\/\/www\.instagram\.com\/thedctvshow\/]/i,
+        /[https\:\/\/twitter\.com\/thedctvshow]/i,
+        /[https\:\/\/www\.youtube\.com\/channel\/UCvFS\-R57UT1q2U_Jp4pi1eg]/i,
+        /[https\:\/\/www\.youtube\.com\/channel\/UC6mI3QJFH1m2V8ZHvvHimVA]/i,
+        /[https\:\/\/twitter\.com\/theblackestlion]/i,
+        /[https\:\/\/twitter\.com\/tvpromosdb]/i,
+        /[https\:\/\/www\.youtube\.com\/channel\/UCDR8cvjALazMm2j9hOar8_g]/i];
+
+        for (var i = 0; i < abm.length; i++) {
+        if (message.content.match(abm[i])) {
+            message.delete();
+            message.channel.send(`${auth}`);
+            message.channel.send(abmembed);
+            return;
+        }
+        }
+
+        const ytrg = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+        const cids = ['UCTbT2FgB9oMpi4jB9gNPadQ', 'UCvFS-R57UT1q2U_Jp4pi1eg', 'UC6mI3QJFH1m2V8ZHvvHimVA', 'UCDR8cvjALazMm2j9hOar8_g'];
+
+        if (message.content.match(ytrg)){
+        const id = message.content.match(ytrg);
+        const google_api_key = process.env.GOOGLE_API_KEY;
+        const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
+        const body = await fetch(api).then(res => res.json()); 
+        const channelid = body.items[0].snippet.channelId;
+
+        if (channelid == cids.every()) {
+            message.delete();
+            message.channel.send(`${auth}`);
+            message.channel.send(abmembed);
+        }
+        }
+    }
+
     //more methods to come
 }
 
