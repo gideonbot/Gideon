@@ -122,7 +122,6 @@ class Util {
     }
 
     static async ABM(message) {
-        const auth = message.author;
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const msg = message.content.toLowerCase().trim();
         const abmembed = new Discord.MessageEmbed()
@@ -137,7 +136,7 @@ class Util {
         'https://www.youtube.com/user/SmallScreenYT',
         'https://www.instagram.com/thedctvshow',
         'https://twitter.com/thedctvshow',
-        'https://www.youtube.com/channel/UCvFS\-R57UT1q2U_Jp4pi1eg',
+        'https://www.youtube.com/channel/UCvFS-R57UT1q2U_Jp4pi1eg',
         'https://www.youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
         'https://twitter.com/theblackestlion',
         'https://twitter.com/tvpromosdb',
@@ -146,7 +145,7 @@ class Util {
         for (var i = 0; i < abm.length; i++) {
         if (msg.includes(abm[i].toLowerCase())) {
             message.delete();
-            message.channel.send(`${auth}`);
+            message.channel.send(message.author.toString());
             message.channel.send(abmembed);
             return;
         }
@@ -161,12 +160,15 @@ class Util {
         const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
         const body = await fetch(api).then(res => res.json()); 
         const channelid = body.items[0].snippet.channelId;
-
-        if (channelid == cids.every()) {
-            message.delete();
-            message.channel.send(`${auth}`);
-            message.channel.send(abmembed);
-        }
+        
+        for (var i = 0; i < abm.length; i++) {
+            if (channelid == cids[i]) {
+                message.delete();
+                message.channel.send(message.author.toString());
+                message.channel.send(abmembed);
+                return;
+            }
+            }
         }
     }
 
