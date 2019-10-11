@@ -3,7 +3,6 @@ const config = require("./config.json");
 const delay = require('delay');
 const Discord = require('discord.js');
 const fs = require("fs");
-const fetch = require('node-fetch');
 const gideon = new Discord.Client();
 const prefix = config.prefix.toLowerCase();
 const prefix2 = config.prefix2.toLowerCase();

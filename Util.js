@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const fetch = require('node-fetch');
 
 class Util {
     constructor() {
@@ -123,6 +124,7 @@ class Util {
     static async ABM(message) {
         const auth = message.author;
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
+        const msg = message.content.toLowerCase().trim();
         const abmembed = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`:rotating_light:Anti-Bitch-Mode is enabled!:rotating_light:`)
@@ -130,19 +132,19 @@ class Util {
         .setTimestamp()
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', avatar);
 
-        const abm = [/(?:https\:\/\/twitter\.com\/Pagmyst)/i,
-        /(?:https\:\/\/www\.instagram\.com\/pageyyt)/i,
-        /(?:https\:\/\/www\.youtube\.com\/user\/SmallScreenYT)/i,
-        /[https\:\/\/www\.instagram\.com\/thedctvshow\/]/i,
-        /[https\:\/\/twitter\.com\/thedctvshow]/i,
-        /[https\:\/\/www\.youtube\.com\/channel\/UCvFS\-R57UT1q2U_Jp4pi1eg]/i,
-        /[https\:\/\/www\.youtube\.com\/channel\/UC6mI3QJFH1m2V8ZHvvHimVA]/i,
-        /[https\:\/\/twitter\.com\/theblackestlion]/i,
-        /[https\:\/\/twitter\.com\/tvpromosdb]/i,
-        /[https\:\/\/www\.youtube\.com\/channel\/UCDR8cvjALazMm2j9hOar8_g]/i];
+        const abm = ['https://twitter.com/Pagmyst',
+        'https://www.instagram.com/pageyyt',
+        'https://www.youtube.com/user/SmallScreenYT',
+        'https://www.instagram.com/thedctvshow',
+        'https://twitter.com/thedctvshow',
+        'https://www.youtube.com/channel/UCvFS\-R57UT1q2U_Jp4pi1eg',
+        'https://www.youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
+        'https://twitter.com/theblackestlion',
+        'https://twitter.com/tvpromosdb',
+        'https://www.youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g'];
 
         for (var i = 0; i < abm.length; i++) {
-        if (message.content.match(abm[i])) {
+        if (msg.includes(abm[i].toLowerCase())) {
             message.delete();
             message.channel.send(`${auth}`);
             message.channel.send(abmembed);
