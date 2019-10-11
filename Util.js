@@ -133,16 +133,16 @@ class Util {
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', avatar);
 
         const abm = [
-            'https://twitter.com/Pagmyst',
-            'https://www.instagram.com/pageyyt',
-            'https://www.youtube.com/user/SmallScreenYT',
-            'https://www.instagram.com/thedctvshow',
-            'https://twitter.com/thedctvshow',
-            'https://www.youtube.com/channel/UCvFS-R57UT1q2U_Jp4pi1eg',
-            'https://www.youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
-            'https://twitter.com/theblackestlion',
-            'https://twitter.com/tvpromosdb',
-            'https://www.youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g'
+            'twitter.com/Pagmyst',
+            'instagram.com/pageyyt',
+            'youtube.com/user/SmallScreenYT',
+            'instagram.com/thedctvshow',
+            'twitter.com/thedctvshow',
+            'youtube.com/channel/UCvFS-R57UT1q2U_Jp4pi1eg',
+            'youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
+            'twitter.com/theblackestlion',
+            'twitter.com/tvpromosdb',
+            'youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g'
         ];
 
         for (let url of abm) {
