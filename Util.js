@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
+const delay = require('delay');
 
 class Util {
     constructor() {
@@ -144,6 +145,7 @@ class Util {
 
         for (var i = 0; i < abm.length; i++) {
         if (msg.includes(abm[i].toLowerCase())) {
+            await delay(200);
             message.delete();
             message.channel.send(message.author.toString());
             message.channel.send(abmembed);
@@ -163,6 +165,7 @@ class Util {
         
         for (var i = 0; i < abm.length; i++) {
             if (channelid == cids[i]) {
+                await delay(200);
                 message.delete();
                 message.channel.send(message.author.toString());
                 message.channel.send(abmembed);
