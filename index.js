@@ -72,7 +72,7 @@ gideon.on("error", err => {
 gideon.on('message', async message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     
-    //Util.ABM(message);
+    Util.ABM(message);
 
     const msg = message.content.toLowerCase();
     if (!msg.startsWith(prefix) && !msg.startsWith(prefix2)) return;

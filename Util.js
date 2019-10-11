@@ -124,7 +124,7 @@ class Util {
     static async ABM(message) {
         const auth = message.author;
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
-        const msg = message.content.toLowerCase().trim();
+        const msg = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
         const abmembed = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`:rotating_light:Anti-Bitch-Mode is enabled!:rotating_light:`)
@@ -132,41 +132,47 @@ class Util {
         .setTimestamp()
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', avatar);
 
-        const abm = ['https://twitter.com/Pagmyst',
-        'https://www.instagram.com/pageyyt',
-        'https://www.youtube.com/user/SmallScreenYT',
-        'https://www.instagram.com/thedctvshow',
-        'https://twitter.com/thedctvshow',
-        'https://www.youtube.com/channel/UCvFS\-R57UT1q2U_Jp4pi1eg',
-        'https://www.youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
-        'https://twitter.com/theblackestlion',
-        'https://twitter.com/tvpromosdb',
-        'https://www.youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g'];
+        const abm = [
+            'https://twitter.com/Pagmyst',
+            'https://www.instagram.com/pageyyt',
+            'https://www.youtube.com/user/SmallScreenYT',
+            'https://www.instagram.com/thedctvshow',
+            'https://twitter.com/thedctvshow',
+            'https://www.youtube.com/channel/UCvFS-R57UT1q2U_Jp4pi1eg',
+            'https://www.youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
+            'https://twitter.com/theblackestlion',
+            'https://twitter.com/tvpromosdb',
+            'https://www.youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g'
+        ];
 
-        for (var i = 0; i < abm.length; i++) {
-        if (msg.includes(abm[i].toLowerCase())) {
-            message.delete();
-            message.channel.send(`${auth}`);
-            message.channel.send(abmembed);
-            return;
-        }
+        for (let url of abm) {
+            if (msg.includes(url.toLowerCase())) {
+                message.delete();
+                return message.channel.send(auth, {embed: abmembed});
+            }
         }
 
         const ytrg = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
         const cids = ['UCTbT2FgB9oMpi4jB9gNPadQ', 'UCvFS-R57UT1q2U_Jp4pi1eg', 'UC6mI3QJFH1m2V8ZHvvHimVA', 'UCDR8cvjALazMm2j9hOar8_g'];
 
-        if (message.content.match(ytrg)){
-        const id = message.content.match(ytrg);
-        const google_api_key = process.env.GOOGLE_API_KEY;
-        const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
-        const body = await fetch(api).then(res => res.json()); 
-        const channelid = body.items[0].snippet.channelId;
+        if (message.content.match(ytrg)) {
+            const id = message.content.match(ytrg);
+            const google_api_key = process.env.GOOGLE_API_KEY;
+            const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
 
-        if (channelid == cids.every()) {
-            message.delete();
-            message.channel.send(`${auth}`);
-            message.channel.send(abmembed);
-        }
+            try {
+                const body = await fetch(api).then(res => res.json());
+
+                const channel_id = body && body.items && body.items[0] && body.items[0].snippet && body.items[0].snippet.channelId ? body.items[0].snippet.channelId : null;
+                if (!channel_id) return;
+    
+                if (cids.includes(channel_id)) {
+                    message.delete();
+                    message.channel.send(auth, {embed: abmembed});
+                }
+            }
+            
+            catch (ex) { this.log("Failed to fetch data from YT API: " + ex); }
         }
     }
 
