@@ -10,7 +10,7 @@ class Util {
     static get roles() {
         return ['596074712682070061', '596075000151277568', '596075415898947584', '596075638285139988', '596075305861513246', '596075165780017172', '607633853527359488', '610867040961560625'];
     }
-
+    
     /**
      * @summary An overly complicated and low-level method for parsing episode stuff
      * @param {string} input 
@@ -149,6 +149,7 @@ class Util {
             message.delete();
             message.channel.send(message.author.toString());
             message.channel.send(abmembed);
+            Util.log("ABM triggered by: " + message.author.toString());
             return;
         }
         }
@@ -169,10 +170,15 @@ class Util {
                 message.delete();
                 message.channel.send(message.author.toString());
                 message.channel.send(abmembed);
+                Util.log("ABM triggered by: " + message.author.toString());
                 return;
             }
             }
         }
+    }
+
+    static async CVM(message) {
+        
     }
 
     //more methods to come
