@@ -2,6 +2,9 @@ const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const delay = require('delay');
 const removeMd = require('remove-markdown');
+const config = require("./config.json");
+const prefix = config.prefix.toLowerCase();
+const prefix2 = config.prefix2.toLowerCase();
 
 class Util {
     constructor() {
@@ -183,6 +186,9 @@ class Util {
     }
 
     static async CVM(message) {
+        if (message.guild.id !== '595318490240385037') return;
+        if (message.channel.id === '595944027208024085' || '595935317631172608' || '595935345598529546' || '598487475568246830' || '622415301144870932' || '596080078815887419') return;
+        if (message.startsWith(prefix) && message.startsWith(prefix2)) return;
         const auth = message.author.toString();
         const plainText = removeMd(message.content); //remove Markdown to apply spoiler tags
         await delay(200);
