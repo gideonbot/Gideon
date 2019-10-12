@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const delay = require('delay');
+const removeMd = require('remove-markdown');
 
 class Util {
     constructor() {
@@ -182,7 +183,11 @@ class Util {
     }
 
     static async CVM(message) {
-        
+        const auth = message.author.toString();
+        const plainText = removeMd(message.content); //remove Markdown to apply spoiler tags
+        await delay(200);
+        message.delete();
+        message.channel.send(`${auth} said: \n||${plainText}||` );
     }
 
     //more methods to come
