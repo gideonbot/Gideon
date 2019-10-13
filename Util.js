@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const delay = require('delay');
-const removeMd = require('remove-markdown');
 const config = require("./config.json");
 const prefix = config.prefix.toLowerCase();
 const prefix2 = config.prefix2.toLowerCase();

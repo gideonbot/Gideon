@@ -15,7 +15,7 @@ module.exports.run = async (gideon, message, args) => {
         let evaled = eval(code);
    
         if (typeof evaled !== "string")
-          evaled = require("util").inspect(evaled);
+          evaled = JSON.stringify(evaled);
    
         message.channel.send(clean(evaled), {code:"xl"});
       } catch (err) {
