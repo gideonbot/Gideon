@@ -187,13 +187,29 @@ class Util {
 
     static async CVM(message) {
         if (message.guild.id !== '595318490240385037') return;
-        if (message.channel.id === '595944027208024085' || '595935317631172608' || '595935345598529546' || '598487475568246830' || '622415301144870932' || '596080078815887419') return;
-        if (message.startsWith(prefix) && message.startsWith(prefix2)) return;
-        const auth = message.author.toString();
+        const ids = ['595944027208024085', '595935317631172608', '595935345598529546', '598487475568246830', '622415301144870932', '596080078815887419'];
+
+        for (let id of ids) {
+            if (message.channel.id === id) {
+                return;
+            }
+        }
+
+        //if (message.content.startsWith(prefix) && message.content.startsWith(prefix2)) return; //doesn't work.
+        const auth = message.author.tag;
+        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const plainText = removeMd(message.content); //remove Markdown to apply spoiler tags
         await delay(200);
         message.delete();
-        message.channel.send(`${auth} said: \n||${plainText}||` );
+
+        const cvm = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle(`${auth} said:`)
+        .setDescription(`||${plainText}||`)
+        .setTimestamp()
+        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', avatar);
+
+        message.channel.send(cvm);
     }
 
     //more methods to come
