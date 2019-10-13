@@ -17,7 +17,6 @@
     "imgur-node": "^0.2.0",
     "node-fetch": "^2.6.0",
     "opensubtitles-api": "^5.0.1",
-    "rarbg": "^1.2.7",
-    "remove-markdown": "^0.3.0"
+    "rarbg": "^1.2.7"
   }
 }

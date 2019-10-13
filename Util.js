@@ -198,7 +198,7 @@ class Util {
         //if (message.content.startsWith(prefix) && message.content.startsWith(prefix2)) return; //doesn't work.
         const auth = message.author.tag;
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
-        const plainText = removeMd(message.content); //remove Markdown to apply spoiler tags
+        const plainText = Discord.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
         await delay(200);
         message.delete();
 
