@@ -1,9 +1,5 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
-const delay = require('delay');
-const config = require("./config.json");
-const prefix = config.prefix.toLowerCase();
-const prefix2 = config.prefix2.toLowerCase();
 
 class Util {
     constructor() {
@@ -13,9 +9,9 @@ class Util {
     static get roles() {
         return ['596074712682070061', '596075000151277568', '596075415898947584', '596075638285139988', '596075305861513246', '596075165780017172', '607633853527359488', '610867040961560625'];
     }
-    
+
     /**
-     * @summary An overly complicated and low-level method for parsing episode stuff
+     * @summary A low-level method for parsing episode stuff
      * @param {string} input 
      */
     static ParseStringToObj(input) {
@@ -54,13 +50,18 @@ class Util {
     static async TDM(guild, mentionable) {
         if (!guild) return;
 
-        for (let role_id of this.roles) {
+        for (let role_id of Util.roles) {
             let role = guild.roles.get(role_id);
             if (role) {
                 try { await role.edit({ mentionable: mentionable }); }
                 catch (ex) { console.log("Failed to make " + role_id + " mentionable: " + ex); }
             }
         }
+    }
+
+    static delay(ms) {
+        if (ms == undefined || ms == null || typeof(ms) != "number") ms = 0;
+        return new Promise((resolve, reject) => setTimeout(resolve, ms));
     }
 
     /**
@@ -125,9 +126,11 @@ class Util {
         return true;
     }
 
+    /**
+     * @param {Discord.Message} message 
+     */
     static async ABM(message) {
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
-        const auth = message.author.toString();
         const msg = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
         const abmembed = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -151,10 +154,10 @@ class Util {
 
         for (let url of abm) {
             if (msg.includes(url.toLowerCase())) {
-                await delay(200);
+                await Util.delay(200);
                 message.delete();
-                Util.log("ABM triggered by: " + auth);
-                return message.channel.send(auth, {embed: abmembed});
+                Util.log("ABM triggered by: " + message.author.tag);
+                return message.channel.send(msg.author, {embed: abmembed});
             }
         }
 
@@ -173,31 +176,30 @@ class Util {
                 if (!channel_id) return;
     
                 if (cids.includes(channel_id)) {
-                    await delay(200);
+                    await Util.delay(200);
                     message.delete();
-                    Util.log("ABM triggered by: " + auth);
-                    return message.channel.send(auth, {embed: abmembed});
+                    Util.log("ABM triggered by: " + message.author.tag);								  
+                    message.channel.send(msg.author, {embed: abmembed});
                 }
             }
             
-            catch (ex) { this.log("Failed to fetch data from YT API: " + ex); }
+            catch (ex) { Util.log("Failed to fetch data from YT API: " + ex); }
         }
     }
-
-    static async CVM(message) {
+    
+    /**
+     * @param {Discord.Message} message 
+     */
+	static async CVM(message) {
         if (message.guild.id !== '595318490240385037') return;
+
         const ids = ['595944027208024085', '595935317631172608', '595935345598529546', '598487475568246830', '622415301144870932', '596080078815887419'];
 
-        for (let id of ids) {
-            if (message.channel.id === id) {
-                return;
-            }
-        }
+        if (ids.includes(message.channel.id)) return;
 
-        //if (message.content.startsWith(prefix) && message.content.startsWith(prefix2)) return; //doesn't work.
         const auth = message.author.tag;
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
-        const plainText = Discord.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
+        const plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
         await delay(200);
         message.delete();
 
