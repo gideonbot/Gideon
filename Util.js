@@ -50,7 +50,7 @@ class Util {
     static async TDM(guild, mentionable) {
         if (!guild) return;
 
-        for (let role_id of this.roles) {
+        for (let role_id of Util.roles) {
             let role = guild.roles.get(role_id);
             if (role) {
                 try { await role.edit({ mentionable: mentionable }); }
@@ -154,7 +154,7 @@ class Util {
 
         for (let url of abm) {
             if (msg.includes(url.toLowerCase())) {
-                await this.delay(200);
+                await Util.delay(200);
                 message.delete();
                 Util.log("ABM triggered by: " + message.author.tag);
                 return message.channel.send(msg.author, {embed: abmembed});
@@ -176,7 +176,7 @@ class Util {
                 if (!channel_id) return;
     
                 if (cids.includes(channel_id)) {
-                    await this.delay(200);
+                    await Util.delay(200);
                     message.delete();
 					Util.log("ABM triggered by: " + message.author.tag);								  
                     message.channel.send(msg.author, {embed: abmembed});
