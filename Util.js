@@ -178,7 +178,7 @@ class Util {
                 if (cids.includes(channel_id)) {
                     await Util.delay(200);
                     message.delete();
-					Util.log("ABM triggered by: " + message.author.tag);								  
+                    Util.log("ABM triggered by: " + message.author.tag);								  
                     message.channel.send(msg.author, {embed: abmembed});
                 }
             }
