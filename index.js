@@ -9,6 +9,7 @@ const prefix2 = config.prefix2.toLowerCase();
 const Util = require("./Util");
 
 gideon.commands = new Discord.Collection();
+gideon.cvmt = false;
 
 fs.readdir("./cmds", (err, files) => {
     if (err) {
@@ -73,10 +74,7 @@ gideon.on('message', async message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     
     Util.ABM(message);
-
-    let cvmt = false;
-    module.exports.cvmt = cvmt;
-    if (cvmt == true) Util.CVM(message);
+    if (gideon.cvmt) Util.CVM(message);
 
     const msg = message.content.toLowerCase();
     if (!msg.startsWith(prefix) && !msg.startsWith(prefix2)) return;
