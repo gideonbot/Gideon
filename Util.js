@@ -183,7 +183,7 @@ class Util {
                 }
             }
             
-            catch (ex) { this.log("Failed to fetch data from YT API: " + ex); }
+            catch (ex) { Util.log("Failed to fetch data from YT API: " + ex); }
         }
     }
     
