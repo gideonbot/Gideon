@@ -28,7 +28,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:constantine)/i)) showtitle = "Constantine";
     else if (agc.match(/(?:batwoman)/i)) showtitle = "Batwoman"; 
     else if (agc.match(/(?:blacklightning)/i)) showtitle = "Black Lightning";
-    else if (agc.match(/(?:av2020)/i)) showtitle = "av2020"; 
+    else if (agc.match(/(?:canaries)/i)) showtitle = "canaries"; 
 
     else return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning`);
         

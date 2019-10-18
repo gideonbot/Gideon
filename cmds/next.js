@@ -31,7 +31,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:constantine)/i)) showtitle = "Constantine";
     else if (agc.match(/(?:batwoman)/i)) showtitle = "Batwoman";
     else if (agc.match(/(?:blacklightning)/i)) showtitle = "Black Lightning";
-    else if (agc.match(/(?:av2020)/i)) showtitle = "av2020";
+    else if (agc.match(/(?:canaries)/i)) showtitle = "canaries";
     else return message.channel.send(as);
 
     try {
@@ -73,7 +73,7 @@ module.exports.run = async (gideon, message, args) => {
             else if (next.series.match(/(?:constantine)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/b/b1/Constantine_TV_show_logo.jpg';
             else if (next.series.match(/(?:batwoman)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/c/c3/Batwoman_TV_series_logo.png';
             else if (next.series.match(/(?:black lightning)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/e/ef/Black_Lightning_%28TV_series%29.png';
-            else if (next.series.match(/(?:av2020)/i)) thimg = '';
+            else if (next.series.match(/(?:canaries)/i)) thimg = '';
         
             const nextmsg = new Discord.MessageEmbed()
             .setColor('#2791D3')
