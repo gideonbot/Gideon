@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const Discord = module.require("discord.js");
 const Util = require("../Util");
 
@@ -47,7 +46,7 @@ module.exports.run = async (gideon, message, args) => {
     }); 
 
     collector.on('collect', message => {
-        if (message.content === 'cancel' || message.content === 'stop') {
+        if (message.content === 'cancel' || message.content === 'stop') {;
             message.channel.bulkDelete(3); 
             collector.stop();
             return message.reply('your news post has been cancelled! :white_check_mark:');
@@ -77,6 +76,7 @@ module.exports.run = async (gideon, message, args) => {
         }
 
         news_channel.send(news).then(async x => {
+            await Util.delay(200);
             message.channel.bulkDelete(3);
             if (roles_to_ping.length > 0) await news_channel.send(roles_to_ping.map(x => "<@&" + x + ">").join(" "));
 

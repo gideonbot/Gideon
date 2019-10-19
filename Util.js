@@ -1,5 +1,8 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
+const config = require("./config.json");
+const prefix = config.prefix.toLowerCase();
+const prefix2 = config.prefix2.toLowerCase();
 
 class Util {
     constructor() {
@@ -195,12 +198,16 @@ class Util {
 
         const ids = ['595944027208024085', '595935317631172608', '595935345598529546', '598487475568246830', '622415301144870932', '596080078815887419'];
 
-        if (ids.includes(message.channel.id)) return;
+        if (ids.includes(message.channel.id)) return; //exclude certain channels
+
+        const msg = message.content.toLowerCase();
+        const args = message.content.slice(msg.startsWith(prefix) ? prefix.length : prefix2.length).trim().split(" ");
+        if (msg.startsWith(prefix) && !args[5] || msg.startsWith(prefix2) && !args[5]) return; //exclude bot cmds from filter
 
         const auth = message.author.tag;
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
-        await delay(200);
+        await Util.delay(200);
         message.delete();
 
         const cvm = new Discord.MessageEmbed()

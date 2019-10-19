@@ -1,13 +1,12 @@
 const Discord = module.require("discord.js");
-const delay = require('delay');
 
 module.exports.run = async (gideon, message, args) => {      
     message.channel.send("Booting up the Multiverse Holo Projector...");
-    await delay (1000);
+    await Util.delay (1000);
     message.channel.send("Calling...");
-    await delay (1000);
+    await Util.delay (1000);
     message.channel.send("...");
-    await delay (1000);
+    await Util.delay (1000);
 
     const arr = [
         {
