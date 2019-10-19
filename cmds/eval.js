@@ -11,16 +11,16 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     try {
-        const code = args.join(" ");
-        let evaled = eval(code);
-   
-        if (typeof evaled !== "string")
-          evaled = JSON.stringify(evaled);
-   
-        message.channel.send(clean(evaled), {code:"xl"});
-      } catch (err) {
-        message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
-      }
+    const code = args.join(" ");
+    let evaled = eval(code);
+
+    if (typeof evaled !== "string")
+      evaled = JSON.stringify(evaled);
+
+      message.channel.send(clean(evaled), {code:"xl"});
+    } catch (err) {
+      message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+    }
 }
 
 module.exports.help = {
