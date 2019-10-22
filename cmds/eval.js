@@ -9,15 +9,16 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     try {
-    const code = args.join(" ");
-    let evaled = eval(code);
+        const code = args.join(" ");
+        let evaluated = eval(code);
+   
+        if (typeof evaluated !== "string") evaluated = JSON.stringify(evaluated, null, 2);
+   
+        message.channel.send(clean(evaluated), {code:"xl"});
+    }
 
-    if (typeof evaled !== "string")
-      evaled = JSON.stringify(evaled);
-
-      message.channel.send(clean(evaled), {code:"xl"});
-    } catch (err) {
-      message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+    catch (err) {
+        message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
     }
 }
 

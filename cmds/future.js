@@ -2,9 +2,8 @@ const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
     let agm = args.join("").toLowerCase();
+    console.log(agm);
     if (agm.match(/(?:me)/i) && agm.match(/(?:the)/i) && agm.match(/(?:future)/i)) {
-        message.channel.send('Yes Dr. Wells!');
-
         const future = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle('The Central City Citizen\nFLASH MISSING VANISHES IN CRISIS')
@@ -13,7 +12,7 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
         .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
-        message.channel.send(future);
+        message.channel.send('Yes Dr. Wells!', {embed: future});
     }   
 }
 

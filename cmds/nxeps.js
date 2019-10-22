@@ -4,13 +4,15 @@ const fetch = require('node-fetch');
 const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
-    const flashapi = 'http://api.tvmaze.com/shows/13?embed=nextepisode';
-    const arrowapi = 'http://api.tvmaze.com/shows/4?embed=nextepisode';
-    const supergirlapi = 'http://api.tvmaze.com/shows/1850?embed=nextepisode';
-    const legendsapi = 'http://api.tvmaze.com/shows/1851?embed=nextepisode';
-    const bwomanapi = 'http://api.tvmaze.com/shows/37776?embed=nextepisode';
-    const blightningapi = 'http://api.tvmaze.com/shows/20683?embed=nextepisode';
-    const canariesapi = 'http://api.tvmaze.com/shows/canaries?embed=nextepisode';
+    const api_urls = {
+        flash: 'http://api.tvmaze.com/shows/13?embed=nextepisode',
+        arrow: 'http://api.tvmaze.com/shows/4?embed=nextepisode',
+        supergirl: 'http://api.tvmaze.com/shows/1850?embed=nextepisode',
+        legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
+        batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
+        b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
+        canaries: 'http://api.tvmaze.com/shows/canaries?embed=nextepisode',
+    };
 
     /**
      * @returns {Promise<{title: string, name: string, value: string, error: null}>}
@@ -21,7 +23,7 @@ module.exports.run = async (gideon, message, args) => {
             if (!api_url) return reject({error: "Missing API URL"});
             
             fetch(api_url).then(res => {
-                if (res.status != 200) return reject({error: "404: Not Found"});
+                if (res.status != 200) return reject({error: res.statusText});
 
                 res.json().then(body => {
                     let title = body.name;
@@ -48,7 +50,7 @@ module.exports.run = async (gideon, message, args) => {
 
                         if (!airs_today) {
                             //this is how we turn
-                            //Wed, 09 Oct 2019 10:00:00
+                            //Wed, 09 Oct 2019 10:00:00 GMT
                             //into
                             //9 Oct 2019 10:00
                             let _date = date.toUTCString().replace("GMT", "");
@@ -70,7 +72,7 @@ module.exports.run = async (gideon, message, args) => {
                         
                         res_value += ` on ${channel}`;
 
-                        result.name = `${season}x${number < 10 ? "0" + number : number} - ${name}`;
+                        result.name = `${season}x${number < 10 ? `0` + number : number} - ${name}`;
                         result.value = res_value;
                     }
     
@@ -80,36 +82,28 @@ module.exports.run = async (gideon, message, args) => {
         });
     }
 
-    try {
-        const countdown = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('__Upcoming Arrowverse episodes:__')
-        .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    const countdown = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('__Upcoming Arrowverse episodes:__')
+    .setTimestamp()
+    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+
+    for (let show in api_urls) {
+        try {
+            let info = await GetNextEpisodeInfo(api_urls[show]);
+            countdown.addField(`${info.title} ${info.name}`, `${info.value}`);
+        }
         
-        //wtf
-        GetNextEpisodeInfo(flashapi).then(flash => countdown.addField(`${flash.title} ${flash.name}`, `${flash.value}`), failed => {}).finally(x => {
-            GetNextEpisodeInfo(arrowapi).then(arrow => countdown.addField(`${arrow.title} ${arrow.name}`, `${arrow.value}`), failed => {}).finally(x => {
-                GetNextEpisodeInfo(supergirlapi).then(supergirl => countdown.addField(`${supergirl.title} ${supergirl.name}`, `${supergirl.value}`), failed => {}).finally(x => {
-                    GetNextEpisodeInfo(legendsapi).then(legends => countdown.addField(`${legends.title} ${legends.name}`, `${legends.value}`), failed => {}).finally(x => {
-                        GetNextEpisodeInfo(bwomanapi).then(bwoman => countdown.addField(`${bwoman.title} ${bwoman.name}`, `${bwoman.value}`), failed => {}).finally(x => {
-                            GetNextEpisodeInfo(blightningapi).then(blightning => countdown.addField(`${blightning.title} ${blightning.name}`, `${blightning.value}`), failed => {}).finally(x => {
-                                GetNextEpisodeInfo(canariesapi).then(canaries => countdown.addField(`${canaries.title} ${canaries.name}`, `${canaries.value}`), failed => {}).finally(x => {
-                                    message.channel.send(countdown);
-                                });
-                            });
-                        });
-                    });
-                });
-            });
-        });
+        catch (ex) {
+            //in this case the "ex" is most likely the object returned by GetNextEpisodeInfo, if not we just log the exception
+            console.log(`Error while fetching next episode for "${show}": ${ex.error ? ex.error : ex}`);
+            Util.log(`Error while fetching next episode for "${show}": ${ex.error ? ex.error : ex}`);
+        }
     }
 
-    catch (ex) {
-        console.log("Error while fetching nxeps: " + ex);
-        Util.log("Error while fetching nxeps: " + ex);
-        message.channel.send("Failed to fetch episode list, please try again later");
-    }
+    if (countdown.fields.length < 1) return message.channel.send("Failed to fetch episode list, please try again later...");
+    
+    message.channel.send(countdown);
 }
 
 module.exports.help = {
