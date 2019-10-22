@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
     const legendsapi = 'http://api.tvmaze.com/shows/1851?embed=nextepisode';
     const bwomanapi = 'http://api.tvmaze.com/shows/37776?embed=nextepisode';
     const blightningapi = 'http://api.tvmaze.com/shows/20683?embed=nextepisode';
-    const AV2020api = 'http://api.tvmaze.com/shows/AV2020?embed=nextepisode';
+    const canariesapi = 'http://api.tvmaze.com/shows/canaries?embed=nextepisode';
 
     /**
      * @returns {Promise<{title: string, name: string, value: string, error: null}>}
@@ -94,7 +94,7 @@ module.exports.run = async (gideon, message, args) => {
                     GetNextEpisodeInfo(legendsapi).then(legends => countdown.addField(`${legends.title} ${legends.name}`, `${legends.value}`), failed => {}).finally(x => {
                         GetNextEpisodeInfo(bwomanapi).then(bwoman => countdown.addField(`${bwoman.title} ${bwoman.name}`, `${bwoman.value}`), failed => {}).finally(x => {
                             GetNextEpisodeInfo(blightningapi).then(blightning => countdown.addField(`${blightning.title} ${blightning.name}`, `${blightning.value}`), failed => {}).finally(x => {
-                                GetNextEpisodeInfo(AV2020api).then(AV2020 => countdown.addField(`${AV2020.title} ${AV2020.name}`, `${AV2020.value}`), failed => {}).finally(x => {
+                                GetNextEpisodeInfo(canariesapi).then(canaries => countdown.addField(`${canaries.title} ${canaries.name}`, `${canaries.value}`), failed => {}).finally(x => {
                                     message.channel.send(countdown);
                                 });
                             });

@@ -60,8 +60,8 @@ module.exports.run = async (gideon, message, args) => {
             channel: 'The CW'
         },
         {
-            id: "av2020",
-            title: "av2020",
+            id: "canaries",
+            title: "Green Arrow and the Canaries",
             channel: 'The CW'
         },
     ]
@@ -75,7 +75,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:constantine)/i)) show = shows[4];
     else if (agc.match(/(?:batwoman)/i)) show = shows[5];
     else if (agc.match(/(?:blacklightning)/i)) show = shows[6];
-    else if (agc.match(/(?:av2020)/i)) show = shows[7];
+    else if (agc.match(/(?:canaries)/i)) show = shows[7];
     else return message.channel.send(as);
     if (!show) return message.channel.send(as);
 

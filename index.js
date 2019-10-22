@@ -1,6 +1,5 @@
 require('dotenv').config();
 const config = require("./config.json");
-const delay = require('delay');
 const Discord = require('discord.js');
 const fs = require("fs");
 const gideon = new Discord.Client();
@@ -44,9 +43,9 @@ gideon.once('ready', async () => {
         const st3 = 'over Queen JPK!';
 
         gideon.user.setActivity(st1, { type: 'PLAYING' }); 
-        await delay(10000);
+        await Util.delay(10000);
         gideon.user.setActivity(st2, { type: 'WATCHING' }); 
-        await delay(10000);
+        await Util.delay(10000);
         gideon.user.setActivity(st3, { type: 'WATCHING' });
     }
     
@@ -56,18 +55,18 @@ gideon.once('ready', async () => {
 });
 
 process.on("uncaughtException", err => {
-    console.log("Uncaught Exception: " + err);
-    Util.log("Uncaught Exception: " + err);
+    console.log("Uncaught Exception: " + err.stack);
+    Util.log("Uncaught Exception: " + err.stack);
 });
 
 process.on("unhandledRejection", err => {
-    console.log("Unhandled Rejection: " + err + "\n\nJSON: " + JSON.stringify(err, null, 2));
-    Util.log("Unhandled Rejection: " + err + "\n\nJSON: " + JSON.stringify(err, null, 2));
+    console.log("Unhandled Rejection: " + err.stack + "\n\nJSON: " + JSON.stringify(err, null, 2));
+    Util.log("Unhandled Rejection: " + err.stack + "\n\nJSON: " + JSON.stringify(err, null, 2));
 });
 
 gideon.on("error", err => {
-    console.log("Bot error: " + err);
-    Util.log("Bot error: " + err);
+    console.log("Bot error: " + err.stack);
+    Util.log("Bot error: " + err.stack);
 });
 
 gideon.on('message', async message => {

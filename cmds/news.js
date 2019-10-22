@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const Discord = module.require("discord.js");
 const Util = require("../Util");
 
@@ -6,7 +5,7 @@ module.exports.run = async (gideon, message, args) => {
     if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
     if (!message.member.roles.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
 
-    const emoji_ids = ['598886586284900354', '607658682246758445', '598886597244485654', '598886605641613353', '598886588545499186', '598886601476800513', '607657873534746634'];
+    const emoji_ids = ['598886586284900354', '607658682246758445', '598886597244485654', '598886605641613353', '598886588545499186', '598886601476800513', '607657873534746634', '634764613434474496'];
 
     const auth = message.author.id;
     const flash = '596074712682070061';
@@ -16,7 +15,7 @@ module.exports.run = async (gideon, message, args) => {
     const legends = '596075305861513246';
     const supergirl = '596075165780017172';
     const blacklightning = '607633853527359488';
-    const AV2020 = '610867040961560625';
+    const canaries = '610867040961560625';
 
     const filter = m => m.author.id === message.author.id;
     const collector = new Discord.MessageCollector(message.channel, filter, { time: 120000, errors: ['time'] });
@@ -42,12 +41,12 @@ module.exports.run = async (gideon, message, args) => {
             if (reaction.emoji.name === 'batwoman') roles_to_ping.push(batwoman);
             if (reaction.emoji.name === 'constantineseal') roles_to_ping.push(constantine);
             if (reaction.emoji.name === 'blacklightning') roles_to_ping.push(blacklightning);
-            if (reaction.emoji.name === 'AV2020') roles_to_ping.push(AV2020);
+            if (reaction.emoji.name === 'canaries') roles_to_ping.push(canaries);
         });
     }); 
 
     collector.on('collect', message => {
-        if (message.content === 'cancel' || message.content === 'stop') {
+        if (message.content === 'cancel' || message.content === 'stop') {;
             message.channel.bulkDelete(3); 
             collector.stop();
             return message.reply('your news post has been cancelled! :white_check_mark:');
@@ -77,6 +76,7 @@ module.exports.run = async (gideon, message, args) => {
         }
 
         news_channel.send(news).then(async x => {
+            await Util.delay(200);
             message.channel.bulkDelete(3);
             if (roles_to_ping.length > 0) await news_channel.send(roles_to_ping.map(x => "<@&" + x + ">").join(" "));
 
