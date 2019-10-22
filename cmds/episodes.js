@@ -64,6 +64,16 @@ module.exports.run = async (gideon, message, args) => {
             title: "Green Arrow and the Canaries",
             channel: 'The CW'
         },
+        {
+            id: "3082",
+            title: "Krypton",
+            channel: 'Syfy'
+        },
+        {
+            id: "1859",
+            title: "Lucifer",
+            channel: info.season == "1" || "2" || "3" ? "Fox" : "Netflix"
+        },
     ]
 
     let show = shows[-1];
@@ -76,6 +86,8 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:batwoman)/i)) show = shows[5];
     else if (agc.match(/(?:blacklightning)/i)) show = shows[6];
     else if (agc.match(/(?:canaries)/i)) show = shows[7];
+    else if (agc.match(/(?:krypton)/i)) show = shows[8];
+    else if (agc.match(/(?:lucifer)/i)) show = shows[9];
     else return message.channel.send(as);
     if (!show) return message.channel.send(as);
 
