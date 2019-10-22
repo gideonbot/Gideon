@@ -2,7 +2,6 @@ const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
     let agm = args.join("").toLowerCase();
-        
     if (agm.match(/(?:me)/i) && agm.match(/(?:the)/i) && agm.match(/(?:future)/i)) {
         const future = new Discord.MessageEmbed()
         .setColor('#2791D3')
