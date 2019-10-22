@@ -83,9 +83,7 @@ gideon.on('message', async message => {
     const cmd = args.shift().toLowerCase();
     const command = gideon.commands.get(cmd);
 
-    if (!command) return;
-    command.run(gideon, message, args);
-
+    if (command) command.run(gideon, message, args);
 });
 
 gideon.login(process.env.CLIENT_TOKEN);

@@ -1,12 +1,13 @@
 const Discord = module.require("discord.js");
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {      
     message.channel.send("Booting up the Multiverse Holo Projector...");
-    await Util.delay (1000);
+    await Util.delay(1000);
     message.channel.send("Calling...");
-    await Util.delay (1000);
+    await Util.delay(1000);
     message.channel.send("...");
-    await Util.delay (1000);
+    await Util.delay(1000);
 
     const arr = [
         {
@@ -67,8 +68,6 @@ module.exports.run = async (gideon, message, args) => {
 
     let result = arr[Math.floor(Math.random() * arr.length)];
 
-    message.channel.send(`You have reached out to Earth-${result.en}`);
-
     const wells = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(result.title)
@@ -77,7 +76,7 @@ module.exports.run = async (gideon, message, args) => {
     .setTimestamp()
     .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
-    message.channel.send(wells);  
+    message.channel.send(`You have reached out to Earth-${result.en}`, {embed: wells});  
 }
 
 module.exports.help = {
