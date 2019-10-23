@@ -1,6 +1,8 @@
 const Discord = module.require("discord.js");
 
 module.exports.run = async (gideon, message, args) => {
+    return message.channel.send('No.');
+/*
     const avih = gideon.guilds.get('474179239068041237');
     const wdurl ='';
     const wturl = 'https://cdn.discordapp.com/attachments/599917281379876893/614969846249160880/AVIH_Demo_Version.7z.torrent';
@@ -22,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
     .setTimestamp()
     .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
-    message.channel.send(github);       
+    message.channel.send(github); */   
 }
 
 module.exports.help = {
