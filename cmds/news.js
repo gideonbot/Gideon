@@ -12,10 +12,10 @@ module.exports.run = async (gideon, message, args) => {
     const role_ids = {
         flashemblem: '596074712682070061',
         arrowlogo: '596075000151277568',
-        houseofel: '596075415898947584',
-        lotlogo: '596075638285139988',
-        batwoman: '596075305861513246',
-        constantineseal: '596075165780017172',
+        houseofel: '596075165780017172',
+        lotlogo: '596075305861513246',
+        batwoman: '596075415898947584',
+        constantineseal: '596075638285139988',
         blacklightning: '607633853527359488',
         canaries: '610867040961560625',
     }
