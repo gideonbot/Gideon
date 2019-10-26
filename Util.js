@@ -220,6 +220,16 @@ class Util {
         message.channel.send(cvm);
     }
 
+    /**
+     * @param {Discord.Message} message 
+     */
+	static async NFL(message) {
+        if (message.content.match(/(?:game)/i) && message.content.match(/(?:link)/i) || 
+        message.content.match(/(?:demo)/i) || message.content.match(/(?:download)/)) {
+            return message.reply('THERE IS NO FUCKING LINK! Deal with it.');
+        }
+    }
+
     //more methods to come
 }
 

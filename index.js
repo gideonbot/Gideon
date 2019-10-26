@@ -74,6 +74,7 @@ gideon.on('message', async message => {
     
     Util.ABM(message);
     if (gideon.cvmt) Util.CVM(message);
+    Util.NFL(message);
 
     const msg = message.content.toLowerCase();
     if (!msg.startsWith(prefix) && !msg.startsWith(prefix2)) return;
