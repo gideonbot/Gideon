@@ -79,23 +79,8 @@ module.exports.run = async (gideon, message, args) => {
         news_channel.send(roles_ping_msg, {embed: news}).then(async x => {
             await Util.delay(200);
             message.channel.bulkDelete(3);
-
-            const g = gideon.guilds.get('474179239068041237');
-            let sent = false;
-
-            if (g) {
-                try { 
-                    await g.channels.get('511627290996637727').send(news);
-                    await g.channels.get('511627290996637727').send('This news was brought to you by:\nhttps://discord.gg/h9SEQaU');
-                    sent = true;
-                }
-                catch (ex) {
-                    console.log("An error occurred while sending news to other server: " + ex);
-                    Util.log("An error occurred while sending news to other server: " + ex);
-                }
-            }
             
-            message.reply(`Your news post has been sent to ${news_channel.toString()}${sent ? ` & ` + g.channels.get('511627290996637727').toString() : ``}! :white_check_mark:`);
+            message.reply(`Your news post has been sent to ${news_channel.toString()}! :white_check_mark:`);
             Util.TDM(message.guild, false);
             collector.stop();
         });
