@@ -21,6 +21,12 @@ Gideon's features are as follows:
 * `!wiki <term> - Searches the Arrowverse Wiki for the given term`
 
 * `!wikibl <term> - Searches the Black Lightning Wiki for the given term`
+
+* `!wikikr <term> - Searches the Krypton Wiki for the given term`
+
+* `!wikilu <term> - Searches the Lucifer Wiki for the given term`
+
+* `!wikidc <term> - Searches the DC Wiki for the given term`
   
 * `!ep <show> NxNN - Fetches episode info`
 
@@ -71,7 +77,7 @@ Too see Gideon in action, feel free to join my Arrowverse Discord Server: [Time 
 
 ### Donations
 
-Donations are gladly accepted. Please send them to my [Paypal.me](https://www.paypal.me/adrifcastr)
+Donations are gladly accepted. Please send them to my [Paypal.me](https://www.paypal.me/adrifcastr) or [Patreon](https://www.patreon.com/gideonbot)
 to support the development, maintenance and hosting of this project. Thank you!
 
 ### Credits
