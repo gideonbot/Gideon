@@ -9,7 +9,7 @@ module.exports.run = async (gideon, message, args) => {
     const as = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply a valid show!')
-    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**')
+    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**')
     .setTimestamp()
     .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
 
@@ -60,7 +60,7 @@ module.exports.run = async (gideon, message, args) => {
             channel: 'The CW'
         },
         {
-            id: "canaries",
+            id: "44496",
             title: "Green Arrow and the Canaries",
             channel: 'The CW'
         },

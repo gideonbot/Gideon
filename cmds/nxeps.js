@@ -11,7 +11,7 @@ module.exports.run = async (gideon, message, args) => {
         legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
         batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
         b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
-        canaries: 'http://api.tvmaze.com/shows/canaries?embed=nextepisode',
+        canaries: 'http://api.tvmaze.com/shows/44496?embed=nextepisode',
     };
 
     /**
