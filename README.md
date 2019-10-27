@@ -57,6 +57,8 @@ Gideon's features are as follows:
 * `!sp <name/alter ego> eN - Fetches Speedster info`
 
 * `!abilites <term> - Fetches abilities`
+
+* `!soundtracks - Displays an Arrowverse soundtrack list`
   
 * `!crossovers - Displays a list of all Arrowverse crossover episodes in their respective watching order`
 
