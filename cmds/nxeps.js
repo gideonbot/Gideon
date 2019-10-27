@@ -31,7 +31,7 @@ module.exports.run = async (gideon, message, args) => {
                     let result = { title: title, name: null, value: null, error: null };
     
                     if (!body._embedded) {
-                        result.name = 'No Episode data available yet';
+                        result.name = '';
                         result.value = 'No Episode data available yet';
                     }
     
