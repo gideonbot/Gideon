@@ -18,7 +18,7 @@ module.exports.run = async (gideon, message, args) => {
 
         const body = await fetch(api).then(res => res.json());
         const article = Object.values(body.items)[0];       
-        if (!Object.keys(body.items).length) return message.channel.send(`There was no result for ${search_term} on the Arrowverse Wiki!\nPlease note that this command is case sensitive!`).catch(console.error);
+        if (!Object.keys(body.items).length) return message.channel.send(`There was no result for ${search_term} on the Arrowverse Wiki!`).catch(console.error);
         const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');       
                 
         const wikiart = new Discord.MessageEmbed()
