@@ -52,9 +52,10 @@ gideon.once('ready', async () => {
     console.log('Ready!');
     Util.log(`${gideon.user.tag} ready\nInstance runs on following server(s):\n`);
     let servers = gideon.guilds;
-    servers.forEach((f, i) => {
-        Util.log(`Server: \`${f}\`\nID: \`${i + 1}\``)
+    servers.forEach((f) => {
+        Util.log(`Server: \`${f}\``);
     });
+
     setInterval(status, 30000);
 });
 
