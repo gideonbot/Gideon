@@ -28,9 +28,10 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:constantine)/i)) showtitle = "Constantine";
     else if (agc.match(/(?:batwoman)/i)) showtitle = "Batwoman"; 
     else if (agc.match(/(?:blacklightning)/i)) showtitle = "Black Lightning";
-    else if (agc.match(/(?:canaries)/i)) showtitle = "canaries"; 
+    //else if (agc.match(/(?:canaries)/i)) showtitle = "Green Arrow and the Canaries"; 
+    //else if (agc.match(/(?:supesnlois)/i)) showtitle = "Superman & Lois"; 
 
-    else return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning`);
+    else return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning | canaries | supesnlois`);
         
     let rbs = `${showtitle} S${season_and_ep.season < 10 ? "0" + season_and_ep.season : season_and_ep.season}E${season_and_ep.episode < 10 ? "0" + season_and_ep.episode : season_and_ep.episode}`;
 

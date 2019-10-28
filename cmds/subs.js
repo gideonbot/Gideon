@@ -66,6 +66,10 @@ module.exports.run = async (gideon, message, args) => {
             id: 'tt4052886',
             title: 'Lucifer'
         },
+        {
+            id: '',
+            title: 'Superman & Lois'
+        }
     ]
 
     let show = shows[-1];
@@ -80,9 +84,10 @@ module.exports.run = async (gideon, message, args) => {
     //else if (agc.match(/(?:canaries)/i)) show = shows[7];
     else if (agc.match(/(?:krypton)/i)) show = shows[8];
     else if (agc.match(/(?:lucifer)/i)) show = shows[9];
-    else return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | canaries | krypton | lucifer`);
+    //else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
+    else return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | canaries | krypton | lucifer | supesnlois`);
     
-    if (!show) return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | canaries | krypton | lucifer`);
+    if (!show) return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | canaries | krypton | lucifer | supesnlois`);
 
     OS.search({
         sublanguageid: args[0],       
