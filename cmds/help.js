@@ -87,6 +87,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!ping', 'Displays the bot\'s ping')
         .addField('!uptime', 'Displays the bot\'s uptime')
         .addField('!invite', 'Sends an invite link to the Time Vault')
+        .addField('!issues', 'Displays Github issues')
         .addField('!github', 'Displays Github repository info')
         .addField('!docs', 'Displays Gideon\'s Github Wiki link')
         .addField('!donate', 'Displays info to support maintainance and hosting of Gideon')       
