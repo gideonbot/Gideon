@@ -55,7 +55,7 @@ module.exports.run = async (gideon, message, args) => {
             title: 'Black Lightning'
         },
         {
-            id: 'canaries',
+            id: 'tt11012356',
             title: 'Green Arrow and the Canaries'
         },
         {

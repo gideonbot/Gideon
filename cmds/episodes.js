@@ -75,7 +75,7 @@ module.exports.run = async (gideon, message, args) => {
             channel: info.season == "1" || "2" || "3" ? "Fox" : "Netflix"
         },
         {
-            id: "",
+            id: "44751",
             title: "Superman & Lois",
             channel: "The CW"
         }
@@ -93,7 +93,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:canaries)/i)) show = shows[7];
     else if (agc.match(/(?:krypton)/i)) show = shows[8];
     else if (agc.match(/(?:lucifer)/i)) show = shows[9];
-    //else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
+    else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
     else return message.channel.send(as);
     if (!show) return message.channel.send(as);
 
