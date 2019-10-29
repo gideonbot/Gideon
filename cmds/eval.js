@@ -1,5 +1,5 @@
 module.exports.run = async (gideon, message, args) => {
-    if (message.author.id !== '178586069351137280') {
+    if (message.author.id !== '224617799434108928') {
         return message.channel.send('You do not have the required permissions to use this command!');
     }
 
