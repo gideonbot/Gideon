@@ -17,11 +17,33 @@ module.exports.run = async (gideon, message, args) => {
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
+    const na = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('You must supply a lang code, the shows name, season and its episode number!')
+    .setDescription(`You can find ISO 639-2 codes [here](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes 'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes')!`)
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+    const vc = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('You must supply a valid ISO 639-2 code!')
+    .setDescription(`[ISO 639-2 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes 'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes')`)
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
     //!subs eng flash 3x3
-    if (!args[0]) return message.channel.send("You must supply a lang code, the shows name, season and its episode number!\nYou can find ISO 639-2 codes at: https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes");
-    if (args[0].length !== 3) return message.channel.send("You must supply a valid ISO 639-2 code!\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes");
+    if (!args[0]) return message.channel.send(na);
+    if (args[0].length !== 3) return message.channel.send(vc);
 
     let agc = args[1];
+
+    const ia = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle(`"${agc}" is not a valid argument!`)
+    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**krypton**\n**lucifer**\n**supesnlois**')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
     let seasonAndEpisode = Util.parseSeriesEpisodeString(args[2]);
     if (!seasonAndEpisode) return message.channel.send(es);
 
@@ -85,9 +107,9 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:krypton)/i)) show = shows[8];
     else if (agc.match(/(?:lucifer)/i)) show = shows[9];
     //else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
-    else return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | canaries | krypton | lucifer | supesnlois`);
+    else return message.channel.send(ia);
     
-    if (!show) return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | canaries | krypton | lucifer | supesnlois`);
+    if (!show) return message.channel.send(ia);
 
     OS.search({
         sublanguageid: args[0],       
@@ -115,7 +137,14 @@ module.exports.run = async (gideon, message, args) => {
     }).catch(err => {
         console.log("An error occurred while trying to fetch subtitles: " + err);
         Util.log("An error occurred while trying to fetch subtitles: " + err);
-        return message.channel.send(`There were no results for this episode on opensubtitles.org!\nTry another episode or another language code!`);
+
+        const er = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('There were no results for this episode on opensubtitles.org!')
+        .setDescription('Try another episode or another language code!')
+        .setTimestamp()
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        return message.channel.send(er);
     });
 }
 

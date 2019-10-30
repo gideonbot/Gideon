@@ -101,7 +101,12 @@ module.exports.run = async (gideon, message, args) => {
 
     try {
         const body = await fetch(api).then(res => res.json());
-        if (body.status === 404) return message.channel.send(`There was no data for this episode!`).catch(console.error);
+        const nd = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('There was no data for this episode!')
+        .setTimestamp()
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        if (body.status === 404) return message.channel.send(nd).catch(console.error);
     
         let airdate = new Date(body.airdate);
         let airtime = body.airtime;
@@ -128,7 +133,14 @@ module.exports.run = async (gideon, message, args) => {
     catch (ex) {
         console.log("Exception occurred while fetching the episodes " + ex);
         Util.log("Exception occurred while fetching the episodes " + ex);
-        message.channel.send("An error occurred while trying to fetch the episodes, please try again later");
+        
+        const er = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('An error occurred while trying to fetch the episodes!')
+        .setDescription('Please try again later!')
+        .setTimestamp()
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        return message.channel.send(er);
     }
 }
 module.exports.help = {

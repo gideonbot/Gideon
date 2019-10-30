@@ -8,7 +8,13 @@ module.exports.run = async (gideon, message, args) => {
         if (err) {
             console.log(err);
             Util.log(err);
-            return message.channel.send("An error occurred, please try again later");
+
+            const er = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setTitle('An error occurred, please try again later!')
+            .setTimestamp()
+            .setFooter(Util.config.footer, gideon.user.avatarURL());
+            return message.channel.send(er);
         }
 
         let min = 0;

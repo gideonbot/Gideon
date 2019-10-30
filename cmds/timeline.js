@@ -24,7 +24,14 @@ module.exports.run = async (gideon, message, args) => {
     catch (ex) {
         console.log("An error occurred while trying to fetch a timeline change: " + ex);
         Util.log("An error occurred while trying to fetch a timeline change: " + ex);
-        return message.channel.send("Failed to fetch a timeline change, please try again later");
+
+        const er = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('Failed to fetch a timeline change!')
+        .setDescription('Please try again later!')
+        .setTimestamp()
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        return message.channel.send(er);
     }
 }
 

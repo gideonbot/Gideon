@@ -78,26 +78,13 @@ gideon.on('message', (message) => {
     if (gideon.cvmt) Util.CVM(message);
     Util.CSD(message);
 
-    // Grab the content, but lowercase it.
     const lowercaseContent = message.content.toLowerCase();
-    
-    // Find the prefix that has been used by the user
     const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
-    // If a prefix hasn't been used by the user, return.
     if (!usedPrefix) return;
-
-    // Grab the input of the bot, by trimming off the prefix.
     const inputString = message.content.slice(usedPrefix.length).trim()
-    // Also grab the arguments of the bot.
-    // Filter removes any empty elements.
     const args = inputString.split(' ').filter(arg => arg !== '');
-
-    // Grab the first argument, which should be the command.
     const cmd = args.shift().toLowerCase();
-
-    // Check the dictionary.
     const command = gideon.commands.get(cmd);
-    // If the dictionary has the command, run the command.
     if (command) command.run(gideon, message, args);
 });
 

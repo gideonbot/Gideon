@@ -65,14 +65,26 @@ module.exports.run = async (gideon, message, args) => {
         if (!tmvt) {
             console.log('Couldn\'t get TV server when running news!');
             Util.log('Couldn\'t get TV server when running news!');
-            return message.channel.send('An error occurred, please try again later');
+
+            const er = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setTitle('An error occurred, please try again later!')
+            .setTimestamp()
+            .setFooter(Util.config.footer, gideon.user.avatarURL());
+            return message.channel.send(er);
         }
 
         const news_channel = tmvt.channels.get('595944027208024085');
         if (!news_channel) {
             console.log('Couldn\'t get news channel when running news!');
             Util.log('Couldn\'t get news channel when running news!');
-            return message.channel.send('An error occurred, please try again later');
+
+            const er = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setTitle('An error occurred, please try again later!')
+            .setTimestamp()
+            .setFooter(Util.config.footer, gideon.user.avatarURL());
+            return message.channel.send(er);
         }
 
         //<@&NUMBER> is how roles are represented | NUMBER - role id

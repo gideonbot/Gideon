@@ -24,7 +24,13 @@ module.exports.run = async (gideon, message, args) => {
     catch (ex) {
         console.log("Exception occurred while starting up the particle accelerator " + ex);
         Util.log("Exception occurred while starting up the particle accelerator " + ex);
-        message.channel.send("An error occurred while trying to start the particle accelerator, please try again later");
+        const er = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('An error occurred while trying to start the particle accelerator!')
+        .setDescription('Please try again later!')
+        .setTimestamp()
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        return message.channel.send(er);
     }
 
     await Util.delay(10000);

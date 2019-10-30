@@ -34,7 +34,14 @@ module.exports.run = async (gideon, message, args) => {
         catch (ex) {
             console.log("Caught an exception while plotting a course: " + ex);
             Util.log("Caught an exception while plotting a course: " + ex);
-            message.channel.send("An error occurred while trying to plot a course, try again later");
+            
+            const er = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setTitle('An error occurred while trying to plot a course!')
+            .setDescription('Try again later!')
+            .setTimestamp()
+            .setFooter(Util.config.footer, gideon.user.avatarURL());
+            return message.channel.send(er);
         }
     }       
 }

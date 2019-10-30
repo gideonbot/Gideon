@@ -3,6 +3,12 @@ const Discord = module.require("discord.js");
 module.exports.run = async (gideon, message, args) => {
     const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
 
+    const ia = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle(`${args[0]} is not a valid argument!`)
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
     if (!args[0]) {
         const help = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -97,7 +103,7 @@ module.exports.run = async (gideon, message, args) => {
 
         message.channel.send(misc);
     }
-    else return message.channel.send(`${args[0]} is not a valid argument!`);
+    else return message.channel.send(ia);
 }   
 
 module.exports.help = {

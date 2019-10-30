@@ -5,7 +5,20 @@ const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
-    if (!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
+    const ia = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle(`"${agc}" is not a valid argument!`)
+    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**supesnlois**')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+    const na = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('You must supply the shows name, season and its episode number!')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+    if (!agc) return message.channel.send(na);
 
     let season_and_ep = Util.parseSeriesEpisodeString(args[1]);
     if (!season_and_ep) {
@@ -31,7 +44,7 @@ module.exports.run = async (gideon, message, args) => {
     //else if (agc.match(/(?:canaries)/i)) showtitle = "Green Arrow and the Canaries"; 
     //else if (agc.match(/(?:supesnlois)/i)) showtitle = "Superman & Lois"; 
 
-    else return message.channel.send(`"${agc}" is not a valid argument!\nAvailable shows: flash | arrow | supergirl | legends | constantine | batwoman | blacklightning | canaries | supesnlois`);
+    else return message.channel.send(ia);
         
     let rbs = `${showtitle} S${season_and_ep.season < 10 ? "0" + season_and_ep.season : season_and_ep.season}E${season_and_ep.episode < 10 ? "0" + season_and_ep.episode : season_and_ep.episode}`;
 
@@ -55,9 +68,13 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send(epdwn);
 
     }).catch(err => {
-        //console.log("Failed to fetch data from rarbg: " + err);
-        //Util.log("Failed to fetch data from rarbg: " + err);
-        message.channel.send(`There was no result for ${rbs} on rarbg.to\nPlease try another episode instead!`);
+        const nf = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle(`There was no result for "${rbs}" on rarbg.to!`)
+        .setDescription('Please try another episode instead!')
+        .setTimestamp()
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        return message.channel.send(nf);
     });
 }
 

@@ -3,10 +3,24 @@ const fetch = require('node-fetch');
 const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
-    if (!args[0]) return message.channel.send("You must supply a speedsters name or alter ego and their home universe!");
+    const na = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('You must supply a speedsters name or alter ego and their home universe!')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+    if (!args[0]) return message.channel.send(na);
 
     const api = `https://api.myjson.com/bins/m8m3d`;
     let ssd = args.join(' ');
+
+    const ia = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle(`"${ssd}" is not a valid argument!`)
+    .setDescription('Check the command\'s syntax and retry!')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
     let spnum;
 
     if (ssd.match(/(?:flash)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:barry)/i) && ssd.match(/(?:e1)/i)) spnum = 0;
@@ -27,7 +41,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (ssd.match(/(?:kid)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:wally)/i) && ssd.match(/(?:e1)/i)) spnum = 15;
     else if (ssd.match(/(?:iris)/i) && ssd.match(/(?:e1)/i)) spnum = 16;
     else if (ssd.match(/(?:XS)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:nora)/i) && ssd.match(/(?:e1)/i)) spnum = 17;
-    else return message.channel.send(`"${ssd}" is not a valid argument!\nCheck the command's syntax and retry!`);
+    else return message.channel.send(ia);
 
     try {
         const body = await fetch(api).then(res => res.json());
@@ -50,7 +64,13 @@ module.exports.run = async (gideon, message, args) => {
     catch (ex) {
         console.log("An error occurred while trying to fetch speedsters: " + err);
         Util.log("An error occurred while trying to fetch speedsters: " + err);
-        message.channel.send("Failed to fetch speedsters data, please try again later");
+
+        const er = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('Failed to fetch speedster data, please try again later!')
+        .setTimestamp()
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        return message.channel.send(er);
     }
 }
 module.exports.help = {

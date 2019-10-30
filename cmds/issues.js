@@ -33,7 +33,14 @@ module.exports.run = async (gideon, message, args) => {
     catch (ex) {
         console.log("Caught an exception while fetching issues: " + ex);
         Util.log("Caught an exception while fetching issues: " + ex);
-        message.channel.send("An error occurred while fetching issues, please try again later");
+
+        const er = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('An error occurred while fetching issues!')
+        .setDescription('Please try again later!')
+        .setTimestamp()
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        return message.channel.send(er);
     }
 }
 

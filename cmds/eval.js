@@ -4,37 +4,35 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     try {
-        // Rejoin the parameters
         const code = args.join(' ');
-        // Evaluate the JavaScript
         const returnedValue = eval(code);
 
-        // If nothing was returned, say so.
         if (typeof returnedValue === 'undefined') {
             message.channel.send('The evaluated code returned nothing.');
             return;
         }
 
-        // Generate a string worthy of being printed.
         let printValue;
 
         if (typeof returnedValue === 'string') {
-            // Return the string if the result was a string
             printValue = returnedValue;
         } else if (typeof returnedValue === 'object') {
-            // Return the object if the result is an object, an instance of a class, basically anything JavaScript loves.
             printValue = JSON.stringify(returnedValue, null, 2);
         } else {
-            // Force turn the thing into a String.
             printValue = new String(returnedValue);
         }
 
-        // Send the returned value.
         message.channel.send(printValue, {
             code: true
         });
     } catch (e) {
-        message.channel.send(`An error occured while processing your request: \`\`\`\n${e.stack}\n\`\`\``);
+        const er = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('An error occured while processing your request:')
+        .setDescription(`\`\`\`\n${e.stack}\n\`\`\``)
+        .setTimestamp()
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        return message.channel.send(er);
     }
 }
 
