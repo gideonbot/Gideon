@@ -5,7 +5,7 @@ const gideon = new Discord.Client();
 const Util = require("./Util");
 
 gideon.commands = new Discord.Collection();
-gideon.crossoverMode = false;
+gideon.cmvt = false;
 
 fs.readdir("./cmds", (err, files) => {
     if (err) {
@@ -74,8 +74,8 @@ gideon.on("error", err => {
 gideon.on('message', (message) => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     
-    Util.checkForBitch(message);
-    if (gideon.crossoverMode) Util.processCrossoverMode(message);
+    Util.ABM(message);
+    if (gideon.cmvt) Util.CVM(message);
 
     // Grab the content, but lowercase it.
     const lowercaseContent = message.content.toLowerCase();

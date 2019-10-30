@@ -57,7 +57,7 @@ class Util {
      * @param {Discord.Guild} guild The guild to make roles mentionable in
      * @param {boolean} mentionable Whether or not to make roles mentionable
      */
-    static async makeRolesMentionableOrNot(guild, mentionable) {
+    static async TDM(guild, mentionable) {
         if (!guild) return;
 
         for (let role_id of config.roles) {
@@ -154,7 +154,7 @@ class Util {
     /**
      * @param {Discord.Message} message 
      */
-    static async checkForBitch(message) {
+    static async ABM(message) {
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const msg = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
         const abmembed = new Discord.MessageEmbed()
@@ -215,7 +215,7 @@ class Util {
     /**
      * @param {Discord.Message} message 
      */
-    static async processCrossoverMode(message) {
+    static async CVM(message) {
         if (message.guild.id !== '595318490240385037') return;
 
         const ids = ['595944027208024085', '595935317631172608', '595935345598529546', '598487475568246830', '622415301144870932', '596080078815887419'];
