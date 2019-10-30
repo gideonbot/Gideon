@@ -5,7 +5,7 @@ const gideon = new Discord.Client();
 const Util = require("./Util");
 
 gideon.commands = new Discord.Collection();
-gideon.cmvt = false;
+gideon.cvmt = false;
 
 fs.readdir("./cmds", (err, files) => {
     if (err) {
@@ -75,7 +75,8 @@ gideon.on('message', (message) => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     
     Util.ABM(message);
-    if (gideon.cmvt) Util.CVM(message);
+    if (gideon.cvmt) Util.CVM(message);
+    Util.CSD(message);
 
     // Grab the content, but lowercase it.
     const lowercaseContent = message.content.toLowerCase();

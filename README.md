@@ -35,3 +35,4 @@ In no particular order, I credit the following for their invaluable contribution
 
 * __MBR#0001__ for the help on various topics & for participating in general development.
 * __AceFire6__ for [arrowverse.info](https://arrowverse.info) and its [API](https://arrowverse.info/api).
+* __7coil__ for [#24](https://github.com/adrifcastr/Gideon/pull/24) and [#25](https://github.com/adrifcastr/Gideon/pull/25).
