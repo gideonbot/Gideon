@@ -1,5 +1,4 @@
 require('dotenv').config();
-const config = require("./data/config.json");
 const Discord = require('discord.js');
 const fs = require("fs");
 const gideon = new Discord.Client();
@@ -82,7 +81,7 @@ gideon.on('message', (message) => {
     const lowercaseContent = message.content.toLowerCase();
     
     // Find the prefix that has been used by the user
-    const usedPrefix = config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+    const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
     // If a prefix hasn't been used by the user, return.
     if (!usedPrefix) return;
 
