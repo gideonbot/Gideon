@@ -7,7 +7,7 @@ module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
     if (!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
 
-    let season_and_ep = Util.ParseStringToObj(args[1]);
+    let season_and_ep = Util.parseSeriesEpisodeString(args[1]);
     if (!season_and_ep) {
         const es = new Discord.MessageEmbed()
         .setColor('#2791D3')

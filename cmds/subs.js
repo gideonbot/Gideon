@@ -22,7 +22,7 @@ module.exports.run = async (gideon, message, args) => {
     if (args[0].length !== 3) return message.channel.send("You must supply a valid ISO 639-2 code!\nhttps://en.wikipedia.org/wiki/List_of_ISO_639-2_codes");
 
     let agc = args[1];
-    let seasonAndEpisode = Util.ParseStringToObj(args[2]);
+    let seasonAndEpisode = Util.parseSeriesEpisodeString(args[2]);
     if (!seasonAndEpisode) return message.channel.send(es);
 
     const shows = [

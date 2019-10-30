@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
 
     if (!atc) return message.channel.send(at);
 
-    const user = gideon.users.get(Util.GetIdFromString(args[1]));
+    const user = gideon.users.get(Util.getIdFromString(args[1]));
     if (!user) return message.channel.send('You must use a proper mention if you want to attack someone!');
     else if (user.id == auth.id || user.id == gideon.user.id) return message.channel.send('My protocols forbid any kind of self-harm!');
 

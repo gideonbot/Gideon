@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-    let info = Util.ParseStringToObj(args[1]);
+    let info = Util.parseSeriesEpisodeString(args[1]);
     if (!info) return message.channel.send(es);
 
     let shows = [

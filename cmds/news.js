@@ -25,7 +25,7 @@ module.exports.run = async (gideon, message, args) => {
     const collector = message.channel.createMessageCollector(f, {time: 120 * 1000});
     let roles_to_ping = [];
 
-    await Util.TDM(message.guild, true);
+    await Util.makeRolesMentionableOrNot(message.guild, true);
 
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.').then(message => {
         for (let emoji of emoji_ids) {
@@ -82,7 +82,7 @@ module.exports.run = async (gideon, message, args) => {
             message.channel.bulkDelete(3);
             
             message.reply(`Your news post has been sent to ${news_channel.toString()}! :white_check_mark:`);
-            Util.TDM(message.guild, false);
+            Util.makeRolesMentionableOrNot(message.guild, false);
             collector.stop();
         });
     });

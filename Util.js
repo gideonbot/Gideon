@@ -13,9 +13,10 @@ class Util {
 
     /**
      * @summary A low-level method for parsing episode stuff
-     * @param {string} input 
+     * @param {string} input
+     * @returns {Object} The object containing the series and episode details
      */
-    static ParseStringToObj(input) {
+    static parseSeriesEpisodeString(input) {
         if (!input) return null;
 
         let str = input.toLowerCase();
@@ -52,10 +53,11 @@ class Util {
     }
 
     /**
-     * @param {Discord.Guild} guild
-     * @param {boolean} mentionable
+     * Make roles mentionable (or not)
+     * @param {Discord.Guild} guild The guild to make roles mentionable in
+     * @param {boolean} mentionable Whether or not to make roles mentionable
      */
-    static async TDM(guild, mentionable) {
+    static async makeRolesMentionableOrNot(guild, mentionable) {
         if (!guild) return;
 
         for (let role_id of config.roles) {
@@ -77,7 +79,7 @@ class Util {
     /**
      * @param {string} input 
      */
-    static GetIdFromString(input) {
+    static getIdFromString(input) {
         if (!input) return null;
 
         return input
@@ -93,7 +95,7 @@ class Util {
      * @param {boolean} seconds 
      * @returns {string} The beautifully formatted string
      */
-    static Timespan(seconds_input, {
+    static secondsToDifferenceString(seconds_input, {
         enableSeconds = true
     }) {
         if (!seconds_input || typeof (seconds_input) != "number") return "Unknown";
@@ -143,14 +145,16 @@ class Util {
         if (split.length < 2) return false;
 
         let client = new Discord.WebhookClient(split[0], split[1]);
-        for (let msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) client.send(msg, { avatarURL: avatar, username: "Gideon-Logs" });
+        for (let msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
+            client.send(msg, { avatarURL: avatar, username: "Gideon-Logs" });
+        }
         return true;
     }
 
     /**
      * @param {Discord.Message} message 
      */
-    static async ABM(message) {
+    static async checkForBitch(message) {
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const msg = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
         const abmembed = new Discord.MessageEmbed()
@@ -202,16 +206,16 @@ class Util {
                     Util.log("ABM triggered by: " + message.author.tag);
                     message.channel.send(msg.author, { embed: abmembed });
                 }
+            } catch (e) {
+                Util.log("Failed to fetch data from YT API: " + e);
             }
-
-            catch (ex) { Util.log("Failed to fetch data from YT API: " + ex); }
         }
     }
 
     /**
      * @param {Discord.Message} message 
      */
-    static async CVM(message) {
+    static async processCrossoverMode(message) {
         if (message.guild.id !== '595318490240385037') return;
 
         const ids = ['595944027208024085', '595935317631172608', '595935345598529546', '598487475568246830', '622415301144870932', '596080078815887419'];
@@ -231,14 +235,14 @@ class Util {
         await Util.delay(200);
         message.delete();
 
-        const cvm = new Discord.MessageEmbed()
+        const crossoverMessage = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setTitle(`${auth} said:`)
             .setDescription(`||${plainText}||`)
             .setTimestamp()
             .setFooter(Util.config.footer, avatar);
 
-        message.channel.send(cvm);
+        message.channel.send(crossoverMessage);
     }
 
     //more methods to come

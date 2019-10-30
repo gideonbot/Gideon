@@ -47,7 +47,7 @@ module.exports.run = async (gideon, message, args) => {
 
                         let airs_today = time_diff_s < 60 * 60 * 24;
                         
-                        let res_value = `Airs in **${Util.Timespan(time_diff_s, {
+                        let res_value = `Airs in **${Util.secondsToDifferenceString(time_diff_s, {
                             enableSeconds: false
                         })}**`;
 

@@ -50,7 +50,7 @@ module.exports.run = async (gideon, message, args) => {
             });
         });
 
-        let fiep = Util.ParseStringToObj(args[1]);
+        let fiep = Util.parseSeriesEpisodeString(args[1]);
         if (!fiep) return message.channel.send(es);
 
         fiep = "S" + (fiep.season < 10 ? "0" + fiep.season : fiep.season) + "E" + (fiep.episode < 10 ? "0" + fiep.episode : fiep.episode);
