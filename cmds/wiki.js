@@ -31,7 +31,7 @@ module.exports.run = async (gideon, message, args) => {
     
     let wiki = wikis[-1];
 
-    if (agc.length != 2) wiki = wikis[0], search_term = args.join(' ');
+    if (agc.length !== 2) wiki = wikis[0], search_term = args.join(' ');
     else if (agc.match(/(?:bl)/i)) wiki = wikis[1], args.shift(), search_term = args.join(' ');
     else if (agc.match(/(?:dc)/i)) wiki = wikis[2], args.shift(), search_term = args.join(' ');
     else if (agc.match(/(?:kr)/i)) wiki = wikis[3], args.shift(), search_term = args.join(' ');
@@ -45,7 +45,7 @@ module.exports.run = async (gideon, message, args) => {
     try {
         const search = await fetch(search_api).then(res => res.json());
 
-        if (search && search.items && search.items.length == 1) search_term = search.items[0].title;
+        if (search && search.items && search.items.length === 1) search_term = search.items[0].title;
 
         const api = encodeURI(`https://${wiki.url}/api/v1/Articles/Details?ids=50&titles=${search_term}&abstract=500&width=200&height=200`);
 

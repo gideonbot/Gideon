@@ -37,7 +37,7 @@ module.exports.run = async (gideon, message, args) => {
         {
             id: "1850",
             title: "Supergirl",
-            channel: info.season == "1" ? "CBS" : "The CW"
+            channel: info.season === "1" ? "CBS" : "The CW"
         },
         {
             id: "1851",
@@ -72,7 +72,7 @@ module.exports.run = async (gideon, message, args) => {
         {
             id: "1859",
             title: "Lucifer",
-            channel: info.season == "1" || "2" || "3" ? "Fox" : "Netflix"
+            channel: info.season === "1" || "2" || "3" ? "Fox" : "Netflix"
         },
         {
             id: "44751",
@@ -101,7 +101,7 @@ module.exports.run = async (gideon, message, args) => {
 
     try {
         const body = await fetch(api).then(res => res.json());
-        if (body.status == 404) return message.channel.send(`There was no data for this episode!`).catch(console.error);
+        if (body.status === 404) return message.channel.send(`There was no data for this episode!`).catch(console.error);
     
         let airdate = new Date(body.airdate);
         let airtime = body.airtime;

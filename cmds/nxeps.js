@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
             if (!api_url) return reject({error: "Missing API URL"});
             
             fetch(api_url).then(res => {
-                if (res.status != 200) return reject({error: res.statusText});
+                if (res.status !== 200) return reject({error: res.statusText});
 
                 res.json().then(body => {
                     let title = body.name;

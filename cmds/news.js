@@ -32,7 +32,7 @@ module.exports.run = async (gideon, message, args) => {
             message.react(emoji).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
         }
         
-        const rfilter = (reaction, user) => emoji_ids.includes(reaction.emoji.id) && user.id == auth;
+        const rfilter = (reaction, user) => emoji_ids.includes(reaction.emoji.id) && user.id === auth;
 
         const rcollector = message.createReactionCollector(rfilter, {time: 120000});
     

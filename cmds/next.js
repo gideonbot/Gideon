@@ -41,7 +41,7 @@ module.exports.run = async (gideon, message, args) => {
         //remove previous !next collectors for that specific user (found by searching for embeds with users name#discriminator in title)
         message.channel.messages.fetch({limit: 50}).then(messages => {
             //really big filter
-            let filtered = messages.filter(x => x && x.author && x.author.id == gideon.user.id && x.nextCollector && x.embeds && x.embeds.length > 0 && x.embeds[0] && x.embeds[0].title && x.embeds[0].title.endsWith(message.author.tag + ":"));
+            let filtered = messages.filter(x => x && x.author && x.author.id === gideon.user.id && x.nextCollector && x.embeds && x.embeds.length > 0 && x.embeds[0] && x.embeds[0].title && x.embeds[0].title.endsWith(message.author.tag + ":"));
 
             filtered.each(msg => {
                 if (msg.reactions.size > 0) msg.reactions.removeAll();
@@ -55,10 +55,10 @@ module.exports.run = async (gideon, message, args) => {
 
         fiep = "S" + (fiep.season < 10 ? "0" + fiep.season : fiep.season) + "E" + (fiep.episode < 10 ? "0" + fiep.episode : fiep.episode);
 
-        let shows = body.filter(x => x.series != 'Vixen' && x.series != 'Freedom Fighters: The Ray');
+        let shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
 
         function GetNextEmbed(show, season_and_episode) {
-            let f = shows.find(x => x.series == show && x.episode_id == season_and_episode);
+            let f = shows.find(x => x.series === show && x.episode_id === season_and_episode);
             if (!f) return `${show} ${season_and_episode} is not a valid episode!`;
 
             let next = shows[shows.indexOf(f) + 1];
@@ -93,10 +93,10 @@ module.exports.run = async (gideon, message, args) => {
 
         message.channel.send(embed).then(sent => {
             //don't react with ▶ to error messages
-            if (typeof(embed) == "string") return;
+            if (typeof embed === "string") return;
             sent.react("▶");
             let LastEdit = Date.now();
-            let filter = (reaction, user) => user.id == message.author.id && reaction.emoji.name == "▶";
+            let filter = (reaction, user) => user.id === message.author.id && reaction.emoji.name === "▶";
             let collector = sent.createReactionCollector(filter);
             sent.nextCollector = collector;
 
@@ -130,7 +130,7 @@ module.exports.run = async (gideon, message, args) => {
                 }
 
                 //we remove the reaction even when the user is rate limited... I guess
-                reaction.message.reactions.find(x => x.emoji.name == "▶").users.remove(user.id);
+                reaction.message.reactions.find(x => x.emoji.name === "▶").users.remove(user.id);
             });
         });
     }

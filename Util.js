@@ -25,9 +25,9 @@ class Util {
         let hit_limiter = false;
 
         for (let letter of str) {
-            if (letter == "s") continue;
+            if (letter === "s") continue;
 
-            if (letter == "e" || letter == "x") {
+            if (letter === "e" || letter === "x") {
                 hit_limiter = true;
                 continue;
             }
@@ -98,7 +98,7 @@ class Util {
     static secondsToDifferenceString(seconds_input, {
         enableSeconds = true
     }) {
-        if (!seconds_input || typeof (seconds_input) != "number") return "Unknown";
+        if (!seconds_input || typeof (seconds_input) !== "number") return "Unknown";
 
         let seconds = Math.floor(seconds_input % 60);
         seconds_input = seconds_input / 60;

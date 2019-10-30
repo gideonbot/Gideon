@@ -4,7 +4,7 @@ module.exports.run = async (gideon, message, args) => {
     if(message.author.id !== '224617799434108928') return message.channel.send('You don\'t have the required permissions to use this command!');
 
     function clean(text) {
-        if (typeof(text) === "string") return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+        if (typeof text === "string") return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
         else return text;
     }
 
