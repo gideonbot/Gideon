@@ -15,14 +15,14 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle('You must supply a valid show!')
     .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**canaries**\n**supesnlois**')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const es = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply a valid episode and season!')
     .setDescription('Acceptable formats: S00E00 and 00x00')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
     
     if (agc.match(/(?:flash)/i)) showtitle = "The Flash";
     else if (agc.match(/(?:arrow)/i)) showtitle = "Arrow";

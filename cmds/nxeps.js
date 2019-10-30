@@ -47,7 +47,9 @@ module.exports.run = async (gideon, message, args) => {
 
                         let airs_today = time_diff_s < 60 * 60 * 24;
                         
-                        let res_value = `Airs in **${Util.Timespan(time_diff_s, false)}**`;
+                        let res_value = `Airs in **${Util.Timespan(time_diff_s, {
+                            enableSeconds: false
+                        })}**`;
 
                         if (!airs_today) {
                             //this is how we turn
@@ -87,7 +89,7 @@ module.exports.run = async (gideon, message, args) => {
     .setColor('#2791D3')
     .setTitle('__Upcoming Arrowverse episodes:__')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     for (let show in api_urls) {
         try {

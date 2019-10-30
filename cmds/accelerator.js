@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setImage('https://i.imgur.com/opCbZTn.gif')
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         sent.edit(sent.content + "\nALERT SYSTEM FAILURE", {embed: explosion});
     }
@@ -65,7 +65,7 @@ module.exports.run = async (gideon, message, args) => {
     .setDescription(result.desc)
     .setImage(result.gif)
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(power);  
 }

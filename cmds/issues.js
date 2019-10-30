@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
         .setTitle('Issues:')
         .setDescription(`Current Open Issues: \`${issuecount}\``)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         for (let i = 0; i < issuecount; i++) {
             try {

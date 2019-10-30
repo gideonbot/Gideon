@@ -1,16 +1,14 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
-const config = require("./config.json");
-const prefix = config.prefix.toLowerCase();
-const prefix2 = config.prefix2.toLowerCase();
+const config = require("./data/config.json");
 
 class Util {
     constructor() {
-        throw new Error("This class cannot be instantiated!");
+        throw new Error('This class cannot be instantiated!');
     }
 
-    static get roles() {
-        return ['596074712682070061', '596075000151277568', '596075415898947584', '596075638285139988', '596075305861513246', '596075165780017172', '607633853527359488', '610867040961560625', '638486598203473958'];
+    static get config() {
+        return config;
     }
 
     /**
@@ -19,31 +17,38 @@ class Util {
      */
     static ParseStringToObj(input) {
         if (!input) return null;
-        
+
         let str = input.toLowerCase();
-        let s = "", e = "";
+        let seriesString = ""
+        let episodeString = "";
         let hit_limiter = false;
-    
+
         for (let letter of str) {
             if (letter == "s") continue;
-    
+
             if (letter == "e" || letter == "x") {
                 hit_limiter = true;
                 continue;
             }
-    
+
             if (!(/^\d+$/.test(letter))) continue;
-    
-            if (!hit_limiter) s += letter;
-            else e += letter;
+
+            if (!hit_limiter) {
+                seriesString += letter
+            } else {
+                episodeString += letter;
+            }
         }
-    
-        let s_num = Number(s);
-        let e_num = Number(e);
-    
-        if (isNaN(s_num) || isNaN(e_num)) return null;
-    
-        return {season: s_num, episode: e_num};
+
+        const seriesNumber = Number(seriesString);
+        const episodeNumber = Number(episodeString);
+
+        if (isNaN(seriesNumber) || isNaN(episodeNumber)) return null;
+
+        return {
+            season: seriesNumber,
+            episode: episodeNumber
+        };
     }
 
     /**
@@ -53,7 +58,7 @@ class Util {
     static async TDM(guild, mentionable) {
         if (!guild) return;
 
-        for (let role_id of Util.roles) {
+        for (let role_id of config.roles) {
             let role = guild.roles.get(role_id);
             if (role) {
                 try { await role.edit({ mentionable: mentionable }); }
@@ -62,9 +67,11 @@ class Util {
         }
     }
 
-    static delay(ms) {
-        if (ms == undefined || ms == null || typeof(ms) != "number") ms = 0;
-        return new Promise((resolve, reject) => setTimeout(resolve, ms));
+    static delay(inputDelay) {
+        // If the input is not a number, instantly resolve
+        if (typeof inputDelay !== "number") return Promise.resolve();
+        // Otherwise, resolve after the number of milliseconds.
+        return new Promise(resolve => setTimeout(resolve, inputDelay));
     }
 
     /**
@@ -73,15 +80,23 @@ class Util {
     static GetIdFromString(input) {
         if (!input) return null;
 
-        return input.replace("<@", "").replace(">", "").replace("!").replace("<@!", "").replace("<#", "");
+        return input
+            .replace("<@", "")
+            .replace("<@!", "")
+            .replace("<#", "")
+            .replace(">", "");
     }
 
     /**
+     * Convert a time in seconds to a time string
      * @param {number} seconds_input 
      * @param {boolean} seconds 
+     * @returns {string} The beautifully formatted string
      */
-    static Timespan(seconds_input, _seconds = true) {
-        if (!seconds_input || typeof(seconds_input) != "number") return "Unknown";
+    static Timespan(seconds_input, {
+        enableSeconds = true
+    }) {
+        if (!seconds_input || typeof (seconds_input) != "number") return "Unknown";
 
         let seconds = Math.floor(seconds_input % 60);
         seconds_input = seconds_input / 60;
@@ -90,27 +105,30 @@ class Util {
         let hours = Math.floor(seconds_input % 24);
         let days = Math.floor(seconds_input / 24);
 
-        let day_s = days + " day" + (days != 1 ? "s" : "");
-        let hour_s = hours + " hour" + (hours != 1 ? "s" : "");
-        let mins_s = minutes + " minute" + (minutes != 1 ? "s" : "");
-        let sec_s = seconds + " second" + (seconds != 1 ? "s" : "");
+        let dayString = days + " day" + (days !== 1 ? "s" : "");
+        let hourString = hours + " hour" + (hours !== 1 ? "s" : "");
+        let minuteString = minutes + " minute" + (minutes !== 1 ? "s" : "");
+        let secondString = seconds + " second" + (seconds !== 1 ? "s" : "");
 
-        let arr = [];
-        if (days > 0) arr.push(day_s);
-        if (hours > 0) arr.push(hour_s);
-        if (minutes > 0) arr.push(mins_s);
-        if (seconds > 0 && _seconds) arr.push(sec_s);
+        let outputArray = [];
+        if (days > 0) outputArray.push(dayString);
+        if (hours > 0) outputArray.push(hourString);
+        if (minutes > 0) outputArray.push(minuteString);
+        if (seconds > 0 && enableSeconds) outputArray.push(secondString);
 
-        if (arr.length < 1) return "Unknown";
-        if (arr.length < 2) return arr[0];
+        // If the output array is empty, return unknown.
+        if (outputArray.length === 0) return "Unknown";
 
-        let last = arr[arr.length - 1];
-        arr.pop();
+        // If the output array is by itself, print the only element
+        if (outputArray.length < 2) return outputArray[0];
 
-        return arr.join(", ") + " and " + last;
+        // Remove the last element from the array
+        const last = outputArray.pop();
+        return outputArray.join(", ") + " and " + last;
     }
 
     /**
+     * Log to a webhook
      * @param {string} message 
      */
     static log(message) {
@@ -125,7 +143,7 @@ class Util {
         if (split.length < 2) return false;
 
         let client = new Discord.WebhookClient(split[0], split[1]);
-        for (let msg of Discord.Util.splitMessage(message, {maxLength: 1980})) client.send(msg, { avatarURL: avatar, username: "Gideon-Logs" });
+        for (let msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) client.send(msg, { avatarURL: avatar, username: "Gideon-Logs" });
         return true;
     }
 
@@ -136,11 +154,11 @@ class Util {
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const msg = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
         const abmembed = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`:rotating_light:Anti-Bitch-Mode is enabled!:rotating_light:`)
-        .setDescription('You posted a link to a forbidden social media account!\nFuck that bitch!')
-        .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', avatar);
+            .setColor('#2791D3')
+            .setTitle(`:rotating_light:Anti-Bitch-Mode is enabled!:rotating_light:`)
+            .setDescription('You posted a link to a forbidden social media account!\nFuck that bitch!')
+            .setTimestamp()
+            .setFooter(Util.config.footer, avatar);
 
         const abm = [
             'twitter.com/Pagmyst',
@@ -160,7 +178,7 @@ class Util {
                 await Util.delay(200);
                 message.delete();
                 Util.log("ABM triggered by: " + message.author.tag);
-                return message.channel.send(msg.author, {embed: abmembed});
+                return message.channel.send(msg.author, { embed: abmembed });
             }
         }
 
@@ -177,32 +195,35 @@ class Util {
 
                 const channel_id = body && body.items && body.items[0] && body.items[0].snippet && body.items[0].snippet.channelId ? body.items[0].snippet.channelId : null;
                 if (!channel_id) return;
-    
+
                 if (cids.includes(channel_id)) {
                     await Util.delay(200);
                     message.delete();
-                    Util.log("ABM triggered by: " + message.author.tag);								  
-                    message.channel.send(msg.author, {embed: abmembed});
+                    Util.log("ABM triggered by: " + message.author.tag);
+                    message.channel.send(msg.author, { embed: abmembed });
                 }
             }
-            
+
             catch (ex) { Util.log("Failed to fetch data from YT API: " + ex); }
         }
     }
-    
+
     /**
      * @param {Discord.Message} message 
      */
-	static async CVM(message) {
+    static async CVM(message) {
         if (message.guild.id !== '595318490240385037') return;
 
         const ids = ['595944027208024085', '595935317631172608', '595935345598529546', '598487475568246830', '622415301144870932', '596080078815887419'];
 
         if (ids.includes(message.channel.id)) return; //exclude certain channels
 
-        const msg = message.content.toLowerCase();
-        const args = message.content.slice(msg.startsWith(prefix) ? prefix.length : prefix2.length).trim().split(" ");
-        if (msg.startsWith(prefix) && !args[5] || msg.startsWith(prefix2) && !args[5]) return; //exclude bot cmds from filter
+        const lowercaseContent = message.content.toLowerCase();
+
+        // Find the prefix that was used
+        const usedPrefix = config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+        const args = message.content.slice(usedPrefix.length).trim().split(" ");
+        if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
         const auth = message.author.tag;
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
@@ -211,11 +232,11 @@ class Util {
         message.delete();
 
         const cvm = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`${auth} said:`)
-        .setDescription(`||${plainText}||`)
-        .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', avatar);
+            .setColor('#2791D3')
+            .setTitle(`${auth} said:`)
+            .setDescription(`||${plainText}||`)
+            .setTimestamp()
+            .setFooter(Util.config.footer, avatar);
 
         message.channel.send(cvm);
     }

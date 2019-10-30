@@ -26,7 +26,7 @@ module.exports.run = async (gideon, message, args) => {
             .setTitle(`Course set to ${destination} ${year}`)
             .setImage('https://i.imgur.com/I3UQhVu.gif')
             .setTimestamp()
-            .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+            .setFooter(Util.config.footer, gideon.user.avatarURL());
     
             message.channel.send(course);
         }

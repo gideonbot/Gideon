@@ -57,7 +57,7 @@ module.exports.run = async (gideon, message, args) => {
         .setThumbnail(message.author.avatarURL())
         .addField('News posted by:', message.author)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         if (message.attachments.size > 0) news.setImage(message.attachments.first().proxyURL);
 

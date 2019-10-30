@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle('You must supply an attack and a victim!')
     .setDescription('Available attacks:\n**iceblast**\n**lthrow**\n**reverseflash**\n**vibeblast**\n**shootarrow**\n**heatvision**\n**stretchpunch**\n**canarycry**\n**batarang**\n**sendtohell**\n**thunderclap**\n**elblast**\n**fireblast**')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     if (!atc) return message.channel.send(at);
 
@@ -123,7 +123,7 @@ module.exports.run = async (gideon, message, args) => {
     .setDescription(`**${attack.emote}${auth} ${attack.text}${attack.emote}**\n\n${attack.desc}`)
 	.setImage(attack.attackgif)
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(attack_embed);
 }

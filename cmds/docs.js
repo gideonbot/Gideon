@@ -8,7 +8,7 @@ module.exports.run = async (gideon, message, args) => {
     .setThumbnail(gideon.user.avatarURL())
     .addField('GitHub Wiki:', `**[Read Docs](https://github.com/adrifcastr/Gideon/wiki 'https://github.com/adrifcastr/Gideon/wiki')**`)
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(github);       
 }

@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('misc', 'Miscellaneous commands')    
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         message.channel.send(help);
     } else if (args[0].match(/(?:general)/i)) {
@@ -36,7 +36,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!suit <character>', 'Displays newly revealed suits') 
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         message.channel.send(general);
     } else if (args[0].match(/(?:fun)/i)) {
@@ -54,7 +54,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Gideon, plot a course!', 'Displays an easter egg')    
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         message.channel.send(fun);
     } else if (args[0].match(/(?:admin)/i)) {
@@ -75,7 +75,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('?slowmode', 'Enables slowmode')        
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         message.channel.send(admin);
     } else if (args[0].match(/(?:misc)/i)) {
@@ -93,7 +93,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!donate', 'Displays info to support maintainance and hosting of Gideon')       
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         message.channel.send(misc);
     }

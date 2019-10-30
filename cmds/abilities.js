@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!abilities viber', 'Displays Viber abilities')  
         .addField('!abilities kryptonian', 'Displays Kryptonian abilities')  
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         message.channel.send(cmdinfo);
     } else if (args[0].match(/(?:speedster)/i)) {
@@ -23,7 +23,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Seismokinesis', 'By vibrating at varying frequencies and with different levels of force, speedsters can create small tremors to induce extreme amounts of jolt on any target they touch.')  
         .addField('Intangibility', ' By vibrating their molecules at the frequency of air, speedsters can physically pass through solid matter.') 
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const sp2 = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -34,7 +34,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Superhuman strength', 'Speedsters physical strength has been heightened beyond that of normal human capacities.')
         .addField('Superhuman durability', 'Speedsters possess inhuman resilience, most commonly seen from being unaffected by momentum build-up. They can take attacks and exertion, even survive impacts that would easily kill normal humans.')   
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const sp3 = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -45,7 +45,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Superhuman agility', 'Speedsters possess flawless coordination, equilibrium and dexterity, they can change direction with immediate sharp turns without sliding or losing balance and instantly stop running on the spot.')
         .addField('Superhuman reflexes', 'A Speedsters reaction time is augmented to superhuman levels, allowing them to react to danger and events far faster than normal humans.')
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const sp4 = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -56,7 +56,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Time reversal (Unique to Nora West-Allen)', 'Nora is able to reverse time around her while running, remaining completely unaffected.')
         .addField('Interdimensional travel', 'Speedsters can move fast enough to break open portals between dimensions, allowing them to travel to different universes.')
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const sp5 = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -67,7 +67,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Time remnant construct', 'Speedsters are able to "create" a time remnant by traveling back to moments before their current-self time travels, hailing from a future that no longer exists. This allows them to be two places at once.')
         .addField('Temporal awareness', 'Speedsters are able to subconsciously detect when other speedsters enter the Speed Force to time travel.')
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const sp6 = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -75,7 +75,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Speed Force awareness', 'With concentration, speedsters can sense the Speed Force in another speedster\'s system.')
         .addField('Superhuman stamina', 'Speedsters can handle the stresses of extreme racing without noticeable distress, letting them function much longer than normal humans unhindered. Their enhanced stamina is due to their augmented physiology, which builds up little to no lactic acid or fatigue toxins.')
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const spembeds = [sp1, sp2, sp3, sp4, sp5, sp6];
         
@@ -97,7 +97,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Vibrational blasts', 'Vibers are able to generate powerful blue or red concussive blasts of vibrations from their hands capable of propelling full-grown humans through the air.')
         .addField('Mental connection', 'Vibers are connected by their powers and are able to observe each other if they\'re skilled enough.')
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         message.channel.send(viber);
     } else if (args[0].match(/(?:kryptonian)/i)) {
@@ -110,7 +110,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Contaminant immunity', 'Kryptonians have an immunity to all forms of disease and contaminants on Earth.')        
         .addField('Resurrection', ' After they die, kryptonians are able to self-resurrect by absorbing solar energy from flora in their vicinity.')               
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const kr2 = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -121,7 +121,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Heat vision', 'By concentrating every solar energy reserve they have in their body, kryptonians can emit blue or red energy beams of variable intensity and temperature from their eyes.')        
         .addField('Invulnerability', 'Kryptonians are essentially invulnerable to all Earthly weapons, with bullets simply ricocheting whenever they come into contact with their skin.')               
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const kr3 = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -132,7 +132,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Reverse photosynthesis', 'Kryptonians are capable of draining solar energy from plants even without a direct source of light.')        
         .addField('Super vision', 'Kryptonians are able to see very far distances, presumably at peak human or low superhuman levels. They are even able to see clearly in the dark.')               
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const kr4 = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -143,7 +143,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Super speed', 'Kryptonians possess the ability to move at hyper-sonic speeds, both through flight and on foot.')        
         .addField('Accelerated perception', 'While using their super speed, Kryptonians see everything much slower, allowing them to move with precision and accuracy within very fast moments.')               
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const kr5 = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -154,7 +154,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Thunderclap', 'When kryptonians use their super strength to clap their hands together, it creates a powerful shock-wave that throws enemies back.')        
         .addField('Super jumping/leaping', 'Kryptonians are able to jump several feet off the ground and leap several stories in a single bound without having to fly.')                     
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const kr6 = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -164,7 +164,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Telepathy immunity', 'Kryptonians are immune to most forms of telepathic powers.')  
         .addField('Power bestowal via electricity', 'If a kryptonian is holding a person while electrocuted by lightning, their kryptonian physiology allows them to affect the person, giving the person strange abilites.')                  
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
         
         const krembeds = [kr1, kr2, kr3, kr4, kr5, kr6];
         

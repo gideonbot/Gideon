@@ -15,7 +15,7 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle('You must supply a valid episode and season!')
     .setDescription('Acceptable formats: S00E00 and 00x00')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     //!subs eng flash 3x3
     if (!args[0]) return message.channel.send("You must supply a lang code, the shows name, season and its episode number!\nYou can find ISO 639-2 codes at: https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes");
@@ -109,7 +109,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField(sub[3].filename, `**[Download SRT](${sub[3].url} '${sub[3].url}')** Lang: \`${sub[3].lang}\` Score: \`${sub[3].score}\``)
         .addField(sub[4].filename, `**[Download SRT](${sub[4].url} '${sub[4].url}')** Lang: \`${sub[4].lang}\` Score: \`${sub[4].score}\``)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
             
         message.channel.send(subs);
     }).catch(err => {

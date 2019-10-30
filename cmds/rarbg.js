@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
         .setTitle('You must supply a valid episode and season!')
         .setDescription('Acceptable formats: S00E00 and 00x00')
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
         
         return message.channel.send(es);
     }
@@ -50,7 +50,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField(response[3].filename, `**[Magnet URI](https://${response[3].download} '${response[3].download}')**`)
         .addField(response[4].filename, `**[Magnet URI](https://${response[4].download} '${response[4].download}')**`)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
             
         message.channel.send(epdwn);
 

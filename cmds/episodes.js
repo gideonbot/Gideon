@@ -11,14 +11,14 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle('You must supply a valid show!')
     .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const es = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply a valid episode and season!')
     .setDescription('Acceptable formats: S00E00 and 00x00')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     let info = Util.ParseStringToObj(args[1]);
     if (!info) return message.channel.send(es);
@@ -120,7 +120,7 @@ module.exports.run = async (gideon, message, args) => {
         .setDescription(desc + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`)
         .setImage(img)     
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
     
         message.channel.send(epinfo);
     }

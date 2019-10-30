@@ -1,10 +1,8 @@
 require('dotenv').config();
-const config = require("./config.json");
+const config = require("./data/config.json");
 const Discord = require('discord.js');
 const fs = require("fs");
 const gideon = new Discord.Client();
-const prefix = config.prefix.toLowerCase();
-const prefix2 = config.prefix2.toLowerCase();
 const Util = require("./Util");
 
 gideon.commands = new Discord.Collection();
@@ -17,7 +15,7 @@ fs.readdir("./cmds", (err, files) => {
         return;
     }
 
-    let jsfiles = files.filter(f => f.endsWith(".js"));
+    let jsfiles = files.filter(fileName => fileName.endsWith(".js"));
     if (jsfiles.length < 1) {
         console.log("No commands to load!");
         return;
@@ -25,9 +23,9 @@ fs.readdir("./cmds", (err, files) => {
 
     console.log(`Loading ${jsfiles.length} commands!`)
 
-    jsfiles.forEach((f, i) => {
-        let props = require(`./cmds/${f}`);
-        console.log(`${i + 1}: ${f} loaded!`)
+    jsfiles.forEach((fileName, i) => {
+        let props = require(`./cmds/${fileName}`);
+        console.log(`${i + 1}: ${fileName} loaded!`)
         gideon.commands.set(props.help.name, props);
     });
 });
@@ -74,20 +72,32 @@ gideon.on("error", err => {
     Util.log("Bot error: " + err.stack);
 });
 
-gideon.on('message', async message => {
+gideon.on('message', (message) => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     
     Util.ABM(message);
     if (gideon.cvmt) Util.CVM(message);
 
-    const msg = message.content.toLowerCase();
-    if (!msg.startsWith(prefix) && !msg.startsWith(prefix2)) return;
+    // Grab the content, but lowercase it.
+    const lowercaseContent = message.content.toLowerCase();
+    
+    // Find the prefix that has been used by the user
+    const usedPrefix = config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+    // If a prefix hasn't been used by the user, return.
+    if (!usedPrefix) return;
 
-    const args = message.content.slice(msg.startsWith(prefix) ? prefix.length : prefix2.length).trim().split(" ");
+    // Grab the input of the bot, by trimming off the prefix.
+    const inputString = message.content.slice(usedPrefix.length).trim()
+    // Also grab the arguments of the bot.
+    // Filter removes any empty elements.
+    const args = inputString.split(' ').filter(arg => arg !== '');
 
+    // Grab the first argument, which should be the command.
     const cmd = args.shift().toLowerCase();
-    const command = gideon.commands.get(cmd);
 
+    // Check the dictionary.
+    const command = gideon.commands.get(cmd);
+    // If the dictionary has the command, run the command.
     if (command) command.run(gideon, message, args);
 });
 

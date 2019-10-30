@@ -9,7 +9,7 @@ module.exports.run = async (gideon, message, args) => {
     .addField('Patreon', `[Patreon.com](https://www.patreon.com/gideonbot 'https://www.patreon.com/gideonbot')`)
 	.setThumbnail('https://i.imgur.com/f3fvsRe.png')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(donate);
 }

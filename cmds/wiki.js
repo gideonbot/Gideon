@@ -60,7 +60,7 @@ module.exports.run = async (gideon, message, args) => {
         .setDescription(article.abstract + `\n\n**[Click here to read the full article](https://${wiki.url}${url} 'https://${wiki.url}${url}')**`)
         .setThumbnail(article.thumbnail)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
     
         message.channel.send(wikiart); 
     }
