@@ -1,5 +1,6 @@
 const Discord = module.require("discord.js");
 const Pagination = require('discord-paginationembed');
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     const ia = new Discord.MessageEmbed()

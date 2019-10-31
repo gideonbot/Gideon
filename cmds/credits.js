@@ -1,4 +1,5 @@
 const Discord = module.require("discord.js");
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
 
@@ -17,5 +18,5 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "credits"
+    name: ["credits", "creds"]
 }

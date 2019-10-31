@@ -41,8 +41,8 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     catch (ex) {
-        console.log("An error occurred while trying to fetch a quote: " + err);
-        Util.log("An error occurred while trying to fetch a quote: " + err);
+        console.log("An error occurred while trying to fetch a quote: " + ex);
+        Util.log("An error occurred while trying to fetch a quote: " + ex);
 
         const er = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -54,5 +54,5 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "quote"
+    name: ["quote"]
 }

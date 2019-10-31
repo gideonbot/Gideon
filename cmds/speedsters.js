@@ -74,5 +74,5 @@ module.exports.run = async (gideon, message, args) => {
     }
 }
 module.exports.help = {
-    name: "sp"
+    name: ["sp", "speedster", "speedsters"]
 }

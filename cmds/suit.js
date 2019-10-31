@@ -1,4 +1,5 @@
 const Discord = module.require("discord.js");
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {     
     const st = new Discord.MessageEmbed()
@@ -84,5 +85,5 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "suit"
+    name: ["suit", "suits"]
 }

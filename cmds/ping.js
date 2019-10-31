@@ -1,4 +1,5 @@
 const Discord = module.require("discord.js");
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     const ping = new Discord.MessageEmbed()
@@ -12,5 +13,5 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "ping"
+    name: ["ping", "latency"]
 }
