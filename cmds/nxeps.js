@@ -11,7 +11,8 @@ module.exports.run = async (gideon, message, args) => {
         legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
         batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
         b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
-        canaries: 'http://api.tvmaze.com/shows/canaries?embed=nextepisode',
+        canaries: 'http://api.tvmaze.com/shows/44496?embed=nextepisode',
+        supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode'
     };
 
     /**
@@ -23,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
             if (!api_url) return reject({error: "Missing API URL"});
             
             fetch(api_url).then(res => {
-                if (res.status != 200) return reject({error: res.statusText});
+                if (res.status !== 200) return reject({error: res.statusText});
 
                 res.json().then(body => {
                     let title = body.name;
@@ -31,7 +32,7 @@ module.exports.run = async (gideon, message, args) => {
                     let result = { title: title, name: null, value: null, error: null };
     
                     if (!body._embedded) {
-                        result.name = 'No Episode data available yet';
+                        result.name = '';
                         result.value = 'No Episode data available yet';
                     }
     
@@ -46,7 +47,9 @@ module.exports.run = async (gideon, message, args) => {
 
                         let airs_today = time_diff_s < 60 * 60 * 24;
                         
-                        let res_value = `Airs in **${Util.Timespan(time_diff_s, false)}**`;
+                        let res_value = `Airs in **${Util.secondsToDifferenceString(time_diff_s, {
+                            enableSeconds: false
+                        })}**`;
 
                         if (!airs_today) {
                             //this is how we turn
@@ -86,7 +89,7 @@ module.exports.run = async (gideon, message, args) => {
     .setColor('#2791D3')
     .setTitle('__Upcoming Arrowverse episodes:__')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     for (let show in api_urls) {
         try {

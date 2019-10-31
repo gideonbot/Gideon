@@ -5,7 +5,7 @@ module.exports.run = async (gideon, message, args) => {
     if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
     if (!message.member.roles.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
 
-    const emoji_ids = ['598886586284900354', '607658682246758445', '598886597244485654', '598886605641613353', '598886588545499186', '598886601476800513', '607657873534746634', '634764613434474496'];
+    const emoji_ids = ['598886586284900354', '607658682246758445', '598886597244485654', '598886605641613353', '598886588545499186', '598886601476800513', '607657873534746634', '634764613434474496', '638489255169228830'];
 
     const auth = message.author.id;
 
@@ -18,6 +18,7 @@ module.exports.run = async (gideon, message, args) => {
         constantineseal: '596075638285139988',
         blacklightning: '607633853527359488',
         canaries: '610867040961560625',
+        supesnlois: '638486598203473958'
     }
 
     const f = m => m.author.id === message.author.id;
@@ -31,7 +32,7 @@ module.exports.run = async (gideon, message, args) => {
             message.react(emoji).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
         }
         
-        const rfilter = (reaction, user) => emoji_ids.includes(reaction.emoji.id) && user.id == auth;
+        const rfilter = (reaction, user) => emoji_ids.includes(reaction.emoji.id) && user.id === auth;
 
         const rcollector = message.createReactionCollector(rfilter, {time: 120000});
     
@@ -56,7 +57,7 @@ module.exports.run = async (gideon, message, args) => {
         .setThumbnail(message.author.avatarURL())
         .addField('News posted by:', message.author)
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         if (message.attachments.size > 0) news.setImage(message.attachments.first().proxyURL);
 
@@ -64,14 +65,26 @@ module.exports.run = async (gideon, message, args) => {
         if (!tmvt) {
             console.log('Couldn\'t get TV server when running news!');
             Util.log('Couldn\'t get TV server when running news!');
-            return message.channel.send('An error occurred, please try again later');
+
+            const er = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setTitle('An error occurred, please try again later!')
+            .setTimestamp()
+            .setFooter(Util.config.footer, gideon.user.avatarURL());
+            return message.channel.send(er);
         }
 
         const news_channel = tmvt.channels.get('595944027208024085');
         if (!news_channel) {
             console.log('Couldn\'t get news channel when running news!');
             Util.log('Couldn\'t get news channel when running news!');
-            return message.channel.send('An error occurred, please try again later');
+
+            const er = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setTitle('An error occurred, please try again later!')
+            .setTimestamp()
+            .setFooter(Util.config.footer, gideon.user.avatarURL());
+            return message.channel.send(er);
         }
 
         //<@&NUMBER> is how roles are represented | NUMBER - role id
@@ -79,23 +92,8 @@ module.exports.run = async (gideon, message, args) => {
         news_channel.send(roles_ping_msg, {embed: news}).then(async x => {
             await Util.delay(200);
             message.channel.bulkDelete(3);
-
-            const g = gideon.guilds.get('474179239068041237');
-            let sent = false;
-
-            if (g) {
-                try { 
-                    await g.channels.get('511627290996637727').send(news);
-                    await g.channels.get('511627290996637727').send('This news was brought to you by:\nhttps://discord.gg/h9SEQaU');
-                    sent = true;
-                }
-                catch (ex) {
-                    console.log("An error occurred while sending news to other server: " + ex);
-                    Util.log("An error occurred while sending news to other server: " + ex);
-                }
-            }
             
-            message.reply(`Your news post has been sent to ${news_channel.toString()}${sent ? ` & ` + g.channels.get('511627290996637727').toString() : ``}! :white_check_mark:`);
+            message.reply(`Your news post has been sent to ${news_channel.toString()}! :white_check_mark:`);
             Util.TDM(message.guild, false);
             collector.stop();
         });

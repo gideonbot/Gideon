@@ -9,18 +9,18 @@ module.exports.run = async (gideon, message, args) => {
     const as = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply a valid show!')
-    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**')
+    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const es = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply a valid episode and season!')
     .setDescription('Acceptable formats: S00E00 and 00x00')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-    let info = Util.ParseStringToObj(args[1]);
+    let info = Util.parseSeriesEpisodeString(args[1]);
     if (!info) return message.channel.send(es);
 
     let shows = [
@@ -37,7 +37,7 @@ module.exports.run = async (gideon, message, args) => {
         {
             id: "1850",
             title: "Supergirl",
-            channel: info.season == "1" ? "CBS" : "The CW"
+            channel: info.season === "1" ? "CBS" : "The CW"
         },
         {
             id: "1851",
@@ -60,7 +60,7 @@ module.exports.run = async (gideon, message, args) => {
             channel: 'The CW'
         },
         {
-            id: "canaries",
+            id: "44496",
             title: "Green Arrow and the Canaries",
             channel: 'The CW'
         },
@@ -72,8 +72,13 @@ module.exports.run = async (gideon, message, args) => {
         {
             id: "1859",
             title: "Lucifer",
-            channel: info.season == "1" || "2" || "3" ? "Fox" : "Netflix"
+            channel: info.season === "1" || "2" || "3" ? "Fox" : "Netflix"
         },
+        {
+            id: "44751",
+            title: "Superman & Lois",
+            channel: "The CW"
+        }
     ]
 
     let show = shows[-1];
@@ -88,6 +93,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:canaries)/i)) show = shows[7];
     else if (agc.match(/(?:krypton)/i)) show = shows[8];
     else if (agc.match(/(?:lucifer)/i)) show = shows[9];
+    else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
     else return message.channel.send(as);
     if (!show) return message.channel.send(as);
 
@@ -95,7 +101,12 @@ module.exports.run = async (gideon, message, args) => {
 
     try {
         const body = await fetch(api).then(res => res.json());
-        if (body.status == 404) return message.channel.send(`There was no data for this episode!`).catch(console.error);
+        const nd = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('There was no data for this episode!')
+        .setTimestamp()
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        if (body.status === 404) return message.channel.send(nd).catch(console.error);
     
         let airdate = new Date(body.airdate);
         let airtime = body.airtime;
@@ -114,7 +125,7 @@ module.exports.run = async (gideon, message, args) => {
         .setDescription(desc + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`)
         .setImage(img)     
         .setTimestamp()
-        .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
     
         message.channel.send(epinfo);
     }
@@ -122,7 +133,14 @@ module.exports.run = async (gideon, message, args) => {
     catch (ex) {
         console.log("Exception occurred while fetching the episodes " + ex);
         Util.log("Exception occurred while fetching the episodes " + ex);
-        message.channel.send("An error occurred while trying to fetch the episodes, please try again later");
+        
+        const er = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle('An error occurred while trying to fetch the episodes!')
+        .setDescription('Please try again later!')
+        .setTimestamp()
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        return message.channel.send(er);
     }
 }
 module.exports.help = {

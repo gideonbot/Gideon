@@ -6,7 +6,7 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle('The fastest bot alive!')
     .setDescription(`WebSocket ping: ${gideon.ws.ping.toFixed(2)} ms`)
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(ping);  
 }

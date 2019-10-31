@@ -1,10 +1,7 @@
 require('dotenv').config();
-const config = require("./config.json");
 const Discord = require('discord.js');
 const fs = require("fs");
 const gideon = new Discord.Client();
-const prefix = config.prefix.toLowerCase();
-const prefix2 = config.prefix2.toLowerCase();
 const Util = require("./Util");
 
 gideon.commands = new Discord.Collection();
@@ -17,7 +14,7 @@ fs.readdir("./cmds", (err, files) => {
         return;
     }
 
-    let jsfiles = files.filter(f => f.endsWith(".js"));
+    let jsfiles = files.filter(fileName => fileName.endsWith(".js"));
     if (jsfiles.length < 1) {
         console.log("No commands to load!");
         return;
@@ -25,9 +22,9 @@ fs.readdir("./cmds", (err, files) => {
 
     console.log(`Loading ${jsfiles.length} commands!`)
 
-    jsfiles.forEach((f, i) => {
-        let props = require(`./cmds/${f}`);
-        console.log(`${i + 1}: ${f} loaded!`)
+    jsfiles.forEach((fileName, i) => {
+        let props = require(`./cmds/${fileName}`);
+        console.log(`${i + 1}: ${fileName} loaded!`)
         gideon.commands.set(props.help.name, props);
     });
 });
@@ -51,6 +48,11 @@ gideon.once('ready', async () => {
     
     console.log('Ready!');
     Util.log(`${gideon.user.tag} ready`);
+    let servers = gideon.guilds;
+    servers.forEach((f) => {
+        Util.log(`Server: \`${f}\``);
+    });
+
     setInterval(status, 30000);
 });
 
@@ -69,21 +71,20 @@ gideon.on("error", err => {
     Util.log("Bot error: " + err.stack);
 });
 
-gideon.on('message', async message => {
+gideon.on('message', (message) => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     
     Util.ABM(message);
     if (gideon.cvmt) Util.CVM(message);
-    Util.NFL(message);
+    Util.CSD(message);
 
-    const msg = message.content.toLowerCase();
-    if (!msg.startsWith(prefix) && !msg.startsWith(prefix2)) return;
-
-    const args = message.content.slice(msg.startsWith(prefix) ? prefix.length : prefix2.length).trim().split(" ");
-
+    const lowercaseContent = message.content.toLowerCase();
+    const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+    if (!usedPrefix) return;
+    const inputString = message.content.slice(usedPrefix.length).trim()
+    const args = inputString.split(' ').filter(arg => arg !== '');
     const cmd = args.shift().toLowerCase();
     const command = gideon.commands.get(cmd);
-
     if (command) command.run(gideon, message, args);
 });
 

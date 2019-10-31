@@ -6,7 +6,7 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle('You must choose a character!')
     .setDescription('Currently available:\n**killer frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**\n**kingdom come superman**')
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL())
+    .setFooter(Util.config.footer, gideon.user.avatarURL())
 
     if (!args[0]) return message.channel.send(st);
 
@@ -78,7 +78,7 @@ module.exports.run = async (gideon, message, args) => {
     .setDescription(suit.desc)
     .setImage(suit.image)
     .setTimestamp()
-    .setFooter('The Arrowverse Bot | Time Vault Discord | Developed by adrifcastr', gideon.user.avatarURL());
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(suit_embed);  
 }
