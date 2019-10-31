@@ -113,12 +113,6 @@ module.exports.run = async (gideon, message, args) => {
 
     let attack = attacks[-1];
 
-    const ia = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply a valid attack!')
-    .setTimestamp()
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
     if (atc.match(/(?:iceblast)/i)) attack = attacks[0];
     else if (atc.match(/(?:lthrow)/i)) attack = attacks[1];
     else if (atc.match(/(?:reverseflash)/i)) attack = attacks[2];
