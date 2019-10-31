@@ -14,9 +14,21 @@ module.exports.run = async (gideon, message, args) => {
 
     if (!atc) return message.channel.send(at);
 
+    const me = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('You must use a proper mention if you want to attack someone!')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+    const sh = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('My protocols forbid any kind of self-harm!')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
     const user = gideon.users.get(Util.getIdFromString(args[1]));
-    if (!user) return message.channel.send('You must use a proper mention if you want to attack someone!');
-    else if (user.id === auth.id || user.id === gideon.user.id) return message.channel.send('My protocols forbid any kind of self-harm!');
+    if (!user) return message.channel.send(me);
+    else if (user.id === auth.id || user.id === gideon.user.id) return message.channel.send(sh);
 
     const attacks = [
         {
@@ -101,6 +113,12 @@ module.exports.run = async (gideon, message, args) => {
 
     let attack = attacks[-1];
 
+    const ia = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('You must supply a valid attack!')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
     if (atc.match(/(?:iceblast)/i)) attack = attacks[0];
     else if (atc.match(/(?:lthrow)/i)) attack = attacks[1];
     else if (atc.match(/(?:reverseflash)/i)) attack = attacks[2];
@@ -114,8 +132,8 @@ module.exports.run = async (gideon, message, args) => {
     else if (atc.match(/(?:thunderclap)/i)) attack = attacks[10];
     else if (atc.match(/(?:elblast)/i)) attack = attacks[11];
     else if (atc.match(/(?:fireblast)/i)) attack = attacks[12];
-    else return message.channel.send('You must supply a valid attack!');
-    if (!attack) return message.channel.send('You must supply a valid attack!');
+    else return message.channel.send(ia);
+    if (!attack) return message.channel.send(ia);
 
 
     const attack_embed = new Discord.MessageEmbed()
