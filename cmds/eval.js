@@ -7,6 +7,8 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     try {
+        message.delete();
+
         const code = args.join(' ');
         const returnedValue = eval(code);
 

@@ -7,18 +7,17 @@ module.exports.run = async (gideon, message, args) => {
 
     try {
         const body = await fetch(api).then(res => res.json()); 
-        let issuecount = Object.keys(body).length;
     
         const issues = new Discord.MessageEmbed()
         .setColor('#2791D3')
-        .setTitle('Issues:')
-        .setDescription(`Current Open Issues: \`${issuecount}\``)
+        .setTitle('Issues: ' + body.length)
         .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-        for (let i = 0; i < issuecount; i++) {
+        let issues_array = body.reverse();
+        for (let item of issues_array) {
             try {
-                issues.addField(`Issue #${body[i].number}: ${body[i].title}`, `Link: [GitHub](${body[i].html_url} '${body[i].html_url}') | Comments: \`${body[i].comments}\` | Opened by: \`${body[i].user.login}\``);
+                issues.addField(`Issue #${item.number}: ${item.title}`, `Link: [GitHub](${item.html_url} '${item.html_url}') | Comments: \`${item.comments}\` | Opened by: \`${item.user.login}\``);
             }
             
             catch (ex) {
