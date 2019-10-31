@@ -132,8 +132,9 @@ module.exports.run = async (gideon, message, args) => {
     else if (atc.match(/(?:thunderclap)/i)) attack = attacks[10];
     else if (atc.match(/(?:elblast)/i)) attack = attacks[11];
     else if (atc.match(/(?:fireblast)/i)) attack = attacks[12];
-    else return message.channel.send(ia);
-    if (!attack) return message.channel.send(ia);
+
+    else return message.channel.send(at);
+    if (!attack) return message.channel.send(at);
 
 
     const attack_embed = new Discord.MessageEmbed()
@@ -147,5 +148,5 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "at"
+    name: ["at", "attack"]
 }

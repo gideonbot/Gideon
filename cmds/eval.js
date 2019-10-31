@@ -25,6 +25,8 @@ module.exports.run = async (gideon, message, args) => {
             printValue = new String(returnedValue);
         }
 
+        if (printValue == "{}") return;
+
         message.channel.send(printValue, {
             code: true
         });

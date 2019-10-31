@@ -24,8 +24,13 @@ fs.readdir("./cmds", (err, files) => {
 
     jsfiles.forEach((fileName, i) => {
         let props = require(`./cmds/${fileName}`);
-        console.log(`${i + 1}: ${fileName} loaded!`)
-        gideon.commands.set(props.help.name, props);
+
+        if (Array.isArray(props.help.name)) {
+            for (let item of props.help.name) gideon.commands.set(item, props);
+        }
+        else gideon.commands.set(props.help.name, props);
+
+        console.log(`${i + 1}: ${fileName} loaded - ${Array.isArray(props.help.name) ? props.help.name.join(", ") : props.help.name}`);
     });
 });
 
@@ -47,11 +52,7 @@ gideon.once('ready', async () => {
     }
     
     console.log('Ready!');
-    Util.log(`${gideon.user.tag} ready`);
-    let servers = gideon.guilds;
-    servers.forEach((f) => {
-        Util.log(`Server: \`${f}\``);
-    });
+    Util.log(`${gideon.user.tag} ready!\nServers:\n${gideon.guilds.map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
 
     setInterval(status, 30000);
 });
@@ -79,9 +80,10 @@ gideon.on('message', (message) => {
     Util.CSD(message);
 
     const lowercaseContent = message.content.toLowerCase();
-    const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+    const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
     if (!usedPrefix) return;
-    const inputString = message.content.slice(usedPrefix.length).trim()
+
+    const inputString = message.content.slice(usedPrefix.length).trim();
     const args = inputString.split(' ').filter(arg => arg !== '');
     const cmd = args.shift().toLowerCase();
     const command = gideon.commands.get(cmd);

@@ -1,44 +1,45 @@
-const Discord = module.require("discord.js");
+const Discord = module.require('discord.js');
 const fetch = require('node-fetch');
-const Util = require("../Util");
+const Util = require('../Util');
 
 module.exports.run = async (gideon, message, args) => {
-    let agc = args[0];
-    let search_term;
-    
     let wikis = [
         {
-            url: "arrow.fandom.com",
-            title: "Arrowverse"
+            url: 'arrow.fandom.com',
+            title: 'Arrowverse'
         },
         {
-            url: "blacklightning.fandom.com",
-            title: "Black Lightning"
+            url: 'blacklightning.fandom.com',
+            title: 'Black Lightning'
         },
         {
-            url: "dc.fandom.com",
-            title: "DC"
+            url: 'dc.fandom.com',
+            title: 'DC'
         },
         {
-            url: "krypton-series.fandom.com",
-            title: "Krypton"
+            url: 'krypton-series.fandom.com',
+            title: 'Krypton'
         },
         {
-            url: "lucifer.fandom.com",
-            title: "Lucifer"
+            url: 'lucifer.fandom.com',
+            title: 'Lucifer'
         },
     ]
     
     let wiki = wikis[-1];
 
-    if (agc.length !== 2) wiki = wikis[0], search_term = args.join(' ');
-    else if (agc.match(/(?:bl)/i)) wiki = wikis[1], args.shift(), search_term = args.join(' ');
-    else if (agc.match(/(?:dc)/i)) wiki = wikis[2], args.shift(), search_term = args.join(' ');
-    else if (agc.match(/(?:kr)/i)) wiki = wikis[3], args.shift(), search_term = args.join(' ');
-    else if (agc.match(/(?:lu)/i)) wiki = wikis[4], args.shift(), search_term = args.join(' ');
+    let command = message.content.toLowerCase().split(' ')[0];
+
+    if (command.endsWith('wiki')) wiki = wikis[0];
+    else if (command.endsWith('bl')) wiki = wikis[1];
+    else if (command.endsWith('dc')) wiki = wikis[2];
+    else if (command.endsWith('kr')) wiki = wikis[3];
+    else if (command.endsWith('lu')) wiki = wikis[4];
     else return message.channel.send('Supply a valid Wiki!');
 
-    if (!search_term) return message.channel.send("You must supply a search term!");
+    let search_term = args.join(' ');
+
+    if (!search_term) return message.channel.send('You must supply a search term!');
 
     const search_api = encodeURI(`https://${wiki.url}/api/v1/SearchSuggestions/List?query=${search_term}`);
 
@@ -50,7 +51,9 @@ module.exports.run = async (gideon, message, args) => {
         const api = encodeURI(`https://${wiki.url}/api/v1/Articles/Details?ids=50&titles=${search_term}&abstract=500&width=200&height=200`);
 
         const body = await fetch(api).then(res => res.json());
-        const article = Object.values(body.items)[0];   
+
+        //black lightning does some weird stuff, therefore the actual result is the 2nd element
+        const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 ? 1 : 0];
         
         const nf = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -72,8 +75,8 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     catch (ex) {
-        console.log("Error occurred while fetching data from wiki: " + ex);
-        Util.log("Error occurred while fetching data from wiki: " + ex);
+        console.log('Error occurred while fetching data from wiki: ' + ex);
+        Util.log('Error occurred while fetching data from wiki: ' + ex);
 
         const er = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -86,5 +89,5 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "wiki"
+    name: ['wiki', 'wikibl', 'wikidc', 'wikikr', 'wikilu']
 }

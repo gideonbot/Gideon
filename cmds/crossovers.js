@@ -1,5 +1,6 @@
 const Discord = module.require("discord.js");
 const Pagination = require('discord-paginationembed');
+const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     const co1 = new Discord.MessageEmbed()
@@ -34,5 +35,5 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "crossovers"
+    name: ["crossovers", "xovers"]
 }
