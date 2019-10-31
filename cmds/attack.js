@@ -109,6 +109,12 @@ module.exports.run = async (gideon, message, args) => {
             emote: ':fire:',
             attackgif: 'https://i.imgur.com/SNuMve9.gif'
         },
+        {
+            text: `Chloe shot ${user} for you!`,
+            desc: 'LONG LIVE DECKERSTAR!',
+            emote: ':smiling_imp:',
+            attackgif: 'https://media.giphy.com/media/RJW3H91jSJTWNV9u6Y/giphy.gif'
+        },
     ]
 
     let attack = attacks[-1];
@@ -126,6 +132,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (atc.match(/(?:thunderclap)/i)) attack = attacks[10];
     else if (atc.match(/(?:elblast)/i)) attack = attacks[11];
     else if (atc.match(/(?:fireblast)/i)) attack = attacks[12];
+    else if (atc.match(/(?:shoot)/i) && message.member.roles.has('635744558499627009')) attack = attacks[13];
 
     else return message.channel.send(at);
     if (!attack) return message.channel.send(at);
