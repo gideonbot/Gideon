@@ -256,6 +256,7 @@ class Util {
         if (message.content.match(/(?:deckerstar)/i)) {
             const Imgur = require('imgur-node');
             const imgclient = new Imgur.Client(process.env.IMG_CL);
+            const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
 
             imgclient.album.get('rJpbLQx', (err, res) => {
                 if (err) {
@@ -266,7 +267,7 @@ class Util {
                     .setColor('#2791D3')
                     .setTitle('An error occurred, please try again later!')
                     .setTimestamp()
-                    .setFooter(Util.config.footer, gideon.user.avatarURL());
+                    .setFooter(Util.config.footer, avatar);
                     return message.channel.send(er);
                 }
         
@@ -279,7 +280,7 @@ class Util {
                 .setColor('#2791D3')
                 .setImage(rds)
                 .setTimestamp()
-                .setFooter(Util.config.footer, gideon.user.avatarURL());
+                .setFooter(Util.config.footer, avatar);
             
                 message.channel.send(ds);
             });
