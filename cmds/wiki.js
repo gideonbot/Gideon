@@ -89,7 +89,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ['wiki', 'wikibl', 'wikidc', 'wikikr', 'wikilu'],
+    name: ['wiki', 'wikidc', 'wikibl', 'wikikr', 'wikilu'],
     type: "general",
     help_text: "wiki[bl|kr|lu|dc] <term>",
     help_desc: "Searches the specified wiki for the given term | bl - Black Lightning | kr - Krypton | lu - Lucifer | dc - DC"

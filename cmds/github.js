@@ -35,7 +35,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "github",
+    name: ["github", "git", "repo"],
     type: "misc",
     help_text: "github",
     help_desc: "Displays Github repository info"

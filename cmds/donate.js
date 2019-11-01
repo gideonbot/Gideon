@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "donate",
+    name: ["donate", "paypal", "patreon"],
     type: "misc",
     help_text: "donate",
     help_desc: "Displays info to support maintainance and hosting of Gideon"

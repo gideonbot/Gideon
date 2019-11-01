@@ -54,7 +54,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["quote"],
+    name: "quote",
     type: "fun",
     help_text: "quote",
     help_desc: "Displays a random quote"

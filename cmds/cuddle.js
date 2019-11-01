@@ -18,7 +18,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "cuddle",
+    name: ["cuddle", "hug"],
     type: "fun",
     help_text: "cuddle <user>",
     help_desc: "Gives the selected user a Beebo-tastic cuddle"

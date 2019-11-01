@@ -2,11 +2,14 @@ const Discord = module.require("discord.js");
 const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
-    if (message.author.id !== '224617799434108928') {
+    const appowner = await gideon.fetchApplication().then(application => application.owner.id).catch(console.error);
+    
+    if (message.author.id !== appowner) {
         return message.channel.send('You do not have the required permissions to use this command!');
     }
 
     try {
+        await Util.delay(200);
         message.delete();
 
         const code = args.join(' ');

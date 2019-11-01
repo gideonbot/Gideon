@@ -246,14 +246,49 @@ class Util {
     }
 
     /**
-     * Lucifer easter egg
+     * Lucifer easter eggs
      * @param {Discord.Message} message 
      */
     static async CSD(message) {
         const vid = 'https://cdn.discordapp.com/attachments/525341082435715085/638782331791867930/Crime_Solving_Devil.mp4';
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
-    }
 
+        if (message.content.match(/(?:deckerstar)/i)) {
+            const Imgur = require('imgur-node');
+            const imgclient = new Imgur.Client(process.env.IMG_CL);
+            const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
+
+            imgclient.album.get('rJpbLQx', (err, res) => {
+                if (err) {
+                    console.log(err);
+                    Util.log(err);
+        
+                    const er = new Discord.MessageEmbed()
+                    .setColor('#2791D3')
+                    .setTitle('An error occurred, please try again later!')
+                    .setTimestamp()
+                    .setFooter(Util.config.footer, avatar);
+                    return message.channel.send(er);
+                }
+        
+                let min = 0;
+                let max = res.images.length - 1;
+                let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
+                let rds = res.images[ranum].link;
+            
+                const ds = new Discord.MessageEmbed()
+                .setColor('#2791D3')
+                .setImage(rds)
+                .setTimestamp()
+                .setFooter(Util.config.footer, avatar);
+            
+                message.channel.send(ds);
+            });
+        }
+        
+        const tls = 'https://twitter.com/LaurenGerman/status/996886094305050627\nhttps://twitter.com/tomellis17/status/996889307506864128';
+        if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
+    }
     //more methods to come
 }
 
