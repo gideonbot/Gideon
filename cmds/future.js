@@ -16,5 +16,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "show"
+    name: "show",
+    type: "fun",
+    help_text: "Gideon, show me the future!",
+    help_desc: "Displays an easter egg"
 }

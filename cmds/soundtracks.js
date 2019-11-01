@@ -39,5 +39,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["soundtracks", "tracks"]
+    name: ["soundtracks", "tracks"],
+    type: "general",
+    help_text: "soundtracks",
+    help_desc: "Displays all soundtracks"
 }

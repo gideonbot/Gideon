@@ -77,5 +77,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "accelerator"
+    name: "accelerator",
+    type: "fun",
+    help_text: "accelerator",
+    help_desc: "Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability"
 }

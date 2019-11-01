@@ -10,5 +10,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "ddm"
+    name: "ddm",
+    type: "admin",
+    help_text: "ddm",
+    help_desc: "Makes DCTV roles non-mentionable"
 }

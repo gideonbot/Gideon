@@ -74,5 +74,8 @@ module.exports.run = async (gideon, message, args) => {
     }
 }
 module.exports.help = {
-    name: ["sp", "speedster", "speedsters"]
+    name: ["sp", "speedster", "speedsters"],
+    type: "general",
+    help_text: "sp <name/alter ego> eN (earth number)",
+    help_desc: "Fetches Speedster info"
 }

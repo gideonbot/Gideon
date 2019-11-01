@@ -149,5 +149,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "next"
+    name: "next",
+    type: "general",
+    help_text: "next <show> <NxNN/SNNENN> ~ N -> number",
+    help_desc: "Fetches next episode in watching order"
 }

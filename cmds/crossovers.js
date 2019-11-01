@@ -35,5 +35,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["crossovers", "xovers"]
+    name: ["crossovers", "xovers"],
+    type: "general",
+    help_text: "crossovers",
+    help_desc: "Displays a list of all Arrowverse crossover episodes in their respective watching order"
 }

@@ -144,5 +144,8 @@ module.exports.run = async (gideon, message, args) => {
     }
 }
 module.exports.help = {
-    name: ["ep", "episode"]
+    name: ["ep", "episode"],
+    type: "general",
+    help_text: "ep <show> <NxNN|SNENN> ~ N -> number",
+    help_desc: "Fetches episode info"
 }

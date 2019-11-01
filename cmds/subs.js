@@ -149,5 +149,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["subs", "subtitles"]
+    name: ["subs", "subtitles"],
+    type: "general",
+    help_text: "subs <lang> <show> <NxNN/SNNENN> ~ N -> number",
+    help_desc: "Searches opensubtitles.org for the specified episode"
 }

@@ -44,5 +44,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "issues"
+    name: "issues",
+    type: "misc",
+    help_text: "issues",
+    help_desc: "Displays Github issues"
 }

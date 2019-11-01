@@ -85,5 +85,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["suit", "suits"]
+    name: ["suit", "suits"],
+    type: "general",
+    help_text: "suit <character>",
+    help_desc: "Displays newly revealed suits"
 }

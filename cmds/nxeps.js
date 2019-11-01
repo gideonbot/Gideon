@@ -110,5 +110,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["nxeps", "nexteps", "nextepisodes"]
+    name: ["nxeps", "nexteps", "nextepisodes"],
+    type: "general",
+    help_text: "nxeps",
+    help_desc: "Displays a countdown to the next airing Arrowverse episodes"
 }

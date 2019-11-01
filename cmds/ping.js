@@ -13,5 +13,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["ping", "latency"]
+    name: ["ping", "latency"],
+    type: "misc",
+    help_text: "ping",
+    help_desc: "Displays the bot's ping"
 }
