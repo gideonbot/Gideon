@@ -18,5 +18,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["credits", "creds"]
+    name: ["credits", "creds"],
+    type: "misc",
+    help_text: "credits",
+    help_desc: "Displays people who contributed to development of this bot"
 }

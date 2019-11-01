@@ -72,5 +72,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "jpk"
+    name: "jpk",
+    type: "fun",
+    help_text: "jpk",
+    help_desc: "Displays a random JPK gif"
 }

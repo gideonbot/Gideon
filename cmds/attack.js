@@ -149,5 +149,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["at", "attack"]
+    name: ["at", "attack"],
+    type: "fun",
+    help_text: "at <attack> <user>",
+    help_desc: "Attacks the selected user with the selected attack"
 }

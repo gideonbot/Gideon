@@ -7,6 +7,8 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     try {
+        message.delete();
+
         const code = args.join(' ');
         const returnedValue = eval(code);
 
@@ -42,5 +44,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: 'eval'
+    name: 'eval',
+    type: "admin",
+    help_text: "eval <code>",
+    help_desc: "Evaluates provided code (:warning: dangerous)"
 }

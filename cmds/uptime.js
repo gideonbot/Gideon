@@ -13,5 +13,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "uptime"
+    name: "uptime",
+    type: "misc",
+    help_text: "uptime",
+    help_desc: "Displays the bot's uptime"
 }

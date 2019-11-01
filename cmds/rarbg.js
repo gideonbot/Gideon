@@ -79,5 +79,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "rarbg"
+    name: "rarbg",
+    type: "general",
+    help_text: "rarbg <show> <NxNN/SNNENN> ~ N -> number",
+    help_desc: "Searches rarbg.to for the specified episode"
 }

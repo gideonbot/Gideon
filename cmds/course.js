@@ -47,5 +47,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "plot"
+    name: "plot",
+    type: "fun",
+    help_text: "Gideon, plot a course!",
+    help_desc: "Plots a course"
 }

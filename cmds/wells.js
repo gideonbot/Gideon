@@ -80,5 +80,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "wells"
+    name: "wells",
+    type: "fun",
+    help_text: "wells",
+    help_desc: "Reaches out to a random Wells"
 }

@@ -105,5 +105,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "news"
+    name: "news",
+    type: "admin",
+    help_text: "news",
+    help_desc: "News Team can use this to post news"
 }

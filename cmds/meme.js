@@ -33,5 +33,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "meme"
+    name: "meme",
+    type: "fun",
+    help_text: "meme",
+    help_desc: "Displays a random Arrowverse meme"
 }

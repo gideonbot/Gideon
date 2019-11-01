@@ -36,5 +36,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "timeline"
+    name: "timeline",
+    type: "fun",
+    help_text: "timeline",
+    help_desc: "Scans for changes in the timeline"
 }

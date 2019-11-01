@@ -17,5 +17,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "cvm"
+    name: "cvm",
+    type: "admin",
+    help_text: "cvm",
+    help_desc: "Toggles crossover mode"
 }

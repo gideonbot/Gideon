@@ -187,5 +187,8 @@ module.exports.run = async (gideon, message, args) => {
 }   
 
 module.exports.help = {
-    name: "abilities"
+    name: "abilities",
+    type: "general",
+    help_text: "abilities <term>",
+    help_desc: "Shows abilities of a following: <speedster | viber | kryptonian>"
 }
