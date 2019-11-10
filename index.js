@@ -85,7 +85,12 @@ gideon.on('message', (message) => {
 
     const inputString = message.content.slice(usedPrefix.length).trim();
     const args = inputString.split(' ').filter(arg => arg !== '');
-    const cmd = args.shift().toLowerCase();
+
+    let cmd = args.shift();
+
+    if (!cmd) return;
+
+    cmd = cmd.toLowerCase();
     const command = gideon.commands.get(cmd);
     if (command) command.run(gideon, message, args);
 });
