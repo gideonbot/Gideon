@@ -246,7 +246,7 @@ class Util {
     }
 
     /**
-     * Lucifer easter eggs
+     * some stuff
      * @param {Discord.Message} message 
      */
     static async CSD(message) {
@@ -297,6 +297,17 @@ class Util {
 
         if (message.content.match(/(?:germ)/i)) {
             IMG('ngJQmxL');
+        }
+
+        const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';
+        if (message.content.match(/(?:typical)/i) && (/(?:cheetah)/i)) {
+            const imgembed = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setImage(ctm)
+            .setTimestamp()
+            .setFooter(Util.config.footer, avatar);
+
+            message.channel.send(imgembed);
         }
     }
     //more methods to come
