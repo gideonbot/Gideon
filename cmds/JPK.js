@@ -43,32 +43,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:fs5gr)/i)) rjpka = "eLugrZD";
     else return message.channel.send(ia); 
 
-    imgclient.album.get(rjpka, (err, res) => {
-        if (err) {
-            console.log(err);
-            Util.log(err);
-
-            const er = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setTitle('An error occurred, please try again later!')
-            .setTimestamp()
-            .setFooter(Util.config.footer, gideon.user.avatarURL());
-            return message.channel.send(er);
-        }
-
-        let min = 0;
-        let max = res.images.length - 1;
-        let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
-        let rjpk = res.images[ranum].link;
-    
-        const jpk = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setImage(rjpk)
-        .setTimestamp()
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-    
-        message.channel.send(jpk);
-    });  
+    Util.IMG(rjpka);
 }
 
 module.exports.help = {
