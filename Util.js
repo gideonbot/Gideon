@@ -155,6 +155,7 @@ class Util {
      * @param {Discord.Message} message 
      */
     static async ABM(message) {
+        let abmmatch;
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const msg = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
         const abmembed = new Discord.MessageEmbed()
@@ -182,7 +183,7 @@ class Util {
                 await Util.delay(200);
                 message.delete();
                 Util.log("ABM triggered by: " + message.author.tag);
-                return message.channel.send(msg.author, { embed: abmembed });
+                return abmmatch = true, message.channel.send(msg.author, { embed: abmembed });
             }
         }
 
@@ -204,7 +205,7 @@ class Util {
                     await Util.delay(200);
                     message.delete();
                     Util.log("ABM triggered by: " + message.author.tag);
-                    message.channel.send(msg.author, { embed: abmembed });
+                    return abmmatch = true, message.channel.send(msg.author, { embed: abmembed });
                 }
             } catch (e) {
                 Util.log("Failed to fetch data from YT API: " + e);
@@ -248,8 +249,9 @@ class Util {
     /**
      * Get image from imgur album
      * @param {string} imgid 
+     * @param {Discord.Message} message
      */
-    static async IMG(imgid){
+    static async IMG(imgid, message){
         const Imgur = require('imgur-node');
         const imgclient = new Imgur.Client(process.env.IMG_CL);
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
@@ -293,14 +295,14 @@ class Util {
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
 
         if (message.content.match(/(?:deckerstar)/i)) {
-            Util.IMG('rJpbLQx');
+            Util.IMG('rJpbLQx', message);
         }
         
         const tls = 'https://twitter.com/LaurenGerman/status/996886094305050627\nhttps://twitter.com/tomellis17/status/996889307506864128';
         if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
 
         if (message.content.match(/(?:germ)/i)) {
-            Util.IMG('ngJQmxL');
+            Util.IMG('ngJQmxL', message);
         }
 
         const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';

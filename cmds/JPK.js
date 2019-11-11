@@ -1,6 +1,4 @@
 const Discord = module.require("discord.js");
-const Imgur = require('imgur-node');
-const imgclient = new Imgur.Client(process.env.IMG_CL);
 const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {     
@@ -43,7 +41,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:fs5gr)/i)) rjpka = "eLugrZD";
     else return message.channel.send(ia); 
 
-    Util.IMG(rjpka);
+    Util.IMG(rjpka, message);
 }
 
 module.exports.help = {
