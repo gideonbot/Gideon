@@ -44,6 +44,12 @@ module.exports.run = async (gideon, message, args) => {
     }); 
 
     collector.on('collect', message => {
+        /*
+        Util.ABM(message, function(response){ //will look into later. #notworking.
+            if (response.abmmatch) return message.channel.bulkDelete(3), collector.stop(), message.channel.reply('you tried to post a forbidden link!\nYour news post has been cancelled!');
+            console.log(response);
+        }); */
+
         if (message.content.toLowerCase() === 'cancel' || message.content.toLowerCase() === 'stop') {;
             message.channel.bulkDelete(3); 
             collector.stop();

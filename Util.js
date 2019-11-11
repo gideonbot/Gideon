@@ -155,6 +155,7 @@ class Util {
      * @param {Discord.Message} message 
      */
     static async ABM(message) {
+        let abmmatch;
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const msg = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
         const abmembed = new Discord.MessageEmbed()
@@ -182,7 +183,7 @@ class Util {
                 await Util.delay(200);
                 message.delete();
                 Util.log("ABM triggered by: " + message.author.tag);
-                return message.channel.send(msg.author, { embed: abmembed });
+                return abmmatch = true, message.channel.send(msg.author, { embed: abmembed });
             }
         }
 
@@ -204,7 +205,7 @@ class Util {
                     await Util.delay(200);
                     message.delete();
                     Util.log("ABM triggered by: " + message.author.tag);
-                    message.channel.send(msg.author, { embed: abmembed });
+                    return abmmatch = true, message.channel.send(msg.author, { embed: abmembed });
                 }
             } catch (e) {
                 Util.log("Failed to fetch data from YT API: " + e);
@@ -246,57 +247,73 @@ class Util {
     }
 
     /**
-     * Lucifer easter eggs
-     * @param {Discord.Message} message 
+     * Get image from imgur album
+     * @param {string} imgid 
+     * @param {Discord.Message} message
      */
-    static async CSD(message) {
+    static async IMG(imgid, message){
         const Imgur = require('imgur-node');
         const imgclient = new Imgur.Client(process.env.IMG_CL);
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
 
-        const er = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('An error occurred, please try again later!')
-        .setTimestamp()
-        .setFooter(Util.config.footer, avatar);
+        imgclient.album.get(imgid, (err, res) => {
+            const er = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setTitle('An error occurred, please try again later!')
+            .setTimestamp()
+            .setFooter(Util.config.footer, avatar);
 
-        async function IMG(imgid){
-            imgclient.album.get(imgid, (err, res) => {
-                if (err) {
-                    console.log(err);
-                    Util.log(err);
-                    return message.channel.send(er);
-                }
+            if (err) {
+                console.log(err);
+                Util.log(err);
+                return message.channel.send(er);
+            }
+    
+            let min = 0;
+            let max = res.images.length - 1;
+            let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
+            let rimg = res.images[ranum].link;
+
+            const imgembed = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setImage(rimg)
+            .setTimestamp()
+            .setFooter(Util.config.footer, avatar);
+            if (imgid === 'ngJQmxL') imgembed.setTitle('Germ approves!:white_check_mark:');
         
-                let min = 0;
-                let max = res.images.length - 1;
-                let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
-                let rds = res.images[ranum].link;
+            message.channel.send(imgembed);
+        });
+    }
 
-                const imgembed = new Discord.MessageEmbed()
-                .setColor('#2791D3')
-                .setImage(rds)
-                .setTimestamp()
-                .setFooter(Util.config.footer, avatar);
-
-                if (imgid === 'ngJQmxL') imgembed.setTitle('Germ approves!:white_check_mark:');
-            
-                message.channel.send(imgembed);
-            });
-        }
-
+    /**
+     * some stuff
+     * @param {Discord.Message} message 
+     */
+    static async CSD(message) {
+        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const vid = 'https://cdn.discordapp.com/attachments/525341082435715085/638782331791867930/Crime_Solving_Devil.mp4';
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
 
         if (message.content.match(/(?:deckerstar)/i)) {
-            IMG('rJpbLQx');
+            Util.IMG('rJpbLQx', message);
         }
         
         const tls = 'https://twitter.com/LaurenGerman/status/996886094305050627\nhttps://twitter.com/tomellis17/status/996889307506864128';
         if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
 
         if (message.content.match(/(?:germ)/i)) {
-            IMG('ngJQmxL');
+            Util.IMG('ngJQmxL', message);
+        }
+
+        const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';
+        if (message.content.match(/(?:typical)/i) && (/(?:cheetah)/i)) {
+            const imgembed = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setImage(ctm)
+            .setTimestamp()
+            .setFooter(Util.config.footer, avatar);
+
+            message.channel.send(imgembed);
         }
     }
     //more methods to come
