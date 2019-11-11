@@ -306,7 +306,7 @@ class Util {
         }
 
         const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';
-        if (message.content.match(/(?:typical)/i) && (/(?:cheetah)/i)) {
+        if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) {
             const imgembed = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setImage(ctm)
