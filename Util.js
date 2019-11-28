@@ -69,6 +69,9 @@ class Util {
         }
     }
 
+    /**
+     * @param {Number} inputDelay 
+     */
     static delay(inputDelay) {
         // If the input is not a number, instantly resolve
         if (typeof inputDelay !== "number") return Promise.resolve();
@@ -77,16 +80,30 @@ class Util {
     }
 
     /**
+     * @returns {string}
+     * @param {string | Discord.GuildMember | Discord.User} input 
+     */
+    static GetUserTag(input) {
+        if (!input) return null;
+
+        let id = "";
+        if (typeof(input) == "string") id = input;
+        else if (input instanceof Discord.GuildMember) id = input.user.id;
+        else if (input instanceof Discord.User) id = input.id;
+        if (!id) return input;
+
+        return isNaN(id) ? input : "<@" + id + ">";
+    }
+
+    /**
      * @param {string} input 
      */
     static getIdFromString(input) {
         if (!input) return null;
 
-        return input
-            .replace("<@", "")
-            .replace("<@!", "")
-            .replace("<#", "")
-            .replace(">", "");
+        for (let item of ["<@", "<@!", "<#", ">"]) input = input.replace(item, "");
+
+        return input;
     }
 
     /**
@@ -95,9 +112,7 @@ class Util {
      * @param {boolean} seconds 
      * @returns {string} The beautifully formatted string
      */
-    static secondsToDifferenceString(seconds_input, {
-        enableSeconds = true
-    }) {
+    static secondsToDifferenceString(seconds_input, { enableSeconds = true }) {
         if (!seconds_input || typeof (seconds_input) !== "number") return "Unknown";
 
         let seconds = Math.floor(seconds_input % 60);
@@ -183,7 +198,7 @@ class Util {
                 await Util.delay(200);
                 message.delete();
                 Util.log("ABM triggered by: " + message.author.tag);
-                return abmmatch = true, message.channel.send(msg.author, { embed: abmembed });
+                return abmmatch = true, message.channel.send(this.GetUserTag(msg.author), { embed: abmembed });
             }
         }
 
@@ -205,7 +220,7 @@ class Util {
                     await Util.delay(200);
                     message.delete();
                     Util.log("ABM triggered by: " + message.author.tag);
-                    return abmmatch = true, message.channel.send(msg.author, { embed: abmembed });
+                    return abmmatch = true, message.channel.send(this.GetUserTag(msg.author), { embed: abmembed });
                 }
             } catch (e) {
                 Util.log("Failed to fetch data from YT API: " + e);
