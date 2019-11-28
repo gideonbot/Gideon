@@ -167,12 +167,65 @@ class Util {
     }
 
     /**
+     * @param {Discord.Message} message
+     * @returns {Promise<string>}
+     */
+    static ABM_Test(message) {
+        return new Promise(async (resolve, reject) => {
+            const content = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
+
+            const abm = [
+                'twitter.com/Pagmyst',
+                'instagram.com/pageyyt',
+                'youtube.com/user/SmallScreenYT',
+                'instagram.com/thedctvshow',
+                'twitter.com/thedctvshow',
+                'youtube.com/channel/UCvFS-R57UT1q2U_Jp4pi1eg',
+                'youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
+                'twitter.com/theblackestlion',
+                'twitter.com/tvpromosdb',
+                'youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g'
+            ];
+
+            for (let url of abm) {
+                if (content.includes(url.toLowerCase())) return resolve(url);
+            }
+
+            const ytrg = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+            const cids = ['UCTbT2FgB9oMpi4jB9gNPadQ', 'UCvFS-R57UT1q2U_Jp4pi1eg', 'UC6mI3QJFH1m2V8ZHvvHimVA', 'UCDR8cvjALazMm2j9hOar8_g'];
+
+            if (message.content.match(ytrg)) {
+                const id = message.content.match(ytrg);
+                const google_api_key = process.env.GOOGLE_API_KEY;
+
+                if (!google_api_key) return reject("No google API key");
+
+                const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
+
+                try {
+                    const body = await fetch(api).then(res => res.json());
+
+                    const channel_id = body && body.items && body.items[0] && body.items[0].snippet && body.items[0].snippet.channelId ? body.items[0].snippet.channelId : null;
+                    if (!channel_id) return reject("Failed to get data from API");
+
+                    if (cids.includes(channel_id)) return resolve("`" + message.content + "`");
+                }
+
+                catch (e) {
+                    Util.log("Failed to fetch data from YT API: " + e);
+                    return reject(e);
+                }
+            }
+
+            return reject("No match");
+        });
+    }
+
+    /**
      * @param {Discord.Message} message 
      */
-    static async ABM(message) {
-        let abmmatch;
+    static ABM(message) {
         const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
-        const msg = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
         const abmembed = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`:rotating_light:Anti-Bitch-Mode is enabled!:rotating_light:`)
@@ -180,52 +233,12 @@ class Util {
         .setTimestamp()
         .setFooter(Util.config.footer, avatar);
 
-        const abm = [
-            'twitter.com/Pagmyst',
-            'instagram.com/pageyyt',
-            'youtube.com/user/SmallScreenYT',
-            'instagram.com/thedctvshow',
-            'twitter.com/thedctvshow',
-            'youtube.com/channel/UCvFS-R57UT1q2U_Jp4pi1eg',
-            'youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
-            'twitter.com/theblackestlion',
-            'twitter.com/tvpromosdb',
-            'youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g'
-        ];
-
-        for (let url of abm) {
-            if (msg.includes(url.toLowerCase())) {
-                await Util.delay(200);
-                message.delete();
-                Util.log("ABM triggered by: " + message.author.tag);
-                return abmmatch = true, message.channel.send(this.GetUserTag(msg.author), { embed: abmembed });
-            }
-        }
-
-        const ytrg = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
-        const cids = ['UCTbT2FgB9oMpi4jB9gNPadQ', 'UCvFS-R57UT1q2U_Jp4pi1eg', 'UC6mI3QJFH1m2V8ZHvvHimVA', 'UCDR8cvjALazMm2j9hOar8_g'];
-
-        if (message.content.match(ytrg)) {
-            const id = message.content.match(ytrg);
-            const google_api_key = process.env.GOOGLE_API_KEY;
-            const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
-
-            try {
-                const body = await fetch(api).then(res => res.json());
-
-                const channel_id = body && body.items && body.items[0] && body.items[0].snippet && body.items[0].snippet.channelId ? body.items[0].snippet.channelId : null;
-                if (!channel_id) return;
-
-                if (cids.includes(channel_id)) {
-                    await Util.delay(200);
-                    message.delete();
-                    Util.log("ABM triggered by: " + message.author.tag);
-                    return abmmatch = true, message.channel.send(this.GetUserTag(msg.author), { embed: abmembed });
-                }
-            } catch (e) {
-                Util.log("Failed to fetch data from YT API: " + e);
-            }
-        }
+        this.ABM_Test(message).then(async match => {
+            await Util.delay(200);
+            message.delete();
+            Util.log("ABM triggered by: " + message.author.tag + " (" + match + ")");
+            message.channel.send(this.GetUserTag(message.author), { embed: abmembed });
+        }, failed => {console.log(failed)});
     }
 
     /**
