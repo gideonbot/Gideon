@@ -238,7 +238,7 @@ class Util {
             message.delete();
             Util.log("ABM triggered by: " + message.author.tag + " (" + match + ")");
             message.channel.send(this.GetUserTag(message.author), { embed: abmembed });
-        }, failed => {console.log(failed)});
+        }, failed => {});
     }
 
     /**
