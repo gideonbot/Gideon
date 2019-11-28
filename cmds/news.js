@@ -46,6 +46,7 @@ module.exports.run = async (gideon, message, args) => {
     collector.on('collect', async message => {
         try {
             let match = await Util.ABM_Test(message);
+            collector.stop();
             Util.log("ABM **in news** triggered by: " + message.author.tag + " (" + match + ")");
             return;
         }
