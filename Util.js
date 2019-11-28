@@ -149,7 +149,6 @@ class Util {
      * @param {string} message 
      */
     static log(message) {
-        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         let url = process.env.LOG_WEBHOOK_URL;
 
         if (!url) return false;
@@ -161,7 +160,7 @@ class Util {
 
         let client = new Discord.WebhookClient(split[0], split[1]);
         for (let msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
-            client.send(msg, { avatarURL: avatar, username: "Gideon-Logs" });
+            client.send(msg, { avatarURL: Util.config.avatar, username: "Gideon-Logs" });
         }
         return true;
     }
@@ -225,13 +224,12 @@ class Util {
      * @param {Discord.Message} message 
      */
     static ABM(message) {
-        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const abmembed = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`:rotating_light:Anti-Bitch-Mode is enabled!:rotating_light:`)
         .setDescription('You posted a link to a forbidden social media account!\nFuck that bitch!')
         .setTimestamp()
-        .setFooter(Util.config.footer, avatar);
+        .setFooter(Util.config.footer, Util.config.avatar);
 
         this.ABM_Test(message).then(async match => {
             await Util.delay(200);
@@ -259,7 +257,6 @@ class Util {
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
         const auth = message.author.tag;
-        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
         await Util.delay(200);
         message.delete();
@@ -269,7 +266,7 @@ class Util {
             .setTitle(`${auth} said:`)
             .setDescription(`||${plainText}||`)
             .setTimestamp()
-            .setFooter(Util.config.footer, avatar);
+            .setFooter(Util.config.footer, Util.config.avatar);
 
         message.channel.send(cvmembed);
     }
@@ -282,14 +279,13 @@ class Util {
     static async IMG(imgid, message){
         const Imgur = require('imgur-node');
         const imgclient = new Imgur.Client(process.env.IMG_CL);
-        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
 
         imgclient.album.get(imgid, (err, res) => {
             const er = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setTitle('An error occurred, please try again later!')
             .setTimestamp()
-            .setFooter(Util.config.footer, avatar);
+            .setFooter(Util.config.footer, Util.config.avatar);
 
             if (err) {
                 console.log(err);
@@ -306,7 +302,7 @@ class Util {
             .setColor('#2791D3')
             .setImage(rimg)
             .setTimestamp()
-            .setFooter(Util.config.footer, avatar);
+            .setFooter(Util.config.footer, Util.config.avatar);
             if (imgid === 'ngJQmxL') imgembed.setTitle('Germ approves!:white_check_mark:');
         
             message.channel.send(imgembed);
@@ -318,7 +314,6 @@ class Util {
      * @param {Discord.Message} message 
      */
     static async CSD(message) {
-        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const vid = 'https://cdn.discordapp.com/attachments/525341082435715085/638782331791867930/Crime_Solving_Devil.mp4';
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
 
@@ -339,7 +334,7 @@ class Util {
             .setColor('#2791D3')
             .setImage(ctm)
             .setTimestamp()
-            .setFooter(Util.config.footer, avatar);
+            .setFooter(Util.config.footer, Util.config.avatar);
 
             message.channel.send(imgembed);
         }
