@@ -265,10 +265,7 @@ class Util {
 
         const cvmembed = new Discord.MessageEmbed()
             .setColor('#2791D3')
-            .setTitle(`${auth} said:`)
-            .setDescription(`||${plainText}||`)
-            .setTimestamp()
-            .setFooter(Util.config.footer, Util.config.avatar);
+            .setDescription(`${auth} said: ||${plainText}||`)
 
         message.channel.send(cvmembed);
     }
