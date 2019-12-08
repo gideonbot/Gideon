@@ -69,6 +69,9 @@ class Util {
         }
     }
 
+    /**
+     * @param {Number} inputDelay 
+     */
     static delay(inputDelay) {
         // If the input is not a number, instantly resolve
         if (typeof inputDelay !== "number") return Promise.resolve();
@@ -77,16 +80,30 @@ class Util {
     }
 
     /**
+     * @returns {string}
+     * @param {string | Discord.GuildMember | Discord.User} input 
+     */
+    static GetUserTag(input) {
+        if (!input) return null;
+
+        let id = "";
+        if (typeof(input) == "string") id = input;
+        else if (input instanceof Discord.GuildMember) id = input.user.id;
+        else if (input instanceof Discord.User) id = input.id;
+        if (!id) return input;
+
+        return isNaN(id) ? input : "<@" + id + ">";
+    }
+
+    /**
      * @param {string} input 
      */
     static getIdFromString(input) {
         if (!input) return null;
 
-        return input
-            .replace("<@", "")
-            .replace("<@!", "")
-            .replace("<#", "")
-            .replace(">", "");
+        for (let item of ["<@", "<@!", "<#", ">"]) input = input.replace(item, "");
+
+        return input;
     }
 
     /**
@@ -95,9 +112,7 @@ class Util {
      * @param {boolean} seconds 
      * @returns {string} The beautifully formatted string
      */
-    static secondsToDifferenceString(seconds_input, {
-        enableSeconds = true
-    }) {
+    static secondsToDifferenceString(seconds_input, { enableSeconds = true }) {
         if (!seconds_input || typeof (seconds_input) !== "number") return "Unknown";
 
         let seconds = Math.floor(seconds_input % 60);
@@ -134,7 +149,6 @@ class Util {
      * @param {string} message 
      */
     static log(message) {
-        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         let url = process.env.LOG_WEBHOOK_URL;
 
         if (!url) return false;
@@ -146,71 +160,83 @@ class Util {
 
         let client = new Discord.WebhookClient(split[0], split[1]);
         for (let msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
-            client.send(msg, { avatarURL: avatar, username: "Gideon-Logs" });
+            client.send(msg, { avatarURL: Util.config.avatar, username: "Gideon-Logs" });
         }
         return true;
     }
 
     /**
+     * @param {Discord.Message} message
+     * @returns {Promise<string>}
+     */
+    static ABM_Test(message) {
+        return new Promise(async (resolve, reject) => {
+            const content = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
+
+            const abm = [
+                'twitter.com/Pagmyst',
+                'instagram.com/pageyyt',
+                'youtube.com/user/SmallScreenYT',
+                'instagram.com/thedctvshow',
+                'twitter.com/thedctvshow',
+                'youtube.com/channel/UCvFS-R57UT1q2U_Jp4pi1eg',
+                'youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
+                'twitter.com/theblackestlion',
+                'twitter.com/tvpromosdb',
+                'youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g'
+            ];
+
+            for (let url of abm) {
+                if (content.includes(url.toLowerCase())) return resolve(url);
+            }
+
+            const ytrg = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+            const cids = ['UCTbT2FgB9oMpi4jB9gNPadQ', 'UCvFS-R57UT1q2U_Jp4pi1eg', 'UC6mI3QJFH1m2V8ZHvvHimVA', 'UCDR8cvjALazMm2j9hOar8_g'];
+
+            if (message.content.match(ytrg)) {
+                const id = message.content.match(ytrg);
+                const google_api_key = process.env.GOOGLE_API_KEY;
+
+                if (!google_api_key) return reject("No google API key");
+
+                const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
+
+                try {
+                    const body = await fetch(api).then(res => res.json());
+
+                    const channel_id = body && body.items && body.items[0] && body.items[0].snippet && body.items[0].snippet.channelId ? body.items[0].snippet.channelId : null;
+                    if (!channel_id) return reject("Failed to get data from API");
+
+                    if (cids.includes(channel_id)) return resolve("`" + message.content + "`");
+                }
+
+                catch (e) {
+                    Util.log("Failed to fetch data from YT API: " + e);
+                    return reject(e);
+                }
+            }
+
+            return reject("No match");
+        });
+    }
+
+    /**
      * @param {Discord.Message} message 
      */
-    static async ABM(message) {
-        let abmmatch;
-        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
-        const msg = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
+    static ABM(message) {
         const abmembed = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`:rotating_light:Anti-Bitch-Mode is enabled!:rotating_light:`)
         .setDescription('You posted a link to a forbidden social media account!\nFuck that bitch!')
         .setTimestamp()
-        .setFooter(Util.config.footer, avatar);
+        .setFooter(Util.config.footer, Util.config.avatar);
 
-        const abm = [
-            'twitter.com/Pagmyst',
-            'instagram.com/pageyyt',
-            'youtube.com/user/SmallScreenYT',
-            'instagram.com/thedctvshow',
-            'twitter.com/thedctvshow',
-            'youtube.com/channel/UCvFS-R57UT1q2U_Jp4pi1eg',
-            'youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
-            'twitter.com/theblackestlion',
-            'twitter.com/tvpromosdb',
-            'youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g'
-        ];
-
-        for (let url of abm) {
-            if (msg.includes(url.toLowerCase())) {
-                await Util.delay(200);
-                message.delete();
-                Util.log("ABM triggered by: " + message.author.tag);
-                return abmmatch = true, message.channel.send(msg.author, { embed: abmembed });
-            }
-        }
-
-        const ytrg = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
-        const cids = ['UCTbT2FgB9oMpi4jB9gNPadQ', 'UCvFS-R57UT1q2U_Jp4pi1eg', 'UC6mI3QJFH1m2V8ZHvvHimVA', 'UCDR8cvjALazMm2j9hOar8_g'];
-
-        if (message.content.match(ytrg)) {
-            const id = message.content.match(ytrg);
-            const google_api_key = process.env.GOOGLE_API_KEY;
-            const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
-
-            try {
-                const body = await fetch(api).then(res => res.json());
-
-                const channel_id = body && body.items && body.items[0] && body.items[0].snippet && body.items[0].snippet.channelId ? body.items[0].snippet.channelId : null;
-                if (!channel_id) return;
-
-                if (cids.includes(channel_id)) {
-                    await Util.delay(200);
-                    message.delete();
-                    Util.log("ABM triggered by: " + message.author.tag);
-                    return abmmatch = true, message.channel.send(msg.author, { embed: abmembed });
-                }
-            } catch (e) {
-                Util.log("Failed to fetch data from YT API: " + e);
-            }
-        }
+        this.ABM_Test(message).then(async match => {
+            await Util.delay(200);
+            message.delete();
+            Util.log("ABM triggered by: " + message.author.tag + " (" + match + ")");
+            message.channel.send(this.GetUserTag(message.author), { embed: abmembed });
+        }, failed => {});
     }
 
     /**
@@ -233,7 +259,6 @@ class Util {
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
         const auth = message.author.tag;
-        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
         const plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
         await Util.delay(200);
         message.delete();
@@ -243,7 +268,7 @@ class Util {
             .setTitle(`${auth} said:`)
             .setDescription(`||${plainText}||`)
             .setTimestamp()
-            .setFooter(Util.config.footer, avatar);
+            .setFooter(Util.config.footer, Util.config.avatar);
 
         message.channel.send(cvmembed);
     }
@@ -256,14 +281,13 @@ class Util {
     static async IMG(imgid, message){
         const Imgur = require('imgur-node');
         const imgclient = new Imgur.Client(process.env.IMG_CL);
-        const avatar = "https://cdn.discordapp.com/avatars/595328879397437463/b3ec2383e5f6c13f8011039ee1f6e06e.png";
 
         imgclient.album.get(imgid, (err, res) => {
             const er = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setTitle('An error occurred, please try again later!')
             .setTimestamp()
-            .setFooter(Util.config.footer, avatar);
+            .setFooter(Util.config.footer, Util.config.avatar);
 
             if (err) {
                 console.log(err);
@@ -280,7 +304,7 @@ class Util {
             .setColor('#2791D3')
             .setImage(rimg)
             .setTimestamp()
-            .setFooter(Util.config.footer, avatar);
+            .setFooter(Util.config.footer, Util.config.avatar);
             if (imgid === 'ngJQmxL') imgembed.setTitle('Germ approves!:white_check_mark:');
         
             message.channel.send(imgembed);
@@ -292,7 +316,6 @@ class Util {
      * @param {Discord.Message} message 
      */
     static async CSD(message) {
-
         const vid = 'https://cdn.discordapp.com/attachments/525341082435715085/638782331791867930/Crime_Solving_Devil.mp4';
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
 
@@ -308,12 +331,12 @@ class Util {
         }
 
         const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';
-        if (message.content.match(/(?:typical)/i) && (/(?:cheetah)/i)) {
+        if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) {
             const imgembed = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setImage(ctm)
             .setTimestamp()
-            .setFooter(Util.config.footer, avatar);
+            .setFooter(Util.config.footer, Util.config.avatar);
 
             message.channel.send(imgembed);
         }

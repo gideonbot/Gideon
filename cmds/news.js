@@ -43,12 +43,14 @@ module.exports.run = async (gideon, message, args) => {
         });
     }); 
 
-    collector.on('collect', message => {
-        /*
-        Util.ABM(message, function(response){ //will look into later. #notworking.
-            if (response.abmmatch) return message.channel.bulkDelete(3), collector.stop(), message.channel.reply('you tried to post a forbidden link!\nYour news post has been cancelled!');
-            console.log(response);
-        }); */
+    collector.on('collect', async message => {
+        try {
+            let match = await Util.ABM_Test(message);
+            collector.stop();
+            Util.log("ABM **in news** triggered by: " + message.author.tag + " (" + match + ")");
+            return;
+        }
+        catch (ex) {console.log(ex);}
 
         if (message.content.toLowerCase() === 'cancel' || message.content.toLowerCase() === 'stop') {;
             message.channel.bulkDelete(3); 
