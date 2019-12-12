@@ -253,7 +253,9 @@ class Util {
 
         // Find the prefix that was used
         const usedPrefix = config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
-        const args = message.content.slice(usedPrefix.length).trim().split(" ");
+        let args;
+        if(!usedPrefix) args = message.content.split(' ').filter(arg => arg !== '');
+        else args = message.content.slice(usedPrefix.length).trim().split(" ");
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
         const auth = message.author.tag;
@@ -263,10 +265,7 @@ class Util {
 
         const cvmembed = new Discord.MessageEmbed()
             .setColor('#2791D3')
-            .setTitle(`${auth} said:`)
-            .setDescription(`||${plainText}||`)
-            .setTimestamp()
-            .setFooter(Util.config.footer, Util.config.avatar);
+            .setDescription(`${auth} said: ||${plainText}||`)
 
         message.channel.send(cvmembed);
     }
