@@ -1,5 +1,5 @@
-const Discord = module.require("discord.js");
-const Util = require("../Util");
+const Discord = module.require('discord.js');
+const Util = require('../Util');
 
 module.exports.run = async (gideon, message, args) => {
     const appowner = await gideon.fetchApplication().then(application => application.owner.id).catch(console.error);
@@ -12,6 +12,8 @@ module.exports.run = async (gideon, message, args) => {
         await Util.delay(200);
         message.delete();
 
+        if (args.length < 1) return message.channel.send('No code provided!');
+
         const code = args.join(' ');
         const returnedValue = eval(code);
 
@@ -20,17 +22,13 @@ module.exports.run = async (gideon, message, args) => {
             return;
         }
 
-        let printValue;
+        let printValue = '';
 
-        if (typeof returnedValue === 'string') {
-            printValue = returnedValue;
-        } else if (typeof returnedValue === 'object') {
-            printValue = JSON.stringify(returnedValue, null, 2);
-        } else {
-            printValue = new String(returnedValue);
-        }
+        if (typeof returnedValue === 'string') printValue = returnedValue;
+        else if (typeof returnedValue === 'object') printValue = JSON.stringify(returnedValue, null, 2);
+        else printValue = new String(returnedValue);
 
-        if (printValue == "{}") return;
+        if (printValue == '{}') return;
 
         message.channel.send(printValue, {
             code: true
@@ -48,7 +46,7 @@ module.exports.run = async (gideon, message, args) => {
 
 module.exports.help = {
     name: 'eval',
-    type: "admin",
-    help_text: "eval <code>",
-    help_desc: "Evaluates provided code (:warning: dangerous)"
+    type: 'admin',
+    help_text: 'eval <code>',
+    help_desc: 'Evaluates provided code (:warning: dangerous)'
 }
