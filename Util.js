@@ -253,21 +253,33 @@ class Util {
 
         // Find the prefix that was used
         const usedPrefix = config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
-        let args;
-        if(!usedPrefix) args = message.content.split(' ').filter(arg => arg !== '');
+        let args = '';
+
+        if (!usedPrefix) args = message.content.split(' ').map(x => x.trim()).filter(x => x);
         else args = message.content.slice(usedPrefix.length).trim().split(" ");
+
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
-        const auth = message.author.tag;
         const plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
-        await Util.delay(200);
-        message.delete();
 
         const cvmembed = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setDescription(`${auth} said: ||${plainText}||`)
+        .setColor('#2791D3')
+        .setDescription(`${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}: ${plainText ? '||' + plainText + '||' : ''}`);
 
-        message.channel.send(cvmembed);
+        await message.channel.send(cvmembed);
+
+        //we don't send the file in the same message because it shows it above the embed (bad)
+        if (message.attachments.filter(x => x.size / 1024 <= 1000).size > 0) {
+            //we reupload attachments smaller than ~1000 KB
+            await message.channel.send({files: message.attachments.filter(x => x.size / 1024 <= 1000).map(x => {
+                let split = x.url.split("/");
+                let filename = split[split.length - 1];
+                return new Discord.MessageAttachment(x.url, 'SPOILER_' + filename);
+            })});
+        }
+
+        await Util.delay(200);
+        message.delete();
     }
 
     /**
