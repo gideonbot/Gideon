@@ -1,29 +1,66 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const Util = require("../Util");
 const cleverbot = require("cleverbot-free");
 
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
 module.exports.run = async (gideon, message, args) => {     
-    try{
-        const text = args.join(' ');
-        message.channel.startTyping();
-        cleverbot(text).then(response => {
-            message.channel.send(response).then(sent => message.channel.stopTyping());
-        });
+    const text = args.join(' ');
+
+    let arr = [];
+    let last = null;
+
+    for (let m of message.channel.messages.array().reverse()) {
+        if (!last) last = m.createdAt;
+
+        else {
+            //we ignore messages that were created 2+ mins ago
+            if (Math.abs(m.createdAt - last) < 1000 * 60 * 2) {
+                let content = m.content;
+
+                const usedPrefix = Util.config.prefixes.find(prefix => content.startsWith(prefix));
+                if (usedPrefix) content = content.slice(usedPrefix.length);
+                
+                for (let alias of this.help.name) {
+                    if (content.startsWith(alias)) content = content.replace(alias, '');
+                }
+
+                content = content.trim();
+
+                if (m.cleverbot) {
+                    last = m.createdAt;
+                    arr.push(content);
+                }
+            }
+
+            else {
+                m.cleverbot = null;
+                break;
+            }
+        }
     }
-    catch(ex){
-        const er = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('An error occured while processing your request:')
-        .setDescription(`\`\`\`\n${ex.stack}\n\`\`\``)
-        .setTimestamp()
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        return message.channel.send(er);
-    }
+
+    arr = arr.reverse();
+
+    message.channel.startTyping().finally(x => {});
+    console.log(arr);
+    cleverbot(text, arr).then(response => {
+        message.channel.send(response).then(sent => {
+            sent.cleverbot = true;
+            message.cleverbot = true;
+        }).finally(x => message.channel.stopTyping());
+    }, failed => {
+        console.log(failed);
+        message.channel.stopTyping();
+    });
 }
 
 module.exports.help = {
-    name: ["chat", "talk"],
-    type: "fun",
-    help_text: "chat",
-    help_desc: "Chat with an AI"
+    name: ['chat', 'talk'],
+    type: 'fun',
+    help_text: 'chat',
+    help_desc: 'Chat with an AI'
 }
