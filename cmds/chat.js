@@ -5,7 +5,9 @@ const cleverbot = require("cleverbot-free");
 module.exports.run = async (gideon, message, args) => {     
     try{
         const text = args.join(' ');
+        message.channel.startTyping();
         cleverbot(text).then(response => message.channel.send(response));
+        message.channel.stopTyping();
     }
     catch(ex){
         const er = new Discord.MessageEmbed()
