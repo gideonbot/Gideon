@@ -44,9 +44,8 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     arr = arr.reverse();
-
     message.channel.startTyping().finally(x => {});
-    console.log(arr);
+
     cleverbot(text, arr).then(response => {
         message.channel.send(response).then(sent => {
             sent.cleverbot = true;
