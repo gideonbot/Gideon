@@ -9,8 +9,6 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     try {
-        await Util.delay(200);
-        message.delete();
 
         if (args.length < 1) return message.channel.send('No code provided!');
 
