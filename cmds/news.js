@@ -25,7 +25,9 @@ module.exports.run = async (gideon, message, args) => {
     const collector = message.channel.createMessageCollector(f, {time: 120 * 1000});
     let roles_to_ping = [];
 
+    let cvmen = false; 
     await Util.TDM(message.guild, true);
+    if (gideon.cvmt) cvmen = true, gideon.cvmt = false; //if CVM is enabled, turn true, then off
 
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.').then(message => {
         for (let emoji of emoji_ids) {
@@ -103,6 +105,7 @@ module.exports.run = async (gideon, message, args) => {
             
             message.reply(`Your news post has been sent to ${news_channel.toString()}! :white_check_mark:`);
             Util.TDM(message.guild, false);
+            if (cvmen) gideon.cvmt = true;
             collector.stop();
         });
     });
