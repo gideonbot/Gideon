@@ -264,6 +264,12 @@ class Util {
 
         const plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
 
+        if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
+            await Util.delay(200);
+            message.delete();
+            return message.reply('Links are not allowed meanwhile Crossover-Mode is active!');
+        }
+
         const cvmembed = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setDescription(`${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}: ${plainText ? '||' + plainText + '||' : ''}`);
