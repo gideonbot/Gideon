@@ -183,7 +183,9 @@ class Util {
                 'youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
                 'twitter.com/theblackestlion',
                 'twitter.com/tvpromosdb',
-                'youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g'
+                'youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g',
+                'https://wegotthiscovered.com',
+                'https://twitter.com/wgtc_site'
             ];
 
             for (let url of abm) {
