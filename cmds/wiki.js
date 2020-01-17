@@ -74,7 +74,6 @@ module.exports.run = async (gideon, message, args) => {
         .setFooter(Util.config.footer, gideon.user.avatarURL());
     
         message.channel.send(wikiart); 
-        console.log(gideon.cmvt);
     }
 
     catch (ex) {
