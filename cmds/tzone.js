@@ -89,7 +89,7 @@ module.exports.run = async (gideon, message, args) => {
                 let obj = members[i];
                 let date = new Date();
                 let formattedTime = date.toLocaleTimeString('en-US',{timeZone:obj.timezone});
-                let formattedDay = date.toLocaleDateString();
+                let formattedDay = date.toLocaleDateString('en-US',{timeZone:obj.timezone});
                 tzembed.addField(`Member: \`${obj.username}\` Timezone: \`${obj.timezone}\``,`Current Local Time: \`${formattedDay} ${formattedTime}\``);
             }
 
