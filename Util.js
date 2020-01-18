@@ -183,7 +183,9 @@ class Util {
                 'youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
                 'twitter.com/theblackestlion',
                 'twitter.com/tvpromosdb',
-                'youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g'
+                'youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g',
+                'https://wegotthiscovered.com',
+                'https://twitter.com/wgtc_site'
             ];
 
             for (let url of abm) {
@@ -261,6 +263,12 @@ class Util {
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
         const plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
+
+        if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
+            await Util.delay(200);
+            message.delete();
+            return message.reply('Links are not allowed meanwhile Crossover-Mode is active!');
+        }
 
         const cvmembed = new Discord.MessageEmbed()
         .setColor('#2791D3')

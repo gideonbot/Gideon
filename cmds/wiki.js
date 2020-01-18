@@ -61,12 +61,14 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
         if (!Object.keys(body.items).length) return message.channel.send(nf).catch(console.error);
-        const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');       
+        const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');     
+        let st = '';  
+        if (gideon.cvmt) st = '||'
                 
         const wikiart = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(article.title)
-        .setDescription(article.abstract + `\n\n**[Click here to read the full article](https://${wiki.url}${url} 'https://${wiki.url}${url}')**`)
+        .setDescription(st + article.abstract + st + `\n\n**[Click here to read the full article](https://${wiki.url}${url} 'https://${wiki.url}${url}')**`)
         .setThumbnail(article.thumbnail)
         .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());

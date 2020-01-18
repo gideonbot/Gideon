@@ -1,3 +1,4 @@
 .autogit
 .env
 .vscode
+/data/tzdb.json
