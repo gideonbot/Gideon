@@ -101,7 +101,7 @@ class Util {
     static getIdFromString(input) {
         if (!input) return null;
 
-        for (let item of ["<@", "<@!", "<#", ">"]) input = input.replace(item, "");
+        for (let item of ["<@!", "<@", "<#", ">"]) input = input.replace(item, "");
 
         return input;
     }
