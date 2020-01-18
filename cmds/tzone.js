@@ -16,19 +16,25 @@ module.exports.run = async (gideon, message, args) => {
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
+    const me = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('You must use a proper mention if you want to check someone\'s timezone!')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
     if (args[0] && args[0].match(/(?:register)/i)){
         message.channel.send('Registering, please stand by...');
 
-        const zapi = `http://api.timezonedb.com/v2.1/list-time-zone?key=${apikey}&format=json`;
-        const zbody = await fetch(zapi).then(res => res.json());
+        const api = `http://api.timezonedb.com/v2.1/list-time-zone?key=${apikey}&format=json`;
+        const body = await fetch(api).then(res => res.json());
 
         let results = [];
         let searchField = "zoneName";
         let searchVal = args[1];
-        for (let i=0 ; i < zbody.zones.length ; i++)
+        for (let i=0 ; i < body.zones.length ; i++)
         {
-            if (zbody.zones[i][searchField] == searchVal) {
-                results.push(zbody.zones[i]);
+            if (body.zones[i][searchField] == searchVal) {
+                results.push(body.zones[i]);
             }
         }
 
@@ -92,6 +98,48 @@ module.exports.run = async (gideon, message, args) => {
                 let formattedDay = date.toLocaleDateString('en-US',{timeZone:obj.timezone});
                 tzembed.addField(`Member: \`${obj.username}\` Timezone: \`${obj.timezone}\``,`Current Local Time: \`${formattedDay} ${formattedTime}\``);
             }
+
+            message.channel.send(tzembed);
+        });
+    }
+
+    else if(args[0] && !args[1]){
+        const user = gideon.users.get(Util.getIdFromString(args[0]));
+   
+        if (!user) return message.channel.send(me);
+        const usertag = user.username + '#' + user.discriminator;
+
+        fs.readFile('./data/tzdb.json', async (err, data) => {
+            if (err) throw err;
+            let members = JSON.parse(data);
+
+            let results = [];
+            let searchField = "username";
+            let searchVal = usertag;
+            for (let i=0 ; i < members.length ; i++)
+            {
+                if (members[i][searchField] == searchVal) {
+                    results.push(members[i]);
+                }
+            }
+
+            if(results.length < 1 || results == undefined){
+                return message.reply(`\`${usertag}\` has not registered a timezone!`);
+            }
+
+            let resultstring = JSON.stringify(results, null, 2);
+            let result = JSON.parse(resultstring);
+
+            let date = new Date();
+            let formattedTime = date.toLocaleTimeString('en-US',{timeZone:result[0].timezone});
+            let formattedDay = date.toLocaleDateString('en-US',{timeZone:result[0].timezone});
+            
+            const tzembed = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setTitle(`${result[0].username}\'s current local time:`)
+            .setDescription(`\`${formattedDay} ${formattedTime} (${result[0].timezone})\``)
+            .setTimestamp()
+            .setFooter(Util.config.footer, gideon.user.avatarURL());
 
             message.channel.send(tzembed);
         });
