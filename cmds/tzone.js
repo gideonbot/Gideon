@@ -88,8 +88,9 @@ module.exports.run = async (gideon, message, args) => {
             for(let i = 0; i < members.length; i++) {
                 let obj = members[i];
                 let date = new Date();
-                let formattedDate = date.toLocaleTimeString('en-US',{timeZone:obj.timezone})
-                tzembed.addField(`Member: \`${obj.username}\` Timezone: \`${obj.timezone}\``,`Current Local Time: \`${formattedDate}\``);
+                let formattedTime = date.toLocaleTimeString('en-US',{timeZone:obj.timezone});
+                let formattedDay = date.toLocaleDateString();
+                tzembed.addField(`Member: \`${obj.username}\` Timezone: \`${obj.timezone}\``,`Current Local Time: \`${formattedDay} ${formattedTime}\``);
             }
 
             message.channel.send(tzembed);
