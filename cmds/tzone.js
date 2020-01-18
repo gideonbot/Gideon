@@ -49,7 +49,10 @@ module.exports.run = async (gideon, message, args) => {
                 mresults.push(members[i]);
             }
         }
-        if (mresults.includes(message.author.tag)){
+
+        let rsltarray = mresults.map(x => x.username)
+
+        if (rsltarray.includes(message.author.tag)){
             await Util.delay(200);
             message.channel.bulkDelete(2);
             return message.reply('you have already registered a timezone!');
