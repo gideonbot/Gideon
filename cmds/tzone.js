@@ -87,9 +87,9 @@ module.exports.run = async (gideon, message, args) => {
 
             for(let i = 0; i < members.length; i++) {
                 let obj = members[i];
-                const api = `http://api.timezonedb.com/v2.1/get-time-zone?key=${apikey}&format=json&by=zone&zone=${obj.timezone}`;
-                const body = await fetch(api).then(res => res.json());
-                tzembed.addField(`Member: \`${obj.username}\` Timezone: \`${body.abbreviation} (${body.zoneName})\``,`Current Local Time: \`${body.formatted}\``);
+                let date = new Date();
+                let formattedDate = date.toLocaleTimeString('en-US',{timeZone:obj.timezone})
+                tzembed.addField(`Member: \`${obj.username}\` Timezone: \`${obj.timezone}\``,`Current Local Time: \`${formattedDate}\``);
             }
 
             message.channel.send(tzembed);
