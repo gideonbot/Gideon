@@ -57,16 +57,18 @@ class Util {
      * @param {Discord.Guild} guild The guild to make roles mentionable in
      * @param {boolean} mentionable Whether or not to make roles mentionable
      */
-    static async TDM(guild, mentionable) {
+    static async TRM(guild, mentionable) {
         if (!guild) return;
-
-        for (let role_id of config.roles) {
+        let roles = [];
+        guild.roles.forEach(role => roles.push(role.id));
+       
+        for (let role_id of roles) {
             let role = guild.roles.get(role_id);
             if (role) {
                 try { await role.edit({ mentionable: mentionable }); }
-                catch (ex) { console.log("Failed to make " + role_id + " mentionable: " + ex); }
+                catch (ex) {} //don't log anything as integration roles will result in an API error but everything else succeeds
             }
-        }
+        } 
     }
 
     /**
