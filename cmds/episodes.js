@@ -9,7 +9,7 @@ module.exports.run = async (gideon, message, args) => {
     const as = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply a valid show!')
-    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**')
+    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**')
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
@@ -78,6 +78,11 @@ module.exports.run = async (gideon, message, args) => {
             id: "44751",
             title: "Superman & Lois",
             channel: "The CW"
+        },
+        {
+            id: "37809",
+            title: "Stargirl",
+            channel: "DC Universe/The CW"
         }
     ]
 
@@ -94,6 +99,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:krypton)/i)) show = shows[8];
     else if (agc.match(/(?:lucifer)/i)) show = shows[9];
     else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
+    else if (agc.match(/(?:stargirl)/i)) show = shows[11];
     else return message.channel.send(as);
     if (!show) return message.channel.send(as);
 

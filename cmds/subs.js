@@ -40,7 +40,7 @@ module.exports.run = async (gideon, message, args) => {
     const ia = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`"${agc}" is not a valid argument!`)
-    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**krypton**\n**lucifer**\n**supesnlois**')
+    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**')
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
@@ -89,8 +89,12 @@ module.exports.run = async (gideon, message, args) => {
             title: 'Lucifer'
         },
         {
-            id: '',
+            id: 'tt11192306',
             title: 'Superman & Lois'
+        },
+        {
+            id: 'tt8722888',
+            title: 'Stargirl'
         }
     ]
 
@@ -107,6 +111,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:krypton)/i)) show = shows[8];
     else if (agc.match(/(?:lucifer)/i)) show = shows[9];
     //else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
+    //else if (agc.match(/(?:stargirl)/i)) show = shows[11];
     else return message.channel.send(ia);
     
     if (!show) return message.channel.send(ia);

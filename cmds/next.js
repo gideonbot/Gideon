@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
     const as = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply a valid show!')
-    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**canaries**\n**supesnlois**')
+    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**canaries**\n**supesnlois**\n**stargirl**')
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
@@ -33,6 +33,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:blacklightning)/i)) showtitle = "Black Lightning";
     //else if (agc.match(/(?:canaries)/i)) showtitle = "Green Arrow and the Canaries";
     //else if (agc.match(/(?:supesnlois)/i)) showtitle = "Superman & Lois";
+    //else if (agc.match(/(?:stargirl)/i)) showtitle = "Stargirl";
     else return message.channel.send(as);
 
     try {
@@ -76,6 +77,7 @@ module.exports.run = async (gideon, message, args) => {
             else if (next.series.match(/(?:black lightning)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/e/ef/Black_Lightning_%28TV_series%29.png';
             //else if (next.series.match(/(?:canaries)/i)) thimg = '';
             //else if (next.series.match(/(?:supesnlois)/i)) thimg = '';
+            //else if (next.series.match(/(?:stargirl)/i)) thimg = '';
         
             const nextmsg = new Discord.MessageEmbed()
             .setColor('#2791D3')

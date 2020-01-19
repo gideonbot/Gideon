@@ -8,7 +8,7 @@ module.exports.run = async (gideon, message, args) => {
     const ia = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`"${agc}" is not a valid argument!`)
-    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**supesnlois**')
+    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**supesnlois**\n**stargirl**')
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
@@ -43,6 +43,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:blacklightning)/i)) showtitle = "Black Lightning";
     //else if (agc.match(/(?:canaries)/i)) showtitle = "Green Arrow and the Canaries"; 
     //else if (agc.match(/(?:supesnlois)/i)) showtitle = "Superman & Lois"; 
+    //else if (agc.match(/(?:stargirl)/i)) showtitle = "Stargirl"; 
 
     else return message.channel.send(ia);
         

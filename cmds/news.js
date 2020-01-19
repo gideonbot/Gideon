@@ -5,7 +5,7 @@ module.exports.run = async (gideon, message, args) => {
     if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
     if (!message.member.roles.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
 
-    const emoji_ids = ['598886586284900354', '607658682246758445', '598886597244485654', '598886605641613353', '598886588545499186', '598886601476800513', '607657873534746634', '634764613434474496', '638489255169228830'];
+    const emoji_ids = ['598886586284900354', '607658682246758445', '598886597244485654', '598886605641613353', '598886588545499186', '598886601476800513', '607657873534746634', '634764613434474496', '638489255169228830', '668513166380105770'];
 
     const auth = message.author.id;
 
@@ -18,7 +18,8 @@ module.exports.run = async (gideon, message, args) => {
         constantineseal: '596075638285139988',
         blacklightning: '607633853527359488',
         canaries: '610867040961560625',
-        supesnlois: '638486598203473958'
+        supesnlois: '638486598203473958',
+        stargirl: '658355462055395358'
     }
 
     const f = m => m.author.id === message.author.id;
@@ -39,8 +40,6 @@ module.exports.run = async (gideon, message, args) => {
         const rcollector = message.createReactionCollector(rfilter, {time: 120000});
     
         rcollector.on('collect', (reaction, reactionCollector) => {
-            console.log(`Collected ${reaction.emoji.name}`);
-
             if (reaction.emoji.name in role_ids) roles_to_ping.push(role_ids[reaction.emoji.name]);
         });
     }); 

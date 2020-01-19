@@ -9,6 +9,10 @@ module.exports.run = async (gideon, message, args) => {
             title: 'Arrowverse'
         },
         {
+            url: 'stargirltv.fandom.com',
+            title: 'Stargirl'
+        },
+        {
             url: 'dc.fandom.com',
             title: 'DC'
         },
@@ -27,9 +31,10 @@ module.exports.run = async (gideon, message, args) => {
     let command = message.content.toLowerCase().split(' ')[0];
 
     if (command.endsWith('wiki')) wiki = wikis[0];
-    else if (command.endsWith('dc')) wiki = wikis[1];
-    else if (command.endsWith('kr')) wiki = wikis[2];
-    else if (command.endsWith('lu')) wiki = wikis[3];
+    else if (command.endsWith('stg')) wiki = wikis[1];
+    else if (command.endsWith('dc')) wiki = wikis[2];
+    else if (command.endsWith('kr')) wiki = wikis[3];
+    else if (command.endsWith('lu')) wiki = wikis[4];
     else return message.channel.send('Supply a valid Wiki!');
 
     let search_term = args.join(' ');
@@ -47,7 +52,8 @@ module.exports.run = async (gideon, message, args) => {
 
         const body = await fetch(api).then(res => res.json());
 
-        const article = Object.values(body.items)[0];
+        //stargirl does some weird stuff, therefore the actual result is the 2nd element
+        const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 ? 1 : 0];
         
         const nf = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -85,8 +91,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ['wiki', 'wikidc', 'wikikr', 'wikilu'],
+    name: ['wiki', 'wikistg', 'wikidc', 'wikikr', 'wikilu'],
     type: "general",
-    help_text: "wiki[kr|lu|dc] <term>",
-    help_desc: "Searches the specified wiki for the given term | kr - Krypton | lu - Lucifer | dc - DC |"
+    help_text: "wiki[stg|kr|lu|dc] <term>",
+    help_desc: "Searches the specified wiki for the given term | stg - Stargirl | kr - Krypton | lu - Lucifer | dc - DC |"
 }

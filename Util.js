@@ -237,7 +237,7 @@ class Util {
 
         this.ABM_Test(message).then(async match => {
             await Util.delay(200);
-            message.delete();
+            await message.delete();
             Util.log("ABM triggered by: " + message.author.tag + " (" + match + ")");
             message.channel.send(this.GetUserTag(message.author), { embed: abmembed });
         }, failed => {});
@@ -268,7 +268,7 @@ class Util {
 
         if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
             await Util.delay(200);
-            message.delete();
+            await message.delete();
             return message.reply('Links are not allowed meanwhile Crossover-Mode is active!');
         }
 
