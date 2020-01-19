@@ -1,3 +1,4 @@
+const Discord = module.require("discord.js");
 const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
