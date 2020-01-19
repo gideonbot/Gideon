@@ -60,7 +60,7 @@ module.exports.run = async (gideon, message, args) => {
 
         if (rsltarray.includes(message.author.tag)){
             await Util.delay(200);
-            message.channel.bulkDelete(2);
+            await message.channel.bulkDelete(2);
             return message.reply('you have already registered a timezone!');
         } 
 
@@ -76,7 +76,7 @@ module.exports.run = async (gideon, message, args) => {
         });
         
         await Util.delay(200);
-        message.channel.bulkDelete(2);
+        await message.channel.bulkDelete(2);
         message.reply('your timezone has been registered!');
     }
 

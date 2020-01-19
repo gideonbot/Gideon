@@ -55,7 +55,7 @@ module.exports.run = async (gideon, message, args) => {
         catch (ex) {console.log(ex);}
 
         if (message.content.toLowerCase() === 'cancel' || message.content.toLowerCase() === 'stop') {;
-            message.channel.bulkDelete(3); 
+            await message.channel.bulkDelete(3); 
             collector.stop();
             return message.reply('your news post has been cancelled! :white_check_mark:');
         }
@@ -101,7 +101,7 @@ module.exports.run = async (gideon, message, args) => {
         let roles_ping_msg = roles_to_ping.length > 0 ? roles_to_ping.map(x => "<@&" + x + ">").join(" ") : null;
         news_channel.send(roles_ping_msg, {embed: news}).then(async x => {
             await Util.delay(200);
-            message.channel.bulkDelete(3);
+            await message.channel.bulkDelete(3);
             
             message.reply(`Your news post has been sent to ${news_channel.toString()}! :white_check_mark:`);
             await Util.TRM(message.guild, false);
