@@ -22,66 +22,80 @@ module.exports.run = async (gideon, message, args) => {
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
+    const er = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('An error occured while executing this command!')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
     if (args[0] && args[0].match(/(?:register)/i)){
-        message.channel.send('Registering, please stand by...');
+        try {
+            message.channel.send('Registering, please stand by...');
 
-        const api = `http://api.timezonedb.com/v2.1/list-time-zone?key=${apikey}&format=json`;
-        const body = await fetch(api).then(res => res.json());
+            const api = `http://api.timezonedb.com/v2.1/list-time-zone?key=${apikey}&format=json`;
+            const body = await fetch(api).then(res => res.json());
 
-        let results = [];
-        let searchField = "zoneName";
-        let searchVal = args[1];
-        for (let i=0 ; i < body.zones.length ; i++)
-        {
-            if (body.zones[i][searchField] == searchVal) {
-                results.push(body.zones[i]);
+            let results = [];
+            let searchField = "zoneName";
+            let searchVal = args[1];
+            for (let i=0 ; i < body.zones.length ; i++)
+            {
+                if (body.zones[i][searchField] == searchVal) {
+                    results.push(body.zones[i]);
+                }
             }
-        }
 
-        if(results.length < 1 || results == undefined){
-            await Util.delay(200);
-            message.channel.bulkDelete(2);
-            return message.reply(`\`${args[1]}\` is not a valid timezone!\nhttps://timezonedb.com/time-zones`);
-        } 
+            if(results.length < 1 || results == undefined){
+                await Util.delay(200);
+                message.channel.bulkDelete(2);
+                return message.reply(`\`${args[1]}\` is not a valid timezone!\nhttps://timezonedb.com/time-zones`);
+            } 
 
-        let members = JSON.parse(fs.readFileSync('./data/tzdb.json', 'utf8'));
+            let members = JSON.parse(fs.readFileSync('./data/tzdb.json', 'utf8'));
 
-        let mresults = [];
-        let msearchField = "username";
-        let msearchVal = message.author.tag;
-        for (let i=0 ; i < members.length ; i++)
-        {
-            if (members[i][msearchField] == msearchVal) {
-                mresults.push(members[i]);
+            let mresults = [];
+            let msearchField = "username";
+            let msearchVal = message.author.tag;
+            for (let i=0 ; i < members.length ; i++)
+            {
+                if (members[i][msearchField] == msearchVal) {
+                    mresults.push(members[i]);
+                }
             }
-        }
 
-        let rsltarray = mresults.map(x => x.username)
+            let rsltarray = mresults.map(x => x.username)
 
-        if (rsltarray.includes(message.author.tag)){
+            if (rsltarray.includes(message.author.tag)){
+                await Util.delay(200);
+                await message.channel.bulkDelete(2);
+                return message.reply('you have already registered a timezone!');
+            } 
+
+            let obj = {};
+            obj["username"] = message.author.tag;
+            obj["timezone"] = slctzone;
+            members.push(obj);
+            
+            let data = JSON.stringify(members, null, 2);
+            
+            fs.writeFile('./data/tzdb.json', data, (err) => {
+                if (err) throw err;
+            });
+            
             await Util.delay(200);
             await message.channel.bulkDelete(2);
-            return message.reply('you have already registered a timezone!');
-        } 
-
-        let obj = {};
-        obj["username"] = message.author.tag;
-        obj["timezone"] = slctzone;
-        members.push(obj);
-         
-        let data = JSON.stringify(members, null, 2);
-        
-        fs.writeFile('./data/tzdb.json', data, (err) => {
-            if (err) throw err;
-        });
-        
-        await Util.delay(200);
-        await message.channel.bulkDelete(2);
-        message.reply('your timezone has been registered!');
+            message.reply('your timezone has been registered!');
+        }
+        catch (ex) {
+            console.log("Caught an exception while running tzone.js: " + ex);
+            Util.log("Caught an exception while running tzone.js: " + ex);
+            return message.channel.send(er);
+        }
     }
 
     else if (!args[0]){
-        fs.readFile('./data/tzdb.json', async (err, data) => {
+        try {
+            fs.readFile('./data/tzdb.json', async (err, data) => {
             if (err) throw err;
             let members = JSON.parse(data);
             
@@ -100,49 +114,63 @@ module.exports.run = async (gideon, message, args) => {
             }
 
             message.channel.send(tzembed);
-        });
+            });
+        }
+        catch (ex) {
+            console.log("Caught an exception while running tzone.js: " + ex);
+            Util.log("Caught an exception while running tzone.js: " + ex);
+            return message.channel.send(er);
+        }
     }
 
     else if(args[0] && !args[1]){
-        const user = gideon.users.get(Util.getIdFromString(args[0]));
+        try {
+            const user = gideon.users.get(Util.getIdFromString(args[0]));
    
-        if (!user) return message.channel.send(me);
-        const usertag = user.username + '#' + user.discriminator;
+            if (!user) return message.channel.send(me);
+            const usertag = user.username + '#' + user.discriminator;
 
-        fs.readFile('./data/tzdb.json', async (err, data) => {
-            if (err) throw err;
-            let members = JSON.parse(data);
+            fs.readFile('./data/tzdb.json', async (err, data) => {
+                if (err) throw err;
+                let members = JSON.parse(data);
 
-            let results = [];
-            let searchField = "username";
-            let searchVal = usertag;
-            for (let i=0 ; i < members.length ; i++)
-            {
-                if (members[i][searchField] == searchVal) {
-                    results.push(members[i]);
+                let results = [];
+                let searchField = "username";
+                let searchVal = usertag;
+                for (let i=0 ; i < members.length ; i++)
+                {
+                    if (members[i][searchField] == searchVal) {
+                        results.push(members[i]);
+                    }
                 }
-            }
 
-            if(results.length < 1 || results == undefined){
-                return message.reply(`\`${usertag}\` has not registered a timezone!`);
-            }
+                if(results.length < 1 || results == undefined){
+                    return message.reply(`\`${usertag}\` has not registered a timezone!`);
+                }
 
-            let resultstring = JSON.stringify(results, null, 2);
-            let result = JSON.parse(resultstring);
+                let resultstring = JSON.stringify(results, null, 2);
+                let result = JSON.parse(resultstring);
 
-            let date = new Date();
-            let formattedTime = date.toLocaleTimeString('en-US',{timeZone:result[0].timezone});
-            let formattedDay = date.toLocaleDateString('en-US',{timeZone:result[0].timezone});
-            
-            const tzembed = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setTitle(`${result[0].username}\'s current local time:`)
-            .setDescription(`\`${formattedDay} ${formattedTime} (${result[0].timezone})\``)
-            .setTimestamp()
-            .setFooter(Util.config.footer, gideon.user.avatarURL());
+                let date = new Date();
+                let formattedTime = date.toLocaleTimeString('en-US',{timeZone:result[0].timezone});
+                let formattedDay = date.toLocaleDateString('en-US',{timeZone:result[0].timezone});
+                
+                const tzembed = new Discord.MessageEmbed()
+                .setColor('#2791D3')
+                .setTitle(`${result[0].username}\'s current local time:`)
+                .setDescription(`\`${formattedDay} ${formattedTime} (${result[0].timezone})\``)
+                .setTimestamp()
+                .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-            message.channel.send(tzembed);
-        });
+                message.channel.send(tzembed);
+            });
+
+        }
+        catch (ex) {
+            console.log("Caught an exception while running tzone.js: " + ex);
+            Util.log("Caught an exception while running tzone.js: " + ex);
+            return message.channel.send(er);
+        }
     }
 
     else return message.channel.send(ia);

@@ -14,17 +14,31 @@ module.exports.run = async (gideon, message, args) => {
         let check = message.guild.roles.get('596402530989375539');
 
         if (check.mentionable == false){
-            message.channel.send('Toggleing roles, please stand by...');
-            await Util.TRM(message.guild, true);
-            message.channel.send('All server roles are now mentionable! :white_check_mark:');
+            try {
+                message.channel.send('Toggleing roles, please stand by...');
+                await Util.TRM(message.guild, true);
+                message.channel.send('All server roles are now mentionable! :white_check_mark:');
+            }
+            catch (ex) {
+                console.log("Caught an exception while toggleing roles: " + ex);
+                Util.log("Caught an exception while toggleing roles: " + ex);
+                return message.channel.send(er);
+            }
         }
         else if (check.mentionable == true){
-            message.channel.send('Toggleing roles, please stand by...');
-            await Util.TRM(message.guild, false);
-            message.channel.send('All server roles are now no longer mentionable! :white_check_mark:');
+            try {
+                message.channel.send('Toggleing roles, please stand by...');
+                await Util.TRM(message.guild, false);
+                message.channel.send('All server roles are now no longer mentionable! :white_check_mark:');
+            }
+            catch (ex) {
+                console.log("Caught an exception while toggleing roles: " + ex);
+                Util.log("Caught an exception while toggleing roles: " + ex);
+                return message.channel.send(er);
+            }
         }
         else {
-            message.channel.send(er);
+            return message.channel.send(er);
         }
     }
 }
