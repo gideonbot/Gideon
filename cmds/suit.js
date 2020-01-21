@@ -4,7 +4,7 @@ const Util = require("../Util");
 module.exports.run = async (gideon, message, args) => {     
     const st = new Discord.MessageEmbed()
     .setColor('#2791D3')
-    .setTitle('You must choose a character!')
+    .setTitle('You must choose a valid character!')
     .setDescription('Currently available:\n**killer frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**\n**kingdom come superman**')
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL())
@@ -44,7 +44,7 @@ module.exports.run = async (gideon, message, args) => {
         },
         {
             image: 'https://i.imgur.com/EduRbe4.jpg',
-            title: 'Sparton',
+            title: 'Spartan',
             desc: 'This is David Ramsey\'s new suit for Arrow Season 8!'
         },
         {
@@ -70,8 +70,8 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:spartan)/i)) suit = suits[6]; 
     else if (args[0].match(/(?:kingdom)/i) && args[1].match(/(?:come)/i) && args[2].match(/(?:superman)/i)) suit = suits[7];
     else if (args[0].match(/(?:harbinger)/i)) suit = suits[8];
-    else return message.channel.send('You must supply a valid character!\nCurrently available: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan | kingdom come superman | harbinger');
-    if (!suit) return message.channel.send('You must supply a valid character!\nCurrently available: killer frost | supergirl | arrow | flash | batwoman | black canary | spartan | kingdom come superman | harbinger');
+    else return message.channel.send(st);
+    if (!suit) return message.channel.send(st);
 
     const suit_embed = new Discord.MessageEmbed()
     .setColor('#2791D3')
@@ -85,7 +85,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["suit", "suits"],
+    name: ["suit", "suits", "costume", "costumes"],
     type: "general",
     help_text: "suit <character>",
     help_desc: "Displays newly revealed suits"
