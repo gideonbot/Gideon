@@ -220,7 +220,7 @@ class Util {
                 }
             }
 
-            return reject("No match");
+            return reject();
         });
     }
 
