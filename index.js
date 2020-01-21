@@ -53,6 +53,23 @@ gideon.once('ready', async () => {
     
     console.log('Ready!');
     Util.log(`${gideon.user.tag} ready!\nServers:\n${gideon.guilds.map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
+    let ids = gideon.guilds.map(x => x.id);
+
+    for (let i = 0; i < ids.length; i++) {
+        try {
+            let guild = gideon.guilds.get(ids[i]);
+            let textchannels = guild.channels.filter(c=> c.type == "text");
+            let invitechannels = textchannels.filter(c=> c.permissionsFor(guild.me).has('CREATE_INSTANT_INVITE'));
+            if(!invitechannels.size) return;
+
+            invitechannels.random().createInvite().then(invite=> Util.log('Found Invite:\n' + 'https://discord.gg/' + invite.code));
+        }
+        
+        catch (ex) {
+            console.log("Caught an exception while creating invites!: " + ex);
+            Util.log("Caught an exception while creating invites!: " + ex);
+        }
+    }
 
     setInterval(status, 30000);
 });
