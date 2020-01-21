@@ -8,9 +8,6 @@ module.exports.run = async (gideon, message, args) => {
     const sourceLang = 'auto';
     const targetLang = 'en';
     const sourceText = args.join(' ');
-    
-    await Util.delay(200);
-    message.delete();
 
     const api = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
     + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
