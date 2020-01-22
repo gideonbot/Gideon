@@ -30,7 +30,7 @@ module.exports.run = async (gideon, message, args) => {
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const f = m => m.author.id === message.author.id;
-        const collector = message.channel.createMessageCollector(f, {time: 60 * 1000});
+        const collector = message.channel.createMessageCollector(f, {time: 30 * 1000});
 
         await message.channel.send(startgame).then(async sent => {
             await sent.react(emotes[1]).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
@@ -38,7 +38,7 @@ module.exports.run = async (gideon, message, args) => {
 
             const rfilter = (reaction, user) => emotes.includes(reaction.emoji.name) && user.id === auth;
 
-            const rcollector = sent.createReactionCollector(rfilter, {time: 60 * 1000});
+            const rcollector = sent.createReactionCollector(rfilter, {time: 30 * 1000});
         
             rcollector.on('collect', (reaction, reactionCollector) => {
                 if (reaction.emoji.name === '▶️') {
