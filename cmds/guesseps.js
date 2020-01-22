@@ -33,31 +33,30 @@ module.exports.run = async (gideon, message, args) => {
     let embed = await GameEmbed();
 
     const f = m => m.author.id === message.author.id;
-        const collector = message.channel.createMessageCollector(f, {time: 30 * 1000});
+    const collector = message.channel.createMessageCollector(f, {time: 30 * 1000});
 
-        await message.channel.send(embed[0]).then(async sent => {
-            await sent.react(emotes[1]).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
-            await sent.react(stopid).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
+    await message.channel.send(embed[0]).then(async sent => {
+        await sent.react(emotes[1]).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
+        await sent.react(stopid).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
+
+        const rfilter = (reaction, user) => emotes.includes(reaction.emoji.name) && user.id === auth;
+        const rcollector = sent.createReactionCollector(rfilter, {time: 30 * 1000});
     
-            const rfilter = (reaction, user) => emotes.includes(reaction.emoji.name) && user.id === auth;
-            const rcollector = sent.createReactionCollector(rfilter, {time: 30 * 1000});
-        
-            rcollector.on('collect', (reaction, user, reactionCollector) => {
-                if (reaction.emoji.name === '▶️') {
-                    //let updateembed = GameEmbed();
-                    //console.log(updateembed[0]);
-                    //sent.edit(updateembed[0]);
-                    sent.reactions.find(x => x.emoji.name === "▶️").users.remove(user.id);
-                    collector.time = 30 * 1000;
-                    rcollector.time = 30 * 1000;
-                    //embed = updateembed;
-                }
-                if (reaction.emoji.name === 'stop') {
-                    collector.stop();
-                    return message.reply('your game round has been cancelled! :white_check_mark:');
-                }
-            });
-        });
+        rcollector.on('collect', async (reaction, user, reactionCollector) => {
+            if (reaction.emoji.name === '▶️') {
+                let updateembed = await GameEmbed();
+                await sent.edit(updateembed[0]);
+                sent.reactions.find(x => x.emoji.name === "▶️").users.remove(user.id);
+                collector.time = 30 * 1000;
+                rcollector.time = 30 * 1000;
+                embed = updateembed;
+            }
+            if (reaction.emoji.name === 'stop') {
+                collector.stop();
+                return message.reply('your game round has been cancelled! :white_check_mark:');
+            }
+        }); 
+    });
 
     collector.on('collect', async message => {
     const similarity = stringSimilarity.compareTwoStrings(embed[3].toLowerCase().replace(/\s/g, ""), message.content.toLowerCase().replace(/\s/g, ""));
