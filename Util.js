@@ -228,9 +228,11 @@ class Util {
      * @param {Discord.Message} message 
      */
     static ABM(message) {
+        const siren = '<a:siren:669518972407775265>';
+
         const abmembed = new Discord.MessageEmbed()
         .setColor('#2791D3')
-        .setTitle(`:rotating_light:Anti-Bitch-Mode is enabled!:rotating_light:`)
+        .setTitle(`${siren}Anti-Bitch-Mode is enabled!${siren}`)
         .setDescription('You posted a link to a forbidden social media account!\nFuck that bitch!')
         .setTimestamp()
         .setFooter(Util.config.footer, Util.config.avatar);
