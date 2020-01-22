@@ -8,11 +8,65 @@ module.exports.run = async (gideon, message, args) => {
     const stopid = '669309980209446912';
     const auth = message.author.id;
 
-    async function GameEmbed(){
+    const as = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('You must supply a valid show!')
+    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+    const er = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('An error occured while executing this command!')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+    let agc = args[0];
+    let filters = [
+        {
+            filter: (x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray')
+        },
+        {
+            filter: (x => x.series == 'The Flash')
+        },
+        {
+            filter: (x => x.series == 'Arrow')
+        },
+        {
+            filter: (x => x.series == 'DC\'s Legends of Tomorrow')
+        },
+        {
+            filter: (x => x.series == 'Supergirl')
+        },
+        {
+            filter: (x => x.series == 'Black Lightning')
+        },
+        {
+            filter: (x => x.series == 'Batwoman')
+        },
+        {
+            filter: (x => x.series == 'Constantine')
+        }
+    ]
+
+    let chosenfilter;
+
+    if (!agc) chosenfilter = filters[0].filter;
+    else if (agc.match(/(?:flash)/i)) chosenfilter = filters[1].filter;
+    else if (agc.match(/(?:arrow)/i)) chosenfilter = filters[2].filter;
+    else if (agc.match(/(?:legends)/i)) chosenfilter = filters[3].filter;
+    else if (agc.match(/(?:supergirl)/i)) chosenfilter = filters[4].filter;
+    else if (agc.match(/(?:blacklightning)/i)) chosenfilter = filters[5].filter;
+    else if (agc.match(/(?:batwoman)/i)) chosenfilter = filters[6].filter;
+    else if (agc.match(/(?:constantine)/i)) chosenfilter = filters[7].filter;
+    else return message.channel.send(as);
+
+    async function GameEmbed(showfilter){
         const url = 'https://arrowverse.info';
         const api = "https://arrowverse.info/api";
         const body = await fetch(api).then(res => res.json());
-        const shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
+
+        const shows = body.filter(showfilter);
 
         const randomep = shows[Math.floor(Math.random() * shows.length)];
         const show = randomep.series;
@@ -30,51 +84,58 @@ module.exports.run = async (gideon, message, args) => {
         return [gameembed, show, epnum, epname];
     }
 
-    let embed = await GameEmbed();
+    try{
+        let embed = await GameEmbed(chosenfilter);
 
-    const f = m => m.author.id === message.author.id;
-    const collector = message.channel.createMessageCollector(f, {time: 30 * 1000});
+        const f = m => m.author.id === message.author.id;
+        const collector = message.channel.createMessageCollector(f, {time: 30 * 1000});
 
-    await message.channel.send(embed[0]).then(async sent => {
-        await sent.react(emotes[1]).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
-        await sent.react(stopid).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
+        await message.channel.send(embed[0]).then(async sent => {
+            await sent.react(emotes[1]).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
+            await sent.react(stopid).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
 
-        const rfilter = (reaction, user) => emotes.includes(reaction.emoji.name) && user.id === auth;
-        const rcollector = sent.createReactionCollector(rfilter, {time: 30 * 1000});
-    
-        rcollector.on('collect', async (reaction, user, reactionCollector) => {
-            if (reaction.emoji.name === '▶️') {
-                let updateembed = await GameEmbed();
-                await sent.edit(updateembed[0]);
-                sent.reactions.find(x => x.emoji.name === "▶️").users.remove(user.id);
-                collector.time = 30 * 1000;
-                rcollector.time = 30 * 1000;
-                embed = updateembed;
-            }
-            if (reaction.emoji.name === 'stop') {
+            const rfilter = (reaction, user) => emotes.includes(reaction.emoji.name) && user.id === auth;
+            const rcollector = sent.createReactionCollector(rfilter, {time: 30 * 1000});
+        
+            rcollector.on('collect', async (reaction, user, reactionCollector) => {
+                if (reaction.emoji.name === '▶️') {
+                    let updateembed = await GameEmbed(chosenfilter);
+                    await sent.edit(updateembed[0]);
+                    sent.reactions.find(x => x.emoji.name === "▶️").users.remove(user.id);
+                    collector.time = 30 * 1000;
+                    rcollector.time = 30 * 1000;
+                    embed = updateembed;
+                }
+                if (reaction.emoji.name === 'stop') {
+                    collector.stop();
+                    return message.reply('your game round has been cancelled! :white_check_mark:');
+                }
+            }); 
+        });
+
+        collector.on('collect', async message => {
+        const similarity = stringSimilarity.compareTwoStrings(embed[3].toLowerCase().replace(/\s/g, ""), message.content.toLowerCase().replace(/\s/g, ""));
+
+            if (similarity >= 0.65) {
                 collector.stop();
-                return message.reply('your game round has been cancelled! :white_check_mark:');
+                return message.reply(`that is correct! :white_check_mark:\n\`${embed[1]} ${embed[2]}\` is titled \`${embed[3]}\``);
             }
-        }); 
-    });
 
-    collector.on('collect', async message => {
-    const similarity = stringSimilarity.compareTwoStrings(embed[3].toLowerCase().replace(/\s/g, ""), message.content.toLowerCase().replace(/\s/g, ""));
+            if (similarity <= 0.64) {
+                collector.stop();
+                return message.reply(`that is incorrect! :x:\n\`${embed[1]} ${embed[2]}\` is titled \`${embed[3]}\``);
+            }
+        });
 
-        if (similarity >= 0.5) {
-            collector.stop();
-            return message.reply(`that is correct! :white_check_mark:\n\`${embed[1]} ${embed[2]}\` is titled \`${embed[3]}\``);
-        }
-
-        if (similarity <= 0.49) {
-            collector.stop();
-            return message.reply(`that is incorrect! :x:\n\`${embed[1]} ${embed[2]}\` is titled \`${embed[3]}\``);
-        }
-    });
-
-    collector.on('end', (collected, reason) => {
-        if (reason === 'time') return message.reply("You ran out of time!");
-    });
+        collector.on('end', (collected, reason) => {
+            if (reason === 'time') return message.reply("You ran out of time!");
+        });
+    }
+    catch (ex) {
+        console.log("Caught an exception while running guesseps.js: " + ex);
+        Util.log("Caught an exception while running guesseps.js: " + ex);
+        return message.channel.send(er);
+    }
 }
 
 module.exports.help = {
