@@ -10,12 +10,14 @@
   "author": "adrifcastr",
   "license": "GPLv2",
   "dependencies": {
+    "better-sqlite3": "^5.4.3",
     "cleverbot-free": "^1.0.3",
     "discord-paginationembed": "^2.0.0-beta.0",
     "discord.js": "github:adrifcastr/discord.js",
     "dotenv": "^8.0.0",
     "imgur-node": "^0.2.0",
     "node-fetch": "^2.6.0",
+    "node-gyp": "^6.1.0",
     "opensubtitles-api": "^5.0.1",
     "rarbg": "^1.2.7",
     "string-similarity": "^4.0.1"

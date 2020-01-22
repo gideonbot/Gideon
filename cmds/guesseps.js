@@ -2,6 +2,8 @@ const Discord = module.require("discord.js");
 const Util = require("../Util");
 const fetch = require('node-fetch');
 const stringSimilarity = require('string-similarity');
+const SQLite = require("better-sqlite3");
+const sql = new SQLite('./data/scores.sqlite');
 
 module.exports.run = async (gideon, message, args) => {
     const emotes = ['stop', '▶️'];
@@ -50,6 +52,38 @@ module.exports.run = async (gideon, message, args) => {
     ]
 
     let chosenfilter;
+
+    let score = gideon.getScore.get(message.author.id, message.guild.id);
+    if (!score) {
+        score = {
+          id: `${message.guild.id}-${message.author.id}`,
+          user: message.author.id,
+          guild: message.guild.id,
+          points: 0
+        }
+    }
+
+    let command = message.content.toLowerCase().split(' ')[0];
+
+    if (command.endsWith('score') || command.endsWith('points')) {
+        return message.reply(`You currently have \`${score.points}\` point(s)!`);
+    }
+
+    if (command.endsWith('leaderboard') || command.endsWith('highscores')) {
+        const top10 = sql.prepare("SELECT * FROM scores WHERE guild = ? ORDER BY points DESC LIMIT 10;").all(message.guild.id);
+
+        const leaderboard = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setTitle(`Top 10 Leaderboard:`)
+        .setTimestamp()
+        .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+        for(const data of top10) {
+            leaderboard.addField(gideon.users.get(data.user).tag, `\`${data.points}\` point(s)`);
+        }
+
+        return message.channel.send(leaderboard);
+    }
 
     if (!agc) chosenfilter = filters[0].filter;
     else if (agc.match(/(?:flash)/i)) chosenfilter = filters[1].filter;
@@ -118,7 +152,9 @@ module.exports.run = async (gideon, message, args) => {
 
             if (similarity >= 0.65) {
                 collector.stop();
-                return message.reply(`that is correct! :white_check_mark:\n\`${embed[1]} ${embed[2]}\` is titled \`${embed[3]}\``);
+                score.points++;
+                gideon.setScore.run(score);
+                return message.reply(`that is correct! :white_check_mark:\n\`${embed[1]} ${embed[2]}\` is titled \`${embed[3]}\`\nYou have gained \`1\` point!`);
             }
 
             if (similarity <= 0.64) {
@@ -139,7 +175,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["guess", "guesseps"],
+    name: ["guess", "guesseps", "points", "score", "leaderboard", "highscores"],
     type: "fun",
     help_text: "!guess",
     help_desc: "Arrowverse episode guessing game"

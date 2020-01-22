@@ -2,3 +2,6 @@
 .env
 .vscode
 /data/tzdb.json
+/data/scores.sqlite
+/data/scores.sqlite-shm
+/data/scores.sqlite-wal
