@@ -10,6 +10,7 @@ const Collection = require('../util/Collection');
 const Util = require('../util/Util');
 const DataResolver = require('../util/DataResolver');
 const Snowflake = require('../util/Snowflake');
+const SystemChannelFlags = require('../util/SystemChannelFlags');
 const GuildMemberStore = require('../stores/GuildMemberStore');
 const RoleStore = require('../stores/RoleStore');
 const GuildEmojiStore = require('../stores/GuildEmojiStore');
@@ -149,18 +150,17 @@ class Guild extends Base {
     /**
      * An array of enabled guild features, here are the possible values:
      * * ANIMATED_ICON
-     * * COMMERCE
-     * * LURKABLE
-     * * PARTNERED
-     * * NEWS
      * * BANNER
-     * * INVITE_SPLASH
-     * * MORE_EMOJI
-     * * VERIFIED
-     * * VIP_REGIONS
-     * * VANITY_URL
+     * * COMMERCE
      * * DISCOVERABLE
      * * FEATURABLE
+     * * INVITE_SPLASH
+     * * PUBLIC
+     * * NEWS
+     * * PARTNERED
+     * * VANITY_URL
+     * * VERIFIED
+     * * VIP_REGIONS
      * @typedef {string} Features
      */
 
@@ -275,6 +275,12 @@ class Guild extends Base {
      */
     this.defaultMessageNotifications = DefaultMessageNotifications[data.default_message_notifications] ||
       data.default_message_notifications;
+
+    /**
+     * The value set for the guild's system channel flags
+     * @type {Readonly<SystemChannelFlags>}
+     */
+    this.systemChannelFlags = new SystemChannelFlags(data.system_channel_flags).freeze();
 
     /**
      * The maximum amount of members the guild can have
@@ -405,6 +411,15 @@ class Guild extends Base {
   }
 
   /**
+   * If this guild is partnered
+   * @type {boolean}
+   * @readonly
+   */
+  get partnered() {
+    return this.features.includes('PARTNERED');
+  }
+
+  /**
    * If this guild is verified
    * @type {boolean}
    * @readonly
@@ -418,9 +433,9 @@ class Guild extends Base {
    * @param {ImageURLOptions} [options={}] Options for the Image URL
    * @returns {?string}
    */
-  iconURL({ format, size } = {}) {
+  iconURL({ format, size, dynamic } = {}) {
     if (!this.icon) return null;
-    return this.client.rest.cdn.Icon(this.id, this.icon, format, size);
+    return this.client.rest.cdn.Icon(this.id, this.icon, format, size, dynamic);
   }
 
   /**
@@ -487,15 +502,6 @@ class Guild extends Base {
    */
   get embedChannel() {
     return this.client.channels.get(this.embedChannelID) || null;
-  }
-
-  /**
-   * The `@everyone` role of the guild
-   * @type {?Role}
-   * @readonly
-   */
-  get defaultRole() {
-    return this.roles.get(this.id) || null;
   }
 
   /**
@@ -774,6 +780,7 @@ class Guild extends Base {
    * @property {Base64Resolvable} [splash] The splash screen of the guild
    * @property {Base64Resolvable} [banner] The banner of the guild
    * @property {DefaultMessageNotifications|number} [defaultMessageNotifications] The default message notifications
+   * @property {SystemChannelFlagsResolvable} [systemChannelFlags] The system channel flags of the guild
    */
 
   /**
@@ -814,6 +821,9 @@ class Guild extends Base {
         DefaultMessageNotifications.indexOf(data.defaultMessageNotifications) :
         Number(data.defaultMessageNotifications);
     }
+    if (typeof data.systemChannelFlags !== 'undefined') {
+      _data.systemChannelFlags = SystemChannelFlags.resolve(data.systemChannelFlags);
+    }
     return this.client.api.guilds(this.id).patch({ data: _data, reason })
       .then(newData => this.client.actions.GuildUpdate.handle(newData).updated);
   }
@@ -839,6 +849,16 @@ class Guild extends Base {
     return this.edit({ defaultMessageNotifications }, reason);
   }
   /* eslint-enable max-len */
+
+  /**
+   * Edits the flags of the default message notifications of the guild.
+   * @param {SystemChannelFlagsResolvable} systemChannelFlags The new flags for the default message notifications
+   * @param {string} [reason] Reason for changing the flags of the default message notifications
+   * @returns {Promise<Guild>}
+   */
+  setSystemChannelFlags(systemChannelFlags, reason) {
+    return this.edit({ systemChannelFlags }, reason);
+  }
 
   /**
    * Edits the name of the guild.

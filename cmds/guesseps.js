@@ -102,8 +102,8 @@ module.exports.run = async (gideon, message, args) => {
                     let updateembed = await GameEmbed(chosenfilter);
                     await sent.edit(updateembed[0]);
                     sent.reactions.find(x => x.emoji.name === "▶️").users.remove(user.id);
-                    collector.time = 30 * 1000;
-                    rcollector.time = 30 * 1000;
+                    collector.resetTimer();
+                    rcollector.resetTimer();
                     embed = updateembed;
                 }
                 if (reaction.emoji.name === 'stop') {
