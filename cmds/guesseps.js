@@ -83,9 +83,11 @@ module.exports.run = async (gideon, message, args) => {
 
 
         for(const data of top10) {
-            let i=0 ; i < top10.length ; i++
-            const guild = gideon.guilds.get(data.guild);
-            leaderboard.addField(`#\`${i < 10 ? "0" + i : i}\` User: \`${gideon.users.get(data.user).tag}\` Server: \`${guild.name}\``, `\`${data.points}\` point(s)`);
+            
+            for (let i=1 ; i < top10.length +1; i++){
+                const guild = gideon.guilds.get(data.guild);
+                leaderboard.addField(`#\`${i < 10 ? "0" + i : i}\` User: \`${gideon.users.get(data.user).tag}\` Server: \`${guild.name}\``, `\`${data.points}\` point(s)`);
+            }
         }
 
         return message.channel.send(leaderboard);
