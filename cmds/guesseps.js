@@ -81,9 +81,9 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-
         for(const data of top10) {
-            let i=0 ; i < top10.length ; i++
+            let i = 0;
+            do {i++;} while (i < top10.length);
             const guild = gideon.guilds.get(data.guild);
             leaderboard.addField(`#\`${i < 10 ? "0" + i : i}\` User: \`${gideon.users.get(data.user).tag}\` Server: \`${guild.name}\``, `\`${data.points}\` point(s)`);
         }
