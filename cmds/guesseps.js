@@ -9,6 +9,11 @@ module.exports.run = async (gideon, message, args) => {
     const emotes = ['stop', '▶️'];
     const stopid = '669309980209446912';
     const auth = message.author.id;
+    let chosenfilter;
+    let tries = 3;
+    let timerstart;
+    let timerdiff;
+    let timervalue;
 
     const as = new Discord.MessageEmbed()
     .setColor('#2791D3')
@@ -51,12 +56,10 @@ module.exports.run = async (gideon, message, args) => {
         }
     ]
 
-    let chosenfilter;
-
-    let score = gideon.getScore.get(message.author.id, message.guild.id);
+    let score = gideon.getScore.get(message.author.id);
     if (!score) {
         score = {
-          id: `${message.guild.id}-${message.author.id}`,
+          id: `${message.author.id}`,
           user: message.author.id,
           guild: message.guild.id,
           points: 0
@@ -70,7 +73,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     if (command.endsWith('leaderboard') || command.endsWith('highscores')) {
-        const top10 = sql.prepare("SELECT * FROM scores WHERE guild = ? ORDER BY points DESC LIMIT 10;").all(message.guild.id);
+        const top10 = sql.prepare("SELECT * FROM scores WHERE user = ? ORDER BY points DESC LIMIT 10;").all(message.author.id);
 
         const leaderboard = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -133,6 +136,7 @@ module.exports.run = async (gideon, message, args) => {
 
             const rfilter = (reaction, user) => emotes.includes(reaction.emoji.name) && user.id === auth;
             const rcollector = sent.createReactionCollector(rfilter, {time: 30 * 1000});
+            timerstart = new Date();
         
             rcollector.on('collect', async (reaction, user, reactionCollector) => {
                 if (reaction.emoji.name === '▶️') {
@@ -142,6 +146,7 @@ module.exports.run = async (gideon, message, args) => {
                     collector.resetTimer();
                     rcollector.resetTimer();
                     embed = updateembed;
+                    tries = 3;
                 }
                 if (reaction.emoji.name === 'stop') {
                     collector.stop();
@@ -161,8 +166,12 @@ module.exports.run = async (gideon, message, args) => {
             }
 
             if (similarity <= 0.64) {
-                collector.stop();
-                return message.reply(`that is incorrect! :x:\n\`${embed[1]} ${embed[2]}\` is titled \`${embed[3]}\``);
+                tries = tries -1;
+                let now = new Date();
+                timerdiff = (now.getTime() - timerstart.getTime()) / 1000;
+                timervalue = Math.round(30 - timerdiff);
+                if (tries == 0) return collector.stop(), message.reply(`that is incorrect! :x:\n\`${embed[1]} ${embed[2]}\` is titled \`${embed[3]}\``);
+                else message.reply(`that is incorrect! :x:\nYou have \`${tries}\` guess(es) and \`${timervalue}\` second(s) left!`);
             }
         });
 
