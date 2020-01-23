@@ -73,7 +73,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     if (command.endsWith('leaderboard') || command.endsWith('highscores')) {
-        const top10 = sql.prepare("SELECT * FROM scores WHERE user = ? ORDER BY points DESC LIMIT 10;").all(message.author.id);
+        const top10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;").all();
 
         const leaderboard = new Discord.MessageEmbed()
         .setColor('#2791D3')

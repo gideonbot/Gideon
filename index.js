@@ -39,7 +39,7 @@ fs.readdir("./cmds", (err, files) => {
 gideon.once('ready', async () => {
     const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
     if (!table['count(*)']) {
-    sql.prepare("CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, points INTEGER);").run();
+    sql.prepare("CREATE TABLE scores (user TEXT, PRIMARY KEY, points INTEGER, guild TEXT);").run();
     sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (id);").run();
     sql.pragma("synchronous = 1");
     sql.pragma("journal_mode = wal");
