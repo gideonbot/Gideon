@@ -39,14 +39,14 @@ fs.readdir("./cmds", (err, files) => {
 gideon.once('ready', async () => {
     const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
     if (!table['count(*)']) {
-    sql.prepare("CREATE TABLE scores (user TEXT, PRIMARY KEY, points INTEGER, guild TEXT);").run();
-    sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (id);").run();
+    sql.prepare("CREATE TABLE scores (user TEXT PRIMARY KEY, points INTEGER, guild TEXT);").run();
+    sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (user);").run();
     sql.pragma("synchronous = 1");
     sql.pragma("journal_mode = wal");
     }
 
     gideon.getScore = sql.prepare("SELECT * FROM scores WHERE user = ?");
-    gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);");
+    gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (user, points, guild) VALUES (@user, @points, @guild);");
 
     async function status() {
         const tmvt = gideon.guilds.get('595318490240385037');

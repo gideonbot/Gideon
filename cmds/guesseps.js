@@ -81,9 +81,10 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
+        
         for(const data of top10) {
-            let i = 0;
-            do {i++;} while (i < top10.length);
+            let index = top10.findIndex(data => data);
+            let i = index +1;
             const guild = gideon.guilds.get(data.guild);
             leaderboard.addField(`#\`${i < 10 ? "0" + i : i}\` User: \`${gideon.users.get(data.user).tag}\` Server: \`${guild.name}\``, `\`${data.points}\` point(s)`);
         }
@@ -176,7 +177,7 @@ module.exports.run = async (gideon, message, args) => {
         });
 
         collector.on('end', (collected, reason) => {
-            if (reason === 'time') return message.reply("You ran out of time!");
+            if (reason === 'time') return message.reply(`You ran out of time!\n\`${embed[1]} ${embed[2]}\` is titled \`${embed[3]}\``);
         });
     }
     catch (ex) {
