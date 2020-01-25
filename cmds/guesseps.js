@@ -211,7 +211,7 @@ module.exports.run = async (gideon, message, args) => {
                     .setColor('#2791D3')
                     .setTitle(`Guessing game for ${message.author.tag}:`)
                     .setAuthor(`You've had ${tries} ${tries !== 1 ? s[4] : s[3]} left!`, message.author.avatarURL())
-                    .setDescription(`You ran out of time!\n\`${embed[1]} ${embed[2]}\` is titled \`${embed[3]}\``)
+                    .setDescription(`You ran out of time!\n\`${embed[1]} ${embed[2]} - ${embed[3]}\``)
                     .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
                     .setTimestamp()
                     .setFooter(Util.config.footer, gideon.user.avatarURL());
