@@ -3,10 +3,10 @@ const fetch = require('node-fetch');
 const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
-    const api = 'https://api.github.com/repos/adrifcastr/Gideon/issues';
+    const fetchapi = 'https://api.github.com/repos/adrifcastr/Gideon/issues';
 
     try {
-        const body = await fetch(api).then(res => res.json()); 
+        const body = await fetch(fetchapi).then(res => res.json()); 
     
         const issues = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -44,8 +44,8 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "issues",
+    name: ["issues", "issue", "bug"],
     type: "misc",
     help_text: "issues",
-    help_desc: "Displays Github issues"
+    help_desc: "Displays Github issues and allows to submit new ones."
 }
