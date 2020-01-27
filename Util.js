@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
-const config = require("./data/config.json");
+const config = require("./data/JSON/config.json");
 
 class Util {
     constructor() {

@@ -51,7 +51,7 @@ module.exports.run = async (gideon, message, args) => {
                 return message.reply(`\`${args[1]}\` is not a valid timezone!\nhttps://timezonedb.com/time-zones`);
             } 
 
-            let members = JSON.parse(fs.readFileSync('./data/tzdb.json', 'utf8'));
+            let members = JSON.parse(fs.readFileSync('./data/JSON/tzdb.json', 'utf8'));
 
             let mresults = [];
             let msearchField = "username";
@@ -78,7 +78,7 @@ module.exports.run = async (gideon, message, args) => {
             
             let data = JSON.stringify(members, null, 2);
             
-            fs.writeFile('./data/tzdb.json', data, (err) => {
+            fs.writeFile('./data/JSON/tzdb.json', data, (err) => {
                 if (err) throw err;
             });
             
@@ -95,7 +95,7 @@ module.exports.run = async (gideon, message, args) => {
 
     else if (!args[0]){
         try {
-            fs.readFile('./data/tzdb.json', async (err, data) => {
+            fs.readFile('./data/JSON/tzdb.json', async (err, data) => {
             if (err) throw err;
             let members = JSON.parse(data);
             
@@ -130,7 +130,7 @@ module.exports.run = async (gideon, message, args) => {
             if (!user) return message.channel.send(me);
             const usertag = user.username + '#' + user.discriminator;
 
-            fs.readFile('./data/tzdb.json', async (err, data) => {
+            fs.readFile('./data/JSON/tzdb.json', async (err, data) => {
                 if (err) throw err;
                 let members = JSON.parse(data);
 

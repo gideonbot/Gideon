@@ -1,7 +1,7 @@
 .autogit
 .env
 .vscode
-/data/tzdb.json
-/data/scores.sqlite
-/data/scores.sqlite-shm
-/data/scores.sqlite-wal
+/data/JSON/tzdb.json
+/data/SQL/scores.sqlite
+/data/SQL/scores.sqlite-shm
+/data/SQL/scores.sqlite-wal

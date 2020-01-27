@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const fs = require("fs");
 const gideon = new Discord.Client();
 const SQLite = require("better-sqlite3");
-const sql = new SQLite('./data/scores.sqlite');
+const sql = new SQLite('./data/SQL/scores.sqlite');
 const Util = require("./Util");
 
 gideon.commands = new Discord.Collection();

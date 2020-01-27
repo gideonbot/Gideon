@@ -3,7 +3,7 @@ const Util = require("../Util");
 const fetch = require('node-fetch');
 const stringSimilarity = require('string-similarity');
 const SQLite = require("better-sqlite3");
-const sql = new SQLite('./data/scores.sqlite');
+const sql = new SQLite('./data/SQL/scores.sqlite');
 
 module.exports.run = async (gideon, message, args) => {
     const url = 'https://arrowverse.info';
