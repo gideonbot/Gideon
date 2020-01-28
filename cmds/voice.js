@@ -21,6 +21,7 @@ module.exports.run = async (gideon, message, args) => {
                 dispatcher.resume();
 
                 dispatcher.on('finish', async () => {
+                    await message.reply('playback finished!');
                     dispatcher.destroy();
                     await message.member.voice.channel.leave();
                 });
