@@ -5,7 +5,6 @@ const Util = require("../Util");
 module.exports.run = async (gideon, message, args) => {
     const api_urls = {
         flash: 'http://api.tvmaze.com/shows/13?embed=nextepisode',
-        arrow: 'http://api.tvmaze.com/shows/4?embed=nextepisode',
         supergirl: 'http://api.tvmaze.com/shows/1850?embed=nextepisode',
         legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
         batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
