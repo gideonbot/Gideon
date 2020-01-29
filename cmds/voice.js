@@ -76,8 +76,7 @@ module.exports.run = async (gideon, message, args) => {
             }  
         }) */
 
-        const dirs = ['./data/audio/captain', './data/audio/phrases'];
-        const dir = dirs[Math.floor(Math.random() * dirs.length)];
+        const dir = './data/audio/phrases';
         await randomFile(dir, async (err, file) => {
             let rfile = `${dir}/${file}`;
             const dispatcher = connection.play(rfile);
