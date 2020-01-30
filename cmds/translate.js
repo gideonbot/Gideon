@@ -13,12 +13,14 @@ module.exports.run = async (gideon, message, args) => {
     + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
 
     const body = await fetch(api).then(res => res.json());
+    let targetflag = `:flag_${body[2]}:`;
+    if (body[2] == targetLang) targetflag = ':flag_gb:';
 
     const trembed = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`Translation for ${message.author.tag}:`)
-    .addField(`Original Text - Detected Language: ${body[2].toUpperCase()} `,`\`\`\`${sourceText}\`\`\``)
-    .addField(`Translated Text - Translated Language: ${targetLang.toUpperCase()}`,`\`\`\`${body[0][0][0]}\`\`\``)
+    .addField(`Original Text - Detected Language: ${targetflag} `,`\`\`\`${sourceText}\`\`\``)
+    .addField(`Translated Text - Translated Language: :flag_gb:`,`\`\`\`${body[0][0][0]}\`\`\``)
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
