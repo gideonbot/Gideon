@@ -19,8 +19,8 @@ module.exports.run = async (gideon, message, args) => {
     const trembed = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`Translation for ${message.author.tag}:`)
-    .addField(`Original Text - Detected Language: ${targetflag} `,`\`\`\`${sourceText}\`\`\``)
-    .addField(`Translated Text - Translated Language: :flag_gb:`,`\`\`\`${body[0][0][0]}\`\`\``)
+    .addField(`Original Text: ${targetflag} `,`\`\`\`${sourceText}\`\`\``)
+    .addField(`Translated Text: :flag_gb:`,`\`\`\`${body[0][0][0]}\`\`\``)
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
