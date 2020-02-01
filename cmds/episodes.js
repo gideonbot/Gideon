@@ -112,12 +112,16 @@ module.exports.run = async (gideon, message, args) => {
         .setTitle('There was no data for this episode!')
         .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
+
         if (body.status === 404) return message.channel.send(nd).catch(console.error);
     
         let airdate = new Date(body.airdate);
         let airtime = body.airtime;
         let desc = !body.summary ? 'No summary available' : body.summary.replace("<p>", "").replace("</p>", "");
-        let img = body.image.original;           
+        let img;
+        if (body.image == null) img = '';
+        else img = body.image.original;        
+           
     
         let timeString = airtime;
         let H = timeString.split(":")[0];
