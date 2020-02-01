@@ -444,52 +444,41 @@ class Util {
 
     /**
      * Voicechannel Speech-To-Text 
-     * @returns {JSON}
      * @param {ReadableStream} speech 
      */
     static async SpeechRecognition(speech) {
         const { Transform } = require('stream')
 
         function convertBufferTo1Channel(buffer) {
-        const convertedBuffer = Buffer.alloc(buffer.length / 2)
+            const convertedBuffer = Buffer.alloc(buffer.length / 2)
 
-        for (let i = 0; i < convertedBuffer.length / 2; i++) {
-            const uint16 = buffer.readUInt16LE(i * 4)
-            convertedBuffer.writeUInt16LE(uint16, i * 2)
-        }
+            for (let i = 0; i < convertedBuffer.length / 2; i++) {
+                const uint16 = buffer.readUInt16LE(i * 4)
+                convertedBuffer.writeUInt16LE(uint16, i * 2)
+            }
 
-        return convertedBuffer
+            return convertedBuffer;
         }
 
         class ConvertTo1ChannelStream extends Transform {
-        constructor(source, options) {
-            super(options)
+            constructor(source, options) {
+                super(options);
+            }
+
+            _transform(data, encoding, next) {
+                next(null, convertBufferTo1Channel(data))
+            }
         }
 
-        _transform(data, encoding, next) {
-            next(null, convertBufferTo1Channel(data))
-        }
-        }
-
-        const convertTo1ChannelStream = new ConvertTo1ChannelStream()
+        const convertTo1ChannelStream = new ConvertTo1ChannelStream();
         const rawaudio = speech.pipe(convertTo1ChannelStream);
 
         const api = 'https://api.wit.ai/speech';
         const content_type = 'audio/raw;encoding=signed-integer;bits=16;rate=48000;endian=little';
+        const headers = { 'Content-Type': content_type, Authorization: 'Bearer ' + process.env.WITAI_TOKEN, Accept: 'application/vnd.wit.' + '20170217' };
+        const options = { method: 'POST', body: rawaudio, headers: headers };
 
-        const headers = {'Content-Type': content_type,
-                         'Authorization': 'Bearer ' + process.env.WITAI_TOKEN,
-                         'Accept': 'application/vnd.wit.' + '20170217'
-        }
-
-        const options = {
-            method: 'POST',
-            body: rawaudio,
-            headers: headers,
-        }
-
-        let result = await fetch(api, options)
-        .then(res => res.json());
+        let result = await fetch(api, options).then(res => res.json());
 
         console.log(result);
         return result;
@@ -518,10 +507,11 @@ class Util {
             }); 
             return;
         }
-        if (value === 'talk') {
+
+        if (value == 'talk') {
             gideon.vcmdexec = true;
             const dir = './data/audio/phrases';
-            await randomFile(dir, async (err, file) => {
+            await randomFile(dir, (err, file) => {
                 let rfile = `${dir}/${file}`;
                 const phrase = connection.play(rfile);
                 phrase.pause();
@@ -535,7 +525,8 @@ class Util {
             })
             return;
         }
-        if (value === 'leave') {
+
+        if (value == 'leave') {
             gideon.vcmdexec = true;
             const leave = connection.play('./data/audio/captain/Yes, Captain.m4a');
             leave.pause();
@@ -549,13 +540,14 @@ class Util {
             });
             return;
         }
-        if (value === 'timejump') {
+
+        if (value == 'timejump') {
             gideon.vcmdexec = true;
             const confirm = connection.play('./data/audio/captain/Right away, Captain!.m4a');
             confirm.pause();
             confirm.resume();
 
-            confirm.on('finish', async () => {
+            confirm.on('finish', () => {
                 confirm.destroy();
 
                 const timejump = connection.play('./data/audio/phrases/Executing timejump now.m4a');
@@ -572,7 +564,8 @@ class Util {
             });
             return;
         }
-        if (value === 'future') {
+
+        if (value == 'future') {
             gideon.vcmdexec = true;
             const confirm = connection.play('./data/audio/captain/Right away, Captain!.m4a');
             confirm.pause();
@@ -587,7 +580,8 @@ class Util {
             });
             return;
         }
-        if (value === 'nxeps') {
+        
+        if (value == 'nxeps') {
             gideon.vcmdexec = true;
             const confirm = connection.play('./data/audio/captain/Right away, Captain!.m4a');
             confirm.pause();

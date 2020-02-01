@@ -4,10 +4,10 @@ const { Readable } = require('stream');
 const SILENCE_FRAME = Buffer.from([0xF8, 0xFF, 0xFE]);
 
 class Silence extends Readable {
-  _read() {
-    this.push(SILENCE_FRAME);
-    this.destroy();
-  }
+    _read() {
+        this.push(SILENCE_FRAME);
+        this.destroy();
+    }
 }
 
 module.exports.run = async (gideon, message, args) => {
@@ -36,29 +36,29 @@ module.exports.run = async (gideon, message, args) => {
        await Util.LeaveVC(message);
        return;
     }
-    else if (args[0] == 'help') {
+
+    if (args[0] == 'help') {
        await message.channel.send(voicehelp);
        return;
     }
+<<<<<<< HEAD
     else if (args[0] == 'tutorial') {
        const url = 'https://drive.google.com/file/d/1or3CxJCQXkEaaKTU0jz7ZDGO4zwfRP8L/view';
        await message.channel.send(url);
        return;
     }
     else 
+=======
+>>>>>>> 40b56e02... cleanup
 
     if (!message.member.voice.channel) return message.reply('You need to join a voice channel first!');
 
-    async function stopTimout() {
-        if (awake) {
-            clearTimeout(checkWake);
-        }
+    function stopTimout() {
+        if (awake) clearTimeout(checkWake);
     }
 
-    async function checkWake() {
-        if (awake == true){
-            await stopTimout();
-        } 
+    function checkWake() {
+        if (awake) stopTimout();
         else {
             await Util.LeaveVC(message);
             return message.reply('no wakeword detected the last `20` seconds after joining VC!');
@@ -69,36 +69,48 @@ module.exports.run = async (gideon, message, args) => {
         let vcname = message.member.voice.channel.name;
         message.reply(`now joining voice channel: \`${vcname}\`!`);
         const connection = await message.member.voice.channel.join();
+<<<<<<< HEAD
         await connection.play(new Silence(), { type: 'opus' });//enable voice receive by sending silence buffer
         await message.reply('ready for voice input!');
+=======
+        connection.play(new Silence(), { type: 'opus' }); //enable voice receive by sending silence buffer
+
+>>>>>>> 40b56e02... cleanup
         await message.channel.send(Util.GetUserTag(message.author), { embed: voicehelp });
 
         setTimeout(checkWake, 20000); //check if wakeword has been used since joining
 
         connection.on('speaking', async (user, speaking) => {
+<<<<<<< HEAD
             if (gideon.vcmdexec == true) return; //disable speechrecognition while voice command is running
+=======
+            if (gideon.vcmdexec) return; //disable speechrocgnition while voice command is running
+            
+>>>>>>> 40b56e02... cleanup
             if (speaking.has('SPEAKING')) {
                 console.log(`Scribe: listening to ${user.username}`);
                 console.log(`Scribe: SPEAKING ${speaking}`, speaking);
 
                 const audio = connection.receiver.createStream(user, { mode: 'pcm' });
 
-                audio.on('end', () => {
-                    console.log(`Scribe: stopped listening to ${user.username}`);
-                });
+                audio.on('end', () => console.log(`Scribe: stopped listening to ${user.username}`));
 
                 let wake = await Util.SpeechRecognition(audio);
 
                 let entities = wake.entities;
                 if (!entities) return;
+
                 let intent = Object.values(entities)[0];
                 if (!intent) return;
+
                 let value = intent[0].value;
+
                 if (value == 'wakeword') awake = true;
                 await Util.VoiceResponse(value, connection, message, gideon); 
             }
         }); 
     }
+    
     catch (ex) {
         console.log("Caught an exception while running voice.js: " + ex);
         Util.log("Caught an exception while running voice.js: " + ex);
