@@ -548,6 +548,7 @@ class Util {
                 leave.destroy();
                 await message.reply('voice command succesfully executed!');
                 await Util.LeaveVC(message);
+                gideon.vcmdexec = false;
             });
             return;
         }

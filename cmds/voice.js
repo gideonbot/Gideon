@@ -65,8 +65,8 @@ module.exports.run = async (gideon, message, args) => {
         let vcname = message.member.voice.channel.name;
         message.reply(`now joining voice channel: \`${vcname}\`!`);
         const connection = await message.member.voice.channel.join();
-        connection.play(new Silence(), { type: 'opus' });//enable voice receive by sending silence buffer
-
+        await connection.play(new Silence(), { type: 'opus' });//enable voice receive by sending silence buffer
+        await message.reply('ready for voice input!');
         await message.channel.send(Util.GetUserTag(message.author), { embed: voicehelp });
 
         setTimeout(checkWake, 20000); //check if wakeword has been used since joining
