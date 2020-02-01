@@ -8,6 +8,7 @@ const Util = require("./Util");
 
 gideon.commands = new Discord.Collection();
 gideon.cvmt = false;
+gideon.vcmdexec = false;
 
 fs.readdir("./cmds", (err, files) => {
     if (err) {

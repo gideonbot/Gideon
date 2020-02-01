@@ -2,8 +2,13 @@ const Discord = module.require("discord.js");
 const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
-    let agm = args.join("").toLowerCase();
-    if (agm.match(/(?:me)/i) && agm.match(/(?:the)/i) && agm.match(/(?:future)/i)) {
+    let agm;
+    if (args){
+        agm = args.join("").toLowerCase();
+        if (agm.match(/(?:me)/i) && agm.match(/(?:the)/i) && agm.match(/(?:future)/i)) {
+            message.channel.send('Yes Dr. Wells!');
+        } 
+    }     
         const future = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle('The Central City Citizen\nFLASH MISSING VANISHES IN CRISIS')
@@ -12,8 +17,7 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-        message.channel.send('Yes Dr. Wells!', {embed: future});
-    }   
+        message.channel.send(future);
 }
 
 module.exports.help = {
