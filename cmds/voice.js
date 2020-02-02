@@ -24,6 +24,7 @@ module.exports.run = async (gideon, message, args) => {
     .setColor('#2791D3')
     .setAuthor(`Note: You must wake Gideon up before using any commands!`, message.author.avatarURL())
     .setTitle(`Available Voice Commands:`)
+    .setDescription(`Use \`!voice tutorial\` for a video tutorial.`)
     .addField(`Wakeword:`,`Say something like:\n\`\`\`'Gideon'\n'Hey Gideon'\n'Hello Gideon'\n etc...\`\`\`\nGideon will be ready!`, true)
     .addField(`Random Phrases:`,`Say something like:\n\`\`\`'Talk'\n'Talk to me'\n'Say something'\n etc...\`\`\`\nGideon will randomly respond!`, true)
     .addField(`Time Travel:`,`Say something like:\n\`\`\`'Plot a course'\n'Time travel'\n'Timejump'\n etc...\`\`\`\nGideon will plot a course!`, true)
@@ -39,6 +40,11 @@ module.exports.run = async (gideon, message, args) => {
     }
     else if (args[0] == 'help') {
        await message.channel.send(voicehelp);
+       return;
+    }
+    else if (args[0] == 'tutorial') {
+       const url = 'https://drive.google.com/file/d/1or3CxJCQXkEaaKTU0jz7ZDGO4zwfRP8L/view';
+       await message.channel.send(url);
        return;
     }
     else 
