@@ -78,7 +78,7 @@ module.exports.run = async (gideon, message, args) => {
         setTimeout(checkWake, 20000); //check if wakeword has been used since joining
 
         connection.on('speaking', async (user, speaking) => {
-            if (gideon.vcmdexec == true) return; //disable speechrocgnition while voice command is running
+            if (gideon.vcmdexec == true) return; //disable speechrecognition while voice command is running
             if (speaking.has('SPEAKING')) {
                 console.log(`Scribe: listening to ${user.username}`);
                 console.log(`Scribe: SPEAKING ${speaking}`, speaking);
@@ -99,7 +99,7 @@ module.exports.run = async (gideon, message, args) => {
                 if (value == 'wakeword') awake = true;
                 await Util.VoiceResponse(value, connection, message, gideon); 
             }
-        }) 
+        }); 
     }
     catch (ex) {
         console.log("Caught an exception while running voice.js: " + ex);
