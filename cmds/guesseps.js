@@ -14,6 +14,7 @@ module.exports.run = async (gideon, message, args) => {
     const auth = message.author.id;
     let chosenfilter;
     let tries = 3;
+    let p;
     let timerstart;
     let timerdiff;
     let timervalue;
@@ -162,15 +163,17 @@ module.exports.run = async (gideon, message, args) => {
         
                     if (similarity >= 0.65) {
                         await collector.stop();
-                        tries = tries -1;
-                        await score.points++;
+                        if (tries === 3) await score.points++, score.points++, score.points++, p = 3;
+                        else if (tries === 2) await score.points++, score.points++, p = 2;
+                        else if (tries === 1) await score.points++, p = 1;
                         await gideon.setScore.run(score);
+                        tries = tries -1;
 
                         const correctembed = new Discord.MessageEmbed()
                         .setColor('#2791D3')
                         .setTitle(`Guessing game for ${message.author.tag}:`)
                         .setAuthor(`You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${await Countdown()} ${await Countdown() > 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
-                        .setDescription(`That is correct! :white_check_mark:\n\`${embed[1]} ${embed[2]} - ${embed[3]}\`\n\n**You have gained \`1\` point!**`)
+                        .setDescription(`That is correct! :white_check_mark:\n\`${embed[1]} ${embed[2]} - ${embed[3]}\`\n\n**You have gained \`${p}\` ${p > 1 ? s[2] + "s" : s[2]}!**`)
                         .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
                         .setTimestamp()
                         .setFooter(Util.config.footer, gideon.user.avatarURL());
