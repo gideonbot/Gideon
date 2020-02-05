@@ -1,6 +1,7 @@
 .autogit
 .env
 .vscode
+node_modules/
 /data/JSON/tzdb.json
 /data/SQL/scores.sqlite
 /data/SQL/scores.sqlite-shm
