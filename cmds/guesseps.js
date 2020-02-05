@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 const stringSimilarity = require('string-similarity');
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./data/SQL/scores.sqlite');
+const datetimeDifference = require("datetime-difference");
 
 module.exports.run = async (gideon, message, args) => {
     const url = 'https://arrowverse.info';
@@ -14,7 +15,7 @@ module.exports.run = async (gideon, message, args) => {
     const auth = message.author.id;
     let chosenfilter;
     let tries = 3;
-    let p;
+    let p = 0;
     let timerstart;
     let timerdiff;
     let timervalue;
@@ -94,6 +95,15 @@ module.exports.run = async (gideon, message, args) => {
         return timervalue;
     }
 
+    async function PointsMulti(airdate) {
+        const today = new Date();
+        const episodeage = await datetimeDifference(airdate, today);
+    }
+
+    async function PointsAmt() {
+        await score.points++;
+    }
+
     async function GameEmbed(showfilter){
         const body = await fetch(api).then(res => res.json());
 
@@ -132,6 +142,7 @@ module.exports.run = async (gideon, message, args) => {
             rcollector.on('collect', async (reaction, user, reactionCollector) => {
                 if (reaction.emoji.name === '▶️') {
                     tries = 3;
+                    p = 0;
                     let updateembed = await GameEmbed(chosenfilter);
                     await sent.reactions.find(x => x.emoji.name === "▶️").users.remove(user.id);
                     await collector.resetTimer();
@@ -163,9 +174,10 @@ module.exports.run = async (gideon, message, args) => {
         
                     if (similarity >= 0.65) {
                         await collector.stop();
-                        if (tries === 3) await score.points++, score.points++, score.points++, p = 3;
-                        else if (tries === 2) await score.points++, score.points++, p = 2;
-                        else if (tries === 1) await score.points++, p = 1;
+                        if (tries === 3) p = 3;
+                        else if (tries === 2) p = 2;
+                        else if (tries === 1) p = 1;
+                        for (let pa = 0; pa < p; pa++) PointsAmt();
                         await gideon.setScore.run(score);
                         tries = tries -1;
 
