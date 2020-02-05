@@ -4,7 +4,8 @@ const fetch = require('node-fetch');
 const stringSimilarity = require('string-similarity');
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./data/SQL/scores.sqlite');
-const datetimeDifference = require("datetime-difference");
+const timediff = require('timediff');
+const moment = require('moment');
 
 module.exports.run = async (gideon, message, args) => {
     const url = 'https://arrowverse.info';
@@ -16,6 +17,7 @@ module.exports.run = async (gideon, message, args) => {
     let chosenfilter;
     let tries = 3;
     let p = 0;
+    let multiplicator;
     let timerstart;
     let timerdiff;
     let timervalue;
@@ -95,13 +97,21 @@ module.exports.run = async (gideon, message, args) => {
         return timervalue;
     }
 
-    async function PointsMulti(airdate) {
-        const today = new Date();
-        const episodeage = await datetimeDifference(airdate, today);
-    }
-
     async function PointsAmt() {
         await score.points++;
+    }
+
+    async function PointsMulti(airdate) {
+        const now = new Date();
+        const today = moment(now).format("MM/DD/YY");
+        const epdate = moment(airdate).format("MM/DD/YY");
+        const diff = timediff(epdate, today, 'D');
+        const epdays = diff.days;
+        multiplicator = epdays/100;
+        const multipoints = multiplicator+p;
+        const finalpoints = Math.round(multipoints);
+        p = finalpoints;
+        for (let pa = 0; pa < p; pa++) PointsAmt();
     }
 
     async function GameEmbed(showfilter){
@@ -113,6 +123,7 @@ module.exports.run = async (gideon, message, args) => {
         const show = randomep.series;
         const epnum = randomep.episode_id;
         const epname = randomep.episode_name;
+        const epairdate = randomep.air_date;
 
         const gameembed = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -123,7 +134,7 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-        return [gameembed, show, epnum, epname];
+        return [gameembed, show, epnum, epname, epairdate];
     }
 
     try{
@@ -178,6 +189,7 @@ module.exports.run = async (gideon, message, args) => {
                         else if (tries === 2) p = 2;
                         else if (tries === 1) p = 1;
                         for (let pa = 0; pa < p; pa++) PointsAmt();
+                        await PointsMulti(embed[4]);
                         await gideon.setScore.run(score);
                         tries = tries -1;
 
@@ -185,7 +197,7 @@ module.exports.run = async (gideon, message, args) => {
                         .setColor('#2791D3')
                         .setTitle(`Guessing game for ${message.author.tag}:`)
                         .setAuthor(`You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${await Countdown()} ${await Countdown() > 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
-                        .setDescription(`That is correct! :white_check_mark:\n\`${embed[1]} ${embed[2]} - ${embed[3]}\`\n\n**You have gained \`${p}\` ${p > 1 ? s[2] + "s" : s[2]}!**`)
+                        .setDescription(`That is correct! :white_check_mark:\n\`${embed[1]} ${embed[2]} - ${embed[3]}\`\n\n**You have gained \`${p}\` ${p > 1 ? s[2] + "s" : s[2]}!**\n(Airdate point bonus: \`+${multiplicator}\`)`)
                         .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
                         .setTimestamp()
                         .setFooter(Util.config.footer, gideon.user.avatarURL());
