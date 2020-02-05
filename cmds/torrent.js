@@ -1,6 +1,5 @@
 const Discord = module.require("discord.js");
-const RarbgApi = require('rarbg');
-const rarbg = new RarbgApi();
+const torrentSearch = require('torrent-search-api');
 const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
@@ -15,6 +14,12 @@ module.exports.run = async (gideon, message, args) => {
     const na = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply the shows name, season and its episode number!')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+    const er = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('An error occured while executing this command!')
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
@@ -47,41 +52,42 @@ module.exports.run = async (gideon, message, args) => {
 
     else return message.channel.send(ia);
         
-    let rbs = `${showtitle} S${season_and_ep.season < 10 ? "0" + season_and_ep.season : season_and_ep.season}E${season_and_ep.episode < 10 ? "0" + season_and_ep.episode : season_and_ep.episode}`;
-
-    rarbg.search({
-        search_string: rbs,
-        sort: 'last',
-        category: [rarbg.categories.TV_HD_EPISODES, rarbg.categories.TV_EPISODES],
-    }).then(response => {
+    let ts = `${showtitle} S${season_and_ep.season < 10 ? "0" + season_and_ep.season : season_and_ep.season}E${season_and_ep.episode < 10 ? "0" + season_and_ep.episode : season_and_ep.episode}`;
+    
+    try {
+        await torrentSearch.enablePublicProviders();
+        const torrents = await torrentSearch.search(['1337x', 'TorrentProject', 'ThePirateBay', 'KickassTorrents', 'Torrentz2'], ts, 'TV', 5);
+        
         const epdwn = new Discord.MessageEmbed()
         .setColor('#2791D3')
-        .setTitle(rbs)
+        .setTitle(ts)
         .setDescription(`:warning:Always enable a VPN before downloading!:warning:`)
-        .addField(response[0].filename, `**[Magnet URI](https://${response[0].download} '${response[0].download}')**`)
-        .addField(response[1].filename, `**[Magnet URI](https://${response[1].download} '${response[1].download}')**`)
-        .addField(response[2].filename, `**[Magnet URI](https://${response[2].download} '${response[2].download}')**`)
-        .addField(response[3].filename, `**[Magnet URI](https://${response[3].download} '${response[3].download}')**`)
-        .addField(response[4].filename, `**[Magnet URI](https://${response[4].download} '${response[4].download}')**`)
+        .addField(torrents[0].title, `Size: \`${torrents[0].size}\` Seeds: \`${torrents[0].seeds}\` Provider: \`${torrents[0].provider}\``)
+        .addField(torrents[1].title, `Size: \`${torrents[1].size}\` Seeds: \`${torrents[1].seeds}\` Provider: \`${torrents[1].provider}\``)
+        .addField(torrents[2].title, `Size: \`${torrents[2].size}\` Seeds: \`${torrents[2].seeds}\` Provider: \`${torrents[2].provider}\``)
+        .addField(torrents[3].title, `Size: \`${torrents[3].size}\` Seeds: \`${torrents[3].seeds}\` Provider: \`${torrents[3].provider}\``)
+        .addField(torrents[4].title, `Size: \`${torrents[4].size}\` Seeds: \`${torrents[4].seeds}\` Provider: \`${torrents[4].provider}\``)
         .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
             
-        message.channel.send(epdwn);
+        await message.channel.send(epdwn);
 
-    }).catch(err => {
-        const nf = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`There was no result for "${rbs}" on rarbg.to!`)
-        .setDescription('Please try another episode instead!')
-        .setTimestamp()
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        return message.channel.send(nf);
-    });
+        for (let i=0 ; i < torrents.length ; i++) {
+            const buffer = await torrentSearch.downloadTorrent(torrents[i]);
+            const attachment = new Discord.MessageAttachment(buffer, `${torrents[i].title}.torrent`);
+            await message.channel.send(attachment);
+        }
+    }
+    catch (ex) {
+        console.log("Caught an exception while running torrent.js: " + ex.stack);
+        Util.log("Caught an exception while running torrent.js: " + ex.stack);
+        return message.channel.send(er);
+    }
 }
 
 module.exports.help = {
-    name: ["torrent", "rarbg", "download"],
+    name: ["torrent", "download"],
     type: "general",
     help_text: "torrent <show> <NxNN/SNNENN> ~ N -> number",
-    help_desc: "Searches rarbg.to for the specified episode"
+    help_desc: "Searches torrent providers for the specified episode"
 }

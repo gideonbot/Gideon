@@ -23,6 +23,7 @@
     "opensubtitles-api": "^5.0.1",
     "rarbg": "^1.2.7",
     "select-random-file": "^1.1.0",
-    "string-similarity": "^4.0.1"
+    "string-similarity": "^4.0.1",
+    "torrent-search-api": "^2.0.10"
   }
 }
