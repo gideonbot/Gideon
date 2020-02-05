@@ -1,0 +1,26 @@
+const Discord = module.require("discord.js");
+const Util = require("../Util");
+
+module.exports.run = async (gideon, message, args) => {  
+    const ia = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('You must supply a valid show!')
+    .setDescription('Available shows:\n**flash**\n**legends**')
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+    if (!args[0]) return message.channel.send(ia);   
+    const flashopening = 'https://cdn.discordapp.com/attachments/595934699285905409/674586782494621696/YouCut_20200205_130726276.mp4';
+    const lotopening = 'https://cdn.discordapp.com/attachments/595934804378386442/674611602577817621/YouCut_20200205_144514668.mp4';
+    
+    if (args[0].match(/(?:flash)/i)) return message.channel.send(flashopening);
+    if (args[0].match(/(?:legends)/i)) return message.channel.send(lotopening);
+    else return message.channel.send(ia);
+}
+
+module.exports.help = {
+    name: ["opening", "intro"],
+    type: "misc",
+    help_text: "opening",
+    help_desc: "Sends the specified opening"
+}
