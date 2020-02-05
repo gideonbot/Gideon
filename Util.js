@@ -508,9 +508,9 @@ class Util {
     static async VoiceResponse(value, connection, message, gideon) {
         const randomFile = require('select-random-file');
         
-        if (value == 'wakeword') {
+        if (value === 'wakeword') {
             gideon.vcmdexec = true;
-            const orders = connection.play('./data/audio/captain/Awaiting orders, Captain.mp3');
+            const orders = connection.play('./data/audio/captain/Awaiting orders, Captain.m4a');
             orders.pause();
             orders.resume();
 
@@ -521,7 +521,7 @@ class Util {
             }); 
             return;
         }
-        if (value == 'talk') {
+        if (value === 'talk') {
             gideon.vcmdexec = true;
             const dir = './data/audio/phrases';
             await randomFile(dir, async (err, file) => {
@@ -538,9 +538,9 @@ class Util {
             })
             return;
         }
-        if (value == 'leave') {
+        if (value === 'leave') {
             gideon.vcmdexec = true;
-            const leave = connection.play('./data/audio/captain/Yes, Captain.mp3');
+            const leave = connection.play('./data/audio/captain/Yes, Captain.m4a');
             leave.pause();
             leave.resume();
 
@@ -552,16 +552,16 @@ class Util {
             });
             return;
         }
-        if (value == 'timejump') {
+        if (value === 'timejump') {
             gideon.vcmdexec = true;
-            const confirm = connection.play('./data/audio/captain/Right away, Captain!.mp3');
+            const confirm = connection.play('./data/audio/captain/Right away, Captain!.m4a');
             confirm.pause();
             confirm.resume();
 
             confirm.on('finish', async () => {
                 confirm.destroy();
 
-                const timejump = connection.play('./data/audio/phrases/Executing timejump now.mp3');
+                const timejump = connection.play('./data/audio/phrases/Executing timejump now.m4a');
                 timejump.pause();
                 timejump.resume();
 
@@ -575,9 +575,9 @@ class Util {
             });
             return;
         }
-        if (value == 'future') {
+        if (value === 'future') {
             gideon.vcmdexec = true;
-            const confirm = connection.play('./data/audio/captain/Right away, Captain!.mp3');
+            const confirm = connection.play('./data/audio/captain/Right away, Captain!.m4a');
             confirm.pause();
             confirm.resume();
 
@@ -590,9 +590,9 @@ class Util {
             });
             return;
         }
-        if (value == 'nxeps') {
+        if (value === 'nxeps') {
             gideon.vcmdexec = true;
-            const confirm = connection.play('./data/audio/captain/Right away, Captain!.mp3');
+            const confirm = connection.play('./data/audio/captain/Right away, Captain!.m4a');
             confirm.pause();
             confirm.resume();
 
