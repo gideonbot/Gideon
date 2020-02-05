@@ -1,1 +1,1 @@
-sudo nodemon --exec npm start --ext '*.*'
+sudo nodemon --exec npm start --ext '*'

@@ -1,2 +1,2 @@
-nodemon --exec npm start --ext '*.*'
+nodemon --exec npm start --ext '*'
 pause
