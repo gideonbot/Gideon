@@ -1,0 +1,1 @@
+sudo nodemon --exec npm start
