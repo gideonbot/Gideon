@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node index.js",
-    "start": "node index.js"
+    "start": "npm install && node index.js"
   },
   "author": "adrifcastr",
   "license": "GPL2",
