@@ -29,11 +29,11 @@ module.exports.run = async (gideon, message, args) => {
     let cvmen = false; 
     if (gideon.cvmt) cvmen = true, gideon.cvmt = false; //if CVM is enabled, turn true, then off
 
-    message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.').then(message => {
+    message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.').then(async message => {
         for (let emoji of emoji_ids) {
             message.react(emoji).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
         }
-        
+
         await Util.TRM(message.guild, true);
 
         const rfilter = (reaction, user) => emoji_ids.includes(reaction.emoji.id) && user.id === auth;
