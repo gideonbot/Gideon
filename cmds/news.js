@@ -27,7 +27,6 @@ module.exports.run = async (gideon, message, args) => {
     let roles_to_ping = [];
 
     let cvmen = false; 
-    await Util.TRM(message.guild, true);
     if (gideon.cvmt) cvmen = true, gideon.cvmt = false; //if CVM is enabled, turn true, then off
 
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.').then(message => {
@@ -35,6 +34,8 @@ module.exports.run = async (gideon, message, args) => {
             message.react(emoji).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
         }
         
+        await Util.TRM(message.guild, true);
+
         const rfilter = (reaction, user) => emoji_ids.includes(reaction.emoji.id) && user.id === auth;
 
         const rcollector = message.createReactionCollector(rfilter, {time: 120000});
