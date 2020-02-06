@@ -110,6 +110,7 @@ module.exports.run = async (gideon, message, args) => {
         multiplicator = epdays/100;
         const multipoints = multiplicator+p;
         const finalpoints = Math.round(multipoints);
+        if (finalpoints === 0 || finalpoints < 0) return p = 0;
         p = finalpoints;
         for (let pa = 0; pa < p; pa++) PointsAmt();
     }
