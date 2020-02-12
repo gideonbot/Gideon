@@ -276,7 +276,8 @@ class Util {
 
         const cvmembed = new Discord.MessageEmbed()
         .setColor('#2791D3')
-        .setDescription(`${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}: ${plainText ? '||' + plainText + '||' : ''}`);
+        .setAuthor(`${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}:`, message.author.avatarURL())
+        .setDescription(`${plainText ? '||' + plainText + '||' : ''}`);
 
         await message.channel.send(cvmembed);
 
