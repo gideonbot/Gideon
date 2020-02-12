@@ -13,13 +13,13 @@ module.exports.run = async (gideon, message, args) => {
     + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
 
     const body = await fetch(api).then(res => res.json());
-    let targetflag = `:flag_${body[2]}:`;
-    if (body[2] == targetLang) targetflag = ':flag_gb:';
+    let sourceflag = `:flag_${body[2]}:`;
+    if (body[2] == targetLang) sourceflag = ':flag_gb:';
 
     const trembed = new Discord.MessageEmbed()
     .setColor('#2791D3')
-    .setTitle(`Translation for ${message.author.tag}:`)
-    .addField(`Original Text: ${targetflag} `,`\`\`\`${sourceText}\`\`\``)
+    .setAuthor(`Translation for ${message.author.tag}:`, message.author.avatarURL())
+    .addField(`Original Text: ${sourceflag}`,`\`\`\`${sourceText}\`\`\``)
     .addField(`Translated Text: :flag_gb:`,`\`\`\`${body[0][0][0]}\`\`\``)
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());

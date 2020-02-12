@@ -9,6 +9,7 @@ const Util = require("./Util");
 gideon.commands = new Discord.Collection();
 gideon.cvmt = false;
 gideon.vcmdexec = false;
+gideon.trmode = new Map();
 
 fs.readdir("./cmds", (err, files) => {
     if (err) {
@@ -109,6 +110,7 @@ gideon.on('message', (message) => {
     Util.ABM(message);
     if (gideon.cvmt) Util.CVM(message);
     Util.CSD(message);
+    Util.TRMode(gideon, message);
 
     const lowercaseContent = message.content.toLowerCase();
     const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));

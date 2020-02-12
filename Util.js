@@ -608,6 +608,52 @@ class Util {
         }
         else return;
     }
+
+    /** Automatic translation mode
+     * @param {Discord.Client} gideon 
+     * @param {Discord.Message} message 
+     */
+    static async TRMode(gideon, message) {
+        const lowercaseContent = message.content.toLowerCase();
+
+        // Find the prefix that was used
+        const usedPrefix = config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+        let args = '';
+
+        if (!usedPrefix) args = message.content.split(' ').map(x => x.trim()).filter(x => x);
+        else args = message.content.slice(usedPrefix.length).trim().split(" ");
+
+        if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
+
+        const uid = message.author.id;
+        let value = false
+        if (!gideon.trmode.get(uid)) gideon.trmode.set(uid, value);
+
+        let check = gideon.trmode.get(uid);
+        if (check === false) return;
+
+        else {
+            const sourceLang = 'auto';
+            const targetLang = 'en';
+            const sourceText = message.content;
+
+            const api = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
+            + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
+
+            const body = await fetch(api).then(res => res.json());
+            let sourceflag = `:flag_${body[2]}:`;
+            if (body[2] == targetLang) sourceflag = ':flag_gb:';
+
+            const autotrembed = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setAuthor(`${message.author.tag} said:`, message.author.avatarURL())
+            .setDescription(`(${sourceflag}) ${body[0][0][0]}`)
+
+            await Util.delay(200);
+            await message.delete();
+            message.channel.send(autotrembed);
+        }
+    }
     //more methods to come
 }
 module.exports = Util;
