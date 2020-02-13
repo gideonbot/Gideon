@@ -5,7 +5,7 @@ const fs = require('fs');
 
 module.exports.run = async (gideon, message, args) => {
     if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
-    if (!message.member.roles.has('657198785289650177')) return message.channel.send('You don\'t have the required permissions to use this command!');
+    if (!message.member.roles.cache.has('657198785289650177')) return message.channel.send('You don\'t have the required permissions to use this command!');
 
     const slctzone = args[1]
     const apikey = process.env.TZ_API_KEY;
@@ -125,7 +125,7 @@ module.exports.run = async (gideon, message, args) => {
 
     else if(args[0] && !args[1]){
         try {
-            const user = gideon.users.get(Util.getIdFromString(args[0]));
+            const user = gideon.users.cache.get(Util.getIdFromString(args[0]));
    
             if (!user) return message.channel.send(me);
             const usertag = user.username + '#' + user.discriminator;

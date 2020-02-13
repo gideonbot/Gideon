@@ -26,7 +26,7 @@ module.exports.run = async (gideon, message, args) => {
     .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-    const user = gideon.users.get(Util.getIdFromString(args[1]));
+    const user = gideon.users.cache.get(Util.getIdFromString(args[1]));
     if (!user) return message.channel.send(me);
     else if (user.id === auth.id || user.id === gideon.user.id) return message.channel.send(sh);
 

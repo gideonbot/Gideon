@@ -4,7 +4,7 @@ const Util = require("../Util");
 module.exports.run = async (gideon, message, args) => {
     const auth = message.author;
 
-    const user = gideon.users.get(Util.getIdFromString(args[0]));
+    const user = gideon.users.cache.get(Util.getIdFromString(args[0]));
     if (!user) return message.channel.send('You must use a proper mention if you want to cuddle someone!');
 
     const cuddle = new Discord.MessageEmbed()

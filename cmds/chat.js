@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
     let arr = [];
     let last = null;
 
-    for (let m of message.channel.messages.array().reverse()) {
+    for (let m of message.channel.messages.cache.array().reverse()) {
         if (!last) last = m.createdAt;
 
         else {

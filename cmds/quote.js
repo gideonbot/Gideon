@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
-    const titlesapi = `https://api.myjson.com/bins/l583v`;
+    const titlesapi = `https://api.myjson.com/bins/13h4p4`;
 
     try {
         const tbody = await fetch(titlesapi).then(res => res.json());
@@ -28,11 +28,10 @@ module.exports.run = async (gideon, message, args) => {
     
         let qp = qbody.sections[0].title;
         let qpe = qp.replace(/(?:\/Quotes)/,'');
-        let qpb = qpe.replace(/(?:Arrow)/, 'Arrowverse');
         
         const quote = new Discord.MessageEmbed()
         .setColor('#2791D3')
-        .setDescription(`**${chosenQuote}\n\n~${qpb}**`)
+        .setDescription(`**${chosenQuote}\n\n~${qpe}**`)
         .setThumbnail(type.thumbnail)
         .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());

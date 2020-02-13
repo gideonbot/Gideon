@@ -51,10 +51,10 @@ gideon.once('ready', async () => {
     gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (user, points, guild) VALUES (@user, @points, @guild);");
 
     async function status() {
-        const tmvt = gideon.guilds.get('595318490240385037');
+        const tmvt = gideon.guilds.cache.get('595318490240385037');
         if (!tmvt) return;
 
-        let mbc = tmvt.members.filter(member => !member.user.bot).size;
+        let mbc = tmvt.members.cache.filter(member => !member.user.bot).size;
         const st1 = `!help | invite.gg/tmvt`;
         let st2 = `${mbc} Time Vault members`;
         const st3 = 'over Queen JPK!';
@@ -67,13 +67,13 @@ gideon.once('ready', async () => {
     }
     
     console.log('Ready!');
-    Util.log(`${gideon.user.tag} ready!\nServers:\n${gideon.guilds.map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
-    let ids = gideon.guilds.map(x => x.id);
+    Util.log(`${gideon.user.tag} ready!\nServers:\n${gideon.guilds.cache.map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
+    let ids = gideon.guilds.cache.map(x => x.id);
 
     for (let i = 0; i < ids.length; i++) {
         try {
-            let guild = gideon.guilds.get(ids[i]);
-            let textchannels = guild.channels.filter(c=> c.type == "text");
+            let guild = gideon.guilds.cache.get(ids[i]);
+            let textchannels = guild.channels.cache.filter(c=> c.type == "text");
             let invitechannels = textchannels.filter(c=> c.permissionsFor(guild.me).has('CREATE_INSTANT_INVITE'));
             if(!invitechannels.size) return;
 

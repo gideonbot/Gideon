@@ -3,7 +3,7 @@ const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
-    if (!message.member.roles.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
+    if (!message.member.roles.cache.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
     else {
         const er = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -11,7 +11,7 @@ module.exports.run = async (gideon, message, args) => {
         .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
     
-        let check = message.guild.roles.get('596402530989375539');
+        let check = message.guild.roles.cache.get('596402530989375539');
 
         if (check.mentionable == false){
             try {

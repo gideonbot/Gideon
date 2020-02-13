@@ -3,7 +3,7 @@ const Util = require("../Util");
 
 module.exports.run = async (gideon, message, args) => {
     if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
-    if (!message.member.roles.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
+    if (!message.member.roles.cache.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
 
     const emoji_ids = ['598886586284900354', '607658682246758445', '598886597244485654', '598886605641613353', '598886588545499186', '598886601476800513', '607657873534746634', '634764613434474496', '638489255169228830', '668513166380105770'];
 
@@ -71,7 +71,7 @@ module.exports.run = async (gideon, message, args) => {
 
         if (message.attachments.size > 0) news.setImage(message.attachments.first().proxyURL);
 
-        const tmvt = gideon.guilds.get('595318490240385037');
+        const tmvt = gideon.guilds.cache.get('595318490240385037');
         if (!tmvt) {
             console.log('Couldn\'t get TV server when running news!');
             Util.log('Couldn\'t get TV server when running news!');
@@ -84,7 +84,7 @@ module.exports.run = async (gideon, message, args) => {
             return message.channel.send(er);
         }
 
-        const news_channel = tmvt.channels.get('595944027208024085');
+        const news_channel = tmvt.channels.cache.get('595944027208024085');
         if (!news_channel) {
             console.log('Couldn\'t get news channel when running news!');
             Util.log('Couldn\'t get news channel when running news!');
