@@ -1,9 +1,12 @@
 const Discord = module.require("discord.js");
 const torrentSearch = require('torrent-search-api');
 const Util = require("../Util");
+const Magnet2torrent = require('magnet2torrent-js');
 
 module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
+    const auth = message.author.id;
+
     const ia = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`"${agc}" is not a valid argument!`)
@@ -54,35 +57,62 @@ module.exports.run = async (gideon, message, args) => {
         
     let ts = `${showtitle} S${season_and_ep.season < 10 ? "0" + season_and_ep.season : season_and_ep.season}E${season_and_ep.episode < 10 ? "0" + season_and_ep.episode : season_and_ep.episode}`;
     
-    try {
-        await torrentSearch.enablePublicProviders();
-        const torrents = await torrentSearch.search(['1337x', 'TorrentProject', 'ThePirateBay', 'KickassTorrents', 'Torrentz2'], ts, 'TV', 5);
-        
-        const epdwn = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(ts)
-        .setDescription(`:warning:Always enable a VPN before downloading!:warning:`)
-        .addField(torrents[0].title, `Size: \`${torrents[0].size}\` Seeds: \`${torrents[0].seeds}\` Provider: \`${torrents[0].provider}\``)
-        .addField(torrents[1].title, `Size: \`${torrents[1].size}\` Seeds: \`${torrents[1].seeds}\` Provider: \`${torrents[1].provider}\``)
-        .addField(torrents[2].title, `Size: \`${torrents[2].size}\` Seeds: \`${torrents[2].seeds}\` Provider: \`${torrents[2].provider}\``)
-        .addField(torrents[3].title, `Size: \`${torrents[3].size}\` Seeds: \`${torrents[3].seeds}\` Provider: \`${torrents[3].provider}\``)
-        .addField(torrents[4].title, `Size: \`${torrents[4].size}\` Seeds: \`${torrents[4].seeds}\` Provider: \`${torrents[4].provider}\``)
-        .setTimestamp()
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-            
-        await message.channel.send(epdwn);
+    const pw = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setAuthor(`Torrents for ${message.author.tag}`, message.author.avatarURL())
+    .setTitle('Gathering torrents: ' + ts)
+    .setDescription(`Please stand by...`)
+    .setTimestamp()
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-        for (let i=0 ; i < torrents.length ; i++) {
-            const buffer = await torrentSearch.downloadTorrent(torrents[i]);
-            const attachment = new Discord.MessageAttachment(buffer, `${torrents[i].title}.torrent`);
-            await message.channel.send(attachment);
+    await message.channel.send(pw).then(async sent => {
+        try {
+            await torrentSearch.enablePublicProviders();
+            const torrents = await torrentSearch.search(['1337x', 'TorrentProject', 'ThePirateBay', 'KickassTorrents', 'Torrentz2'], ts, 'TV', 5);
+            
+            const epdwn = new Discord.MessageEmbed()
+            .setColor('#2791D3')
+            .setAuthor(`Torrents for ${message.author.tag}`, message.author.avatarURL())
+            .setTitle(ts)
+            .setDescription(`:warning:Always enable a VPN before downloading!:warning:`)
+            .setTimestamp()
+            .setFooter(Util.config.footer, gideon.user.avatarURL());
+    
+            const m2t = new Magnet2torrent({
+                timeout: 60
+            });
+    
+    
+            for (let i=0 ; i < torrents.length ; i++) {
+                const magnet = await torrentSearch.getMagnet(torrents[i]);
+                const buffer = await m2t.getTorrentBuffer(magnet);
+                const attachment = new Discord.MessageAttachment(buffer, `${torrents[i].title}.torrent`);
+    
+                const emotes = gideon.guilds.cache.get('525341081727008788');
+                if (!emotes) {
+                    return message.channel.send(er);
+                }
+    
+                const torrent_channel = emotes.channels.cache.get('677861559682465802');
+                if (!torrent_channel) {
+                    return message.channel.send(er);
+                }
+    
+                await torrent_channel.send(attachment).then(async msg =>{
+                    const url = msg.attachments.first().url;
+                    epdwn.addField(torrents[i].title, `Size: \`${torrents[i].size}\` Seeds: \`${torrents[i].seeds}\` Provider: \`${torrents[i].provider}\` **[Download](${url} '${url}')**`)
+                });
+            } 
+    
+            await sent.edit(epdwn);
+            await message.channel.send(`<@${auth}>`);
         }
-    }
-    catch (ex) {
-        console.log("Caught an exception while running torrent.js: " + ex.stack);
-        Util.log("Caught an exception while running torrent.js: " + ex.stack);
-        return message.channel.send(er);
-    }
+        catch (ex) {
+            console.log("Caught an exception while running torrent.js: " + ex.stack);
+            Util.log("Caught an exception while running torrent.js: " + ex.stack);
+            return message.channel.send(er);
+        }
+    });
 }
 
 module.exports.help = {
