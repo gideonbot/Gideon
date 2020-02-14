@@ -8,7 +8,6 @@ module.exports.run = async (gideon, message, args) => {
     const ia = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`${args[0]} is not a valid argument!`)
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     if (!args[0]) {
@@ -20,7 +19,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('admin', 'Commands for people with higher roles then the average Metahuman')  
         .addField('misc', 'Miscellaneous commands')    
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         message.channel.send(help);
@@ -68,7 +66,6 @@ module.exports.run = async (gideon, message, args) => {
         const embed = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle('__List of available "' + type + '" commands below:__') 
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         for (let item in commands) {

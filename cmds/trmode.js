@@ -5,7 +5,6 @@ module.exports.run = async (gideon, message, args) => {
     const er = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('An error occured while executing this command!')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const uid = message.author.id;

@@ -12,7 +12,6 @@ module.exports.run = async (gideon, message, args) => {
             const er = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setTitle('An error occurred, please try again later!')
-            .setTimestamp()
             .setFooter(Util.config.footer, gideon.user.avatarURL());
             return message.channel.send(er);
         }
@@ -25,7 +24,6 @@ module.exports.run = async (gideon, message, args) => {
         const meme = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setImage(ravm)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         message.channel.send(meme);

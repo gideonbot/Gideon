@@ -11,19 +11,16 @@ module.exports.run = async (gideon, message, args) => {
     .setColor('#2791D3')
     .setTitle(`"${agc}" is not a valid argument!`)
     .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**supesnlois**\n**stargirl**')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const na = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply the shows name, season and its episode number!')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const er = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('An error occured while executing this command!')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     if (!agc) return message.channel.send(na);
@@ -34,7 +31,6 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setTitle('You must supply a valid episode and season!')
         .setDescription('Acceptable formats: S00E00 and 00x00')
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
         
         return message.channel.send(es);
@@ -62,7 +58,6 @@ module.exports.run = async (gideon, message, args) => {
     .setAuthor(`Torrents for ${message.author.tag}`, message.author.avatarURL())
     .setTitle('Gathering torrents: ' + ts)
     .setDescription(`Please stand by...`)
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     await message.channel.send(pw).then(async sent => {
@@ -75,7 +70,6 @@ module.exports.run = async (gideon, message, args) => {
             .setAuthor(`Torrents for ${message.author.tag}`, message.author.avatarURL())
             .setTitle(ts)
             .setDescription(`:warning:Always enable a VPN before downloading!:warning:`)
-            .setTimestamp()
             .setFooter(Util.config.footer, gideon.user.avatarURL());
     
             const m2t = new Magnet2torrent({

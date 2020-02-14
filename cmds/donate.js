@@ -9,7 +9,6 @@ module.exports.run = async (gideon, message, args) => {
     .addField('PayPal', `[Paypal.me](https://www.paypal.me/adrifcastr 'https://www.paypal.me/adrifcastr')`)
     .addField('Patreon', `[Patreon.com](https://www.patreon.com/gideonbot 'https://www.patreon.com/gideonbot')`)
 	.setThumbnail('https://i.imgur.com/f3fvsRe.png')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(donate);

@@ -6,7 +6,6 @@ module.exports.run = async (gideon, message, args) => {
     .setColor('#2791D3')
     .setTitle('You must choose a valid character!')
     .setDescription('Currently available:\n**killer frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**\n**kingdom come superman**')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL())
 
     if (!args[0]) return message.channel.send(st);
@@ -78,7 +77,6 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle(suit.title)
     .setDescription(suit.desc)
     .setImage(suit.image)
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(suit_embed);  

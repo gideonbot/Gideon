@@ -8,7 +8,6 @@ module.exports.run = async (gideon, message, args) => {
     .setDescription('Click the link below to read the GitHub documentation on how to selfhost me!')
     .setThumbnail(gideon.user.avatarURL())
     .addField('GitHub Wiki:', `**[Read Docs](https://github.com/adrifcastr/Gideon/wiki 'https://github.com/adrifcastr/Gideon/wiki')**`)
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(github);       

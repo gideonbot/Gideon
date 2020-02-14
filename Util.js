@@ -234,7 +234,6 @@ class Util {
         .setColor('#2791D3')
         .setTitle(`${siren}Anti-Bitch-Mode is enabled!${siren}`)
         .setDescription('You posted a link to a forbidden social media account!\nFuck that bitch!')
-        .setTimestamp()
         .setFooter(Util.config.footer, Util.config.avatar);
 
         this.ABM_Test(message).then(async match => {
@@ -308,7 +307,6 @@ class Util {
             const er = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setTitle('An error occurred, please try again later!')
-            .setTimestamp()
             .setFooter(Util.config.footer, Util.config.avatar);
 
             if (err) {
@@ -325,7 +323,6 @@ class Util {
             const imgembed = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setImage(rimg)
-            .setTimestamp()
             .setFooter(Util.config.footer, Util.config.avatar);
             if (imgid === 'ngJQmxL') imgembed.setTitle('Germ approves!:white_check_mark:');
         
@@ -357,7 +354,6 @@ class Util {
             const imgembed = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setImage(ctm)
-            .setTimestamp()
             .setFooter(Util.config.footer, Util.config.avatar);
 
             message.channel.send(imgembed);

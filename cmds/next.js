@@ -14,14 +14,12 @@ module.exports.run = async (gideon, message, args) => {
     .setColor('#2791D3')
     .setTitle('You must supply a valid show!')
     .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**canaries**\n**supesnlois**\n**stargirl**')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const es = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply a valid episode and season!')
     .setDescription('Acceptable formats: S00E00 and 00x00')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
     
     if (agc.match(/(?:flash)/i)) showtitle = "The Flash";
@@ -85,7 +83,7 @@ module.exports.run = async (gideon, message, args) => {
             .setThumbnail(thimg ? thimg : null)
             .addField(nxep, nxepard)
             .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-            .setTimestamp()
+            
             .setFooter('Click on the button below to view the next episode (works every 5 minutes)', gideon.user.avatarURL());
 
             return nextmsg;
@@ -144,7 +142,7 @@ module.exports.run = async (gideon, message, args) => {
         const er = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle('Failed to fetch episode list, please try again later!')
-        .setTimestamp()
+        
         .setFooter(Util.config.footer, gideon.user.avatarURL());
         return message.channel.send(er);
     }

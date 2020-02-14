@@ -36,7 +36,6 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setTitle('An error occured while processing your request:')
         .setDescription(`\`\`\`\n${e.stack}\n\`\`\``)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
         return message.channel.send(er);
     }

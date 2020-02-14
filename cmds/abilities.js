@@ -6,7 +6,7 @@ module.exports.run = async (gideon, message, args) => {
     const ia = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`${args[0]} is not a valid argument!`)
-    .setTimestamp()
+    
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     if (!args[0]) {
@@ -16,7 +16,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('!abilities speedster', 'Displays Speedster abilities')  
         .addField('!abilities viber', 'Displays Viber abilities')  
         .addField('!abilities kryptonian', 'Displays Kryptonian abilities')  
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         message.channel.send(cmdinfo);
@@ -29,7 +28,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Bodily vibration', 'Speedsters can vibrate their body for various effects.', true)  
         .addField('Seismokinesis', 'By vibrating at varying frequencies and with different levels of force, speedsters can create small tremors to induce extreme amounts of jolt on any target they touch.', true)  
         .addField('Intangibility', ' By vibrating their molecules at the frequency of air, speedsters can physically pass through solid matter.', true) 
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const sp2 = new Discord.MessageEmbed()
@@ -40,7 +38,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Speed Force sharing (Unique to Barry Allen)', 'Barry can expand his Speed Force aura to protect others he carries while moving at super speed.', true)
         .addField('Superhuman strength', 'Speedsters physical strength has been heightened beyond that of normal human capacities.', true)
         .addField('Superhuman durability', 'Speedsters possess inhuman resilience, most commonly seen from being unaffected by momentum build-up. They can take attacks and exertion, even survive impacts that would easily kill normal humans.', true)   
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const sp3 = new Discord.MessageEmbed()
@@ -51,7 +48,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Superhuman speed', 'Speedsters can move at such vast speeds, indeterminable to the naked eye. ')  
         .addField('Superhuman agility', 'Speedsters possess flawless coordination, equilibrium and dexterity, they can change direction with immediate sharp turns without sliding or losing balance and instantly stop running on the spot.', true)
         .addField('Superhuman reflexes', 'A Speedsters reaction time is augmented to superhuman levels, allowing them to react to danger and events far faster than normal humans.', true)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const sp4 = new Discord.MessageEmbed()
@@ -62,7 +58,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Time travel', 'The kinetic energy buildup from a speedsters speed can allow them to breach the space-time continuum, allowing them to physically enter the Speed Force and travel through time.', true)
         .addField('Time reversal (Unique to Nora West-Allen)', 'Nora is able to reverse time around her while running, remaining completely unaffected.', true)
         .addField('Interdimensional travel', 'Speedsters can move fast enough to break open portals between dimensions, allowing them to travel to different universes.', true)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const sp5 = new Discord.MessageEmbed()
@@ -73,7 +68,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Temporal dilution (Unique to Barry Allen & Nora West-Allen)', 'By generating enough energy, Barry and Nora can move so fast that time essentially slows down relative to them, to a complete standstill.', true)
         .addField('Time remnant construct', 'Speedsters are able to "create" a time remnant by traveling back to moments before their current-self time travels, hailing from a future that no longer exists. This allows them to be two places at once.', true)
         .addField('Temporal awareness', 'Speedsters are able to subconsciously detect when other speedsters enter the Speed Force to time travel.')
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const sp6 = new Discord.MessageEmbed()
@@ -81,7 +75,6 @@ module.exports.run = async (gideon, message, args) => {
         .setTitle('__Speedsters possess the following abilities:__')
         .addField('Speed Force awareness', 'With concentration, speedsters can sense the Speed Force in another speedster\'s system.', true)
         .addField('Superhuman stamina', 'Speedsters can handle the stresses of extreme racing without noticeable distress, letting them function much longer than normal humans unhindered. Their enhanced stamina is due to their augmented physiology, which builds up little to no lactic acid or fatigue toxins.', true)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const spembeds = [sp1, sp2, sp3, sp4, sp5, sp6];
@@ -103,7 +96,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Interdimensional travel', 'With their natural connection to the multiverse, vibers can open portals to other dimensions. Being a noticeably more advanced ability, they are shown to need focus and a proper awareness of their intended target.', true)
         .addField('Vibrational blasts', 'Vibers are able to generate powerful blue or red concussive blasts of vibrations from their hands capable of propelling full-grown humans through the air.', true)
         .addField('Mental connection', 'Vibers are connected by their powers and are able to observe each other if they\'re skilled enough.', true)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         message.channel.send(viber);
@@ -116,7 +108,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Accelerated healing factor', 'Kryptonian metabolism is tremendously enhanced by solar energy, allowing accelerated healing abilities and burning calories at a superhuman rate, making them practically immune to becoming fat or obese.', true)        
         .addField('Contaminant immunity', 'Kryptonians have an immunity to all forms of disease and contaminants on Earth.', true)        
         .addField('Resurrection', ' After they die, kryptonians are able to self-resurrect by absorbing solar energy from flora in their vicinity.', true)               
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const kr2 = new Discord.MessageEmbed()
@@ -127,7 +118,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Levitation', 'Kryptonians can levitate using their flight abilities.', true)        
         .addField('Heat vision', 'By concentrating every solar energy reserve they have in their body, kryptonians can emit blue or red energy beams of variable intensity and temperature from their eyes.', true)        
         .addField('Invulnerability', 'Kryptonians are essentially invulnerable to all Earthly weapons, with bullets simply ricocheting whenever they come into contact with their skin.', true)               
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const kr3 = new Discord.MessageEmbed()
@@ -138,7 +128,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Atmospheric adaption', 'While kryptonians do require oxygen, their physicality and exposure to a yellow sun allows them to survive while inhaling more harsh forms of it such as the thin, highly CO2-concentrated, atmosphere of Mars.', true)        
         .addField('Reverse photosynthesis', 'Kryptonians are capable of draining solar energy from plants even without a direct source of light.', true)        
         .addField('Super vision', 'Kryptonians are able to see very far distances, presumably at peak human or low superhuman levels. They are even able to see clearly in the dark.', true)               
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const kr4 = new Discord.MessageEmbed()
@@ -149,7 +138,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Super hearing', 'Kryptonians have super-sensitive ears that can perfectly pick up sounds from miles away and even through structures.', true)        
         .addField('Super speed', 'Kryptonians possess the ability to move at hyper-sonic speeds, both through flight and on foot.', true)        
         .addField('Accelerated perception', 'While using their super speed, Kryptonians see everything much slower, allowing them to move with precision and accuracy within very fast moments.', true)               
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const kr5 = new Discord.MessageEmbed()
@@ -160,7 +148,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Super strength', 'A kryptonians strength is enhanced under a yellow sun, enough to easily kill a normal human if they were to attack them directly.', true)        
         .addField('Thunderclap', 'When kryptonians use their super strength to clap their hands together, it creates a powerful shock-wave that throws enemies back.', true)        
         .addField('Super jumping/leaping', 'Kryptonians are able to jump several feet off the ground and leap several stories in a single bound without having to fly.', true)                     
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         const kr6 = new Discord.MessageEmbed()
@@ -170,7 +157,6 @@ module.exports.run = async (gideon, message, args) => {
         .addField('Extended longevity', 'A Kryptonians life span is considerably longer than a humans and they likewise age much slower.', true)  
         .addField('Telepathy immunity', 'Kryptonians are immune to most forms of telepathic powers.', true)  
         .addField('Power bestowal via electricity', 'If a kryptonian is holding a person while electrocuted by lightning, their kryptonian physiology allows them to affect the person, giving the person strange abilites.', true)                  
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
         
         const krembeds = [kr1, kr2, kr3, kr4, kr5, kr6];

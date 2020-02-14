@@ -33,7 +33,6 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setDescription(`**${chosenQuote}\n\n~${qpe}**`)
         .setThumbnail(type.thumbnail)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
     
         message.channel.send(quote);
@@ -46,7 +45,6 @@ module.exports.run = async (gideon, message, args) => {
         const er = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle('Failed to fetch a quote, please try again later!')
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
         return message.channel.send(er);
     }

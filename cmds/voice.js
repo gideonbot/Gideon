@@ -17,7 +17,6 @@ module.exports.run = async (gideon, message, args) => {
     const er = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('An error occured while executing this command!')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const voicehelp = new Discord.MessageEmbed()
@@ -31,7 +30,6 @@ module.exports.run = async (gideon, message, args) => {
     .addField(`Future:`,`Say something like:\n\`\`\`'Show me the future'\n'What's the future'\n'future'\n etc...\`\`\`\nGideon show you the future!`, true)
     .addField(`Upcoming Eps:`,`Say something like:\n\`\`\`'Upcoming Episodes'\n'Next Arrowverse episodes'\n'Next episodes'\n etc...\`\`\`\nGideon will show you the next eps!`, true)
     .addField(`Leave VC:`,`Say something like:\n\`\`\`'Leave'\n'Stop'\n'Get out'\n etc...\`\`\`\nGideon will leave the VC!`, true)
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     if (command.endsWith('leave')) {

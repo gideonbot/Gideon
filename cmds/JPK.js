@@ -5,7 +5,6 @@ module.exports.run = async (gideon, message, args) => {
     const ia = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`${args[0]} is not a valid argument!`)
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const jpkArray = ["FqCwt1J", "8bFXk0z", "2yz4RWt", "kxpGHYM", "f8mENXa", "Xy2SoEw", "UcPxCV5", "JhTWxoJ", "eLugrZD"];
@@ -23,7 +22,6 @@ module.exports.run = async (gideon, message, args) => {
     .addField('!JPK TSC', 'The Secret Circle')
     .addField('!JPK ILBAL', 'I Love Bekka & Lucy')
     .addField('!JPK FS5GR', 'The Flash - S5 Gag Reel')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     let rjpka;  

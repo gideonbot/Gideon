@@ -66,7 +66,6 @@ module.exports.run = async (gideon, message, args) => {
         .setDescription(message.content)
         .setThumbnail(message.author.avatarURL())
         .addField('News posted by:', message.author)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         if (message.attachments.size > 0) news.setImage(message.attachments.first().proxyURL);
@@ -79,7 +78,6 @@ module.exports.run = async (gideon, message, args) => {
             const er = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setTitle('An error occurred, please try again later!')
-            .setTimestamp()
             .setFooter(Util.config.footer, gideon.user.avatarURL());
             return message.channel.send(er);
         }
@@ -92,7 +90,6 @@ module.exports.run = async (gideon, message, args) => {
             const er = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setTitle('An error occurred, please try again later!')
-            .setTimestamp()
             .setFooter(Util.config.footer, gideon.user.avatarURL());
             return message.channel.send(er);
         }

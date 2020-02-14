@@ -21,7 +21,6 @@ module.exports.run = async (gideon, message, args) => {
     .setAuthor(`Translation for ${message.author.tag}:`, message.author.avatarURL())
     .addField(`Original Text: ${sourceflag}`,`\`\`\`${sourceText}\`\`\``)
     .addField(`Translated Text: :flag_gb:`,`\`\`\`${body[0][0][0]}\`\`\``)
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(trembed);

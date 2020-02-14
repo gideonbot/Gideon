@@ -73,7 +73,6 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle(result.title)
     .setDescription(result.desc)
     .setImage(result.gif)
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(`You have reached out to Earth-${result.en}`, {embed: wells});  

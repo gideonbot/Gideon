@@ -9,7 +9,6 @@ module.exports.run = async (gideon, message, args) => {
     .setColor('#2791D3')
     .setTitle('You must supply an attack and a victim!')
     .setDescription('Available attacks:\n**iceblast**\n**lthrow**\n**reverseflash**\n**vibeblast**\n**shootarrow**\n**heatvision**\n**stretchpunch**\n**canarycry**\n**batarang**\n**sendtohell**\n**thunderclap**\n**elblast**\n**fireblast**')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     if (!atc) return message.channel.send(at);
@@ -17,13 +16,11 @@ module.exports.run = async (gideon, message, args) => {
     const me = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must use a proper mention if you want to attack someone!')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const sh = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('My protocols forbid any kind of self-harm!')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const user = gideon.users.cache.get(Util.getIdFromString(args[1]));
@@ -142,7 +139,6 @@ module.exports.run = async (gideon, message, args) => {
 	.setColor('#2791D3')
     .setDescription(`**${attack.emote}${auth} ${attack.text}${attack.emote}**\n\n${attack.desc}`)
 	.setImage(attack.attackgif)
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(attack_embed);

@@ -27,13 +27,11 @@ module.exports.run = async (gideon, message, args) => {
     .setColor('#2791D3')
     .setTitle('You must supply a valid show!')
     .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const er = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('An error occured while executing this command!')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     let agc = args[0];
@@ -68,7 +66,6 @@ module.exports.run = async (gideon, message, args) => {
         const leaderboard = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`Top 10 Leaderboard:`)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
         
         for(let [i=0, data] of top10.entries()){
@@ -132,7 +129,6 @@ module.exports.run = async (gideon, message, args) => {
         .setAuthor(`You've got ${tries} ${tries !== 1 ? s[4] : s[3]} and ${await Countdown()} ${await Countdown() > 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
         .setDescription(`Please guess the following Arrowverse episode's name:\n\`${show} ${epnum}\`\n\n(Press :arrow_forward: to skip this episode or <:stop:669309980209446912> to end this round)`)
         .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         return [gameembed, show, epnum, epname, epairdate];
@@ -173,7 +169,6 @@ module.exports.run = async (gideon, message, args) => {
                     .setAuthor(`You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${await Countdown()} ${await Countdown() > 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
                     .setDescription(`Your game round has been cancelled! :white_check_mark:`)
                     .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-                    .setTimestamp()
                     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
                     await sent.edit(stopembed);
@@ -200,7 +195,6 @@ module.exports.run = async (gideon, message, args) => {
                         .setAuthor(`You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${await Countdown()} ${await Countdown() > 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
                         .setDescription(`That is correct! :white_check_mark:\n\`${embed[1]} ${embed[2]} - ${embed[3]}\`\n\n**You have gained \`${p}\` ${p > 1 ? s[2] + "s" : s[2]}!**\n(Airdate point bonus: \`+${multiplicator}\`)`)
                         .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-                        .setTimestamp()
                         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
                         await sent.edit(correctembed);
@@ -219,7 +213,6 @@ module.exports.run = async (gideon, message, args) => {
                         .setAuthor(`You've ${tries == 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${await Countdown()} ${await Countdown() > 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
                         .setDescription(`That is incorrect! :x:\n${tries == 0 ? solution : question}`)
                         .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-                        .setTimestamp()
                         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
                         if (tries == 0){
@@ -241,7 +234,6 @@ module.exports.run = async (gideon, message, args) => {
                     .setAuthor(`You've had ${tries} ${tries !== 1 ? s[4] : s[3]} left!`, message.author.avatarURL())
                     .setDescription(`You ran out of time!\n\`${embed[1]} ${embed[2]} - ${embed[3]}\``)
                     .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-                    .setTimestamp()
                     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
                     await sent.reactions.removeAll();

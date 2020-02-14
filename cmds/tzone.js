@@ -13,19 +13,16 @@ module.exports.run = async (gideon, message, args) => {
     const ia = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply a valid argument!')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const me = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must use a proper mention if you want to check someone\'s timezone!')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const er = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('An error occured while executing this command!')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     if (args[0] && args[0].match(/(?:register)/i)){
@@ -102,7 +99,6 @@ module.exports.run = async (gideon, message, args) => {
             const tzembed = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setTitle('ITSF-Team Timezones:')
-            .setTimestamp()
             .setFooter(Util.config.footer, gideon.user.avatarURL());
 
             for(let i = 0; i < members.length; i++) {
@@ -159,7 +155,6 @@ module.exports.run = async (gideon, message, args) => {
                 .setColor('#2791D3')
                 .setTitle(`${result[0].username}\'s current local time:`)
                 .setDescription(`\`${formattedDay} ${formattedTime} (${result[0].timezone})\``)
-                .setTimestamp()
                 .setFooter(Util.config.footer, gideon.user.avatarURL());
 
                 message.channel.send(tzembed);

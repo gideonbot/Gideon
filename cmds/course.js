@@ -29,7 +29,6 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setTitle(`Course set to ${destination} ${year}`)
         .setImage('https://i.imgur.com/I3UQhVu.gif')
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         message.channel.send(course);
@@ -43,7 +42,6 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setTitle('An error occurred while trying to plot a course!')
         .setDescription('Try again later!')
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
         return message.channel.send(er);
     }

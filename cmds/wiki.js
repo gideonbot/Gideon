@@ -58,7 +58,6 @@ module.exports.run = async (gideon, message, args) => {
         const nf = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`There was no result for ${search_term} on the ${wiki.title} Wiki!`)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
         if (!Object.keys(body.items).length) return message.channel.send(nf).catch(console.error);
         const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');     
@@ -70,7 +69,6 @@ module.exports.run = async (gideon, message, args) => {
         .setTitle(article.title)
         .setDescription(st + article.abstract + st + `\n\n**[Click here to read the full article](https://${wiki.url}${url} 'https://${wiki.url}${url}')**`)
         .setThumbnail(article.thumbnail)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
     
         message.channel.send(wikiart); 
@@ -84,7 +82,6 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setTitle('Failed to fetch info from wiki!')
         .setDescription('Please try again later!')
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
         return message.channel.send(er);
     } 

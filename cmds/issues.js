@@ -15,42 +15,36 @@ module.exports.run = async (gideon, message, args) => {
     const er = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('An error occured while executing this command!')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const issuerequest = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('Post an issue to GitHub:')
     .setDescription('Please type the issue\'s title below:\nYou\'ve got `2` minutes.\n\n(Press <:stop:669309980209446912> to cancel your post)')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const timeouttembed = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('Post an issue to GitHub:')
     .setDescription('You ran out of time!')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const stopembed = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('Post an issue to GitHub:')
     .setDescription('Your issue post has been cancelled! :white_check_mark:')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const issuebodyembed = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('Post an issue to GitHub:')
     .setDescription('Please type the issue\'s body below:\nYou\'ve got `2` minutes.\n\n(Press <:stop:669309980209446912> to cancel your post)')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const finishedembed = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('Post an issue to GitHub:')
     .setDescription('Thank you!\nYour issue has been submitted to GitHub! :white_check_mark:')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     let command = message.content.toLowerCase().split(' ')[0];
@@ -130,7 +124,6 @@ module.exports.run = async (gideon, message, args) => {
         const issues = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle('Issues: ' + body.length)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         let issues_array = body.reverse();

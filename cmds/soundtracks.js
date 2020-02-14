@@ -32,7 +32,6 @@ module.exports.run = async (gideon, message, args) => {
     .addField('Supergirl', `[Season 1](${sturls[10]} '${sturls[10]}')\n[Season 2](${sturls[11]} '${sturls[11]}')\n[Season 3](${sturls[12]} '${sturls[12]}')`, true)
     .addField('DC\'s Legends of Tomorrow', `[Season 1](${sturls[13]} '${sturls[13]}')\n[Season 2](${sturls[14]} '${sturls[14]}')\n[Season 3](${sturls[15]} '${sturls[15]}')`, true)
     .addField('Crossovers', `[The Flash vs. Arrow: Music Selections from the Epic 2-Night Event](${sturls[16]} '${sturls[16]}')\n[The Flash – Music From the Special Episode: Duet](${sturls[17]} '${sturls[17]}')\n[Crisis on Earth-X (Original Television Score)](${sturls[18]} '${sturls[18]}')`, true)
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     message.channel.send(stracks);  

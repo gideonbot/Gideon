@@ -14,21 +14,18 @@ module.exports.run = async (gideon, message, args) => {
     .setColor('#2791D3')
     .setTitle('You must supply a valid episode and season!')
     .setDescription('Acceptable formats: S00E00 and 00x00')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const na = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply a lang code, the shows name, season and its episode number!')
     .setDescription(`You can find ISO 639-2 codes [here](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes 'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes')!`)
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     const vc = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply a valid ISO 639-2 code!')
     .setDescription(`[ISO 639-2 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes 'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes')`)
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     //!subs eng flash 3x3
@@ -41,7 +38,6 @@ module.exports.run = async (gideon, message, args) => {
     .setColor('#2791D3')
     .setTitle(`"${agc}" is not a valid argument!`)
     .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     let seasonAndEpisode = Util.parseSeriesEpisodeString(args[2]);
@@ -130,7 +126,6 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setTitle(`Subtitles for: ${show.title} ${seasonAndEpisode.season}x${seasonAndEpisode.episode}`)
         .setDescription(`Here are the 5 best results from opensubtitles.org:`)
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
         for (let i=0 ; i < sub.length ; i++) {
@@ -146,7 +141,6 @@ module.exports.run = async (gideon, message, args) => {
         .setColor('#2791D3')
         .setTitle('There were no results for this episode on opensubtitles.org!')
         .setDescription('Try another episode or another language code!')
-        .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
         return message.channel.send(er);
     });

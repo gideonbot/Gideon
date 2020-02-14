@@ -6,7 +6,6 @@ module.exports.run = async (gideon, message, args) => {
     .setColor('#2791D3')
     .setTitle('You must supply a valid show!')
     .setDescription('Available shows:\n**flash**\n**legends**')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     if (!args[0]) return message.channel.send(ia);   

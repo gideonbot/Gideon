@@ -11,7 +11,6 @@ module.exports.run = async (gideon, message, args) => {
 	.setColor('#2791D3')
     .setDescription(`**${auth} you have cuddled ${user}!**\n\nA Beebo-tastic cuddle always brightens the mood!`)
 	.setImage('https://i.imgur.com/IOpmt2j.gif')
-    .setTimestamp()
     .setFooter(Util.config.footer, gideon.user.avatarURL());
     
     message.channel.send(cuddle);
