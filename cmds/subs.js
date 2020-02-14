@@ -123,23 +123,22 @@ module.exports.run = async (gideon, message, args) => {
         limit: '5',                 
         imdbid: show.id,           
 
-    }).then(subtitles => {
+    }).then(async subtitles => {
         const sub = Object.values(subtitles)[0];
 
         const subs = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`Subtitles for: ${show.title} ${seasonAndEpisode.season}x${seasonAndEpisode.episode}`)
         .setDescription(`Here are the 5 best results from opensubtitles.org:`)
-        .addField(sub[0].filename, `**[Download SRT](${sub[0].url} '${sub[0].url}')** Lang: \`${sub[0].lang}\` Score: \`${sub[0].score}\``)
-        .addField(sub[1].filename, `**[Download SRT](${sub[1].url} '${sub[1].url}')** Lang: \`${sub[1].lang}\` Score: \`${sub[1].score}\``)
-        .addField(sub[2].filename, `**[Download SRT](${sub[2].url} '${sub[2].url}')** Lang: \`${sub[2].lang}\` Score: \`${sub[2].score}\``)
-        .addField(sub[3].filename, `**[Download SRT](${sub[3].url} '${sub[3].url}')** Lang: \`${sub[3].lang}\` Score: \`${sub[3].score}\``)
-        .addField(sub[4].filename, `**[Download SRT](${sub[4].url} '${sub[4].url}')** Lang: \`${sub[4].lang}\` Score: \`${sub[4].score}\``)
         .setTimestamp()
         .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+        for (let i=0 ; i < sub.length ; i++) {
+            subs.addField(sub[i].filename, `**[Download SRT](${sub[i].url} '${sub[i].url}')** Lang: \`${sub[i].lang}\` Score: \`${sub[i].score}\``)
+        }
             
-        message.channel.send(subs);
-    }).catch(err => {
+        await message.channel.send(subs);
+    }).catch(async err => {
         console.log("An error occurred while trying to fetch subtitles: " + err);
         Util.log("An error occurred while trying to fetch subtitles: " + err);
 

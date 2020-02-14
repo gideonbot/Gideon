@@ -82,7 +82,6 @@ module.exports.run = async (gideon, message, args) => {
                 timeout: 60
             });
     
-    
             for (let i=0 ; i < torrents.length ; i++) {
                 const magnet = await torrentSearch.getMagnet(torrents[i]);
                 const buffer = await m2t.getTorrentBuffer(magnet);
