@@ -48,7 +48,13 @@ module.exports.run = async (gideon, message, args) => {
     let cs = 0;
     let csemoji = '';
     if (user.presence.activities[0]){
-        if (user.presence.activities[0].type === 'CUSTOM_STATUS') csemoji = user.presence.activities[0].emoji.toString(), cs = 1;
+        if (user.presence.activities[0].type === 'CUSTOM_STATUS') {
+            cs = 1;
+            if (user.presence.activities[0].emoji) {
+                const emote = gideon.emojis.cache.get(user.presence.activities[0].emoji.id);
+                if (emote) csemoji = user.presence.activities[0].emoji.toString();
+            }
+        }
     }; 
 
     const member = message.guild.member(user);
@@ -61,7 +67,7 @@ module.exports.run = async (gideon, message, args) => {
     .setAuthor('Info requested by ' + auth.tag, auth.displayAvatarURL())
     .setDescription(`User **${user.tag}**:`)
     .setThumbnail(user.displayAvatarURL())
-    .addField(`❯ User Info:`, `• ID: \`${user.id}\`\n• Nickname: \`${user.nickname === undefined ? 'None' : user.nickname}\`\n• Status: \`${status}\`${semote}\n• Custom Status: \`${user.presence.activities[0] === undefined || user.presence.activities[0].type !== 'CUSTOM_STATUS' ? 'None' : user.presence.activities[0].state}\`${csemoji}\n• Activity: \`${user.presence.activities[cs] === undefined ? 'None' : user.presence.activities[cs].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot === true ? 'Yes' : 'No'}\``)
+    .addField(`❯ User Info:`, `• ID: \`${user.id}\`\n• Nickname: \`${user.nickname === undefined ? 'None' : user.nickname}\`\n• Status: \`${status}\`${semote}\n• Custom Status: \`${user.presence.activities[0] === undefined || user.presence.activities[0].state === null || user.presence.activities[0].type !== 'CUSTOM_STATUS' ? 'None' : user.presence.activities[0].state}\`${csemoji}\n• Activity: \`${user.presence.activities[cs] === undefined ? 'None' : user.presence.activities[cs].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot === true ? 'Yes' : 'No'}\``)
     .addField(`❯ GuildMember Info:`, `• Joined at: \`${moment.utc(member.joinedAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Boosted: ${member.premiumSince === null ? '\`No\`' : '\`Yes\` <:boost:678746359549132812>'}\n• Roles: ${member.roles.cache.map(roles => roles.toString()).join(' ')}\n• Permissions: \`${perms}\`\n• Last Message: ${member.lastMessage === null ? '\`None\`' : `[Click Here](${member.lastMessage.url} '${member.lastMessage.url}')`}`)
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
