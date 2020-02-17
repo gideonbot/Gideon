@@ -8,7 +8,7 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle('Development Credits:')
     .addField('adrifcastr', 'Development & maintenance')
     .addField('MBR#0001', 'Development, support & testing')
-    .addField('Klaus#5857', 'Server hosting')
+    .addField('Klaus#5857', 'Website development & server hosting')
     .addField('AceFire6', 'Development & hosting of [arrowverse.info](https://arrowverse.info) and its [API](https://arrowverse.info/api)')
     .addField('7coil', 'PR [#24](https://github.com/adrifcastr/Gideon/pull/24) and [#25](https://github.com/adrifcastr/Gideon/pull/25)')
     .setThumbnail(gideon.user.avatarURL())

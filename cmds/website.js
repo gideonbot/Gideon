@@ -9,5 +9,5 @@ module.exports.help = {
     name: ['website', 'web', 'url', 'homepage'],
     type: "misc",
     help_text: "website",
-    help_desc: "Displays a link to Gideons homepage"
+    help_desc: "Displays a link to Gideon's homepage"
 }
