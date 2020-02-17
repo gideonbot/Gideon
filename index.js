@@ -51,13 +51,14 @@ gideon.once('ready', async () => {
     gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (user, points, guild) VALUES (@user, @points, @guild);");
 
     async function status() {
+        const guilds = gideon.guilds.cache.size;
         const tmvt = gideon.guilds.cache.get('595318490240385037');
         if (!tmvt) return;
 
         let mbc = tmvt.members.cache.filter(member => !member.user.bot).size;
         const st1 = `!help | invite.gg/tmvt`;
         let st2 = `${mbc} Time Vault members`;
-        const st3 = 'over Queen JPK!';
+        const st3 = `${guilds} Guilds`;
 
         gideon.user.setActivity(st1, { type: 'PLAYING' }); 
         await Util.delay(10000);
@@ -69,7 +70,7 @@ gideon.once('ready', async () => {
     console.log('Ready!');
     Util.log(`${gideon.user.tag} ready!\nServers:\n${gideon.guilds.cache.map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
     let ids = gideon.guilds.cache.map(x => x.id);
-
+/*
     for (let i = 0; i < ids.length; i++) {
         try {
             let guild = gideon.guilds.cache.get(ids[i]);
@@ -85,7 +86,7 @@ gideon.once('ready', async () => {
             Util.log("Caught an exception while creating invites!: " + ex);
         }
     }
-
+*/
     setInterval(status, 30000);
 });
 
