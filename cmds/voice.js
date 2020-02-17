@@ -48,7 +48,7 @@ module.exports.run = async (gideon, message, args) => {
         if (awake) clearTimeout(checkWake);
     }
 
-    function checkWake() {
+    async function checkWake() {
         if (awake) stopTimout();
         else {
             await Util.LeaveVC(message);
