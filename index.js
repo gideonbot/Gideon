@@ -56,7 +56,7 @@ gideon.once('ready', async () => {
         if (!tmvt) return;
 
         let mbc = tmvt.members.cache.filter(member => !member.user.bot).size;
-        const st1 = `!help | invite.gg/tmvt`;
+        const st1 = `!help | gideonbot.co.vu`;
         let st2 = `${mbc} Time Vault members`;
         const st3 = `${guilds} Guilds`;
 
