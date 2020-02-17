@@ -69,8 +69,8 @@ gideon.once('ready', async () => {
     
     console.log('Ready!');
     Util.log(`${gideon.user.tag} ready!\nServers:\n${gideon.guilds.cache.map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
-    let ids = gideon.guilds.cache.map(x => x.id);
-/*
+ /* let ids = gideon.guilds.cache.map(x => x.id);
+
     for (let i = 0; i < ids.length; i++) {
         try {
             let guild = gideon.guilds.cache.get(ids[i]);
