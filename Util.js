@@ -650,6 +650,15 @@ class Util {
             message.channel.send(autotrembed);
         }
     }
+
+    // Truncate string
+    static async truncate( n, useWordBoundary ){
+        if (this.length <= n) { return this; }
+        var subString = this.substr(0, n-1);
+        return (useWordBoundary 
+           ? subString.substr(0, subString.lastIndexOf(' ')) 
+           : subString) + "...";
+    };
     //more methods to come
 }
 module.exports = Util;
