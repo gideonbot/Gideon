@@ -56,7 +56,7 @@ module.exports.run = async (gideon, message, args) => {
 
     else return message.channel.send(ia);
         
-    let ts = `${showtitle} S${season_and_ep.season < 10 ? "0" + season_and_ep.season : season_and_ep.season}E${season_and_ep.episode < 10 ? "0" + season_and_ep.episode : season_and_ep.episode}`;
+    let ts = `${showtitle} S${Util.normalize(season_and_ep.season)}E${Util.normalize(season_and_ep.episode)}`;
     
     const pw = new Discord.MessageEmbed()
     .setColor('#2791D3')
@@ -77,11 +77,9 @@ module.exports.run = async (gideon, message, args) => {
             .setDescription(`:warning:Always enable a VPN before downloading!:warning:`)
             .setFooter(Util.config.footer, gideon.user.avatarURL());
     
-            const m2t = new Magnet2torrent({
-                timeout: 60
-            });
+            const m2t = new Magnet2torrent({timeout: 60});
     
-            for (let i=0 ; i < torrents.length ; i++) {
+            for (let i = 0; i < torrents.length; i++) {
                 const magnet = await torrentSearch.getMagnet(torrents[i]);
                 const buffer = await m2t.getTorrentBuffer(magnet);
                 const attachment = new Discord.MessageAttachment(buffer, `${torrents[i].title}.torrent`);

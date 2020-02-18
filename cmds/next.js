@@ -57,7 +57,7 @@ module.exports.run = async (gideon, message, args) => {
         let fiep = Util.parseSeriesEpisodeString(args[1]);
         if (!fiep) return message.channel.send(es);
 
-        fiep = "S" + (fiep.season < 10 ? "0" + fiep.season : fiep.season) + "E" + (fiep.episode < 10 ? "0" + fiep.episode : fiep.episode);
+        fiep = "S" + Util.normalize(fiep.season) + "E" + Util.normalize(fiep.episode);
 
         let shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
 

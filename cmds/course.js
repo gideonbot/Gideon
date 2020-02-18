@@ -9,7 +9,7 @@ const Util = require("../Util");
  */
 module.exports.run = async (gideon, message, args) => {
     let agm;
-    if (args){
+    if (args) {
         agm = args.join("").toLowerCase();
         if (agm.match(/(?:course)/i)) {
             message.channel.send('Yes Captain Lance!');
