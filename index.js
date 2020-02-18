@@ -9,6 +9,7 @@ const Util = require("./Util");
 gideon.commands = new Discord.Collection();
 gideon.cvmt = false;
 gideon.vcmdexec = false;
+gideon.emptyvc = false;
 gideon.trmode = new Map();
 
 fs.readdir("./cmds", (err, files) => {
@@ -115,6 +116,21 @@ gideon.on('message', (message) => {
 
 gideon.on("guildCreate", guild => {
     Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
+})
+
+gideon.on("voiceStateUpdate", (oldState, newState) => {
+    let newChannel = newState.channel
+    let oldChannel = oldState.channel
+
+    if(newChannel === null){
+        // User leaves a voice channel
+        const members = oldChannel.members.map(x => x.id);
+        const mamount = oldChannel.members.size;
+        const bot = oldChannel.members.map(x => x.user.bot);
+
+        if (!members.includes(gideon.user.id)) return;
+        if (mamount === 1 || mamount > 1 && !bot.includes('false')) return oldChannel.leave(), gideon.emptyvc = true;
+    }
 })
 
 gideon.login(process.env.CLIENT_TOKEN);

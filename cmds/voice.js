@@ -55,6 +55,7 @@ module.exports.run = async (gideon, message, args) => {
 
     async function checkWake() {
         if (awake) stopTimout();
+        else if (gideon.emptyvc) stopTimout();
         else {
             await Util.LeaveVC(message);
             return message.reply('no wakeword detected the last `20` seconds after joining VC!');
