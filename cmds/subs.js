@@ -1,7 +1,12 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const OpenSubtitles = require('opensubtitles-api');
 const Util = require("../Util");
 
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
 module.exports.run = async (gideon, message, args) => {
     const OS = new OpenSubtitles({
         useragent: process.env.OPS_UA,

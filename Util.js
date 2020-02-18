@@ -14,7 +14,7 @@ class Util {
     /**
      * @summary A low-level method for parsing episode stuff
      * @param {string} input
-     * @returns {Object} The object containing the series and episode details
+     * @returns {{season: number, episode: number}} The object containing the series and episode details
      */
     static parseSeriesEpisodeString(input) {
         if (!input) return null;
@@ -59,14 +59,11 @@ class Util {
      */
     static async TRM(guild, mentionable) {
         if (!guild) return;
-        let roles = [];
-        guild.roles.cache.forEach(role => roles.push(role.id));
        
-        for (let role_id of roles) {
-            let role = guild.roles.cache.get(role_id);
-            if (role) {
+        for (let role of guild.roles.cache.array()) {
+            if (role.editable) {
                 try { await role.edit({ mentionable: mentionable }); }
-                catch (ex) {} //don't log anything as integration roles will result in an API error but everything else succeeds
+                catch (ex) { console.log(ex); }
             }
         } 
     }
@@ -172,6 +169,7 @@ class Util {
      * @returns {Promise<string>}
      */
     static ABM_Test(message) {
+        // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
             const content = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
 
@@ -194,6 +192,7 @@ class Util {
                 if (content.includes(url.toLowerCase())) return resolve(url);
             }
 
+            // eslint-disable-next-line no-useless-escape
             const ytrg = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
             const cids = ['UCTbT2FgB9oMpi4jB9gNPadQ', 'UCvFS-R57UT1q2U_Jp4pi1eg', 'UC6mI3QJFH1m2V8ZHvvHimVA', 'UCDR8cvjALazMm2j9hOar8_g'];
 
@@ -241,7 +240,7 @@ class Util {
             await message.delete();
             Util.log("ABM triggered by: " + message.author.tag + " (" + match + ")");
             message.channel.send(this.GetUserTag(message.author), { embed: abmembed });
-        }, failed => {});
+        }, failed => console.log(failed));
     }
 
     /**
@@ -267,6 +266,7 @@ class Util {
 
         const plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
 
+        // eslint-disable-next-line no-useless-escape
         if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
             await Util.delay(200);
             await message.delete();
@@ -652,7 +652,7 @@ class Util {
         return (useWordBoundary 
            ? subString.substr(0, subString.lastIndexOf(' ')) 
            : subString) + "...";
-    };
+    }
     //more methods to come
 }
 module.exports = Util;

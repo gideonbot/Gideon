@@ -2,6 +2,11 @@ const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const Util = require("../Util");
 
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
 module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
     if (!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
@@ -56,7 +61,11 @@ module.exports.run = async (gideon, message, args) => {
 
         let shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
 
-        function GetNextEmbed(show, season_and_episode) {
+        /**
+         * @param {string} show 
+         * @param {*} season_and_episode 
+         */
+        let GetNextEmbed = (show, season_and_episode) => {
             let f = shows.find(x => x.series === show && x.episode_id === season_and_episode);
             if (!f) return `${show} ${season_and_episode} is not a valid episode!`;
 

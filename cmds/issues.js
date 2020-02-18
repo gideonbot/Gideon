@@ -1,8 +1,13 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const Util = require("../Util");
 
-module.exports.run = async (gideon, message, args) => {
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
+module.exports.run = async (gideon, message) => {
     const api = 'https://api.github.com/repos/adrifcastr/Gideon/issues';
     const token = process.env.GITHUB_OAUTH_TOKEN
     let issuetitle;
@@ -54,12 +59,12 @@ module.exports.run = async (gideon, message, args) => {
         const collector = message.channel.createMessageCollector(filter, {time: 120 * 1000});
 
         await message.channel.send(issuerequest).then(async sent => {
-            await sent.react(stopid).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
+            await sent.react(stopid).then(() => {}, failed => console.log("Failed to react with " + stopid + ": " + failed));
 
             const rfilter = (reaction, user) => emote.includes(reaction.emoji.name) && user.id === auth;
             const rcollector = sent.createReactionCollector(rfilter, {time: 30 * 1000});
 
-            rcollector.on('collect', async (reaction, reactionCollector) => {
+            rcollector.on('collect', async reaction => {
                 if (reaction.emoji.name === 'stop') {
                     await collector.stop();
                     await sent.reactions.removeAll();
@@ -74,7 +79,7 @@ module.exports.run = async (gideon, message, args) => {
                 } 
             });
 
-            try{
+            try {
                 await message.channel.awaitMessages(filter, { max: 1, time: 120 * 1000, errors: ['time'] })
                 .then(async collected => {
                     issuetitle = collected.map(x => x.content);
@@ -82,8 +87,7 @@ module.exports.run = async (gideon, message, args) => {
                     await collected.first().delete();
                     await sent.edit(issuebodyembed);
                 })
-                .catch(async collected => {
-                });
+                .catch(() => {});
 
                 await message.channel.awaitMessages(filter, { max: 1, time: 120 * 1000, errors: ['time'] })
                 .then(async collected => {
@@ -94,8 +98,7 @@ module.exports.run = async (gideon, message, args) => {
                     await sent.reactions.removeAll();
                     await rcollector.stop();
                 })
-                .catch(async collected => {
-                });
+                .catch(() => {});
             }
             catch (ex) {
                 console.log("Caught an exception while running issues.js: " + ex);

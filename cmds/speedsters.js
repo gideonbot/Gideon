@@ -1,7 +1,12 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const Util = require("../Util");
 
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
 module.exports.run = async (gideon, message, args) => {
     const na = new Discord.MessageEmbed()
     .setColor('#2791D3')
@@ -58,7 +63,7 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send(speedster);
     }
     
-    catch (ex) {
+    catch (err) {
         console.log("An error occurred while trying to fetch speedsters: " + err);
         Util.log("An error occurred while trying to fetch speedsters: " + err);
 

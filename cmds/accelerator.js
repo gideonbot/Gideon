@@ -1,7 +1,12 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const Util = require("../Util");
 
-module.exports.run = async (gideon, message, args) => {
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
+module.exports.run = async (gideon, message) => {
     try {
         let sent = await message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...");
         await Util.delay(1000);

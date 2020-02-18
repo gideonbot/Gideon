@@ -1,4 +1,4 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const Util = require("../Util");
 const fetch = require('node-fetch');
 const stringSimilarity = require('string-similarity');
@@ -7,6 +7,11 @@ const sql = new SQLite('./data/SQL/scores.sqlite');
 const timediff = require('timediff');
 const moment = require('moment');
 
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
 module.exports.run = async (gideon, message, args) => {
     const url = 'https://arrowverse.info';
     const api = "https://arrowverse.info/api";
@@ -134,20 +139,20 @@ module.exports.run = async (gideon, message, args) => {
         return [gameembed, show, epnum, epname, epairdate];
     }
 
-    try{
+    try {
         let embed = await GameEmbed(chosenfilter);
 
         const f = m => m.author.id === message.author.id;
         const collector = message.channel.createMessageCollector(f, {time: 30 * 1000});
 
         await message.channel.send(embed[0]).then(async sent => {
-            await sent.react(emotes[1]).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
-            await sent.react(stopid).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
+            await sent.react(emotes[1]).then(() => {}, failed => console.log("Failed to react with " + emotes[1] + ": " + failed));
+            await sent.react(stopid).then(() => {}, failed => console.log("Failed to react with " + stopid + ": " + failed));
 
             const rfilter = (reaction, user) => emotes.includes(reaction.emoji.name) && user.id === auth;
             const rcollector = sent.createReactionCollector(rfilter, {time: 30 * 1000});
         
-            rcollector.on('collect', async (reaction, user, reactionCollector) => {
+            rcollector.on('collect', async (reaction, user) => {
                 if (reaction.emoji.name === '▶️') {
                     tries = 3;
                     p = 0;

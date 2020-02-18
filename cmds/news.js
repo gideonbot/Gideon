@@ -1,7 +1,12 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const Util = require("../Util");
 
-module.exports.run = async (gideon, message, args) => {
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
+module.exports.run = async (gideon, message) => {
     if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
     if (!message.member.roles.cache.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
 
@@ -31,7 +36,7 @@ module.exports.run = async (gideon, message, args) => {
 
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.').then(async message => {
         for (let emoji of emoji_ids) {
-            message.react(emoji).then(s => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
+            message.react(emoji).then(() => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
         }
 
         await Util.TRM(message.guild, true);
@@ -40,7 +45,7 @@ module.exports.run = async (gideon, message, args) => {
 
         const rcollector = message.createReactionCollector(rfilter, {time: 120000});
     
-        rcollector.on('collect', (reaction, reactionCollector) => {
+        rcollector.on('collect', reaction => {
             if (reaction.emoji.name in role_ids) roles_to_ping.push(role_ids[reaction.emoji.name]);
         });
     }); 
@@ -54,7 +59,7 @@ module.exports.run = async (gideon, message, args) => {
         }
         catch (ex) {console.log(ex);}
 
-        if (message.content.toLowerCase() === 'cancel' || message.content.toLowerCase() === 'stop') {;
+        if (message.content.toLowerCase() === 'cancel' || message.content.toLowerCase() === 'stop') {
             await message.channel.bulkDelete(3); 
             collector.stop();
             return message.reply('your news post has been cancelled! :white_check_mark:');
@@ -96,7 +101,7 @@ module.exports.run = async (gideon, message, args) => {
 
         //<@&NUMBER> is how roles are represented | NUMBER - role id
         let roles_ping_msg = roles_to_ping.length > 0 ? roles_to_ping.map(x => "<@&" + x + ">").join(" ") : null;
-        news_channel.send(roles_ping_msg, {embed: news}).then(async x => {
+        news_channel.send(roles_ping_msg, {embed: news}).then(async () => {
             await Util.delay(200);
             await message.channel.bulkDelete(3);
             

@@ -1,7 +1,12 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const Util = require("../Util");
 
-module.exports.run = async (gideon, message, args) => {
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
+module.exports.run = async (gideon, message) => {
     const sturls = [
         'https://open.spotify.com/album/0xiJwfDcZRQ77bsbjS9TF5', 
         'https://open.spotify.com/album/2EE7W74Rk1LDHzbYC9js2Z',

@@ -1,4 +1,4 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const Util = require("../Util");
 const { Readable } = require('stream');
 const SILENCE_FRAME = Buffer.from([0xF8, 0xFF, 0xFE]);
@@ -10,6 +10,11 @@ class Silence extends Readable {
     }
 }
 
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
 module.exports.run = async (gideon, message, args) => {
     let command = message.content.toLowerCase().split(' ')[0];
     let awake = false;

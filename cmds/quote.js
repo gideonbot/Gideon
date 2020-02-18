@@ -1,8 +1,13 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const Util = require("../Util");
 
-module.exports.run = async (gideon, message, args) => {
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
+module.exports.run = async (gideon, message) => {
     const titlesapi = `https://api.myjson.com/bins/13h4p4`;
 
     try {

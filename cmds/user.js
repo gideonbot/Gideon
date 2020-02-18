@@ -1,8 +1,13 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const Util = require("../Util");
 const stringSimilarity = require('string-similarity');
 const moment = require('moment');
 
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
 module.exports.run = async (gideon, message, args) => {
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
@@ -13,11 +18,6 @@ module.exports.run = async (gideon, message, args) => {
     const as = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('You must supply valid input!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    const er = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('An error occured while executing this command!')
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     if (noid && args[0].includes("@")) user = gideon.users.cache.get(Util.getIdFromString(args[0]));
@@ -55,7 +55,7 @@ module.exports.run = async (gideon, message, args) => {
                 if (emote) csemoji = user.presence.activities[0].emoji.toString();
             }
         }
-    }; 
+    }
 
     const member = message.guild.member(user);
 
@@ -68,6 +68,7 @@ module.exports.run = async (gideon, message, args) => {
     .setDescription(`User **${user.tag}**:`)
     .setThumbnail(user.displayAvatarURL())
     .addField(`❯ User Info:`, `• ID: \`${user.id}\`\n• Nickname: \`${user.nickname === undefined ? 'None' : user.nickname}\`\n• Status: \`${status}\`${semote}\n• Custom Status: \`${user.presence.activities[0] === undefined || user.presence.activities[0].state === null || user.presence.activities[0].type !== 'CUSTOM_STATUS' ? 'None' : user.presence.activities[0].state}\`${csemoji}\n• Activity: \`${user.presence.activities[cs] === undefined ? 'None' : user.presence.activities[cs].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot === true ? 'Yes' : 'No'}\``)
+    //eslint-disable-next-line
     .addField(`❯ GuildMember Info:`, `• Joined at: \`${moment.utc(member.joinedAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Boosted: ${member.premiumSince === null ? '\`No\`' : '\`Yes\` <:boost:678746359549132812>'}\n• Roles: ${member.roles.cache.map(roles => roles.toString()).join(' ')}\n• Permissions: \`${perms}\`\n• Last Message: ${member.lastMessage === null ? '\`None\`' : `[Click Here](${member.lastMessage.url} '${member.lastMessage.url}')`}`)
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 

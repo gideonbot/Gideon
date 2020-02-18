@@ -44,13 +44,13 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     arr = arr.reverse();
-    message.channel.startTyping().finally(x => {});
+    message.channel.startTyping().finally(() => {});
 
     cleverbot(text, arr).then(response => {
         message.channel.send(response).then(sent => {
             sent.cleverbot = true;
             message.cleverbot = true;
-        }).finally(x => message.channel.stopTyping());
+        }).finally(() => message.channel.stopTyping());
     }, failed => {
         console.log(failed);
         message.channel.stopTyping();

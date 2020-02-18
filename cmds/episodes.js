@@ -1,7 +1,12 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const Util = require("../Util");
 
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
 module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
     if (!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
@@ -70,7 +75,7 @@ module.exports.run = async (gideon, message, args) => {
         {
             id: "1859",
             title: "Lucifer",
-            channel: info.season === "1" || "2" || "3" ? "Fox" : "Netflix"
+            channel: info.season == "1" || info.season == "2" || info.season == "3" ? "Fox" : "Netflix"
         },
         {
             id: "44751",
