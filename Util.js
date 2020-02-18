@@ -219,7 +219,7 @@ class Util {
                 }
             }
 
-            resolve({match: false});
+            else resolve({match: false});
         });
     }
 
