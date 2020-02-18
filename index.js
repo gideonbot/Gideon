@@ -119,17 +119,20 @@ gideon.on("guildCreate", guild => {
 })
 
 gideon.on("voiceStateUpdate", (oldState, newState) => {
-    let newChannel = newState.channel
-    let oldChannel = oldState.channel
+    let newChannel = newState.channel;
+    let oldChannel = oldState.channel;
 
-    if(newChannel === null){
+    if (oldChannel && !newChannel) {
         // User leaves a voice channel
         const members = oldChannel.members.map(x => x.id);
-        const mamount = oldChannel.members.size;
-        const bot = oldChannel.members.map(x => x.user.bot);
-
         if (!members.includes(gideon.user.id)) return;
-        if (mamount === 1 || mamount > 1 && !bot.includes('false')) return oldChannel.leave(), gideon.emptyvc = true;
+
+        const bot_count = oldChannel.members.filter(x => x.user.bot).size;
+
+        if (oldChannel.members.size - bot_count === 0) {
+            gideon.emptyvc = true;
+            return oldChannel.leave();
+        }
     }
 })
 
