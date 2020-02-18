@@ -19,6 +19,15 @@ export function VoiceResponse(value: string, connection: Discord.VoiceConnection
 export function TRMode(gideon: Discord.Client, message: Discord.Message): Promise<void>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
 
+declare module "discord.js" {
+    interface Client {
+        commands: Discord.Collection<string, Command>;
+        cvmt: boolean;
+        vcmdexec: boolean;
+        trmode: Map<string, boolean>;
+    }
+}
+
 interface SeasonAndEpisodeInfo {
     season: number;
     episode: number;
@@ -31,6 +40,16 @@ interface ABMResult {
 
 interface secondsToDifferenceSettings {
     enableSeconds: boolean
+}
+
+interface Command {
+    help: {
+        name: string;
+        type: string;
+        help_text: string;
+        help_desc: string;
+    },
+    run: Function;
 }
 
 interface EpisodeInfo {
