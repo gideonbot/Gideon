@@ -26,6 +26,7 @@ declare module "discord.js" {
         commands: Discord.Collection<string, Command>;
         vcmdexec: boolean;
         emptyvc: boolean;
+        owner: string;
     }
 }
 

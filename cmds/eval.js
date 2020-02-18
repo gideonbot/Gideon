@@ -7,9 +7,7 @@ const Util = require('../Util');
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    const appowner = await gideon.fetchApplication().then(application => application.owner.id).catch(console.error);
-    
-    if (message.author.id !== appowner) {
+    if (message.author.id !== gideon.owner) {
         return message.channel.send('You do not have the required permissions to use this command!');
     }
 
