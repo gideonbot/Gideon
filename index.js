@@ -113,4 +113,8 @@ gideon.on('message', (message) => {
     if (command) command.run(gideon, message, args);
 });
 
+gideon.on("guildCreate", guild => {
+    Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
+})
+
 gideon.login(process.env.CLIENT_TOKEN);
