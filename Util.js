@@ -249,7 +249,15 @@ class Util {
      * @param {Discord.Message} message 
      */
     static async CVM(message) {
-        if (message.guild.id !== '595318490240385037') return;
+        let cvm = gideon.getCVM.get(message.guild.id);
+        if (!cvm) {
+            cvm = {
+                guild: message.guild.id,
+                cvmval: 0,
+            }
+            await gideon.setCVM.run(cvm);
+        }
+        if (cvm.cvmval === 0) return;
 
         const ids = ['595944027208024085', '595935317631172608', '595935345598529546', '598487475568246830', '622415301144870932', '596080078815887419'];
 
@@ -615,7 +623,15 @@ class Util {
 
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
-        if (!gideon.trmode.get(message.author.id)) return;
+        let trmode = gideon.getTrmode.get(message.author.id);
+        if (!trmode) {
+            trmode = {
+                user: message.author.id,
+                trmodeval: 0,
+            }
+            await gideon.setTrmode.run(trmode);
+        }
+        if (trmode.trmodeval === 0) return;
 
         else {
             const sourceLang = 'auto';

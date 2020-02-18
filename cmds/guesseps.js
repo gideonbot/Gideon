@@ -3,7 +3,7 @@ const Util = require("../Util");
 const fetch = require('node-fetch');
 const stringSimilarity = require('string-similarity');
 const SQLite = require("better-sqlite3");
-const sql = new SQLite('./data/SQL/scores.sqlite');
+const sql = new SQLite('./data/SQL/gideon.sqlite');
 
 /**
  * @param {Discord.Client} gideon
@@ -60,6 +60,8 @@ module.exports.run = async (gideon, message, args) => {
     let command = message.content.toLowerCase().split(' ')[0];
 
     if (command.endsWith('score') || command.endsWith('points')) {
+        console.log(score);
+        console.log(score.points);
         return message.reply(`You currently have \`${score.points}\` point(s)!`);
     }
 

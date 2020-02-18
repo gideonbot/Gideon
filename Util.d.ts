@@ -24,10 +24,8 @@ export function normalize(num: number): string;
 declare module "discord.js" {
     interface Client {
         commands: Discord.Collection<string, Command>;
-        cvmt: boolean;
         vcmdexec: boolean;
         emptyvc: boolean;
-        trmode: Map<string, boolean>;
     }
 }
 
