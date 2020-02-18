@@ -4,8 +4,7 @@
   "description": "Gideon will obey your command and guide you through the Arrowverse",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js",
-    "start": "npm install & node index.js"
+    "test": "node index.js"
   },
   "author": "adrifcastr",
   "license": "GPL2",
