@@ -18,6 +18,7 @@ export function SpeechRecognition(speech: ReadableStream): Promise<VoiceInfoResp
 export function VoiceResponse(value: string, connection: Discord.VoiceConnection, message: Discord.Message, gideon: Discord.Client): Promise<void>;
 export function TRMode(gideon: Discord.Client, message: Discord.Message): Promise<void>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
+export const config: Config;
 
 declare module "discord.js" {
     interface Client {
@@ -26,6 +27,12 @@ declare module "discord.js" {
         vcmdexec: boolean;
         trmode: Map<string, boolean>;
     }
+}
+
+interface Config {
+    prefixes: string[];
+    footer: string;
+    avatar: string;
 }
 
 interface SeasonAndEpisodeInfo {
