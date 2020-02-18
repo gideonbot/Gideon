@@ -56,7 +56,7 @@ gideon.once('ready', async () => {
         if (!tmvt) return;
 
         let mbc = tmvt.members.cache.filter(member => !member.user.bot).size;
-        const st1 = `!help | invite.gg/tmvt`;
+        const st1 = `!help | gideonbot.co.vu`;
         let st2 = `${mbc} Time Vault members`;
         const st3 = `${guilds} Guilds`;
 
@@ -68,7 +68,7 @@ gideon.once('ready', async () => {
     }
     
     console.log('Ready!');
-    Util.log(`${gideon.user.tag} ready!\nServers:\n${gideon.guilds.cache.map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
+    Util.log(`${gideon.user.tag} ready!\n\nOnline on \`${gideon.guilds.cache.size}\` guilds:\n${gideon.guilds.cache.map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
     if (gideon.guilds.cache.size >= 1000) Util.log(`<@224617799434108928> <@351871113346809860>\n1000+ Guilds reached. Please refactor for sharding!`);
 
     setInterval(status, 30000);
@@ -112,5 +112,9 @@ gideon.on('message', (message) => {
     const command = gideon.commands.get(cmd);
     if (command) command.run(gideon, message, args);
 });
+
+gideon.on("guildCreate", guild => {
+    Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
+})
 
 gideon.login(process.env.CLIENT_TOKEN);
