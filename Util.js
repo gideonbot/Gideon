@@ -615,12 +615,7 @@ class Util {
 
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
-        const uid = message.author.id;
-        let value = false
-        if (!gideon.trmode.get(uid)) gideon.trmode.set(uid, value);
-
-        let check = gideon.trmode.get(uid);
-        if (check === false) return;
+        if (!gideon.trmode.get(message.author.id)) return;
 
         else {
             const sourceLang = 'auto';
