@@ -9,7 +9,7 @@ export function secondsToDifferenceString(seconds: number, settings: secondsToDi
 export function log(message: string): boolean;
 export function ABM_Test(message: Discord.Message): Promise<ABMResult>;
 export function ABM(message: Discord.Message): void;
-export function CVM(message: Discord.Message): Promise<Message>;
+export function CVM(message: Discord.Message): Promise<Discord.Message>;
 export function IMG(image_id: string, message: Discord.Message): Promise<void>;
 export function CSD(message: Discord.Message): Promise<void>;
 export function GetNextEpisodeInfo(url: string): Promise<EpisodeInfo>;
@@ -44,7 +44,7 @@ interface secondsToDifferenceSettings {
 
 interface Command {
     help: {
-        name: string;
+        name: string | string[];
         type: string;
         help_text: string;
         help_desc: string;
