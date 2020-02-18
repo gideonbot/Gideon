@@ -69,7 +69,7 @@ class Util {
     }
 
     /**
-     * @param {Number} inputDelay 
+     * @param {number} inputDelay 
      */
     static delay(inputDelay) {
         // If the input is not a number, instantly resolve
@@ -166,7 +166,7 @@ class Util {
 
     /**
      * @param {Discord.Message} message
-     * @returns {Promise<string>}
+     * @returns {Promise<{match: boolean, content: string}>}
      */
     static ABM_Test(message) {
         // eslint-disable-next-line no-async-promise-executor
@@ -189,7 +189,7 @@ class Util {
             ];
 
             for (let url of abm) {
-                if (content.includes(url.toLowerCase())) return resolve(url);
+                if (content.includes(url.toLowerCase())) return resolve({match: true, content: url});
             }
 
             // eslint-disable-next-line no-useless-escape
@@ -210,7 +210,7 @@ class Util {
                     const channel_id = body && body.items && body.items[0] && body.items[0].snippet && body.items[0].snippet.channelId ? body.items[0].snippet.channelId : null;
                     if (!channel_id) return reject("Failed to get data from API");
 
-                    if (cids.includes(channel_id)) return resolve("`" + message.content + "`");
+                    if (cids.includes(channel_id)) return resolve({match: true, content: "`" + message.content + "`"});
                 }
 
                 catch (e) {
@@ -219,7 +219,7 @@ class Util {
                 }
             }
 
-            return reject();
+            resolve({match: false});
         });
     }
 
@@ -235,11 +235,13 @@ class Util {
         .setDescription('You posted a link to a forbidden social media account!\nFuck that bitch!')
         .setFooter(Util.config.footer, Util.config.avatar);
 
-        this.ABM_Test(message).then(async match => {
-            await Util.delay(200);
-            await message.delete();
-            Util.log("ABM triggered by: " + message.author.tag + " (" + match + ")");
-            message.channel.send(this.GetUserTag(message.author), { embed: abmembed });
+        this.ABM_Test(message).then(async res => {
+            if (res.match) {
+                await Util.delay(200);
+                await message.delete();
+                Util.log("ABM triggered by: " + message.author.tag + " (" + res.content + ")");
+                message.channel.send(this.GetUserTag(message.author), { embed: abmembed });
+            }
         }, failed => console.log(failed));
     }
 
@@ -362,20 +364,20 @@ class Util {
 
     /**
      * Get episode info 
-     * @returns {Promise<{title: string, name: string, value: string, error: null}>}
+     * @returns {Promise<{title: string, name: string, value: string}>}
      * @param {string} api_url 
      */
     static async GetNextEpisodeInfo(api_url) {
         return new Promise((resolve, reject) => {
-            if (!api_url) return reject({error: "Missing API URL"});
+            if (!api_url) return reject("Missing API URL");
             
             fetch(api_url).then(res => {
-                if (res.status !== 200) return reject({error: res.statusText});
+                if (res.status !== 200) return reject(res.statusText);
 
                 res.json().then(body => {
                     let title = body.name;
     
-                    let result = { title: title, name: null, value: null, error: null };
+                    let result = { title: title, name: null, value: null };
     
                     if (!body._embedded) {
                         result.name = '';
@@ -393,9 +395,7 @@ class Util {
 
                         let airs_today = time_diff_s < 60 * 60 * 24;
                         
-                        let res_value = `Airs in **${Util.secondsToDifferenceString(time_diff_s, {
-                            enableSeconds: false
-                        })}**`;
+                        let res_value = `Airs in **${Util.secondsToDifferenceString(time_diff_s, {enableSeconds: false})}**`;
 
                         if (!airs_today) {
                             //this is how we turn
@@ -426,8 +426,8 @@ class Util {
                     }
     
                     return resolve(result);
-                }, failed => reject({error: failed}));
-            }, failed => reject({error: failed}));
+                }, failed => reject(failed));
+            }, failed => reject(failed));
         });
     }
 
@@ -486,7 +486,7 @@ class Util {
 
     /**
      * Audio Response/Voice cmd exec 
-     * @param {string} intent 
+     * @param {string} value 
      * @param {Discord.VoiceConnection} connection 
      * @param {Discord.Message} message
      * @param {Discord.Client} gideon
@@ -645,14 +645,15 @@ class Util {
         }
     }
 
-    // Truncate string
-    static async truncate( n, useWordBoundary ){
-        if (this.length <= n) { return this; }
-        var subString = this.substr(0, n-1);
-        return (useWordBoundary 
-           ? subString.substr(0, subString.lastIndexOf(' ')) 
-           : subString) + "...";
+    /**
+     * @param {string} str 
+     * @param {number} length 
+     * @param {boolean} useWordBoundary 
+     */
+    static truncate(str, length, useWordBoundary){
+        if (str.length <= length) return str;
+        let subString = str.substr(0, length - 1);
+        return (useWordBoundary ? subString.substr(0, subString.lastIndexOf(' ')) : subString) + "...";
     }
-    //more methods to come
 }
 module.exports = Util;

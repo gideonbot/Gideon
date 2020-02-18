@@ -52,10 +52,12 @@ module.exports.run = async (gideon, message) => {
 
     collector.on('collect', async message => {
         try {
-            let match = await Util.ABM_Test(message);
-            collector.stop();
-            Util.log("ABM **in news** triggered by: " + message.author.tag + " (" + match + ")");
-            return;
+            let res = await Util.ABM_Test(message);
+            if (res.match) {
+                collector.stop();
+                Util.log("ABM **in news** triggered by: " + message.author.tag + " (" + res.content + ")");
+                return;
+            }
         }
         catch (ex) {console.log(ex);}
 
