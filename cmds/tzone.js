@@ -44,8 +44,6 @@ module.exports.run = async (gideon, message, args) => {
             message.channel.send('Registering, please stand by...');
 
             let zone = moment().tz(args[1]);
-            console.log(zone.zoneName());
-
             if (!zone._z) return message.reply(`\`${args[1]}\` is not a valid timezone!\nhttps://timezonedb.com/time-zones`);
 
             let obj = {
