@@ -69,10 +69,15 @@ gideon.once('ready', async () => {
     }
     
     console.log('Ready!');
-    Util.log(`${gideon.user.tag} ready!\n\nOnline on \`${gideon.guilds.cache.size}\` guilds:\n${gideon.guilds.cache.map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
+    Util.log(`${gideon.user.tag} ready!\n\nOnline in \`${gideon.guilds.cache.size}\` guilds:\n${gideon.guilds.cache.map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
     if (gideon.guilds.cache.size >= 1000) Util.log(`<@224617799434108928> <@351871113346809860>\n1000+ Guilds reached. Please refactor for sharding!`);
 
-    setInterval(status, 30000);
+    setInterval(status, 30e3);
+
+    gideon.fetchApplication().then(app => {
+        //when the bot is owned by a team owner id is stored under ownerID, otherwise id
+        gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
+    }, failed => console.log("Failed to fetch application: " + failed));
 });
 
 process.on("uncaughtException", err => {

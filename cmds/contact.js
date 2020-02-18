@@ -1,7 +1,7 @@
 const Discord = module.require("discord.js");
 const Util = require("../Util");
 
-module.exports.run = async (gideon, message, args) => {
+module.exports.run = async (gideon, message) => {
     const cembed = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('Contact:')
