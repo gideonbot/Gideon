@@ -74,8 +74,10 @@ module.exports.run = async (gideon, message, args) => {
         let i = 1;
         for(let data of top10.values()) {
             const guild = gideon.guilds.cache.get(data.guild);
-            console.log(Util.normalize(i));
-            leaderboard.addField(`#\`${Util.normalize(i)}\` User: \`${data.user}\` Server: \`${guild.name}\``, `\`${data.points}\` ${data.points != 1 ? s[2] + "s" : s[2]}`);
+
+            let name = guild.members.cache.get(data.user) ? guild.members.cache.get(data.user).user.tag : data.user;
+
+            leaderboard.addField(`#\`${Util.normalize(i)}\` User: \`${name}\` Server: \`${guild.name}\``, `\`${data.points}\` ${data.points != 1 ? s[2] + "s" : s[2]}`);
             i++;
         }
 

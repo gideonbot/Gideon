@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const Util = require("../Util");
-const fetch = require('node-fetch');
 const fs = require('fs');
+const moment = require("moment-timezone");
 
 /**
  * @param {Discord.Client} gideon
@@ -12,8 +12,11 @@ module.exports.run = async (gideon, message, args) => {
     if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
     if (!message.member.roles.cache.has('657198785289650177')) return message.channel.send('You don\'t have the required permissions to use this command!');
 
-    const apikey = process.env.TZ_API_KEY;
     const path = './data/JSON/tzdb.json';
+
+    if (!fs.existsSync(path)) {
+        fs.writeFileSync(path, JSON.stringify([]));
+    }
 
     const ia = new Discord.MessageEmbed()
     .setColor('#2791D3')
@@ -34,28 +37,20 @@ module.exports.run = async (gideon, message, args) => {
         try {
             let members = JSON.parse(fs.readFileSync(path));
             
-            if (members.map(x => x.username).includes(message.author.tag)) {
-                await Util.delay(200);
-                await message.channel.bulkDelete(2);
-                return message.reply('you have already registered a timezone!');
-            }
+            if (members.map(x => x.username).includes(message.author.tag)) return message.reply('you have already registered a timezone!');
+
+            if (!args[1]) return message.channel.send(ia);
 
             message.channel.send('Registering, please stand by...');
 
-            const api = `http://api.timezonedb.com/v2.1/list-time-zone?key=${apikey}&format=json`;
-            const body = await fetch(api).then(res => res.json());
+            let zone = moment().tz(args[1]);
+            console.log(zone.zoneName());
 
-            let result = body.zones.find(x => x.zoneName == args[1]);
-
-            if (!result) {
-                await Util.delay(200);
-                message.channel.bulkDelete(2);
-                return message.reply(`\`${args[1]}\` is not a valid timezone!\nhttps://timezonedb.com/time-zones`);
-            }
+            if (!zone._z) return message.reply(`\`${args[1]}\` is not a valid timezone!\nhttps://timezonedb.com/time-zones`);
 
             let obj = {
                 username: message.author.tag,
-                timezone: result.zoneName
+                timezone: zone._z.name
             };
             
             members.push(obj);
@@ -72,6 +67,7 @@ module.exports.run = async (gideon, message, args) => {
             Util.log("Caught an exception while running tzone.js: " + ex);
             return message.channel.send(er);
         }
+        return;
     }
 
     else if (!args[0]) {
@@ -136,7 +132,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["tz", "tzones", "timezones"],
+    name: ["tz", "tzones", "timezone", "timezones"],
     type: "misc",
     help_text: "tz",
     help_desc: "Displays the ITSF timezones"
