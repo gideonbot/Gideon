@@ -20,13 +20,13 @@
     "imgur-node": "^0.2.0",
     "magnet2torrent-js": "^1.3.0",
     "moment": "^2.24.0",
+    "moment-timezone": "^0.5.27",
     "node-fetch": "^2.6.0",
     "node-gyp": "^6.1.0",
     "opensubtitles-api": "^5.0.1",
     "rarbg": "^1.2.7",
     "select-random-file": "^1.1.0",
     "string-similarity": "^4.0.1",
-    "timediff": "^1.1.1",
     "torrent-search-api": "^2.0.10"
   }
 }

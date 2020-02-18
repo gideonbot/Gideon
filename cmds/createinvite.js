@@ -28,7 +28,7 @@ module.exports.run = async (gideon, message, args) => {
     try {
         let textchannels = guild.channels.cache.filter(c=> c.type == "text");
         let invitechannels = textchannels.filter(c=> c.permissionsFor(guild.me).has('CREATE_INSTANT_INVITE'));
-        if(!invitechannels.size) return message.reply('no channels found to create instant invite!');
+        if (!invitechannels.size) return message.reply('no channels found to create instant invite!');
 
         invitechannels.random().createInvite().then(invite=> message.channel.send('Found Invite:\n' + 'https://discord.gg/' + invite.code));
     }

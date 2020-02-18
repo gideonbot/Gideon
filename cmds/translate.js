@@ -8,7 +8,7 @@ const fetch = require('node-fetch');
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if(!args[0]) return message.reply('you must provide input to translate something!');
+    if (!args[0]) return message.reply('you must provide input to translate something!');
 
     const sourceLang = 'auto';
     const targetLang = 'en';
