@@ -76,6 +76,7 @@ module.exports.run = async (gideon, message, args) => {
         for(let [i=0, data] of top10.entries()){
             i++;
             Util.log(gideon.users.cache.get(data.user));
+            Util.log('data.user: \n' + data.user);
             const guild = gideon.guilds.cache.get(data.guild);
             leaderboard.addField(`#\`${i < 10 ? "0" + i : i}\` User: \`${gideon.users.cache.get(data.user).tag}\` Server: \`${guild.name}\``, `\`${data.points}\` ${data.points > 1 ? s[2] + "s" : s[2]}`);
         }
