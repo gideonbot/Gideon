@@ -26,6 +26,7 @@ declare module "discord.js" {
         commands: Discord.Collection<string, Command>;
         cvmt: boolean;
         vcmdexec: boolean;
+        emptyvc: boolean;
         trmode: Map<string, boolean>;
     }
 }
