@@ -75,7 +75,7 @@ module.exports.run = async (gideon, message, args) => {
         {
             id: "1859",
             title: "Lucifer",
-            channel: info.season === "1" || "2" || "3" ? "Fox" : "Netflix"
+            channel: info.season == "1" || info.season == "2" || info.season == "3" ? "Fox" : "Netflix"
         },
         {
             id: "44751",

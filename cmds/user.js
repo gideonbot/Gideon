@@ -20,11 +20,6 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle('You must supply valid input!')
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-    const er = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('An error occured while executing this command!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
     if (noid && args[0].includes("@")) user = gideon.users.cache.get(Util.getIdFromString(args[0]));
     else if (!noid && args[0].length === 18) user = gideon.users.cache.get(args[0]);
     else if (noid && !args[0].includes("@")) {
@@ -60,7 +55,7 @@ module.exports.run = async (gideon, message, args) => {
                 if (emote) csemoji = user.presence.activities[0].emoji.toString();
             }
         }
-    }; 
+    }
 
     const member = message.guild.member(user);
 
@@ -73,6 +68,7 @@ module.exports.run = async (gideon, message, args) => {
     .setDescription(`User **${user.tag}**:`)
     .setThumbnail(user.displayAvatarURL())
     .addField(`❯ User Info:`, `• ID: \`${user.id}\`\n• Nickname: \`${user.nickname === undefined ? 'None' : user.nickname}\`\n• Status: \`${status}\`${semote}\n• Custom Status: \`${user.presence.activities[0] === undefined || user.presence.activities[0].state === null || user.presence.activities[0].type !== 'CUSTOM_STATUS' ? 'None' : user.presence.activities[0].state}\`${csemoji}\n• Activity: \`${user.presence.activities[cs] === undefined ? 'None' : user.presence.activities[cs].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot === true ? 'Yes' : 'No'}\``)
+    //eslint-disable-next-line
     .addField(`❯ GuildMember Info:`, `• Joined at: \`${moment.utc(member.joinedAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Boosted: ${member.premiumSince === null ? '\`No\`' : '\`Yes\` <:boost:678746359549132812>'}\n• Roles: ${member.roles.cache.map(roles => roles.toString()).join(' ')}\n• Permissions: \`${perms}\`\n• Last Message: ${member.lastMessage === null ? '\`None\`' : `[Click Here](${member.lastMessage.url} '${member.lastMessage.url}')`}`)
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 

@@ -5,7 +5,7 @@ const Discord = require("discord.js");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {     
+module.exports.run = async (gideon, message) => {     
     message.channel.send('https://discord.gg/h9SEQaU'); 
 }
 

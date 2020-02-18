@@ -63,7 +63,7 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send(speedster);
     }
     
-    catch (ex) {
+    catch (err) {
         console.log("An error occurred while trying to fetch speedsters: " + err);
         Util.log("An error occurred while trying to fetch speedsters: " + err);
 

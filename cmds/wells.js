@@ -6,7 +6,7 @@ const Util = require("../Util");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {      
+module.exports.run = async (gideon, message) => {      
     message.channel.send("Booting up the Multiverse Holo Projector...");
     await Util.delay(1000);
     message.channel.send("Calling...");

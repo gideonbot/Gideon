@@ -158,7 +158,7 @@ module.exports.run = async (gideon, message, args) => {
                 
                 const tzembed = new Discord.MessageEmbed()
                 .setColor('#2791D3')
-                .setTitle(`${result[0].username}\'s current local time:`)
+                .setTitle(`${result[0].username}'s current local time:`)
                 .setDescription(`\`${formattedDay} ${formattedTime} (${result[0].timezone})\``)
                 .setFooter(Util.config.footer, gideon.user.avatarURL());
 

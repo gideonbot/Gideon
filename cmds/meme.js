@@ -8,7 +8,7 @@ const Util = require("../Util");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {      
+module.exports.run = async (gideon, message) => {      
     imgclient.album.get('NVHwdNg', (err, res) => {
         if (err) {
             console.log(err);

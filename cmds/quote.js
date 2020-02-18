@@ -7,7 +7,7 @@ const Util = require("../Util");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+module.exports.run = async (gideon, message) => {
     const titlesapi = `https://api.myjson.com/bins/13h4p4`;
 
     try {

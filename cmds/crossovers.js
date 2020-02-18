@@ -7,7 +7,7 @@ const Util = require("../Util");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+module.exports.run = async (gideon, message) => {
     const co1 = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle('__All Arrowverse crossover episodes in their respective watching order:__')

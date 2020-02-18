@@ -61,7 +61,11 @@ module.exports.run = async (gideon, message, args) => {
 
         let shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
 
-        function GetNextEmbed(show, season_and_episode) {
+        /**
+         * @param {string} show 
+         * @param {*} season_and_episode 
+         */
+        let GetNextEmbed = (show, season_and_episode) => {
             let f = shows.find(x => x.series === show && x.episode_id === season_and_episode);
             if (!f) return `${show} ${season_and_episode} is not a valid episode!`;
 

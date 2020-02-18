@@ -1,12 +1,11 @@
 const Discord = require("discord.js");
-const Util = require("../Util");
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {      
+module.exports.run = async (gideon, message) => {      
     message.channel.send('http://gideonbot.co.vu');
 }
 

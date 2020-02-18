@@ -7,7 +7,7 @@ const Util = require("../Util");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+module.exports.run = async (gideon, message) => {
     const api = 'https://api.myjson.com/bins/zixur';
     try {
         const body = await fetch(api).then(res => res.json()); 
