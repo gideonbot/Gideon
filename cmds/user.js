@@ -60,7 +60,7 @@ module.exports.run = async (gideon, message, args) => {
     const member = message.guild.member(user);
 
     const s = member.permissions.toArray().join(' ');
-    const perms = await Util.truncate.apply(s, [200, true]);
+    const perms = Util.truncate(s, 200, true);
 
     const embed = new Discord.MessageEmbed()
     .setColor('#2791D3')

@@ -32,8 +32,8 @@ module.exports.run = async (gideon, message, args) => {
         
         catch (ex) {
             //in this case the "ex" is most likely the object returned by GetNextEpisodeInfo, if not we just log the exception
-            console.log(`Error while fetching next episode for "${show}": ${ex.error ? ex.error : ex}`);
-            Util.log(`Error while fetching next episode for "${show}": ${ex.error ? ex.error : ex}`);
+            console.log(`Error while fetching next episode for "${show}": ${ex}`);
+            Util.log(`Error while fetching next episode for "${show}": ${ex}`);
         }
     }
 
