@@ -28,6 +28,7 @@ declare module "discord.js" {
         vcmdexec: boolean;
         emptyvc: boolean;
         trmode: Map<string, boolean>;
+        owner: string;
     }
 }
 
