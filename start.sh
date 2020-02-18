@@ -1,2 +1,2 @@
-sudo nodemon --exec npm start
+nodemon index.js
 break
