@@ -17,7 +17,7 @@ module.exports.run = async (gideon, message) => {
     
         let check = message.guild.roles.cache.get('596402530989375539');
 
-        if (check.mentionable == false){
+        if (check.mentionable == false) {
             try {
                 message.channel.send('Toggling roles, please stand by...');
                 await Util.TRM(message.guild, true);
@@ -29,7 +29,7 @@ module.exports.run = async (gideon, message) => {
                 return message.channel.send(er);
             }
         }
-        else if (check.mentionable == true){
+        else if (check.mentionable == true) {
             try {
                 message.channel.send('Toggling roles, please stand by...');
                 await Util.TRM(message.guild, false);

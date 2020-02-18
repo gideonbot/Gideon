@@ -1,5 +1,6 @@
 import Discord from "discord.js";
 
+export const config: Config;
 export function parseSeriesEpisodeString(str: string): SeasonAndEpisodeInfo;
 export function TRM(guild: Discord.Guild, mentionable: boolean): Promise<void>;
 export function delay(num: number): Promise<void>;
@@ -18,7 +19,7 @@ export function SpeechRecognition(speech: ReadableStream): Promise<VoiceInfoResp
 export function VoiceResponse(value: string, connection: Discord.VoiceConnection, message: Discord.Message, gideon: Discord.Client): Promise<void>;
 export function TRMode(gideon: Discord.Client, message: Discord.Message): Promise<void>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
-export const config: Config;
+export function normalize(num: number): string;
 
 declare module "discord.js" {
     interface Client {

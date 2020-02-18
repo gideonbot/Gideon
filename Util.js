@@ -301,7 +301,7 @@ class Util {
      * @param {string} imgid 
      * @param {Discord.Message} message
      */
-    static async IMG(imgid, message){
+    static async IMG(imgid, message) {
         const Imgur = require('imgur-node');
         const imgclient = new Imgur.Client(process.env.IMG_CL);
 
@@ -645,10 +645,20 @@ class Util {
      * @param {number} length 
      * @param {boolean} useWordBoundary 
      */
-    static truncate(str, length, useWordBoundary){
+    static truncate(str, length, useWordBoundary) {
         if (str.length <= length) return str;
         let subString = str.substr(0, length - 1);
         return (useWordBoundary ? subString.substr(0, subString.lastIndexOf(' ')) : subString) + "...";
+    }
+
+    /**
+     * Converts number to string & ensures it has at least 2 digits
+     * @param {number} num 
+     */
+    static normalize(num) {
+        if (num == undefined || typeof(num) != "number") return "";
+
+        return num.toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping: false});
     }
 }
 module.exports = Util;

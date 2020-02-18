@@ -8,7 +8,7 @@ const Util = require("../Util");
  */
 module.exports.run = async (gideon, message, args) => {
     let agm;
-    if (args){
+    if (args) {
         agm = args.join("").toLowerCase();
         if (agm.match(/(?:me)/i) && agm.match(/(?:the)/i) && agm.match(/(?:future)/i)) {
             message.channel.send('Yes Dr. Wells!');
