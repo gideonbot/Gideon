@@ -1,6 +1,11 @@
-const Discord = module.require('discord.js');
+const Discord = require('discord.js');
 const Util = require('../Util');
 
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
 module.exports.run = async (gideon, message, args) => {
     const appowner = await gideon.fetchApplication().then(application => application.owner.id).catch(console.error);
     

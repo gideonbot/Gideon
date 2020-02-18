@@ -2,6 +2,11 @@ const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const Util = require("../Util");
 
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
 module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
     if (!agc) return message.channel.send("You must supply the shows name, season and its episode number!");

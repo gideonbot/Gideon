@@ -1,8 +1,13 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const Util = require("../Util");
 const stringSimilarity = require('string-similarity');
 const moment = require('moment');
 
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
 module.exports.run = async (gideon, message, args) => {
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);

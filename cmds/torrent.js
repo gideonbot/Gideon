@@ -1,8 +1,13 @@
-const Discord = module.require("discord.js");
+const Discord = require("discord.js");
 const torrentSearch = require('torrent-search-api');
 const Util = require("../Util");
 const Magnet2torrent = require('magnet2torrent-js');
 
+/**
+ * @param {Discord.Client} gideon
+ * @param {Discord.Message} message
+ * @param {string[]} args
+ */
 module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
     const auth = message.author.id;
