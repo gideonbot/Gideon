@@ -56,7 +56,7 @@ gideon.once('ready', async () => {
         if (!tmvt) return;
 
         let mbc = tmvt.members.cache.filter(member => !member.user.bot).size;
-        const st1 = `!help | gideonbot.co.vu`;
+        const st1 = `!help | invite.gg/tmvt`;
         let st2 = `${mbc} Time Vault members`;
         const st3 = `${guilds} Guilds`;
 
@@ -70,24 +70,7 @@ gideon.once('ready', async () => {
     console.log('Ready!');
     Util.log(`${gideon.user.tag} ready!\nServers:\n${gideon.guilds.cache.map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
     if (gideon.guilds.cache.size >= 1000) Util.log(`<@224617799434108928> <@351871113346809860>\n1000+ Guilds reached. Please refactor for sharding!`);
- /* let ids = gideon.guilds.cache.map(x => x.id);
 
-    for (let i = 0; i < ids.length; i++) {
-        try {
-            let guild = gideon.guilds.cache.get(ids[i]);
-            let textchannels = guild.channels.cache.filter(c=> c.type == "text");
-            let invitechannels = textchannels.filter(c=> c.permissionsFor(guild.me).has('CREATE_INSTANT_INVITE'));
-            if(!invitechannels.size) return;
-
-            invitechannels.random().createInvite().then(invite=> Util.log('Found Invite:\n' + 'https://discord.gg/' + invite.code));
-        }
-        
-        catch (ex) {
-            console.log("Caught an exception while creating invites!: " + ex);
-            Util.log("Caught an exception while creating invites!: " + ex);
-        }
-    }
-*/
     setInterval(status, 30000);
 });
 
