@@ -148,7 +148,7 @@ module.exports.run = async (gideon, message, args) => {
             await sent.react(emoji).then(() => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
         }
 
-        const rfilter = (reaction, user) => emotes.includes(reaction.emoji.name) && user.id === auth;
+        const rfilter = (reaction, user) => (emotes.includes(reaction.emoji.name) || emotes.includes(reaction.emoji.id)) && user.id === auth;
         const rcollector = sent.createReactionCollector(rfilter, {time: 30 * 1000});
     
         rcollector.on('collect', async (reaction, user) => {
