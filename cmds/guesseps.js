@@ -63,7 +63,7 @@ module.exports.run = async (gideon, message, args) => {
         return message.reply(`You currently have \`${score.points}\` point(s)!`);
     }
 
-    if (command.endsWith('leaderboard') || command.endsWith('highscores')) {
+    if (command.endsWith('leaderboard') || command.endsWith('highscores') || command.endsWith('lb')) {
         const top10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;").all();
 
         const leaderboard = new Discord.MessageEmbed()
@@ -253,7 +253,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["guess", "guesseps", "points", "score", "leaderboard", "highscores"],
+    name: ["guess", "guesseps", "points", "score", "leaderboard", "highscores", "lb"],
     type: "fun",
     help_text: "!guess",
     help_desc: "Arrowverse episode guessing game"
