@@ -1,5 +1,6 @@
 ![License](https://img.shields.io/badge/License-GPLv2-blue.svg)
-![npm](https://img.shields.io/npm/v/discord.js.svg)
+![node](https://img.shields.io/node/v/discord.js)
+![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/adrifcastr/discord.js/master)
 [![Build Status](https://travis-ci.org/adrifcastr/Gideon.svg?branch=master)](https://travis-ci.org/adrifcastr/Gideon)
 [![Known Vulnerabilities](https://snyk.io//test/github/adrifcastr/Gideon/badge.svg?targetFile=package.json)](https://snyk.io//test/github/adrifcastr/Gideon)
 [![Dependency Status](https://david-dm.org/adrifcastr/Gideon.svg)](https://david-dm.org/adrifcastr/Gideon.svg)
@@ -9,13 +10,10 @@
 # Gideon  
 ### The Open Source Arrowverse Discord Bot
 
-Documentation:
-[GitHub Wiki](https://github.com/adrifcastr/Gideon/wiki)
+Infos & features:
+[Homepage](http://gideonbot.co.vu)
 
-Features:
-[GitHub Wiki](https://github.com/adrifcastr/Gideon/wiki/Feature-List)
-
-Too see Gideon in action, feel free to join my Arrowverse Discord Server: [Time Vault](https://invite.gg/tmvt) 
+Too see Gideon in action, you can join the Time Vault: [Join](https://invite.gg/tmvt) 
 ![Discord Banner](https://discordapp.com/api/guilds/595318490240385037/widget.png?style=banner2)
 
 <a href="https://i.imgur.com/9Pdixuy.png"><img src="https://i.imgur.com/9Pdixuy.png" width="286.5" height="168.5"/></a>
@@ -25,7 +23,7 @@ Too see Gideon in action, feel free to join my Arrowverse Discord Server: [Time 
 ### Donations
 
 Donations are gladly accepted. Please send them to my [Paypal.me](https://www.paypal.me/adrifcastr) or [Patreon](https://www.patreon.com/gideonbot)
-to support the development, maintenance and hosting of this project. Thank you!
+to support the development, and maintenance of this project. Thank you!
 
 ### Credits
 
@@ -35,5 +33,6 @@ In no particular order, I credit the following for their invaluable contribution
 
 * __MBR#0001__ for development, testing & support.
 * __Klaus#5857__ for website development & server hosting.
+* __Stevenson Johnson__ for drawing the artwork.
 * __AceFire6__ for [arrowverse.info](https://arrowverse.info) and its [API](https://arrowverse.info/api).
 * __7coil__ for [#24](https://github.com/adrifcastr/Gideon/pull/24) and [#25](https://github.com/adrifcastr/Gideon/pull/25).
