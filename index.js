@@ -18,33 +18,34 @@ gideon.once('ready', async () => {
 
     const scoresdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
     if (!scoresdb['count(*)']) {
-    sql.prepare("CREATE TABLE scores (user TEXT PRIMARY KEY, points INTEGER, guild TEXT);").run();
-    sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (user);").run();
-    sql.pragma("synchronous = 1");
-    sql.pragma("journal_mode = wal");
+        sql.prepare("CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, points INTEGER);").run();
+        sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (id);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
     }
 
     const trmodedb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'trmode';").get();
     if (!trmodedb['count(*)']) {
-    sql.prepare("CREATE TABLE trmode (user TEXT PRIMARY KEY, trmodeval BIT);").run();
-    sql.prepare("CREATE UNIQUE INDEX idx_trmode_id ON trmode (user);").run();
-    sql.pragma("synchronous = 1");
-    sql.pragma("journal_mode = wal");
+        sql.prepare("CREATE TABLE trmode (id TEXT PRIMARY KEY, trmodeval BIT);").run();
+        sql.prepare("CREATE UNIQUE INDEX idx_trmode_id ON trmode (id);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
     }
 
     const cvmdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'cvm';").get();
     if (!cvmdb['count(*)']) {
-    sql.prepare("CREATE TABLE cvm (guild TEXT PRIMARY KEY, cvmval BIT);").run();
-    sql.prepare("CREATE UNIQUE INDEX idx_cvm_id ON cvm (guild);").run();
-    sql.pragma("synchronous = 1");
-    sql.pragma("journal_mode = wal");
+        sql.prepare("CREATE TABLE cvm (guild TEXT PRIMARY KEY, cvmval BIT);").run();
+        sql.prepare("CREATE UNIQUE INDEX idx_cvm_id ON cvm (guild);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
     }
 
-    gideon.getScore = sql.prepare("SELECT * FROM scores WHERE user = ?");
-    gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (user, points, guild) VALUES (@user, @points, @guild);");
+    gideon.getScore = sql.prepare("SELECT * FROM scores WHERE id = ?");
+    gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);");
+    gideon.getTop10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;");
 
-    gideon.getTrmode = sql.prepare("SELECT * FROM trmode WHERE user = ?");
-    gideon.setTrmode = sql.prepare("INSERT OR REPLACE INTO trmode (user, trmodeval) VALUES (@user, @trmodeval);");
+    gideon.getTrmode = sql.prepare("SELECT * FROM trmode WHERE id = ?");
+    gideon.setTrmode = sql.prepare("INSERT OR REPLACE INTO trmode (id, trmodeval) VALUES (@id, @trmodeval);");
 
     gideon.getCVM = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
     gideon.setCVM = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@guild, @cvmval);");

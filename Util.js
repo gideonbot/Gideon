@@ -621,11 +621,12 @@ class Util {
         let trmode = gideon.getTrmode.get(message.author.id);
         if (!trmode) {
             trmode = {
-                user: message.author.id,
+                id: message.author.id,
                 trmodeval: 0,
             }
-            await gideon.setTrmode.run(trmode);
+            gideon.setTrmode.run(trmode);
         }
+        
         if (trmode.trmodeval === 0) return;
 
         else {
