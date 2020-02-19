@@ -247,16 +247,11 @@ class Util {
 
     /**
      * @param {Discord.Message} message 
+     * @param {Discord.Client} gideon 
      */
-    static async CVM(message) {
+    static async CVM(message, gideon) {
         let cvm = gideon.getCVM.get(message.guild.id);
-        if (!cvm) {
-            cvm = {
-                guild: message.guild.id,
-                cvmval: 0,
-            }
-            await gideon.setCVM.run(cvm);
-        }
+        if (!cvm) return;
         if (cvm.cvmval === 0) return;
 
         const ids = ['595944027208024085', '595935317631172608', '595935345598529546', '598487475568246830', '622415301144870932', '596080078815887419'];
@@ -607,11 +602,11 @@ class Util {
         else return;
     }
 
-    /** Automatic translation mode
-     * @param {Discord.Client} gideon 
+    /** Automatic translation mode 
      * @param {Discord.Message} message 
+     * @param {Discord.Client} gideon
      */
-    static async TRMode(gideon, message) {
+    static async TRMode(message, gideon) {
         const lowercaseContent = message.content.toLowerCase();
 
         // Find the prefix that was used

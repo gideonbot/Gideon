@@ -6,6 +6,3 @@ node_modules/
 /data/SQL/gideon.sqlite
 /data/SQL/gideon.sqlite-shm
 /data/SQL/gideon.sqlite-wal
-/data/SQL/scores.sqlite
-/data/SQL/scores.sqlite-shm
-/data/SQL/scores.sqlite-wal

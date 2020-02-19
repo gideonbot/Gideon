@@ -10,14 +10,14 @@ export function secondsToDifferenceString(seconds: number, settings: secondsToDi
 export function log(message: string): boolean;
 export function ABM_Test(message: Discord.Message): Promise<ABMResult>;
 export function ABM(message: Discord.Message): void;
-export function CVM(message: Discord.Message): Promise<Discord.Message>;
+export function CVM(message: Discord.Message, gideon: Discord.Client): Promise<Discord.Message>;
 export function IMG(image_id: string, message: Discord.Message): Promise<void>;
 export function CSD(message: Discord.Message): Promise<void>;
 export function GetNextEpisodeInfo(url: string): Promise<EpisodeInfo>;
 export function LeaveVC(message: Discord.Message): Promise<void>;
 export function SpeechRecognition(speech: ReadableStream): Promise<VoiceInfoResponse>;
 export function VoiceResponse(value: string, connection: Discord.VoiceConnection, message: Discord.Message, gideon: Discord.Client): Promise<void>;
-export function TRMode(gideon: Discord.Client, message: Discord.Message): Promise<void>;
+export function TRMode(message: Discord.Message, gideon: Discord.Client): Promise<void>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
 export function normalize(num: number): string;
 
