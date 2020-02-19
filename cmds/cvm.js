@@ -18,13 +18,13 @@ module.exports.run = async (gideon, message) => {
 
     if (cvm.cvmval === 0) {
         cvm.cvmval = 1;
-        await gideon.setCVM.run(cvm);
+        gideon.setCVM.run(cvm);
         message.reply('Crossover-Mode enabled! :white_check_mark:');
     }
 
     else {
         cvm.cvmval = 0;
-        await gideon.setCVM.run(cvm);
+        gideon.setCVM.run(cvm);
         message.reply('Crossover-Mode disabled! :white_check_mark:');
     } 
 }

@@ -2,8 +2,6 @@ const Discord = require("discord.js");
 const Util = require("../Util");
 const fetch = require('node-fetch');
 const stringSimilarity = require('string-similarity');
-const SQLite = require("better-sqlite3");
-const sql = new SQLite('./data/SQL/gideon.sqlite');
 
 /**
  * @param {Discord.Client} gideon
@@ -12,17 +10,12 @@ const sql = new SQLite('./data/SQL/gideon.sqlite');
  */
 module.exports.run = async (gideon, message, args) => {
     const url = 'https://arrowverse.info';
-    const api = "https://arrowverse.info/api";
     const emotes = ['▶️', '669309980209446912'];
     let s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
-    const auth = message.author.id;
     let chosenfilter;
     let tries = 3;
-    let p = 0;
-    let multiplicator;
+    let points = 0;
     let timerstart = new Date();
-    let timerdiff;
-    let timervalue;
 
     const as = new Discord.MessageEmbed()
     .setColor('#2791D3')
@@ -47,44 +40,42 @@ module.exports.run = async (gideon, message, args) => {
         (x => x.series == 'Constantine')
     ]
 
-    let score = gideon.getScore.get(message.author.id);
-    if (!score) {
-        score = {
-            id: `${message.author.id}`,
-            user: message.author.tag,
-            guild: message.guild.id,
-            points: 0
-        }
-        await gideon.setScore.run(score);
-    }
-
     let command = message.content.toLowerCase().split(' ')[0];
 
-    if (command.endsWith('score') || command.endsWith('points')) {
-        console.log(score);
-        console.log(score.points);
-        return message.reply(`You currently have \`${score.points}\` point(s)!`);
-    }
-
     if (command.endsWith('leaderboard') || command.endsWith('highscores') || command.endsWith('lb')) {
-        const top10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;").all();
-
         const leaderboard = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setTitle(`Top 10 Leaderboard:`)
         .setFooter(Util.config.footer, gideon.user.avatarURL());
-        
-        let i = 1;
-        for(let data of top10.values()) {
-            const guild = gideon.guilds.cache.get(data.guild);
 
-            let name = guild.members.cache.get(data.user) ? guild.members.cache.get(data.user).user.tag : data.user;
+        let top10 = gideon.getTop10.all().filter(x => x.points > 0);
 
-            leaderboard.addField(`#\`${Util.normalize(i)}\` User: \`${name}\` Server: \`${guild.name}\``, `\`${data.points}\` ${data.points != 1 ? s[2] + "s" : s[2]}`);
-            i++;
+        if (top10.length < 1) leaderboard.setDescription("No entries yet!");
+
+        else {
+            leaderboard.setDescription(top10.map((data, i) => {
+                let guild = gideon.guilds.cache.get(data.guild);
+                let user = guild && guild.members.cache.get(data.user) ? guild.members.cache.get(data.user).user.tag : data.user;
+                return "**#" + (i + 1) + "** - " + user + " in `" + (guild ? guild.name : "Unknown") + "`: **" + data.points + "** " + (data.points != 1 ? s[2] + "s" : s[2]);
+            }).join("\n"));
         }
 
         return message.channel.send(leaderboard);
+    }
+
+    let score = gideon.getScore.get(message.author.id);
+    if (!score) {
+        score = {
+            id: message.author.id,
+            user: message.author.tag,
+            guild: message.guild.id,
+            points: 0
+        }
+        gideon.setScore.run(score);
+    }
+
+    if (command.endsWith('score') || command.endsWith('points')) {
+        return message.reply(`You currently have \`${score.points}\` point(s)!`);
     }
 
     if (!agc) chosenfilter = filters[0];
@@ -98,31 +89,29 @@ module.exports.run = async (gideon, message, args) => {
     else return message.channel.send(as);
 
     function Countdown() {
-        let now = new Date();
-        timerdiff = (now.getTime() - timerstart.getTime()) / 1000;
-        timervalue = Math.round(30 - timerdiff);
-        return timervalue;
+        let timerdiff = (Date.now() - timerstart.getTime()) / 1000;
+        return Math.round(30 - timerdiff);
     }
 
-    async function PointsAmt() {
-        score.points++;
-        console.log(score.points);
+    function IncreasePoints(points) {
+        score.points += points;
     }
 
-    async function PointsMulti(airdate) {
+    /**
+     * @param {Date} airdate 
+     */
+    function CalculateAirDatePoints(airdate) {
         const difference = Math.floor(Math.floor(new Date() - new Date(airdate)) / (1000 * 60 * 60 * 24));
-
-        multiplicator = difference / 100;
-        const finalpoints = Math.round(multiplicator + p);
-        if (finalpoints <= 0) return p = 0;
-        console.log(p);
-        p = finalpoints;
-        console.log(p);
-        for (let pa = 0; pa < p; pa++) await PointsAmt();
+        
+        return Math.round(difference / 100);
     }
 
-    async function GameEmbed(showfilter) {
-        const body = await fetch(api).then(res => res.json());
+    /**
+     * @param {Function} showfilter 
+     * @returns {Promise<{embed: Discord.MessageEmbed, show: string, ep_and_s: string, airdate: Date, ep_name: string}>}
+     */
+    async function GetGame(showfilter) {
+        const body = await fetch("https://arrowverse.info/api").then(res => res.json());
 
         const shows = body.filter(showfilter);
 
@@ -130,7 +119,7 @@ module.exports.run = async (gideon, message, args) => {
         const show = randomep.series;
         const epnum = randomep.episode_id;
         const epname = randomep.episode_name;
-        const epairdate = randomep.air_date;
+        const epairdate = new Date(randomep.air_date);
 
         const gameembed = new Discord.MessageEmbed()
         .setColor('#2791D3')
@@ -140,34 +129,39 @@ module.exports.run = async (gideon, message, args) => {
         .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
         .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-        return [gameembed, show, epnum, epname, epairdate];
+        return {embed: gameembed, show: show, ep_and_s: epnum, ep_name: epname, airdate: epairdate};
     }
 
     try {
-        let embed = await GameEmbed(chosenfilter);
+        let game = await GetGame(chosenfilter);
 
         const f = m => m.author.id === message.author.id;
         const collector = message.channel.createMessageCollector(f, {time: 30 * 1000});
 
-        let sent = await message.channel.send(embed[0]);
+        let sent = await message.channel.send(game.embed);
         for (let emoji of emotes) {
             await sent.react(emoji).then(() => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
         }
 
-        const rfilter = (reaction, user) => (emotes.includes(reaction.emoji.name) || emotes.includes(reaction.emoji.id)) && user.id === auth;
+        const rfilter = (reaction, user) => (emotes.includes(reaction.emoji.name) || emotes.includes(reaction.emoji.id)) && user.id === message.author.id;
         const rcollector = sent.createReactionCollector(rfilter, {time: 30 * 1000});
     
         rcollector.on('collect', async (reaction, user) => {
             if (reaction.emoji.name == emotes[0]) {
                 tries = 3;
-                p = 0;
-                let updateembed = await GameEmbed(chosenfilter);
+                points = 0;
+
+                game = await GetGame(chosenfilter);
+
                 sent.reactions.cache.find(x => x.emoji.name == emotes[0]).users.remove(user.id);
+
                 collector.resetTimer();
                 rcollector.resetTimer();
-                await sent.edit(updateembed[0]);
+                
+                await sent.edit(game.embed);
+                
                 timerstart = new Date();
-                embed = updateembed;
+                return;
             }
 
             if (reaction.emoji.id == emotes[1]) {
@@ -187,26 +181,26 @@ module.exports.run = async (gideon, message, args) => {
         }); 
 
         collector.on('collect', async message => {
-            const similarity = stringSimilarity.compareTwoStrings(embed[3].toLowerCase().replace(/\s/g, ""), message.content.toLowerCase().replace(/\s/g, ""));
+            const similarity = stringSimilarity.compareTwoStrings(game.ep_name.toLowerCase().replace(/\s/g, ""), message.content.toLowerCase().replace(/\s/g, ""));
 
             if (similarity >= 0.65) {
                 collector.stop();
 
-                if (tries === 3) p = 3;
-                else if (tries === 2) p = 2;
-                else if (tries === 1) p = 1;
+                if (tries === 3) points = 3;
+                else if (tries === 2) points = 2;
+                else if (tries === 1) points = 1;
 
-                for (let pa = 0; pa < p; pa++) await PointsAmt();
-                
-                await PointsMulti(embed[4]);
-                await gideon.setScore.run(score);
+                let airdate_bonus = CalculateAirDatePoints(game.airdate);
+                points += airdate_bonus;
+                IncreasePoints(points);
+                gideon.setScore.run(score);
                 tries--;
 
                 const correctembed = new Discord.MessageEmbed()
                 .setColor('#2791D3')
                 .setTitle(`Guessing game for ${message.author.tag}:`)
                 .setAuthor(`You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
-                .setDescription(`That is correct! :white_check_mark:\n\`${embed[1]} ${embed[2]} - ${embed[3]}\`\n\n**You have gained \`${p}\` ${p > 1 ? s[2] + "s" : s[2]}!**\n(Airdate point bonus: \`+${multiplicator}\`)`)
+                .setDescription(`That is correct! :white_check_mark:\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\`\n\n**You have gained \`${points}\` ${points > 1 ? s[2] + "s" : s[2]}!**\n(Airdate point bonus: \`+${airdate_bonus}\`)`)
                 .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
                 .setFooter(Util.config.footer, gideon.user.avatarURL());
 
@@ -215,13 +209,13 @@ module.exports.run = async (gideon, message, args) => {
             }
 
             tries--;
-            let question = `\`${embed[1]} ${embed[2]}\``;
-            let solution = `\`${embed[1]} ${embed[2]} - ${embed[3]}\``;
+            let question = `\`${game.show} ${game.ep_and_s}\``;
+            let solution = `\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``;
 
             const incorrectembed = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setTitle(`Guessing game for ${message.author.tag}:`)
-            .setAuthor(`You've had ${tries == 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
+            .setAuthor(`You've ${tries == 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
             .setDescription(`That is incorrect! :x:\n${tries == 0 ? solution : question}`)
             .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
             .setFooter(Util.config.footer, gideon.user.avatarURL());
@@ -241,7 +235,7 @@ module.exports.run = async (gideon, message, args) => {
                 .setColor('#2791D3')
                 .setTitle(`Guessing game for ${message.author.tag}:`)
                 .setAuthor(`You've had ${tries} ${tries !== 1 ? s[4] : s[3]} left!`, message.author.avatarURL())
-                .setDescription(`You ran out of time!\n\`${embed[1]} ${embed[2]} - ${embed[3]}\``)
+                .setDescription(`You ran out of time!\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``)
                 .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
                 .setFooter(Util.config.footer, gideon.user.avatarURL());
 

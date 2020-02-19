@@ -1,4 +1,5 @@
 import Discord from "discord.js";
+import BetterSqlite3 from "better-sqlite3";
 
 export const config: Config;
 export function parseSeriesEpisodeString(str: string): SeasonAndEpisodeInfo;
@@ -27,6 +28,13 @@ declare module "discord.js" {
         vcmdexec: boolean;
         emptyvc: boolean;
         owner: string;
+        getScore: BetterSqlite3.Statement<any[]>;
+        setScore: BetterSqlite3.Statement<any[]>;
+        getTop10: BetterSqlite3.Statement<any[]>;
+        getTrmode: BetterSqlite3.Statement<any[]>;
+        setTrmode: BetterSqlite3.Statement<any[]>;
+        getCVM: BetterSqlite3.Statement<any[]>;
+        setCVM: BetterSqlite3.Statement<any[]>;
     }
 }
 
