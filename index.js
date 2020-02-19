@@ -40,8 +40,8 @@ gideon.once('ready', async () => {
         sql.pragma("journal_mode = wal");
     }
 
-    gideon.getScore = sql.prepare("SELECT * FROM scores WHERE id = ?");
-    gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);");
+    gideon.getTrmode = sql.prepare("SELECT * FROM trmode WHERE user = ?");
+    gideon.setTrmode = sql.prepare("INSERT OR REPLACE INTO trmode (user, trmodeval) VALUES (@user, @trmodeval);");
     gideon.getTop10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;");
 
     gideon.getTrmode = sql.prepare("SELECT * FROM trmode WHERE id = ?");
