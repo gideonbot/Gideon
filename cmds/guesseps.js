@@ -3,7 +3,7 @@ const Util = require("../Util");
 const fetch = require('node-fetch');
 const stringSimilarity = require('string-similarity');
 const SQLite = require("better-sqlite3");
-const sql = new SQLite('./data/SQL/scores.sqlite');
+const sql = new SQLite('./data/SQL/gideon.sqlite');
 
 /**
  * @param {Discord.Client} gideon
@@ -60,10 +60,12 @@ module.exports.run = async (gideon, message, args) => {
     let command = message.content.toLowerCase().split(' ')[0];
 
     if (command.endsWith('score') || command.endsWith('points')) {
+        console.log(score);
+        console.log(score.points);
         return message.reply(`You currently have \`${score.points}\` point(s)!`);
     }
 
-    if (command.endsWith('leaderboard') || command.endsWith('highscores')) {
+    if (command.endsWith('leaderboard') || command.endsWith('highscores') || command.endsWith('lb')) {
         const top10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;").all();
 
         const leaderboard = new Discord.MessageEmbed()
@@ -253,7 +255,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["guess", "guesseps", "points", "score", "leaderboard", "highscores"],
+    name: ["guess", "guesseps", "points", "score", "leaderboard", "highscores", "lb"],
     type: "fun",
     help_text: "!guess",
     help_desc: "Arrowverse episode guessing game"

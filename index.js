@@ -3,14 +3,12 @@ const Discord = require('discord.js');
 const fs = require("fs");
 const gideon = new Discord.Client();
 const SQLite = require("better-sqlite3");
-const sql = new SQLite('./data/SQL/scores.sqlite');
+const sql = new SQLite('./data/SQL/gideon.sqlite');
 const Util = require("./Util");
 
 gideon.commands = new Discord.Collection();
-gideon.cvmt = false;
 gideon.vcmdexec = false;
 gideon.emptyvc = false;
-gideon.trmode = new Map();
 
 fs.readdir("./cmds", (err, files) => {
     if (err) {
@@ -40,16 +38,38 @@ fs.readdir("./cmds", (err, files) => {
 });
 
 gideon.once('ready', async () => {
-    const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
-    if (!table['count(*)']) {
+    const scoresdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
+    if (!scoresdb['count(*)']) {
     sql.prepare("CREATE TABLE scores (user TEXT PRIMARY KEY, points INTEGER, guild TEXT);").run();
     sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (user);").run();
     sql.pragma("synchronous = 1");
     sql.pragma("journal_mode = wal");
     }
 
+    const trmodedb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'trmode';").get();
+    if (!trmodedb['count(*)']) {
+    sql.prepare("CREATE TABLE trmode (user TEXT PRIMARY KEY, trmodeval BIT);").run();
+    sql.prepare("CREATE UNIQUE INDEX idx_trmode_id ON trmode (user);").run();
+    sql.pragma("synchronous = 1");
+    sql.pragma("journal_mode = wal");
+    }
+
+    const cvmdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'cvm';").get();
+    if (!cvmdb['count(*)']) {
+    sql.prepare("CREATE TABLE cvm (guild TEXT PRIMARY KEY, cvmval BIT);").run();
+    sql.prepare("CREATE UNIQUE INDEX idx_cvm_id ON cvm (guild);").run();
+    sql.pragma("synchronous = 1");
+    sql.pragma("journal_mode = wal");
+    }
+
     gideon.getScore = sql.prepare("SELECT * FROM scores WHERE user = ?");
     gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (user, points, guild) VALUES (@user, @points, @guild);");
+
+    gideon.getTrmode = sql.prepare("SELECT * FROM trmode WHERE user = ?");
+    gideon.setTrmode = sql.prepare("INSERT OR REPLACE INTO trmode (user, trmodeval) VALUES (@user, @trmodeval);");
+
+    gideon.getCVM = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
+    gideon.setCVM = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@guild, @cvmval);");
 
     async function status() {
         const guilds = gideon.guilds.cache.size;

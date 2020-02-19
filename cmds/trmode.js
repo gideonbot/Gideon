@@ -6,15 +6,23 @@ const Discord = require("discord.js");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message) => {
-    const uid = message.author.id;
+    let trmode = gideon.getTrmode.get(message.author.id);
+    if (!trmode) {
+        trmode = {
+            user: message.author.id,
+            trmodeval: 0,
+        }
+    }
 
-    if (!gideon.trmode.get(uid)) {
-        gideon.trmode.set(uid, true);
+    if (trmode.trmodeval === 0) {
+        trmode.trmodeval = 1;
+        await gideon.setTrmode.run(trmode);
         message.reply('Translation Mode enabled! :white_check_mark:');
     }
 
     else {
-        gideon.trmode.set(uid, false);
+        trmode.trmodeval = 0;
+        await gideon.setTrmode.run(trmode);
         message.reply('Translation Mode disabled! :white_check_mark:');
     }
 }
