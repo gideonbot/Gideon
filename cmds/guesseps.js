@@ -55,6 +55,7 @@ module.exports.run = async (gideon, message, args) => {
             guild: message.guild.id,
             points: 0
         }
+        await gideon.setScore.run(score);
     }
 
     let command = message.content.toLowerCase().split(' ')[0];
@@ -103,18 +104,21 @@ module.exports.run = async (gideon, message, args) => {
         return timervalue;
     }
 
-    function PointsAmt() {
+    async function PointsAmt() {
         score.points++;
+        console.log(score.points);
     }
 
-    function PointsMulti(airdate) {
+    async function PointsMulti(airdate) {
         const difference = Math.floor(Math.floor(new Date() - new Date(airdate)) / (1000 * 60 * 60 * 24));
 
         multiplicator = difference / 100;
         const finalpoints = Math.round(multiplicator + p);
         if (finalpoints <= 0) return p = 0;
+        console.log(p);
         p = finalpoints;
-        for (let pa = 0; pa < p; pa++) PointsAmt();
+        console.log(p);
+        for (let pa = 0; pa < p; pa++) await PointsAmt();
     }
 
     async function GameEmbed(showfilter) {
@@ -192,9 +196,9 @@ module.exports.run = async (gideon, message, args) => {
                 else if (tries === 2) p = 2;
                 else if (tries === 1) p = 1;
 
-                for (let pa = 0; pa < p; pa++) PointsAmt();
+                for (let pa = 0; pa < p; pa++) await PointsAmt();
                 
-                PointsMulti(embed[4]);
+                await PointsMulti(embed[4]);
                 await gideon.setScore.run(score);
                 tries--;
 
@@ -217,7 +221,7 @@ module.exports.run = async (gideon, message, args) => {
             const incorrectembed = new Discord.MessageEmbed()
             .setColor('#2791D3')
             .setTitle(`Guessing game for ${message.author.tag}:`)
-            .setAuthor(`You've ${tries == 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
+            .setAuthor(`You've had ${tries == 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
             .setDescription(`That is incorrect! :x:\n${tries == 0 ? solution : question}`)
             .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
             .setFooter(Util.config.footer, gideon.user.avatarURL());

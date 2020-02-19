@@ -97,9 +97,9 @@ gideon.on('message', message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     
     Util.ABM(message);
-    if (gideon.cvmt) Util.CVM(message);
+    Util.CVM(message, gideon);
     Util.CSD(message);
-    Util.TRMode(gideon, message);
+    Util.TRMode(message, gideon);
 
     const lowercaseContent = message.content.toLowerCase();
     const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
