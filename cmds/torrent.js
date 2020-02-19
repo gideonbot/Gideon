@@ -58,8 +58,16 @@ module.exports.run = async (gideon, message, args) => {
     //else if (agc.match(/(?:canaries)/i)) showtitle = "Green Arrow and the Canaries"; 
     //else if (agc.match(/(?:supesnlois)/i)) showtitle = "Superman & Lois"; 
     //else if (agc.match(/(?:stargirl)/i)) showtitle = "Stargirl"; 
-
     else return message.channel.send(ia);
+
+    const emotes = gideon.guilds.cache.get('525341081727008788');
+    if (!emotes) return message.channel.send(er);
+
+    /**
+     * @type {Discord.TextChannel}
+     */
+    const torrent_channel = emotes.channels.cache.get('677861559682465802');
+    if (!torrent_channel) return message.channel.send(er);
         
     let ts = `${showtitle} S${Util.normalize(season_and_ep.season)}E${Util.normalize(season_and_ep.episode)}`;
     
@@ -87,30 +95,36 @@ module.exports.run = async (gideon, message, args) => {
 
         const m2t = new Magnet2torrent({timeout: 60});
 
+        let list = [];
+
         for (let torrent of torrents) {
             try {
                 const magnet = await torrentSearch.getMagnet(torrent);
                 const buffer = await m2t.getTorrentBuffer(magnet);
-                const attachment = new Discord.MessageAttachment(buffer, `${torrent.title}.torrent`);
 
-                const emotes = gideon.guilds.cache.get('525341081727008788');
-                if (!emotes) return message.channel.send(er);
-
-                /**
-                 * @type {Discord.TextChannel}
-                 */
-                const torrent_channel = emotes.channels.cache.get('677861559682465802');
-                if (!torrent_channel) return message.channel.send(er);
-
-                let msg = await torrent_channel.send(attachment);
-                const url = msg.attachments.first().url;
-                epdwn.addField(torrent.title, `Size: \`${torrent.size}\` Seeds: \`${torrent.seeds}\` Provider: \`${torrent.provider}\` **[Download](${url} '${url}')**`);
+                list.push({
+                    attachment: new Discord.MessageAttachment(buffer, `${list.length + 1}_${torrent.title}.torrent`),
+                    torrent: torrent
+                });
             }
 
             catch (ex) {
                 if (ex == "Timeout") continue;
             }
-        } 
+        }
+
+        let msg = await torrent_channel.send(list.map(x => x.attachment));
+
+        for (let attachment of msg.attachments.values()) {
+            let match = attachment.name.match(/\d+/g);
+
+            if (match && match.length > 0) {
+                let id = Number(match[0]);
+                let item = list[id - 1];
+
+                if (item) epdwn.addField(item.torrent.title, `Size: \`${item.torrent.size}\` Seeds: \`${item.torrent.seeds}\` Provider: \`${item.torrent.provider}\` **[Download](${attachment.url} '${attachment.url}')**`);
+            }
+        }
 
         await sent.edit(`<@${auth}>`, {embed: epdwn});
     }

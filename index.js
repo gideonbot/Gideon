@@ -10,34 +10,12 @@ gideon.commands = new Discord.Collection();
 gideon.vcmdexec = false;
 gideon.emptyvc = false;
 
-fs.readdir("./cmds", (err, files) => {
-    if (err) {
-        Util.log("Error while reading commands:\n" + err);
-        console.log(err);
-        return;
-    }
-
-    let jsfiles = files.filter(fileName => fileName.endsWith(".js"));
-    if (jsfiles.length < 1) {
-        console.log("No commands to load!");
-        return;
-    }
-
-    console.log(`Loading ${jsfiles.length} commands!`)
-
-    jsfiles.forEach((fileName, i) => {
-        let props = require(`./cmds/${fileName}`);
-
-        if (Array.isArray(props.help.name)) {
-            for (let item of props.help.name) gideon.commands.set(item, props);
-        }
-        else gideon.commands.set(props.help.name, props);
-
-        console.log(`${i + 1}: ${fileName} loaded - ${Array.isArray(props.help.name) ? props.help.name.join(", ") : props.help.name}`);
-    });
-});
+if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
+else console.log("No client token!");
 
 gideon.once('ready', async () => {
+    LoadCommands();
+
     const scoresdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
     if (!scoresdb['count(*)']) {
     sql.prepare("CREATE TABLE scores (user TEXT PRIMARY KEY, points INTEGER, guild TEXT);").run();
@@ -101,21 +79,21 @@ gideon.once('ready', async () => {
 });
 
 process.on("uncaughtException", err => {
-    console.log("Uncaught Exception: " + err.stack);
+    console.log(err);
     Util.log("Uncaught Exception: " + err.stack);
 });
 
 process.on("unhandledRejection", err => {
-    console.log("Unhandled Rejection: " + err.stack + "\n\nJSON: " + JSON.stringify(err, null, 2));
+    console.log(err);
     Util.log("Unhandled Rejection: " + err.stack + "\n\nJSON: " + JSON.stringify(err, null, 2));
 });
 
 gideon.on("error", err => {
-    console.log("Bot error: " + err.stack);
+    console.log(err);
     Util.log("Bot error: " + err.stack);
 });
 
-gideon.on('message', (message) => {
+gideon.on('message', message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     
     Util.ABM(message);
@@ -128,20 +106,18 @@ gideon.on('message', (message) => {
     if (!usedPrefix) return;
 
     const inputString = message.content.slice(usedPrefix.length).trim();
-    const args = inputString.split(' ').filter(arg => arg !== '');
+    const args = inputString.split(' ').filter(arg => arg);
 
     let cmd = args.shift();
-
     if (!cmd) return;
 
-    cmd = cmd.toLowerCase();
-    const command = gideon.commands.get(cmd);
+    const command = gideon.commands.get(cmd.toLowerCase());
     if (command) command.run(gideon, message, args);
 });
 
 gideon.on("guildCreate", guild => {
     Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
-})
+});
 
 gideon.on("voiceStateUpdate", (oldState, newState) => {
     let newChannel = newState.channel;
@@ -159,6 +135,43 @@ gideon.on("voiceStateUpdate", (oldState, newState) => {
             return oldChannel.leave();
         }
     }
-})
+});
 
-gideon.login(process.env.CLIENT_TOKEN);
+function LoadCommands() {
+    let start = process.hrtime.bigint();
+    
+    fs.readdir("./cmds", (err, files) => {
+        if (err) {
+            Util.log("Error while reading commands:\n" + err);
+            console.log(err);
+            return;
+        }
+    
+        let jsfiles = files.filter(fileName => fileName.endsWith(".js"));
+        if (jsfiles.length < 1) {
+            console.log("No commands to load!");
+            return;
+        }
+    
+        console.log(`Found ${jsfiles.length} commands`)
+    
+        jsfiles.forEach((fileName, i) => {
+            let cmd_start = process.hrtime.bigint();
+            let props = require(`./cmds/${fileName}`);
+    
+            if (Array.isArray(props.help.name)) {
+                for (let item of props.help.name) gideon.commands.set(item, props);
+            }
+            else gideon.commands.set(props.help.name, props);
+    
+            let cmd_end = process.hrtime.bigint();
+            let took = (cmd_end - cmd_start) / BigInt("1000000");
+    
+            console.log(`${Util.normalize(i + 1)} - ${fileName} loaded in ${took}ms`);
+        });
+        
+        let end = process.hrtime.bigint();
+        let took = (end - start) / BigInt("1000000");
+        console.log(`All commands loaded in ${took}ms`);
+    });
+}
