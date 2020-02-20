@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const Imgur = require('imgur-node');
-const imgclient = new Imgur.Client(process.env.IMG_CL);
 const Util = require("../Util");
 
 /**
@@ -8,7 +7,21 @@ const Util = require("../Util");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {      
+module.exports.run = async (gideon, message) => {
+    const mt = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('This command is not available currently')
+    .setDescription('Try again later')
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+    if (!process.env.IMG_CL) {
+        Util.log("Missing env variable for meme command!");
+        console.log("Missing env variable for meme command!");
+        return message.channel.send(mt);
+    }
+
+    const imgclient = new Imgur.Client(process.env.IMG_CL);
+
     imgclient.album.get('NVHwdNg', (err, res) => {
         if (err) {
             console.log(err);

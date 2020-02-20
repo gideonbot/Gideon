@@ -12,7 +12,17 @@ gideon.emptyvc = false;
 gideon.guessing = [];
 
 if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
-else console.log("No client token!");
+else {
+    console.log("No client token!");
+    process.exit(1);
+}
+
+setTimeout(() => {
+    if (process.env.CI) {
+        console.log("Exiting because CI was detected but cycle was not complete!");
+        process.exit(1);
+    }
+}, 60e3);
 
 gideon.once('ready', async () => {
     LoadCommands();
@@ -41,6 +51,14 @@ gideon.once('ready', async () => {
         //when the bot is owned by a team owner id is stored under ownerID, otherwise id
         gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
     }, failed => console.log("Failed to fetch application: " + failed));
+
+    setTimeout(() => {
+        if (process.env.CI) {
+            console.log("Exiting because CI was detected!");
+            gideon.destroy();
+            process.exit(0);
+        }
+    }, 10e3);
 });
 
 process.on("uncaughtException", err => {

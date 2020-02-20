@@ -8,6 +8,18 @@ const Util = require("../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
+    const mt = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('This command is not available currently')
+    .setDescription('Try again later')
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+    if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
+        Util.log("Missing env variables for subs command!");
+        console.log("Missing env variables for subs command!");
+        return message.channel.send(mt);
+    }
+
     const OS = new OpenSubtitles({
         useragent: process.env.OPS_UA,
         username: process.env.OPS_USER,
