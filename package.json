@@ -25,6 +25,7 @@
     "node-gyp": "^6.1.0",
     "opensubtitles-api": "^5.0.1",
     "rarbg": "^1.2.7",
+    "recursive-readdir": "^2.2.2",
     "select-random-file": "^1.1.0",
     "string-similarity": "^4.0.1",
     "torrent-search-api": "^2.0.10"
