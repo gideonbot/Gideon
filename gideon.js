@@ -70,7 +70,7 @@ process.on("uncaughtException", err => {
     console.log(err);
     Util.log("Uncaught Exception: " + err.stack);
     if (process.env.CI) {
-        console.log("Error detected, marking build as failed");
+        console.log("Error detected, marking as failed");
         process.exit(1);
     }
 });
