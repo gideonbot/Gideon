@@ -46,7 +46,10 @@ gideon.once('ready', async () => {
     }, failed => console.log("Failed to fetch application: " + failed));
 
     setTimeout(() => {
-        if (process.env.CI) process.exit(0);
+        if (process.env.CI) {
+            console.log("Exiting because CI was detected!");
+            process.exit(0);
+        }
     }, 10e3);
 });
 

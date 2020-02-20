@@ -85,16 +85,18 @@ module.exports.run = async (gideon, message, args) => {
 
                 let wake = await Util.SpeechRecognition(audio);
 
-                let entities = wake.entities;
-                if (!entities) return;
-
-                let intent = Object.values(entities)[0];
-                if (!intent) return;
-
-                let value = intent[0].value;
-
-                if (value == 'wakeword') awake = true;
-                await Util.VoiceResponse(value, connection, message, gideon); 
+                if (wake) {
+                    let entities = wake.entities;
+                    if (!entities) return;
+    
+                    let intent = Object.values(entities)[0];
+                    if (!intent) return;
+    
+                    let value = intent[0].value;
+    
+                    if (value == 'wakeword') awake = true;
+                    await Util.VoiceResponse(value, connection, message, gideon);
+                }
             }
         }); 
     }

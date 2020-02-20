@@ -9,7 +9,8 @@ const Util = require("../Util");
  */
 module.exports.run = async (gideon, message) => {
     const api = 'https://api.github.com/repos/adrifcastr/Gideon/issues';
-    const token = process.env.GITHUB_OAUTH_TOKEN
+    const token = process.env.GITHUB_OAUTH_TOKEN;
+
     let issuetitle;
     let issuebody;
     const author = message.author.tag;
@@ -52,9 +53,21 @@ module.exports.run = async (gideon, message) => {
     .setDescription('Thank you!\nYour issue has been submitted to GitHub! :white_check_mark:')
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
+    const mt = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('This command is not available currently')
+    .setDescription('Try again later')
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
     let command = message.content.toLowerCase().split(' ')[0];
 
     if (command.endsWith('issue') || command.endsWith('bug')) {
+        if (!token) {
+            Util.log("Missing env variable for issues command!");
+            console.log("Missing env variable for issues command!");
+            return message.channel.send(mt);
+        }
+
         const filter = m => m.author.id === message.author.id;
         const collector = message.channel.createMessageCollector(filter, {time: 120 * 1000});
 
@@ -112,12 +125,7 @@ module.exports.run = async (gideon, message) => {
                 'labels': ['bug']
             }
             
-            await fetch(api, {
-            method: 'POST',
-            body:    JSON.stringify(issue),
-            headers: { 'Content-Type': 'application/json',
-                        'Authorization': "token " + token },
-            })
+            fetch(api, { method: 'POST', body: JSON.stringify(issue), headers: { 'Content-Type': 'application/json', 'Authorization': "token " + token }});
         });
     }
     else

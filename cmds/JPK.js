@@ -6,7 +6,19 @@ const Util = require("../Util");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {     
+module.exports.run = async (gideon, message, args) => {
+    const mt = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('This command is not available currently')
+    .setDescription('Try again later')
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+    
+    if (!process.env.IMG_CL) {
+        Util.log("Missing env variable for JPK command!");
+        console.log("Missing env variable for JPK command!");
+        return message.channel.send(mt);
+    }
+
     const ia = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`${args[0]} is not a valid argument!`)
