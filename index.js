@@ -48,6 +48,7 @@ gideon.once('ready', async () => {
     setTimeout(() => {
         if (process.env.CI) {
             console.log("Exiting because CI was detected!");
+            gideon.destroy();
             process.exit(0);
         }
     }, 10e3);
