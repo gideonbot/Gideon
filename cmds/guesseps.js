@@ -212,7 +212,7 @@ module.exports.run = async (gideon, message, args) => {
                 .setDescription(`That is correct! :white_check_mark:\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\`\n\n**You have gained \`${points}\` ${points > 1 ? s[2] + "s" : s[2]}!**\n(Airdate point bonus: \`+${airdate_bonus}\`)`)
                 .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
                 .setFooter(Util.config.footer, gideon.user.avatarURL());
-
+                gideon.guessing.remove(message.author.id);
                 await sent.edit(correctembed);
                 return sent.reactions.removeAll();
             }
