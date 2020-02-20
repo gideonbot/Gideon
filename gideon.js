@@ -9,45 +9,26 @@ const Util = require("./Util");
 gideon.commands = new Discord.Collection();
 gideon.vcmdexec = false;
 gideon.emptyvc = false;
+gideon.guessing = [];
 
 if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
-else console.log("No client token!");
+else {
+    console.log("No client token!");
+    process.exit(1);
+}
+
+setTimeout(() => {
+    if (process.env.CI) {
+        console.log("Exiting because CI was detected but cycle was not complete!");
+        process.exit(1);
+    }
+}, 60e3);
 
 gideon.once('ready', async () => {
     LoadCommands();
-
-    const scoresdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
-    if (!scoresdb['count(*)']) {
-    sql.prepare("CREATE TABLE scores (user TEXT PRIMARY KEY, points INTEGER, guild TEXT);").run();
-    sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (user);").run();
-    sql.pragma("synchronous = 1");
-    sql.pragma("journal_mode = wal");
-    }
-
-    const trmodedb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'trmode';").get();
-    if (!trmodedb['count(*)']) {
-    sql.prepare("CREATE TABLE trmode (user TEXT PRIMARY KEY, trmodeval BIT);").run();
-    sql.prepare("CREATE UNIQUE INDEX idx_trmode_id ON trmode (user);").run();
-    sql.pragma("synchronous = 1");
-    sql.pragma("journal_mode = wal");
-    }
-
-    const cvmdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'cvm';").get();
-    if (!cvmdb['count(*)']) {
-    sql.prepare("CREATE TABLE cvm (guild TEXT PRIMARY KEY, cvmval BIT);").run();
-    sql.prepare("CREATE UNIQUE INDEX idx_cvm_id ON cvm (guild);").run();
-    sql.pragma("synchronous = 1");
-    sql.pragma("journal_mode = wal");
-    }
-
-    gideon.getScore = sql.prepare("SELECT * FROM scores WHERE user = ?");
-    gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (user, points, guild) VALUES (@user, @points, @guild);");
-
-    gideon.getTrmode = sql.prepare("SELECT * FROM trmode WHERE user = ?");
-    gideon.setTrmode = sql.prepare("INSERT OR REPLACE INTO trmode (user, trmodeval) VALUES (@user, @trmodeval);");
-
-    gideon.getCVM = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
-    gideon.setCVM = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@guild, @cvmval);");
+    InitDB();
+    
+    console.log('Ready!');
 
     async function status() {
         const guilds = await gideon.shard.fetchClientValues('guilds.cache.size').then(results => {return results.reduce((prev, guildCount) => prev + guildCount, 0)}).catch(console.error);
@@ -64,8 +45,6 @@ gideon.once('ready', async () => {
         await Util.delay(10000);
         gideon.user.setActivity(st3, { type: 'WATCHING' });
     }
-
-    console.log('Ready!');
     
     const guildsamt = await gideon.shard.fetchClientValues('guilds.cache.size').then(results => {return results.reduce((prev, guildCount) => prev + guildCount, 0)}).catch(console.error);
     const guildslist = await gideon.shard.fetchClientValues('guilds.cache').then(results => {return results}).catch(console.error);
@@ -77,6 +56,14 @@ gideon.once('ready', async () => {
         //when the bot is owned by a team owner id is stored under ownerID, otherwise id
         gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
     }, failed => console.log("Failed to fetch application: " + failed));
+
+    setTimeout(() => {
+        if (process.env.CI) {
+            console.log("Exiting because CI was detected!");
+            gideon.destroy();
+            process.exit(0);
+        }
+    }, 10e3);
 });
 
 process.on("uncaughtException", err => {
@@ -175,4 +162,40 @@ function LoadCommands() {
         let took = (end - start) / BigInt("1000000");
         console.log(`All commands loaded in ${took}ms`);
     });
+}
+
+function InitDB() {
+    const scoresdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
+    if (!scoresdb['count(*)']) {
+        sql.prepare("CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, points INTEGER);").run();
+        sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (id);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
+    }
+
+    const trmodedb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'trmode';").get();
+    if (!trmodedb['count(*)']) {
+        sql.prepare("CREATE TABLE trmode (id TEXT PRIMARY KEY, trmodeval BIT);").run();
+        sql.prepare("CREATE UNIQUE INDEX idx_trmode_id ON trmode (id);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
+    }
+
+    const cvmdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'cvm';").get();
+    if (!cvmdb['count(*)']) {
+        sql.prepare("CREATE TABLE cvm (guild TEXT PRIMARY KEY, cvmval BIT);").run();
+        sql.prepare("CREATE UNIQUE INDEX idx_cvm_id ON cvm (guild);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
+    }
+
+    gideon.getScore = sql.prepare("SELECT * FROM scores WHERE id = ?");
+    gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);");
+    gideon.getTop10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;");
+
+    gideon.getTrmode = sql.prepare("SELECT * FROM trmode WHERE id = ?");
+    gideon.setTrmode = sql.prepare("INSERT OR REPLACE INTO trmode (id, trmodeval) VALUES (@id, @trmodeval);");
+
+    gideon.getCVM = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
+    gideon.setCVM = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@guild, @cvmval);");
 }

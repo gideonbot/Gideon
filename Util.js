@@ -2,6 +2,28 @@ const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const config = require("./data/JSON/config.json");
 
+Array.prototype.remove = function(...item) {
+    if (Array.isArray(item)) {
+        let rv = false;
+        
+        for (let i of item) {
+            if (this.includes(i)) {
+                this.splice(this.indexOf(i), 1);
+                rv = true;
+            }
+        }
+
+        if (rv) return true;
+    }
+
+    else if (this.includes(item)) {
+        this.splice(this.indexOf(item), 1);
+        return true;
+    }
+
+    return false;
+}
+
 class Util {
     constructor() {
         throw new Error('This class cannot be instantiated!');
@@ -149,7 +171,6 @@ class Util {
      */
     static log(message) {
         let url = process.env.LOG_WEBHOOK_URL;
-
         if (!url) return false;
 
         url = url.replace("https://discordapp.com/api/webhooks/", "");
@@ -306,6 +327,9 @@ class Util {
      */
     static async IMG(imgid, message) {
         const Imgur = require('imgur-node');
+
+        if (!process.env.IMG_CL) return;
+
         const imgclient = new Imgur.Client(process.env.IMG_CL);
 
         imgclient.album.get(imgid, (err, res) => {
@@ -343,17 +367,13 @@ class Util {
         const vid = 'https://cdn.discordapp.com/attachments/525341082435715085/638782331791867930/Crime_Solving_Devil.mp4';
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
 
-        if (message.content.match(/(?:deckerstar)/i)) {
-            Util.IMG('rJpbLQx', message);
-        }
+        if (message.content.match(/(?:deckerstar)/i)) Util.IMG('rJpbLQx', message);
         
         const tls = 'https://twitter.com/LaurenGerman/status/996886094305050627\nhttps://twitter.com/tomellis17/status/996889307506864128';
         if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
 
-        if (message.content.match(/(?:germ)/i)) {
-            Util.IMG('ngJQmxL', message);
-        }
-
+        if (message.content.match(/(?:germ)/i)) Util.IMG('ngJQmxL', message);
+        
         const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';
         if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) {
             const imgembed = new Discord.MessageEmbed()
@@ -450,6 +470,8 @@ class Util {
      * @param {ReadableStream} speech 
      */
     static async SpeechRecognition(speech) {
+        if (!process.env.WITAI_TOKEN) return null;
+        
         const { Transform } = require('stream')
 
         function convertBufferTo1Channel(buffer) {
@@ -621,11 +643,12 @@ class Util {
         let trmode = gideon.getTrmode.get(message.author.id);
         if (!trmode) {
             trmode = {
-                user: message.author.id,
+                id: message.author.id,
                 trmodeval: 0,
             }
-            await gideon.setTrmode.run(trmode);
+            gideon.setTrmode.run(trmode);
         }
+        
         if (trmode.trmodeval === 0) return;
 
         else {
