@@ -76,7 +76,16 @@ module.exports.run = async (gideon, message, args) => {
         
         let i = 1;
         for(let data of top10.values()) {
-            const guild = gideon.guilds.cache.get(data.guild);
+    /*        gideon.shard.broadcastEval(`
+                const guild = this.guilds.cache.get(${data.guild});
+                let msg;
+                if (channel) {
+                    msg = channel.fetchMessage('id').then(m => m.id);
+                }
+                msg;
+            `);
+            const guildslist = await gideon.shard.fetchClientValues('guilds.cache').then(results => {return results}).catch(console.error);
+    */        const guild = gideon.guilds.cache.get(data.guild);
 
             let name = guild.members.cache.get(data.user) ? guild.members.cache.get(data.user).user.tag : data.user;
 
