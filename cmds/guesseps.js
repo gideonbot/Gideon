@@ -28,6 +28,15 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle('An error occured while executing this command!')
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
+    const ag = new Discord.MessageEmbed()
+    .setColor('#2791D3')
+    .setTitle('A guessing game is already running!')
+    .setFooter(Util.config.footer, gideon.user.avatarURL());
+
+    if (gideon.guessing.includes(message.author.id)) return message.channel.send(ag);
+    
+    gideon.guessing.push(message.author.id);
+
     let agc = args[0];
     let filters = [
         (x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray'),
@@ -102,7 +111,6 @@ module.exports.run = async (gideon, message, args) => {
      */
     function CalculateAirDatePoints(airdate) {
         const difference = Math.floor(Math.floor(new Date() - new Date(airdate)) / (1000 * 60 * 60 * 24));
-        
         return Math.round(difference / 100);
     }
 
@@ -176,6 +184,7 @@ module.exports.run = async (gideon, message, args) => {
                 .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
                 .setFooter(Util.config.footer, gideon.user.avatarURL());
 
+                gideon.guessing.remove(message.author.id);
                 return sent.edit(stopembed);
             }
         }); 
@@ -222,6 +231,7 @@ module.exports.run = async (gideon, message, args) => {
 
             if (tries == 0) {
                 collector.stop();
+                gideon.guessing.remove(message.author.id);
                 await sent.reactions.removeAll();
                 return sent.edit(incorrectembed);
             }
@@ -239,6 +249,7 @@ module.exports.run = async (gideon, message, args) => {
                 .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
                 .setFooter(Util.config.footer, gideon.user.avatarURL());
 
+                gideon.guessing.remove(message.author.id);
                 await sent.reactions.removeAll();
                 return sent.edit(timeouttembed);
             }

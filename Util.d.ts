@@ -28,6 +28,7 @@ declare module "discord.js" {
         vcmdexec: boolean;
         emptyvc: boolean;
         owner: string;
+        guessing: string[];
         getScore: BetterSqlite3.Statement<any[]>;
         setScore: BetterSqlite3.Statement<any[]>;
         getTop10: BetterSqlite3.Statement<any[]>;
@@ -35,6 +36,12 @@ declare module "discord.js" {
         setTrmode: BetterSqlite3.Statement<any[]>;
         getCVM: BetterSqlite3.Statement<any[]>;
         setCVM: BetterSqlite3.Statement<any[]>;
+    }
+}
+
+declare global {
+    export interface Array<T> {
+        remove(item: T|T[]): boolean;
     }
 }
 
