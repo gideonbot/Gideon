@@ -11,8 +11,11 @@ gideon.vcmdexec = false;
 gideon.emptyvc = false;
 gideon.guessing = [];
 
-if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
-else console.log("No client token!");
+if (process.env.CLIENT_TOKEN1) gideon.login(process.env.CLIENT_TOKEN1);
+else {
+    console.log("No client token!");
+    process.exit(1);
+}
 
 gideon.once('ready', async () => {
     LoadCommands();
