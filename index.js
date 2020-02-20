@@ -16,7 +16,7 @@ function LogCount() {
 
 		let guild_list = "\n" + guilds.map(x => x.id + " - `" + x.name + "`").join("\n");
 
-		Util.log(`Gideon startup complete, ${manager.shards.size} shard(s) and ${guilds.length} guilds${guild_list.length < 2000 ? guild_list : ''}`);
+		Util.log(`Gideon startup complete, ${manager.shards.size} shard(s) and ${guilds.length} guilds${guild_list.length < 1935 ? guild_list : ''}`);
 	});
 }
 
