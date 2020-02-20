@@ -136,7 +136,7 @@ function LoadCommands() {
             return;
         }
     
-        console.log(`Found ${jsfiles.length} commands`)
+        console.log(`Found ${jsfiles.length} commands`);
     
         jsfiles.forEach((fileName, i) => {
             let cmd_start = process.hrtime.bigint();
