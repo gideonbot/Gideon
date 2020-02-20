@@ -4,7 +4,7 @@
   "description": "Gideon will obey your command and guide you through the Arrowverse",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node gideon.js"
   },
   "author": "adrifcastr",
   "license": "GPL2",
