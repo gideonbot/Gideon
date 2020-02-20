@@ -1,6 +1,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const fs = require("fs");
+const recursive = require("recursive-readdir");
 const gideon = new Discord.Client();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./data/SQL/gideon.sqlite');
@@ -127,25 +128,25 @@ gideon.on("voiceStateUpdate", (oldState, newState) => {
 
 function LoadCommands() {
     let start = process.hrtime.bigint();
-    
-    fs.readdir("./cmds", (err, files) => {
+
+    recursive("./cmds", function (err, files) {
         if (err) {
             Util.log("Error while reading commands:\n" + err);
             console.log(err);
             return;
         }
-    
+
         let jsfiles = files.filter(fileName => fileName.endsWith(".js"));
         if (jsfiles.length < 1) {
             console.log("No commands to load!");
             return;
         }
-    
-        console.log(`Found ${jsfiles.length} commands`)
-    
+
+        console.log(`Found ${jsfiles.length} commands`);
+
         jsfiles.forEach((fileName, i) => {
             let cmd_start = process.hrtime.bigint();
-            let props = require(`./cmds/${fileName}`);
+            let props = require(`./${fileName}`);
     
             if (Array.isArray(props.help.name)) {
                 for (let item of props.help.name) gideon.commands.set(item, props);
@@ -157,7 +158,7 @@ function LoadCommands() {
     
             console.log(`${Util.normalize(i + 1)} - ${fileName} loaded in ${took}ms`);
         });
-        
+
         let end = process.hrtime.bigint();
         let took = (end - start) / BigInt("1000000");
         console.log(`All commands loaded in ${took}ms`);
