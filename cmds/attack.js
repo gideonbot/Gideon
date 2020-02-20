@@ -28,7 +28,7 @@ module.exports.run = async (gideon, message, args) => {
     .setTitle('My protocols forbid any kind of self-harm!')
     .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-    const user = gideon.users.cache.get(Util.getIdFromString(args[1]));
+    const user = await gideon.shard.broadcastEval(`this.users.cache.get('${Util.getIdFromString(args[1])}').toString()`).then(results => {return results}).catch(console.error);
     if (!user) return message.channel.send(me);
     else if (user.id === auth.id || user.id === gideon.user.id) return message.channel.send(sh);
 

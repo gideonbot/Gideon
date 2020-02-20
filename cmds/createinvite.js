@@ -7,6 +7,7 @@ const Util = require("../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
+/*
     let guild;
     const as = new Discord.MessageEmbed()
     .setColor('#2791D3')
@@ -38,6 +39,7 @@ module.exports.run = async (gideon, message, args) => {
         Util.log("Caught an exception while creating invites!: " + ex);
         return message.channel.send(er);
     }      
+*/
 }
 
 module.exports.help = {
