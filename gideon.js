@@ -4,7 +4,6 @@ const gideon = new Discord.Client();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./data/SQL/gideon.sqlite');
 const recursive = require("recursive-readdir");
-const git = require('git-last-commit');
 const Util = require("./Util");
 
 gideon.commands = new Discord.Collection();
@@ -28,31 +27,29 @@ setTimeout(() => {
 gideon.once('ready', async () => {
     LoadCommands();
     InitDB();
-    
+
     console.log('Ready!');
 
     async function status() {
-        const guilds = await gideon.shard.fetchClientValues('guilds.cache.size').then(results => {return results.reduce((prev, guildCount) => prev + guildCount, 0)}).catch(console.error);
-        const mbc = await gideon.shard.broadcastEval('this.guilds.cache.get(\'595318490240385037\').members.cache.filter(member => !member.user.bot).size').then(results => {return results}).catch(console.error);
-        if (!mbc) return;
-        
-        const st1 = `!help | gideonbot.co.vu`;
-        let st2 = `${mbc} Time Vault members`;
-        const st3 = `${guilds} Guilds`;
-
-        gideon.user.setActivity(st1, { type: 'PLAYING' }); 
-        await Util.delay(10000);
-        gideon.user.setActivity(st2, { type: 'WATCHING' }); 
-        await Util.delay(10000);
-        gideon.user.setActivity(st3, { type: 'WATCHING' });
-    }
+        let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
+        let mbc = await gideon.shard.broadcastEval('!guilds.cache.get(\'595318490240385037\') ? null : guilds.cache.get(\'595318490240385037\').members.cache.filter(member => !member.user.bot).size').catch(ex => console.log(ex));
     
-    const guildsamt = !gideon.shard ? gideon.guilds.cache.size : await gideon.shard.fetchClientValues('guilds.cache.size').then(results => {return results.reduce((prev, guildCount) => prev + guildCount, 0)}).catch(console.error);
-    const guildslist = !gideon.shard ? [gideon.guilds.cache] : await gideon.shard.fetchClientValues('guilds.cache').then(results => {return results}).catch(console.error);
+        if (mbc) mbc = mbc.filter(x => x);
 
-    git.getLastCommit(function(err, commit) {
-        Util.log(`${gideon.user.tag} ready!\nCommit \`#${commit.shortHash}\` by \`${commit.committer.name}:\`\n\`${commit.subject}\` \n\nOnline in \`${guildsamt}\` guilds:\n${guildslist[0].map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
-    });
+        if (guilds) {
+            guilds = [].concat.apply([], guilds);
+            
+            const st1 = `!help | gideonbot.co.vu`;
+            let st2 = `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`;
+            const st3 = `${guilds.length} Guilds`;
+    
+            gideon.user.setActivity(st1, { type: 'PLAYING' }); 
+            await Util.delay(10000);
+            gideon.user.setActivity(st2, { type: 'WATCHING' }); 
+            await Util.delay(10000);
+            gideon.user.setActivity(st3, { type: 'WATCHING' });
+        }
+    }
     
     setInterval(status, 30e3);
 
