@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const OpenSubtitles = require('opensubtitles-api');
-const Util = require("../Util");
+const Util = require("../../Util");
 
 /**
  * @param {Discord.Client} gideon

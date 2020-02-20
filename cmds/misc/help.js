@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-const Util = require("../Util");
+const Util = require("../../Util");
 
 /**
  * @param {Discord.Client} gideon

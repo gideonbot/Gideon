@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const Util = require("../Util");
+const Util = require("../../Util");
 const fs = require('fs');
 const moment = require("moment-timezone");
 

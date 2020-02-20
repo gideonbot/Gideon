@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const Util = require("../Util");
+const Util = require("../../Util");
 const { Readable } = require('stream');
 const SILENCE_FRAME = Buffer.from([0xF8, 0xFF, 0xFE]);
 

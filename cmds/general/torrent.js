@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const torrentSearch = require('torrent-search-api');
-const Util = require("../Util");
+const Util = require("../../Util");
 const Magnet2torrent = require('magnet2torrent-js');
 
 /**
