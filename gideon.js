@@ -1,6 +1,5 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const fs = require("fs");
 const recursive = require("recursive-readdir");
 const gideon = new Discord.Client();
 const SQLite = require("better-sqlite3");
@@ -127,6 +126,7 @@ gideon.on("voiceStateUpdate", (oldState, newState) => {
 });
 
 function LoadCommands() {
+    console.log(process.cwd());
     let start = process.hrtime.bigint();
 
     recursive("./cmds", function (err, files) {
@@ -141,7 +141,6 @@ function LoadCommands() {
             console.log("No commands to load!");
             return;
         }
-
         console.log(`Found ${jsfiles.length} commands`);
 
         jsfiles.forEach((fileName, i) => {

@@ -110,7 +110,7 @@ module.exports.run = async (gideon, message, args) => {
 
 module.exports.help = {
     name: ["voice", "join", "leave"],
-    type: "misc",
+    type: "fun",
     help_text: "voice",
     help_desc: "Joins voice channel for voice commands"
 }
