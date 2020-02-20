@@ -32,8 +32,8 @@ gideon.once('ready', async () => {
 
     async function status() {
         let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
-        let mbc = await gideon.shard.broadcastEval('!guilds.cache.get(\'595318490240385037\') ? null : guilds.cache.get(\'595318490240385037\').members.cache.filter(member => !member.user.bot).size').catch(ex => console.log(ex));
-    
+        let mbc = await gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? 0 : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(x => !x.user.bot).size').catch(ex => console.log(ex));
+        console.log(mbc);
         if (mbc) mbc = mbc.filter(x => x);
 
         if (guilds) {
