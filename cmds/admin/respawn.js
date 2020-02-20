@@ -1,12 +1,11 @@
 const Discord = require("discord.js");
-const Util = require("../../Util");
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+module.exports.run = async (gideon, message) => {
     if (message.author.id !== gideon.owner) {
         return message.channel.send('You do not have the required permissions to use this command!');
     }
