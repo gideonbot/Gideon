@@ -32,15 +32,15 @@ gideon.once('ready', async () => {
 
     async function status() {
         let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
+        let mbc = await gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? null : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(member => !member.user.bot).size').catch(ex => console.log(ex));
+    
+        if (mbc) mbc = mbc.filter(x => x);
 
         if (guilds) {
             guilds = [].concat.apply([], guilds);
-
-            let tv = guilds.find(x => x.id == "595318490240385037");
-            if (!tv) return;
             
             const st1 = `!help | gideonbot.co.vu`;
-            let st2 = `${tv.members.length} Time Vault members`;
+            let st2 = `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`;
             const st3 = `${guilds.length} Guilds`;
     
             gideon.user.setActivity(st1, { type: 'PLAYING' }); 
