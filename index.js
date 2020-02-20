@@ -9,69 +9,33 @@ const Util = require("./Util");
 gideon.commands = new Discord.Collection();
 gideon.vcmdexec = false;
 gideon.emptyvc = false;
+gideon.guessing = [];
 
 if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
 else console.log("No client token!");
 
 gideon.once('ready', async () => {
     LoadCommands();
-
-    const scoresdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
-    if (!scoresdb['count(*)']) {
-        sql.prepare("CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, points INTEGER);").run();
-        sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (id);").run();
-        sql.pragma("synchronous = 1");
-        sql.pragma("journal_mode = wal");
-    }
-
-    const trmodedb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'trmode';").get();
-    if (!trmodedb['count(*)']) {
-        sql.prepare("CREATE TABLE trmode (id TEXT PRIMARY KEY, trmodeval BIT);").run();
-        sql.prepare("CREATE UNIQUE INDEX idx_trmode_id ON trmode (id);").run();
-        sql.pragma("synchronous = 1");
-        sql.pragma("journal_mode = wal");
-    }
-
-    const cvmdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'cvm';").get();
-    if (!cvmdb['count(*)']) {
-        sql.prepare("CREATE TABLE cvm (guild TEXT PRIMARY KEY, cvmval BIT);").run();
-        sql.prepare("CREATE UNIQUE INDEX idx_cvm_id ON cvm (guild);").run();
-        sql.pragma("synchronous = 1");
-        sql.pragma("journal_mode = wal");
-    }
-
-    gideon.getScore = sql.prepare("SELECT * FROM scores WHERE id = ?");
-    gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);");
-    gideon.getTop10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;");
-
-    gideon.getTrmode = sql.prepare("SELECT * FROM trmode WHERE id = ?");
-    gideon.setTrmode = sql.prepare("INSERT OR REPLACE INTO trmode (id, trmodeval) VALUES (@id, @trmodeval);");
-
-    gideon.getCVM = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
-    gideon.setCVM = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@guild, @cvmval);");
-
-    async function status() {
-        const guilds = gideon.guilds.cache.size;
-        const tmvt = gideon.guilds.cache.get('595318490240385037');
-        if (!tmvt) return;
-
-        let mbc = tmvt.members.cache.filter(member => !member.user.bot).size;
-        const st1 = `!help | gideonbot.co.vu`;
-        let st2 = `${mbc} Time Vault members`;
-        const st3 = `${guilds} Guilds`;
-
-        gideon.user.setActivity(st1, { type: 'PLAYING' }); 
-        await Util.delay(10000);
-        gideon.user.setActivity(st2, { type: 'WATCHING' }); 
-        await Util.delay(10000);
-        gideon.user.setActivity(st3, { type: 'WATCHING' });
-    }
+    InitDB();
     
     console.log('Ready!');
     Util.log(`${gideon.user.tag} ready!\n\nOnline in \`${gideon.guilds.cache.size}\` guilds:\n${gideon.guilds.cache.map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
     if (gideon.guilds.cache.size >= 1000) Util.log(`<@224617799434108928> <@351871113346809860>\n1000+ Guilds reached. Please refactor for sharding!`);
 
-    setInterval(status, 30e3);
+    setInterval(async () => {
+        const tmvt = gideon.guilds.cache.get('595318490240385037');
+        if (!tmvt) return;
+
+        const st1 = `!help | gideonbot.co.vu`;
+        let st2 = `${tmvt.members.cache.filter(member => !member.user.bot).size} Time Vault members`;
+        const st3 = `${gideon.guilds.cache.size} Guilds`;
+
+        gideon.user.setActivity(st1, { type: 'PLAYING' }); 
+        await Util.delay(10e3);
+        gideon.user.setActivity(st2, { type: 'WATCHING' }); 
+        await Util.delay(10e3);
+        gideon.user.setActivity(st3, { type: 'WATCHING' });
+    }, 30e3);
 
     gideon.fetchApplication().then(app => {
         //when the bot is owned by a team owner id is stored under ownerID, otherwise id
@@ -175,4 +139,40 @@ function LoadCommands() {
         let took = (end - start) / BigInt("1000000");
         console.log(`All commands loaded in ${took}ms`);
     });
+}
+
+function InitDB() {
+    const scoresdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
+    if (!scoresdb['count(*)']) {
+        sql.prepare("CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, points INTEGER);").run();
+        sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (id);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
+    }
+
+    const trmodedb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'trmode';").get();
+    if (!trmodedb['count(*)']) {
+        sql.prepare("CREATE TABLE trmode (id TEXT PRIMARY KEY, trmodeval BIT);").run();
+        sql.prepare("CREATE UNIQUE INDEX idx_trmode_id ON trmode (id);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
+    }
+
+    const cvmdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'cvm';").get();
+    if (!cvmdb['count(*)']) {
+        sql.prepare("CREATE TABLE cvm (guild TEXT PRIMARY KEY, cvmval BIT);").run();
+        sql.prepare("CREATE UNIQUE INDEX idx_cvm_id ON cvm (guild);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
+    }
+
+    gideon.getScore = sql.prepare("SELECT * FROM scores WHERE id = ?");
+    gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);");
+    gideon.getTop10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;");
+
+    gideon.getTrmode = sql.prepare("SELECT * FROM trmode WHERE id = ?");
+    gideon.setTrmode = sql.prepare("INSERT OR REPLACE INTO trmode (id, trmodeval) VALUES (@id, @trmodeval);");
+
+    gideon.getCVM = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
+    gideon.setCVM = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@guild, @cvmval);");
 }

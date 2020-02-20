@@ -2,6 +2,28 @@ const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const config = require("./data/JSON/config.json");
 
+Array.prototype.remove = function(...item) {
+    if (Array.isArray(item)) {
+        let rv = false;
+        
+        for (let i of item) {
+            if (this.includes(i)) {
+                this.splice(this.indexOf(i), 1);
+                rv = true;
+            }
+        }
+
+        if (rv) return true;
+    }
+
+    else if (this.includes(item)) {
+        this.splice(this.indexOf(item), 1);
+        return true;
+    }
+
+    return false;
+}
+
 class Util {
     constructor() {
         throw new Error('This class cannot be instantiated!');
