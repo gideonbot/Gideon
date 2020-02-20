@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const Imgur = require('imgur-node');
-const Util = require("../Util");
+const Util = require("../../Util");
 
 /**
  * @param {Discord.Client} gideon

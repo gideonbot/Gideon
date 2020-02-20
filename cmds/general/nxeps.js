@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 const Discord = require("discord.js");
-const Util = require("../Util");
+const Util = require("../../Util");
 
 /**
  * @param {Discord.Client} gideon

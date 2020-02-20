@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const Util = require("../Util");
+const Util = require("../../Util");
 const fetch = require('node-fetch');
 const stringSimilarity = require('string-similarity');
 
