@@ -47,13 +47,13 @@ gideon.once('ready', async () => {
         gideon.user.setActivity(st3, { type: 'WATCHING' });
     }
     
-    const guildsamt = await gideon.shard.fetchClientValues('guilds.cache.size').then(results => {return results.reduce((prev, guildCount) => prev + guildCount, 0)}).catch(console.error);
-    const guildslist = await gideon.shard.fetchClientValues('guilds.cache').then(results => {return results}).catch(console.error);
+    const guildsamt = !gideon.shard ? gideon.guilds.cache.size : await gideon.shard.fetchClientValues('guilds.cache.size').then(results => {return results.reduce((prev, guildCount) => prev + guildCount, 0)}).catch(console.error);
+    const guildslist = !gideon.shard ? [gideon.guilds.cache] : await gideon.shard.fetchClientValues('guilds.cache').then(results => {return results}).catch(console.error);
 
     git.getLastCommit(function(err, commit) {
         Util.log(`${gideon.user.tag} ready!\nCommit \`#${commit.shortHash}\` by \`${commit.committer.name}:\`\n\`${commit.subject}\` \n\nOnline in \`${guildsamt}\` guilds:\n${guildslist[0].map(x => x.id + ' - `' + x.name + '`').join("\n")}`);
     });
-
+    
     setInterval(status, 30e3);
 
     gideon.fetchApplication().then(app => {
@@ -73,8 +73,9 @@ gideon.once('ready', async () => {
 process.on("uncaughtException", err => {
     console.log(err);
     Util.log("Uncaught Exception: " + err.stack);
+
     if (process.env.CI) {
-        console.log("Error detected, marking as failed");
+        console.log("Exception detected, marking as failed");
         process.exit(1);
     }
 });
@@ -82,6 +83,11 @@ process.on("uncaughtException", err => {
 process.on("unhandledRejection", err => {
     console.log(err);
     Util.log("Unhandled Rejection: " + err.stack + "\n\nJSON: " + JSON.stringify(err, null, 2));
+
+    if (process.env.CI) {
+        console.log("Unhandled Rejection detected, marking as failed");
+        process.exit(1);
+    }
 });
 
 gideon.on("error", err => {
