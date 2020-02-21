@@ -47,6 +47,12 @@ module.exports.run = async (gideon, message, args) => {
        return;
     }
 
+    if (args[0] == 'tutorial') {
+       const url = 'https://drive.google.com/open?id=1or3CxJCQXkEaaKTU0jz7ZDGO4zwfRP8L';
+       await message.channel.send(url);
+       return;
+    }
+
     if (!message.member.voice.channel) return message.reply('You need to join a voice channel first!');
 
     function stopTimout() {
