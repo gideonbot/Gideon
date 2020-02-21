@@ -167,11 +167,11 @@ class Util {
 
     /**
      * Log to a webhook
-     * @param {string} message 
+     * @param {string | Discord.MessageEmbed} message 
      */
     static log(message) {
         let url = process.env.LOG_WEBHOOK_URL;
-        if (!url) return false;
+        if (!url || !message) return false;
 
         url = url.replace("https://discordapp.com/api/webhooks/", "");
         let split = url.split("/");
@@ -179,9 +179,15 @@ class Util {
         if (split.length < 2) return false;
 
         let client = new Discord.WebhookClient(split[0], split[1]);
-        for (let msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
-            client.send(msg, { avatarURL: Util.config.avatar, username: "Gideon-Logs" });
+
+        if (typeof(message) == "string") {
+            for (let msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
+                client.send(msg, { avatarURL: Util.config.avatar, username: "Gideon-Logs" });
+            }
         }
+
+        else client.send(null, { embeds: [message], avatarURL: Util.config.avatar, username: "Gideon-Logs" });
+        
         return true;
     }
 
@@ -250,18 +256,12 @@ class Util {
     static ABM(message) {
         const siren = '<a:siren:669518972407775265>';
 
-        const abmembed = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`${siren}Anti-Bitch-Mode is enabled!${siren}`)
-        .setDescription('You posted a link to a forbidden social media account!\nFuck that bitch!')
-        .setFooter(Util.config.footer, Util.config.avatar);
-
-        this.ABM_Test(message).then(async res => {
+        Util.ABM_Test(message).then(async res => {
             if (res.match) {
                 await Util.delay(200);
                 await message.delete();
                 Util.log("ABM triggered by: " + message.author.tag + " (" + res.content + ")");
-                message.channel.send(this.GetUserTag(message.author), { embed: abmembed });
+                message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-Bitch-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!\nFuck that bitch!'}) });
             }
         }, failed => console.log(failed));
     }
@@ -299,12 +299,13 @@ class Util {
             return message.reply('Links are not allowed meanwhile Crossover-Mode is active!');
         }
 
-        const cvmembed = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setAuthor(`${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}:`, message.author.avatarURL())
-        .setDescription(`${plainText ? '||' + plainText + '||' : ''}`);
-
-        await message.channel.send(cvmembed);
+        await message.channel.send(Util.CreateEmbed(null, {
+            description: `${plainText ? '||' + plainText + '||' : ''}`,
+            author: {
+                name: `${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}:`,
+                icon: message.author.avatarURL()
+            }
+        }));
 
         //we don't send the file in the same message because it shows it above the embed (bad)
         if (message.attachments.filter(x => x.size / 1024 <= 1000).size > 0) {
@@ -333,15 +334,10 @@ class Util {
         const imgclient = new Imgur.Client(process.env.IMG_CL);
 
         imgclient.album.get(imgid, (err, res) => {
-            const er = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setTitle('An error occurred, please try again later!')
-            .setFooter(Util.config.footer, Util.config.avatar);
-
             if (err) {
                 console.log(err);
                 Util.log(err);
-                return message.channel.send(er);
+                return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
             }
     
             let min = 0;
@@ -349,13 +345,7 @@ class Util {
             let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
             let rimg = res.images[ranum].link;
 
-            const imgembed = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setImage(rimg)
-            .setFooter(Util.config.footer, Util.config.avatar);
-            if (imgid === 'ngJQmxL') imgembed.setTitle('Germ approves!:white_check_mark:');
-        
-            message.channel.send(imgembed);
+            message.channel.send(Util.CreateEmbed(imgid == 'ngJQmxL' ? 'Germ approves!:white_check_mark:' : '', {image: rimg}));
         });
     }
 
@@ -376,12 +366,7 @@ class Util {
         
         const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';
         if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) {
-            const imgembed = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setImage(ctm)
-            .setFooter(Util.config.footer, Util.config.avatar);
-
-            message.channel.send(imgembed);
+            message.channel.send(Util.CreateEmbed(null, {image: ctm}));
         }
     }
 
@@ -452,6 +437,46 @@ class Util {
                 }, failed => reject(failed));
             }, failed => reject(failed));
         });
+    }
+
+    /**
+     * @param {string} title
+     * @param {string?} description
+     * @param {{
+        description?: string;
+        image?: string;
+        fields?: Discord.EmbedField[];
+        timestamp?: Date;
+        color?: string;
+        url?: string;
+        author?: {name: string, icon: string, url: string};
+        footer?: {text: string, icon: string};
+        thumbnail?: string;
+       }} options
+     */
+    static CreateEmbed(title, options) {
+        if (!options) options = {};
+        
+        const embed = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setFooter(Util.config.footer, Util.config.avatar)
+
+        if (title && typeof(title) == "string") embed.setTitle(title);
+        if (options.description && typeof(options.description) == "string") embed.setDescription(options.description);
+        if (options.color) embed.setColor(options.color);
+        if (options.image && typeof(options.image) == "string") embed.setImage(options.image);
+        if (options.url && typeof(options.url)) embed.setURL(options.url);
+        if (options.timestamp && (typeof(options.timestamp) == "number" || options.timestamp instanceof Date)) embed.setTimestamp(options.timestamp);
+        if (options.thumbnail && typeof(options.thumbnail) == "string") embed.setThumbnail(options.thumbnail);
+        if (options.footer && options.footer.text && !Object.values(options.footer).some(x => typeof(x) != "string")) embed.setFooter(options.footer.text, options.footer.icon);
+        if (options.author && options.author.name && !Object.values(options.author).some(x => typeof(x) != "string")) embed.setAuthor(options.author.name, options.author.icon, options.author.url);
+        if (options.fields && Array.isArray(options.fields)) {
+            if (!options.fields.some(x => !x.name || !x.value)) {
+                embed.fields = options.fields.map(x => ({name: x.name, value: x.value, inline: x.inline}));
+            }
+        }
+
+        return embed;
     }
 
     /**
@@ -663,14 +688,9 @@ class Util {
             let sourceflag = `:flag_${body[2]}:`;
             if (body[2] == targetLang) sourceflag = ':flag_gb:';
 
-            const autotrembed = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setAuthor(`${message.author.tag} said:`, message.author.avatarURL())
-            .setDescription(`(${sourceflag}) ${body[0][0][0]}`)
-
             await Util.delay(200);
             await message.delete();
-            message.channel.send(autotrembed);
+            message.channel.send(Util.CreateEmbed(null, {description: `(${sourceflag}) ${body[0][0][0]}`, author: {name: `${message.author.tag} said:`, icon: message.author.avatarURL()}}));
         }
     }
 

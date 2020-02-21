@@ -10,21 +10,13 @@ const Util = require("../../Util");
 module.exports.run = async (gideon, message, args) => {
     const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
 
-    const ia = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle(`${args[0]} is not a valid argument!`)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
     if (!args[0]) {
-        const help = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('__Use !help <module> to get a list of commands\nYou can check the list of available modules below:__')
+        const help = Util.CreateEmbed('__Use !help <module> to get a list of commands\nYou can check the list of available modules below:__')
         .addField('general', 'General helpful Arrowverse commands')  
         .addField('fun', 'Fun and interactive Arrowverse commands')  
         .addField('admin', 'Commands for people with higher roles then the average Metahuman')  
         .addField('misc', 'Miscellaneous commands')    
-        .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`)
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
         message.channel.send(help);
         return;
@@ -35,10 +27,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:fun)/i)) type = "fun";
     else if (args[0].match(/(?:admin)/i)) type = "admin";
     else if (args[0].match(/(?:misc)/i)) type = "misc";
-    else return message.channel.send(ia);
-
-    if (!type) return message.channel.send(ia);
-
+    else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`));
 
     fs.readdir("./cmds", (err, files) => {
         if (err) {
@@ -68,15 +57,8 @@ module.exports.run = async (gideon, message, args) => {
             if (props.help.type == type) commands[props.help.help_text] = props.help.help_desc;
         }
 
-        const embed = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('__List of available "' + type + '" commands below:__') 
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-        for (let item in commands) {
-            embed.addField(item.toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
-        }
-
+        const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
+        for (let item in commands) embed.addField(item.toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
         embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
         message.channel.send(embed);

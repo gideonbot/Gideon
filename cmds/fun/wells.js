@@ -72,15 +72,7 @@ module.exports.run = async (gideon, message) => {
     ];
 
     let result = arr[Math.floor(Math.random() * arr.length)];
-
-    const wells = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle(result.title)
-    .setDescription(result.desc)
-    .setImage(result.gif)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    message.channel.send(`You have reached out to Earth-${result.en}`, {embed: wells});  
+    message.channel.send(`You have reached out to Earth-${result.en}`, {embed: Util.CreateEmbed(result.title, {description: result.desc, image: result.gif})});  
 }
 
 module.exports.help = {

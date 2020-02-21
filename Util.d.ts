@@ -21,6 +21,7 @@ export function VoiceResponse(value: string, connection: Discord.VoiceConnection
 export function TRMode(message: Discord.Message, gideon: Discord.Client): Promise<void>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
 export function normalize(num: number): string;
+export function CreateEmbed(title: string, options?: EmbedOptions): Discord.MessageEmbed;
 
 declare module "discord.js" {
     interface Client {
@@ -43,6 +44,18 @@ declare global {
     export interface Array<T> {
         remove(item: T|T[]): boolean;
     }
+}
+
+interface EmbedOptions {
+    description?: string;
+    image?: string;
+    fields?: Discord.EmbedField[];
+    timestamp?: Date;
+    color?: string;
+    url?: string;
+    author?: {name: string, icon?: string, url?: string};
+    footer?: {text: string, icon?: string};
+    thumbnail?: string;
 }
 
 interface Config {

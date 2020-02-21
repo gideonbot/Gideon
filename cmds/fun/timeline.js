@@ -15,26 +15,13 @@ module.exports.run = async (gideon, message) => {
         let max = body.content.length - 1;
         let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
     
-        const tli = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`Timeline change detected!`)
-        .setDescription(body.content[ranum].text)
-        .setImage('https://i.imgur.com/qWN3luc.gif')
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-    
-        message.channel.send(tli);
+        message.channel.send(Util.CreateEmbed('Timeline change detected!', {description: body.content[ranum].text, image: 'https://i.imgur.com/qWN3luc.gif'}));
     }
     
     catch (ex) {
         console.log("An error occurred while trying to fetch a timeline change: " + ex);
         Util.log("An error occurred while trying to fetch a timeline change: " + ex);
-
-        const er = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('Failed to fetch a timeline change!')
-        .setDescription('Please try again later!')
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        return message.channel.send(er);
+        return message.channel.send(Util.CreateEmbed('Failed to fetch a timeline change!'));
     }
 }
 

@@ -8,21 +8,10 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    const na = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply a speedsters name or alter ego and their home universe!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    if (!args[0]) return message.channel.send(na);
+    if (!args[0]) return message.channel.send(Util.CreateEmbed('You must supply a speedsters name or alter ego and their home universe!'));
 
     const api = `https://api.myjson.com/bins/m8m3d`;
     let ssd = args.join(' ');
-
-    const ia = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle(`"${ssd}" is not a valid argument!`)
-    .setDescription('Check the command\'s syntax and retry!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     let spnum;
 
@@ -44,21 +33,17 @@ module.exports.run = async (gideon, message, args) => {
     else if (ssd.match(/(?:kid)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:wally)/i) && ssd.match(/(?:e1)/i)) spnum = 15;
     else if (ssd.match(/(?:iris)/i) && ssd.match(/(?:e1)/i)) spnum = 16;
     else if (ssd.match(/(?:XS)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:nora)/i) && ssd.match(/(?:e1)/i)) spnum = 17;
-    else return message.channel.send(ia);
+    else return message.channel.send(Util.CreateEmbed(`"${ssd}" is not a valid argument!`, {description: 'Check the command\'s syntax and retry!'}));
 
     try {
         const body = await fetch(api).then(res => res.json());
 
-        const speedster = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`${body[spnum].speedster}`)
+        const speedster = Util.CreateEmbed(body[spnum].speedster, {thumbnail: body[spnum].image})
         .addField(`*Lightning Color(s) (Electrokinesis)*`, `${body[spnum].lightningColorsElectrokinesis}`)
         .addField(`*Universe*`, `${body[spnum].universe}`)
         .addField(`*Actor/Actress*`, `${body[spnum].actoractress}`)
         .addField(`*First Appearance*`, `${body[spnum].firstAppearance}`)
-        .addField(`*First Appearance as Speedster*`, `${body[spnum].firstAppearanceAsSpeedster}`)
-        .setThumbnail(body[spnum].image)
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        .addField(`*First Appearance as Speedster*`, `${body[spnum].firstAppearanceAsSpeedster}`);
     
         message.channel.send(speedster);
     }
@@ -66,12 +51,7 @@ module.exports.run = async (gideon, message, args) => {
     catch (err) {
         console.log("An error occurred while trying to fetch speedsters: " + err);
         Util.log("An error occurred while trying to fetch speedsters: " + err);
-
-        const er = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('Failed to fetch speedster data, please try again later!')
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        return message.channel.send(er);
+        message.channel.send(Util.CreateEmbed('Failed to fetch speedster data, please try again later!'));
     }
 }
 module.exports.help = {

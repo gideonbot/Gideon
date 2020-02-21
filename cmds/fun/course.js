@@ -30,25 +30,14 @@ module.exports.run = async (gideon, message, args) => {
         let tmax = 3000;
         let year = Math.floor(Math.random() * (tmax - tmin + 1)) + tmin;
 
-        const course = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`Course set to ${destination} ${year}`)
-        .setImage('https://i.imgur.com/I3UQhVu.gif')
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-        message.channel.send(course);
+        message.channel.send(Util.CreateEmbed(`Course set to ${destination} ${year}`, {image: 'https://i.imgur.com/I3UQhVu.gif'}));
     }
     
     catch (ex) {
         console.log("Caught an exception while plotting a course: " + ex);
         Util.log("Caught an exception while plotting a course: " + ex);
         
-        const er = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('An error occurred while trying to plot a course!')
-        .setDescription('Try again later!')
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        return message.channel.send(er);
+        return message.channel.send(Util.CreateEmbed('An error occurred while trying to plot a course!'));
     }
 }
 

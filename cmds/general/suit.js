@@ -7,13 +7,11 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {     
-    const st = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must choose a valid character!')
-    .setDescription('Currently available:\n**killer frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**\n**kingdom come superman**')
-    .setFooter(Util.config.footer, gideon.user.avatarURL())
+    const st = Util.CreateEmbed('You must choose a valid character!', {
+        description: 'Currently available:\n**killer frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**\n**kingdom come superman**'
+    });
 
-    if (!args[0]) return message.channel.send(st);
+    if (!args[0]) return message.channel.send();
 
     const suits = [
         {
@@ -75,16 +73,8 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:kingdom)/i) && args[1].match(/(?:come)/i) && args[2].match(/(?:superman)/i)) suit = suits[7];
     else if (args[0].match(/(?:harbinger)/i)) suit = suits[8];
     else return message.channel.send(st);
-    if (!suit) return message.channel.send(st);
 
-    const suit_embed = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle(suit.title)
-    .setDescription(suit.desc)
-    .setImage(suit.image)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    message.channel.send(suit_embed);  
+    message.channel.send(Util.CreateEmbed(suit.title, {description: suit.desc, image: suit.image}));  
 }
 
 module.exports.help = {

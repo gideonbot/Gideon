@@ -21,14 +21,22 @@ module.exports.run = async (gideon, message, args) => {
     let sourceflag = `:flag_${body[2]}:`;
     if (body[2] == targetLang) sourceflag = ':flag_gb:';
 
-    const trembed = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setAuthor(`Translation for ${message.author.tag}:`, message.author.avatarURL())
-    .addField(`Original Text: ${sourceflag}`,`\`\`\`${sourceText}\`\`\``)
-    .addField(`Translated Text: :flag_gb:`,`\`\`\`${body[0][0][0]}\`\`\``)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    message.channel.send(trembed);
+    message.channel.send(Util.CreateEmbed(null, {
+        author: {
+            name: `Translation for ${message.author.tag}:`,
+            icon: message.author.avatarURL()
+        },
+        fields: [
+            {
+                name: `Original Text: ${sourceflag}`,
+                value: '```' + sourceText + '```'
+            },
+            {
+                name: `Translated Text: :flag_gb:`,
+                value: '```' + body[0][0][0] + '```'
+            }
+        ]
+    }));
 }
 
 module.exports.help = {

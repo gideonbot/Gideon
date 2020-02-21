@@ -11,10 +11,7 @@ module.exports.run = async (gideon, message, args) => {
         return message.channel.send('You do not have the required permissions to use this command!');
     }
 
-    const as = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply valid input!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
+    const as = Util.CreateEmbed('You must supply valid input!');
     
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);

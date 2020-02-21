@@ -7,15 +7,16 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message) => {
-    const github = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('Gideon - Selfhosting Documentation')
-    .setDescription('Click the link below to read the GitHub documentation on how to selfhost me!')
-    .setThumbnail(gideon.user.avatarURL())
-    .addField('GitHub Wiki:', `**[Read Docs](https://github.com/adrifcastr/Gideon/wiki 'https://github.com/adrifcastr/Gideon/wiki')**`)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    message.channel.send(github);       
+    message.channel.send(Util.CreateEmbed('Gideon - Selfhosting Documentation', {
+        description: 'Click the link below to read the GitHub documentation on how to selfhost me!',
+        thumbnail: gideon.user.avatarURL(),
+        fields: [
+            {
+                name: 'GitHub Wiki:',
+                value: `**[Read Docs](https://github.com/adrifcastr/Gideon/wiki 'https://github.com/adrifcastr/Gideon/wiki')**`
+            }
+        ]
+    }));
 }
 
 module.exports.help = {

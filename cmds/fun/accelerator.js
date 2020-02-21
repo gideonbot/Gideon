@@ -16,24 +16,14 @@ module.exports.run = async (gideon, message) => {
         await Util.delay(1000);
         await sent.edit(sent.content + "\n1");
         await Util.delay(1000);
-        
-        const explosion = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setImage('https://i.imgur.com/opCbZTn.gif')
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-        sent.edit(sent.content + "\nALERT SYSTEM FAILURE", {embed: explosion});
+        sent.edit(sent.content + "\nALERT SYSTEM FAILURE", {embed: Util.CreateEmbed(null, {image: 'https://i.imgur.com/opCbZTn.gif'})});
     }
     
     catch (ex) {
         console.log("Exception occurred while starting up the particle accelerator " + ex);
         Util.log("Exception occurred while starting up the particle accelerator " + ex);
-        const er = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('An error occurred while trying to start the particle accelerator!')
-        .setDescription('Please try again later!')
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        return message.channel.send(er);
+        return message.channel.send(Util.CreateEmbed('An error occurred while trying to start the particle accelerator!'));
     }
 
     await Util.delay(10000);
@@ -68,14 +58,10 @@ module.exports.run = async (gideon, message) => {
     
     let result = abilities[Math.floor(Math.random() * abilities.length)];
 
-    const power = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle(result.title)
-    .setDescription(result.desc)
-    .setImage(result.gif)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    message.channel.send(power);  
+    message.channel.send(Util.CreateEmbed(result.title, {
+        description: result.desc,
+        image: result.gif
+    }));  
 }
 
 module.exports.help = {

@@ -8,16 +8,10 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message) => {
-    const mt = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('This command is not available currently')
-    .setDescription('Try again later')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
     if (!process.env.IMG_CL) {
         Util.log("Missing env variable for meme command!");
         console.log("Missing env variable for meme command!");
-        return message.channel.send(mt);
+        return message.channel.send('This command is not available currently');
     }
 
     const imgclient = new Imgur.Client(process.env.IMG_CL);
@@ -26,12 +20,7 @@ module.exports.run = async (gideon, message) => {
         if (err) {
             console.log(err);
             Util.log(err);
-
-            const er = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setTitle('An error occurred, please try again later!')
-            .setFooter(Util.config.footer, gideon.user.avatarURL());
-            return message.channel.send(er);
+            return message.channel.send('An error occurred, please try again later!');
         }
 
         let min = 0;
@@ -39,12 +28,7 @@ module.exports.run = async (gideon, message) => {
         let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
         let ravm = res.images[ranum].link;
 
-        const meme = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setImage(ravm)
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-        message.channel.send(meme);
+        message.channel.send(Util.CreateEmbed(null, {image: ravm}));
     });   
 }
 

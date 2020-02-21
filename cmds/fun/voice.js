@@ -19,23 +19,15 @@ module.exports.run = async (gideon, message, args) => {
     let command = message.content.toLowerCase().split(' ')[0];
     let awake = false;
 
-    const er = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('An error occured while executing this command!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    const voicehelp = new Discord.MessageEmbed()
-    .setColor('#2791D3')
+    const voicehelp = Util.CreateEmbed(`Available Voice Commands:`, {description: `Use \`!voice tutorial\` for a video tutorial.`})
     .setAuthor(`Note: You must wake Gideon up before using any commands!`, message.author.avatarURL())
-    .setTitle(`Available Voice Commands:`)
-    .setDescription(`Use \`!voice tutorial\` for a video tutorial.`)
     .addField(`Wakeword:`,`Say something like:\n\`\`\`'Gideon'\n'Hey Gideon'\n'Hello Gideon'\n etc...\`\`\`\nGideon will be ready!`, true)
     .addField(`Random Phrases:`,`Say something like:\n\`\`\`'Talk'\n'Talk to me'\n'Say something'\n etc...\`\`\`\nGideon will randomly respond!`, true)
     .addField(`Time Travel:`,`Say something like:\n\`\`\`'Plot a course'\n'Time travel'\n'Timejump'\n etc...\`\`\`\nGideon will plot a course!`, true)
     .addField(`Future:`,`Say something like:\n\`\`\`'Show me the future'\n'What's the future'\n'future'\n etc...\`\`\`\nGideon show you the future!`, true)
     .addField(`Upcoming Eps:`,`Say something like:\n\`\`\`'Upcoming Episodes'\n'Next Arrowverse episodes'\n'Next episodes'\n etc...\`\`\`\nGideon will show you the next eps!`, true)
-    .addField(`Leave VC:`,`Say something like:\n\`\`\`'Leave'\n'Stop'\n'Get out'\n etc...\`\`\`\nGideon will leave the VC!`, true)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
+    .addField(`Leave VC:`,`Say something like:\n\`\`\`'Leave'\n'Stop'\n'Get out'\n etc...\`\`\`\nGideon will leave the VC!`, true);
+    //peepee
 
     if (command.endsWith('leave')) {
        await Util.LeaveVC(message);
@@ -110,7 +102,7 @@ module.exports.run = async (gideon, message, args) => {
     catch (ex) {
         console.log("Caught an exception while running voice.js: " + ex);
         Util.log("Caught an exception while running voice.js: " + ex);
-        return message.channel.send(er);
+        message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     } 
 }
 

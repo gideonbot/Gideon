@@ -7,13 +7,7 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message) => {
-    const ping = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('The fastest bot alive!')
-    .setDescription(`WebSocket ping: ${gideon.ws.ping.toFixed(2)} ms`)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    message.channel.send(ping);  
+    message.channel.send(Util.CreateEmbed('The fastest bot alive!', {description: `WebSocket ping: ${gideon.ws.ping.toFixed(2)} ms`}));  
 }
 
 module.exports.help = {

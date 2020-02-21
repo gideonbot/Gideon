@@ -33,25 +33,15 @@ module.exports.run = async (gideon, message) => {
     
         let qp = qbody.sections[0].title;
         let qpe = qp.replace(/(?:\/Quotes)/,'');
-        
-        const quote = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setDescription(`**${chosenQuote}\n\n~${qpe}**`)
-        .setThumbnail(type.thumbnail)
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
     
-        message.channel.send(quote);
+        message.channel.send(Util.CreateEmbed(null, {description: `**${chosenQuote}\n\n~${qpe}**`, thumbnail: type.thumbnail}));
     }
 
     catch (ex) {
         console.log("An error occurred while trying to fetch a quote: " + ex);
         Util.log("An error occurred while trying to fetch a quote: " + ex);
 
-        const er = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('Failed to fetch a quote, please try again later!')
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        return message.channel.send(er);
+        return message.channel.send(Util.CreateEmbed('Failed to fetch a quote, please try again later!'));
     }
 }
 

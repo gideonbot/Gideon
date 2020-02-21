@@ -7,13 +7,7 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message) => {
-    const uptime_embed = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('Enter Flashtime!')
-    .setDescription(Util.secondsToDifferenceString(gideon.uptime / 1000, { enableSeconds: true }))
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    message.channel.send(uptime_embed);
+    message.channel.send(Util.CreateEmbed('Enter Flashtime!', {description: Util.secondsToDifferenceString(gideon.uptime / 1000, { enableSeconds: true })}));
 }
 
 module.exports.help = {
