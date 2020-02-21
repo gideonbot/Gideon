@@ -14,9 +14,9 @@ function LogCount() {
 		//guilds is array of arrays so we just turn it into a single array
 		guilds = [].concat.apply([], guilds);
 
-		let guild_list = "\n" + guilds.map(x => x.id + " - `" + x.name + "`").join("\n");
+		let guild_list = "\n" + guilds.map(x => x.id + " - " + x.name + "").join("\n");
 
-		Util.log(`Gideon startup complete, ${manager.shards.size} shard(s) and ${guilds.length} guilds${guild_list.length < 1935 ? guild_list : ''}`);
+		Util.log(`Gideon startup complete, \`${manager.shards.size}\` ${manager.shards.size > 1 ? 'shards' : 'shard'} and \`${guilds.length}\` guilds\`\`\`\n${guild_list.length < 1935 ? guild_list : ''}\n\`\`\``);
 	});
 }
 
