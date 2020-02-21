@@ -9,17 +9,13 @@ const moment = require('moment');
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
+    const as = Util.CreateEmbed("You must supply valid input!");
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
 
     let noid = isNaN(args[0]);
     const auth = message.author;
     let user;
-
-    const as = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply valid input!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     if (noid && args[0].includes("@")) user = gideon.users.cache.get(Util.getIdFromString(args[0]));
     else if (!noid && args[0].length >= 18) user = gideon.users.cache.get(args[0]);
@@ -65,21 +61,31 @@ module.exports.run = async (gideon, message, args) => {
     let other_activities = user.presence.activities.filter(x => x.type != "CUSTOM_STATUS");
     let custom_status = {
         text: activity ? activity.state : "",
-        emoji: !activity ? "" : gideon.guilds.cache.get(activity.emoji.id) ? activity.emoji.id : activity.emoji.identifier.includes(activity.emoji.name) ? "" : activity.emoji.name 
+        emoji: !activity || !activity.emoji ? "" : gideon.guilds.cache.get(activity.emoji.id) ? activity.emoji.id : activity.emoji.identifier.includes(activity.emoji.name) ? "" : activity.emoji.name 
     }
 
     const member = message.guild.member(user);
     const perms = Util.truncate(member.permissions.toArray().join(' '), 200, true);
 
-    const embed = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setAuthor('Info requested by ' + auth.tag, auth.displayAvatarURL())
-    .setDescription(`User **${user.tag}**:`)
-    .setThumbnail(user.displayAvatarURL())
-    .addField(`❯ User Info:`, `• ID: \`${user.id}\`\n• Nickname: \`${!member.nickname ? 'None' : member.nickname}\`\n• Status: \`${status}\`${semote}\n• Custom Status: ${!custom_status.text ? custom_status.emoji ? '' : 'None' : custom_status.text} ${custom_status.emoji}\n• Activity: \`${other_activities.length < 1 ? 'None' : other_activities[0].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot ? 'Yes' : 'No'}\``)
-    //eslint-disable-next-line
-    .addField(`❯ GuildMember Info:`, `• Joined at: \`${moment.utc(member.joinedAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Boosted: ${!member.premiumSince ? '\`No\`' : '\`Yes\` <:boost:678746359549132812>'}\n• Roles: ${member.roles.cache.filter(x => x.id != member.guild.roles.everyone.id).map(roles => roles.toString()).join(' ')}\n• Permissions: \`${perms}\`\n• Last Message: ${member.lastMessage === null ? '\`None\`' : `[Click Here](${member.lastMessage.url} '${member.lastMessage.url}')`}`)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
+    const embed = Util.CreateEmbed(null, {
+        author: {
+            name: `Info requested by ${auth.tag}`,
+            icon: auth.displayAvatarURL()
+        },
+        description: `User **${user.tag}**:`,
+        thumbnail: user.displayAvatarURL(),
+        fields: [
+            {
+                name: `❯ User Info:`,
+                value: `• ID: \`${user.id}\`\n• Nickname: \`${!member.nickname ? 'None' : member.nickname}\`\n• Status: \`${status}\`${semote}\n• Custom Status: ${!custom_status.text ? custom_status.emoji ? '' : 'None' : custom_status.text} ${custom_status.emoji}\n• Activity: \`${other_activities.length < 1 ? 'None' : other_activities[0].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot ? 'Yes' : 'No'}\``
+            },
+            {
+                name: `❯ GuildMember Info:`,
+                // eslint-disable-next-line no-useless-escape
+                value: `• Joined at: \`${moment.utc(member.joinedAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Boosted: ${!member.premiumSince ? '\`No\`' : '\`Yes\` <:boost:678746359549132812>'}\n• Roles: ${member.roles.cache.filter(x => x.id != member.guild.roles.everyone.id).map(roles => roles.toString()).join(' ')}\n• Permissions: \`${perms}\`\n• Last Message: ${member.lastMessage === null ? '\`None\`' : `[Click Here](${member.lastMessage.url} '${member.lastMessage.url}')`}`
+            }
+        ]
+    })
 
     message.channel.send(embed);
 }

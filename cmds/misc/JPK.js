@@ -7,28 +7,14 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    const mt = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('This command is not available currently')
-    .setDescription('Try again later')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-    
     if (!process.env.IMG_CL) {
         Util.log("Missing env variable for JPK command!");
         console.log("Missing env variable for JPK command!");
-        return message.channel.send(mt);
+        return message.channel.send(Util.CreateEmbed('This command is not available currently'));
     }
 
-    const ia = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle(`${args[0]} is not a valid argument!`)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
     const jpkArray = ["FqCwt1J", "8bFXk0z", "2yz4RWt", "kxpGHYM", "f8mENXa", "Xy2SoEw", "UcPxCV5", "JhTWxoJ", "eLugrZD"];
-    const jpkas = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You can choose an album!')
-    .setDescription('Currently available:')
+    const jpkas = Util.CreateEmbed('You can choose an album!', {description: 'Currently available:'})
     .addField('!JPK', 'All Albums')
     .addField('!JPK GN', 'General')
     .addField('!JPK TF', 'The Flash')
@@ -38,8 +24,7 @@ module.exports.run = async (gideon, message, args) => {
     .addField('!JPK DM', 'Deep Murder')
     .addField('!JPK TSC', 'The Secret Circle')
     .addField('!JPK ILBAL', 'I Love Bekka & Lucy')
-    .addField('!JPK FS5GR', 'The Flash - S5 Gag Reel')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
+    .addField('!JPK FS5GR', 'The Flash - S5 Gag Reel');
 
     let rjpka;  
 
@@ -54,7 +39,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:tsc)/i)) rjpka = "UcPxCV5";
     else if (args[0].match(/(?:ilbal)/i)) rjpka = "f8mENXa";
     else if (args[0].match(/(?:fs5gr)/i)) rjpka = "eLugrZD";
-    else return message.channel.send(ia); 
+    else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`)); 
 
     Util.IMG(rjpka, message);
 }

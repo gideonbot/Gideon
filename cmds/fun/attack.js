@@ -10,27 +10,15 @@ module.exports.run = async (gideon, message, args) => {
     const auth = message.author;
     let atc = args[0];
 
-    const at = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply an attack and a victim!')
-    .setDescription('Available attacks:\n**iceblast**\n**lthrow**\n**reverseflash**\n**vibeblast**\n**shootarrow**\n**heatvision**\n**stretchpunch**\n**canarycry**\n**batarang**\n**sendtohell**\n**thunderclap**\n**elblast**\n**fireblast**')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
+    const at = Util.CreateEmbed('You must supply an attack and a victim!', {
+        description: 'Available attacks:\n**iceblast**\n**lthrow**\n**reverseflash**\n**vibeblast**\n**shootarrow**\n**heatvision**\n**stretchpunch**\n**canarycry**\n**batarang**\n**sendtohell**\n**thunderclap**\n**elblast**\n**fireblast**'
+    });
 
     if (!atc) return message.channel.send(at);
 
-    const me = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must use a proper mention if you want to attack someone!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    const sh = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('My protocols forbid any kind of self-harm!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
     const user = await gideon.shard.broadcastEval(`this.users.cache.get('${Util.getIdFromString(args[1])}').toString()`).then(results => {return results}).catch(console.error);
-    if (!user) return message.channel.send(me);
-    else if (user.id === auth.id || user.id === gideon.user.id) return message.channel.send(sh);
+    if (!user) return message.channel.send(Util.CreateEmbed('You must use a proper mention if you want to attack someone!'));
+    else if (user.id === auth.id || user.id === gideon.user.id) return message.channel.send(Util.CreateEmbed('My protocols forbid any kind of self-harm!'));
 
     const attacks = [
         {
@@ -139,14 +127,10 @@ module.exports.run = async (gideon, message, args) => {
     else return message.channel.send(at);
     if (!attack) return message.channel.send(at);
 
-
-    const attack_embed = new Discord.MessageEmbed()
-	.setColor('#2791D3')
-    .setDescription(`**${attack.emote}${auth} ${attack.text}${attack.emote}**\n\n${attack.desc}`)
-	.setImage(attack.attackgif)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    message.channel.send(attack_embed);
+    message.channel.send(Util.CreateEmbed(null, {
+        description: `**${attack.emote}${auth} ${attack.text}${attack.emote}**\n\n${attack.desc}`,
+        image: attack.attackgif
+    }));
 }
 
 module.exports.help = {

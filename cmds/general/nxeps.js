@@ -19,15 +19,12 @@ module.exports.run = async (gideon, message, args) => {
         stargirl: 'http://api.tvmaze.com/shows/37809?embed=nextepisode'
     };
 
-    const countdown = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('__Upcoming Arrowverse episodes:__')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
+    const embed = Util.CreateEmbed('__Upcoming Arrowverse episodes:__');
 
     for (let show in api_urls) {
         try {
             let info = await Util.GetNextEpisodeInfo(api_urls[show]);
-            countdown.addField(`${info.title} ${info.name}`, `${info.value}`);
+            embed.addField(`${info.title} ${info.name}`, `${info.value}`);
         }
         
         catch (ex) {
@@ -37,9 +34,9 @@ module.exports.run = async (gideon, message, args) => {
         }
     }
 
-    if (countdown.fields.length < 1) return message.channel.send("Failed to fetch episode list, please try again later...");
+    if (embed.fields.length < 1) return message.channel.send("Failed to fetch episode list, please try again later...");
     
-    message.channel.send(countdown);
+    message.channel.send(embed);
 }
 
 module.exports.help = {

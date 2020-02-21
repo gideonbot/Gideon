@@ -14,18 +14,6 @@ module.exports.run = async (gideon, message, args) => {
     const api = 'https://arrowverse.info/api';
     let showtitle;
     let thimg;
-
-    const as = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply a valid show!')
-    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**canaries**\n**supesnlois**\n**stargirl**')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    const es = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply a valid episode and season!')
-    .setDescription('Acceptable formats: S00E00 and 00x00')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
     
     if (agc.match(/(?:flash)/i)) showtitle = "The Flash";
     else if (agc.match(/(?:arrow)/i)) showtitle = "Arrow";
@@ -37,7 +25,9 @@ module.exports.run = async (gideon, message, args) => {
     //else if (agc.match(/(?:canaries)/i)) showtitle = "Green Arrow and the Canaries";
     //else if (agc.match(/(?:supesnlois)/i)) showtitle = "Superman & Lois";
     //else if (agc.match(/(?:stargirl)/i)) showtitle = "Stargirl";
-    else return message.channel.send(as);
+    else return message.channel.send(Util.CreateEmbed('You must supply a valid show!', {
+        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**canaries**\n**supesnlois**\n**stargirl**'
+    }));
 
     try {
         const body = await fetch(api).then(res => res.json());
@@ -55,7 +45,7 @@ module.exports.run = async (gideon, message, args) => {
         });
 
         let fiep = Util.parseSeriesEpisodeString(args[1]);
-        if (!fiep) return message.channel.send(es);
+        if (!fiep) return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}));
 
         fiep = "S" + Util.normalize(fiep.season) + "E" + Util.normalize(fiep.episode);
 
@@ -86,16 +76,22 @@ module.exports.run = async (gideon, message, args) => {
             //else if (next.series.match(/(?:supesnlois)/i)) thimg = '';
             //else if (next.series.match(/(?:stargirl)/i)) thimg = '';
         
-            const nextmsg = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setTitle(`Next episode for ${message.author.tag}:`)
-            .setThumbnail(thimg ? thimg : null)
-            .addField(nxep, nxepard)
-            .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-            
-            .setFooter('Click on the button below to view the next episode (works every 5 minutes)', gideon.user.avatarURL());
+            const embed = Util.CreateEmbed(`Next episode for ${message.author.tag}:`, {
+                thumbnail: thimg,
+                footer: {text: 'Click on the button below to view the next episode (works every 5 minutes)', icon: gideon.user.avatarURL()},
+                fields: [
+                    {
+                        name: nxep,
+                        value: nxepard
+                    },
+                    {
+                        name: `Powered by:`,
+                        value: `**[arrowverse.info](${url} '${url}')**`
+                    }
+                ]
+            });
 
-            return nextmsg;
+            return embed;
         }
     
         let embed = GetNextEmbed(showtitle, fiep);
@@ -147,13 +143,7 @@ module.exports.run = async (gideon, message, args) => {
     catch (ex) {
         console.log("Failed to fetch next episode: " + ex);
         Util.log("Failed to fetch next episode: " + ex);
-
-        const er = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('Failed to fetch episode list, please try again later!')
-        
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        return message.channel.send(er);
+        message.channel.send(Util.CreateEmbed('Failed to fetch episode list, please try again later!'));
     }
 }
 

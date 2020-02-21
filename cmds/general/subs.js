@@ -8,16 +8,10 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    const mt = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('This command is not available currently')
-    .setDescription('Try again later')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
     if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
         Util.log("Missing env variables for subs command!");
         console.log("Missing env variables for subs command!");
-        return message.channel.send(mt);
+        return message.channel.send(Util.CreateEmbed('This command is not available currently'));
     }
 
     const OS = new OpenSubtitles({
@@ -27,38 +21,16 @@ module.exports.run = async (gideon, message, args) => {
         ssl: true
     });
 
-    const es = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply a valid episode and season!')
-    .setDescription('Acceptable formats: S00E00 and 00x00')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
+    if (!args[0]) return message.channel.send(Util.CreateEmbed('You must supply a lang code, the shows name, season and its episode number!', {
+        description: `You can find ISO 639-2 codes [here](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes 'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes')!`
+    }));
 
-    const na = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply a lang code, the shows name, season and its episode number!')
-    .setDescription(`You can find ISO 639-2 codes [here](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes 'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes')!`)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    const vc = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply a valid ISO 639-2 code!')
-    .setDescription(`[ISO 639-2 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes 'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes')`)
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    //!subs eng flash 3x3
-    if (!args[0]) return message.channel.send(na);
-    if (args[0].length !== 3) return message.channel.send(vc);
-
-    let agc = args[1];
-
-    const ia = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle(`"${agc}" is not a valid argument!`)
-    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
+    if (args[0].length !== 3) return message.channel.send(Util.CreateEmbed('You must supply a valid ISO 639-2 code!', {
+        description: `[ISO 639-2 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes 'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes')`
+    }));
 
     let seasonAndEpisode = Util.parseSeriesEpisodeString(args[2]);
-    if (!seasonAndEpisode) return message.channel.send(es);
+    if (!seasonAndEpisode) return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}));
 
     const shows = [
         {
@@ -112,6 +84,11 @@ module.exports.run = async (gideon, message, args) => {
     ]
 
     let show = shows[-1];
+    let agc = args[1];
+
+    const ia = Util.CreateEmbed(`"${agc}" is not a valid argument!`, {
+        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**'
+    });
 
     if (agc.match(/(?:flash)/i)) show = shows[0];
     else if (agc.match(/(?:arrow)/i)) show = shows[1];
@@ -136,30 +113,18 @@ module.exports.run = async (gideon, message, args) => {
         limit: '5',                 
         imdbid: show.id,           
 
-    }).then(async subtitles => {
-        const sub = Object.values(subtitles)[0];
+    }).then(subtitles => {
+        const embed = Util.CreateEmbed(`Subtitles for: ${show.title} ${seasonAndEpisode.season}x${seasonAndEpisode.episode}`, {description: `Here are the 5 best results from opensubtitles.org:`});
 
-        const subs = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`Subtitles for: ${show.title} ${seasonAndEpisode.season}x${seasonAndEpisode.episode}`)
-        .setDescription(`Here are the 5 best results from opensubtitles.org:`)
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-        for (let i=0 ; i < sub.length ; i++) {
-            subs.addField(sub[i].filename, `**[Download SRT](${sub[i].url} '${sub[i].url}')** Lang: \`${sub[i].lang}\` Score: \`${sub[i].score}\``)
+        for (let sub of Object.values(subtitles)[0]) {
+            embed.addField(sub.filename, `**[Download SRT](${sub.url} '${sub.url}')** Lang: \`${sub.lang}\` Score: \`${sub.score}\``)
         }
-            
-        await message.channel.send(subs);
+        
+        message.channel.send(embed);
     }).catch(async err => {
         console.log("An error occurred while trying to fetch subtitles: " + err);
         Util.log("An error occurred while trying to fetch subtitles: " + err);
-
-        const er = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('There were no results for this episode on opensubtitles.org!')
-        .setDescription('Try another episode or another language code!')
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        return message.channel.send(er);
+        return message.channel.send(Util.CreateEmbed('There were no results for this episode on opensubtitles.org!', {description: 'Try another episode or another language code!'}));
     });
 }
 

@@ -17,23 +17,7 @@ module.exports.run = async (gideon, message, args) => {
     let points = 0;
     let timerstart = new Date();
 
-    const as = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply a valid show!')
-    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    const er = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('An error occured while executing this command!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    const ag = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('A guessing game is already running!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    if (gideon.guessing.includes(message.author.id)) return message.channel.send(ag);
+    if (gideon.guessing.includes(message.author.id)) return message.channel.send(Util.CreateEmbed('A guessing game is already running!'));
     
     gideon.guessing.push(message.author.id);
 
@@ -52,10 +36,7 @@ module.exports.run = async (gideon, message, args) => {
     let command = message.content.toLowerCase().split(' ')[0];
 
     if (command.endsWith('leaderboard') || command.endsWith('highscores') || command.endsWith('lb')) {
-        const leaderboard = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`Top 10 Leaderboard:`)
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        let leaderboard = Util.CreateEmbed(`Top 10 Leaderboard:`);
 
         let top10 = gideon.getTop10.all().filter(x => x.points > 0);
 
@@ -95,7 +76,9 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:blacklightning)/i)) chosenfilter = filters[5];
     else if (agc.match(/(?:batwoman)/i)) chosenfilter = filters[6];
     else if (agc.match(/(?:constantine)/i)) chosenfilter = filters[7];
-    else return message.channel.send(as);
+    else return message.channel.send(Util.CreateEmbed('You must supply a valid show!', {
+        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**'
+    }));
 
     function Countdown() {
         let timerdiff = (Date.now() - timerstart.getTime()) / 1000;
@@ -129,13 +112,19 @@ module.exports.run = async (gideon, message, args) => {
         const epname = randomep.episode_name;
         const epairdate = new Date(randomep.air_date);
 
-        const gameembed = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`Guessing game for ${message.author.tag}:`)
-        .setAuthor(`You've got ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
-        .setDescription(`Please guess the following Arrowverse episode's name:\n\`${show} ${epnum}\`\n\n(Press :arrow_forward: to skip this episode or <:stop:669309980209446912> to end this round)`)
-        .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        const gameembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
+            description: `Please guess the following Arrowverse episode's name:\n\`${show} ${epnum}\`\n\n(Press :arrow_forward: to skip this episode or <:stop:669309980209446912> to end this round)`,
+            author: {
+                name: `You've got ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`,
+                value: message.author.avatarURL()
+            },
+            fields: [
+                {
+                    name: `Powered by:`,
+                    value: `**[arrowverse.info](${url} '${url}')**`
+                }
+            ]
+        });
 
         return {embed: gameembed, show: show, ep_and_s: epnum, ep_name: epname, airdate: epairdate};
     }
@@ -176,13 +165,19 @@ module.exports.run = async (gideon, message, args) => {
                 collector.stop();
                 await sent.reactions.removeAll();
 
-                const stopembed = new Discord.MessageEmbed()
-                .setColor('#2791D3')
-                .setTitle(`Guessing game for ${message.author.tag}:`)
-                .setAuthor(`You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() > 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
-                .setDescription(`Your game round has been cancelled! :white_check_mark:`)
-                .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-                .setFooter(Util.config.footer, gideon.user.avatarURL());
+                const stopembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
+                    description: `Your game round has been cancelled! :white_check_mark:`,
+                    author: {
+                        name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() > 1 ? s[1] + "s" : s[1]} left!`,
+                        icon: message.author.avatarURL()
+                    },
+                    fields: [
+                        {
+                            name: `Powered by:`,
+                            value: `**[arrowverse.info](${url} '${url}')**`   
+                        }
+                    ]
+                });
 
                 gideon.guessing.remove(message.author.id);
                 return sent.edit(stopembed);
@@ -205,13 +200,20 @@ module.exports.run = async (gideon, message, args) => {
                 gideon.setScore.run(score);
                 tries--;
 
-                const correctembed = new Discord.MessageEmbed()
-                .setColor('#2791D3')
-                .setTitle(`Guessing game for ${message.author.tag}:`)
-                .setAuthor(`You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
-                .setDescription(`That is correct! :white_check_mark:\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\`\n\n**You have gained \`${points}\` ${points > 1 ? s[2] + "s" : s[2]}!**\n(Airdate point bonus: \`+${airdate_bonus}\`)`)
-                .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-                .setFooter(Util.config.footer, gideon.user.avatarURL());
+                const correctembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
+                    description: `That is correct! :white_check_mark:\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\`\n\n**You have gained \`${points}\` ${points > 1 ? s[2] + "s" : s[2]}!**\n(Airdate point bonus: \`+${airdate_bonus}\`)`,
+                    author: {
+                        name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`,
+                        icon: message.author.avatarURL()
+                    },
+                    fields: [
+                        {
+                            name: `Powered by:`,
+                            value: `**[arrowverse.info](${url} '${url}')**`
+                        }
+                    ]
+                })
+
                 gideon.guessing.remove(message.author.id);
                 await sent.edit(correctembed);
                 return sent.reactions.removeAll();
@@ -221,13 +223,19 @@ module.exports.run = async (gideon, message, args) => {
             let question = `\`${game.show} ${game.ep_and_s}\``;
             let solution = `\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``;
 
-            const incorrectembed = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setTitle(`Guessing game for ${message.author.tag}:`)
-            .setAuthor(`You've ${tries == 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`, message.author.avatarURL())
-            .setDescription(`That is incorrect! :x:\n${tries == 0 ? solution : question}`)
-            .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-            .setFooter(Util.config.footer, gideon.user.avatarURL());
+            const incorrectembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
+                description: `That is incorrect! :x:\n${tries == 0 ? solution : question}`,
+                author: {
+                    name: `You've ${tries == 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`,
+                    icon: message.author.avatarURL()
+                },
+                fields: [
+                    {
+                        name: `Powered by:`,
+                        value: `**[arrowverse.info](${url} '${url}')**`
+                    }
+                ]
+            })
 
             if (tries == 0) {
                 collector.stop();
@@ -241,13 +249,19 @@ module.exports.run = async (gideon, message, args) => {
     
         collector.on('end', async (collected, reason) => {
             if (reason === 'time') {
-                const timeouttembed = new Discord.MessageEmbed()
-                .setColor('#2791D3')
-                .setTitle(`Guessing game for ${message.author.tag}:`)
-                .setAuthor(`You've had ${tries} ${tries !== 1 ? s[4] : s[3]} left!`, message.author.avatarURL())
-                .setDescription(`You ran out of time!\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``)
-                .addField(`Powered by:`, `**[arrowverse.info](${url} '${url}')**`)
-                .setFooter(Util.config.footer, gideon.user.avatarURL());
+                const timeouttembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
+                    description: `You ran out of time!\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``,
+                    author: {
+                        name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} left!`,
+                        icon: message.author.avatarURL()
+                    },
+                    fields: [
+                        {
+                            name: `Powered by:`,
+                            value: `**[arrowverse.info](${url} '${url}')**`
+                        }
+                    ]
+                });
 
                 gideon.guessing.remove(message.author.id);
                 await sent.reactions.removeAll();
@@ -259,7 +273,7 @@ module.exports.run = async (gideon, message, args) => {
     catch (ex) {
         console.log("Caught an exception while running guesseps.js: " + ex);
         Util.log("Caught an exception while running guesseps.js: " + ex);
-        return message.channel.send(er);
+        message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 }
 

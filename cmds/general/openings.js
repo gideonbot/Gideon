@@ -6,12 +6,8 @@ const Util = require("../../Util");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {  
-    const ia = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply a valid show!')
-    .setDescription('Available shows:\n**flash**\n**legends**')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
+module.exports.run = async (gideon, message, args) => {
+    const ia = Util.CreateEmbed('You must supply a valid show!', {description: 'Available shows:\n**flash**\n**legends**'});
 
     if (!args[0]) return message.channel.send(ia);   
     const flashopening = 'https://cdn.discordapp.com/attachments/595934699285905409/674586782494621696/YouCut_20200205_130726276.mp4';
@@ -19,7 +15,7 @@ module.exports.run = async (gideon, message, args) => {
     
     if (args[0].match(/(?:flash)/i)) return message.channel.send(flashopening);
     if (args[0].match(/(?:legends)/i)) return message.channel.send(lotopening);
-    else return message.channel.send(ia);
+    else return message.channel.send();
 }
 
 module.exports.help = {

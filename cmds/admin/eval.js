@@ -35,12 +35,7 @@ module.exports.run = async (gideon, message, args) => {
             code: true
         });
     } catch (e) {
-        const er = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('An error occured while processing your request:')
-        .setDescription(`\`\`\`\n${e.stack}\n\`\`\``)
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        return message.channel.send(er);
+        return message.channel.send(Util.CreateEmbed('An error occured while processing your request:', {description: "```\n" + e.stack + "```"}));
     }
 }
 

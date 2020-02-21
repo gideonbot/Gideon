@@ -11,20 +11,8 @@ module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
     if (!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
 
-    const as = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply a valid show!')
-    .setDescription('Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    const es = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply a valid episode and season!')
-    .setDescription('Acceptable formats: S00E00 and 00x00')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
     let info = Util.parseSeriesEpisodeString(args[1]);
-    if (!info) return message.channel.send(es);
+    if (!info) return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}));
 
     let shows = [
         {
@@ -103,19 +91,16 @@ module.exports.run = async (gideon, message, args) => {
     else if (agc.match(/(?:lucifer)/i)) show = shows[9];
     else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
     else if (agc.match(/(?:stargirl)/i)) show = shows[11];
-    else return message.channel.send(as);
-    if (!show) return message.channel.send(as);
+    else return message.channel.send(Util.CreateEmbed('You must supply a valid show!', {
+        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**'
+    }));
 
     const api = `http://api.tvmaze.com/shows/${show.id}/episodebynumber?season=${info.season}&number=${info.episode}`;
 
     try {
         const body = await fetch(api).then(res => res.json());
-        const nd = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('There was no data for this episode!')
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-        if (body.status === 404) return message.channel.send(nd).catch(console.error);
+        if (body.status === 404) return message.channel.send(Util.CreateEmbed('There was no data for this episode!'));
     
         let airdate = new Date(body.airdate);
         let airtime = body.airtime;
@@ -131,26 +116,16 @@ module.exports.run = async (gideon, message, args) => {
         let am_pm = (H < 12 || H === 24) ? " AM" : " PM";
         timeString = h + ":" + timeString.split(":")[1] + am_pm;
     
-        const epinfo = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`${show.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`)
-        .setDescription(desc + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`)
-        .setImage(img)     
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-    
-        message.channel.send(epinfo);
+        message.channel.send(Util.CreateEmbed(`${show.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
+            description: desc + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`,
+            image: img
+        }));
     }
     
     catch (ex) {
         console.log("Exception occurred while fetching the episodes " + ex);
         Util.log("Exception occurred while fetching the episodes " + ex);
-        
-        const er = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('An error occurred while trying to fetch the episodes!')
-        .setDescription('Please try again later!')
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        return message.channel.send(er);
+        message.channel.send(Util.CreateEmbed('An error occurred while trying to fetch the episodes!'));
     }
 }
 module.exports.help = {

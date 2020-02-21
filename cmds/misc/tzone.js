@@ -18,28 +18,13 @@ module.exports.run = async (gideon, message, args) => {
         fs.writeFileSync(path, JSON.stringify([]));
     }
 
-    const ia = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply a valid argument!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    const me = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must use a proper mention if you want to check someone\'s timezone!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    const er = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('An error occured while executing this command!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
     if (args[0] && args[0].match(/(?:register)/i)) {
         try {
             let members = JSON.parse(fs.readFileSync(path));
             
             if (members.map(x => x.username).includes(message.author.tag)) return message.reply('you have already registered a timezone!');
 
-            if (!args[1]) return message.channel.send(ia);
+            if (!args[1]) return message.channel.send(Util.CreateEmbed('You must supply a valid argument!'));
 
             message.channel.send('Registering, please stand by...');
 
@@ -63,7 +48,7 @@ module.exports.run = async (gideon, message, args) => {
         catch (ex) {
             console.log("Caught an exception while running tzone.js: " + ex);
             Util.log("Caught an exception while running tzone.js: " + ex);
-            return message.channel.send(er);
+            return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
         }
         return;
     }
@@ -72,10 +57,7 @@ module.exports.run = async (gideon, message, args) => {
         try {
             let members = JSON.parse(fs.readFileSync(path));
             
-            const tzembed = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setTitle('ITSF-Team Timezones:')
-            .setFooter(Util.config.footer, gideon.user.avatarURL());
+            const embed = Util.CreateEmbed('ITSF-Team Timezones:');
 
             for (let obj of members) {
                 let date = new Date();
@@ -83,23 +65,23 @@ module.exports.run = async (gideon, message, args) => {
                 let formattedTime = date.toLocaleTimeString('en-US', {timeZone: obj.timezone});
                 let formattedDay = date.toLocaleDateString('en-US', {timeZone: obj.timezone});
 
-                tzembed.addField(`Member: \`${obj.username}\` Timezone: \`${obj.timezone}\``,`Current Local Time: \`${formattedDay} ${formattedTime}\``);
+                embed.addField(`Member: \`${obj.username}\` Timezone: \`${obj.timezone}\``,`Current Local Time: \`${formattedDay} ${formattedTime}\``);
             }
 
-            message.channel.send(tzembed);
+            message.channel.send(embed);
         }
 
         catch (ex) {
             console.log("Caught an exception while running tzone.js: " + ex);
             Util.log("Caught an exception while running tzone.js: " + ex);
-            return message.channel.send(er);
+            return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
         }
     }
 
     else if (args[0] && !args[1]) {
         try {
             const user = gideon.users.cache.get(Util.getIdFromString(args[0]));
-            if (!user) return message.channel.send(me);
+            if (!user) return message.channel.send(Util.CreateEmbed('You must use a proper mention if you want to check someone\'s timezone!'));
 
             let members = JSON.parse(fs.readFileSync(path));
 
@@ -109,24 +91,18 @@ module.exports.run = async (gideon, message, args) => {
             let date = new Date();
             let formattedTime = date.toLocaleTimeString('en-US',{timeZone: found.timezone});
             let formattedDay = date.toLocaleDateString('en-US',{timeZone: found.timezone});
-            
-            const tzembed = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setTitle(`${found.username}'s current local time:`)
-            .setDescription(`\`${formattedDay} ${formattedTime} (${found.timezone})\``)
-            .setFooter(Util.config.footer, gideon.user.avatarURL());
 
-            message.channel.send(tzembed);
+            message.channel.send(Util.CreateEmbed(`${found.username}'s current local time:`, {description: `\`${formattedDay} ${formattedTime} (${found.timezone})\``}));
         }
 
         catch (ex) {
             console.log("Caught an exception while running tzone.js: " + ex);
             Util.log("Caught an exception while running tzone.js: " + ex);
-            return message.channel.send(er);
+            message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
         }
     }
 
-    else return message.channel.send(ia);
+    else return message.channel.send(Util.CreateEmbed('You must supply a valid argument!'));
 }
 
 module.exports.help = {

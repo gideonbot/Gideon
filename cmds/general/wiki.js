@@ -59,36 +59,22 @@ module.exports.run = async (gideon, message, args) => {
 
         //stargirl does some weird stuff, therefore the actual result is the 2nd element
         const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 ? 1 : 0];
+
+        if (Object.keys(body.items).length < 1) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!`));
         
-        const nf = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`There was no result for ${search_term} on the ${wiki.title} Wiki!`)
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        if (!Object.keys(body.items).length) return message.channel.send(nf).catch(console.error);
-        const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');     
-        let st = '';  
-        if (gideon.cvmt) st = '||'
-                
-        const wikiart = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(article.title)
-        .setDescription(st + article.abstract + st + `\n\n**[Click here to read the full article](https://${wiki.url}${url} 'https://${wiki.url}${url}')**`)
-        .setThumbnail(article.thumbnail)
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
+        const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
+        let st = gideon.cvmt ? '||' : '';
     
-        message.channel.send(wikiart); 
+        message.channel.send(Util.CreateEmbed(article.title, {
+            description: `${st}${article.abstract}${st}\n\n**[Click here to read the full article](https://${wiki.url}${url} 'https://${wiki.url}${url}')**`,
+            thumbnail: article.thumbnail
+        })); 
     }
 
     catch (ex) {
         console.log('Error occurred while fetching data from wiki: ' + ex);
         Util.log('Error occurred while fetching data from wiki: ' + ex);
-
-        const er = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle('Failed to fetch info from wiki!')
-        .setDescription('Please try again later!')
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-        return message.channel.send(er);
+        message.channel.send(Util.CreateEmbed('Failed to fetch info from wiki!'));
     } 
 }
 

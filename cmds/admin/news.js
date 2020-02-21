@@ -35,14 +35,11 @@ module.exports.run = async (gideon, message) => {
     if (gideon.cvmt) cvmen = true, gideon.cvmt = false; //if CVM is enabled, turn true, then off
 
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.').then(async message => {
-        for (let emoji of emoji_ids) {
-            message.react(emoji).then(() => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
-        }
+        for (let emoji of emoji_ids) message.react(emoji).then(() => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
 
         await Util.TRM(message.guild, true);
 
         const rfilter = (reaction, user) => emoji_ids.includes(reaction.emoji.id) && user.id === auth;
-
         const rcollector = message.createReactionCollector(rfilter, {time: 120000});
     
         rcollector.on('collect', reaction => {
@@ -67,38 +64,21 @@ module.exports.run = async (gideon, message) => {
             return message.reply('your news post has been cancelled! :white_check_mark:');
         }
 
-        const news = new Discord.MessageEmbed()
-        .setColor('#2791D3')
-        .setTitle(`Arrowverse News`)
-        .setDescription(message.content)
-        .setThumbnail(message.author.avatarURL())
-        .addField('News posted by:', message.author)
-        .setFooter(Util.config.footer, gideon.user.avatarURL());
-
+        const news = Util.CreateEmbed('Arrowverse News', {description: message.content, thumbnail: message.author.avatarURL()}).addField('News posted by:', message.author);
         if (message.attachments.size > 0) news.setImage(message.attachments.first().proxyURL);
 
         const tmvt = gideon.guilds.cache.get('595318490240385037');
         if (!tmvt) {
             console.log('Couldn\'t get TV server when running news!');
             Util.log('Couldn\'t get TV server when running news!');
-
-            const er = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setTitle('An error occurred, please try again later!')
-            .setFooter(Util.config.footer, gideon.user.avatarURL());
-            return message.channel.send(er);
+            return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
         }
 
         const news_channel = tmvt.channels.cache.get('595944027208024085');
         if (!news_channel) {
             console.log('Couldn\'t get news channel when running news!');
             Util.log('Couldn\'t get news channel when running news!');
-
-            const er = new Discord.MessageEmbed()
-            .setColor('#2791D3')
-            .setTitle('An error occurred, please try again later!')
-            .setFooter(Util.config.footer, gideon.user.avatarURL());
-            return message.channel.send(er);
+            return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
         }
 
         //<@&NUMBER> is how roles are represented | NUMBER - role id

@@ -9,15 +9,6 @@ const Util = require("../../Util");
 module.exports.run = async (gideon, message, args) => {
 /*
     let guild;
-    const as = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('You must supply valid input!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
-
-    const er = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .setTitle('An error occured while executing this command!')
-    .setFooter(Util.config.footer, gideon.user.avatarURL());
 
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
