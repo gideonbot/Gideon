@@ -460,6 +460,20 @@ class Util {
         });
     }
 
+    /**
+     * @param {string} title
+     * @param {string?} description
+     * @param {{
+        image?: string;
+        fields?: Discord.EmbedField[];
+        timestamp?: Date;
+        color?: string;
+        url?: string;
+        author?: {name: string, icon: string, url: string};
+        footer?: {text: string, icon: string};
+        thumbnail?: string;
+       }} options
+     */
     static CreateEmbed(title, description, options) {
         if (!title || typeof(title) != "string") return null;
 
@@ -468,7 +482,20 @@ class Util {
         .setFooter(Util.config.footer, Util.config.avatar)
         .setTitle(title);
         if (description && typeof(description) == "string") embed.setDescription(description);
-        
+
+        if (options.color) embed.setColor(options.color);
+        if (options.image && typeof(options.image) == "string") embed.setImage(options.image);
+        if (options.url && typeof(options.url)) embed.setURL(options.url);
+        if (options.timestamp && (typeof(options.timestamp) == "number" || options.timestamp instanceof Date)) embed.setTimestamp(options.timestamp);
+        if (options.thumbnail && typeof(options.thumbnail) == "string") embed.setThumbnail(options.thumbnail);
+        if (options.footer && options.footer.text && !Object.values(options.footer).some(x => typeof(x) != "string")) embed.setFooter(options.footer.text, options.footer.icon);
+        if (options.author && options.author.name && !Object.values(options.author).some(x => typeof(x) != "string")) embed.setAuthor(options.author.name, options.author.icon, options.author.url);
+        if (options.fields && Array.isArray(options.fields)) {
+            if (!options.fields.some(x => !x.name || !x.value)) {
+                embed.fields = options.fields.map(x => ({name: x.name, value: x.value, inline: x.inline}));
+            }
+        }
+
         return embed;
     }
 

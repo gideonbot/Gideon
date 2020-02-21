@@ -48,12 +48,12 @@ declare global {
 
 interface EmbedOptions {
     image?: string;
-    fields?: {name: string, value: string, inline?: boolean}[];
+    fields?: Discord.EmbedField[];
     timestamp?: Date;
     color?: string;
     url?: string;
-    author?: {name: string, icon: string, url: string};
-    footer?: {text: string, icon: string};
+    author?: {name: string, icon?: string, url?: string};
+    footer?: {text: string, icon?: string};
     thumbnail?: string;
 }
 
