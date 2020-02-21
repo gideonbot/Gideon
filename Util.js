@@ -167,11 +167,11 @@ class Util {
 
     /**
      * Log to a webhook
-     * @param {string} message 
+     * @param {string | Discord.MessageEmbed} message 
      */
     static log(message) {
         let url = process.env.LOG_WEBHOOK_URL;
-        if (!url) return false;
+        if (!url || !message) return false;
 
         url = url.replace("https://discordapp.com/api/webhooks/", "");
         let split = url.split("/");
@@ -179,9 +179,15 @@ class Util {
         if (split.length < 2) return false;
 
         let client = new Discord.WebhookClient(split[0], split[1]);
-        for (let msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
-            client.send(msg, { avatarURL: Util.config.avatar, username: "Gideon-Logs" });
+
+        if (typeof(message) == "string") {
+            for (let msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
+                client.send(msg, { avatarURL: Util.config.avatar, username: "Gideon-Logs" });
+            }
         }
+
+        else client.send(null, { embeds: [message], avatarURL: Util.config.avatar, username: "Gideon-Logs" });
+        
         return true;
     }
 
@@ -256,12 +262,12 @@ class Util {
         .setDescription('You posted a link to a forbidden social media account!\nFuck that bitch!')
         .setFooter(Util.config.footer, Util.config.avatar);
 
-        this.ABM_Test(message).then(async res => {
+        Util.ABM_Test(message).then(async res => {
             if (res.match) {
                 await Util.delay(200);
                 await message.delete();
                 Util.log("ABM triggered by: " + message.author.tag + " (" + res.content + ")");
-                message.channel.send(this.GetUserTag(message.author), { embed: abmembed });
+                message.channel.send(Util.GetUserTag(message.author), { embed: abmembed });
             }
         }, failed => console.log(failed));
     }
@@ -452,6 +458,18 @@ class Util {
                 }, failed => reject(failed));
             }, failed => reject(failed));
         });
+    }
+
+    static CreateEmbed(title, description, options) {
+        if (!title || typeof(title) != "string") return null;
+
+        const embed = new Discord.MessageEmbed()
+        .setColor('#2791D3')
+        .setFooter(Util.config.footer, Util.config.avatar)
+        .setTitle(title);
+        if (description && typeof(description) == "string") embed.setDescription(description);
+        
+        return embed;
     }
 
     /**
