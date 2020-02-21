@@ -1,7 +1,7 @@
 ![License](https://img.shields.io/badge/License-GPLv2-blue.svg)
 ![node](https://img.shields.io/node/v/discord.js)
 ![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/adrifcastr/discord.js/master)
-[![Build Status](https://travis-ci.org/adrifcastr/Gideon.svg?branch=master)](https://travis-ci.org/adrifcastr/Gideon)
+![Node.js CI](https://github.com/gideonbot/Gideon/workflows/Node.js%20CI/badge.svg)
 [![Known Vulnerabilities](https://snyk.io//test/github/adrifcastr/Gideon/badge.svg?targetFile=package.json)](https://snyk.io//test/github/adrifcastr/Gideon)
 [![Dependency Status](https://david-dm.org/adrifcastr/Gideon.svg)](https://david-dm.org/adrifcastr/Gideon.svg)
 [![HitCount](http://hits.dwyl.io/adrifcastr/Gideon.svg)](http://hits.dwyl.io/adrifcastr/Gideon)
