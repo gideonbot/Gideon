@@ -1,6 +1,5 @@
 .env
 .vscode
-package-lock.json
 node_modules/
 /data/JSON/tzdb.json
 /data/SQL/gideon.sqlite
