@@ -3,17 +3,28 @@ name: Node.js CI
 on: [push]
 
 jobs:
-  Test:
+  test:
+    name: Test
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 12.x
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js 12
       uses: actions/setup-node@v1
       with:
-        node-version: 12.x
-    - run: npm install
-    - run: npm test
+        node-version: 12
+    
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run ESLint
+      uses: icrawl/action-eslint@v1
+
+    - name: Run Test
+      run: npm test
+
     env:
       CI: true
       CLIENT_TOKEN: ${{ secrets.CLIENT_TOKEN }}
