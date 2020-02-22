@@ -123,7 +123,7 @@ gideon.on("voiceStateUpdate", (oldState, newState) => {
     let oldChannel = oldState.channel;
 
     if (oldChannel && !newChannel) {
-        // User leaves a voice channel
+        //User leaves a voice channel
         const members = oldChannel.members.map(x => x.id);
         if (!members.includes(gideon.user.id)) return;
 
