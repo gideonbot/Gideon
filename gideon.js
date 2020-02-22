@@ -54,7 +54,7 @@ gideon.once('ready', async () => {
     setInterval(status, 30e3);
 
     gideon.fetchApplication().then(app => {
-        //when the bot is owned by a team owner id is stored under ownerID, otherwise id
+        //When the bot is owned by a team owner id is stored under ownerID, otherwise id
         gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
     }, failed => console.log("Failed to fetch application: " + failed));
 
