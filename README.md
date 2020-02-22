@@ -11,7 +11,7 @@
 ### The Open Source Arrowverse Discord Bot
 
 Infos & features:
-[Homepage](http://gideonbot.co.vu)
+[Homepage](https://gideonbot.co.vu)
 
 Too see Gideon in action, you can join the Time Vault: [Join](https://invite.gg/tmvt) 
 
