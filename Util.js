@@ -261,7 +261,7 @@ class Util {
                 await Util.delay(200);
                 await message.delete();
                 Util.log("ABM triggered by: " + message.author.tag + " (" + res.content + ")");
-                message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-Bitch-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!\nFuck that bitch!'}) });
+                message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-Bitch-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}) });
             }
         }, failed => console.log(failed));
     }
