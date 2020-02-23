@@ -7,7 +7,6 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-/*
     let guild;
 
     if (!args[0]) return message.channel.send(as);
@@ -30,7 +29,6 @@ module.exports.run = async (gideon, message, args) => {
         Util.log("Caught an exception while creating invites!: " + ex);
         return message.channel.send(er);
     }      
-*/
 }
 
 module.exports.help = {

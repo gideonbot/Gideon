@@ -10,7 +10,7 @@ const Util = require("../../Util");
 module.exports.run = async (gideon, message, args) => {
     if (!args[0]) return message.channel.send(Util.CreateEmbed('You must supply a speedsters name or alter ego and their home universe!'));
 
-    const api = `https://api.myjson.com/bins/m8m3d`;
+    const api = `https://gideonbot.co.vu/api/speedsters`;
     let ssd = args.join(' ');
 
     let spnum;

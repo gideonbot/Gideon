@@ -8,7 +8,7 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message) => {
-    const titlesapi = `https://api.myjson.com/bins/13h4p4`;
+    const titlesapi = `https://gideonbot.co.vu/api/quotes`;
 
     try {
         const tbody = await fetch(titlesapi).then(res => res.json());
