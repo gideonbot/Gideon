@@ -290,13 +290,19 @@ class Util {
 
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
-        const plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
+        let plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
 
         // eslint-disable-next-line no-useless-escape
         if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
             await Util.delay(200);
             await message.delete();
             return message.reply('Links are not allowed meanwhile Crossover-Mode is active!');
+        }
+
+        let trmode = gideon.getTrmode.get(message.author.id);
+        if (trmode) if (trmode.trmodeval === 1) {
+            let tr = await Util.Translate(plainText);
+            plainText = `(${tr[1]}) ${tr[0]}`;
         }
 
         await message.channel.send(Util.CreateEmbed(null, {
@@ -649,7 +655,27 @@ class Util {
         else return;
     }
 
-    /** Automatic translation mode 
+    /** 
+     * Translate texts
+     * @param {String} input 
+     */
+    static async Translate(input) {
+        const sourceLang = 'auto';
+        const targetLang = 'en';
+        const sourceText = input
+
+        const api = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
+        + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
+
+        const body = await fetch(api).then(res => res.json());
+        let sourceflag = `:flag_${body[2]}:`;
+        if (body[2] == targetLang) sourceflag = ':flag_gb:';
+
+        return [body[0][0][0], sourceflag]
+    }
+
+    /** 
+     * Automatic translation mode 
      * @param {Discord.Message} message 
      * @param {Discord.Client} gideon
      */
@@ -665,6 +691,9 @@ class Util {
 
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
+        let cvm = gideon.getCVM.get(message.guild.id); //if CVM is enabled, return
+        if (cvm) if (cvm.cvmval === 1) return;
+        
         let trmode = gideon.getTrmode.get(message.author.id);
         if (!trmode) {
             trmode = {
@@ -677,20 +706,10 @@ class Util {
         if (trmode.trmodeval === 0) return;
 
         else {
-            const sourceLang = 'auto';
-            const targetLang = 'en';
-            const sourceText = message.content;
-
-            const api = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
-            + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
-
-            const body = await fetch(api).then(res => res.json());
-            let sourceflag = `:flag_${body[2]}:`;
-            if (body[2] == targetLang) sourceflag = ':flag_gb:';
-
+            let tr = await Util.Translate(args.join(' '));
             await Util.delay(200);
             await message.delete();
-            message.channel.send(Util.CreateEmbed(null, {description: `(${sourceflag}) ${body[0][0][0]}`, author: {name: `${message.author.tag} said:`, icon: message.author.avatarURL()}}));
+            message.channel.send(Util.CreateEmbed(null, {description: `(${tr[1]}) ${tr[0]}`, author: {name: `${message.author.tag} said:`, icon: message.author.avatarURL()}}));
         }
     }
 
