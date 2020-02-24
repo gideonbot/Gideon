@@ -695,6 +695,7 @@ class Util {
     }
 
     /**
+     * Cuts string down to specified length
      * @param {string} str 
      * @param {number} length 
      * @param {boolean} useWordBoundary 
