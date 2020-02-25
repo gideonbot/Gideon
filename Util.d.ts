@@ -22,6 +22,7 @@ export function TRMode(message: Discord.Message, gideon: Discord.Client): Promis
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
 export function normalize(num: number): string;
 export function CreateEmbed(title: string, options?: EmbedOptions): Discord.MessageEmbed;
+export function Translate(input: string): Promise<Array>;
 
 declare module "discord.js" {
     interface Client {
