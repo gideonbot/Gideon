@@ -11,7 +11,7 @@ manager.on('message', (shard, message) => console.log(`Shard[${shard.id}] : ${me
 
 function LogCount() {
 	manager.broadcastEval("this.guilds.cache").then(guilds => {
-		//guilds is array of arrays so we just turn it into a single array
+		//guilds is an array of arrays so we just turn it into a single array
 		guilds = [].concat.apply([], guilds);
 
 		let guild_list = "\n" + guilds.map(x => x.id + " - " + x.name + "").join("\n");
