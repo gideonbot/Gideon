@@ -10,6 +10,7 @@ gideon.commands = new Discord.Collection();
 gideon.vcmdexec = false;
 gideon.emptyvc = false;
 gideon.guessing = [];
+gideon.listening = [];
 
 if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
 else {

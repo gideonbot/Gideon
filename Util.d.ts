@@ -31,6 +31,7 @@ declare module "discord.js" {
         emptyvc: boolean;
         owner: string;
         guessing: string[];
+        listening: string[];
         getScore: BetterSqlite3.Statement<any[]>;
         setScore: BetterSqlite3.Statement<any[]>;
         getTop10: BetterSqlite3.Statement<any[]>;
