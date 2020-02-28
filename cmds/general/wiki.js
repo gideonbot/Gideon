@@ -63,7 +63,13 @@ module.exports.run = async (gideon, message, args) => {
         if (Object.keys(body.items).length < 1) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!`));
         
         const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
-        let st = gideon.cvmt ? '||' : '';
+
+        let st = ''
+        let cvm = gideon.getCVM.get(message.guild.id);
+        if (cvm) {
+            if (cvm.cvmval === 1) st = '||';
+        }
+        
     
         message.channel.send(Util.CreateEmbed(article.title, {
             description: `${st}${article.abstract}${st}\n\n**[Click here to read the full article](https://${wiki.url}${url} 'https://${wiki.url}${url}')**`,
