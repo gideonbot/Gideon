@@ -13,7 +13,7 @@
     "better-sqlite3": "^5.4.3",
     "cleverbot-free": "^1.0.3",
     "discord-paginationembed": "^2.0.0-beta.4",
-    "discord.js": "discordjs/discord.js#bc5e2950d065fd7c65259d050063299fc4468136",
+    "discord.js": "discordjs/discord.js",
     "dotenv": "^8.0.0",
     "eslint": "^6.8.0",
     "ffmpeg-static": "^4.0.1",
