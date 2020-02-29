@@ -9,6 +9,7 @@
   "author": "adrifcastr",
   "license": "GPL2",
   "dependencies": {
+    "@activediscourse/podcast-parser": "^1.0.0",
     "@discordjs/opus": "^0.1.0",
     "better-sqlite3": "^5.4.3",
     "cleverbot-free": "^1.0.3",
