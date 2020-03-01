@@ -96,6 +96,7 @@ gideon.on("error", err => {
 gideon.on('message', message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     
+    Util.LBG(message.guild);
     Util.ABM(message);
     Util.CVM(message, gideon);
     Util.CSD(message);
@@ -117,6 +118,7 @@ gideon.on('message', message => {
 
 gideon.on("guildCreate", guild => {
     Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
+    Util.LBG(guild);
 });
 
 gideon.on("voiceStateUpdate", (oldState, newState) => {

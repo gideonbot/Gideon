@@ -739,5 +739,27 @@ class Util {
 
         return num.toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping: false});
     }
+
+    /**
+     * Leaves a blacklisted guild
+     * @param {Discord.Guild} guild 
+     */
+    static async LBG(guild) {
+        const fs = require('fs');
+
+        const path = './data/JSON/guildblacklist.json';
+
+        if (!fs.existsSync(path)) {
+            fs.writeFileSync(path, JSON.stringify([]));
+        }
+
+        let blacklist = JSON.parse(fs.readFileSync(path));
+        if (blacklist.map(x => x.guildid).includes(guild.id)) {
+            const id = guild.id;
+            await guild.leave();
+            Util.log(`Left guild \`${id}\` due to it being blacklisted!`);
+        }
+        else return;
+    }
 }
 module.exports = Util;
