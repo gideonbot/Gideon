@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const Util = require("../../Util");
-const { Readable } = require('stream');
 
 /**
  * @param {Discord.Client} gideon

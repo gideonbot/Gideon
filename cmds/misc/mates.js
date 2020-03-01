@@ -159,14 +159,15 @@ module.exports.run = async (gideon, message, args) => {
             }
 
             if (reaction.emoji.id == emotes[1]) {
-                cast.destroy();
+                cast.end();
                 gideon.listening.remove(message.author.id);
                 await sent.reactions.removeAll();
+                await Util.LeaveVC(message);
                 return sent.edit(stopembed);
             }
 
             if (reaction.emoji.id == emotes[2]) {
-                cast.destroy();
+                cast.end();
                 epnum--;
 
                 cast = connection.play(stream);
@@ -178,7 +179,7 @@ module.exports.run = async (gideon, message, args) => {
             }
 
             if (reaction.emoji.id == emotes[2]) {
-                cast.destroy();
+                cast.end();
                 epnum++;
 
                 cast = connection.play(stream);
@@ -191,7 +192,7 @@ module.exports.run = async (gideon, message, args) => {
         }); 
 
         cast.on('finish', async () => {
-           cast.destroy();
+           cast.end();
            rcollector.stop();
            gideon.listening.remove(message.author.id);
            sent.edit(finishedembed);
