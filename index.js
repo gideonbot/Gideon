@@ -4,7 +4,7 @@ const git = require("git-last-commit");
 const Util = require("./Util");
 
 const manager = new Discord.ShardingManager("./gideon.js", {token: process.env.CLIENT_TOKEN});
-manager.spawn().then(() => LogCount());
+manager.spawn().then(LogCount);
 
 manager.on("shardCreate", shard => console.log("Shard " + shard.id + " spawned!"));
 manager.on('message', (shard, message) => console.log(`Shard[${shard.id}] : ${message._eval} : ${message._result}`));
