@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const Util = require("../../Util");
+const gideonapi = require('gideon-api');
 
 /**
  * @param {Discord.Client} gideon
@@ -33,8 +34,11 @@ module.exports.run = async (gideon, message) => {
     
         let qp = qbody.sections[0].title;
         let qpe = qp.replace(/(?:\/Quotes)/,'');
+
+        const quote = await gideonapi.quote().catch(ex => console.log(ex));
+        console.log(quote);
     
-        message.channel.send(Util.CreateEmbed(null, {description: `**${chosenQuote}\n\n~${qpe}**`, thumbnail: type.thumbnail}));
+        //message.channel.send(Util.CreateEmbed(null, {description: `**${chosenQuote}\n\n~${qpe}**`, thumbnail: type.thumbnail}));
     }
 
     catch (ex) {
