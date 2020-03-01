@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const fs = require("fs");
+const recursive = require("recursive-readdir");
 const Util = require("../../Util");
 
 /**
@@ -29,25 +29,23 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:misc)/i)) type = "misc";
     else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`));
 
-    fs.readdir("./cmds", (err, files) => {
+    recursive("./cmds", function (err, files) {
         if (err) {
-            message.channel.send("An error occurred, please try again later");
             Util.log("Error while reading commands:\n" + err);
             console.log(err);
             return;
         }
-    
+
         let jsfiles = files.filter(fileName => fileName.endsWith(".js"));
         if (jsfiles.length < 1) {
-            message.channel.send("An error occurred, please try again later");
-            console.log("No jsfiles!");
+            console.log("No commands to load!");
             return;
         }
     
         let commands = {};
 
         for (let filename of jsfiles) {
-            let props = require(`./${filename}`);
+            let props = require(`../../${filename}`);
 
             if (!props.help || !props.help.help_text || !props.help.help_desc) {
                 console.log(filename + " is missing help properties!");

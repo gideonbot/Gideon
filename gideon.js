@@ -1,6 +1,6 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const gideon = new Discord.Client();
+const gideon = new Discord.Client({ ws: { intents: Discord.Intents.ALL } });
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./data/SQL/gideon.sqlite');
 const recursive = require("recursive-readdir");
@@ -26,6 +26,7 @@ setTimeout(() => {
 }, 60e3);
 
 gideon.once('ready', async () => {
+    if (!process.env.CI) await Util.NPMInstall(gideon);//check for new modules and install them
     LoadCommands();
     InitDB();
 
@@ -96,6 +97,7 @@ gideon.on("error", err => {
 gideon.on('message', message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     
+    Util.LBG(message.guild);
     Util.ABM(message);
     Util.CVM(message, gideon);
     Util.CSD(message);
@@ -117,6 +119,7 @@ gideon.on('message', message => {
 
 gideon.on("guildCreate", guild => {
     Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
+    Util.LBG(guild);
 });
 
 gideon.on("voiceStateUpdate", (oldState, newState) => {

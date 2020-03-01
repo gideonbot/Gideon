@@ -374,6 +374,11 @@ class Util {
         if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) {
             message.channel.send(Util.CreateEmbed(null, {image: ctm}));
         }
+
+        const img = 'https://i.imgur.com/XffX82O.jpg';
+        if (message.content.match(/(?:callback)/i)) {
+            message.channel.send(Util.CreateEmbed(null, {image: img}));
+        }
     }
 
     /**
@@ -733,6 +738,52 @@ class Util {
         if (num == undefined || typeof(num) != "number") return "";
 
         return num.toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping: false});
+    }
+
+    /**
+     * Leaves a blacklisted guild
+     * @param {Discord.Guild} guild 
+     */
+    static async LBG(guild) {
+        const fs = require('fs');
+
+        const path = './data/JSON/guildblacklist.json';
+
+        if (!fs.existsSync(path)) {
+            fs.writeFileSync(path, JSON.stringify([]));
+        }
+
+        let blacklist = JSON.parse(fs.readFileSync(path));
+        if (blacklist.map(x => x.guildid).includes(guild.id)) {
+            const id = guild.id;
+            await guild.leave();
+            Util.log(`Left guild \`${id}\` due to it being blacklisted!`);
+        }
+        else return;
+    }
+
+    /**
+     * Runs NPM Install if package.json has been modified
+     */
+    static async NPMInstall(gideon) {
+        const gitAffectedFiles = require('git-affected-files');
+        const exec = require('child_process').exec;
+        const files = await gitAffectedFiles().catch(ex => console.log(ex));
+        if (!files.map(x => x.filename).includes('package.json')) return;
+        else {
+            Util.log("Detected changes in `package.json`, now running `npm install`...");
+
+            const install = exec('npm install');
+
+            install.stdout.on('data', function(data) {
+                Util.log("```\n" + data + "```"); 
+            });
+
+            install.stdout.on('end', function() {
+                Util.log("Automatic NPM install ran successfully!\nNow respawning all shards... :white_check_mark:");
+                gideon.shard.respawnAll();
+            });
+        }
     }
 }
 module.exports = Util;
