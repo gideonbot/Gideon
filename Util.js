@@ -374,6 +374,11 @@ class Util {
         if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) {
             message.channel.send(Util.CreateEmbed(null, {image: ctm}));
         }
+
+        const img = 'https://i.imgur.com/XffX82O.jpg';
+        if (message.content.match(/(?:callback)/i)) {
+            message.channel.send(Util.CreateEmbed(null, {image: img}));
+        }
     }
 
     /**
