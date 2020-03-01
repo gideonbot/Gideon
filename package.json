@@ -7,7 +7,7 @@
     "test": "node gideon.js"
   },
   "author": "adrifcastr",
-  "license": "GPL2",
+  "license": "LGPL-2.0-only",
   "dependencies": {
     "@activediscourse/podcast-parser": "^1.0.0",
     "@discordjs/opus": "^0.1.0",
