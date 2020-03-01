@@ -26,6 +26,7 @@ setTimeout(() => {
 }, 60e3);
 
 gideon.once('ready', async () => {
+    await Util.NPMInstall(gideon);//check for new modules and install them
     LoadCommands();
     InitDB();
 
