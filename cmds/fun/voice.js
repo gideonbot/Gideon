@@ -1,14 +1,6 @@
 const Discord = require("discord.js");
 const Util = require("../../Util");
 const { Readable } = require('stream');
-const SILENCE_FRAME = Buffer.from([0xF8, 0xFF, 0xFE]);
-
-class Silence extends Readable {
-    _read() {
-        this.push(SILENCE_FRAME);
-        this.destroy();
-    }
-}
 
 /**
  * @param {Discord.Client} gideon
@@ -64,7 +56,6 @@ module.exports.run = async (gideon, message, args) => {
         let vcname = message.member.voice.channel.name;
         message.reply(`now joining voice channel: \`${vcname}\`!`);
         const connection = await message.member.voice.channel.join();
-        connection.play(new Silence(), { type: 'opus' }); //enable voice receive by sending silence buffer
 
         await message.channel.send(Util.GetUserTag(message.author), { embed: voicehelp });
 
