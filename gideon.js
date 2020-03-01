@@ -1,6 +1,6 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const gideon = new Discord.Client();
+const gideon = new Discord.Client({ ws: { intents: Discord.Intents.ALL } });
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./data/SQL/gideon.sqlite');
 const recursive = require("recursive-readdir");
