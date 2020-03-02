@@ -97,11 +97,12 @@ gideon.on("error", err => {
 gideon.on('message', message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     
-    Util.LBG(message.guild);
-    Util.ABM(message);
-    Util.CVM(message, gideon);
-    Util.CSD(message);
-    Util.TRMode(message, gideon);
+    if (Util.IBU() === true) return; //check if user is blacklisted, if yes, return
+    Util.LBG(message.guild); //check if guild is blacklisted, if yes, leave
+    Util.ABM(message); //apply content filter
+    Util.CVM(message, gideon); //apply crossover mode if enabled
+    Util.CSD(message); //eastereggs
+    Util.TRMode(message, gideon); //apply trmode if enabled
 
     const lowercaseContent = message.content.toLowerCase();
     const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
@@ -119,7 +120,7 @@ gideon.on('message', message => {
 
 gideon.on("guildCreate", guild => {
     Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
-    Util.LBG(guild);
+    Util.LBG(guild); //check if guild is blacklisted, if yes, leave
 });
 
 gideon.on("voiceStateUpdate", (oldState, newState) => {
