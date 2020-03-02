@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const fetch = require('node-fetch');
+const gideonapi = require('gideon-api');
 const Util = require("../../Util");
 
 /**
@@ -10,7 +10,6 @@ const Util = require("../../Util");
 module.exports.run = async (gideon, message, args) => {
     if (!args[0]) return message.channel.send(Util.CreateEmbed('You must supply a speedsters name or alter ego and their home universe!'));
 
-    const api = `https://gideonbot.co.vu/api/speedsters`;
     let ssd = args.join(' ');
 
     let spnum;
@@ -36,14 +35,14 @@ module.exports.run = async (gideon, message, args) => {
     else return message.channel.send(Util.CreateEmbed(`"${ssd}" is not a valid argument!`, {description: 'Check the command\'s syntax and retry!'}));
 
     try {
-        const body = await fetch(api).then(res => res.json());
+        const speedsters = await gideonapi.speedsters();
 
-        const speedster = Util.CreateEmbed(body[spnum].speedster, {thumbnail: body[spnum].image})
-        .addField(`*Lightning Color(s) (Electrokinesis)*`, `${body[spnum].lightningColorsElectrokinesis}`)
-        .addField(`*Universe*`, `${body[spnum].universe}`)
-        .addField(`*Actor/Actress*`, `${body[spnum].actoractress}`)
-        .addField(`*First Appearance*`, `${body[spnum].firstAppearance}`)
-        .addField(`*First Appearance as Speedster*`, `${body[spnum].firstAppearanceAsSpeedster}`);
+        const speedster = Util.CreateEmbed(speedsters[spnum].speedster, {thumbnail: speedsters[spnum].image})
+        .addField(`*Lightning Color(s) (Electrokinesis)*`, `${speedsters[spnum].lightningColorsElectrokinesis}`)
+        .addField(`*Universe*`, `${speedsters[spnum].universe}`)
+        .addField(`*Actor/Actress*`, `${speedsters[spnum].actoractress}`)
+        .addField(`*First Appearance*`, `${speedsters[spnum].firstAppearance}`)
+        .addField(`*First Appearance as Speedster*`, `${speedsters[spnum].firstAppearanceAsSpeedster}`);
     
         message.channel.send(speedster);
     }
