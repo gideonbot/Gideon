@@ -11,7 +11,6 @@ module.exports.run = async (gideon, message, args) => {
     if (!args[0]) return message.channel.send(Util.CreateEmbed('You must supply a speedsters name or alter ego and their home universe!'));
 
     let ssd = args.join(' ');
-
     let spnum;
 
     if (ssd.match(/(?:flash)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:barry)/i) && ssd.match(/(?:e1)/i)) spnum = 0;
@@ -19,7 +18,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (ssd.match(/(?:zoom)/i) && ssd.match(/(?:e2)/i) || ssd.match(/(?:hunter)/i) && ssd.match(/(?:e2)/i)) spnum = 2;
     else if (ssd.match(/(?:savitar)/i) && ssd.match(/(?:e1)/i)) spnum = 3;
     else if (ssd.match(/(?:godspeed)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:august)/i) && ssd.match(/(?:e1)/i)) spnum = 4;
-    else if (ssd.match(/(?:red)/i) && ssd.match(/(?:e52)/i)) spnum = 5;
+    else if (ssd.match(/(?:g4)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:unnamed)/i) && ssd.match(/(?:e1)/i)) spnum = 5;
     else if (ssd.match(/(?:accelerated)/i) && ssd.match(/(?:e19)/i)) spnum = 6;
     else if (ssd.match(/(?:quick)/i) && ssd.match(/(?:e2)/i) || ssd.match(/(?:wells)/i) && ssd.match(/(?:e2)/i)) spnum = 7;
     else if (ssd.match(/(?:flash)/i) && ssd.match(/(?:e3)/i) || ssd.match(/(?:jay)/i) && ssd.match(/(?:e3)/i)) spnum = 8;
@@ -32,6 +31,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (ssd.match(/(?:kid)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:wally)/i) && ssd.match(/(?:e1)/i)) spnum = 15;
     else if (ssd.match(/(?:iris)/i) && ssd.match(/(?:e1)/i)) spnum = 16;
     else if (ssd.match(/(?:XS)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:nora)/i) && ssd.match(/(?:e1)/i)) spnum = 17;
+    else if (ssd.match(/(?:flash)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:grodd)/i) && ssd.match(/(?:e1)/i)) spnum = 18;
     else return message.channel.send(Util.CreateEmbed(`"${ssd}" is not a valid argument!`, {description: 'Check the command\'s syntax and retry!'}));
 
     try {
