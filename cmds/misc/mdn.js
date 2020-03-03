@@ -47,5 +47,5 @@ module.exports.help = {
     name: ["mdn", "mozilla", "js"],
     type: "misc",
     help_text: "mdn",
-    help_desc: "Searches mdn"
+    help_desc: "Searches MDN"
 }
