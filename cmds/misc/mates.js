@@ -227,6 +227,6 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: ['mates', 'podcast'],
     type: "misc",
-    help_text: "mates",
+    help_text: "mates <episode>",
     help_desc: "Listen to the MATES podcast"
 }

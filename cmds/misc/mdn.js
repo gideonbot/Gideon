@@ -46,6 +46,6 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: ["mdn", "mozilla", "js"],
     type: "misc",
-    help_text: "mdn",
+    help_text: "mdn <query>",
     help_desc: "Searches MDN"
 }

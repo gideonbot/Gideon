@@ -34,6 +34,6 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: ["civ", "create"],
     type: "misc",
-    help_text: "civ",
+    help_text: "civ <guildid>",
     help_desc: "Attempts to create instant invite"
 }

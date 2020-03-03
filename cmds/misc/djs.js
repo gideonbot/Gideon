@@ -30,6 +30,6 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: ["djs", "discordjs", "lib"],
     type: "misc",
-    help_text: "djs",
+    help_text: "djs <query>",
     help_desc: "Searches discord.js docs"
 }
