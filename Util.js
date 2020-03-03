@@ -808,5 +808,18 @@ class Util {
             }
         }
     }
+
+    /**
+     * Split Array into Arrays
+     */
+    static Split(arr, chunks) {
+        let array_of_arrays = [];
+
+        for (let i = 0; i < arr.length; i += chunks) {
+            array_of_arrays.push(arr.slice(i, i + chunks));
+        }
+
+        return array_of_arrays;
+    }
 }
 module.exports = Util;

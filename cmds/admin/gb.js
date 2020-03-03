@@ -52,5 +52,5 @@ module.exports.help = {
     name: ["gb", "gblacklist", "bl"],
     type: "admin",
     help_text: "gb <guildid>",
-    help_desc: "Blacklists a guild id"
+    help_desc: "Blacklists a guild"
 }
