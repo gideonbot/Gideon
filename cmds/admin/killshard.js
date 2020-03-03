@@ -27,6 +27,6 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: ["ks", "kill"],
     type: "admin",
-    help_text: "ks",
+    help_text: "ks <shardid>",
     help_desc: "Kills the specified shard"
 }

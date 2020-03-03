@@ -26,6 +26,6 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: ["purge", "delete", "remove"],
     type: "admin",
-    help_text: "purge",
+    help_text: "purge <amount>",
     help_desc: "Deletes the specified amount of messages in the current channel"
 }

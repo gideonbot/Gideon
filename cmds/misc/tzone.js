@@ -108,6 +108,6 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: ["tz", "tzones", "timezone", "timezones"],
     type: "misc",
-    help_text: "tz",
+    help_text: "tz [<register>/<user>]",
     help_desc: "Displays the ITSF timezones"
 }

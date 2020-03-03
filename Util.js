@@ -763,27 +763,63 @@ class Util {
     }
 
     /**
+     * Ignore commands from blacklisted users
+     * @param {Discord.Message} message 
+     */
+    static async IBU(message) {
+        const fs = require('fs');
+
+        const path = './data/JSON/userblacklist.json';
+
+        if (!fs.existsSync(path)) {
+            fs.writeFileSync(path, JSON.stringify([]));
+        }
+
+        let blacklist = JSON.parse(fs.readFileSync(path));
+        if (blacklist.map(x => x.userid).includes(message.author.id)) {
+            return true;
+        }
+        else return false;
+    }
+
+    /**
      * Runs NPM Install if package.json has been modified
      */
     static async NPMInstall(gideon) {
         const gitAffectedFiles = require('git-affected-files');
         const exec = require('child_process').exec;
         const files = await gitAffectedFiles().catch(ex => console.log(ex));
-        if (!files.map(x => x.filename).includes('package.json')) return;
-        else {
-            Util.log("Detected changes in `package.json`, now running `npm install`...");
 
-            const install = exec('npm install');
+        if (gideon.user.tag === 'Gideon#2420') {
+            if (!files.map(x => x.filename).includes('package.json')) return;
+            else {
+                Util.log("Detected changes in `package.json`, now running `npm install`...");
 
-            install.stdout.on('data', function(data) {
-                Util.log("```\n" + data + "```"); 
-            });
+                const install = exec('npm install');
 
-            install.stdout.on('end', function() {
-                Util.log("Automatic NPM install ran successfully!\nNow respawning all shards... :white_check_mark:");
-                gideon.shard.respawnAll();
-            });
+                install.stdout.on('data', function(data) {
+                    Util.log("```\n" + data + "```"); 
+                });
+
+                install.stdout.on('end', function() {
+                    Util.log("Automatic NPM install ran successfully!\nNow respawning all shards... :white_check_mark:");
+                    gideon.shard.respawnAll();
+                });
+            }
         }
+    }
+
+    /**
+     * Split Array into Arrays
+     */
+    static Split(arr, chunks) {
+        let array_of_arrays = [];
+
+        for (let i = 0; i < arr.length; i += chunks) {
+            array_of_arrays.push(arr.slice(i, i + chunks));
+        }
+
+        return array_of_arrays;
     }
 }
 module.exports = Util;
