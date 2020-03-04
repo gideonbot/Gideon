@@ -4,14 +4,14 @@ const git = require("git-last-commit");
 const Util = require("./Util");
 
 const manager = new Discord.ShardingManager("./gideon.js", {token: process.env.CLIENT_TOKEN});
-manager.spawn().then(() => LogCount());
+manager.spawn().then(LogCount);
 
 manager.on("shardCreate", shard => console.log("Shard " + shard.id + " spawned!"));
 manager.on('message', (shard, message) => console.log(`Shard[${shard.id}] : ${message._eval} : ${message._result}`));
 
 function LogCount() {
 	manager.broadcastEval("this.guilds.cache").then(guilds => {
-		//guilds is array of arrays so we just turn it into a single array
+		//guilds is an array of arrays so we just turn it into a single array
 		guilds = [].concat.apply([], guilds);
 
 		let guild_list = "\n" + guilds.map(x => x.id + " - " + x.name + "").join("\n");
