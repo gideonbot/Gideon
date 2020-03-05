@@ -784,7 +784,9 @@ class Util {
         const exec = require('child_process').exec;
         const files = await gitAffectedFiles().catch(ex => console.log(ex));
 
-        if (gideon.user.tag === 'Gideon#2420') {
+        if (gideon.user.tag !== 'Gideon#2420') return;
+        
+        else {
             if (!files.map(x => x.filename).includes('package.json')) return;
             else {
                 Util.log("Detected changes in `package.json`, now running `npm install`...");
