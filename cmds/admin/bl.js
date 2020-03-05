@@ -13,8 +13,8 @@ module.exports.run = async (gideon, message) => {
     }
 
     try {
-        path1 = './data/JSON/userblacklist.json';
-        path2 = './data/JSON/guildblacklist.json';
+        let path1 = './data/JSON/userblacklist.json';
+        let path2 = './data/JSON/guildblacklist.json';
 
         if (!fs.existsSync(path1)) {
             fs.writeFileSync(path1, JSON.stringify([]));

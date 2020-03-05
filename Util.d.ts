@@ -15,7 +15,7 @@ export function CVM(message: Discord.Message, gideon: Discord.Client): Promise<D
 export function IMG(image_id: string, message: Discord.Message): Promise<void>;
 export function CSD(message: Discord.Message): Promise<void>;
 export function LBG(guild: Discord.Guild): Promise<void>;
-export function IBU(message: Discord.Message): Promise<boolean>;
+export function IBU(message: Discord.Message): boolean;
 export function Split(arr: Array, chunks:number): Array;
 export function NPMInstall(gideon: Discord.Client): Promise<void>;
 export function GetNextEpisodeInfo(url: string): Promise<EpisodeInfo>;

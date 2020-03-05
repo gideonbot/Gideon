@@ -408,7 +408,7 @@ class Util {
                         let number = body._embedded.nextepisode.number;
                         let name = body._embedded.nextepisode.name;
                         let date = new Date(body._embedded.nextepisode.airstamp);
-                        let channel = body.network.name;
+                        let channel = body.network ? body.network.name : "Unknown";
 
                         let time_diff_s = Math.abs(new Date() - date) / 1000;
 
@@ -765,8 +765,9 @@ class Util {
     /**
      * Ignore commands from blacklisted users
      * @param {Discord.Message} message 
+     * @returns {boolean}
      */
-    static async IBU(message) {
+    static IBU(message) {
         const fs = require('fs');
 
         const path = './data/JSON/userblacklist.json';
@@ -776,10 +777,7 @@ class Util {
         }
 
         let blacklist = JSON.parse(fs.readFileSync(path));
-        if (blacklist.map(x => x.userid).includes(message.author.id)) {
-            return true;
-        }
-        else return false;
+        return blacklist.map(x => x.userid).includes(message.author.id);
     }
 
     /**
