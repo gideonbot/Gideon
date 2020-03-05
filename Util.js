@@ -829,7 +829,7 @@ class Util {
                 guilds: gideon.guilds.cache.map(x => x.id + " - " + x.name + "").join("\n")
             }
             const options = { method: 'POST', body: body };
-            await fetch(api, options);
+            //await fetch(api, options);
         }
     }
 }
