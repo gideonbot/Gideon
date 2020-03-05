@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message) => {
                 return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
             }
         }
-        else if (check.mentionable == true) {
+        else if (check.mentionable) {
             try {
                 message.channel.send('Toggling roles, please stand by...');
                 await Util.TRM(message.guild, false);

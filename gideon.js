@@ -97,7 +97,7 @@ gideon.on("error", err => {
 gideon.on('message', message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     
-    if (Util.IBU(message) === true) return; //check if user is blacklisted, if yes, return
+    if (Util.IBU(message)) return; //check if user is blacklisted, if yes, return
     Util.LBG(message.guild); //check if guild is blacklisted, if yes, leave
     Util.ABM(message); //apply content filter
     Util.CVM(message, gideon); //apply crossover mode if enabled
@@ -145,7 +145,7 @@ function LoadCommands() {
     console.log(process.cwd());
     let start = process.hrtime.bigint();
 
-    recursive("./cmds", function (err, files) {
+    recursive("./cmds", (err, files) => {
         if (err) {
             Util.log("Error while reading commands:\n" + err);
             console.log(err);
