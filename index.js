@@ -1,9 +1,9 @@
 require('dotenv').config();
-const Discord = require("discord.js");
+const { ShardingManager } = require('discord.js');
 const git = require("git-last-commit");
 const Util = require("./Util");
 
-const manager = new Discord.ShardingManager("./gideon.js", {token: process.env.CLIENT_TOKEN});
+const manager = new ShardingManager("./gideon.js", {token: process.env.CLIENT_TOKEN});
 manager.spawn().then(LogCount);
 
 manager.on("shardCreate", shard => console.log("Shard " + shard.id + " spawned!"));
