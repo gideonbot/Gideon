@@ -29,6 +29,7 @@ gideon.once('ready', async () => {
     if (!process.env.CI) await Util.NPMInstall(gideon);//check for new modules and install them
     LoadCommands();
     InitDB();
+    Util.Selfhostlog(gideon);
 
     console.log('Ready!');
 

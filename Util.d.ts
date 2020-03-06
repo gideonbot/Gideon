@@ -18,6 +18,7 @@ export function LBG(guild: Discord.Guild): Promise<void>;
 export function IBU(message: Discord.Message): boolean;
 export function Split(arr: Array, chunks:number): Array;
 export function NPMInstall(gideon: Discord.Client): Promise<void>;
+export function Selfhostlog(gideon: Discord.Client): Promise<void>;
 export function GetNextEpisodeInfo(url: string): Promise<EpisodeInfo>;
 export function LeaveVC(message: Discord.Message): Promise<void>;
 export function SpeechRecognition(speech: ReadableStream): Promise<VoiceInfoResponse>;

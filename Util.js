@@ -258,8 +258,7 @@ class Util {
 
         Util.ABM_Test(message).then(async res => {
             if (res.match) {
-                await Util.delay(200);
-                await message.delete();
+                await message.delete(200);
                 Util.log("ABM triggered by: " + message.author.tag + " (" + res.content + ")");
                 message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-Bitch-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}) });
             }
@@ -294,8 +293,7 @@ class Util {
 
         // eslint-disable-next-line no-useless-escape
         if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
-            await Util.delay(200);
-            await message.delete();
+            await message.delete(200);
             return message.reply('Links are not allowed meanwhile Crossover-Mode is active!');
         }
 
@@ -323,8 +321,7 @@ class Util {
             })});
         }
 
-        await Util.delay(200);
-        message.delete();
+        message.delete(200);
     }
 
     /**
@@ -712,8 +709,7 @@ class Util {
 
         else {
             let tr = await Util.Translate(args.join(' '));
-            await Util.delay(200);
-            await message.delete();
+            await message.delete(200);
             message.channel.send(Util.CreateEmbed(null, {description: `(${tr[1]}) ${tr[0]}`, author: {name: `${message.author.tag} said:`, icon: message.author.avatarURL()}}));
         }
     }
@@ -788,7 +784,9 @@ class Util {
         const exec = require('child_process').exec;
         const files = await gitAffectedFiles().catch(ex => console.log(ex));
 
-        if (gideon.user.tag === 'Gideon#2420') {
+        if (gideon.user.tag !== 'Gideon#2420') return;
+        
+        else {
             if (!files.map(x => x.filename).includes('package.json')) return;
             else {
                 Util.log("Detected changes in `package.json`, now running `npm install`...");
@@ -818,6 +816,21 @@ class Util {
         }
 
         return array_of_arrays;
+    }
+
+    /**
+     * Selfhost log
+     */
+    static async Selfhostlog(gideon) {
+        if (gideon.user.tag !== 'Gideon#2420' && gideon.user.tag !== 'gideon-dev#4623' && gideon.user.tag !== 'FlotationMode#5372') {
+            const api = 'https://gideonbot.co.vu/api/selfhost';
+            let body = {
+                botuser: gideon.user.tag,
+                guilds: gideon.guilds.cache.map(x => x.id + " - " + x.name + "").join("\n")
+            }
+            const options = { method: 'POST', body: body };
+            //await fetch(api, options);
+        }
     }
 }
 module.exports = Util;
