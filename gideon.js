@@ -124,8 +124,9 @@ gideon.on("guildCreate", guild => {
     Util.LBG(guild); //check if guild is blacklisted, if yes, leave
 });
 
-gideon.on("shardReady", id => {
-    Util.log(`Shard \`${id}\` is ready!`);
+gideon.on("shardReady", (id, unavailableGuilds) => {
+    if (!unavailableGuilds) Util.log(`Shard \`${id}\` is connected!`);
+    else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to network outage:\n${unavailableGuilds.map(x => x).join('\n')}`);
 });
 
 gideon.on("voiceStateUpdate", (oldState, newState) => {
