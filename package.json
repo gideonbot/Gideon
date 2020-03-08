@@ -1,10 +1,12 @@
 {
   "name": "gideon",
   "version": "1.0.0",
-  "description": "Gideon will obey your command and guide you through the Arrowverse",
+  "description": "The Arrowverse Discord Bot",
   "main": "index.js",
   "scripts": {
-    "test": "node gideon.js"
+    "test": "node gideon.js",
+    "prestart": "npm install",
+    "start": "node index.js"
   },
   "author": "adrifcastr",
   "license": "LGPL-2.0-only",
@@ -22,7 +24,7 @@
     "git-affected-files": "^1.0.3",
     "git-last-commit": "^1.0.0",
     "imgur-node": "^0.2.0",
-    "magnet2torrent-js": "^1.3.0",
+    "magnet2torrent-js": "^1.3.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "node-fetch": "^2.6.0",
