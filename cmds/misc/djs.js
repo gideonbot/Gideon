@@ -13,7 +13,7 @@ module.exports.run = async (gideon, message, args) => {
     if (!args[0]) return message.channel.send(as);
 
     try {
-        const source = `https://raw.githubusercontent.com/discordjs/discord.js/docs/12.0.1.json`;
+        const source = `https://raw.githubusercontent.com/discordjs/discord.js/docs/12.0.2.json`;
         const queryString = encodeURI(args.join(' '));
         const api = `https://djsdocs.sorta.moe/v2/embed?src=${source}&q=${queryString}`;
         const body = await fetch(api).then(res => res.json());
