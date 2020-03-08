@@ -85,8 +85,6 @@ module.exports.run = async (gideon, message, args) => {
             for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
             embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
             message.channel.send(embed);
-            console.log(commands);
-
     });
 }   
 
