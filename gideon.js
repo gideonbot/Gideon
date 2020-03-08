@@ -124,6 +124,10 @@ gideon.on("guildCreate", guild => {
     Util.LBG(guild); //check if guild is blacklisted, if yes, leave
 });
 
+gideon.on("shardReady", id => {
+    Util.log(`Shard \`${id}\` is ready!`);
+});
+
 gideon.on("voiceStateUpdate", (oldState, newState) => {
     let newChannel = newState.channel;
     let oldChannel = oldState.channel;
