@@ -465,12 +465,14 @@ class Util {
     static CreateEmbed(title, options) {
         if (!options) options = {};
         
+        const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
+
         const embed = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setFooter(Util.config.footer, Util.config.avatar)
 
         if (title && typeof(title) == "string") embed.setTitle(title);
-        if (options.description && typeof(options.description) == "string") embed.setDescription(options.description);
+        if (options.description && typeof(options.description) == "string") embed.setDescription(options.description + `\n${logos}`);
         if (options.color) embed.setColor(options.color);
         if (options.image && typeof(options.image) == "string") embed.setImage(options.image);
         if (options.url && typeof(options.url)) embed.setURL(options.url);
