@@ -39,6 +39,20 @@ module.exports.run = async (gideon, message, args) => {
             gideon.shard.respawnAll();
         });
     }
+
+    if (args[0].match(/(?:audit)/i) && args[1].match(/(?:fix)/i)) {
+        message.reply('running `npm audit fix` please check <#622415301144870932> for console output!')
+        const update = exec('npm audit fix');
+
+        update.stdout.on('data', function(data) {
+            Util.log("```\n" + data + "```"); 
+        });
+
+        update.stdout.on('end', async function() {
+            await message.reply('`npm audit fix` ran succesfully!\nNow respawning all shards... :white_check_mark:') 
+            gideon.shard.respawnAll();
+        });
+    }
     else return;
 }
 
