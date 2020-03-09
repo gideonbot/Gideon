@@ -9,12 +9,27 @@ const Util = require("../../Util");
 module.exports.run = async (gideon, message) => {     
     const guild = message.guild;
     const emojis = guild.emojis.cache.map(emojis => emojis.toString()).join(' ');
+    const escaped = Util.truncate(emojis, 1000, true);
+    const rawurls = guild.emojis.cache.map(x => x.toString() + " - " + `[URL](${x.url} '${x.url}')` + "").join(" ");
+    const urls = Util.truncate(rawurls, 1000, true);
 
-    const embed = new Discord.MessageEmbed()
-    .setColor('#2791D3')
-    .addField('❯ Emojis:', emojis)
-    .addField('❯ Escaped Emojis:', `\`${emojis}\``)
-    .setFooter(Util.config.footer, Util.config.avatar)
+    const embed = Util.CreateEmbed(null, {
+        fields: [
+            {
+                name: `❯ Emojis:`,
+                value: emojis
+            },
+            {
+                name: `❯ Escaped Emojis:`,
+                value: `\`${escaped}\``
+            },
+            {
+                name: `❯ Emoji URL's:`,
+                value: urls
+            },
+        ]
+    })
+
     message.channel.send(embed);
 }
 
