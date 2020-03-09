@@ -21,6 +21,6 @@ module.exports.run = async (gideon, message) => {
 module.exports.help = {
     name: ['emojis', 'emotes'],
     type: "misc",
-    help_text: "guild",
-    help_desc: "Get current guild info"
+    help_text: "emojis",
+    help_desc: "Get a list og guild emojis"
 }
