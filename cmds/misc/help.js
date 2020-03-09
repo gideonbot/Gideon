@@ -30,62 +30,47 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:misc)/i)) type = "misc";
     else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`));
 
-    recursive("./cmds", function (err, files) {
-        if (err) {
-            Util.log("Error while reading commands:\n" + err);
-            console.log(err);
-            return;
+    for (let filename of gideon.commands) {
+        let props = filename[1];
+        console.log(props);
+
+        if (!props.help || !props.help.help_text || !props.help.help_desc) {
+            console.log(filename + " is missing help properties!");
+            Util.log(filename + " is missing help properties, please fix");
         }
 
-        let jsfiles = files.filter(fileName => fileName.endsWith(".js"));
-        if (jsfiles.length < 1) {
-            console.log("No commands to load!");
-            return;
-        }
-    
-        let commands = {};
-
-        for (let filename of jsfiles) {
-            let props = require(`../../${filename}`);
-
-            if (!props.help || !props.help.help_text || !props.help.help_desc) {
-                console.log(filename + " is missing help properties!");
-                Util.log(filename + " is missing help properties, please fix");
-            }
-
-            if (props.help.type == type) commands[props.help.help_text] = props.help.help_desc;
-        }
+        if (props.help.type == type) commands[props.help.help_text] = props.help.help_desc;
+    }
 /*
-        if (Object.keys(commands).length > 10) {
-                let cmds = [commands]
-                console.log(cmds);
-                const arrs = Util.Split(Object.entries(commands), 10);
-                //console.log(arrs[0]);
-                let pages = [];
+    if (Object.keys(commands).length > 10) {
+            let cmds = [commands]
+            console.log(cmds);
+            const arrs = Util.Split(Object.entries(commands), 10);
+            //console.log(arrs[0]);
+            let pages = [];
 
-                for (let i = 0; i < arrs.length; i++) {
-                    //console.log('array ' + arrs[i] + '\n\n');
+            for (let i = 0; i < arrs.length; i++) {
+                //console.log('array ' + arrs[i] + '\n\n');
 
-                    const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
-                    for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
-                    embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
-                    pages.push(embed);
-                }
-
-                new Pagination.Embeds()
-                .setArray(pages)
-                .setAuthorizedUsers([message.author.id])
-                .setChannel(message.channel)
-                .setPageIndicator(true)
-                .setPage(1)
-                .build();
+                const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
+                for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
+                embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
+                pages.push(embed);
             }
+
+            new Pagination.Embeds()
+            .setArray(pages)
+            .setAuthorizedUsers([message.author.id])
+            .setChannel(message.channel)
+            .setPageIndicator(true)
+            .setPage(1)
+            .build();
+        }
 */
-            const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
-            for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
-            embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
-            message.channel.send(embed);
-    });
+        const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
+        for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
+        embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
+        message.channel.send(embed);
 }   
 
 module.exports.help = {
