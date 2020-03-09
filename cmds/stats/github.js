@@ -7,7 +7,7 @@ const Util = require("../../Util");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (message) => {
+module.exports.run = async (gideon, message) => {
     const api = 'https://api.github.com/repos/adrifcastr/Gideon';
 
     try {
