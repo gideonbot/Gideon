@@ -30,6 +30,7 @@
     "node-fetch": "^2.6.0",
     "node-gyp": "^6.1.0",
     "opensubtitles-api": "^5.0.1",
+    "pretty-error": "^2.1.1",
     "rarbg": "^1.2.7",
     "recursive-readdir": "^2.2.2",
     "select-random-file": "^1.1.0",

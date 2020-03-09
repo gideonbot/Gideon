@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('pretty-error').start().withoutColors();
 const Discord = require('discord.js');
 const gideon = new Discord.Client({ ws: { intents: Discord.Intents.ALL } });
 const SQLite = require("better-sqlite3");
