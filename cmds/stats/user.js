@@ -77,7 +77,7 @@ module.exports.run = async (gideon, message, args) => {
         fields: [
             {
                 name: `❯ User Info:`,
-                value: `• ID: \`${user.id}\`\n• Nickname: \`${!member.nickname ? 'None' : member.nickname}\`\n• Status: \`${status}\`${semote}\n• Custom Status: ${!custom_status.text ? custom_status.emoji ? '' : 'None' : custom_status.text} ${custom_status.emoji}\n• Activity: \`${other_activities.length < 1 ? 'None' : other_activities[0].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot ? 'Yes' : 'No'}\``
+                value: `• ID: \`${user.id}\`\n• Nickname: \`${!member.nickname ? 'None' : member.nickname}\`\n• Status: \`${status}\`${semote}\n• Custom Status: ${!custom_status.text ? custom_status.emoji ? '' : '\`None\`' : custom_status.text} ${custom_status.emoji}\n• Activity: \`${other_activities.length < 1 ? 'None' : other_activities[0].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot ? 'Yes' : 'No'}\``
             },
             {
                 name: `❯ GuildMember Info:`,
