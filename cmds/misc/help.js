@@ -44,20 +44,17 @@ module.exports.run = async (gideon, message, args) => {
 
         if (props.help.type == type) commands[props.help.help_text] = props.help.help_desc;
     }
-/*
+
     if (Object.keys(commands).length > 10) {
         const arrs = Util.Split(Object.entries(commands), 10);
-        console.log(arrs.length);
         let pages = [];
 
         for (let i = 0; i < arrs.length; i++) {
             const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
-            for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
+            for (item of arrs[i]) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item[0], item[1]);
             embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
             pages.push(embed);
         }
-
-        console.log(pages);
         
         new Pagination.Embeds()
         .setArray(pages)
@@ -67,13 +64,13 @@ module.exports.run = async (gideon, message, args) => {
         .setPage(1)
         .build();
     }
-*/
 
+    else {
         const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
         for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
         embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
         message.channel.send(embed);
-    
+    }
 }   
 
 module.exports.help = {
