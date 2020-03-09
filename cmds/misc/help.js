@@ -17,6 +17,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('admin', 'Commands for people with higher roles then the average Metahuman')  
         .addField('misc', 'Miscellaneous commands')    
         .addField('stats', 'Useful bot/user/guild statistics')    
+        .addField('owner', 'Application owner only commands')    
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
         message.channel.send(help);
@@ -30,6 +31,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:admin)/i)) type = "admin";
     else if (args[0].match(/(?:misc)/i)) type = "misc";
     else if (args[0].match(/(?:stats)/i)) type = "stats";
+    else if (args[0].match(/(?:owner)/i)) type = "owner";
     else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`));
 
     for (let filename of gideon.commands) {

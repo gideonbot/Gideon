@@ -44,7 +44,7 @@ module.exports.run = async (gideon, message) => {
 
 module.exports.help = {
     name: ["blacklist","bl"],
-    type: "admin",
+    type: "owner",
     help_text: "blacklist",
     help_desc: "Displays blacklisted users and guilds"
 }

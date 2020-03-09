@@ -16,7 +16,7 @@ module.exports.run = async (gideon, message) => {
 
 module.exports.help = {
     name: ["rs", "respawn"],
-    type: "admin",
+    type: "owner",
     help_text: "rs",
     help_desc: "Respawns all shards"
 }
