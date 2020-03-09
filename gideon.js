@@ -73,7 +73,7 @@ gideon.once('ready', async () => {
 
 process.on("uncaughtException", err => {
     console.log(err);
-    Util.log("Uncaught Exception: " + err.stack);
+    Util.log("Uncaught Exception: " + `\`\`\`\n${err.stack}\n\`\`\``);
 
     if (process.env.CI) {
         console.log("Exception detected, marking as failed");
@@ -83,7 +83,7 @@ process.on("uncaughtException", err => {
 
 process.on("unhandledRejection", err => {
     console.log(err);
-    Util.log("Unhandled Rejection: " + err.stack + "\n\nJSON: " + JSON.stringify(err, null, 2));
+    Util.log("Unhandled Rejection: " + `\`\`\`\n${err.stack + "\n\nJSON: " + JSON.stringify(err, null, 2)}\n\`\`\``);
 
     if (process.env.CI) {
         console.log("Unhandled Rejection detected, marking as failed");
@@ -93,7 +93,7 @@ process.on("unhandledRejection", err => {
 
 gideon.on("error", err => {
     console.log(err);
-    Util.log("Bot error: " + err.stack);
+    Util.log("Bot error: " + `\`\`\`\n${err.stack}\n\`\`\``);
 });
 
 gideon.on('message', message => {
