@@ -17,22 +17,24 @@ module.exports.run = async (gideon, message, args) => {
         .addField('fun', 'Fun and interactive Arrowverse commands')  
         .addField('admin', 'Commands for people with higher roles then the average Metahuman')  
         .addField('misc', 'Miscellaneous commands')    
+        .addField('stats', 'Useful bot/user/guild statistics')    
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
         message.channel.send(help);
         return;
     }
 
+    let commands = {};
     let type = "";
     if (args[0].match(/(?:general)/i)) type = "general";
     else if (args[0].match(/(?:fun)/i)) type = "fun";
     else if (args[0].match(/(?:admin)/i)) type = "admin";
     else if (args[0].match(/(?:misc)/i)) type = "misc";
+    else if (args[0].match(/(?:stats)/i)) type = "stats";
     else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`));
 
     for (let filename of gideon.commands) {
         let props = filename[1];
-        console.log(props);
 
         if (!props.help || !props.help.help_text || !props.help.help_desc) {
             console.log(filename + " is missing help properties!");

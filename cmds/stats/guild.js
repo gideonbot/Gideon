@@ -39,7 +39,7 @@ module.exports.run = async (gideon, message) => {
 
 module.exports.help = {
     name: ['guild', 'server'],
-    type: "misc",
+    type: "stats",
     help_text: "guild",
     help_desc: "Get current guild info"
 }

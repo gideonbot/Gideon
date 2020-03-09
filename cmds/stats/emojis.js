@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message) => {
 
 module.exports.help = {
     name: ['emojis', 'emotes'],
-    type: "misc",
+    type: "stats",
     help_text: "emojis",
-    help_desc: "Get a list og guild emojis"
+    help_desc: "Get a list of guild emojis"
 }

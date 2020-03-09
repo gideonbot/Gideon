@@ -92,7 +92,7 @@ module.exports.run = async (gideon, message, args) => {
 
 module.exports.help = {
     name: ["user", "member"],
-    type: "misc",
+    type: "stats",
     help_text: "user <user>",
     help_desc: "Displays a user's info"
 }

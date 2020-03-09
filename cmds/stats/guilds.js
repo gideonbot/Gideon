@@ -28,7 +28,7 @@ module.exports.run = async (gideon, message) => {
 
 module.exports.help = {
     name: ["guilds", "servers"],
-    type: "misc",
+    type: "stats",
     help_text: "guilds",
     help_desc: "Displays all guilds the bot is in"
 }
