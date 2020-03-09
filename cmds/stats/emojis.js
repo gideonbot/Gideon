@@ -9,9 +9,9 @@ const Util = require("../../Util");
 module.exports.run = async (gideon, message) => {     
     const guild = message.guild;
     const emojis = guild.emojis.cache.map(emojis => emojis.toString()).join(' ');
-    const escaped = Util.truncate(emojis, 1000, true);
+    const escaped = Util.truncate(emojis, 1024, true);
     const rawurls = guild.emojis.cache.map(x => x.toString() + " - " + `[URL](${x.url} '${x.url}')` + "").join(" ");
-    const urls = Util.truncate(rawurls, 1000, true);
+    const urls = Util.truncate(rawurls, 1024, true);
 
     const embed = Util.CreateEmbed(null, {
         fields: [
