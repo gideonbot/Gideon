@@ -353,7 +353,7 @@ class Util {
     }
 
     /**
-     * some stuff
+     * Easter eggs
      * @param {Discord.Message} message 
      */
     static async CSD(message) {
@@ -375,6 +375,11 @@ class Util {
         const img = 'https://i.imgur.com/XffX82O.jpg';
         if (message.content.match(/(?:callback)/i)) {
             message.channel.send(Util.CreateEmbed(null, {image: img}));
+        }
+
+        const vid2 = 'https://cdn.discordapp.com/attachments/679864620864765983/686589432501239899/Hi_Im_Richard_Castle.mp4';
+        if (message.content.match(/(?:castle)/i)) {
+            message.channel.send(vid2);
         }
     }
 
