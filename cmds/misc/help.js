@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const recursive = require("recursive-readdir");
 const Pagination = require('discord-paginationembed');
 const Util = require("../../Util");
 
@@ -45,34 +44,34 @@ module.exports.run = async (gideon, message, args) => {
     }
 /*
     if (Object.keys(commands).length > 10) {
-            let cmds = [commands]
-            console.log(cmds);
-            const arrs = Util.Split(Object.entries(commands), 10);
-            //console.log(arrs[0]);
-            let pages = [];
+        const arrs = Util.Split(Object.entries(commands), 10);
+        console.log(arrs.length);
+        let pages = [];
 
-            for (let i = 0; i < arrs.length; i++) {
-                //console.log('array ' + arrs[i] + '\n\n');
-
-                const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
-                for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
-                embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
-                pages.push(embed);
-            }
-
-            new Pagination.Embeds()
-            .setArray(pages)
-            .setAuthorizedUsers([message.author.id])
-            .setChannel(message.channel)
-            .setPageIndicator(true)
-            .setPage(1)
-            .build();
+        for (let i = 0; i < arrs.length; i++) {
+            const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
+            for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
+            embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
+            pages.push(embed);
         }
+
+        console.log(pages);
+        
+        new Pagination.Embeds()
+        .setArray(pages)
+        .setAuthorizedUsers([message.author.id])
+        .setChannel(message.channel)
+        .setPageIndicator(true)
+        .setPage(1)
+        .build();
+    }
 */
+
         const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
         for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
         embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
         message.channel.send(embed);
+    
 }   
 
 module.exports.help = {
