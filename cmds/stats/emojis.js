@@ -6,7 +6,7 @@ const Util = require("../../Util");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {     
+module.exports.run = async (message) => {     
     const guild = message.guild;
     const emojis = guild.emojis.cache.map(emojis => emojis.toString()).join(' ');
     const escaped = Util.truncate(emojis, 1024, true);

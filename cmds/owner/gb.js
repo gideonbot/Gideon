@@ -51,6 +51,6 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: ["gb", "gblacklist", "bl"],
     type: "owner",
-    help_text: "gb <guildid>",
+    help_text: "gb <guildid> <:gideon:686678560798146577>",
     help_desc: "Blacklists a guild"
 }

@@ -59,6 +59,6 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: "npm",
     type: "admin",
-    help_text: "npm install/update",
+    help_text: "npm install/update `@Gideon Dev Team`",
     help_desc: "Runs npm command"
 }

@@ -43,6 +43,6 @@ module.exports.run = async (gideon, message) => {
 module.exports.help = {
     name: "trm",
     type: "admin",
-    help_text: "trm",
+    help_text: "trm <:timevault:686676561298063361>`@News Team`",
     help_desc: "Toggles server role mentionability"
 }
