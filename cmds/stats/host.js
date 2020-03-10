@@ -23,7 +23,7 @@ module.exports.run = async (gideon, message) => {
             fields: [
                 {
                     name: `❯ CPU:`,
-                    value: `CPU: \`${cpu.manufacturer} ${cpu.brand} @${cpu.speed} GHz\`\nCurrent Speed: \`${curspeed.avg} GHz\`\nCurrent Temperature: \`${curtemp.main === -1 ? 'Not available' : curtemp.main}\``
+                    value: `CPU: \`${cpu.manufacturer} ${cpu.brand} @${cpu.speedmax} GHz\`\nCurrent Speed: \`${curspeed.avg} GHz\``
                 },
                 {
                     name: `❯ Memory:`,
@@ -31,7 +31,7 @@ module.exports.run = async (gideon, message) => {
                 },
                 {
                     name: `❯ OS:`,
-                    value: `OS: \`${os.platform}\`\nDistro: \`${os.distro}\`\nBuild: \`${os.build}\``
+                    value: `OS: \`${os.platform}\`\nDistro: \`${os.distro}\``
                 },
                 {
                     name: `❯ Load:`,
@@ -39,7 +39,7 @@ module.exports.run = async (gideon, message) => {
                 },
                 {
                     name: `❯ Network:`,
-                    value: `Network Speed: \`${net[0].speed} Mbit/s\``
+                    value: `Network Speed: \`${net[1].speed} Mbit/s\``
                 },
             ]
         })
