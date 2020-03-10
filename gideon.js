@@ -27,10 +27,10 @@ setTimeout(() => {
 }, 60e3);
 
 gideon.once('ready', async () => {
-    if (!process.env.CI) await Util.NPMInstall(gideon);//check for new modules and install them
-    LoadCommands();
-    InitDB();
-    Util.Selfhostlog(gideon);
+    if (!process.env.CI) await Util.NPMInstall(gideon);//install missing npm packages
+    await LoadCommands();
+    await InitDB();
+    await Util.Selfhostlog(gideon);
 
     console.log('Ready!');
 
@@ -153,7 +153,7 @@ gideon.on("voiceStateUpdate", (oldState, newState) => {
     }
 });
 
-function LoadCommands() {
+async function LoadCommands() {
     console.log(process.cwd());
     let start = process.hrtime.bigint();
 
@@ -192,7 +192,7 @@ function LoadCommands() {
     });
 }
 
-function InitDB() {
+async function InitDB() {
     const scoresdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
     if (!scoresdb['count(*)']) {
         sql.prepare("CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, points INTEGER);").run();

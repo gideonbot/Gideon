@@ -784,32 +784,24 @@ class Util {
     }
 
     /**
-     * Runs NPM Install if package.json has been modified
+     * Runs NPM Install
      */
     static async NPMInstall(gideon) {
-        const gitAffectedFiles = require('git-affected-files');
         const exec = require('child_process').exec;
-        const files = await gitAffectedFiles().catch(ex => console.log(ex));
 
         if (gideon.user.tag !== 'Gideon#2420') return;
         
-        else {
-            if (!files.map(x => x.filename).includes('package.json')) return;
-            else {
-                Util.log("Detected changes in `package.json`, now running `npm install`...");
+        Util.log("`Now running npm install...`");
+        const install = exec('npm install');
 
-                const install = exec('npm install');
+        install.stdout.on('data', function(data) {
+            Util.log("```\n" + data + "```"); 
+        });
 
-                install.stdout.on('data', function(data) {
-                    Util.log("```\n" + data + "```"); 
-                });
-
-                install.stdout.on('end', function() {
-                    Util.log("Automatic NPM install ran successfully!\nNow respawning all shards... :white_check_mark:");
-                    gideon.shard.respawnAll();
-                });
-            }
-        }
+        install.stdout.on('end', function() {
+            Util.log("`Automatic NPM install ran successfully!");
+            gideon.shard.respawnAll();
+        }); 
     }
 
     /**

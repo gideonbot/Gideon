@@ -31,16 +31,12 @@ module.exports.run = async (gideon, message) => {
                 },
                 {
                     name: `❯ OS:`,
-                    value: `OS: \`${os.platform}\`\nDistro: \`${os.distro}\``
+                    value: `OS: \`${os.platform}\`\nDistro: \`${os.distro}\`\nBuild: \`${os.codepage}\``
                 },
                 {
                     name: `❯ Load:`,
                     value: `Current CPU Load: \`${Math.round(load.currentload)} %\``
-                },
-                {
-                    name: `❯ Network:`,
-                    value: `Network Speed: \`${net[1].speed} Mbit/s\``
-                },
+                }
             ]
         })
     
