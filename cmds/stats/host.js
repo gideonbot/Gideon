@@ -31,7 +31,7 @@ module.exports.run = async (gideon, message) => {
                 },
                 {
                     name: `❯ OS:`,
-                    value: `OS: \`${os.platform}\`\nDistro: \`${os.distro}\`\nBuild: \`${os.codepage}\``
+                    value: `OS: \`${os.platform}\`\nDistro: \`${os.distro}\``
                 },
                 {
                     name: `❯ Load:`,
