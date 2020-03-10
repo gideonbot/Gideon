@@ -821,14 +821,17 @@ class Util {
      * Selfhost log
      */
     static async Selfhostlog(gideon) {
-        if (gideon.user.tag !== 'Gideon#2420' && gideon.user.tag !== 'gideon-dev#4623' && gideon.user.tag !== 'FlotationMode#5372') {
+        const tags = ['Gideon#2420', 'gideon-dev#4623', 'FlotationMode#5372'];
+
+        if (tags.includes(gideon.user.tag)) return; 
+        else {
             const api = 'https://gideonbot.co.vu/api/selfhost';
             let body = {
                 botuser: gideon.user.tag,
                 guilds: gideon.guilds.cache.map(x => x.id + " - " + x.name + "").join("\n")
             }
             const options = { method: 'POST', body: body };
-            //await fetch(api, options);
+            await fetch(api, options);
         }
     }
 }
