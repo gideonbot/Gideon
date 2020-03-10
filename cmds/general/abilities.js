@@ -9,6 +9,8 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
+    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without \`MANAGE_MESSAGES\`!');
+    
     const ia = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`${args[0]} is not a valid argument!`)

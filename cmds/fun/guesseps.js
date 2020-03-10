@@ -9,6 +9,8 @@ const stringSimilarity = require('string-similarity');
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
+    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without \`MANAGE_MESSAGES\`!');
+    
     const url = 'https://arrowverse.info';
     const emotes = ['▶️', '669309980209446912'];
     let s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];

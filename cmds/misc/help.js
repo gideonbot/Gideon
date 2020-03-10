@@ -8,6 +8,8 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
+    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without \`MANAGE_MESSAGES\`!');
+
     const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
 
     if (!args[0]) {
