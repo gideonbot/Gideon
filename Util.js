@@ -258,7 +258,7 @@ class Util {
 
         Util.ABM_Test(message).then(async res => {
             if (res.match) {
-                await message.delete(200);
+                await message.delete({ timeout: 200 });
                 Util.log("ABM triggered by: " + message.author.tag + " (" + res.content + ")");
                 message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-Bitch-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}) });
             }
@@ -293,7 +293,7 @@ class Util {
 
         // eslint-disable-next-line no-useless-escape
         if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
-            await message.delete(200);
+            await message.delete({ timeout: 200 });
             return message.reply('Links are not allowed meanwhile Crossover-Mode is active!');
         }
 
@@ -321,7 +321,7 @@ class Util {
             })});
         }
 
-        message.delete(200);
+        message.delete({ timeout: 200 });
     }
 
     /**
@@ -716,7 +716,7 @@ class Util {
 
         else {
             let tr = await Util.Translate(args.join(' '));
-            await message.delete(200);
+            await message.delete({ timeout: 200 });
             message.channel.send(Util.CreateEmbed(null, {description: `(${tr[1]}) ${tr[0]}`, author: {name: `${message.author.tag} said:`, icon: message.author.avatarURL()}}));
         }
     }

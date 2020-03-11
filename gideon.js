@@ -97,8 +97,8 @@ gideon.on("error", err => {
 });
 
 gideon.on('message', message => {
-    if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
     if (!message || !message.author || message.author.bot || !message.guild) return;
+    if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
     
     if (Util.IBU(message)) return; //check if user is blacklisted, if yes, return
     Util.LBG(message.guild); //check if guild is blacklisted, if yes, leave
