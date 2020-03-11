@@ -770,7 +770,7 @@ class Util {
             else{
                 channels.random().send('This guild is banned by the bot owner!\nNow leaving this guild!');
                 await guild.leave();
-                Util.log(`Left guild \`${id}\` due to it being blacklisted!`);
+                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
             }
         }
         else return;
