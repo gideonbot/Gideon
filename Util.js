@@ -764,7 +764,7 @@ class Util {
             let channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
             if (!channels.size) {
                 await guild.leave();
-                Util.log(`Left guild \`${id}\` due to it being blacklisted!`);
+                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
             }
 
             else{
