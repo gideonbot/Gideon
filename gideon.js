@@ -124,6 +124,20 @@ gideon.on('message', message => {
 gideon.on("guildCreate", guild => {
     Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
     Util.LBG(guild); //check if guild is blacklisted, if yes, leave
+
+    try {
+        let textchannels = guild.channels.cache.filter(c=> c.type == "text");
+        let invitechannels = textchannels.filter(c=> c.permissionsFor(guild.me).has('CREATE_INSTANT_INVITE'));
+        if (!invitechannels.size) return message.reply('no channels found to create instant invite!');
+
+        invitechannels.random().createInvite().then(invite=> Util.log('Found Invite:\n' + 'https://discord.gg/' + invite.code));
+    }
+    
+    catch (ex) {
+        console.log("Caught an exception while creating invites!: " + ex);
+        Util.log("Caught an exception while creating invites!: " + ex);
+        return message.channel.send(er);
+    }      
 });
 
 gideon.on("guildDelete", guild => {
