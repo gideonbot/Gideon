@@ -759,8 +759,19 @@ class Util {
         let blacklist = JSON.parse(fs.readFileSync(path));
         if (blacklist.map(x => x.guildid).includes(guild.id)) {
             const id = guild.id;
-            await guild.leave();
-            Util.log(`Left guild \`${id}\` due to it being blacklisted!`);
+
+            let textchannels = guild.channels.cache.filter(c=> c.type == "text");
+            let channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
+            if (!channels.size) {
+                await guild.leave();
+                Util.log(`Left guild \`${id}\` due to it being blacklisted!`);
+            }
+
+            else{
+                channels.random().send('This guild is banned by the bot owner!\nNow leaving this guild!');
+                await guild.leave();
+                Util.log(`Left guild \`${id}\` due to it being blacklisted!`);
+            }
         }
         else return;
     }
