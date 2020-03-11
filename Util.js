@@ -372,7 +372,7 @@ class Util {
             message.channel.send(Util.CreateEmbed(null, {image: ctm}));
         }
 
-        const img = 'https://i.imgur.com/XffX82O.jpg';
+        const img = 'https://media.discordapp.net/attachments/669243069878501385/687048353296678943/es7-promise-async-await-es6-promise-es5-callback-hell-async-27790051.png';
         if (message.content.match(/(?:callback)/i)) {
             message.channel.send(Util.CreateEmbed(null, {image: img}));
         }
