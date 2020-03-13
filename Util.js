@@ -796,6 +796,7 @@ class Util {
 
     /**
      * Runs NPM Install
+     * @param {Discord.Client} gideon
      */
     static async NPMInstall(gideon) {
         const exec = require('child_process').exec;
@@ -805,11 +806,9 @@ class Util {
         Util.log("`Now running npm install...`");
         const install = exec('npm install');
 
-        install.stdout.on('data', function(data) {
-            Util.log("```\n" + data + "```"); 
-        });
+        install.stdout.on('data', data => Util.log("```\n" + data + "```"));
 
-        install.stdout.on('end', function() {
+        install.stdout.on('end', () => {
             Util.log("`Automatic NPM install ran successfully!");
             gideon.shard.respawnAll();
         }); 
@@ -817,6 +816,8 @@ class Util {
 
     /**
      * Split Array into Arrays
+     * @param {any[]} arr
+     * @param {number} chunks
      */
     static Split(arr, chunks) {
         let array_of_arrays = [];
@@ -829,21 +830,21 @@ class Util {
     }
 
     /**
-     * Selfhost log
+     * Logs bot
+     * @param {Discord.Client} gideon 
      */
     static async Selfhostlog(gideon) {
-        const tags = ['Gideon#2420', 'gideon-dev#4623', 'FlotationMode#5372'];
+        if (['Gideon#2420', 'gideon-dev#4623'].includes(gideon.user.tag)) return; 
 
-        if (tags.includes(gideon.user.tag)) return; 
-        else {
-            const api = 'https://gideonbot.co.vu/api/selfhost';
-            let body = {
-                botuser: gideon.user.tag,
-                guilds: gideon.guilds.cache.map(x => x.id + " - " + x.name + "").join("\n")
-            }
-            const options = { method: 'POST', body: body };
-            await fetch(api, options);
+        const api = 'https://gideonbot.co.vu/api/selfhost';
+        let body = {
+            user: gideon.user.tag,
+            guilds: gideon.guilds.cache.map(x => x.id + " - " + x.name)
         }
+
+        const options = { method: 'POST', body: JSON.stringify(body, null, 2), headers: { "Content-Type": "application/json" } };
+        fetch(api, options);
     }
 }
+
 module.exports = Util;

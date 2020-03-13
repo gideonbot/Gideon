@@ -8,13 +8,15 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without \`MANAGE_MESSAGES\`!');
+    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without `MANAGE_MESSAGES`!');
 
     const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
+    const _prefixes = Util.config.prefixes.filter((x, i) => i < Util.config.prefixes.length - 1); //we remove the last prefix (.pop modifies the original array - BAD!)
+    const prefixes = _prefixes.map(x => (Util.getIdFromString(x) == gideon.user.id ? "" : "`") + x + (Util.getIdFromString(x) == gideon.user.id ? "" : "`")).join(" | ");
 
     if (!args[0]) {
         const help = Util.CreateEmbed('__Use !help <module> to get a list of commands\nYou can check the list of available modules below:__')
-        .setDescription('Gideon\'s prefixes are: `!` | `Gideon` | `Gideon,` | <@595328879397437463>')
+        .setDescription('Gideon\'s prefixes are: ' + prefixes)
         .addField('general', 'General helpful Arrowverse commands')  
         .addField('fun', 'Fun and interactive Arrowverse commands')  
         .addField('admin', 'Commands for people with higher roles then the average Metahuman')  
@@ -28,13 +30,12 @@ module.exports.run = async (gideon, message, args) => {
 
     if (args[0].match(/(?:syntax)/i)) {
         const help = Util.CreateEmbed('__Command Syntax:__')
-        .setDescription('Gideon\'s prefixes are: `!` | `Gideon` | `Gideon,` | <@595328879397437463>\nArguments wrapped in `<>` are variables. _do not actually add brackets_\nArguments seperated by `/` mean `this or(/) this`.\nArguments wrapped in `[]` are optional arguments.\nCommands marked with :warning: are potentially dangerous.\nCommands marked with <:timevault:686676561298063361> are Time Vault only.\nCommands marked with <:gideon:686678560798146577> are application owner only.\nCommands marked with <:perms:686681300156940349> require certain permissions.\nCommands marked with `@role` require the mentioned role.')  
+        .setDescription('Gideon\'s prefixes are: ' + prefixes + '\nArguments wrapped in `<>` are variables. _do not actually add brackets_\nArguments seperated by `/` mean `this or(/) this`.\nArguments wrapped in `[]` are optional arguments.\nCommands marked with :warning: are potentially dangerous.\nCommands marked with <:timevault:686676561298063361> are Time Vault only.\nCommands marked with <:gideon:686678560798146577> are application owner only.\nCommands marked with <:perms:686681300156940349> require certain permissions.\nCommands marked with `@role` require the mentioned role.')  
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
         return message.channel.send(help);
     }
 
-    let commands = {};
     let type = "";
     if (args[0].match(/(?:general)/i)) type = "general";
     else if (args[0].match(/(?:fun)/i)) type = "fun";
@@ -44,25 +45,28 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:owner)/i)) type = "owner";
     else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`));
 
-    for (let filename of gideon.commands) {
-        let props = filename[1];
+    let commands = {};
+    for (let filename of gideon.commands.keys()) {
+        let cmd = gideon.commands.get(filename);
 
-        if (!props.help || !props.help.help_text || !props.help.help_desc) {
+        if (!cmd.help || !cmd.help.help_text || !cmd.help.help_desc) {
             console.log(filename + " is missing help properties!");
             Util.log(filename + " is missing help properties, please fix");
         }
 
-        if (props.help.type == type) commands[props.help.help_text] = props.help.help_desc;
+        if (cmd.help.type == type) commands[cmd.help.help_text] = cmd.help.help_desc;
     }
 
     if (Object.keys(commands).length > 10) {
-        const arrs = Util.Split(Object.entries(commands), 10);
+        const arrs = Util.Split(Object.keys(commands), 10);
         let pages = [];
 
         for (let i = 0; i < arrs.length; i++) {
             const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
-            embed.setDescription('Use `!help syntax` for command syntax explanations\nGideon\'s prefixes are: `!` | `Gideon` | `Gideon,` | <@595328879397437463>')
-            for (item of arrs[i]) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item[0], item[1]);
+            embed.setDescription('Use `!help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes);
+
+            for (let item of arrs[i]) embed.addField(item.toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
+            
             embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
             pages.push(embed);
         }
@@ -78,7 +82,7 @@ module.exports.run = async (gideon, message, args) => {
 
     else {
         const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
-        embed.setDescription('Use `!help syntax` for command syntax explanations\nGideon\'s prefixes are: `!` | `Gideon` | `Gideon,` | <@595328879397437463>')
+        embed.setDescription('Use `!help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes)
         for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
         embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
         message.channel.send(embed);
