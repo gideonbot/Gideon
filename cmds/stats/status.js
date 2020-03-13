@@ -28,7 +28,7 @@ module.exports.run = async (gideon, message) => {
 
 module.exports.help = {
     name: ['status', 'api'],
-    type: "misc",
+    type: "stats",
     help_text: "status",
     help_desc: "Checks Gideon's API status"
 }

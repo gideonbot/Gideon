@@ -11,7 +11,6 @@ module.exports.run = async (gideon, message, args) => {
     if (!message.member.roles.cache.has('621399916283035658')) return message.channel.send('You don\'t have the required permissions to use this command!');
     const as = Util.CreateEmbed("You must supply valid input!");
     if (!args[0]) return message.channel.send(as);
-    if (args[1]) return message.channel.send(as);
 
     if (args[0].match(/(?:install)/i)) {
         message.reply('running `npm install` please check <#622415301144870932> for console output!')
@@ -26,6 +25,7 @@ module.exports.run = async (gideon, message, args) => {
             gideon.shard.respawnAll();
         });
     }
+    
     if (args[0].match(/(?:update)/i)) {
         message.reply('running `npm update` please check <#622415301144870932> for console output!')
         const update = exec('npm update');
@@ -39,12 +39,26 @@ module.exports.run = async (gideon, message, args) => {
             gideon.shard.respawnAll();
         });
     }
+
+    if (args[0].match(/(?:audit)/i) && args[1].match(/(?:fix)/i)) {
+        message.reply('running `npm audit fix` please check <#622415301144870932> for console output!')
+        const update = exec('npm audit fix');
+
+        update.stdout.on('data', function(data) {
+            Util.log("```\n" + data + "```"); 
+        });
+
+        update.stdout.on('end', async function() {
+            await message.reply('`npm audit fix` ran succesfully!\nNow respawning all shards... :white_check_mark:') 
+            gideon.shard.respawnAll();
+        });
+    }
     else return;
 }
 
 module.exports.help = {
     name: "npm",
     type: "admin",
-    help_text: "npm install/update",
+    help_text: "npm install/update `@Gideon Dev Team`",
     help_desc: "Runs npm command"
 }

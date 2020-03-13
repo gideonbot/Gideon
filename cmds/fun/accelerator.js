@@ -7,6 +7,8 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message) => {
+    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without \`MANAGE_MESSAGES\`!');
+    
     try {
         let sent = await message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...");
         await Util.delay(1000);

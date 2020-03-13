@@ -1,5 +1,14 @@
 const Discord = require("discord.js");
 const Util = require("../../Util");
+const { Readable } = require('stream');
+const SILENCE_FRAME = Buffer.from([0xF8, 0xFF, 0xFE]);
+
+class Silence extends Readable {
+    _read() {
+        this.push(SILENCE_FRAME);
+        this.destroy();
+    }
+}
 
 /**
  * @param {Discord.Client} gideon
@@ -7,6 +16,10 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
+/*
+    if (!message.channel.permissionsFor(message.guild.me).has('CONNECT')) return message.reply('sorry can\'t do that without \`CONNECT\`!');
+    if (!message.channel.permissionsFor(message.guild.me).has('SPEAK')) return message.reply('sorry can\'t do that without \`SPEAK\`!');
+*/
     let command = message.content.toLowerCase().split(' ')[0];
     let awake = false;
 
@@ -55,6 +68,7 @@ module.exports.run = async (gideon, message, args) => {
         let vcname = message.member.voice.channel.name;
         message.reply(`now joining voice channel: \`${vcname}\`!`);
         const connection = await message.member.voice.channel.join();
+        connection.play(new Silence(), { type: 'opus' }); //enable voice receive by sending silence buffer
 
         await message.channel.send(Util.GetUserTag(message.author), { embed: voicehelp });
 

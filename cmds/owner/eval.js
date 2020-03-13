@@ -41,7 +41,7 @@ module.exports.run = async (gideon, message, args) => {
 
 module.exports.help = {
     name: 'eval',
-    type: 'admin',
-    help_text: 'eval <code>',
-    help_desc: 'Evaluates provided code (:warning: dangerous)'
+    type: 'owner',
+    help_text: 'eval <code> <:gideon:686678560798146577>:warning:',
+    help_desc: 'Evaluates provided code'
 }

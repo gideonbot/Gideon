@@ -258,7 +258,7 @@ class Util {
 
         Util.ABM_Test(message).then(async res => {
             if (res.match) {
-                await message.delete(200);
+                await message.delete({ timeout: 200 });
                 Util.log("ABM triggered by: " + message.author.tag + " (" + res.content + ")");
                 message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-Bitch-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}) });
             }
@@ -293,7 +293,7 @@ class Util {
 
         // eslint-disable-next-line no-useless-escape
         if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
-            await message.delete(200);
+            await message.delete({ timeout: 200 });
             return message.reply('Links are not allowed meanwhile Crossover-Mode is active!');
         }
 
@@ -321,7 +321,7 @@ class Util {
             })});
         }
 
-        message.delete(200);
+        message.delete({ timeout: 200 });
     }
 
     /**
@@ -353,7 +353,7 @@ class Util {
     }
 
     /**
-     * some stuff
+     * Easter eggs
      * @param {Discord.Message} message 
      */
     static async CSD(message) {
@@ -372,9 +372,14 @@ class Util {
             message.channel.send(Util.CreateEmbed(null, {image: ctm}));
         }
 
-        const img = 'https://i.imgur.com/XffX82O.jpg';
+        const img = 'https://media.discordapp.net/attachments/669243069878501385/687048353296678943/es7-promise-async-await-es6-promise-es5-callback-hell-async-27790051.png';
         if (message.content.match(/(?:callback)/i)) {
             message.channel.send(Util.CreateEmbed(null, {image: img}));
+        }
+
+        const vid2 = 'https://cdn.discordapp.com/attachments/679864620864765983/686589432501239899/Hi_Im_Richard_Castle.mp4';
+        if (message.content.match(/(?:castle)/i)) {
+            message.channel.send(vid2);
         }
     }
 
@@ -465,12 +470,14 @@ class Util {
     static CreateEmbed(title, options) {
         if (!options) options = {};
         
+        const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
+
         const embed = new Discord.MessageEmbed()
         .setColor('#2791D3')
         .setFooter(Util.config.footer, Util.config.avatar)
 
         if (title && typeof(title) == "string") embed.setTitle(title);
-        if (options.description && typeof(options.description) == "string") embed.setDescription(options.description);
+        if (options.description && typeof(options.description) == "string") embed.setDescription(options.description + `\n${logos}`);
         if (options.color) embed.setColor(options.color);
         if (options.image && typeof(options.image) == "string") embed.setImage(options.image);
         if (options.url && typeof(options.url)) embed.setURL(options.url);
@@ -709,7 +716,7 @@ class Util {
 
         else {
             let tr = await Util.Translate(args.join(' '));
-            await message.delete(200);
+            await message.delete({ timeout: 200 });
             message.channel.send(Util.CreateEmbed(null, {description: `(${tr[1]}) ${tr[0]}`, author: {name: `${message.author.tag} said:`, icon: message.author.avatarURL()}}));
         }
     }
@@ -752,8 +759,19 @@ class Util {
         let blacklist = JSON.parse(fs.readFileSync(path));
         if (blacklist.map(x => x.guildid).includes(guild.id)) {
             const id = guild.id;
-            await guild.leave();
-            Util.log(`Left guild \`${id}\` due to it being blacklisted!`);
+
+            let textchannels = guild.channels.cache.filter(c=> c.type == "text");
+            let channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
+            if (!channels.size) {
+                await guild.leave();
+                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
+            }
+
+            else{
+                channels.random().send('This guild is banned by the bot owner!\nNow leaving this guild!');
+                await guild.leave();
+                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
+            }
         }
         else return;
     }
@@ -777,32 +795,24 @@ class Util {
     }
 
     /**
-     * Runs NPM Install if package.json has been modified
+     * Runs NPM Install
      */
     static async NPMInstall(gideon) {
-        const gitAffectedFiles = require('git-affected-files');
         const exec = require('child_process').exec;
-        const files = await gitAffectedFiles().catch(ex => console.log(ex));
 
         if (gideon.user.tag !== 'Gideon#2420') return;
         
-        else {
-            if (!files.map(x => x.filename).includes('package.json')) return;
-            else {
-                Util.log("Detected changes in `package.json`, now running `npm install`...");
+        Util.log("`Now running npm install...`");
+        const install = exec('npm install');
 
-                const install = exec('npm install');
+        install.stdout.on('data', function(data) {
+            Util.log("```\n" + data + "```"); 
+        });
 
-                install.stdout.on('data', function(data) {
-                    Util.log("```\n" + data + "```"); 
-                });
-
-                install.stdout.on('end', function() {
-                    Util.log("Automatic NPM install ran successfully!\nNow respawning all shards... :white_check_mark:");
-                    gideon.shard.respawnAll();
-                });
-            }
-        }
+        install.stdout.on('end', function() {
+            Util.log("`Automatic NPM install ran successfully!");
+            gideon.shard.respawnAll();
+        }); 
     }
 
     /**
@@ -822,14 +832,17 @@ class Util {
      * Selfhost log
      */
     static async Selfhostlog(gideon) {
-        if (gideon.user.tag !== 'Gideon#2420' && gideon.user.tag !== 'gideon-dev#4623' && gideon.user.tag !== 'FlotationMode#5372') {
+        const tags = ['Gideon#2420', 'gideon-dev#4623', 'FlotationMode#5372'];
+
+        if (tags.includes(gideon.user.tag)) return; 
+        else {
             const api = 'https://gideonbot.co.vu/api/selfhost';
             let body = {
                 botuser: gideon.user.tag,
                 guilds: gideon.guilds.cache.map(x => x.id + " - " + x.name + "").join("\n")
             }
             const options = { method: 'POST', body: body };
-            //await fetch(api, options);
+            await fetch(api, options);
         }
     }
 }

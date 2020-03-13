@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('pretty-error').start().withoutColors();
 const Discord = require('discord.js');
 const gideon = new Discord.Client({ ws: { intents: Discord.Intents.ALL } });
 const SQLite = require("better-sqlite3");
@@ -26,7 +27,7 @@ setTimeout(() => {
 }, 60e3);
 
 gideon.once('ready', async () => {
-    if (!process.env.CI) await Util.NPMInstall(gideon);//check for new modules and install them
+    //if (!process.env.CI) await Util.NPMInstall(gideon);//install missing npm packages
     LoadCommands();
     InitDB();
     Util.Selfhostlog(gideon);
@@ -72,7 +73,7 @@ gideon.once('ready', async () => {
 
 process.on("uncaughtException", err => {
     console.log(err);
-    Util.log("Uncaught Exception: " + err.stack);
+    Util.log("Uncaught Exception: " + `\`\`\`\n${err.stack}\n\`\`\``);
 
     if (process.env.CI) {
         console.log("Exception detected, marking as failed");
@@ -82,7 +83,7 @@ process.on("uncaughtException", err => {
 
 process.on("unhandledRejection", err => {
     console.log(err);
-    Util.log("Unhandled Rejection: " + err.stack + "\n\nJSON: " + JSON.stringify(err, null, 2));
+    Util.log("Unhandled Rejection: " + `\`\`\`\n${err.stack + "\n\nJSON: " + JSON.stringify(err, null, 2)}\n\`\`\``);
 
     if (process.env.CI) {
         console.log("Unhandled Rejection detected, marking as failed");
@@ -92,11 +93,12 @@ process.on("unhandledRejection", err => {
 
 gideon.on("error", err => {
     console.log(err);
-    Util.log("Bot error: " + err.stack);
+    Util.log("Bot error: " + `\`\`\`\n${err.stack}\n\`\`\``);
 });
 
 gideon.on('message', message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
+    if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
     
     if (Util.IBU(message)) return; //check if user is blacklisted, if yes, return
     Util.LBG(message.guild); //check if guild is blacklisted, if yes, leave
@@ -122,6 +124,29 @@ gideon.on('message', message => {
 gideon.on("guildCreate", guild => {
     Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
     Util.LBG(guild); //check if guild is blacklisted, if yes, leave
+
+    try {
+        let textchannels = guild.channels.cache.filter(c=> c.type == "text");
+        let invitechannels = textchannels.filter(c=> c.permissionsFor(guild.me).has('CREATE_INSTANT_INVITE'));
+        if (!invitechannels.size) return message.reply('no channels found to create instant invite!');
+
+        invitechannels.random().createInvite().then(invite=> Util.log('Found Invite:\n' + 'https://discord.gg/' + invite.code));
+    }
+    
+    catch (ex) {
+        console.log("Caught an exception while creating invites!: " + ex);
+        Util.log("Caught an exception while creating invites!: " + ex);
+        return message.channel.send(er);
+    }      
+});
+
+gideon.on("guildDelete", guild => {
+    Util.log("Left guild:\n" + guild.id + ' - `' + guild.name + '`');
+});
+
+gideon.on("shardReady", (id, unavailableGuilds) => {
+    if (!unavailableGuilds) Util.log(`Shard \`${id}\` is connected!`);
+    else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to network outage:\n${unavailableGuilds.map(x => x).join('\n')}`);
 });
 
 gideon.on("voiceStateUpdate", (oldState, newState) => {

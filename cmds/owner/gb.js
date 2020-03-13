@@ -21,36 +21,36 @@ module.exports.run = async (gideon, message, args) => {
     if (noid && !args[0].length >= 18) return message.channel.send(as);
 
     try {
-        const path = './data/JSON/userblacklist.json';
+        const path = './data/JSON/guildblacklist.json';
 
         if (!fs.existsSync(path)) {
             fs.writeFileSync(path, JSON.stringify([]));
         }
 
         let blacklist = JSON.parse(fs.readFileSync(path));
-        if (blacklist.map(x => x.guildid).includes(args[0])) return message.reply('you have already blacklisted this user!');
+        if (blacklist.map(x => x.guildid).includes(args[0])) return message.reply('you have already blacklisted this guild!');
 
         let obj = {
-            userid: args[0]
+            guildid: args[0]
         };
         
         blacklist.push(obj);
         
         fs.writeFileSync(path, JSON.stringify(blacklist, null, 2));
 
-        message.reply(`user \`${args[0]}\` has been blacklisted!`);
+        message.reply(`guild \`${args[0]}\` has been blacklisted!`);
     }
 
     catch (ex) {
-        console.log("Caught an exception while running ub.js: " + ex);
-        Util.log("Caught an exception while running ub.js: " + ex);
+        console.log("Caught an exception while running gb.js: " + ex);
+        Util.log("Caught an exception while running gb.js: " + ex);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 }
 
 module.exports.help = {
-    name: ["ub", "ublacklist", "bu"],
-    type: "admin",
-    help_text: "ub <userid>",
-    help_desc: "Blacklists a user"
+    name: ["gb", "gblacklist", "bl"],
+    type: "owner",
+    help_text: "gb <guildid> <:gideon:686678560798146577>",
+    help_desc: "Blacklists a guild"
 }
