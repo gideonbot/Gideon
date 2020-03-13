@@ -34,6 +34,8 @@ gideon.once('ready', async () => {
 
     console.log('Ready!');
 
+    Util.config.prefixes.push(`<@!${gideon.user.id}>`, `<@${gideon.user.id}>`);
+
     async function status() {
         let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
         let mbc = await gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? 0 : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(x => !x.user.bot).size').catch(ex => console.log(ex));
@@ -128,7 +130,7 @@ gideon.on("guildCreate", guild => {
     try {
         let textchannels = guild.channels.cache.filter(c=> c.type == "text");
         let invitechannels = textchannels.filter(c=> c.permissionsFor(guild.me).has('CREATE_INSTANT_INVITE'));
-        if (!invitechannels.size) return message.reply('no channels found to create instant invite!');
+        if (!invitechannels.size) return;
 
         invitechannels.random().createInvite().then(invite=> Util.log('Found Invite:\n' + 'https://discord.gg/' + invite.code));
     }
@@ -136,7 +138,6 @@ gideon.on("guildCreate", guild => {
     catch (ex) {
         console.log("Caught an exception while creating invites!: " + ex);
         Util.log("Caught an exception while creating invites!: " + ex);
-        return message.channel.send(er);
     }      
 });
 

@@ -7,7 +7,7 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message) => {
-    const url = 'https://discordapp.com/api/oauth2/authorize?client_id=595328879397437463&permissions=37088321&scope=bot';
+    const url = 'https://discordapp.com/api/oauth2/authorize?client_id=' + gideon.user.id + '&permissions=37088321&scope=bot';
 
     message.channel.send(Util.CreateEmbed('Gideon - Oauth2 Invite', {
         description: 'Click the link below to add me to your server!',

@@ -9,7 +9,7 @@ const Util = require("../../Util");
 module.exports.run = async (gideon, message) => {
     const role = message.guild.me.roles.cache.first().toString();
     message.channel.send(Util.CreateEmbed('Discord mentions syntax:', {
-    description: '`<@userid>` => <@595328879397437463>\n`<@&roleid>` => ' + role + '\n`<:emojiname:emojiid>` => <:timevault:686676561298063361>\n`<a:emojiname:emojiid>` => <a:siren:669518972407775265>',
+        description: '`<@userid>` => <@595328879397437463>\n`<@&roleid>` => ' + role + '\n`<:emojiname:emojiid>` => <:timevault:686676561298063361>\n`<a:emojiname:emojiid>` => <a:siren:669518972407775265>',
     }));       
 }
 
