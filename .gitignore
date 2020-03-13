@@ -1,6 +1,8 @@
 .env
 .vscode
 node_modules/
+/data/JSON/guildblacklist.json
+/data/JSON/userblacklist.json
 /data/JSON/tzdb.json
 /data/SQL/gideon.sqlite
 /data/SQL/gideon.sqlite-shm
