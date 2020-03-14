@@ -151,7 +151,8 @@ gideon.on("shardReady", (id, unavailableGuilds) => {
     else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to network outage:\n${unavailableGuilds.map(x => x).join('\n')}`);
 });
 
-gideon.on("guildMemberAdd", member => {
+gideon.on("guildMemberAdd", async member => {
+    await Util.delay(200);// wait 200ms for altdentifier to apply join role - or not.
     if (member.guild.id !== '595318490240385037') return;
     if (!member.roles.cache.has('596076332836978698')) return;
     const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
