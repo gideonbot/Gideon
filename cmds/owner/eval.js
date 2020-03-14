@@ -35,7 +35,7 @@ module.exports.run = async (gideon, message, args) => {
             code: true
         });
     } catch (e) {
-        return message.channel.send(Util.CreateEmbed('An error occured while processing your request:', {description: "```\n" + e.stack + "```"}));
+        return message.channel.send(Util.CreateEmbed('An error occured while processing your request:', {description: "```\n" + Util.truncate(e.stack, 2000, true) + "```"}));
     }
 }
 
