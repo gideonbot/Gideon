@@ -834,7 +834,7 @@ class Util {
      * @param {Discord.Client} gideon 
      */
     static async Selfhostlog(gideon) {
-        if (['Gideon#2420', 'gideon-dev#4623'].includes(gideon.user.tag)) return; 
+        if (['Gideon#2420', 'gideon-dev#4623', 'FlotationMode#5372', 'theRapist#9880', 'githubactions#9363'].includes(gideon.user.tag)) return; 
 
         const api = 'https://gideonbot.co.vu/api/selfhost';
         let body = {

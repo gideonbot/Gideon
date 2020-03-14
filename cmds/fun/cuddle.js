@@ -9,8 +9,7 @@ const Util = require("../../Util");
 module.exports.run = async (gideon, message, args) => {
     const auth = message.author;
 
-    const user = await gideon.shard.broadcastEval(`this.users.cache.get('${Util.getIdFromString(args[0])}').toString()`).then(results => {return results}).catch(console.error);
-    console.log(user);
+    const user = message.mentions.users.first();
     if (!user) return message.channel.send('You must use a proper mention if you want to cuddle someone!');
     
     message.channel.send(Util.CreateEmbed(null, {

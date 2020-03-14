@@ -62,7 +62,7 @@ gideon.once('ready', async () => {
     gideon.fetchApplication().then(app => {
         //When the bot is owned by a team owner id is stored under ownerID, otherwise id
         gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
-    }, failed => console.log("Failed to fetch application: " + failed));
+    }, failed => console.log("Failed to fetch application: " + failed)).catch(ex => console.log(ex));
 
     setTimeout(() => {
         if (process.env.CI) {
@@ -148,6 +148,15 @@ gideon.on("guildDelete", guild => {
 gideon.on("shardReady", (id, unavailableGuilds) => {
     if (!unavailableGuilds) Util.log(`Shard \`${id}\` is connected!`);
     else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to network outage:\n${unavailableGuilds.map(x => x).join('\n')}`);
+});
+
+gideon.on("guildMemberAdd", member => {
+    if (member.guild.id !== '595318490240385037') return;
+    const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
+    const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
+    const welcome = `\`Greatings Earth-Prime-ling\` ${member.user.toString()}\`!\`\n\`Welcome to the Time Vault\`<:timevault:686676561298063361>\`!\`\n\`If you want full server access make sure to read\` <#595935345598529546>\`!\`\n\`Ignoring this will probably get you kicked!\`\n${logos}`;
+    channel.send(welcome);
+    member.send(welcome).catch(ex => console.log(ex));
 });
 
 gideon.on("voiceStateUpdate", (oldState, newState) => {
