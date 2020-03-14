@@ -105,6 +105,7 @@ gideon.on('message', message => {
     if (Util.IBU(message)) return; //check if user is blacklisted, if yes, return
     Util.LBG(message.guild); //check if guild is blacklisted, if yes, leave
     Util.ABM(message); //apply content filter
+    Util.RulesCheck(message); //check if member read the guilds rules
     Util.CVM(message, gideon); //apply crossover mode if enabled
     Util.CSD(message); //eastereggs
     Util.TRMode(message, gideon); //apply trmode if enabled
@@ -152,6 +153,7 @@ gideon.on("shardReady", (id, unavailableGuilds) => {
 
 gideon.on("guildMemberAdd", member => {
     if (member.guild.id !== '595318490240385037') return;
+    if (!member.roles.cache.has('596076332836978698')) return;
     const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
     const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
     const welcome = `\`Greatings Earth-Prime-ling\` ${member.user.toString()}\`!\`\n\`Welcome to the Time Vault\`<:timevault:686676561298063361>\`!\`\n\`If you want full server access make sure to read\` <#595935345598529546>\`!\`\n\`Ignoring this will probably get you kicked!\`\n${logos}`;

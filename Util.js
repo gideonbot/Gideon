@@ -845,6 +845,23 @@ class Util {
         const options = { method: 'POST', body: JSON.stringify(body, null, 2), headers: { "Content-Type": "application/json" } };
         fetch(api, options);
     }
+
+    /**
+     * Rules check
+     * @param {Discord.Message} message 
+     */
+    static async RulesCheck(message) {
+        if (message.channel.id !== '595934999824302091') return;
+        if (message.member.roles.cache.has('688430418466177082')) return;
+
+        if (message.content.match(/(?:readdemrulez)/i)) {
+            await message.delete({ timeout: 200 });
+            const role = message.guild.roles.cache.get('688430418466177082');
+            const member = message.member;
+            await member.roles.add(role);
+            await message.reply(`\`you have been given the\` ${role} \`role and gained access to\` <#595935317631172608>\`!\``);
+        }
+    }
 }
 
 module.exports = Util;
