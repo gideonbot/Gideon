@@ -9,9 +9,6 @@ const moment = require("moment-timezone");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
-    if (!message.member.roles.cache.has('657198785289650177')) return message.channel.send('You don\'t have the required permissions to use this command!');
-
     const path = './data/JSON/tzdb.json';
 
     if (!fs.existsSync(path)) {
@@ -53,34 +50,9 @@ module.exports.run = async (gideon, message, args) => {
         return;
     }
 
-    else if (!args[0]) {
-        try {
-            let members = JSON.parse(fs.readFileSync(path));
-            
-            const embed = Util.CreateEmbed('ITSF-Team Timezones:');
-
-            for (let obj of members) {
-                let date = new Date();
-                
-                let formattedTime = date.toLocaleTimeString('en-US', {timeZone: obj.timezone});
-                let formattedDay = date.toLocaleDateString('en-US', {timeZone: obj.timezone});
-
-                embed.addField(`Member: \`${obj.username}\` Timezone: \`${obj.timezone}\``,`Current Local Time: \`${formattedDay} ${formattedTime}\``);
-            }
-
-            message.channel.send(embed);
-        }
-
-        catch (ex) {
-            console.log("Caught an exception while running tzone.js: " + ex);
-            Util.log("Caught an exception while running tzone.js: " + ex);
-            return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
-        }
-    }
-
     else if (args[0] && !args[1]) {
         try {
-            const user = gideon.users.cache.get(Util.getIdFromString(args[0]));
+            const user = message.mentions.users.first();
             if (!user) return message.channel.send(Util.CreateEmbed('You must use a proper mention if you want to check someone\'s timezone!'));
 
             let members = JSON.parse(fs.readFileSync(path));
@@ -109,5 +81,5 @@ module.exports.help = {
     name: ["tz", "tzones", "timezone", "timezones"],
     type: "misc",
     help_text: "tz [<register>/<user>]",
-    help_desc: "Displays the ITSF timezones"
+    help_desc: "Displays users timezones"
 }
