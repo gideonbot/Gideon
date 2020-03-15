@@ -7,10 +7,10 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message) => {
-    if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
-    if (!message.member.roles.cache.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
+    if (!message.member.hasPermission('MANAGE_ROLES')) return message.reply('You don\'t have the required permissions to use this command!');
+
     else {
-        let check = message.guild.roles.cache.get('596402530989375539');
+        let check = message.guild.roles.cache.random();
 
         if (check.mentionable == false) {
             try {
@@ -43,6 +43,6 @@ module.exports.run = async (gideon, message) => {
 module.exports.help = {
     name: "trm",
     type: "admin",
-    help_text: "trm <:timevault:686676561298063361>`@News Team`",
+    help_text: "trm <:perms:686681300156940349>",
     help_desc: "Toggles server role mentionability"
 }
