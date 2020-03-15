@@ -28,17 +28,30 @@ module.exports.run = async (gideon, message, args) => {
         }
 
         let blacklist = JSON.parse(fs.readFileSync(path));
-        if (blacklist.map(x => x.guildid).includes(args[0])) return message.reply('you have already blacklisted this guild!');
 
-        let obj = {
-            guildid: args[0]
-        };
-        
-        blacklist.push(obj);
-        
-        fs.writeFileSync(path, JSON.stringify(blacklist, null, 2));
+        let command = message.content.toLowerCase().split(' ')[0];
 
-        message.reply(`guild \`${args[0]}\` has been blacklisted!`);
+        if (command.endsWith('rm')) {
+            let pos = blacklist.indexOf(args[0]);
+            blacklist.splice(pos, 1); 
+            return message.reply(`guild \`${args[0]}\` has been un-blacklisted!`);                                        
+        }
+
+        else {
+            if (blacklist.map(x => x.guildid).includes(args[0])) return message.reply('you have already blacklisted this guild!');
+
+            let obj = {
+                guildid: args[0]
+            };
+            
+            blacklist.push(obj);
+            
+            fs.writeFileSync(path, JSON.stringify(blacklist, null, 2));
+
+            message.reply(`guild \`${args[0]}\` has been blacklisted!`);
+        }
+
+        
     }
 
     catch (ex) {
@@ -49,7 +62,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["gb", "gblacklist", "bl"],
+    name: ["gb", "gblacklist", "gbrm"],
     type: "owner",
     help_text: "gb <guildid> <:gideon:686678560798146577>",
     help_desc: "Blacklists a guild"
