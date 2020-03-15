@@ -381,6 +381,11 @@ class Util {
         if (message.content.match(/(?:castle)/i)) {
             message.channel.send(vid2);
         }
+
+        const train = 'https://cdn.discordapp.com/attachments/679864620864765983/688677813934620725/Gary_the_unspeakable_train-abomination.mp4';
+        if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) {
+            message.channel.send(train);
+        }
     }
 
     /**
