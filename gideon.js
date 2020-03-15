@@ -242,6 +242,21 @@ function InitDB() {
         sql.pragma("journal_mode = wal");
     }
 
+    const gbldb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'guildblacklist';").get();
+    if (!cvmdb['count(*)']) {
+        sql.prepare("CREATE TABLE guildblacklist (guild TEXT PRIMARY KEY, guildval BIT);").run();
+        sql.prepare("CREATE UNIQUE INDEX idx_gbl_id ON guildblacklist (guild);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
+    }
+    const ubldb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'userblacklist';").get();
+    if (!cvmdb['count(*)']) {
+        sql.prepare("CREATE TABLE userblacklist (user TEXT PRIMARY KEY, userval BIT);").run();
+        sql.prepare("CREATE UNIQUE INDEX idx_ubl_id ON userblacklist (user);").run();
+        sql.pragma("synchronous = 1");
+        sql.pragma("journal_mode = wal");
+    }
+
     gideon.getScore = sql.prepare("SELECT * FROM scores WHERE id = ?");
     gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);");
     gideon.getTop10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;");
@@ -251,4 +266,10 @@ function InitDB() {
 
     gideon.getCVM = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
     gideon.setCVM = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@guild, @cvmval);");
+
+    gideon.getGBL = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
+    gideon.setGBL = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@guild, @guildval);");
+
+    gideon.getUBL = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
+    gideon.setUBL = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@user, @userval);");
 }
