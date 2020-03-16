@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message, args) => {
         let ub = gideon.getUBL.get(args[0]);
         if (!ub) {
             ub = {
-                guild: args[0],
+                user: args[0],
                 userval: 0,
             }
         }
