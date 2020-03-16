@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const config = require("./data/JSON/config.json");
+const SQL = require('./Util/SQL')
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -31,6 +32,10 @@ class Util {
 
     static get config() {
         return config;
+    }
+
+    static get SQL() {
+        return SQL;
     }
 
     /**
