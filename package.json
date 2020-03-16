@@ -41,7 +41,7 @@
     "select-random-file": "^1.1.0",
     "string-similarity": "^4.0.1",
     "systeminformation": "^4.23.0",
-    "torrent-search-api": "^2.0.10",
+    "torrent-search-api": "^2.1.1",
     "turndown": "^6.0.0"
   }
 }
