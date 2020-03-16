@@ -34,7 +34,7 @@ module.exports.run = async (gideon, message, args) => {
             message.reply(`guild \`${args[0]}\` has been blacklisted!`);
         }
 
-        else {
+        else if (gb.guildval === 1) {
             gb.guildval = 0;
             gideon.setGBL.run(gb);
             message.reply(`guild \`${args[0]}\` has been un-blacklisted!`); 

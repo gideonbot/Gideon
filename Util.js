@@ -752,33 +752,24 @@ class Util {
      * Leaves a blacklisted guild
      * @param {Discord.Guild} guild 
      */
-    static async LBG(guild) {
-        const fs = require('fs');
+    static async LBG(guild, gideon) {
+        const id = guild.id;
+        let gbl = gideon.getGBL.get(id);
+        if (!gbl) return;
+        if (gbl.guildval === 0) return;
 
-        const path = './data/JSON/guildblacklist.json';
-
-        if (!fs.existsSync(path)) {
-            fs.writeFileSync(path, JSON.stringify([]));
+        let textchannels = guild.channels.cache.filter(c=> c.type == "text");
+        let channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
+        if (!channels.size) {
+            await guild.leave();
+            Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
         }
 
-        let blacklist = JSON.parse(fs.readFileSync(path));
-        if (blacklist.map(x => x.guildid).includes(guild.id)) {
-            const id = guild.id;
-
-            let textchannels = guild.channels.cache.filter(c=> c.type == "text");
-            let channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
-            if (!channels.size) {
-                await guild.leave();
-                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
-            }
-
-            else{
-                channels.random().send('This guild is banned by the bot owner!\nNow leaving this guild!');
-                await guild.leave();
-                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
-            }
+        else{
+            channels.random().send('This guild is banned by the bot owner!\nNow leaving this guild!');
+            await guild.leave();
+            Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
         }
-        else return;
     }
 
     /**
@@ -786,17 +777,10 @@ class Util {
      * @param {Discord.Message} message 
      * @returns {boolean}
      */
-    static IBU(message) {
-        const fs = require('fs');
-
-        const path = './data/JSON/userblacklist.json';
-
-        if (!fs.existsSync(path)) {
-            fs.writeFileSync(path, JSON.stringify([]));
-        }
-
-        let blacklist = JSON.parse(fs.readFileSync(path));
-        return blacklist.map(x => x.userid).includes(message.author.id);
+    static IBU(message, gideon) {
+        let ubl = gideon.getGBL.get(message.author.id);
+        if (!ubl) return;
+        return ubl.userval === 1;
     }
 
     /**

@@ -102,8 +102,8 @@ gideon.on('message', message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
     
-    if (Util.IBU(message)) return; //check if user is blacklisted, if yes, return
-    Util.LBG(message.guild); //check if guild is blacklisted, if yes, leave
+    if (Util.IBU(message, gideon)) return; //check if user is blacklisted, if yes, return
+    Util.LBG(message.guild, gideon); //check if guild is blacklisted, if yes, leave
     Util.ABM(message); //apply content filter
     Util.RulesCheck(message); //check if member read the guilds rules
     Util.CVM(message, gideon); //apply crossover mode if enabled
@@ -126,7 +126,7 @@ gideon.on('message', message => {
 
 gideon.on("guildCreate", guild => {
     Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
-    Util.LBG(guild); //check if guild is blacklisted, if yes, leave
+    Util.LBG(guild, gideon); //check if guild is blacklisted, if yes, leave
 
     try {
         let textchannels = guild.channels.cache.filter(c=> c.type == "text");
@@ -243,14 +243,14 @@ function InitDB() {
     }
 
     const gbldb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'guildblacklist';").get();
-    if (!cvmdb['count(*)']) {
+    if (!gbldb['count(*)']) {
         sql.prepare("CREATE TABLE guildblacklist (guild TEXT PRIMARY KEY, guildval BIT);").run();
         sql.prepare("CREATE UNIQUE INDEX idx_gbl_id ON guildblacklist (guild);").run();
         sql.pragma("synchronous = 1");
         sql.pragma("journal_mode = wal");
     }
     const ubldb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'userblacklist';").get();
-    if (!cvmdb['count(*)']) {
+    if (!ubldb['count(*)']) {
         sql.prepare("CREATE TABLE userblacklist (user TEXT PRIMARY KEY, userval BIT);").run();
         sql.prepare("CREATE UNIQUE INDEX idx_ubl_id ON userblacklist (user);").run();
         sql.pragma("synchronous = 1");
@@ -267,9 +267,9 @@ function InitDB() {
     gideon.getCVM = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
     gideon.setCVM = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@guild, @cvmval);");
 
-    gideon.getGBL = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
-    gideon.setGBL = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@guild, @guildval);");
+    gideon.getGBL = sql.prepare("SELECT * FROM guildblacklist WHERE guild = ?");
+    gideon.setGBL = sql.prepare("INSERT OR REPLACE INTO guildblacklist (guild, guildval) VALUES (@guild, @guildval);");
 
-    gideon.getUBL = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
-    gideon.setUBL = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@user, @userval);");
+    gideon.getUBL = sql.prepare("SELECT * FROM userblacklist WHERE user = ?");
+    gideon.setUBL = sql.prepare("INSERT OR REPLACE INTO userblacklist (user, userval) VALUES (@user, @userval);");
 }
