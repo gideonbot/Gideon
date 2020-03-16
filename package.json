@@ -42,6 +42,6 @@
     "string-similarity": "^4.0.1",
     "systeminformation": "^4.23.0",
     "torrent-search-api": "^2.0.10",
-    "turndown": "^5.0.3"
+    "turndown": "^6.0.0"
   }
 }
