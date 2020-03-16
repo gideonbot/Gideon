@@ -18,7 +18,7 @@
   "dependencies": {
     "@activediscourse/podcast-parser": "^1.0.0",
     "@discordjs/opus": "^0.1.0",
-    "better-sqlite3": "^5.4.3",
+    "better-sqlite3": "^6.0.1",
     "cleverbot-free": "^1.0.3",
     "discord-paginationembed": "^2.0.0-beta.4",
     "discord.js": "github:discordjs/discord.js",
