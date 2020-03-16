@@ -11,10 +11,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Setup Node.js 12
+    - name: Setup Node.js 13
       uses: actions/setup-node@v1
       with:
-        node-version: 12
+        node-version: 13
     
     - name: Install dependencies
       run: npm install
