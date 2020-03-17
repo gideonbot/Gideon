@@ -23,6 +23,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('misc', 'Miscellaneous commands')    
         .addField('stats', 'Useful bot/user/guild statistics')    
         .addField('owner', 'Application owner only commands')    
+        .addField('tags', 'List of promptable tags')    
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
         return message.channel.send(help);
@@ -31,6 +32,31 @@ module.exports.run = async (gideon, message, args) => {
     if (args[0].match(/(?:syntax)/i)) {
         const help = Util.CreateEmbed('__Command Syntax:__')
         .setDescription('Gideon\'s prefixes are: ' + prefixes + '\nArguments wrapped in `<>` are variables. _do not actually add brackets_\nArguments seperated by `/` mean `this or(/) this`.\nArguments wrapped in `[]` are optional arguments.\nCommands marked with :warning: are potentially dangerous.\nCommands marked with <:timevault:686676561298063361> are Time Vault only.\nCommands marked with <:gideon:686678560798146577> are application owner only.\nCommands marked with <:perms:686681300156940349> require certain permissions.\nCommands marked with `@role` require the mentioned role.')  
+        .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
+
+        return message.channel.send(help);
+    }
+
+    if (args[0].match(/(?:tags)/i)) {
+        let cmds = {};
+        let tags = [];
+        for (let filename of gideon.commands.keys()) {
+            let cmd = gideon.commands.get(filename);
+
+            if (!cmd.help || !cmd.help.help_text || !cmd.help.help_desc) {
+                console.log(filename + " is missing help properties!");
+                Util.log(filename + " is missing help properties, please fix");
+            }
+
+
+            if (cmd.help.type == 'tags') cmds[cmd.help.help_text] = cmd.help.help_desc;
+        }
+
+        for (let item in cmds) tags.push(item);
+        const tagnames = tags.map(x => `\`${x}\``).join(' ');
+
+        const help = Util.CreateEmbed('__Available tags:__ <:timevault:686676561298063361>')
+        .setDescription('Gideon\'s prefixes are: ' + prefixes + '\n\n' + tagnames)  
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
         return message.channel.send(help);
@@ -81,6 +107,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     else {
+        console.log(commands);
         const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
         embed.setDescription('Use `!help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes)
         for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
