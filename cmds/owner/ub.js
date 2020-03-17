@@ -21,34 +21,24 @@ module.exports.run = async (gideon, message, args) => {
     if (noid && !args[0].length >= 18) return message.channel.send(as);
 
     try {
-        const path = './data/JSON/userblacklist.json';
-
-        if (!fs.existsSync(path)) {
-            fs.writeFileSync(path, JSON.stringify([]));
+        let ub = gideon.getUBL.get(args[0]);
+        if (!ub) {
+            ub = {
+                user: args[0],
+                userval: 0,
+            }
         }
 
-        let blacklist = JSON.parse(fs.readFileSync(path));
-
-        let command = message.content.toLowerCase().split(' ')[0];
-
-        if (command.endsWith('rm')) {
-            let pos = blacklist.indexOf(args[0]);
-            blacklist.splice(pos, 1); 
-            return message.reply(`user \`${args[0]}\` has been un-blacklisted!`);                                        
+        if (ub.userval === 0) {
+            ub.userval = 1;
+            gideon.setUBL.run(ub);
+            message.reply(`user \`${args[0]}\` has been blacklisted!`);
         }
 
         else {
-            if (blacklist.map(x => x.guildid).includes(args[0])) return message.reply('you have already blacklisted this user!');
-
-            let obj = {
-                userid: args[0]
-            };
-            
-            blacklist.push(obj);
-            
-            fs.writeFileSync(path, JSON.stringify(blacklist, null, 2));
-
-            message.reply(`user \`${args[0]}\` has been blacklisted!`);
+            ub.userval = 0;
+            gideon.setUBL.run(ub);
+            message.reply(`user \`${args[0]}\` has been un-blacklisted!`); 
         }
     }
 
@@ -60,7 +50,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ["ub", "ublacklist", "ubrm"],
+    name: ["ub", "UBLacklist", "ubrm"],
     type: "owner",
     help_text: "ub <userid> <:gideon:686678560798146577>",
     help_desc: "Blacklists a user"

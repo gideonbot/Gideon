@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const config = require("./data/JSON/config.json");
+const SQL = require('./Util/SQL')
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -31,6 +32,10 @@ class Util {
 
     static get config() {
         return config;
+    }
+
+    static get SQL() {
+        return SQL;
     }
 
     /**
@@ -752,33 +757,24 @@ class Util {
      * Leaves a blacklisted guild
      * @param {Discord.Guild} guild 
      */
-    static async LBG(guild) {
-        const fs = require('fs');
+    static async LBG(guild, gideon) {
+        const id = guild.id;
+        let gbl = gideon.getGBL.get(id);
+        if (!gbl) return;
+        if (gbl.guildval === 0) return;
 
-        const path = './data/JSON/guildblacklist.json';
-
-        if (!fs.existsSync(path)) {
-            fs.writeFileSync(path, JSON.stringify([]));
+        let textchannels = guild.channels.cache.filter(c=> c.type == "text");
+        let channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
+        if (!channels.size) {
+            await guild.leave();
+            Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
         }
 
-        let blacklist = JSON.parse(fs.readFileSync(path));
-        if (blacklist.map(x => x.guildid).includes(guild.id)) {
-            const id = guild.id;
-
-            let textchannels = guild.channels.cache.filter(c=> c.type == "text");
-            let channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
-            if (!channels.size) {
-                await guild.leave();
-                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
-            }
-
-            else{
-                channels.random().send('This guild is banned by the bot owner!\nNow leaving this guild!');
-                await guild.leave();
-                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
-            }
+        else{
+            channels.random().send('This guild is banned by the bot owner!\nNow leaving this guild!');
+            await guild.leave();
+            Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
         }
-        else return;
     }
 
     /**
@@ -786,17 +782,10 @@ class Util {
      * @param {Discord.Message} message 
      * @returns {boolean}
      */
-    static IBU(message) {
-        const fs = require('fs');
-
-        const path = './data/JSON/userblacklist.json';
-
-        if (!fs.existsSync(path)) {
-            fs.writeFileSync(path, JSON.stringify([]));
-        }
-
-        let blacklist = JSON.parse(fs.readFileSync(path));
-        return blacklist.map(x => x.userid).includes(message.author.id);
+    static IBU(message, gideon) {
+        let ubl = gideon.getGBL.get(message.author.id);
+        if (!ubl) return;
+        return ubl.userval === 1;
     }
 
     /**
@@ -870,6 +859,32 @@ class Util {
         }
         
         else return message.reply('`you have not yet read the rules. You will be kicked immediately if you keep refusing to.`');
+    }
+
+    /**
+     * Auto-kick
+     * @param {Discord.GuildMember} member 
+     */
+    static async AutoKick(member, gideon) {
+        let t;
+        let k;
+        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
+
+        async function check() {
+            if (member.roles.cache.has('688430418466177082')) return; 
+            
+            channel.send(`${member.user.toString()} \`you have 30 minutes left to read\` <#595935345598529546> \`otherwise you will be kicked!\``);
+            k = setTimeout(kick, 1,8e+6);
+        }
+
+        t = setTimeout(check, 1,8e+6);
+
+        async function kick() {
+            if (member.roles.cache.has('688430418466177082')) return;
+            await member.send('`You have been kicked for not reading the rules!`').catch(ex => console.log(ex));
+            await channel.send(`\`${member.user.tag} has been kicked for not reading the rules!\``);
+            await member.kick();
+        }
     }
 }
 

@@ -2,8 +2,6 @@ require('dotenv').config();
 require('pretty-error').start().withoutColors();
 const Discord = require('discord.js');
 const gideon = new Discord.Client({ ws: { intents: Discord.Intents.ALL } });
-const SQLite = require("better-sqlite3");
-const sql = new SQLite('./data/SQL/gideon.sqlite');
 const recursive = require("recursive-readdir");
 const Util = require("./Util");
 
@@ -29,7 +27,7 @@ setTimeout(() => {
 gideon.once('ready', async () => {
     //if (!process.env.CI) await Util.NPMInstall(gideon);//install missing npm packages
     LoadCommands();
-    InitDB();
+    Util.SQL.InitDB(gideon);
     Util.Selfhostlog(gideon);
 
     console.log('Ready!');
@@ -102,8 +100,8 @@ gideon.on('message', message => {
     if (!message || !message.author || message.author.bot || !message.guild) return;
     if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
     
-    if (Util.IBU(message)) return; //check if user is blacklisted, if yes, return
-    Util.LBG(message.guild); //check if guild is blacklisted, if yes, leave
+    if (Util.IBU(message, gideon)) return; //check if user is blacklisted, if yes, return
+    Util.LBG(message.guild, gideon); //check if guild is blacklisted, if yes, leave
     Util.ABM(message); //apply content filter
     Util.RulesCheck(message); //check if member read the guilds rules
     Util.CVM(message, gideon); //apply crossover mode if enabled
@@ -126,7 +124,7 @@ gideon.on('message', message => {
 
 gideon.on("guildCreate", guild => {
     Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
-    Util.LBG(guild); //check if guild is blacklisted, if yes, leave
+    Util.LBG(guild, gideon); //check if guild is blacklisted, if yes, leave
 
     try {
         let textchannels = guild.channels.cache.filter(c=> c.type == "text");
@@ -151,13 +149,22 @@ gideon.on("shardReady", (id, unavailableGuilds) => {
     else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to network outage:\n${unavailableGuilds.map(x => x).join('\n')}`);
 });
 
+gideon.on("shardError", (error, shardID) => {
+    Util.log(`Shard \`${shardID}\` has encountered a connection error:\n\n\`\`\`\n${error}\n\`\`\``);
+});
+
+gideon.on("shardDisconnect", (event, id) => {
+    Util.log(`Shard \`${id}\` has lost its WebSocket connection:\n\n\`\`\`\nCode: ${event.code}\nReason: ${event.reason}\n\`\`\``);
+});
+
 gideon.on("guildMemberAdd", async member => {
     if (member.guild.id !== '595318490240385037') return;
     const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
     const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
-    const welcome = `\`Greatings Earth-Prime-ling\` ${member.user.toString()}\`!\`\n\`Welcome to the Time Vault\`<:timevault:686676561298063361>\`!\`\n\`If you want full server access make sure to read\` <#595935345598529546>\`!\`\n\`Ignoring this will probably get you kicked!\`\n${logos}`;
+    const welcome = `\`Greetings Earth-Prime-ling\` ${member.user.toString()}\`!\`\n\`Welcome to the Time Vault\`<:timevault:686676561298063361>\`!\`\n\`If you want full server access make sure to read\` <#595935345598529546>\`!\`\n\`Ignoring this will get you kicked in 60 minutes!\`\n${logos}`;
     channel.send(welcome);
     member.send(welcome).catch(ex => console.log(ex));
+    Util.AutoKick(member, gideon);
 });
 
 gideon.on("voiceStateUpdate", (oldState, newState) => {
@@ -215,40 +222,4 @@ function LoadCommands() {
         let took = (end - start) / BigInt("1000000");
         console.log(`All commands loaded in ${took}ms`);
     });
-}
-
-function InitDB() {
-    const scoresdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
-    if (!scoresdb['count(*)']) {
-        sql.prepare("CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, points INTEGER);").run();
-        sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (id);").run();
-        sql.pragma("synchronous = 1");
-        sql.pragma("journal_mode = wal");
-    }
-
-    const trmodedb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'trmode';").get();
-    if (!trmodedb['count(*)']) {
-        sql.prepare("CREATE TABLE trmode (id TEXT PRIMARY KEY, trmodeval BIT);").run();
-        sql.prepare("CREATE UNIQUE INDEX idx_trmode_id ON trmode (id);").run();
-        sql.pragma("synchronous = 1");
-        sql.pragma("journal_mode = wal");
-    }
-
-    const cvmdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'cvm';").get();
-    if (!cvmdb['count(*)']) {
-        sql.prepare("CREATE TABLE cvm (guild TEXT PRIMARY KEY, cvmval BIT);").run();
-        sql.prepare("CREATE UNIQUE INDEX idx_cvm_id ON cvm (guild);").run();
-        sql.pragma("synchronous = 1");
-        sql.pragma("journal_mode = wal");
-    }
-
-    gideon.getScore = sql.prepare("SELECT * FROM scores WHERE id = ?");
-    gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);");
-    gideon.getTop10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;");
-
-    gideon.getTrmode = sql.prepare("SELECT * FROM trmode WHERE id = ?");
-    gideon.setTrmode = sql.prepare("INSERT OR REPLACE INTO trmode (id, trmodeval) VALUES (@id, @trmodeval);");
-
-    gideon.getCVM = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
-    gideon.setCVM = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@guild, @cvmval);");
 }
