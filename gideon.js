@@ -149,6 +149,14 @@ gideon.on("shardReady", (id, unavailableGuilds) => {
     else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to network outage:\n${unavailableGuilds.map(x => x).join('\n')}`);
 });
 
+gideon.on("shardError", (error, shardID) => {
+    Util.log(`Shard \`${shardID}\` has encountered a connection error:\n\n\`\`\`\n${error}\n\`\`\``);
+});
+
+gideon.on("shardDisconnect", (event, id) => {
+    Util.log(`Shard \`${id}\` has lost its WebSocket connection:\n\n\`\`\`\nCode: ${event.code}\nReason: ${event.reason}\n\`\`\``);
+});
+
 gideon.on("guildMemberAdd", async member => {
     if (member.guild.id !== '595318490240385037') return;
     const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
