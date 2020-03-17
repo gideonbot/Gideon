@@ -14,6 +14,7 @@ export function ABM(message: Discord.Message): void;
 export function CVM(message: Discord.Message, gideon: Discord.Client): Promise<Discord.Message>;
 export function IMG(image_id: string, message: Discord.Message): Promise<void>;
 export function CSD(message: Discord.Message): Promise<void>;
+export function AutoKick(member: Discord.GuildMember, gideon: Discord.Client): Promise<void>;
 export function LBG(guild: Discord.Guild, gideon: Discord.Client): Promise<void>;
 export function IBU(message: Discord.Message, gideon: Discord.Client): boolean;
 export function Split<T>(arr: T[], chunks: number): T[][];
