@@ -871,6 +871,7 @@ class Util {
         const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
 
         async function check() {
+            if (member.deleted) return;
             if (member.roles.cache.has('688430418466177082')) return; 
             
             channel.send(`${member.user.toString()} \`you have 30 minutes left to read\` <#595935345598529546> \`otherwise you will be kicked!\``);
@@ -880,9 +881,10 @@ class Util {
         setTimeout(check, 30 * 60 * 1000);
 
         async function kick() {
+            if (member.deleted) return;
             if (member.roles.cache.has('688430418466177082')) return;
-            await member.send('`You have been kicked for not reading the rules!`').catch(ex => console.log(ex));
-            await channel.send(`\`${member.user.tag} has been kicked for not reading the rules!\``);
+            await member.send('You have been kicked for not reading the rules!').catch(ex => console.log(ex));
+            await channel.send(`${member.user.tag} has been kicked for not reading the rules!`);
             await member.kick();
         }
     }
