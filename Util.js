@@ -874,10 +874,10 @@ class Util {
             if (member.roles.cache.has('688430418466177082')) return; 
             
             channel.send(`${member.user.toString()} \`you have 30 minutes left to read\` <#595935345598529546> \`otherwise you will be kicked!\``);
-            k = setTimeout(kick, 1,8e+6);
+            k = setTimeout(kick, 1800000);
         }
 
-        t = setTimeout(check, 1,8e+6);
+        t = setTimeout(check, 1800000);
 
         async function kick() {
             if (member.roles.cache.has('688430418466177082')) return;
