@@ -147,7 +147,7 @@ gideon.on("guildDelete", guild => {
 
 gideon.on("shardReady", (id, unavailableGuilds) => {
     if (!unavailableGuilds) Util.log(`Shard \`${id}\` is connected!`);
-    else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to network outage:\n${unavailableGuilds.map(x => x).join('\n')}`);
+    else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to a server outage:\n${unavailableGuilds.map(x => x).join('\n')}`);
 });
 
 gideon.on("shardError", (error, shardID) => {
@@ -156,6 +156,14 @@ gideon.on("shardError", (error, shardID) => {
 
 gideon.on("shardDisconnect", (event, id) => {
     Util.log(`Shard \`${id}\` has lost its WebSocket connection:\n\n\`\`\`\nCode: ${event.code}\nReason: ${event.reason}\n\`\`\``);
+});
+
+gideon.on("guildUnavailable", guild => {
+    Util.log(`The following guild turned unavailable due to a server outage:\n` + guild.id + ' - `' + guild.name + '`');
+});
+
+gideon.on("rateLimit", rateLimitInfo => {
+    Util.log(`Hit a ratelimit:\n\n\`\`\`\n Timeout: ${rateLimitInfo.timeout} ms\nLimit: ${rateLimitInfo.limit}\nMethod: ${rateLimitInfo.method}\nPath: ${rateLimitInfo.path}\nRoute: ${rateLimitInfo.route}\n\`\`\``);
 });
 
 gideon.on("guildMemberAdd", async member => {
