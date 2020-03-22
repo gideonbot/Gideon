@@ -362,34 +362,21 @@ class Util {
      */
     static async CSD(message) {
         const vid = 'https://cdn.discordapp.com/attachments/525341082435715085/638782331791867930/Crime_Solving_Devil.mp4';
-        if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
-
-        if (message.content.match(/(?:deckerstar)/i)) Util.IMG('rJpbLQx', message);
-        
         const tls = 'https://twitter.com/LaurenGerman/status/996886094305050627\nhttps://twitter.com/tomellis17/status/996889307506864128';
-        if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
-
-        if (message.content.match(/(?:germ)/i)) Util.IMG('ngJQmxL', message);
-        
         const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';
-        if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) {
-            message.channel.send(Util.CreateEmbed(null, {image: ctm}));
-        }
-
         const img = 'https://media.discordapp.net/attachments/669243069878501385/687048353296678943/es7-promise-async-await-es6-promise-es5-callback-hell-async-27790051.png';
-        if (message.content.match(/(?:callback)/i)) {
-            message.channel.send(Util.CreateEmbed(null, {image: img}));
-        }
-
         const vid2 = 'https://cdn.discordapp.com/attachments/679864620864765983/686589432501239899/Hi_Im_Richard_Castle.mp4';
-        if (message.content.match(/(?:castle)/i)) {
-            message.channel.send(vid2);
-        }
-
         const train = 'https://cdn.discordapp.com/attachments/679864620864765983/688677813934620725/Gary_the_unspeakable_train-abomination.mp4';
-        if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) {
-            message.channel.send(train);
-        }
+
+        if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
+        if (message.content.match(/(?:deckerstar)/i)) Util.IMG('rJpbLQx', message);
+        if (message.content.match(/(?:caskett)/i)) Util.IMG('eemyeVL', message);
+        if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
+        if (message.content.match(/(?:germ)/i)) Util.IMG('ngJQmxL', message);
+        if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.CreateEmbed(null, {image: ctm}));
+        if (message.content.match(/(?:callback)/i)) message.channel.send(Util.CreateEmbed(null, {image: img}));
+        if (message.content.match(/(?:castle)/i)) message.channel.send(vid2);
+        if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) message.channel.send(train);
     }
 
     /**
