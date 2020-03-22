@@ -1,4 +1,3 @@
-const config = require("../data/JSON/config.json");
 const SQLite = require("better-sqlite3");
 const path = require('path');
 const sql = new SQLite(path.resolve(__dirname, "../data/SQL/gideon.sqlite"));
@@ -6,10 +5,6 @@ const sql = new SQLite(path.resolve(__dirname, "../data/SQL/gideon.sqlite"));
 class SQL {
     constructor() {
         throw new Error('This class cannot be instantiated!');
-    }
-
-    static get config() {
-        return config;
     }
 
     static InitDB(gideon) {
@@ -69,4 +64,5 @@ class SQL {
         gideon.setUBL = sql.prepare("INSERT OR REPLACE INTO userblacklist (user, userval) VALUES (@user, @userval);");
     }
 }
+
 module.exports = SQL;

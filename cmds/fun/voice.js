@@ -16,10 +16,9 @@ class Silence extends Readable {
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-/*
     if (!message.channel.permissionsFor(message.guild.me).has('CONNECT')) return message.reply('sorry can\'t do that without \`CONNECT\`!');
     if (!message.channel.permissionsFor(message.guild.me).has('SPEAK')) return message.reply('sorry can\'t do that without \`SPEAK\`!');
-*/
+
     let command = message.content.toLowerCase().split(' ')[0];
     let awake = false;
 
@@ -34,7 +33,7 @@ module.exports.run = async (gideon, message, args) => {
     //peepee
 
     if (command.endsWith('leave')) {
-       await Util.LeaveVC(message);
+       await Util.Voice.LeaveVC(message);
        return;
     }
 
@@ -59,7 +58,7 @@ module.exports.run = async (gideon, message, args) => {
         if (awake) stopTimout();
         else if (gideon.emptyvc) stopTimout();
         else {
-            await Util.LeaveVC(message);
+            await Util.Voice.LeaveVC(message);
             return message.reply('no wakeword detected the last `20` seconds after joining VC!');
         }
     }
@@ -70,7 +69,7 @@ module.exports.run = async (gideon, message, args) => {
         const connection = await message.member.voice.channel.join();
         connection.play(new Silence(), { type: 'opus' }); //enable voice receive by sending silence buffer
 
-        await message.channel.send(Util.GetUserTag(message.author), { embed: voicehelp });
+        await message.channel.send(message.author.toString(), { embed: voicehelp });
 
         setTimeout(checkWake, 20000); //check if wakeword has been used since joining
 
@@ -78,14 +77,14 @@ module.exports.run = async (gideon, message, args) => {
             if (gideon.vcmdexec) return; //disable speechrocgnition while voice command is running
             
             if (speaking.has('SPEAKING')) {
-                console.log(`Scribe: listening to ${user.username}`);
-                console.log(`Scribe: SPEAKING ${speaking}`, speaking);
+                console.log(`Listening to ${user.username}`);
+                console.log(`SPEAKING:`, speaking);
 
                 const audio = connection.receiver.createStream(user, { mode: 'pcm' });
 
-                audio.on('end', () => console.log(`Scribe: stopped listening to ${user.username}`));
+                audio.on('end', () => console.log(`Stopped listening to ${user.username}`));
 
-                let wake = await Util.SpeechRecognition(audio);
+                let wake = await Util.Voice.SpeechRecognition(audio);
 
                 if (wake) {
                     let entities = wake.entities;
@@ -96,8 +95,8 @@ module.exports.run = async (gideon, message, args) => {
     
                     let value = intent[0].value;
     
-                    if (value == 'wakeword') awake = true;
-                    await Util.VoiceResponse(value, connection, message, gideon);
+                    if (value === 'wakeword') awake = true;
+                    await Util.Voice.VoiceResponse(value, connection, message, gideon);
                 }
             }
         }); 
