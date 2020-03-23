@@ -101,8 +101,11 @@ module.exports.run = async (gideon, message, args) => {
         const body = await fetch(api).then(res => res.json());
 
         if (body.status === 404) return message.channel.send(Util.CreateEmbed('There was no data for this episode!'));
-    
+        
+        let sp = '';
+        let today = new Date();
         let airdate = new Date(body.airdate);
+        if (today < airdate) sp = '||';
         let airtime = body.airtime;
         let desc = !body.summary ? 'No summary available' : body.summary.replace("<p>", "").replace("</p>", "");
         let img;
@@ -117,7 +120,7 @@ module.exports.run = async (gideon, message, args) => {
         timeString = h + ":" + timeString.split(":")[1] + am_pm;
     
         message.channel.send(Util.CreateEmbed(`${show.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
-            description: desc + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`,
+            description: sp + desc + sp + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`,
             image: img
         }));
     }
