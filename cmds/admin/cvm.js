@@ -7,7 +7,8 @@ const Discord = require("discord.js");
  */
 module.exports.run = async (gideon, message) => {   
     if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send('You don\'t have the required permissions to use this command!');
-
+    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without `MANAGE_MESSAGES`!');
+    
     let cvm = gideon.getCVM.get(message.guild.id);
     if (!cvm) {
         cvm = {

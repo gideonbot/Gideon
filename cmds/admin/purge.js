@@ -10,6 +10,8 @@ module.exports.run = async (gideon, message, args) => {
     if (message.author.id !== gideon.owner) {
         if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('You don\'t have the required permissions to use this command!');
     }
+
+    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without `MANAGE_MESSAGES`!');
     
     const msgamt = args[0];
     if (!msgamt) return await Util.delay(200), await message.channel.bulkDelete(2);

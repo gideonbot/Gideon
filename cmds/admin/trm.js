@@ -8,7 +8,7 @@ const Util = require("../../Util");
  */
 module.exports.run = async (gideon, message) => {
     if (!message.member.hasPermission('MANAGE_ROLES')) return message.reply('You don\'t have the required permissions to use this command!');
-
+    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_ROLES')) return message.reply('sorry can\'t do that without `MANAGE_ROLES`!');
     else {
         let check = message.guild.roles.cache.random();
 
