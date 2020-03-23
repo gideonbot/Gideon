@@ -9,14 +9,14 @@ const Util = require("../../Util");
  */
 module.exports.run = async (gideon, message, args) => {
     const api_urls = {
-        flash: 'http://api.tvmaze.com/shows/13?embed=nextepisode',
-        supergirl: 'http://api.tvmaze.com/shows/1850?embed=nextepisode',
-        legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
         batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
+        supergirl: 'http://api.tvmaze.com/shows/1850?embed=nextepisode',
+        flash: 'http://api.tvmaze.com/shows/13?embed=nextepisode',
+        legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
+        stargirl: 'http://api.tvmaze.com/shows/37809?embed=nextepisode', 
         b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
         canaries: 'http://api.tvmaze.com/shows/44496?embed=nextepisode',
-        supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode',
-        stargirl: 'http://api.tvmaze.com/shows/37809?embed=nextepisode'
+        supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode'
     };
 
     const embed = Util.CreateEmbed('__Upcoming Arrowverse episodes:__');
