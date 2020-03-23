@@ -170,8 +170,9 @@ class Util {
     /**
      * Log to a webhook
      * @param {string | Discord.MessageEmbed} message 
+     * @param {string[]} files 
      */
-    static log(message) {
+    static log(message, files) {
         let url = process.env.LOG_WEBHOOK_URL;
         if (!url || !message) return false;
 
@@ -184,11 +185,11 @@ class Util {
 
         if (typeof(message) == "string") {
             for (let msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
-                client.send(msg, { avatarURL: Util.config.avatar, username: "Gideon-Logs" });
+                client.send(msg, { avatarURL: Util.config.avatar, username: "Gideon-Logs", files: files });
             }
         }
 
-        else client.send(null, { embeds: [message], avatarURL: Util.config.avatar, username: "Gideon-Logs" });
+        else client.send(null, { embeds: [message], avatarURL: Util.config.avatar, username: "Gideon-Logs", files: files });
         
         return true;
     }
@@ -678,6 +679,7 @@ class Util {
     /**
      * Auto-kick
      * @param {Discord.GuildMember} member 
+     * @param {Discord.Client} gideon 
      */
     static async AutoKick(member, gideon) {
         let t;
@@ -701,6 +703,28 @@ class Util {
             await channel.send(`${member.user.tag} has been kicked for not reading the rules!`);
             await member.kick();
         }
+    }
+
+    /**
+     * DB Backup
+     */
+    static async SQLBkup() {
+        const { zip } = require('zip-a-folder');
+        const del = require('del');
+        const db = './data/SQL';
+        const arc = './data/SQL.zip';
+        const date = new Date();
+
+        try {
+            await zip(db, arc);
+            Util.log(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, [arc]);
+            await del(arc);
+        }
+        
+        catch (ex) {
+            console.log("Caught an exception while backing up!: " + ex);
+            Util.log("Caught an exception while backing up!: " + ex);
+        }      
     }
 }
 

@@ -55,7 +55,9 @@ gideon.once('ready', async () => {
         }
     }
     
+    const twodays = 1000 * 60 * 60 * 48;
     setInterval(status, 30e3);
+    setInterval(Util.SQLBkup, twodays);
 
     gideon.fetchApplication().then(app => {
         //When the bot is owned by a team owner id is stored under ownerID, otherwise id
@@ -160,10 +162,6 @@ gideon.on("shardDisconnect", (event, id) => {
 
 gideon.on("guildUnavailable", guild => {
     Util.log(`The following guild turned unavailable due to a server outage:\n` + guild.id + ' - `' + guild.name + '`');
-});
-
-gideon.on("rateLimit", rateLimitInfo => {
-    Util.log(`Hit a ratelimit:\n\n\`\`\`\n Timeout: ${rateLimitInfo.timeout} ms\nLimit: ${rateLimitInfo.limit}\nMethod: ${rateLimitInfo.method}\nPath: ${rateLimitInfo.path}\nRoute: ${rateLimitInfo.route}\n\`\`\``);
 });
 
 gideon.on("guildMemberAdd", async member => {
