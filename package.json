@@ -45,6 +45,7 @@
     "systeminformation": "^4.23.1",
     "torrent-search-api": "^2.0.10",
     "turndown": "^6.0.0",
+    "unzipper": "^0.10.10",
     "zip-a-folder": "0.0.12"
   }
 }
