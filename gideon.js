@@ -1,7 +1,7 @@
 require('dotenv').config();
 require('pretty-error').start().withoutColors();
 const Discord = require('discord.js');
-const gideon = new Discord.Client({ ws: { intents: Discord.Intents.ALL } });
+const gideon = new Discord.Client({ ws: { intents: Discord.Intents.ALL }, partials: ['MESSAGE', 'REACTION'] });
 const recursive = require("recursive-readdir");
 const Util = require("./Util");
 
@@ -99,7 +99,7 @@ gideon.on("error", err => {
 });
 
 gideon.on('message', message => {
-    if (!message || !message.author || message.author.bot || !message.guild) return;
+    if (!message || !message.author || message.author.bot || !message.guild || message.partial) return;
     if (!message.guild.me) message.guild.members.fetch();
     if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
     
@@ -165,9 +165,6 @@ gideon.on("guildUnavailable", guild => {
 });
 
 gideon.on("messageReactionAdd", (messageReaction, user) => {
-    if (messageReaction.message.guild.id !== '595318490240385037') return;
-    if (messageReaction.emoji.name !== '⭐') return;
-    if (messageReaction.users.cache.size > 1) return;
     Util.Starboard(messageReaction, user, gideon);
 });
 

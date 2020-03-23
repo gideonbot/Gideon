@@ -737,6 +737,14 @@ class Util {
         try {
             const board = gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
 
+            if (reaction.partial) await reaction.fetch();
+            if (reaction.message.partial) await reaction.fetch();
+
+            if (reaction.message.guild.id !== '595318490240385037') return;
+            if (reaction.emoji.name !== '⭐') return;
+            if (reaction.message.embeds[0]) return;
+            if (reaction.users.cache.size > 1) return;
+
             const starmsg = Util.CreateEmbed(null, {
                 author: {
                     name: reaction.message.author.tag + ' said:',
@@ -746,7 +754,7 @@ class Util {
                 fields: [ 
                     {
                         name: 'Message Info:',
-                        value: 'Sent in ' + reaction.message.channel.toString() + ' | Starred by: ' + user.tag 
+                        value: 'Sent in: ' + reaction.message.channel.toString() + ' | Starred by: ' + user.tag 
                     }
                 ]
             })
