@@ -15,7 +15,7 @@ module.exports.run = async (gideon, message, args) => {
     
     if (args[0].match(/(?:flash)/i)) return message.channel.send(flashopening);
     if (args[0].match(/(?:legends)/i)) return message.channel.send(lotopening);
-    else return message.channel.send();
+    else return message.channel.send(ia);
 }
 
 module.exports.help = {
