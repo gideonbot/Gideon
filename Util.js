@@ -708,7 +708,7 @@ class Util {
     /**
      * DB Backup
      */
-    static async SQLBkup() {
+    static async SQLBkup(gideon) {
         const { zip } = require('zip-a-folder');
         const del = require('del');
         const db = './data/SQL';
@@ -716,9 +716,15 @@ class Util {
         const date = new Date();
 
         try {
+            const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('622415301144870932');
             await zip(db, arc);
-            Util.log(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, [arc]);
+            channel.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
             await del(arc);
+            const lastbkup = await channel.messages.fetchPinned({ limit: 1 });
+            if (lastbkup) await lastbkup.first().unpin();
+            const msg = await channel.messages.fetch({ limit: 1 });
+            const bkupmsg = msg.first();
+            await bkupmsg.pin();
         }
         
         catch (ex) {

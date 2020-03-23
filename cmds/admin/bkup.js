@@ -11,8 +11,8 @@ module.exports.run = async (gideon, message, args) => {
     
     try {
         message.channel.send('Performing database backup, please wait...');
-        await Util.SQLBkup();
-        message.channel.send('Database backup complete! Please check <#622415301144870932>! :white_check_mark:')
+        await Util.SQLBkup(gideon);
+        message.channel.send('Database backup complete! Please check <#622415301144870932>! :white_check_mark:');
     }
     
     catch (ex) {

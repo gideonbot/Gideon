@@ -57,7 +57,7 @@ gideon.once('ready', async () => {
     
     const twodays = 1000 * 60 * 60 * 48;
     setInterval(status, 30e3);
-    setInterval(Util.SQLBkup, twodays);
+    setInterval(Util.SQLBkup, twodays, gideon);
 
     gideon.fetchApplication().then(app => {
         //When the bot is owned by a team owner id is stored under ownerID, otherwise id
