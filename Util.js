@@ -726,6 +726,39 @@ class Util {
             Util.log("Caught an exception while backing up!: " + ex);
         }      
     }
+
+    /**
+     * Starboard
+     * @param {Discord.MessageReaction} reaction 
+     * @param {Discord.User} user
+     * @param {Discord.Client} gideon
+     */
+    static async Starboard(reaction, user, gideon) {
+        try {
+            const board = gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
+
+            const starmsg = Util.CreateEmbed(null, {
+                author: {
+                    name: reaction.message.author.tag + ' said:',
+                    icon: reaction.message.author.displayAvatarURL()
+                },
+                description: reaction.message.content,
+                fields: [ 
+                    {
+                        name: 'Message Info:',
+                        value: 'Sent in ' + reaction.message.channel.toString() + ' | Starred by: ' + user.tag 
+                    }
+                ]
+            })
+
+            await board.send(starmsg);
+        }
+        
+        catch (ex) {
+            console.log("Caught an exception while starboarding!: " + ex);
+            Util.log("Caught an exception while starboarding!: " + ex);
+        }      
+    }
 }
 
 module.exports = Util;
