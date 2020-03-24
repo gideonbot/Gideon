@@ -366,6 +366,7 @@ class Util {
         const img = 'https://media.discordapp.net/attachments/669243069878501385/687048353296678943/es7-promise-async-await-es6-promise-es5-callback-hell-async-27790051.png';
         const vid2 = 'https://cdn.discordapp.com/attachments/679864620864765983/686589432501239899/Hi_Im_Richard_Castle.mp4';
         const train = 'https://cdn.discordapp.com/attachments/679864620864765983/688677813934620725/Gary_the_unspeakable_train-abomination.mp4';
+        const yombo = 'https://cdn.discordapp.com/attachments/679864620864765983/692020740215537755/YomboBomboMomboJombo.mp4';
 
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
         if (message.content.match(/(?:deckerstar)/i)) Util.IMG('rJpbLQx', message);
@@ -375,6 +376,7 @@ class Util {
         if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.CreateEmbed(null, {image: ctm}));
         if (message.content.match(/(?:callback)/i)) message.channel.send(Util.CreateEmbed(null, {image: img}));
         if (message.content.match(/(?:castle)/i)) message.channel.send(vid2);
+        if (message.content.match(/(?:constantine)/i)) message.channel.send(yombo);
         if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) message.channel.send(train);
     }
 
