@@ -19,8 +19,8 @@ module.exports.run = async (gideon, message, args) => {
             {
                 name: `❯ Info`,
                 value: 
-                `• Identifier: \`${emoji}\`
-                 • Creation Date: \`${emoji.createdAt.toUTCString()}\`
+                `• Identifier: \`${emoji}\`\n
+                 • Creation Date: \`${emoji.createdAt.toUTCString()}\`\n
                  • URL: ${emoji.url}
                 `
             }
