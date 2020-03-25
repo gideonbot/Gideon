@@ -10,9 +10,6 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {   
-    if (!message.channel.permissionsFor(message.guild.me).has('CONNECT')) return message.reply('sorry can\'t do that without \`CONNECT\`!');
-    if (!message.channel.permissionsFor(message.guild.me).has('SPEAK')) return message.reply('sorry can\'t do that without \`SPEAK\`!');
-      
     const as = Util.CreateEmbed("You must supply valid input!");
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
@@ -231,5 +228,10 @@ module.exports.help = {
     name: ['mates', 'podcast'],
     type: "misc",
     help_text: "mates <episode>",
-    help_desc: "Listen to the MATES podcast"
+    help_desc: "Listen to the MATES podcast",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: ['CONNECT', 'SPEAK', 'USE_VAD']
 }

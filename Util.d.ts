@@ -94,6 +94,11 @@ interface Command {
         type: string;
         help_text: string;
         help_desc: string;
+        owner: boolean;
+        timevault: boolean;
+        roles: string[]
+        user_perms: string[]
+        bot_perms: string[]
     },
     run: Function;
 }

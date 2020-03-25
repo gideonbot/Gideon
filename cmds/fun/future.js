@@ -25,5 +25,10 @@ module.exports.help = {
     name: "show",
     type: "fun",
     help_text: "Gideon, show me the future!",
-    help_desc: "Displays an easter egg"
+    help_desc: "Displays an easter egg",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

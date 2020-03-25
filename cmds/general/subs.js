@@ -11,7 +11,7 @@ module.exports.run = async (gideon, message, args) => {
     if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
         Util.log("Missing env variables for subs command!");
         console.log("Missing env variables for subs command!");
-        return message.channel.send(Util.CreateEmbed('This command is not available currently'));
+        return message.channel.send(Util.CreateEmbed('This command is currently not available'));
     }
 
     const OS = new OpenSubtitles({
@@ -132,5 +132,10 @@ module.exports.help = {
     name: ["subs", "subtitles"],
     type: "general",
     help_text: "subs <lang> <show> <NxNN/SNNENN> ~ N -> number",
-    help_desc: "Searches opensubtitles.org for the specified episode"
+    help_desc: "Searches opensubtitles.org for the specified episode",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

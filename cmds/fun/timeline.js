@@ -29,5 +29,10 @@ module.exports.help = {
     name: "timeline",
     type: "fun",
     help_text: "timeline",
-    help_desc: "Scans for changes in the timeline"
+    help_desc: "Scans for changes in the timeline",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

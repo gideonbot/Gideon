@@ -8,8 +8,6 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without `MANAGE_MESSAGES`!');
-    
     let agc = args[0];
     if (!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
     const url = 'https://arrowverse.info';
@@ -153,5 +151,10 @@ module.exports.help = {
     name: ["next", "nx"],
     type: "general",
     help_text: "next <show> <NxNN/SNNENN> ~ N -> number",
-    help_desc: "Fetches next episode in watching order"
+    help_desc: "Fetches next episode in watching order",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: ['MANAGE_MESSAGES']
 }

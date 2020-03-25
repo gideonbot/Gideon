@@ -81,5 +81,10 @@ module.exports.help = {
     name: ["suit", "suits", "costume", "costumes"],
     type: "general",
     help_text: "suit <character>",
-    help_desc: "Displays newly revealed suits"
+    help_desc: "Displays newly revealed suits",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

@@ -14,5 +14,10 @@ module.exports.help = {
     name: ["ping", "latency"],
     type: "stats",
     help_text: "ping",
-    help_desc: "Displays the bot's ping"
+    help_desc: "Displays the bot's ping",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

@@ -47,5 +47,10 @@ module.exports.help = {
     name: ["mdn", "mozilla", "js"],
     type: "misc",
     help_text: "mdn <query>",
-    help_desc: "Searches MDN"
+    help_desc: "Searches MDN",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

@@ -24,5 +24,10 @@ module.exports.help = {
     name: ["perms", "permissions"],
     type: "stats",
     help_text: "perms",
-    help_desc: "Displays a members perms"
+    help_desc: "Displays a members perms",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

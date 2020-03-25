@@ -35,5 +35,10 @@ module.exports.help = {
     name: ["civ", "create"],
     type: "misc",
     help_text: "civ <guildid>",
-    help_desc: "Attempts to create instant invite"
+    help_desc: "Attempts to create instant invite",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

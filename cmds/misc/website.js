@@ -13,5 +13,10 @@ module.exports.help = {
     name: ['website', 'web', 'url', 'homepage'],
     type: "misc",
     help_text: "website",
-    help_desc: "Displays a link to Gideon's homepage"
+    help_desc: "Displays a link to Gideon's homepage",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

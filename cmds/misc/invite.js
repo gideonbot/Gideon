@@ -13,5 +13,10 @@ module.exports.help = {
     name: "invite",
     type: "misc",
     help_text: "invite",
-    help_desc: "Sends an invite link to the Time Vault"
+    help_desc: "Sends an invite link to the Time Vault",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

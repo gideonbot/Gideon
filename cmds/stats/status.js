@@ -30,5 +30,10 @@ module.exports.help = {
     name: ['status', 'api'],
     type: "stats",
     help_text: "status",
-    help_desc: "Checks Gideon's API status"
+    help_desc: "Checks Gideon's API status",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

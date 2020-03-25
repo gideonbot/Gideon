@@ -24,5 +24,10 @@ module.exports.help = {
     name: ["credits", "creds"],
     type: "misc",
     help_text: "credits",
-    help_desc: "Displays people who contributed to development of this bot"
+    help_desc: "Displays people who contributed to development of this bot",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

@@ -7,9 +7,6 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message) => {
-    if (!message.member.hasPermission('MANAGE_ROLES')) return message.reply('You don\'t have the required permissions to use this command!');
-    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_ROLES')) return message.reply('sorry can\'t do that without `MANAGE_ROLES`!');
-    else {
         let check = message.guild.roles.cache.random();
 
         if (check.mentionable == false) {
@@ -38,11 +35,15 @@ module.exports.run = async (gideon, message) => {
         }
         else return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
-}
 
 module.exports.help = {
     name: "trm",
     type: "admin",
     help_text: "trm <:perms:686681300156940349>",
-    help_desc: "Toggles server role mentionability"
+    help_desc: "Toggles server role mentionability",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: ['MANAGE_ROLES'],
+    bot_perms: ['MANAGE_ROLES']
 }

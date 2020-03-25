@@ -16,5 +16,10 @@ module.exports.help = {
     name: ["flags", "permflags"],
     type: "misc",
     help_text: "flags",
-    help_desc: "Displays Discord permission flags"
+    help_desc: "Displays Discord permission flags",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

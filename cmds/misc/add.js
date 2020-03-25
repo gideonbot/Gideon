@@ -25,5 +25,10 @@ module.exports.help = {
     name: ["add", "oauth"],
     type: "misc",
     help_text: "add",
-    help_desc: "Displays Gideon's oauth2 invite link"
+    help_desc: "Displays Gideon's oauth2 invite link",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

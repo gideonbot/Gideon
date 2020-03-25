@@ -16,9 +16,6 @@ class Silence extends Readable {
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (!message.channel.permissionsFor(message.guild.me).has('CONNECT')) return message.reply('sorry can\'t do that without \`CONNECT\`!');
-    if (!message.channel.permissionsFor(message.guild.me).has('SPEAK')) return message.reply('sorry can\'t do that without \`SPEAK\`!');
-
     let command = message.content.toLowerCase().split(' ')[0];
     let awake = false;
 
@@ -113,5 +110,10 @@ module.exports.help = {
     name: ["voice", "join", "leave"],
     type: "fun",
     help_text: "voice",
-    help_desc: "Joins voice channel for voice commands"
+    help_desc: "Joins voice channel for voice commands",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: ['CONNECT', 'SPEAK', 'USE_VAD']
 }

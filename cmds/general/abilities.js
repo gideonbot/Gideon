@@ -9,8 +9,6 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without `MANAGE_MESSAGES`!');
-    
     const ia = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`${args[0]} is not a valid argument!`)
@@ -185,5 +183,10 @@ module.exports.help = {
     name: ["abilities", "powers"],
     type: "general",
     help_text: "abilities <term>",
-    help_desc: "Shows abilities of a following: <speedster | viber | kryptonian>"
+    help_desc: "Shows abilities of a following: <speedster | viber | kryptonian>",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: ['MANAGE_MESSAGES']
 }

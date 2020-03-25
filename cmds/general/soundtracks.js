@@ -24,5 +24,10 @@ module.exports.help = {
     name: ["soundtracks", "tracks", "music"],
     type: "general",
     help_text: "soundtracks",
-    help_desc: "Displays all soundtracks"
+    help_desc: "Displays all soundtracks",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

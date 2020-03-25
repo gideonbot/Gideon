@@ -135,5 +135,10 @@ module.exports.help = {
     name: ["ep", "episode"],
     type: "general",
     help_text: "ep <show> <NxNN|SNENN> ~ N -> number",
-    help_desc: "Fetches episode info"
+    help_desc: "Fetches episode info",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

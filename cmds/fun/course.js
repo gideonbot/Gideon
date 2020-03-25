@@ -45,5 +45,10 @@ module.exports.help = {
     name: "plot",
     type: "fun",
     help_text: "Gideon, plot a course!",
-    help_desc: "Plots a course"
+    help_desc: "Plots a course",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

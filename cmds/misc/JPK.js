@@ -10,7 +10,7 @@ module.exports.run = async (gideon, message, args) => {
     if (!process.env.IMG_CL) {
         Util.log("Missing env variable for JPK command!");
         console.log("Missing env variable for JPK command!");
-        return message.channel.send(Util.CreateEmbed('This command is not available currently'));
+        return message.channel.send(Util.CreateEmbed('This command is currently not available'));
     }
 
     const jpkArray = ["FqCwt1J", "8bFXk0z", "2yz4RWt", "kxpGHYM", "f8mENXa", "Xy2SoEw", "UcPxCV5", "JhTWxoJ", "eLugrZD"];
@@ -48,5 +48,10 @@ module.exports.help = {
     name: "jpk",
     type: "fun",
     help_text: "jpk",
-    help_desc: "Displays a random JPK gif"
+    help_desc: "Displays a random JPK gif",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

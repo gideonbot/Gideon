@@ -23,5 +23,10 @@ module.exports.help = {
     name: ["docs", "hosting"],
     type: "misc",
     help_text: "docs",
-    help_desc: "Displays Gideon's Github Wiki link"
+    help_desc: "Displays Gideon's Github Wiki link",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

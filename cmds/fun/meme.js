@@ -11,7 +11,7 @@ module.exports.run = async (gideon, message) => {
     if (!process.env.IMG_CL) {
         Util.log("Missing env variable for meme command!");
         console.log("Missing env variable for meme command!");
-        return message.channel.send('This command is not available currently');
+        return message.channel.send('This command is currently not available');
     }
 
     const imgclient = new Imgur.Client(process.env.IMG_CL);
@@ -36,5 +36,10 @@ module.exports.help = {
     name: "meme",
     type: "fun",
     help_text: "meme",
-    help_desc: "Displays a random Arrowverse meme"
+    help_desc: "Displays a random Arrowverse meme",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

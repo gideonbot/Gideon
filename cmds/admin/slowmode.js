@@ -8,13 +8,7 @@ const Util = require("../../Util");
  */
 module.exports.run = async (gideon, message, args) => {
     const as = Util.CreateEmbed("You must supply valid input!");
-
-    if (message.author.id !== gideon.owner) {
-        if (!message.member.hasPermission('MANAGE_CHANNELS')) return message.reply('You don\'t have the required permissions to use this command!');
-    }
     
-    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_CHANNELS')) return message.reply('sorry can\'t do that without `MANAGE_CHANNELS`!');
-
     try {
         if (isNaN(args[0])) {
             if (isNaN(args[1])) return message.channel.send(as);
@@ -40,5 +34,10 @@ module.exports.help = {
     name: ["slowmode", "slowmo", "slow", "sm"],
     type: "admin",
     help_text: "slowmode [channel] <seconds> <:perms:686681300156940349>",
-    help_desc: "Enables slowmode"
+    help_desc: "Enables slowmode",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: ['MANAGE_CHANNELS'],
+    bot_perms: ['MANAGE_CHANNELS']
 }

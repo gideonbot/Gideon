@@ -9,8 +9,6 @@ const stringSimilarity = require('string-similarity');
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without `MANAGE_MESSAGES`!');
-    
     const url = 'https://arrowverse.info';
     const emotes = ['▶️', '669309980209446912'];
     let s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
@@ -283,5 +281,10 @@ module.exports.help = {
     name: ["guess", "guesseps", "points", "score", "leaderboard", "highscores", "lb"],
     type: "fun",
     help_text: "guess",
-    help_desc: "Arrowverse episode guessing game"
+    help_desc: "Arrowverse episode guessing game",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: ['MANAGE_MESSAGES']
 }

@@ -17,5 +17,10 @@ module.exports.help = {
     name: "mentions",
     type: "misc",
     help_text: "mentions",
-    help_desc: "Displays Discord mentions syntax"
+    help_desc: "Displays Discord mentions syntax",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

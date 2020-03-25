@@ -7,10 +7,6 @@ const Util = require('../../Util');
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (message.author.id !== gideon.owner) {
-        return message.channel.send('You do not have the required permissions to use this command!');
-    }
-
     try {
 
         if (args.length < 1) return message.channel.send('No code provided!');
@@ -43,5 +39,10 @@ module.exports.help = {
     name: 'eval',
     type: 'owner',
     help_text: 'eval <code> <:gideon:686678560798146577>:warning:',
-    help_desc: 'Evaluates provided code'
+    help_desc: 'Evaluates provided code',
+    owner: true,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

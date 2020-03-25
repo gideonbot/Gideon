@@ -97,7 +97,7 @@ gideon.on("error", err => {
     Util.log("Bot error: " + `\`\`\`\n${err.stack}\n\`\`\``);
 });
 
-gideon.on('message', message => {
+gideon.on('message', async message => {
     if (!message || !message.author || message.author.bot || !message.guild || message.partial) return;
     if (!message.guild.me) message.guild.members.fetch();
     if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
@@ -121,6 +121,64 @@ gideon.on('message', message => {
     if (!cmd) return;
 
     const command = gideon.commands.get(cmd.toLowerCase());
+
+    if (command.help.owner) {
+        if (message.author.id !== gideon.owner) return message.reply('you do not have the required permission to use this command!\n Required permission: `Application Owner`');
+    } 
+
+    if (command.help.timevault) {
+        if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
+    }
+
+    if (command.help.roles && command.help.roles.length > 0) {
+        let missingroles = [];
+        let rolenames = [];
+
+        for (let role of command.help.roles) {
+            if (!message.member.roles.cache.has(role)) missingroles.push(role);
+        }
+
+        if (missingroles && missingroles.length > 0) {
+            for (let role of missingroles) {
+            
+                const rolename = await gideon.shard.broadcastEval(`
+                    (async () => {
+                        let rolename;
+                        const guilds = this.guilds.cache;
+                        
+                        guilds.forEach(guild => {
+                            if (guild.roles.cache.get('${role}')) {
+                               rolename = guild.roles.cache.get('${role}').name;
+                            }
+                        });
+                        
+                        if (rolename) return rolename;
+                    })();
+                `);
+                rolenames.push(rolename.toString());
+            }
+        }
+        if (rolenames && rolenames.length > 0) return message.reply('you do not have the required roles to use this command!\nRequired roles: ' + rolenames.map(x => `\`${x}\``).join(' '));
+    }
+
+    if (message.author.id !== gideon.owner) {
+        if (command.help.user_perms && command.help.user_perms.length > 0) {
+            let missingperms = [];
+            for (let perms of command.help.user_perms) {
+                if (!message.member.hasPermission(perms)) missingperms.push(perms);
+            }
+            if (missingperms && missingperms.length > 0) return message.reply('you do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
+        }
+    }
+
+    if (command.help.bot_perms && command.help.bot_perms.length > 0) {
+        let missingperms = [];
+        for (let perms of command.help.bot_perms) {
+            if (!message.channel.permissionsFor(message.guild.me).has(perms)) missingperms.push(perms);
+        }
+        if (missingperms && missingperms.length > 0) return message.reply('sorry I can\'t do that without having the required permissions for this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
+    }
+
     if (command) command.run(gideon, message, args);
 });
 

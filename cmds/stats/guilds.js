@@ -30,5 +30,10 @@ module.exports.help = {
     name: ["guilds", "servers"],
     type: "stats",
     help_text: "guilds",
-    help_desc: "Displays all guilds the bot is in"
+    help_desc: "Displays all guilds the bot is in",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

@@ -8,10 +8,6 @@ const fs = require('fs');
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message) => {
-    if (message.author.id !== gideon.owner) {
-        return message.channel.send('You do not have the required permissions to use this command!');
-    }
-
     try {
         let path1 = './data/JSON/userblacklist.json';
         let path2 = './data/JSON/guildblacklist.json';
@@ -46,5 +42,10 @@ module.exports.help = {
     name: ["blacklist","bl"],
     type: "owner",
     help_text: "blacklist <:gideon:686678560798146577>",
-    help_desc: "Displays blacklisted users and guilds"
+    help_desc: "Displays blacklisted users and guilds",
+    owner: true,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

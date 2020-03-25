@@ -7,8 +7,6 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (!message.member.roles.cache.has('621399916283035658')) return message.channel.send('You don\'t have the required permissions to use this command!');
-    
     try {
         message.channel.send('Performing database backup, please wait...');
         await Util.SQLBkup(gideon);
@@ -26,5 +24,10 @@ module.exports.help = {
     name: ["backup", "bkup"],
     type: "admin",
     help_text: "backup `@Gideon Dev Team`",
-    help_desc: "Performs a database backup"
+    help_desc: "Performs a database backup",
+    owner: false,
+    timevault: false,
+    roles: ['621399916283035658'],
+    user_perms: [],
+    bot_perms: []
 }

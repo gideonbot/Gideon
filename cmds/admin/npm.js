@@ -8,7 +8,6 @@ const exec = require('child_process').exec;
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {   
-    if (!message.member.roles.cache.has('621399916283035658')) return message.channel.send('You don\'t have the required permissions to use this command!');
     const as = Util.CreateEmbed("You must supply valid input!");
     if (!args[0]) return message.channel.send(as);
 
@@ -53,5 +52,10 @@ module.exports.help = {
     name: "npm",
     type: "admin",
     help_text: "npm install/update `@Gideon Dev Team`",
-    help_desc: "Runs npm command"
+    help_desc: "Runs npm command",
+    owner: false,
+    timevault: false,
+    roles: ['621399916283035658'],
+    user_perms: [],
+    bot_perms: []
 }

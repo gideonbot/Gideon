@@ -43,5 +43,10 @@ module.exports.help = {
     name: ["nxeps", "nexteps", "nextepisodes"],
     type: "general",
     help_text: "nxeps",
-    help_desc: "Displays a countdown to the next airing Arrowverse episodes"
+    help_desc: "Displays a countdown to the next airing Arrowverse episodes",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

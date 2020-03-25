@@ -7,10 +7,6 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (message.author.id !== gideon.owner) {
-        return message.channel.send('You do not have the required permissions to use this command!');
-    }
-
     const as = Util.CreateEmbed("You must supply valid input!");
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
@@ -52,5 +48,10 @@ module.exports.help = {
     name: ["gb", "gblacklist", "gbrm"],
     type: "owner",
     help_text: "gb <guildid> <:gideon:686678560798146577>",
-    help_desc: "Blacklists a guild"
+    help_desc: "Blacklists a guild",
+    owner: true,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

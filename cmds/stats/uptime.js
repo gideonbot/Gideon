@@ -14,5 +14,10 @@ module.exports.help = {
     name: "uptime",
     type: "stats",
     help_text: "uptime",
-    help_desc: "Displays the bot's uptime"
+    help_desc: "Displays the bot's uptime",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

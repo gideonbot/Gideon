@@ -13,8 +13,6 @@ const del = require('del');
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (!message.member.roles.cache.has('621399916283035658')) return message.channel.send('You don\'t have the required permissions to use this command!');
-
     try {
         message.channel.send('Performing database restore, please wait...');
         const channel = gideon.guilds.cache.get('525341081727008788').channels.cache.get('525341082435715085');
@@ -42,5 +40,10 @@ module.exports.help = {
     name: ["restore", "rs"],
     type: "admin",
     help_text: "restore `@Gideon Dev Team`",
-    help_desc: "Restores the latest database backup"
+    help_desc: "Restores the latest database backup",
+    owner: false,
+    timevault: false,
+    roles: ['621399916283035658'],
+    user_perms: [],
+    bot_perms: []
 }

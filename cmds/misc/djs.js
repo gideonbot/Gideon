@@ -31,5 +31,10 @@ module.exports.help = {
     name: ["djs", "discordjs", "lib"],
     type: "misc",
     help_text: "djs <query>",
-    help_desc: "Searches discord.js docs"
+    help_desc: "Searches discord.js docs",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

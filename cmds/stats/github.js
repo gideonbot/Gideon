@@ -31,5 +31,10 @@ module.exports.help = {
     name: ["github", "git", "repo"],
     type: "stats",
     help_text: "github",
-    help_desc: "Displays Github repository info"
+    help_desc: "Displays Github repository info",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

@@ -137,5 +137,10 @@ module.exports.help = {
     name: ["at", "attack"],
     type: "fun",
     help_text: "at <attack> <user>",
-    help_desc: "Attacks the selected user with the selected attack"
+    help_desc: "Attacks the selected user with the selected attack",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

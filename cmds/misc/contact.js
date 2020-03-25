@@ -11,5 +11,10 @@ module.exports.help = {
     name: ["contact", "about"],
     type: "misc",
     help_text: "contact",
-    help_desc: "Displays contact info"
+    help_desc: "Displays contact info",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

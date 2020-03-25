@@ -9,8 +9,6 @@ const Magnet2torrent = require('magnet2torrent-js');
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without `MANAGE_MESSAGES`!');
-    
     let agc = args[0];
     const auth = message.author.id;
 
@@ -100,5 +98,10 @@ module.exports.help = {
     name: ["torrent", "download"],
     type: "general",
     help_text: "torrent <show> <NxNN/SNNENN> ~ N -> number",
-    help_desc: "Searches torrent providers for the specified episode"
+    help_desc: "Searches torrent providers for the specified episode",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: ['MANAGE_MESSAGES']
 }

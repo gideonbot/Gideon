@@ -22,5 +22,10 @@ module.exports.help = {
     name: ["cuddle", "hug"],
     type: "fun",
     help_text: "cuddle <user>",
-    help_desc: "Gives the selected user a Beebo-tastic cuddle"
+    help_desc: "Gives the selected user a Beebo-tastic cuddle",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

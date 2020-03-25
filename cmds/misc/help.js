@@ -8,8 +8,6 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without `MANAGE_MESSAGES`!');
-
     const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
     const _prefixes = Util.config.prefixes.filter((x, i) => i < Util.config.prefixes.length - 1); //we remove the last prefix (.pop modifies the original array - BAD!)
     const prefixes = _prefixes.map(x => (Util.getIdFromString(x) == gideon.user.id ? "" : "`") + x + (Util.getIdFromString(x) == gideon.user.id ? "" : "`")).join(" | ");
@@ -120,5 +118,10 @@ module.exports.help = {
     name: "help",
     type: "misc",
     help_text: "help",
-    help_desc: "Provides you help with commands"
+    help_desc: "Provides you help with commands",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: ['MANAGE_MESSAGES']
 }

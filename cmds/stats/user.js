@@ -94,5 +94,10 @@ module.exports.help = {
     name: ["user", "member"],
     type: "stats",
     help_text: "user <user>",
-    help_desc: "Displays a user's info"
+    help_desc: "Displays a user's info",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

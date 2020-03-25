@@ -22,5 +22,10 @@ module.exports.help = {
     name: ["opening", "intro"],
     type: "misc",
     help_text: "opening",
-    help_desc: "Sends the specified opening"
+    help_desc: "Sends the specified opening",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

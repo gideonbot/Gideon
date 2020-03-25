@@ -37,5 +37,10 @@ module.exports.help = {
     name: ['emojis', 'emotes'],
     type: "stats",
     help_text: "emojis",
-    help_desc: "Get a list of guild emojis"
+    help_desc: "Get a list of guild emojis",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

@@ -33,5 +33,10 @@ module.exports.help = {
     name: ["tr", "translate"],
     type: "misc",
     help_text: "!tr <text>",
-    help_desc: "Translates text"
+    help_desc: "Translates text",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

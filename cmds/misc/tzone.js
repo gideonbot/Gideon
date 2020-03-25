@@ -81,5 +81,10 @@ module.exports.help = {
     name: ["tz", "tzones", "timezone", "timezones"],
     type: "misc",
     help_text: "tz [<register>/<user>]",
-    help_desc: "Displays users timezones"
+    help_desc: "Displays users timezones",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

@@ -111,5 +111,10 @@ module.exports.help = {
     name: ["issues", "issue", "bug"],
     type: "misc",
     help_text: "issues",
-    help_desc: "Displays Github issues and allows to submit new ones."
+    help_desc: "Displays Github issues and allows to submit new ones.",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

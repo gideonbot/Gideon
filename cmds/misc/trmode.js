@@ -31,5 +31,10 @@ module.exports.help = {
     name: "trmode",
     type: "misc",
     help_text: "trmode",
-    help_desc: "Toggles translation mode"
+    help_desc: "Toggles translation mode",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

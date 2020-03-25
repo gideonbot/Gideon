@@ -41,5 +41,10 @@ module.exports.help = {
     name: ['guild', 'server'],
     type: "stats",
     help_text: "guild",
-    help_desc: "Get current guild info"
+    help_desc: "Get current guild info",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

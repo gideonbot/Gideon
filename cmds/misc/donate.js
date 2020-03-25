@@ -27,5 +27,10 @@ module.exports.help = {
     name: ["donate", "paypal", "patreon"],
     type: "misc",
     help_text: "donate",
-    help_desc: "Displays info to support maintainance and hosting of Gideon"
+    help_desc: "Displays info to support maintainance and hosting of Gideon",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

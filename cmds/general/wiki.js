@@ -88,5 +88,10 @@ module.exports.help = {
     name: ['wiki', 'wikistg', 'wikidc', 'wikikr', 'wikilu'],
     type: "general",
     help_text: "wiki[stg|kr|lu|dc] <term>",
-    help_desc: "Searches the specified wiki for the given term | stg - Stargirl | kr - Krypton | lu - Lucifer | dc - DC |"
+    help_desc: "Searches the specified wiki for the given term | stg - Stargirl | kr - Krypton | lu - Lucifer | dc - DC |",
+    owner: false,
+    timevault: false,
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }
