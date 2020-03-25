@@ -759,6 +759,27 @@ class Util {
             Util.log("Caught an exception while starboarding!: " + ex.stack);
         }      
     }
+
+    static async status(gideon) {
+        let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
+        let mbc = await gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? 0 : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(x => !x.user.bot).size').catch(ex => console.log(ex));
+
+        if (mbc) mbc = mbc.filter(x => x);
+
+        if (guilds) {
+            guilds = [].concat.apply([], guilds);
+            
+            const st1 = `!help | gideonbot.co.vu`;
+            let st2 = `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`;
+            const st3 = `${guilds.length} Guilds`;
+    
+            gideon.user.setActivity(st1, { type: 'PLAYING' }); 
+            await Util.delay(10000);
+            gideon.user.setActivity(st2, { type: 'WATCHING' }); 
+            await Util.delay(10000);
+            gideon.user.setActivity(st3, { type: 'WATCHING' });
+        }
+    }
 }
 
 module.exports = Util;

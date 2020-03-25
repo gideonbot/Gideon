@@ -32,30 +32,9 @@ gideon.once('ready', async () => {
     console.log('Ready!');
 
     Util.config.prefixes.push(`<@!${gideon.user.id}>`, `<@${gideon.user.id}>`);
-
-    async function status() {
-        let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
-        let mbc = await gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? 0 : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(x => !x.user.bot).size').catch(ex => console.log(ex));
-
-        if (mbc) mbc = mbc.filter(x => x);
-
-        if (guilds) {
-            guilds = [].concat.apply([], guilds);
-            
-            const st1 = `!help | gideonbot.co.vu`;
-            let st2 = `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`;
-            const st3 = `${guilds.length} Guilds`;
-    
-            gideon.user.setActivity(st1, { type: 'PLAYING' }); 
-            await Util.delay(10000);
-            gideon.user.setActivity(st2, { type: 'WATCHING' }); 
-            await Util.delay(10000);
-            gideon.user.setActivity(st3, { type: 'WATCHING' });
-        }
-    }
     
     const twodays = 1000 * 60 * 60 * 48;
-    setInterval(status, 30e3);
+    setInterval(Util.status, 30e3, gideon);
     setInterval(Util.SQLBkup, twodays, gideon);
 
     gideon.fetchApplication().then(app => {

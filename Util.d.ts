@@ -21,6 +21,7 @@ export function Split<T>(arr: T[], chunks: number): T[][];
 export function Starboard(reaction: Discord.MessageReaction, user: Discord.User, gideon: Discord.Client): Promise<void>;
 export function Selfhostlog(gideon: Discord.Client): Promise<void>;
 export function SQLBkup(gideon: Discord.Client): Promise<void>;
+export function status(gideon: Discord.Client): Promise<void>;
 export function GetNextEpisodeInfo(url: string): Promise<EpisodeInfo>;
 export function LeaveVC(message: Discord.Message): Promise<void>;
 export function SpeechRecognition(speech: ReadableStream): Promise<VoiceInfoResponse>;
