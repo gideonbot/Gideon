@@ -39,10 +39,19 @@ class SQL {
             sql.pragma("synchronous = 1");
             sql.pragma("journal_mode = wal");
         }
+
         const ubldb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'userblacklist';").get();
         if (!ubldb['count(*)']) {
             sql.prepare("CREATE TABLE userblacklist (user TEXT PRIMARY KEY, userval BIT);").run();
             sql.prepare("CREATE UNIQUE INDEX idx_ubl_id ON userblacklist (user);").run();
+            sql.pragma("synchronous = 1");
+            sql.pragma("journal_mode = wal");
+        }
+
+        const eggsdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'eastereggs';").get();
+        if (!eggsdb['count(*)']) {
+            sql.prepare("CREATE TABLE eastereggs (guild TEXT PRIMARY KEY, eggsval BIT);").run();
+            sql.prepare("CREATE UNIQUE INDEX idx_eggs_id ON eastereggs (guild);").run();
             sql.pragma("synchronous = 1");
             sql.pragma("journal_mode = wal");
         }
@@ -62,6 +71,9 @@ class SQL {
     
         gideon.getUBL = sql.prepare("SELECT * FROM userblacklist WHERE user = ?");
         gideon.setUBL = sql.prepare("INSERT OR REPLACE INTO userblacklist (user, userval) VALUES (@user, @userval);");
+
+        gideon.getEggs = sql.prepare("SELECT * FROM eastereggs WHERE guild = ?");
+        gideon.setEggs = sql.prepare("INSERT OR REPLACE INTO eastereggs (guild, eggsval) VALUES (@guild, @eggsval);");
     }
 }
 

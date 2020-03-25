@@ -13,7 +13,7 @@ class MsgHandler {
         Util.Checks.ABM(message, Util); //apply content filter
         Util.Checks.RulesCheck(message); //check if member read the guilds rules
         Util.Checks.CVM(message, gideon, Util); //apply crossover mode if enabled
-        Util.Checks.CSD(message, Util); //eastereggs
+        Util.Checks.CSD(message, gideon, Util); //eastereggs
         Util.TR.TRMode(message, gideon, Util); //apply trmode if enabled
 
         const lowercaseContent = message.content.toLowerCase();

@@ -146,7 +146,16 @@ class Checks {
      * Easter eggs
      * @param {Discord.Message} message 
      */
-    static async CSD(message, Util) {
+    static async CSD(message, gideon, Util) {
+        let eggs = gideon.getEggs.get(message.guild.id);
+        if (!eggs) {
+            eggs = {
+                guild: message.guild.id,
+                eggsval: 1,
+            }
+        }
+        if (eggs.eggsval === 0) return;
+
         const vid = 'https://cdn.discordapp.com/attachments/525341082435715085/638782331791867930/Crime_Solving_Devil.mp4';
         const tls = 'https://twitter.com/LaurenGerman/status/996886094305050627\nhttps://twitter.com/tomellis17/status/996889307506864128';
         const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';
