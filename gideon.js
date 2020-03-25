@@ -25,7 +25,6 @@ setTimeout(() => {
 }, 60e3);
 
 gideon.once('ready', async () => {
-    //if (!process.env.CI) await Util.NPMInstall(gideon);//install missing npm packages
     LoadCommands();
     Util.SQL.InitDB(gideon);
     Util.Selfhostlog(gideon);

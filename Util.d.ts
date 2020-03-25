@@ -18,7 +18,6 @@ export function AutoKick(member: Discord.GuildMember, gideon: Discord.Client): P
 export function LBG(guild: Discord.Guild, gideon: Discord.Client): Promise<void>;
 export function IBU(message: Discord.Message, gideon: Discord.Client): boolean;
 export function Split<T>(arr: T[], chunks: number): T[][];
-export function NPMInstall(gideon: Discord.Client): Promise<void>;
 export function Starboard(reaction: Discord.MessageReaction, user: Discord.User, gideon: Discord.Client): Promise<void>;
 export function Selfhostlog(gideon: Discord.Client): Promise<void>;
 export function SQLBkup(gideon: Discord.Client): Promise<void>;

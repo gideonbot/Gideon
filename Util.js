@@ -606,26 +606,6 @@ class Util {
     }
 
     /**
-     * Runs NPM Install
-     * @param {Discord.Client} gideon
-     */
-    static async NPMInstall(gideon) {
-        const exec = require('child_process').exec;
-
-        if (gideon.user.tag !== 'Gideon#2420') return;
-        
-        Util.log("`Now running npm install...`");
-        const install = exec('npm install');
-
-        install.stdout.on('data', data => Util.log("```\n" + data + "```"));
-
-        install.stdout.on('end', () => {
-            Util.log("`Automatic NPM install ran successfully!");
-            gideon.shard.respawnAll();
-        }); 
-    }
-
-    /**
      * Split Array into Arrays
      * @param {any[]} arr
      * @param {number} chunks
@@ -747,7 +727,7 @@ class Util {
 
             if (reaction.partial) await reaction.fetch();
             if (reaction.message.partial) await reaction.message.fetch();
-
+            if (reaction.message.deleted) return;
             if (reaction.message.guild.id !== '595318490240385037') return;
             if (reaction.emoji.name !== '⭐') return;
             if (reaction.message.embeds[0]) return;
