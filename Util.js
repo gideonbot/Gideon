@@ -1,11 +1,12 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const config = require("./data/JSON/config.json");
-const SQL = require('./Util/SQL')
-const Voice = require('./Util/Voice')
-const Checks = require('./Util/Checks')
-const TR = require('./Util/Translation')
-const MsgHandler = require('./Util/MessageHandler')
+const path = require('path');
+const SQL = require(path.resolve(__dirname,'./Util/SQL'))
+const Voice = require(path.resolve(__dirname,'./Util/Voice'))
+const Checks = require(path.resolve(__dirname,'./Util/Checks'))
+const TR = require(path.resolve(__dirname,'./Util/Translation'))
+const MsgHandler = require(path.resolve(__dirname,'./Util/MessageHandler'))
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
