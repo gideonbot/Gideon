@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const Util = require("../../Util");
+const moment = require('moment');
 
 /**
  * @param {Discord.Client} gideon
@@ -105,6 +106,7 @@ module.exports.run = async (gideon, message, args) => {
         let sp = '';
         let today = new Date();
         let airdate = new Date(body.airdate);
+        if (!moment(airdate).isValid()) sp = '||';
         if (today < airdate) sp = '||';
         let airtime = body.airtime;
         let desc = !body.summary ? 'No summary available' : body.summary.replace("<p>", "").replace("</p>", "");
@@ -120,7 +122,7 @@ module.exports.run = async (gideon, message, args) => {
         timeString = h + ":" + timeString.split(":")[1] + am_pm;
     
         message.channel.send(Util.CreateEmbed(`${show.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
-            description: sp + desc + sp + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`,
+            description: sp + desc + sp + `\n\nAirdate: \`${moment(airdate).isValid() ? airdate.toDateString() : 'No Airdate Available'}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`,
             image: img
         }));
     }
