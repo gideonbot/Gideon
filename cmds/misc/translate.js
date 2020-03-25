@@ -9,7 +9,7 @@ const Util = require("../../Util");
 module.exports.run = async (gideon, message, args) => {
     if (!args[0]) return message.reply('you must provide input to translate something!');
 
-    let tr = await Util.Translate(args.join(' '));
+    let tr = await Util.TR.Translate(args.join(' '));
 
     message.channel.send(Util.CreateEmbed(null, {
         author: {

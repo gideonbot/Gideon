@@ -3,6 +3,8 @@ const fetch = require('node-fetch');
 const config = require("./data/JSON/config.json");
 const SQL = require('./Util/SQL')
 const Voice = require('./Util/Voice')
+const Checks = require('./Util/Checks')
+const TR = require('./Util/Translation')
 const MsgHandler = require('./Util/MessageHandler')
 
 Array.prototype.remove = function(...item) {
@@ -35,6 +37,8 @@ class Util {
     static get config() { return config; }
     static get SQL() { return SQL; }
     static get Voice() { return Voice; }
+    static get Checks() { return Checks; }
+    static get TR() { return TR; }
     static get MsgHandler() { return MsgHandler; }
 
     /**
@@ -197,139 +201,6 @@ class Util {
     }
 
     /**
-     * @param {Discord.Message} message
-     * @returns {Promise<{match: boolean, content: string}>}
-     */
-    static ABM_Test(message) {
-        // eslint-disable-next-line no-async-promise-executor
-        return new Promise(async (resolve, reject) => {
-            const content = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
-
-            const abm = [
-                'twitter.com/Pagmyst',
-                'instagram.com/pageyyt',
-                'youtube.com/user/SmallScreenYT',
-                'instagram.com/thedctvshow',
-                'twitter.com/thedctvshow',
-                'youtube.com/channel/UCvFS-R57UT1q2U_Jp4pi1eg',
-                'youtube.com/channel/UC6mI3QJFH1m2V8ZHvvHimVA',
-                'twitter.com/theblackestlion',
-                'twitter.com/tvpromosdb',
-                'youtube.com/channel/UCDR8cvjALazMm2j9hOar8_g',
-                'https://wegotthiscovered.com',
-                'https://twitter.com/wgtc_site'
-            ];
-
-            for (let url of abm) {
-                if (content.includes(url.toLowerCase())) return resolve({match: true, content: url});
-            }
-
-            // eslint-disable-next-line no-useless-escape
-            const ytrg = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
-            const cids = ['UCTbT2FgB9oMpi4jB9gNPadQ', 'UCvFS-R57UT1q2U_Jp4pi1eg', 'UC6mI3QJFH1m2V8ZHvvHimVA', 'UCDR8cvjALazMm2j9hOar8_g'];
-
-            if (message.content.match(ytrg)) {
-                const id = message.content.match(ytrg);
-                const google_api_key = process.env.GOOGLE_API_KEY;
-
-                if (!google_api_key) return reject("No google API key");
-
-                const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
-
-                try {
-                    const body = await fetch(api).then(res => res.json());
-
-                    const channel_id = body && body.items && body.items[0] && body.items[0].snippet && body.items[0].snippet.channelId ? body.items[0].snippet.channelId : null;
-                    if (!channel_id) return reject("Failed to get data from API");
-
-                    if (cids.includes(channel_id)) return resolve({match: true, content: "`" + message.content + "`"});
-                }
-
-                catch (e) {
-                    Util.log("Failed to fetch data from YT API: " + e);
-                    return reject(e);
-                }
-            }
-
-            else resolve({match: false});
-        });
-    }
-
-    /**
-     * @param {Discord.Message} message 
-     */
-    static ABM(message) {
-        const siren = '<a:siren:669518972407775265>';
-
-        Util.ABM_Test(message).then(async res => {
-            if (res.match) {
-                await message.delete({ timeout: 200 });
-                Util.log("ABM triggered by: " + message.author.tag + " (" + res.content + ")");
-                message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-Bitch-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}) });
-            }
-        }, failed => console.log(failed));
-    }
-
-    /**
-     * @param {Discord.Message} message 
-     * @param {Discord.Client} gideon 
-     */
-    static async CVM(message, gideon) {
-        let cvm = gideon.getCVM.get(message.guild.id);
-        if (!cvm) return;
-        if (cvm.cvmval === 0) return;
-
-        const ids = ['595944027208024085', '595935317631172608', '595935345598529546', '598487475568246830', '622415301144870932', '596080078815887419'];
-
-        if (ids.includes(message.channel.id)) return; //exclude certain channels
-
-        const lowercaseContent = message.content.toLowerCase();
-
-        // Find the prefix that was used
-        const usedPrefix = config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
-        let args = '';
-
-        if (!usedPrefix) args = message.content.split(' ').map(x => x.trim()).filter(x => x);
-        else args = message.content.slice(usedPrefix.length).trim().split(" ");
-
-        if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
-
-        let plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
-
-        // eslint-disable-next-line no-useless-escape
-        if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
-            await message.delete({ timeout: 200 });
-            return message.reply('Links are not allowed meanwhile Crossover-Mode is active!');
-        }
-
-        let trmode = gideon.getTrmode.get(message.author.id);
-        if (trmode) if (trmode.trmodeval === 1) {
-            let tr = await Util.Translate(plainText);
-            plainText = `(${tr[1]}) ${tr[0]}`;
-        }
-
-        await message.channel.send(Util.CreateEmbed(null, {
-            description: `${plainText ? '||' + plainText + '||' : ''}`,
-            author: {
-                name: `${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}:`,
-                icon: message.author.avatarURL()
-            }
-        }));
-
-        //we don't send the file in the same message because it shows it above the embed (bad)
-        if (message.attachments.filter(x => x.size / 1024 <= 1000).size > 0) {
-            //we reupload attachments smaller than ~1000 KB
-            await message.channel.send({files: message.attachments.filter(x => x.size / 1024 <= 1000).map(x => {
-                let split = x.url.split("/");
-                let filename = split[split.length - 1];
-                return new Discord.MessageAttachment(x.url, 'SPOILER_' + filename);
-            })});
-        }
-
-        message.delete({ timeout: 200 });
-    }
-
-    /**
      * Get image from imgur album
      * @param {string} imgid 
      * @param {Discord.Message} message
@@ -355,31 +226,6 @@ class Util {
 
             message.channel.send(Util.CreateEmbed(imgid == 'ngJQmxL' ? 'Germ approves!:white_check_mark:' : '', {image: rimg}));
         });
-    }
-
-    /**
-     * Easter eggs
-     * @param {Discord.Message} message 
-     */
-    static async CSD(message) {
-        const vid = 'https://cdn.discordapp.com/attachments/525341082435715085/638782331791867930/Crime_Solving_Devil.mp4';
-        const tls = 'https://twitter.com/LaurenGerman/status/996886094305050627\nhttps://twitter.com/tomellis17/status/996889307506864128';
-        const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';
-        const img = 'https://media.discordapp.net/attachments/669243069878501385/687048353296678943/es7-promise-async-await-es6-promise-es5-callback-hell-async-27790051.png';
-        const vid2 = 'https://cdn.discordapp.com/attachments/679864620864765983/686589432501239899/Hi_Im_Richard_Castle.mp4';
-        const train = 'https://cdn.discordapp.com/attachments/679864620864765983/688677813934620725/Gary_the_unspeakable_train-abomination.mp4';
-        const yombo = 'https://cdn.discordapp.com/attachments/679864620864765983/692020740215537755/YomboBomboMomboJombo.mp4';
-
-        if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
-        if (message.content.match(/(?:deckerstar)/i)) Util.IMG('rJpbLQx', message);
-        if (message.content.match(/(?:caskett)/i)) Util.IMG('eemyeVL', message);
-        if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
-        if (message.content.match(/(?:germ)/i)) Util.IMG('ngJQmxL', message);
-        if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.CreateEmbed(null, {image: ctm}));
-        if (message.content.match(/(?:callback)/i)) message.channel.send(Util.CreateEmbed(null, {image: img}));
-        if (message.content.match(/(?:castle)/i)) message.channel.send(vid2);
-        if (message.content.match(/(?:constantine)/i)) message.channel.send(yombo);
-        if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) message.channel.send(train);
     }
 
     /**
@@ -493,63 +339,6 @@ class Util {
         return embed;
     }
 
-    /** 
-     * Translate texts
-     * @param {String} input 
-     */
-    static async Translate(input) {
-        const sourceLang = 'auto';
-        const targetLang = 'en';
-        const sourceText = input
-
-        const api = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
-        + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
-
-        const body = await fetch(api).then(res => res.json());
-        let sourceflag = `:flag_${body[2]}:`;
-        if (body[2] == targetLang) sourceflag = ':flag_gb:';
-
-        return [body[0][0][0], sourceflag]
-    }
-
-    /** 
-     * Automatic translation mode 
-     * @param {Discord.Message} message 
-     * @param {Discord.Client} gideon
-     */
-    static async TRMode(message, gideon) {
-        const lowercaseContent = message.content.toLowerCase();
-
-        // Find the prefix that was used
-        const usedPrefix = config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
-        let args = '';
-
-        if (!usedPrefix) args = message.content.split(' ').map(x => x.trim()).filter(x => x);
-        else args = message.content.slice(usedPrefix.length).trim().split(" ");
-
-        if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
-
-        let cvm = gideon.getCVM.get(message.guild.id); //if CVM is enabled, return
-        if (cvm) if (cvm.cvmval === 1) return;
-        
-        let trmode = gideon.getTrmode.get(message.author.id);
-        if (!trmode) {
-            trmode = {
-                id: message.author.id,
-                trmodeval: 0,
-            }
-            gideon.setTrmode.run(trmode);
-        }
-        
-        if (trmode.trmodeval === 0) return;
-
-        else {
-            let tr = await Util.Translate(args.join(' '));
-            await message.delete({ timeout: 200 });
-            message.channel.send(Util.CreateEmbed(null, {description: `(${tr[1]}) ${tr[0]}`, author: {name: `${message.author.tag} said:`, icon: message.author.avatarURL()}}));
-        }
-    }
-
     /**
      * Cuts string down to specified length
      * @param {string} str 
@@ -570,41 +359,6 @@ class Util {
         if (num == undefined || typeof(num) != "number") return "";
 
         return num.toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping: false});
-    }
-
-    /**
-     * Leaves a blacklisted guild
-     * @param {Discord.Guild} guild 
-     */
-    static async LBG(guild, gideon) {
-        const id = guild.id;
-        let gbl = gideon.getGBL.get(id);
-        if (!gbl) return;
-        if (gbl.guildval === 0) return;
-
-        let textchannels = guild.channels.cache.filter(c=> c.type == "text");
-        let channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
-        if (!channels.size) {
-            await guild.leave();
-            Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
-        }
-
-        else{
-            channels.random().send('This guild is banned by the bot owner!\nNow leaving this guild!');
-            await guild.leave();
-            Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
-        }
-    }
-
-    /**
-     * Ignore commands from blacklisted users
-     * @param {Discord.Message} message 
-     * @returns {boolean}
-     */
-    static IBU(message, gideon) {
-        let ubl = gideon.getGBL.get(message.author.id);
-        if (!ubl) return;
-        return ubl.userval === 1;
     }
 
     /**
@@ -637,27 +391,6 @@ class Util {
 
         const options = { method: 'POST', body: JSON.stringify(body, null, 2), headers: { "Content-Type": "application/json" } };
         fetch(api, options);
-    }
-
-    /**
-     * Rules check
-     * @param {Discord.Message} message 
-     */
-    static async RulesCheck(message) {
-        if (message.guild.id !== '595318490240385037') return;
-        if (message.member.roles.cache.has('688430418466177082')) return;
-
-        if (message.channel.id === '595934999824302091') {
-            if (message.content.match(/(?:readdemrulez)/i)) {
-                await message.delete({ timeout: 200 });
-                const role = message.guild.roles.cache.get('688430418466177082');
-                const member = message.member;
-                await member.roles.add(role);
-                await message.reply(`\`you have been given the\` ${role} \`role and gained access to\` <#595935317631172608>\`!\``);
-            }
-        }
-        
-        else return message.reply('`you have not yet read the rules. You will be kicked immediately if you keep refusing to.`');
     }
 
     /**

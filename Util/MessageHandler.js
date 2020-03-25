@@ -1,5 +1,3 @@
-const Discord = require("discord.js");
-
 class MsgHandler {
     constructor() {
         throw new Error('This class cannot be instantiated!');
@@ -10,13 +8,13 @@ class MsgHandler {
         if (!message.guild.me) message.guild.members.fetch();
         if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
         
-        if (Util.IBU(message, gideon)) return; //check if user is blacklisted, if yes, return
-        Util.LBG(message.guild, gideon); //check if guild is blacklisted, if yes, leave
-        Util.ABM(message); //apply content filter
-        Util.RulesCheck(message); //check if member read the guilds rules
-        Util.CVM(message, gideon); //apply crossover mode if enabled
-        Util.CSD(message); //eastereggs
-        Util.TRMode(message, gideon); //apply trmode if enabled
+        if (Util.Checks.IBU(message, gideon)) return; //check if user is blacklisted, if yes, return
+        Util.Checks.LBG(message.guild, gideon, Util); //check if guild is blacklisted, if yes, leave
+        Util.Checks.ABM(message, Util); //apply content filter
+        Util.Checks.RulesCheck(message); //check if member read the guilds rules
+        Util.Checks.CVM(message, gideon, Util); //apply crossover mode if enabled
+        Util.Checks.CSD(message, Util); //eastereggs
+        Util.TR.TRMode(message, gideon, Util); //apply trmode if enabled
 
         const lowercaseContent = message.content.toLowerCase();
         const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
