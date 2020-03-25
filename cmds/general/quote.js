@@ -14,8 +14,8 @@ module.exports.run = async (gideon, message) => {
     }
 
     catch (ex) {
-        console.log("An error occurred while trying to fetch a quote: " + ex);
-        Util.log("An error occurred while trying to fetch a quote: " + ex);
+        console.log("An error occurred while trying to fetch a quote: " + ex.stack);
+        Util.log("An error occurred while trying to fetch a quote: " + ex.stack);
 
         return message.channel.send(Util.CreateEmbed('Failed to fetch a quote, please try again later!'));
     }

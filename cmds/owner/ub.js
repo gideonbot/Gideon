@@ -43,8 +43,8 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     catch (ex) {
-        console.log("Caught an exception while running ub.js: " + ex);
-        Util.log("Caught an exception while running ub.js: " + ex);
+        console.log("Caught an exception while running ub.js: " + ex.stack);
+        Util.log("Caught an exception while running ub.js: " + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 }

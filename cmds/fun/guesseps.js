@@ -273,8 +273,8 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     catch (ex) {
-        console.log("Caught an exception while running guesseps.js: " + ex);
-        Util.log("Caught an exception while running guesseps.js: " + ex);
+        console.log("Caught an exception while running guesseps.js: " + ex.stack);
+        Util.log("Caught an exception while running guesseps.js: " + ex.stack);
         message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 }

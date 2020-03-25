@@ -36,8 +36,8 @@ module.exports.run = async (gideon, message) => {
     }
 
     catch (ex) {
-        console.log("Caught an exception while running bl.js: " + ex);
-        Util.log("Caught an exception while running bl.js: " + ex);
+        console.log("Caught an exception while running bl.js: " + ex.stack);
+        Util.log("Caught an exception while running bl.js: " + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 }

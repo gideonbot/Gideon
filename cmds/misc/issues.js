@@ -75,8 +75,8 @@ module.exports.run = async (gideon, message) => {
         }
 
         catch (ex) {
-            console.log("Caught an exception while running issues.js: " + ex);
-            Util.log("Caught an exception while running issues.js: " + ex);
+            console.log("Caught an exception while running issues.js: " + ex.stack);
+            Util.log("Caught an exception while running issues.js: " + ex.stack);
             return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
         }
     }
@@ -101,8 +101,8 @@ module.exports.run = async (gideon, message) => {
     }
     
     catch (ex) {
-        console.log("Caught an exception while fetching issues: " + ex);
-        Util.log("Caught an exception while fetching issues: " + ex);
+        console.log("Caught an exception while fetching issues: " + ex.stack);
+        Util.log("Caught an exception while fetching issues: " + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 }

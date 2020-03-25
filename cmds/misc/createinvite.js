@@ -25,8 +25,8 @@ module.exports.run = async (gideon, message, args) => {
     }
     
     catch (ex) {
-        console.log("Caught an exception while creating invites!: " + ex);
-        Util.log("Caught an exception while creating invites!: " + ex);
+        console.log("Caught an exception while creating invites!: " + ex.stack);
+        Util.log("Caught an exception while creating invites!: " + ex.stack);
         return message.channel.send(er);
     }      
 }

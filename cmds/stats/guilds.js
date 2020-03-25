@@ -21,7 +21,7 @@ module.exports.run = async (gideon, message) => {
     }
     catch (ex) {
         console.log(ex);
-        Util.log("Caught an exception while running torrent.js: " + ex);
+        Util.log("Caught an exception while running torrent.js: " + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 }

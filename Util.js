@@ -730,8 +730,8 @@ class Util {
         }
         
         catch (ex) {
-            console.log("Caught an exception while backing up!: " + ex);
-            Util.log("Caught an exception while backing up!: " + ex);
+            console.log("Caught an exception while backing up!: " + ex.stack);
+            Util.log("Caught an exception while backing up!: " + ex.stack);
         }      
     }
 
@@ -773,8 +773,8 @@ class Util {
         }
         
         catch (ex) {
-            console.log("Caught an exception while starboarding!: " + ex);
-            Util.log("Caught an exception while starboarding!: " + ex);
+            console.log("Caught an exception while starboarding!: " + ex.stack);
+            Util.log("Caught an exception while starboarding!: " + ex.stack);
         }      
     }
 }

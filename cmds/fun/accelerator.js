@@ -23,8 +23,8 @@ module.exports.run = async (gideon, message) => {
     }
     
     catch (ex) {
-        console.log("Exception occurred while starting up the particle accelerator " + ex);
-        Util.log("Exception occurred while starting up the particle accelerator " + ex);
+        console.log("Exception occurred while starting up the particle accelerator " + ex.stack);
+        Util.log("Exception occurred while starting up the particle accelerator " + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while trying to start the particle accelerator!'));
     }
 

@@ -138,8 +138,8 @@ gideon.on("guildCreate", guild => {
     }
     
     catch (ex) {
-        console.log("Caught an exception while creating invites!: " + ex);
-        Util.log("Caught an exception while creating invites!: " + ex);
+        console.log("Caught an exception while creating invites!: " + ex.stack);
+        Util.log("Caught an exception while creating invites!: " + ex.stack);
     }      
 });
 

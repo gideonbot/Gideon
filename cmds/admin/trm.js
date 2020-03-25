@@ -19,8 +19,8 @@ module.exports.run = async (gideon, message) => {
                 message.channel.send('All server roles are now mentionable! :white_check_mark:');
             }
             catch (ex) {
-                console.log("Caught an exception while toggling roles: " + ex);
-                Util.log("Caught an exception while toggling roles: " + ex);
+                console.log("Caught an exception while toggling roles: " + ex.stack);
+                Util.log("Caught an exception while toggling roles: " + ex.stack);
                 return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
             }
         }
@@ -31,8 +31,8 @@ module.exports.run = async (gideon, message) => {
                 message.channel.send('All server roles are now no longer mentionable! :white_check_mark:');
             }
             catch (ex) {
-                console.log("Caught an exception while toggling roles: " + ex);
-                Util.log("Caught an exception while toggling roles: " + ex);
+                console.log("Caught an exception while toggling roles: " + ex.stack);
+                Util.log("Caught an exception while toggling roles: " + ex.stack);
                 return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
             }
         }

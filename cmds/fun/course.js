@@ -34,8 +34,8 @@ module.exports.run = async (gideon, message, args) => {
     }
     
     catch (ex) {
-        console.log("Caught an exception while plotting a course: " + ex);
-        Util.log("Caught an exception while plotting a course: " + ex);
+        console.log("Caught an exception while plotting a course: " + ex.stack);
+        Util.log("Caught an exception while plotting a course: " + ex.stack);
         
         return message.channel.send(Util.CreateEmbed('An error occurred while trying to plot a course!'));
     }
