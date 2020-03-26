@@ -439,7 +439,7 @@ class Util {
             channel.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
             await del(arc);
             const lastbkup = await channel.messages.fetchPinned({ limit: 1 });
-            if (lastbkup) await lastbkup.first().unpin();
+            if (lastbkup.first()) await lastbkup.first().unpin();
             const msg = await channel.messages.fetch({ limit: 1 });
             const bkupmsg = msg.first();
             await bkupmsg.pin();
@@ -595,6 +595,15 @@ class Util {
             let took = (end - start) / BigInt("1000000");
             console.log(`All commands loaded in ${took}ms`);
         });
+    }
+
+    /**
+     * Parse Snowflakes
+     * @param {string} input
+     */
+    static ValID(input) {
+        if (!input.match(/^\d{17,19}$/)) return;
+        else return input.match(/^\d{17,19}$/)[0];
     }
 }
 

@@ -11,9 +11,7 @@ module.exports.run = async (gideon, message, args) => {
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
 
-    let noid = isNaN(args[0]);
-
-    if (noid && !args[0].length >= 18) return message.channel.send(as);
+    if (!Util.ValID(args[0])) return message.channel.send(as);
 
     try {
         let gb = gideon.getGBL.get(args[0]);

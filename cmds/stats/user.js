@@ -13,13 +13,12 @@ module.exports.run = async (gideon, message, args) => {
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
 
-    let noid = isNaN(args[0]);
     const auth = message.author;
     let user;
 
-    if (noid && message.mentions.users.first()) user = message.mentions.users.first();
-    else if (!noid && args[0].length >= 18) user = gideon.users.cache.get(args[0]);
-    else if (noid && !message.mentions.users.first()) {
+    if (!Util.ValID(args[0]) && message.mentions.users.first()) user = message.mentions.users.first();
+    else if (Util.ValID(args[0])) user = gideon.users.cache.get(args[0]);
+    else if (!Util.ValID(args[0]) && !message.mentions.users.first()) {
         const match = stringSimilarity.findBestMatch(args[0].toLowerCase(), gideon.users.cache.map(x => x.username.toLowerCase())).bestMatch;
 
         if (match.rating == 0) return message.channel.send(as);
@@ -65,6 +64,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     const member = message.guild.member(user);
+    if (member.lastMessage.partial) await member.lastMessage.fetch();
     const perms = Util.truncate(member.permissions.toArray().map(perms => `\`${perms}\``).join(' '), 200, true);
 
     const embed = Util.CreateEmbed(null, {
