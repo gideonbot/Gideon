@@ -494,6 +494,10 @@ class Util {
         }      
     }
 
+    /**
+     * Status
+     * @param {Discord.Client} gideon
+     */
     static async status(gideon) {
         let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
         let mbc = await gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? 0 : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(x => !x.user.bot).size').catch(ex => console.log(ex));
@@ -513,6 +517,84 @@ class Util {
             await Util.delay(10000);
             gideon.user.setActivity(st3, { type: 'WATCHING' });
         }
+    }
+
+    /**
+     * Invite
+     * @param {Discord.Guild} guild
+     */
+    static async Invite(guild) {
+        try {
+            let textchannels = guild.channels.cache.filter(c=> c.type == "text");
+            let invitechannels = textchannels.filter(c=> c.permissionsFor(guild.me).has('CREATE_INSTANT_INVITE'));
+            if (!invitechannels.size) return;
+    
+            invitechannels.random().createInvite().then(invite=> Util.log('Found Invite:\n' + 'https://discord.gg/' + invite.code));
+        }
+        
+        catch (ex) {
+            console.log("Caught an exception while creating invites!: " + ex.stack);
+            Util.log("Caught an exception while creating invites!: " + ex.stack);
+        }      
+    }
+
+    /**
+     * Welcome stuff
+     * @param {Discord.GuildMember} member
+     * @param {Discord.Client} gideon
+     */
+    static async Welcome(member, gideon) {
+        if (member.guild.id !== '595318490240385037') return;
+        const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
+        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
+        const welcome = `\`Greetings Earth-Prime-ling\` ${member.user.toString()}\`!\`\n\`Welcome to the Time Vault\`<:timevault:686676561298063361>\`!\`\n\`If you want full server access make sure to read\` <#595935345598529546>\`!\`\n\`Ignoring this will get you kicked in 60 minutes!\`\n${logos}`;
+        channel.send(welcome);
+        member.send(welcome).catch(ex => console.log(ex));
+        Util.AutoKick(member, gideon);
+    }
+
+    /**
+     * Load cmds
+     * @param {Discord.Client} gideon
+     */
+    static LoadCommands(gideon) {
+        const recursive = require("recursive-readdir");
+        console.log(process.cwd());
+        let start = process.hrtime.bigint();
+    
+        recursive("./cmds", (err, files) => {
+            if (err) {
+                Util.log("Error while reading commands:\n" + err);
+                console.log(err);
+                return;
+            }
+    
+            let jsfiles = files.filter(fileName => fileName.endsWith(".js"));
+            if (jsfiles.length < 1) {
+                console.log("No commands to load!");
+                return;
+            }
+            console.log(`Found ${jsfiles.length} commands`);
+    
+            jsfiles.forEach((fileName, i) => {
+                let cmd_start = process.hrtime.bigint();
+                let props = require(`./${fileName}`);
+        
+                if (Array.isArray(props.help.name)) {
+                    for (let item of props.help.name) gideon.commands.set(item, props);
+                }
+                else gideon.commands.set(props.help.name, props);
+        
+                let cmd_end = process.hrtime.bigint();
+                let took = (cmd_end - cmd_start) / BigInt("1000000");
+        
+                console.log(`${Util.normalize(i + 1)} - ${fileName} loaded in ${took}ms`);
+            });
+    
+            let end = process.hrtime.bigint();
+            let took = (end - start) / BigInt("1000000");
+            console.log(`All commands loaded in ${took}ms`);
+        });
     }
 }
 

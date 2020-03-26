@@ -211,7 +211,7 @@ class Checks {
         return ubl.userval === 1;
     }
 
-        /**
+    /**
      * Rules check
      * @param {Discord.Message} message 
      */
@@ -230,6 +230,28 @@ class Checks {
         }
         
         else return message.reply('`you have not yet read the rules. You will be kicked immediately if you keep refusing to.`');
+    }
+
+    /**
+     * VC check
+     * @param {Discord.Message} message 
+     */
+    static async VCCheck(oldState, newState, gideon) {
+        let newChannel = newState.channel;
+        let oldChannel = oldState.channel;
+    
+        if (oldChannel && !newChannel) {
+            //User leaves a voice channel
+            const members = oldChannel.members.map(x => x.id);
+            if (!members.includes(gideon.user.id)) return;
+    
+            const bot_count = oldChannel.members.filter(x => x.user.bot).size;
+    
+            if (oldChannel.members.size - bot_count === 0) {
+                gideon.emptyvc = true;
+                return oldChannel.leave();
+            }
+        }
     }
 }
 module.exports = Checks;
