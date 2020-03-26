@@ -27,6 +27,7 @@ class MsgHandler {
         if (!cmd) return;
 
         const command = gideon.commands.get(cmd.toLowerCase());
+        if (!command) return;
 
         if (command.help.owner) {
             if (message.author.id !== gideon.owner) return message.reply('you do not have the required permission to use this command!\n Required permission: `Application Owner`');
@@ -86,6 +87,7 @@ class MsgHandler {
         }
 
         if (command) command.run(gideon, message, args);
-        }
+    }
 }
+
 module.exports = MsgHandler;
