@@ -74,7 +74,7 @@ class Checks {
     static ABM(message, Util) {
         const siren = '<a:siren:669518972407775265>';
 
-        this.ABM_Test(message).then(async res => {
+        this.ABM_Test(message, Util).then(async res => {
             if (res.match) {
                 await message.delete({ timeout: 200 });
                 Util.log("ABM triggered by: " + message.author.tag + " (" + res.content + ")");
