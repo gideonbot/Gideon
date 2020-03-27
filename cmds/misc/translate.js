@@ -32,7 +32,7 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: ["tr", "translate"],
     type: "misc",
-    help_text: "!tr <text>",
+    help_text: "tr <text>",
     help_desc: "Translates text",
     owner: false,
     timevault: false,
