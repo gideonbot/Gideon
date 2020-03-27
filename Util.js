@@ -205,8 +205,9 @@ class Util {
      * Get image from imgur album
      * @param {string} imgid 
      * @param {Discord.Message} message
+     * @param {boolean} nsfw
      */
-    static async IMG(imgid, message) {
+    static async IMG(imgid, message, nsfw) {
         const Imgur = require('imgur-node');
 
         if (!process.env.IMG_CL) return;
@@ -224,6 +225,15 @@ class Util {
             let max = res.images.length - 1;
             let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
             let rimg = res.images[ranum].link;
+
+            if (nsfw) {
+                const img =  { files: [ {
+                attachment: rimg,
+                name: "SPOILER_NSFW.gif" 
+                }]}
+
+                return message.channel.send(img);
+            }
 
             message.channel.send(Util.CreateEmbed(imgid == 'ngJQmxL' ? 'Germ approves!:white_check_mark:' : '', {image: rimg}));
         });

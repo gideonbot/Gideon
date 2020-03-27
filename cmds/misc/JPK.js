@@ -24,7 +24,8 @@ module.exports.run = async (gideon, message, args) => {
     .addField('!JPK DM', 'Deep Murder')
     .addField('!JPK TSC', 'The Secret Circle')
     .addField('!JPK ILBAL', 'I Love Bekka & Lucy')
-    .addField('!JPK FS5GR', 'The Flash - S5 Gag Reel');
+    .addField('!JPK FS5GR', 'The Flash - S5 Gag Reel')
+    .addField('!JPK NSFW', 'NSFW');
 
     let rjpka;  
 
@@ -39,6 +40,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:tsc)/i)) rjpka = "UcPxCV5";
     else if (args[0].match(/(?:ilbal)/i)) rjpka = "f8mENXa";
     else if (args[0].match(/(?:fs5gr)/i)) rjpka = "eLugrZD";
+    else if (args[0].match(/(?:nsfw)/i)) return Util.IMG('AwPimhP', message, true);
     else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`)); 
 
     Util.IMG(rjpka, message);
@@ -47,7 +49,7 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: "jpk",
     type: "fun",
-    help_text: "jpk",
+    help_text: "jpk <:18:693135780796694668>",
     help_desc: "Displays a random JPK gif",
     owner: false,
     timevault: false,

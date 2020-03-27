@@ -12,7 +12,7 @@ export function log(message: string, files: string[]): boolean;
 export function ABM_Test(message: Discord.Message): Promise<ABMResult>;
 export function ABM(message: Discord.Message): void;
 export function CVM(message: Discord.Message, gideon: Discord.Client): Promise<Discord.Message>;
-export function IMG(image_id: string, message: Discord.Message): Promise<void>;
+export function IMG(image_id: string, message: Discord.Message, nsfw: boolean): Promise<void>;
 export function CSD(message: Discord.Message): Promise<void>;
 export function AutoKick(member: Discord.GuildMember, gideon: Discord.Client): Promise<void>;
 export function LBG(guild: Discord.Guild, gideon: Discord.Client): Promise<void>;

@@ -22,7 +22,7 @@ module.exports.run = async (gideon, message, args) => {
             title: 'DC'
         },
         {
-            url: 'krypton-series.fandom.com',
+            url: 'krypton.fandom.com',
             title: 'Krypton'
         },
         {
@@ -57,8 +57,8 @@ module.exports.run = async (gideon, message, args) => {
 
         const body = await fetch(api).then(res => res.json());
 
-        //stargirl does some weird stuff, therefore the actual result is the 2nd element
-        const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 ? 1 : 0];
+        //stargirl & krypton do some weird stuff, therefore the actual result is the 2nd element
+        const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 || wikis.indexOf(wiki) == 3 ? 1 : 0];
 
         if (Object.keys(body.items).length < 1) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!`));
         
