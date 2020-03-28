@@ -11,6 +11,8 @@ export function secondsToDifferenceString(seconds: number, settings: secondsToDi
 export function log(message: string, files: string[]): boolean;
 export function ABM_Test(message: Discord.Message): Promise<ABMResult>;
 export function ABM(message: Discord.Message): void;
+export function LoadCommands(gideon: Discord.Client): void;
+export function ValID(input: string): string;
 export function CVM(message: Discord.Message, gideon: Discord.Client): Promise<Discord.Message>;
 export function IMG(image_id: string, message: Discord.Message, nsfw: boolean): Promise<void>;
 export function CSD(message: Discord.Message): Promise<void>;
@@ -22,6 +24,8 @@ export function Starboard(reaction: Discord.MessageReaction, user: Discord.User,
 export function Selfhostlog(gideon: Discord.Client): Promise<void>;
 export function SQLBkup(gideon: Discord.Client): Promise<void>;
 export function status(gideon: Discord.Client): Promise<void>;
+export function Invite(guild: Discord.Guild): Promise<void>;
+export function Welcome(member: Discord.GuildMember, gideon: Discord.Client): Promise<void>;
 export function GetNextEpisodeInfo(url: string): Promise<EpisodeInfo>;
 export function LeaveVC(message: Discord.Message): Promise<void>;
 export function SpeechRecognition(speech: ReadableStream): Promise<VoiceInfoResponse>;
