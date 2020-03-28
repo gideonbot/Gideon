@@ -5,10 +5,6 @@ class Checks {
         throw new Error('This class cannot be instantiated!');
     }
 
-    static get config() {
-        return config;
-    }
-
     /**
      * @param {Discord.Message} message
      * @returns {Promise<{match: boolean, content: string}>}
