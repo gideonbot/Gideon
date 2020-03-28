@@ -58,7 +58,7 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: ['chat', 'talk', 'speak'],
+    name: ['chat', 'ai', 'speak'],
     type: 'fun',
     help_text: 'chat',
     help_desc: 'Chat with an AI',

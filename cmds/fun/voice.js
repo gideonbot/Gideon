@@ -27,12 +27,12 @@ module.exports.run = async (gideon, message, args) => {
        return;
     }
 
-    if (args[0] == 'help') {
+    if (args[0] === 'help') {
        await message.channel.send(voicehelp);
        return;
     }
 
-    if (args[0] == 'tutorial') {
+    if (args[0] === 'tutorial') {
        const url = 'https://drive.google.com/open?id=1or3CxJCQXkEaaKTU0jz7ZDGO4zwfRP8L';
        await message.channel.send(url);
        return;

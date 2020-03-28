@@ -95,7 +95,7 @@ module.exports.run = async (gideon, message, args) => {
             const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
             embed.setDescription('Use `!help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes);
 
-            for (let item of arrs[i]) embed.addField(item.toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
+            for (let item of arrs[i]) embed.addField(item.toLowerCase().startsWith("gideon") || item.help.type === 'voice' ? item : Util.config.prefixes[0] + item, commands[item]);
             
             embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
             pages.push(embed);
