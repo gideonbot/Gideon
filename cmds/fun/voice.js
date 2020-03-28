@@ -52,28 +52,32 @@ module.exports.run = async (gideon, message, args) => {
             if (gideon.vcmdexec) return; //disable speechrocgnition while voice command is running
             
             if (speaking.has('SPEAKING')) {
+                message.channel.startTyping();
+ 
                 console.log(`Listening to ${user.username}`);
                 console.log(`SPEAKING:`, speaking);
 
                 const audio = connection.receiver.createStream(user, { mode: 'pcm' });
 
-                audio.on('end', async () => {
+                audio.on('end', () => {
                     console.log(`Stopped listening to ${user.username}`);
-
-                    const SpeechRec = await Util.Voice.SpeechRecognition(audio, message.channel);
-
-                    if (SpeechRec) {
-                        let entities = SpeechRec.entities;
-                        if (!entities) return;
-        
-                        let intent = Object.values(entities)[0];
-                        if (!intent) return;
-        
-                        let value = intent[0].value;
-        
-                        await Util.Voice.VoiceResponse(value, gideon, message, connection, Util);
-                    }
                 })
+
+                const SpeechRec = await Util.Voice.SpeechRecognition(audio, message.channel, gideon);
+
+                if (SpeechRec) {
+                    let entities = SpeechRec.entities;
+                    if (!entities) return;
+    
+                    let intent = Object.values(entities)[0];
+                    if (!intent) return;
+    
+                    let value = intent[0].value;
+                    
+                    gideon.vcmdexec = true;
+                    await Util.Voice.VoiceResponse(value, gideon, message, connection, Util);
+                    await message.channel.stopTyping(true);
+                }
             }
         }); 
     }

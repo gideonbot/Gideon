@@ -27,7 +27,8 @@ class MsgHandler {
         if (!cmd) return;
 
         const command = gideon.commands.get(cmd.toLowerCase());
-        if (!command) return;
+        if (!command) return gideon.vcmdexec = false;
+        
 /*unfinished spam check thingy
         if (!gideon.spamcounter.get(message.author.id)) {
             gideon.spamcounter.set(message.author.id, {count: 0})
@@ -35,11 +36,6 @@ class MsgHandler {
         gideon.spamcounter.get(message.author.id).count++
         console.log(gideon.spamcounter);
 */
-        if (message.voice) {
-            gideon.vcmdexec = false;
-            message.channel.stopTyping()
-            if (!command.help.voice) return;
-        }
 
         if (command.help.owner) {
             if (message.author.id !== gideon.owner) return message.reply('you do not have the required permission to use this command!\n Required permission: `Application Owner`');

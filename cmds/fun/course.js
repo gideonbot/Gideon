@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
+const path = require('path');
 const Util = require("../../Util");
 
 /**
@@ -7,7 +8,7 @@ const Util = require("../../Util");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+module.exports.run = async (gideon, message, args, connection) => {
     let agm;
     if (args) {
         agm = args.join("").toLowerCase();
@@ -15,6 +16,25 @@ module.exports.run = async (gideon, message, args) => {
             message.channel.send('Yes Captain Lance!');
         } 
     }     
+
+    if (connection) {
+        const confirm = connection.play(path.resolve(__dirname, '../../data/audio/captain/Right away, Captain!.m4a'));
+        confirm.pause();
+        confirm.resume();
+
+        confirm.on('finish', () => {
+            confirm.destroy();
+
+            const timejump = connection.play(path.resolve(__dirname, '../../data/audio/phrases/Executing timejump now.m4a'));
+            timejump.pause();
+            timejump.resume();
+
+            timejump.on('finish', () => {
+                timejump.destroy();
+                gideon.vcmdexec = false;
+            });
+        });
+    }
 
     try {
         const api1 = 'http://geodb-free-service.wirefreethought.com/v1/geo/cities?hateoasMode=off';
@@ -42,12 +62,12 @@ module.exports.run = async (gideon, message, args) => {
 }
 
 module.exports.help = {
-    name: "plot",
+    name: ["plot", "timejump"],
     type: "fun",
     help_text: "Gideon, plot a course!",
     help_desc: "Plots a course",
     owner: false,
-    voice: false,
+    voice: true,
     timevault: false,
     roles: [],
     user_perms: [],

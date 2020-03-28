@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 const Discord = require("discord.js");
+const path = require('path');
 const Util = require("../../Util");
 
 /**
@@ -7,7 +8,18 @@ const Util = require("../../Util");
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+module.exports.run = async (gideon, message, args, connection) => {
+    if (connection) {
+        const confirm = connection.play(path.resolve(__dirname, '../../data/audio/captain/Right away, Captain!.m4a'));
+        confirm.pause();
+        confirm.resume();
+
+        confirm.on('finish', () => {
+            confirm.destroy();
+            gideon.vcmdexec = false;
+        });
+    }
+
     const api_urls = {
         batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
         supergirl: 'http://api.tvmaze.com/shows/1850?embed=nextepisode',
@@ -45,7 +57,7 @@ module.exports.help = {
     help_text: "nxeps",
     help_desc: "Displays a countdown to the next airing Arrowverse episodes",
     owner: false,
-    voice: false,
+    voice: true,
     timevault: false,
     roles: [],
     user_perms: [],

@@ -21,10 +21,8 @@ class Voice {
      * Voicechannel Speech-To-Text 
      * @param {ReadableStream} speech 
      */
-    static async SpeechRecognition(speech, channel) {
+    static async SpeechRecognition(speech, channel, gideon) {
         if (!process.env.WITAI_TOKEN) return null;
-        gideon.vcmdexec = true;
-        channel.startTyping()
         
         const { Transform } = require('stream')
 
@@ -71,8 +69,6 @@ class Voice {
      * @param {Discord.Client} gideon
      */
     static async VoiceResponse(intent, gideon, message, connection, Util) {
-        gideon.vcmdexec = true;
-
         const data = {
             channel: message.channel,
             id: message.id,

@@ -96,7 +96,7 @@ interface CheckUtil {
 
 interface VoiceUtil {
     LeaveVC(message: Discord.Message): Promise<void>;
-    SpeechRecognition(speech: ReadableStream, channel: Discord.TextChannel): Promise<VoiceInfoResponse>;
+    SpeechRecognition(speech: ReadableStream, channel: Discord.TextChannel, gideon: Discord.Client): Promise<VoiceInfoResponse>;
     VoiceResponse(value: string, gideon: Discord.Client, message: Discord.Message, connection: Discord.VoiceConnection, Util: Util): Promise<void>;
 }
 

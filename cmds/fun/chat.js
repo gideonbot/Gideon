@@ -50,10 +50,10 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send(response).then(sent => {
             sent.cleverbot = true;
             message.cleverbot = true;
-        }).finally(() => message.channel.stopTyping());
+        }).finally(() => message.channel.stopTyping(true));
     }, failed => {
         console.log(failed);
-        message.channel.stopTyping();
+        message.channel.stopTyping(true);
     });
 }
 
