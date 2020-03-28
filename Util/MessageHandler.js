@@ -36,6 +36,7 @@ class MsgHandler {
         gideon.spamcounter.get(message.author.id).count++
         console.log(gideon.spamcounter);
 */
+        if (command.help.type === 'voice' && !message.voice) return;
 
         if (command.help.owner) {
             if (message.author.id !== gideon.owner) return message.reply('you do not have the required permission to use this command!\n Required permission: `Application Owner`');
