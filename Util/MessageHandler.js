@@ -28,13 +28,19 @@ class MsgHandler {
 
         const command = gideon.commands.get(cmd.toLowerCase());
         if (!command) return;
-
+/*unfinished spam check thingy
+        if (!gideon.spamcounter.get(message.author.id)) {
+            gideon.spamcounter.set(message.author.id, {count: 0})
+        }
+        gideon.spamcounter.get(message.author.id).count++
+        console.log(gideon.spamcounter);
+*/
         if (command.help.owner) {
             if (message.author.id !== gideon.owner) return message.reply('you do not have the required permission to use this command!\n Required permission: `Application Owner`');
         } 
 
         if (command.help.timevault) {
-            if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
+            if (message.guild.id !== '595318490240385037') return message.reply('this command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
         }
 
         if (command.help.roles && command.help.roles.length > 0) {

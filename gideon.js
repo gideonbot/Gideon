@@ -9,6 +9,7 @@ gideon.vcmdexec = false;
 gideon.emptyvc = false;
 gideon.guessing = [];
 gideon.listening = [];
+gideon.spamcounter = new Discord.Collection();
 
 if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
 else {

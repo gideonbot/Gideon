@@ -43,6 +43,7 @@ declare module "discord.js" {
         owner: string;
         guessing: string[];
         listening: string[];
+        spamcounter: Discord.Collection<SpamCount>;
         getScore: BetterSqlite3.Statement<any[]>;
         setScore: BetterSqlite3.Statement<any[]>;
         getTop10: BetterSqlite3.Statement<any[]>;
@@ -129,6 +130,10 @@ interface ABMResult {
 
 interface secondsToDifferenceSettings {
     enableSeconds: boolean
+}
+
+interface SpamCount {
+    count: Number
 }
 
 interface Command {

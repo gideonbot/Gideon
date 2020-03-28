@@ -230,7 +230,9 @@ class Checks {
 
     /**
      * VC check
-     * @param {Discord.Message} message 
+     * @param {Discord.VoiceState} oldState 
+     * @param {Discord.VoiceState} newState 
+     * @param {Discord.Client} gideon 
      */
     static async VCCheck(oldState, newState, gideon) {
         let newChannel = newState.channel;
@@ -247,6 +249,18 @@ class Checks {
                 gideon.emptyvc = true;
                 return oldChannel.leave();
             }
+        }
+    }
+
+    /**
+     * Spam check //unfinished
+     * @param {Discord.Message} message 
+     * @param {Discord.Client} gideon 
+     */
+    static async SpamCheck(message, gideon) {
+        if (!gideon.spamcounter.get(message.author.id)) return
+        if (gideon.spamcounter.get(message.author.id).count > 10) {
+            return message.reply('spam limit reached');
         }
     }
 }
