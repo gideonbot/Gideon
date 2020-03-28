@@ -81,6 +81,7 @@ module.exports.help = {
     help_text: "wells",
     help_desc: "Reaches out to a random Wells",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

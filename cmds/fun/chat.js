@@ -63,6 +63,7 @@ module.exports.help = {
     help_text: 'chat',
     help_desc: 'Chat with an AI',
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

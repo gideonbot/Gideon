@@ -153,6 +153,7 @@ module.exports.help = {
     help_text: "next <show> <NxNN/SNNENN> ~ N -> number",
     help_desc: "Fetches next episode in watching order",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

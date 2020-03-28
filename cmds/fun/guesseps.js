@@ -283,6 +283,7 @@ module.exports.help = {
     help_text: "guess",
     help_desc: "Arrowverse episode guessing game",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

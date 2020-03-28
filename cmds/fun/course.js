@@ -47,6 +47,7 @@ module.exports.help = {
     help_text: "Gideon, plot a course!",
     help_desc: "Plots a course",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

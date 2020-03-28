@@ -33,6 +33,7 @@ module.exports.help = {
     help_text: "cvm <:perms:686681300156940349>",
     help_desc: "Toggles crossover mode",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: ['MANAGE_MESSAGES'],

@@ -26,6 +26,7 @@ module.exports.help = {
     help_text: "backup `@Gideon Dev Team`",
     help_desc: "Performs a database backup",
     owner: false,
+    voice: false,
     timevault: false,
     roles: ['621399916283035658'],
     user_perms: [],

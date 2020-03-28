@@ -33,6 +33,7 @@ module.exports.help = {
     help_text: "djs <query>",
     help_desc: "Searches discord.js docs",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

@@ -26,6 +26,7 @@ module.exports.help = {
     help_text: "soundtracks",
     help_desc: "Displays all soundtracks",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

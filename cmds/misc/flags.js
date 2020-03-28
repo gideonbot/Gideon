@@ -18,6 +18,7 @@ module.exports.help = {
     help_text: "flags",
     help_desc: "Displays Discord permission flags",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

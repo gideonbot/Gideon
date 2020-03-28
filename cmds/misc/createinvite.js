@@ -37,6 +37,7 @@ module.exports.help = {
     help_text: "civ <guildid>",
     help_desc: "Attempts to create instant invite",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

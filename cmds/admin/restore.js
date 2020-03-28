@@ -42,6 +42,7 @@ module.exports.help = {
     help_text: "restore `@Gideon Dev Team`",
     help_desc: "Restores the latest database backup",
     owner: false,
+    voice: false,
     timevault: false,
     roles: ['621399916283035658'],
     user_perms: [],

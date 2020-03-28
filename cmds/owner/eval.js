@@ -41,6 +41,7 @@ module.exports.help = {
     help_text: 'eval <code> <:gideon:686678560798146577>:warning:',
     help_desc: 'Evaluates provided code',
     owner: true,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

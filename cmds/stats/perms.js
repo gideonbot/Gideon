@@ -26,6 +26,7 @@ module.exports.help = {
     help_text: "perms",
     help_desc: "Displays a members perms",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

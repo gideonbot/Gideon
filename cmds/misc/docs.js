@@ -25,6 +25,7 @@ module.exports.help = {
     help_text: "docs",
     help_desc: "Displays Gideon's Github Wiki link",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

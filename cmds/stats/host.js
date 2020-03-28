@@ -55,6 +55,7 @@ module.exports.help = {
     help_text: "host",
     help_desc: "Hosting server stats",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

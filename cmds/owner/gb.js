@@ -48,6 +48,7 @@ module.exports.help = {
     help_text: "gb <guildid> <:gideon:686678560798146577>",
     help_desc: "Blacklists a guild",
     owner: true,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

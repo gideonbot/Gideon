@@ -59,6 +59,7 @@ module.exports.help = {
     help_text: "sp <name/alter ego> eN (earth number)",
     help_desc: "Fetches Speedster info",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

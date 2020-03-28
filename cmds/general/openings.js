@@ -24,6 +24,7 @@ module.exports.help = {
     help_text: "opening",
     help_desc: "Sends the specified opening",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

@@ -16,6 +16,7 @@ module.exports.help = {
     help_text: "rs <:gideon:686678560798146577>",
     help_desc: "Respawns all shards",
     owner: true,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

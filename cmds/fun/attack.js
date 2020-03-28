@@ -139,6 +139,7 @@ module.exports.help = {
     help_text: "at <attack> <user>",
     help_desc: "Attacks the selected user with the selected attack",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

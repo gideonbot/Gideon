@@ -29,6 +29,7 @@ module.exports.help = {
     help_text: "donate",
     help_desc: "Displays info to support maintainance and hosting of Gideon",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

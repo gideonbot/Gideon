@@ -83,6 +83,7 @@ module.exports.help = {
     help_text: "suit <character>",
     help_desc: "Displays newly revealed suits",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

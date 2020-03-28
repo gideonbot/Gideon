@@ -16,6 +16,7 @@ module.exports.help = {
     help_text: "sources",
     help_desc: "Sources Tag",
     owner: false,
+    voice: false,
     timevault: true,
     roles: [],
     user_perms: [],

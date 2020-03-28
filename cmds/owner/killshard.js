@@ -26,6 +26,7 @@ module.exports.help = {
     help_text: "ks <shardid> <:gideon:686678560798146577>",
     help_desc: "Kills the specified shard",
     owner: true,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

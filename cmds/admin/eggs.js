@@ -33,6 +33,7 @@ module.exports.help = {
     help_text: "eggs <:perms:686681300156940349>",
     help_desc: "Toggles eastereggs",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: ['MANAGE_MESSAGES'],

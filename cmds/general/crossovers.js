@@ -37,6 +37,7 @@ module.exports.help = {
     help_text: "crossovers",
     help_desc: "Displays a list of all Arrowverse crossover episodes in their respective watching order",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

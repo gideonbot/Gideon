@@ -138,6 +138,7 @@ interface Command {
         help_text: string;
         help_desc: string;
         owner: boolean;
+        voice: boolean;
         timevault: boolean;
         roles: string[]
         user_perms: string[]

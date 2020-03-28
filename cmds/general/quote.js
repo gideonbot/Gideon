@@ -27,6 +27,7 @@ module.exports.help = {
     help_text: "quote",
     help_desc: "Displays a random quote",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

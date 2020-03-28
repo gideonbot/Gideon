@@ -15,6 +15,7 @@ module.exports.help = {
     help_text: "website",
     help_desc: "Displays a link to Gideon's homepage",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

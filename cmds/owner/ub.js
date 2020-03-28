@@ -49,6 +49,7 @@ module.exports.help = {
     help_text: "ub <userid> <:gideon:686678560798146577>",
     help_desc: "Blacklists a user",
     owner: true,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

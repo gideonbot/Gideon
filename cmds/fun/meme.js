@@ -38,6 +38,7 @@ module.exports.help = {
     help_text: "meme",
     help_desc: "Displays a random Arrowverse meme",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

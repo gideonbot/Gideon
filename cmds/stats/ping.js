@@ -16,6 +16,7 @@ module.exports.help = {
     help_text: "ping",
     help_desc: "Displays the bot's ping",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

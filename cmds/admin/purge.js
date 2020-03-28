@@ -23,6 +23,7 @@ module.exports.help = {
     help_text: "purge <amount> <:perms:686681300156940349>",
     help_desc: "Deletes the specified amount of messages in the current channel",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: ['MANAGE_MESSAGES'],

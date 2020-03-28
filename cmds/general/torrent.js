@@ -100,6 +100,7 @@ module.exports.help = {
     help_text: "torrent <show> <NxNN/SNNENN> ~ N -> number",
     help_desc: "Searches torrent providers for the specified episode",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

@@ -33,6 +33,7 @@ module.exports.help = {
     help_text: "trmode",
     help_desc: "Toggles translation mode",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

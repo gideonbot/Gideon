@@ -16,6 +16,7 @@ module.exports.help = {
     help_text: "abm",
     help_desc: "ABM Tag",
     owner: false,
+    voice: false,
     timevault: true,
     roles: [],
     user_perms: [],

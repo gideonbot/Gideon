@@ -16,6 +16,7 @@ module.exports.help = {
     help_text: "spoilers",
     help_desc: "Spoilers Tag",
     owner: false,
+    voice: false,
     timevault: true,
     roles: [],
     user_perms: [],

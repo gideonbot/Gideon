@@ -33,6 +33,7 @@ module.exports.help = {
     help_text: "github",
     help_desc: "Displays Github repository info",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

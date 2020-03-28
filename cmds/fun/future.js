@@ -27,6 +27,7 @@ module.exports.help = {
     help_text: "Gideon, show me the future!",
     help_desc: "Displays an easter egg",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

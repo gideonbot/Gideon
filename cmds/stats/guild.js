@@ -43,6 +43,7 @@ module.exports.help = {
     help_text: "guild",
     help_desc: "Get current guild info",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

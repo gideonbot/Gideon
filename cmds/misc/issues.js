@@ -113,6 +113,7 @@ module.exports.help = {
     help_text: "issues",
     help_desc: "Displays Github issues and allows to submit new ones.",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

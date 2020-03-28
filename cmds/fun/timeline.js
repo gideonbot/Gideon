@@ -31,6 +31,7 @@ module.exports.help = {
     help_text: "timeline",
     help_desc: "Scans for changes in the timeline",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

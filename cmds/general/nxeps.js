@@ -45,6 +45,7 @@ module.exports.help = {
     help_text: "nxeps",
     help_desc: "Displays a countdown to the next airing Arrowverse episodes",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

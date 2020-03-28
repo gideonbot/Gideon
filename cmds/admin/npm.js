@@ -54,6 +54,7 @@ module.exports.help = {
     help_text: "npm install/update `@Gideon Dev Team`",
     help_desc: "Runs npm command",
     owner: false,
+    voice: false,
     timevault: false,
     roles: ['621399916283035658'],
     user_perms: [],

@@ -70,6 +70,7 @@ module.exports.help = {
     help_text: "accelerator",
     help_desc: "Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

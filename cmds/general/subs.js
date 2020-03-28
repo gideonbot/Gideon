@@ -134,6 +134,7 @@ module.exports.help = {
     help_text: "subs <lang> <show> <NxNN/SNNENN> ~ N -> number",
     help_desc: "Searches opensubtitles.org for the specified episode",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

@@ -24,6 +24,7 @@ module.exports.help = {
     help_text: "cuddle <user>",
     help_desc: "Gives the selected user a Beebo-tastic cuddle",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

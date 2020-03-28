@@ -102,6 +102,7 @@ module.exports.help = {
     help_text: "news <text> [img] <:timevault:686676561298063361>`@News Team`",
     help_desc: "News Team can use this to post news",
     owner: false,
+    voice: false,
     timevault: true,
     roles: ['602311948809273344'],
     user_perms: [],

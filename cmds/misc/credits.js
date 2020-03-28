@@ -26,6 +26,7 @@ module.exports.help = {
     help_text: "credits",
     help_desc: "Displays people who contributed to development of this bot",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

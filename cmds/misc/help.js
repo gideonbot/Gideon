@@ -120,6 +120,7 @@ module.exports.help = {
     help_text: "help",
     help_desc: "Provides you help with commands",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

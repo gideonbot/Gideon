@@ -18,6 +18,7 @@ module.exports.help = {
     help_text: "shards",
     help_desc: "Displays amount of spawned shards",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

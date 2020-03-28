@@ -112,6 +112,7 @@ module.exports.help = {
     help_text: "voice",
     help_desc: "Joins voice channel for voice commands",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

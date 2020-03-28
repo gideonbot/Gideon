@@ -16,6 +16,7 @@ module.exports.help = {
     help_text: "uptime",
     help_desc: "Displays the bot's uptime",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

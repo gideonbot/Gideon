@@ -96,6 +96,7 @@ module.exports.help = {
     help_text: "user <user>",
     help_desc: "Displays a user's info",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

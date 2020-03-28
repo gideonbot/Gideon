@@ -230,6 +230,7 @@ module.exports.help = {
     help_text: "mates <episode>",
     help_desc: "Listen to the MATES podcast",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

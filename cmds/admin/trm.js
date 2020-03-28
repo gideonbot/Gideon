@@ -42,6 +42,7 @@ module.exports.help = {
     help_text: "trm <:perms:686681300156940349>",
     help_desc: "Toggles server role mentionability",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: ['MANAGE_ROLES'],

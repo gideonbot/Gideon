@@ -32,6 +32,7 @@ module.exports.help = {
     help_text: "status",
     help_desc: "Checks Gideon's API status",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

@@ -49,6 +49,7 @@ module.exports.help = {
     help_text: "mdn <query>",
     help_desc: "Searches MDN",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

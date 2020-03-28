@@ -52,6 +52,7 @@ module.exports.help = {
     help_text: "jpk <:18:693135780796694668>",
     help_desc: "Displays a random JPK gif",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

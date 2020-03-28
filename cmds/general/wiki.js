@@ -90,6 +90,7 @@ module.exports.help = {
     help_text: "wiki[stg|kr|lu|dc] <term>",
     help_desc: "Searches the specified wiki for the given term | stg - Stargirl | kr - Krypton | lu - Lucifer | dc - DC |",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

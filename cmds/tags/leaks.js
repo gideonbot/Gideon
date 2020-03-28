@@ -16,6 +16,7 @@ module.exports.help = {
     help_text: "leaks",
     help_desc: "Leaks Tag",
     owner: false,
+    voice: false,
     timevault: true,
     roles: [],
     user_perms: [],

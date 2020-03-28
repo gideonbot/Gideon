@@ -36,6 +36,7 @@ module.exports.help = {
     help_text: "emoji <emoji>",
     help_desc: "Displays a GuildEmoji's info",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],

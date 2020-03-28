@@ -185,6 +185,7 @@ module.exports.help = {
     help_text: "abilities <term>",
     help_desc: "Shows abilities of a following: <speedster | viber | kryptonian>",
     owner: false,
+    voice: false,
     timevault: false,
     roles: [],
     user_perms: [],
