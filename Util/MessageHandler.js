@@ -3,7 +3,7 @@ class MsgHandler {
         throw new Error('This class cannot be instantiated!');
     }
 
-    static async Handle(gideon, message, Util) {
+    static async Handle(gideon, message, Util, connection) {
         if (!message || !message.author || message.author.bot || !message.guild || message.partial) return;
         if (!message.guild.me) message.guild.members.fetch();
         if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
@@ -35,6 +35,12 @@ class MsgHandler {
         gideon.spamcounter.get(message.author.id).count++
         console.log(gideon.spamcounter);
 */
+        if (message.voice) {
+            gideon.vcmdexec = false;
+            message.channel.stopTyping()
+            if (!command.help.voice) return;
+        }
+
         if (command.help.owner) {
             if (message.author.id !== gideon.owner) return message.reply('you do not have the required permission to use this command!\n Required permission: `Application Owner`');
         } 
@@ -92,7 +98,7 @@ class MsgHandler {
             if (missingperms && missingperms.length > 0) return message.reply('sorry I can\'t do that without having the required permissions for this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
         }
 
-        if (command) command.run(gideon, message, args);
+        if (command) command.run(gideon, message, args, connection);
     }
 }
 

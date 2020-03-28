@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const path = require('path');
 const fetch = require('node-fetch');
 
 class Voice {
@@ -22,8 +21,10 @@ class Voice {
      * Voicechannel Speech-To-Text 
      * @param {ReadableStream} speech 
      */
-    static async SpeechRecognition(speech) {
+    static async SpeechRecognition(speech, channel) {
         if (!process.env.WITAI_TOKEN) return null;
+        gideon.vcmdexec = true;
+        channel.startTyping()
         
         const { Transform } = require('stream')
 
@@ -64,117 +65,27 @@ class Voice {
 
     /**
      * Audio Response/Voice cmd exec 
-     * @param {string} value 
+     * @param {string} intent 
      * @param {Discord.VoiceConnection} connection 
      * @param {Discord.Message} message
      * @param {Discord.Client} gideon
      */
-    static async VoiceResponse(value, connection, message, gideon) {
-        const randomFile = require('select-random-file');
-        
-        if (value === 'wakeword') {
-            gideon.vcmdexec = true;
-            const orders = connection.play(path.resolve(__dirname, '../data/audio/captain/Awaiting orders, Captain.m4a'));
-            orders.pause();
-            orders.resume();
+    static async VoiceResponse(intent, gideon, message, connection, Util) {
+        gideon.vcmdexec = true;
 
-            orders.on('finish', async () => {
-                orders.destroy();
-                await message.reply('voice command succesfully executed!');
-                gideon.vcmdexec = false;
-            }); 
-            return;
-        }
-
-        if (value == 'talk') {
-            gideon.vcmdexec = true;
-            const dir = path.resolve(__dirname, '../data/audio/phrases');
-            await randomFile(dir, (err, file) => {
-                let rfile = `${dir}/${file}`;
-                const phrase = connection.play(rfile);
-                phrase.pause();
-                phrase.resume();
-
-                phrase.on('finish', async () => {
-                    phrase.destroy();
-                    await message.reply('voice command succesfully executed!');
-                    gideon.vcmdexec = false;
-                }); 
-            })
-            return;
-        }
-
-        if (value == 'leave') {
-            gideon.vcmdexec = true;
-            const leave = connection.play(path.resolve(__dirname, '../data/audio/captain/Yes, Captain.m4a'));
-            leave.pause();
-            leave.resume();
-
-            leave.on('finish', async () => {
-                leave.destroy();
-                await message.reply('voice command succesfully executed!');
-                await this.LeaveVC(message);
-                gideon.vcmdexec = false;
-            });
-            return;
-        }
-
-        if (value == 'timejump') {
-            gideon.vcmdexec = true;
-            const confirm = connection.play(path.resolve(__dirname, '../data/audio/captain/Right away, Captain!.m4a'));
-            confirm.pause();
-            confirm.resume();
-
-            confirm.on('finish', () => {
-                confirm.destroy();
-
-                const timejump = connection.play(path.resolve(__dirname, '../data/audio/phrases/Executing timejump now.m4a'));
-                timejump.pause();
-                timejump.resume();
-
-                timejump.on('finish', async () => {
-                    timejump.destroy();
-                    const command = gideon.commands.get('plot');
-                    if (command) await command.run(gideon, message);
-                    await message.reply('voice command succesfully executed!');
-                    gideon.vcmdexec = false;
-                });
-            });
-            return;
-        }
-
-        if (value == 'future') {
-            gideon.vcmdexec = true;
-            const confirm = connection.play(path.resolve(__dirname, '../data/audio/captain/Right away, Captain!.m4a'));
-            confirm.pause();
-            confirm.resume();
-
-            confirm.on('finish', async () => {
-                confirm.destroy();
-                const command = gideon.commands.get('show');
-                if (command) await command.run(gideon, message);
-                await message.reply('voice command succesfully executed!');
-                gideon.vcmdexec = false;
-            });
-            return;
+        const data = {
+            channel: message.channel,
+            id: message.id,
+            type: message.type,
+            content: '!' + intent,
+            author: message.author,
+            partial: message.partial,
+            voice: true
         }
         
-        if (value == 'nxeps') {
-            gideon.vcmdexec = true;
-            const confirm = connection.play(path.resolve(__dirname, '../data/audio/captain/Right away, Captain!.m4a'));
-            confirm.pause();
-            confirm.resume();
-
-            confirm.on('finish', async () => {
-                confirm.destroy();
-                const command = gideon.commands.get('nxeps');
-                if (command) await command.run(gideon, message);
-                await message.reply('voice command succesfully executed!');
-                gideon.vcmdexec = false;
-            });
-            return;
-        }
-        else return;
+        const voicemsg = new Discord.Message(gideon, data, message.channel);
+        
+        Util.MsgHandler.Handle(gideon, voicemsg, Util, connection);
     }
 }
 

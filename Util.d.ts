@@ -71,7 +71,7 @@ declare global {
 }
 
 interface Handler {
-    Handle(gideon: Discord.Client, message: Discord.Message, Util: Util): Promise<void>;
+    Handle(gideon: Discord.Client, message: Discord.Message, Util: Util, connection: Discord.VoiceConnection): Promise<void>;
 }
 
 interface Database {
@@ -96,8 +96,8 @@ interface CheckUtil {
 
 interface VoiceUtil {
     LeaveVC(message: Discord.Message): Promise<void>;
-    SpeechRecognition(speech: ReadableStream): Promise<VoiceInfoResponse>;
-    VoiceResponse(value: string, connection: Discord.VoiceConnection, message: Discord.Message, gideon: Discord.Client): Promise<void>;
+    SpeechRecognition(speech: ReadableStream, channel: Discord.TextChannel): Promise<VoiceInfoResponse>;
+    VoiceResponse(value: string, gideon: Discord.Client, message: Discord.Message, connection: Discord.VoiceConnection, Util: Util): Promise<void>;
 }
 
 interface EmbedOptions {
