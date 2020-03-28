@@ -49,6 +49,10 @@ declare module "discord.js" {
         getCVM: BetterSqlite3.Statement<any[]>;
         setCVM: BetterSqlite3.Statement<any[]>;
     }
+
+    interface Message {
+        voice: boolean
+    }
 }
 
 declare global {
