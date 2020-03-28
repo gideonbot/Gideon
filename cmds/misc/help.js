@@ -19,6 +19,7 @@ module.exports.run = async (gideon, message, args) => {
         .addField('fun', 'Fun and interactive Arrowverse commands')  
         .addField('admin', 'Commands for people with higher roles then the average Metahuman')  
         .addField('misc', 'Miscellaneous commands')    
+        .addField('voice', 'Gideon Voice™ only commands')    
         .addField('stats', 'Useful bot/user/guild statistics')    
         .addField('owner', 'Application owner only commands')    
         .addField('tags', 'List of promptable tags')    
@@ -29,7 +30,7 @@ module.exports.run = async (gideon, message, args) => {
 
     if (args[0].match(/(?:syntax)/i)) {
         const help = Util.CreateEmbed('__Command Syntax:__')
-        .setDescription('Gideon\'s prefixes are: ' + prefixes + '\nArguments wrapped in `<>` are variables. _do not actually add brackets_\nArguments seperated by `/` mean `this or(/) this`.\nArguments wrapped in `[]` are optional arguments.\nCommands marked with :warning: are potentially dangerous.\nCommands marked with <:18:693135780796694668> are potentially NSFW.\nCommands marked with <:timevault:686676561298063361> are Time Vault only.\nCommands marked with <:gideon:686678560798146577> are application owner only.\nCommands marked with <:perms:686681300156940349> require certain permissions.\nCommands marked with `@role` require the mentioned role.')  
+        .setDescription('Gideon\'s prefixes are: ' + prefixes + '\nArguments wrapped in `<>` are variables. _do not actually add brackets_\nArguments seperated by `/` mean `this or(/) this`.\nArguments wrapped in `[]` are optional arguments.\nCommands marked with :warning: are potentially dangerous.\nCommands marked with <:18:693135780796694668> are potentially NSFW.\nCommands marked with <:timevault:686676561298063361> are Time Vault only.\nCommands marked with <:gideon:686678560798146577> are application owner only.\nCommands marked with <:voicerecognition:693521621184413777> are Gideon Voice™ compatible.\nCommands marked with <:perms:686681300156940349> require certain permissions.\nCommands marked with `@role` require the mentioned role.')  
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
         return message.channel.send(help);
@@ -69,6 +70,7 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:fun)/i)) type = "fun";
     else if (args[0].match(/(?:admin)/i)) type = "admin";
     else if (args[0].match(/(?:misc)/i)) type = "misc";
+    else if (args[0].match(/(?:voice)/i)) type = "voice";
     else if (args[0].match(/(?:stats)/i)) type = "stats";
     else if (args[0].match(/(?:owner)/i)) type = "owner";
     else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`));

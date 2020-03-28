@@ -18,16 +18,10 @@ class Silence extends Readable {
 module.exports.run = async (gideon, message, args) => {
     let command = message.content.toLowerCase().split(' ')[0];
 
-    const voicehelp = Util.CreateEmbed(`Usage of Voice™ Commands:`, {description: `Use \`!voice tutorial\` for a video tutorial.`})
+    const voicehelp = Util.CreateEmbed(`Usage of Voice™ Commands:`, {
+    description: `Use \`!voice tutorial\` for a video tutorial.\n\nUse Gideon Voice™ commands by speaking into your microphone\n\`'Gideon is typing...'\` means your Voice™ command is being processed\n\nNo further response means the input was not recognized or no Voice™ enabled command was used`})
     .setAuthor(`Note: Not all commands are Voice™ compatible!`, message.author.avatarURL())
-/*    .addField(`Wakeword:`,`Say something like:\n\`\`\`'Gideon'\n'Hey Gideon'\n'Hello Gideon'\n etc...\`\`\`\nGideon will be ready!`, true)
-    .addField(`Random Phrases:`,`Say something like:\n\`\`\`'Talk'\n'Talk to me'\n'Say something'\n etc...\`\`\`\nGideon will randomly respond!`, true)
-    .addField(`Time Travel:`,`Say something like:\n\`\`\`'Plot a course'\n'Time travel'\n'Timejump'\n etc...\`\`\`\nGideon will plot a course!`, true)
-    .addField(`Future:`,`Say something like:\n\`\`\`'Show me the future'\n'What's the future'\n'future'\n etc...\`\`\`\nGideon show you the future!`, true)
-    .addField(`Upcoming Eps:`,`Say something like:\n\`\`\`'Upcoming Episodes'\n'Next Arrowverse episodes'\n'Next episodes'\n etc...\`\`\`\nGideon will show you the next eps!`, true)
-    .addField(`Leave VC:`,`Say something like:\n\`\`\`'Leave'\n'Stop'\n'Get out'\n etc...\`\`\`\nGideon will leave the VC!`, true);
-    //peepee
-*/
+
     if (command.endsWith('leave')) {
        await Util.Voice.LeaveVC(message);
        return;
@@ -63,7 +57,7 @@ module.exports.run = async (gideon, message, args) => {
 
                 const audio = connection.receiver.createStream(user, { mode: 'pcm' });
 
-                audio.on('end', () => {
+                audio.on('end', async () => {
                     console.log(`Stopped listening to ${user.username}`);
 
                     const SpeechRec = await Util.Voice.SpeechRecognition(audio, message.channel);
