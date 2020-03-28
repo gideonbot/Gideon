@@ -41,7 +41,11 @@ module.exports.run = async (gideon, message, args) => {
         for (let filename of gideon.commands.keys()) {
             let cmd = gideon.commands.get(filename);
 
-            if (!cmd.help || !cmd.help.help_text || !cmd.help.help_desc) {
+            if (!cmd.help || !cmd.help.help_text 
+                || !cmd.help.help_desc || !cmd.help.owner 
+                || !cmd.help.voice || !cmd.help.timevault 
+                || !cmd.help.roles || !cmd.help.bot_perms
+                || !cmd.help.user_perms) {
                 console.log(filename + " is missing help properties!");
                 Util.log(filename + " is missing help properties, please fix");
             }
