@@ -22,7 +22,7 @@ module.exports.run = async (gideon, message, args, connection) => {
 module.exports.help = {
     name: "wakeword",
     type: "voice",
-    help_text: "Hello Gideon",
+    help_text: "Hello Gideon <:voicerecognition:693521621184413777>",
     help_desc: "Greets the user",
     owner: false,
     voice: true,

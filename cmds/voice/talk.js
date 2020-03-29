@@ -27,7 +27,7 @@ module.exports.run = async (gideon, message, args, connection) => {
 module.exports.help = {
     name: "talk",
     type: "voice",
-    help_text: "Talk to me",
+    help_text: "Talk to me <:voicerecognition:693521621184413777>",
     help_desc: "Talks to the user",
     owner: false,
     voice: true,

@@ -64,7 +64,7 @@ module.exports.run = async (gideon, message, args, connection) => {
 module.exports.help = {
     name: ["plot", "timejump"],
     type: "fun",
-    help_text: "Gideon, plot a course!",
+    help_text: "Gideon, plot a course! <:voicerecognition:693521621184413777>",
     help_desc: "Plots a course",
     owner: false,
     voice: true,

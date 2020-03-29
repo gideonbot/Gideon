@@ -280,7 +280,7 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: ["guess", "guesseps", "points", "score", "leaderboard", "highscores", "lb"],
     type: "fun",
-    help_text: "guess",
+    help_text: "guess [show]",
     help_desc: "Arrowverse episode guessing game",
     owner: false,
     voice: false,

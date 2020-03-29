@@ -54,7 +54,7 @@ module.exports.run = async (gideon, message, args, connection) => {
 module.exports.help = {
     name: ["nxeps", "nexteps", "nextepisodes"],
     type: "general",
-    help_text: "nxeps",
+    help_text: "nxeps <:voicerecognition:693521621184413777>",
     help_desc: "Displays a countdown to the next airing Arrowverse episodes",
     owner: false,
     voice: true,

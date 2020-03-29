@@ -42,11 +42,7 @@ module.exports.run = async (gideon, message, args) => {
         for (let filename of gideon.commands.keys()) {
             let cmd = gideon.commands.get(filename);
 
-            if (!cmd.help || !cmd.help.help_text 
-                || !cmd.help.help_desc || !cmd.help.owner 
-                || !cmd.help.voice || !cmd.help.timevault 
-                || !cmd.help.roles || !cmd.help.bot_perms
-                || !cmd.help.user_perms) {
+            if (!cmd.help || !cmd.help.help_text || !cmd.help.help_desc) {
                 console.log(filename + " is missing help properties!");
                 Util.log(filename + " is missing help properties, please fix");
             }
@@ -65,7 +61,7 @@ module.exports.run = async (gideon, message, args) => {
         return message.channel.send(help);
     }
 
-    let type = "";
+    let marks = [];
     if (args[0].match(/(?:general)/i)) type = "general";
     else if (args[0].match(/(?:fun)/i)) type = "fun";
     else if (args[0].match(/(?:admin)/i)) type = "admin";
@@ -111,10 +107,9 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     else {
-        console.log(commands);
         const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
         embed.setDescription('Use `!help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes)
-        for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
+        for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item + marks, commands[item]);
         embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
         message.channel.send(embed);
     }
@@ -123,7 +118,7 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: "help",
     type: "misc",
-    help_text: "help",
+    help_text: "help [syntax]",
     help_desc: "Provides you help with commands",
     owner: false,
     voice: false,
