@@ -5,7 +5,7 @@ class MsgHandler {
 
     static async Handle(gideon, message, Util, connection) {
         if (!message || !message.author || message.author.bot || !message.guild || message.partial) return;
-        if (!message.guild.me) message.guild.members.fetch();
+        if (!message.guild.me) await message.guild.members.fetch(gideon.user.id);
         if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
         
         if (Util.Checks.IBU(message, gideon)) return; //check if user is blacklisted, if yes, return
