@@ -6,6 +6,7 @@ class MsgHandler {
     static async Handle(gideon, message, Util, connection) {
         if (!message || !message.author || message.author.bot || !message.guild || message.partial) return;
         if (!message.guild.me) await message.guild.members.fetch(gideon.user.id);
+        if (message.channel.type !== 'text') return;
         if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
         
         if (Util.Checks.IBU(message, gideon)) return; //check if user is blacklisted, if yes, return
@@ -29,13 +30,19 @@ class MsgHandler {
         const command = gideon.commands.get(cmd.toLowerCase());
         if (!command) return gideon.vcmdexec = false;
         
-/*unfinished spam check thingy
-        if (!gideon.spamcounter.get(message.author.id)) {
-            gideon.spamcounter.set(message.author.id, {count: 0})
+        Util.Checks.Spamcounter(message.author.id, gideon);
+
+        const spamcount = gideon.spamcount.get(message.author.id);
+   
+        if(spamcount && spamcount.usages + 1 > 10) {
+            const ub = {
+                user: message.author.id,
+                userval: 1,
+            }
+            gideon.setUBL.run(ub);
+            return message.reply('your access to ' + gideon.user.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
         }
-        gideon.spamcounter.get(message.author.id).count++
-        console.log(gideon.spamcounter);
-*/
+
         if (command.help.type === 'voice' && !message.voice) return;
 
         if (command.help.owner) {

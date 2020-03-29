@@ -253,15 +253,29 @@ class Checks {
     }
 
     /**
-     * Spam check //unfinished
-     * @param {Discord.Message} message 
+     * Spam check 
+     * @param {string} id 
      * @param {Discord.Client} gideon 
      */
-    static async SpamCheck(message, gideon) {
-        if (!gideon.spamcounter.get(message.author.id)) return
-        if (gideon.spamcounter.get(message.author.id).count > 10) {
-            return message.reply('spam limit reached');
+    static Spamcounter(id, gideon) {
+		if(id === gideon.owner) return null;
+
+		let spamcount = gideon.spamcount.get(id);
+		if(!spamcount) {
+			spamcount = {
+				start: Date.now(),
+				usages: 1,
+				timeout: gideon.setTimeout(() => {
+					gideon.spamcount.delete(id);
+				}, 10 * 1000)
+			};
+			gideon.spamcount.set(id, spamcount);
         }
+        else {
+            spamcount.usages++;
+            gideon.spamcount.set(id, spamcount);
+        }
+		return spamcount;
     }
 }
 module.exports = Checks;
