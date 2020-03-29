@@ -40,6 +40,7 @@ class MsgHandler {
                 userval: 1,
             }
             gideon.setUBL.run(ub);
+            Util.log(messag.author.tag + ' had their access revoked due to command spam')
             return message.reply('your access to ' + gideon.user.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
         }
 
