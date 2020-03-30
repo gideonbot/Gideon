@@ -68,6 +68,8 @@ class Checks {
      * @param {Discord.Message} message 
      */
     static ABM(message, Util) {
+        if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return;
+        
         const siren = '<a:siren:669518972407775265>';
 
         this.ABM_Test(message, Util).then(async res => {
@@ -87,6 +89,8 @@ class Checks {
         let cvm = gideon.getCVM.get(message.guild.id);
         if (!cvm) return;
         if (cvm.cvmval === 0) return;
+
+        if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return;
 
         const ids = ['595944027208024085', '595935317631172608', '595935345598529546', '598487475568246830', '622415301144870932', '596080078815887419'];
 

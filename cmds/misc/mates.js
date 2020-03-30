@@ -53,7 +53,7 @@ module.exports.run = async (gideon, message, args) => {
 
         let matescast = await PodCast(epnum);
 
-        const matesembed = Util.CreateEmbed(matescast[0], {
+        let matesembed = Util.CreateEmbed(matescast[0], {
             description: matescast[1],
             thumbnail: matescast[2],
             author: {
@@ -158,7 +158,7 @@ module.exports.run = async (gideon, message, args) => {
         const rcollector = sent.createReactionCollector(rfilter, {time: matescast[6] * 1000});
     
         rcollector.on('collect', async (reaction, user) => {
-            if (reaction.emoji.name == emotes[0]) {
+            if (reaction.emoji.name === emotes[0]) {
                 if (cast.paused) {
                     cast.resume()
                     sent.edit(matesembed)
@@ -168,10 +168,10 @@ module.exports.run = async (gideon, message, args) => {
                     cast.pause()
                     sent.edit(pauseembed)
                 }
-                sent.reactions.cache.find(x => x.emoji.name == emotes[0]).users.remove(user.id);
+                sent.reactions.cache.find(x => x.emoji.name === emotes[0]).users.remove(user.id);
             }
 
-            if (reaction.emoji.name == emotes[1]) {
+            if (reaction.emoji.name === emotes[1]) {
                 cast.destroy();
                 gideon.listening.remove(message.author.id);
                 await sent.reactions.removeAll();
@@ -179,32 +179,32 @@ module.exports.run = async (gideon, message, args) => {
                 return sent.edit(stopembed);
             }
 
-            if (reaction.emoji.name == emotes[2]) {
-                cast.destroy();
+            if (reaction.emoji.name === emotes[2]) {
+                cast.end();
                 epnum - 1;
 
                 matescast = await PodCast(epnum);
 
-                await sent.reactions.cache.find(x => x.emoji.name == emotes[0]).users.remove(user.id);
                 await sent.edit(matesembed);
 
                 cast = connection.play(matescast[5]);
                 cast.pause();
                 cast.resume();
+                sent.reactions.cache.find(x => x.emoji.name === emotes[2]).users.remove(user.id);
             }
 
-            if (reaction.emoji.name == emotes[2]) {
-                cast.destroy();
+            if (reaction.emoji.name === emotes[3]) {
+                cast.end();
                 epnum + 1;
 
                 matescast = await PodCast(epnum);
 
-                await sent.reactions.cache.find(x => x.emoji.name == emotes[0]).users.remove(user.id);
                 await sent.edit(matesembed);
 
                 cast = connection.play(matescast[5]);
                 cast.pause();
                 cast.resume();
+                sent.reactions.cache.find(x => x.emoji.name === emotes[3]).users.remove(user.id);
             }
         }); 
 
@@ -233,6 +233,6 @@ module.exports.help = {
     voice: false,
     timevault: false,
     roles: [],
-    user_perms: [],
+    user_perms: ['CONNECT', 'SPEAK', 'USE_VAD'],
     bot_perms: ['CONNECT', 'SPEAK', 'USE_VAD']
 }
