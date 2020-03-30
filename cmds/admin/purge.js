@@ -25,6 +25,8 @@ module.exports.help = {
     owner: false,
     voice: false,
     timevault: false,
+    nsfw: false,
+    args: {},
     roles: [],
     user_perms: ['MANAGE_MESSAGES'],
     bot_perms: ['MANAGE_MESSAGES']

@@ -146,7 +146,7 @@ interface Command {
         voice: boolean;
         timevault: boolean;
         nsfw: boolean;
-        args: {force: boolean, amount?: Number, type?: argtypes[]}
+        args: {force: boolean, amount?: Number, type?: argtypes};
         roles: string[];
         user_perms: string[];
         bot_perms: string[];
@@ -155,10 +155,10 @@ interface Command {
 }
 
 interface argtypes {
-    string: string;
-    snowflake: string;
-    episode: string;
-    mention: Discord.MessageMentions;
+    string?: string;
+    snowflake?: string;
+    episode?: string;
+    mention?: Discord.MessageMentions;
 }
 
 interface EpisodeInfo {

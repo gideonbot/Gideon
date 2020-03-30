@@ -18,6 +18,8 @@ module.exports.help = {
     owner: false,
     voice: false,
     timevault: true,
+    nsfw: false,
+    args: {},
     roles: [],
     user_perms: [],
     bot_perms: []

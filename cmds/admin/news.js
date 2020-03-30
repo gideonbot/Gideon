@@ -104,6 +104,8 @@ module.exports.help = {
     owner: false,
     voice: false,
     timevault: true,
+    nsfw: false,
+    args: {},
     roles: ['602311948809273344'],
     user_perms: [],
     bot_perms: []

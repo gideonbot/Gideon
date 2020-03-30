@@ -28,6 +28,8 @@ module.exports.help = {
     owner: false,
     voice: false,
     timevault: false,
+    nsfw: false,
+    args: {},
     roles: ['621399916283035658'],
     user_perms: [],
     bot_perms: []

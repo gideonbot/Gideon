@@ -46,6 +46,8 @@ module.exports.help = {
     owner: true,
     voice: false,
     timevault: false,
+    nsfw: false,
+    args: {},
     roles: [],
     user_perms: [],
     bot_perms: []
