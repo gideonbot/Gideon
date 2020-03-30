@@ -145,11 +145,20 @@ interface Command {
         owner: boolean;
         voice: boolean;
         timevault: boolean;
-        roles: string[]
-        user_perms: string[]
-        bot_perms: string[]
+        nsfw: boolean;
+        args: {force: boolean, amount?: Number, type?: argtypes[]}
+        roles: string[];
+        user_perms: string[];
+        bot_perms: string[];
     },
     run: Function;
+}
+
+interface argtypes {
+    string: string;
+    snowflake: string;
+    episode: string;
+    mention: Discord.MessageMentions;
 }
 
 interface EpisodeInfo {
