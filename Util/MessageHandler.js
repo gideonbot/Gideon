@@ -54,37 +54,6 @@ class MsgHandler {
             if (message.guild.id !== '595318490240385037') return message.reply('this command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
         }
 
-        if (command.help.roles && command.help.roles.length > 0) {
-            let missingroles = [];
-            let rolenames = [];
-
-            for (let role of command.help.roles) {
-                if (!message.member.roles.cache.has(role)) missingroles.push(role);
-            }
-
-            if (missingroles && missingroles.length > 0) {
-                for (let role of missingroles) {
-                
-                    const rolename = await gideon.shard.broadcastEval(`
-                        (async () => {
-                            let rolename;
-                            const guilds = this.guilds.cache;
-                            
-                            guilds.forEach(guild => {
-                                if (guild.roles.cache.get('${role}')) {
-                                rolename = guild.roles.cache.get('${role}').name;
-                                }
-                            });
-                            
-                            if (rolename) return rolename;
-                        })();
-                    `);
-                    rolenames.push(rolename.toString());
-                }
-            }
-            if (rolenames && rolenames.length > 0) return message.reply('you do not have the required roles to use this command!\nRequired roles: ' + rolenames.map(x => `\`${x}\``).join(' '));
-        }
-
         if (message.author.id !== gideon.owner) {
             if (command.help.user_perms && command.help.user_perms.length > 0) {
                 let missingperms = [];
@@ -96,6 +65,37 @@ class MsgHandler {
 
             if (command.help.nsfw) {
                 if (!message.channel.nsfw) return message.reply('this command requires a `NSFW` channel!');
+            }
+
+            if (command.help.roles && command.help.roles.length > 0) {
+                let missingroles = [];
+                let rolenames = [];
+    
+                for (let role of command.help.roles) {
+                    if (!message.member.roles.cache.has(role)) missingroles.push(role);
+                }
+    
+                if (missingroles && missingroles.length > 0) {
+                    for (let role of missingroles) {
+                    
+                        const rolename = await gideon.shard.broadcastEval(`
+                            (async () => {
+                                let rolename;
+                                const guilds = this.guilds.cache;
+                                
+                                guilds.forEach(guild => {
+                                    if (guild.roles.cache.get('${role}')) {
+                                    rolename = guild.roles.cache.get('${role}').name;
+                                    }
+                                });
+                                
+                                if (rolename) return rolename;
+                            })();
+                        `);
+                        rolenames.push(rolename.toString());
+                    }
+                }
+                if (rolenames && rolenames.length > 0) return message.reply('you do not have the required roles to use this command!\nRequired roles: ' + rolenames.map(x => `\`${x}\``).join(' '));
             }
         }
 
