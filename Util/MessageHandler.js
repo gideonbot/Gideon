@@ -93,6 +93,10 @@ class MsgHandler {
                 }
                 if (missingperms && missingperms.length > 0) return message.reply('you do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
             }
+
+            if (command.help.nsfw) {
+                if (!message.channel.nsfw) return message.reply('this command requires a `NSFW` channel!');
+            }
         }
 
         if (command.help.bot_perms && command.help.bot_perms.length > 0) {

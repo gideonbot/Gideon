@@ -54,7 +54,7 @@ module.exports.help = {
     owner: false,
     voice: false,
     timevault: false,
-    nsfw: false,
+    nsfw: true,
     args: {},
     roles: [],
     user_perms: [],
