@@ -164,6 +164,12 @@ class Checks {
         const vid2 = 'https://cdn.discordapp.com/attachments/679864620864765983/686589432501239899/Hi_Im_Richard_Castle.mp4';
         const train = 'https://cdn.discordapp.com/attachments/679864620864765983/688677813934620725/Gary_the_unspeakable_train-abomination.mp4';
         const yombo = 'https://cdn.discordapp.com/attachments/679864620864765983/692020740215537755/YomboBomboMomboJombo.mp4';
+        const nuts = 'https://cdn.discordapp.com/attachments/679864620864765983/694607537902715010/CANDEEZ_NUTS.mp4';
+        const katic1 = 'https://cdn.discordapp.com/attachments/679864620864765983/694628302719156285/katic1.mp4';
+        const katic2 = 'https://cdn.discordapp.com/attachments/679864620864765983/694628421321490574/katic2.mp4';
+        const katicarray = [katic1, katic2];
+        const titanic = 'https://cdn.discordapp.com/attachments/679864620864765983/694628170527408289/Murder_on_the_Titanic.mp4';
+        const occupied = 'https://cdn.discordapp.com/attachments/679864620864765983/694629142322216970/otherwise_occupied.mp4';
 
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
         if (message.content.match(/(?:deckerstar)/i)) Util.IMG('rJpbLQx', message);
@@ -175,9 +181,13 @@ class Checks {
         if (message.content.match(/(?:castle)/i)) message.channel.send(vid2);
         if (message.content.match(/(?:constantine)/i)) message.channel.send(yombo);
         if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) message.channel.send(train);
+        if (message.content.match(/(?:nuts)/i)) message.channel.send(nuts);
+        if (message.content.match(/(?:titanic)/i)) message.channel.send(titanic);
+        if (message.content.match(/(?:occupied)/i)) message.channel.send(occupied);
+        if (message.content.match(/(?:katic)/i)) message.channel.send(katicarray[Math.floor(Math.random() * katicarray.length)]);
     }
 
-       /**
+    /**
      * Leaves a blacklisted guild
      * @param {Discord.Guild} guild 
      */
