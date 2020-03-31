@@ -205,7 +205,7 @@ class Checks {
         }
 
         else{
-            channels.random().send('This guild is banned by the bot owner!\nNow leaving this guild!');
+            channels.random().send('This guild is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
             await guild.leave();
             Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
         }
