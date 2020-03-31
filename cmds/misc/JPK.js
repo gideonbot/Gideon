@@ -49,7 +49,7 @@ module.exports.run = async (gideon, message, args) => {
 module.exports.help = {
     name: "jpk",
     type: "fun",
-    help_text: "jpk <:18:693135780796694668>",
+    help_text: "jpk [help] <:18:693135780796694668>",
     help_desc: "Displays a random JPK gif",
     owner: false,
     voice: false,

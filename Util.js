@@ -612,8 +612,8 @@ class Util {
      * @param {string} input
      */
     static ValID(input) {
-        if (!input.match(/^\d{17,19}$/)) return;
-        else return input.match(/^\d{17,19}$/)[0];
+        if (!input.match(/\d{17,19}/)) return;
+        else return input.match(/\d{17,19}/)[0];
     }
 }
 

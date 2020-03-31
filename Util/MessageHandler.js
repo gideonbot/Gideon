@@ -107,6 +107,29 @@ class MsgHandler {
             if (missingperms && missingperms.length > 0) return message.reply('sorry I can\'t do that without having the required permissions for this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
         }
 
+        if (command.help.args.force) {
+            const noinput = Util.CreateEmbed("You must supply valid input!");
+            const noid = Util.CreateEmbed("You must supply a valid ID!");
+            const noepisode = Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'});
+            const nomention = Util.CreateEmbed("You must supply a valid mention!");
+
+            if (command.help.args.amount && command.help.args.amount > 0) {
+                if (args.length !== command.help.args.amount) return message.channel.send(noinput);
+            }
+
+            if (command.help.args.type && command.help.args.type === 'snowflake') {
+                if (!Util.ValID(args[0])) return message.channel.send(noid);
+            }
+
+            if (command.help.args.type && command.help.args.type === 'episode') {
+                if (!Util.parseSeriesEpisodeString(args[1])) return message.channel.send(noepisode);
+            }
+
+            if (command.help.args.type && command.help.args.type === 'mention') {
+                if (!message.mentions.users.first()) return message.channel.send(nomention);
+            }
+        }
+
         if (command) command.run(gideon, message, args, connection);
     }
 }
