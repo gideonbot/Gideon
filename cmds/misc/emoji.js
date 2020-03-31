@@ -8,7 +8,6 @@ const Util = require("../../Util");
  */
 module.exports.run = async (gideon, message, args) => {
     const as = Util.CreateEmbed("You must supply valid input!");
-    if (!args[0]) return message.channel.send(as);  
     if (!args[0].match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)) return message.channel.send(as);  
 
     const emoji = gideon.emojis.cache.get(args[0].match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)[3])
@@ -39,7 +38,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true, amount: 1},
     roles: [],
     user_perms: [],
     bot_perms: []

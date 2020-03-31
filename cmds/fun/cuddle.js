@@ -8,9 +8,7 @@ const Util = require("../../Util");
  */
 module.exports.run = async (gideon, message, args) => {
     const auth = message.author;
-
     const user = message.mentions.users.first();
-    if (!user) return message.channel.send('You must use a proper mention if you want to cuddle someone!');
     
     message.channel.send(Util.CreateEmbed(null, {
         description: `**${auth} you have cuddled ${user}!**\n\nA Beebo-tastic cuddle always brightens the mood!`,
@@ -27,7 +25,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true, amount: 1, type: 'mention'},
     roles: [],
     user_perms: [],
     bot_perms: []

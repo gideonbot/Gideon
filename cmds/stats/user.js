@@ -10,9 +10,6 @@ const moment = require('moment');
  */
 module.exports.run = async (gideon, message, args) => {
     const as = Util.CreateEmbed("You must supply valid input!");
-    if (!args[0]) return message.channel.send(as);
-    if (args[1]) return message.channel.send(as);
-
     const auth = message.author;
     let user;
 
@@ -99,7 +96,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true, amount: 1},
     roles: [],
     user_perms: [],
     bot_perms: []

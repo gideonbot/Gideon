@@ -7,8 +7,6 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    if (!args[0]) return message.reply('you must provide input to translate something!');
-
     let tr = await Util.TR.Translate(args.join(' '));
 
     message.channel.send(Util.CreateEmbed(null, {
@@ -38,7 +36,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true},
     roles: [],
     user_perms: [],
     bot_perms: []

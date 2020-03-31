@@ -7,17 +7,12 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    const as = Util.CreateEmbed("You must supply valid input!");
-    if (!args[0]) return message.channel.send(as);
-    if (args[1]) return message.channel.send(as);
-
-    if (!Util.ValID(args[0])) return message.channel.send(as);
-
+    const id = Util.ValID(args.join(' '))[0];
     try {
-        let gb = gideon.getGBL.get(args[0]);
+        let gb = gideon.getGBL.get(id);
         if (!gb) {
             gb = {
-                guild: args[0],
+                guild: id,
                 guildval: 0,
             }
         }
@@ -25,13 +20,13 @@ module.exports.run = async (gideon, message, args) => {
         if (gb.guildval === 0) {
             gb.guildval = 1;
             gideon.setGBL.run(gb);
-            message.reply(`guild \`${args[0]}\` has been blacklisted!`);
+            message.reply(`guild \`${id}\` has been blacklisted!`);
         }
 
         else if (gb.guildval === 1) {
             gb.guildval = 0;
             gideon.setGBL.run(gb);
-            message.reply(`guild \`${args[0]}\` has been un-blacklisted!`); 
+            message.reply(`guild \`${id}\` has been un-blacklisted!`); 
         }
     }
 
@@ -51,7 +46,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true, amount: 1, type: 'snowflake'},
     roles: [],
     user_perms: [],
     bot_perms: []

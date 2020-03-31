@@ -7,14 +7,8 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    let guild;
-
-    if (!args[0]) return message.channel.send(as);
-    if (args[1]) return message.channel.send(as);
-    let noid = isNaN(args[0]);
-
-    if (!noid && args[0].length === 18) guild = gideon.guilds.cache.get(args[0]);
-    else return message.channel.send(as);
+    const id = Util.ValID(args.join(' '))[0];
+    let guild = gideon.guilds.cache.get(id);
 
     try {
         let textchannels = guild.channels.cache.filter(c=> c.type == "text");
@@ -40,7 +34,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true, amount: 1, type: 'snowflake'},
     roles: [],
     user_perms: [],
     bot_perms: []

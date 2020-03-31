@@ -39,7 +39,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true},
     roles: [],
     user_perms: ['MANAGE_CHANNELS'],
     bot_perms: ['MANAGE_CHANNELS']

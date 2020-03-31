@@ -8,17 +8,12 @@ const fs = require('fs');
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    const as = Util.CreateEmbed("You must supply valid input!");
-    if (!args[0]) return message.channel.send(as);
-    if (args[1]) return message.channel.send(as);
-
-    if (!Util.ValID(args[0])) return message.channel.send(as);
-
+    const id = Util.ValID(args.join(' '))[0];
     try {
-        let ub = gideon.getUBL.get(args[0]);
+        let ub = gideon.getUBL.get(id);
         if (!ub) {
             ub = {
-                user: args[0],
+                user: id,
                 userval: 0,
             }
         }
@@ -26,13 +21,13 @@ module.exports.run = async (gideon, message, args) => {
         if (ub.userval === 0) {
             ub.userval = 1;
             gideon.setUBL.run(ub);
-            message.reply(`user \`${args[0]}\` has been blacklisted!`);
+            message.reply(`user \`${id}\` has been blacklisted!`);
         }
 
         else {
             ub.userval = 0;
             gideon.setUBL.run(ub);
-            message.reply(`user \`${args[0]}\` has been un-blacklisted!`); 
+            message.reply(`user \`${id}\` has been un-blacklisted!`); 
         }
     }
 
@@ -52,7 +47,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true, amount: 1, type: 'snowflake'},
     roles: [],
     user_perms: [],
     bot_perms: []

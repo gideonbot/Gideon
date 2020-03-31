@@ -93,7 +93,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true},
     roles: [],
     user_perms: [],
     bot_perms: []

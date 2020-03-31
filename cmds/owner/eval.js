@@ -8,9 +8,6 @@ const Util = require('../../Util');
  */
 module.exports.run = async (gideon, message, args) => {
     try {
-
-        //if (args.length < 1) return message.channel.send('No code provided!');
-
         const code = args.join(' ');
         const returnedValue = eval(code);
 

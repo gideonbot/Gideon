@@ -11,8 +11,6 @@ module.exports.run = async (gideon, message, args) => {
         description: 'Currently available:\n**killer frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**\n**kingdom come superman**'
     });
 
-    if (!args[0]) return message.channel.send();
-
     const suits = [
         {
             image: 'https://i.imgur.com/0XI5gxr.jpg',
@@ -86,7 +84,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true, amount: 1},
     roles: [],
     user_perms: [],
     bot_perms: []

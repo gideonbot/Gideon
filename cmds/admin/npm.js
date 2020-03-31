@@ -8,9 +8,6 @@ const exec = require('child_process').exec;
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {   
-    const as = Util.CreateEmbed("You must supply valid input!");
-    if (!args[0]) return message.channel.send(as);
-
     if (args[0].match(/(?:install)/i)) {
         message.reply('running `npm install` please check <#622415301144870932> for console output!');
         const install = exec('npm install');
@@ -57,7 +54,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true},
     roles: ['621399916283035658'],
     user_perms: [],
     bot_perms: []

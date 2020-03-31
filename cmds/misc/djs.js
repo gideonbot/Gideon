@@ -9,9 +9,6 @@ const Turndown = require('turndown');
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    const as = Util.CreateEmbed("You must supply valid input!");
-    if (!args[0]) return message.channel.send(as);
-
     try {
         const source = `https://raw.githubusercontent.com/discordjs/discord.js/docs/12.0.2.json`;
         const queryString = encodeURI(args.join(' '));
@@ -36,7 +33,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true},
     roles: [],
     user_perms: [],
     bot_perms: []

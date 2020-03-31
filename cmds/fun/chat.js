@@ -8,9 +8,6 @@ const cleverbot = require("cleverbot-free");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {     
-    const as = Util.CreateEmbed("You must supply valid input!");
-    if (!args[0]) return message.channel.send(as);
-    
     const text = args.join(' ');
 
     let arr = [];
@@ -69,7 +66,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true},
     roles: [],
     user_perms: [],
     bot_perms: []

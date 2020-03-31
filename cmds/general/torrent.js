@@ -12,13 +12,6 @@ module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
     const auth = message.author.id;
 
-    if (!agc) return message.channel.send(Util.CreateEmbed('You must supply the shows name, season and its episode number!'));
-
-    let season_and_ep = Util.parseSeriesEpisodeString(args[1]);
-    if (!season_and_ep) {
-        return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}));
-    }
-
     let showtitle = "";
 
     if (agc.match(/(?:flash)/i)) showtitle = "The Flash";
@@ -103,7 +96,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true, amount: 2, type: 'episode'},
     roles: [],
     user_perms: [],
     bot_perms: ['MANAGE_MESSAGES']

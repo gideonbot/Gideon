@@ -9,7 +9,6 @@ const Util = require("../../Util");
  */
 module.exports.run = async (gideon, message, args) => {
     let agc = args[0];
-    if (!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
     const url = 'https://arrowverse.info';
     const api = 'https://arrowverse.info/api';
     let showtitle;
@@ -45,8 +44,6 @@ module.exports.run = async (gideon, message, args) => {
         });
 
         let fiep = Util.parseSeriesEpisodeString(args[1]);
-        if (!fiep) return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}));
-
         fiep = "S" + Util.normalize(fiep.season) + "E" + Util.normalize(fiep.episode);
 
         let shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
@@ -156,7 +153,7 @@ module.exports.help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
+    args: {force: true, amount: 2, type: 'episode'},
     roles: [],
     user_perms: [],
     bot_perms: ['MANAGE_MESSAGES']
