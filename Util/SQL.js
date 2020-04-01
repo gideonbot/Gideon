@@ -55,6 +55,14 @@ class SQL {
             sql.pragma("synchronous = 1");
             sql.pragma("journal_mode = wal");
         }
+
+        const prefixdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'prefixes';").get();
+        if (!prefixdb['count(*)']) {
+            sql.prepare("CREATE TABLE prefixes (guild TEXT PRIMARY KEY, prefix TEXT);").run();
+            sql.prepare("CREATE UNIQUE INDEX idx_prefixes_id ON prefixes (guild);").run();
+            sql.pragma("synchronous = 1");
+            sql.pragma("journal_mode = wal");
+        }
     
         gideon.getScore = sql.prepare("SELECT * FROM scores WHERE id = ?");
         gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);");
@@ -74,6 +82,9 @@ class SQL {
 
         gideon.getEggs = sql.prepare("SELECT * FROM eastereggs WHERE guild = ?");
         gideon.setEggs = sql.prepare("INSERT OR REPLACE INTO eastereggs (guild, eggsval) VALUES (@guild, @eggsval);");
+
+        gideon.getPrefix = sql.prepare("SELECT * FROM prefixes WHERE guild = ?");
+        gideon.setPrefix = sql.prepare("INSERT OR REPLACE INTO prefixes (guild, prefix) VALUES (@guild, @prefix);");
     }
 }
 
