@@ -18,6 +18,7 @@ class MsgHandler {
         Util.TR.TRMode(message, gideon, Util); //apply trmode if enabled
 
         const lowercaseContent = message.content.toLowerCase();
+
         let customprefix = gideon.getPrefix.get(message.guild.id);
         if (!customprefix) {
             customprefix = {
@@ -26,11 +27,12 @@ class MsgHandler {
             }
             gideon.setPrefix.run(customprefix);
         }
-        Util.config.prefixes.unshift(customprefix.prefix);
+ 
         const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
-        if (!usedPrefix) return;
+        const usedCustom = lowercaseContent.startsWith(customprefix.prefix.toLowerCase());
+        if (!usedPrefix && !usedCustom) return;
 
-        const inputString = message.content.slice(usedPrefix.length).trim();
+        const inputString = usedPrefix ? message.content.slice(usedPrefix.length).trim() : message.content.slice(customprefix.prefix.length).trim();
         const args = inputString.split(' ').filter(arg => arg);
 
         let cmd = args.shift();

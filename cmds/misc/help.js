@@ -9,11 +9,12 @@ const Util = require("../../Util");
  */
 module.exports.run = async (gideon, message, args) => {
     const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
+    const customprefix = gideon.getPrefix.get(message.guild.id);
     const _prefixes = Util.config.prefixes.filter((x, i) => i < Util.config.prefixes.length - 1); //we remove the last prefix (.pop modifies the original array - BAD!)
-    const prefixes = _prefixes.map(x => (Util.getIdFromString(x) == gideon.user.id ? "" : "`") + x + (Util.getIdFromString(x) == gideon.user.id ? "" : "`")).join(" | ");
+    const prefixes = `\`${customprefix.prefix}\` | ` + _prefixes.map(x => (Util.getIdFromString(x) == gideon.user.id ? "" : "`") + x + (Util.getIdFromString(x) == gideon.user.id ? "" : "`")).join(" | ");
 
     if (!args[0]) {
-        const help = Util.CreateEmbed('__Use !help <module> to get a list of commands\nYou can check the list of available modules below:__')
+        const help = Util.CreateEmbed('__Use ' + customprefix.prefix + 'help <module> to get a list of commands\nYou can check the list of available modules below:__')
         .setDescription('Gideon\'s prefixes are: ' + prefixes)
         .addField('general', 'General helpful Arrowverse commands')  
         .addField('fun', 'Fun and interactive Arrowverse commands')  
@@ -89,9 +90,9 @@ module.exports.run = async (gideon, message, args) => {
 
         for (let i = 0; i < arrs.length; i++) {
             const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
-            embed.setDescription('Use `!help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes);
+            embed.setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes);
 
-            for (let item of arrs[i]) embed.addField(item.toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item, commands[item]);
+            for (let item of arrs[i]) embed.addField(item.toLowerCase().startsWith("gideon") ? item : customprefix.prefix + item, commands[item]);
             
             embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
             pages.push(embed);
@@ -108,8 +109,8 @@ module.exports.run = async (gideon, message, args) => {
 
     else {
         const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
-        embed.setDescription('Use `!help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes)
-        for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : Util.config.prefixes[0] + item + marks, commands[item]);
+        embed.setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes)
+        for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : customprefix.prefix + item + marks, commands[item]);
         embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
         message.channel.send(embed);
     }

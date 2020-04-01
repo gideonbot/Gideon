@@ -14,7 +14,7 @@ module.exports.run = async (gideon, message, args) => {
                 prefix: '!',
             }
             gideon.setPrefix.run(defaultprefix);
-            message.reply(`restored the default prefix: \`${defaultprefix.prefix}\`:white_check_mark:`);
+            message.reply(`restored the default prefix \`${defaultprefix.prefix}\` for \`${message.guild.name}\`:white_check_mark:`);
         }
 
         else {
@@ -23,7 +23,7 @@ module.exports.run = async (gideon, message, args) => {
                 prefix: args[0],
             }
             gideon.setPrefix.run(customprefix);
-            message.reply(`set custom prefix to: \`${customprefix.prefix}\`:white_check_mark:`);
+            message.reply(`set custom prefix for \`${message.guild.name}\` to \`${customprefix.prefix}\`:white_check_mark:`);
         }
     }
     
