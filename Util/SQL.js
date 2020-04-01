@@ -85,6 +85,8 @@ class SQL {
 
         gideon.getPrefix = sql.prepare("SELECT * FROM prefixes WHERE guild = ?");
         gideon.setPrefix = sql.prepare("INSERT OR REPLACE INTO prefixes (guild, prefix) VALUES (@guild, @prefix);");
+
+        gideon.db = sql;
     }
 }
 

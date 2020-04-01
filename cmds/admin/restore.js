@@ -15,16 +15,18 @@ const del = require('del');
 module.exports.run = async (gideon, message, args) => {
     try {
         message.channel.send('Performing database restore, please wait...');
-        const channel = gideon.guilds.cache.get('525341081727008788').channels.cache.get('525341082435715085');
+        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('622415301144870932');
         const lastbkup = await channel.messages.fetchPinned({ limit: 1 });
-        if (!lastbkup) return message.reply('no backup found!');
-
+        if (!lastbkup.first()) return message.reply('no backup found!');
+        gideon.db.close();
         const res = await fetch(lastbkup.first().attachments.first().url);
         await streamPipeline(res.body, fs.createWriteStream(path.resolve(__dirname, '../../data/SQL.zip')));
+        fs.unlinkSync(path.resolve(__dirname, '../../data/SQL/gideon.sqlite'));
         await del(path.resolve(__dirname, '../../data/SQL'));
 
         fs.createReadStream(path.resolve(__dirname, '../../data/SQL.zip')).pipe(unzipper.Extract({ path: path.resolve(__dirname, '../../data') }).on('close', async () => {
             await del(path.resolve(__dirname, '../../data/SQL.zip'));
+            Util.SQL.InitDB(gideon);
             Util.log(`Successfully restored SQL Database Backup from \`${lastbkup.first().createdAt}\`!`);
             message.channel.send('Database restore complete! Please check <#622415301144870932>! :white_check_mark:')
         })); 

@@ -59,6 +59,7 @@ declare module "discord.js" {
         setEggs: BetterSqlite3.Statement<any[]>;
         getPrefix: BetterSqlite3.Statement<any[]>;
         setPrefix: BetterSqlite3.Statement<any[]>;
+        db: BetterSqlite3.Database;
     }
 
     interface Message {
