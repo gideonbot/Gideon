@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
 
 module.exports.help = {
     name: ["opening", "intro"],
-    type: "misc",
+    type: "general",
     help_text: "opening",
     help_desc: "Sends the specified opening",
     owner: false,
