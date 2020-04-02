@@ -43,7 +43,7 @@ module.exports.help = {
     nsfw: false,
     args: {},
     nsfw: false,
-    args: {force: true, amount: 1},
+    args: {force: true},
     roles: [],
     user_perms: [],
     bot_perms: []

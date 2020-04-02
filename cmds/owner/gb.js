@@ -7,7 +7,7 @@ const Util = require("../../Util");
  * @param {string[]} args
  */
 module.exports.run = async (gideon, message, args) => {
-    const id = Util.ValID(args.join(' '))[0];
+    const id = Util.ValID(args.join(' '));
     try {
         let gb = gideon.getGBL.get(id);
         if (!gb) {
