@@ -292,5 +292,29 @@ class Checks {
         }
 		return spamcount;
     }
+
+    /**
+     * Invite check 
+     * @param {Discord.Message} message 
+     * @param {Discord.Client} gideon 
+     */
+    static async Ads(message, gideon) {
+        const invregex = /(?:(?:http|https):\/\/)?(?:www.)?(?:disco|discord|discordapp).(?:com|gg|io|li|me|net|org)(?:\/(?:invite))?\/([a-z0-9-.]+)/i;
+        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
+
+        if (message.guild.id !== '595318490240385037') return;
+        if (message.channel.permissionsFor(message.member).has('MANAGE_MESSAGES')) return;
+
+        if (message.content.match(invregex)) {
+            const invcode = message.content.match(invregex)[1];
+            const invite = await gideon.fetchInvite(invcode).catch(ex => console.log(ex));
+            
+            if (invite.guild.id !== '595318490240385037' || !invite.guild) {
+                await message.member.send('You have been kicked for sending a foreign guild invite!').catch(ex => console.log(ex));
+                await channel.send(`${message.author.tag} has been kicked for sending a foreign guild invite!`);
+                await message.member.kick();
+            }
+        }
+    }
 }
 module.exports = Checks;
