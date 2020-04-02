@@ -29,9 +29,10 @@ class MsgHandler {
             gideon.setPrefix.run(customprefix);
         }
  
-        const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
         const usedCustom = lowercaseContent.startsWith(customprefix.prefix.toLowerCase());
-        if (!usedPrefix && !usedCustom) return;
+        let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+        if (usedCustom) usedPrefix = customprefix.prefix;
+        if (!usedPrefix) return;
 
         const inputString = usedPrefix ? message.content.slice(usedPrefix.length).trim() : message.content.slice(customprefix.prefix.length).trim();
         const args = inputString.split(' ').filter(arg => arg);
