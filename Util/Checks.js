@@ -311,9 +311,9 @@ class Checks {
         if (message.content.match(invregex)) {
             const invcode = message.content.match(invregex)[1];
             const invite = await gideon.fetchInvite(invcode).catch(ex => console.log(ex));
-            await message.delete({ timeout: 200 });
 
             if (invite.guild.id !== '595318490240385037' || !invite.guild) {
+                await message.delete({ timeout: 200 });
                 await message.member.send('You have been kicked for sending a foreign guild invite!').catch(ex => console.log(ex));
                 await channel.send(`${message.author.tag} has been kicked for sending a foreign guild invite!`);
                 await message.member.kick();
