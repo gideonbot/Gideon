@@ -100,13 +100,15 @@ class Checks {
         const lowercaseContent = message.content.toLowerCase();
 
         // Find the prefix that was used
+        const customprefix = gideon.getPrefix.get(message.guild.id);
+        const usedCustom = lowercaseContent.startsWith(customprefix.prefix.toLowerCase());
         const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
         let args = '';
 
-        if (!usedPrefix) args = message.content.split(' ').map(x => x.trim()).filter(x => x);
+        if (!usedPrefix && !usedCustom) args = message.content.split(' ').map(x => x.trim()).filter(x => x);
         else args = message.content.slice(usedPrefix.length).trim().split(" ");
 
-        if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
+        if (lowercaseContent.startsWith(usedPrefix) && !args[5] || lowercaseContent.startsWith(customprefix.prefix) && !args[5]) return; //exclude bot cmds from filter
 
         let plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
 
