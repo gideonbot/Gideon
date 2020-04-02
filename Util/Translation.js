@@ -1,5 +1,5 @@
-const Discord = require("discord.js");
-const fetch = require('node-fetch');
+import Discord from "discord.js";
+import fetch from 'node-fetch';
 
 class TR {
     constructor() {
@@ -63,4 +63,4 @@ class TR {
         }
     }
 }
-module.exports = TR;
+export default TR;

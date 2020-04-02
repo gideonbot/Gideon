@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const Pagination = require('discord-paginationembed');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Pagination from 'discord-paginationembed';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
     const customprefix = gideon.getPrefix.get(message.guild.id);
     const _prefixes = Util.config.prefixes.filter((x, i) => i < Util.config.prefixes.length - 1); //we remove the last prefix (.pop modifies the original array - BAD!)
@@ -116,7 +116,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 }   
 
-module.exports.help = {
+export const help = {
     name: "help",
     type: "misc",
     help_text: "help [syntax]",

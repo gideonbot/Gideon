@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     const as = Util.CreateEmbed('You must supply valid input!');
     
     if (!args[0]) return message.channel.send(as);
@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
     gideon.shard.broadcastEval(`if (this.shard.ids[0] === ${shardid}) process.exit();`);
 }
 
-module.exports.help = {
+export const help = {
     name: ["ks", "kill"],
     type: "owner",
     help_text: "ks <shardid> <:gideon:686678560798146577>",

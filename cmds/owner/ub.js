@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const fs = require('fs');
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import fs from 'fs';;
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     const id = Util.ValID(args.join(' '));
     try {
         let ub = gideon.getUBL.get(id);
@@ -38,7 +38,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ["ub", "UBLacklist", "ubrm"],
     type: "owner",
     help_text: "ub <userid> <:gideon:686678560798146577>",

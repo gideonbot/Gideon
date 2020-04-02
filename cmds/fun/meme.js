@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const Imgur = require('imgur-node');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Imgur from 'imgur-node';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
     if (!process.env.IMG_CL) {
         Util.log("Missing env variable for meme command!");
         console.log("Missing env variable for meme command!");
@@ -32,7 +32,7 @@ module.exports.run = async (gideon, message) => {
     });   
 }
 
-module.exports.help = {
+export const help = {
     name: "meme",
     type: "fun",
     help_text: "meme",

@@ -1,18 +1,20 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const fs = require('fs')
-const streamPipeline = require('util').promisify(require('stream').pipeline)
-const unzipper = require('unzipper')
-const path = require('path');
-const fetch = require('node-fetch')
-const del = require('del');
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import fs from 'fs';
+import util from 'util';
+import stream from 'stream';
+const streamPipeline = util.promisify(stream.pipeline);
+import unzipper from 'unzipper';
+import path from 'path';
+import fetch from 'node-fetch';
+import del from 'del';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     try {
         message.channel.send('Performing database restore, please wait...');
         const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('622415301144870932');
@@ -38,7 +40,7 @@ module.exports.run = async (gideon, message, args) => {
     }      
 }
 
-module.exports.help = {
+export const help = {
     name: ["restore", "rs"],
     type: "admin",
     help_text: "restore `@Gideon Dev Team`",

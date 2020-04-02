@@ -1,6 +1,6 @@
-const Discord = require("discord.js");
-const path = require('path');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import path from 'path';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
@@ -8,7 +8,7 @@ const Util = require("../../Util");
  * @param {string[]} args
  * @param {Discord.VoiceConnection} connection
  */
-module.exports.run = async (gideon, message, args, connection) => {
+export async function run(gideon, message, args, connection) {
     const orders = connection.play(path.resolve(__dirname, '../../data/audio/captain/Awaiting orders, Captain.m4a'));
     orders.pause();
     orders.resume();
@@ -19,7 +19,7 @@ module.exports.run = async (gideon, message, args, connection) => {
     }); 
 }
 
-module.exports.help = {
+export const help = {
     name: "wakeword",
     type: "voice",
     help_text: "Hello Gideon <:voicerecognition:693521621184413777>",

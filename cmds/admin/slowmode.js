@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     const as = Util.CreateEmbed("You must supply valid input!");
     
     try {
@@ -30,7 +30,7 @@ module.exports.run = async (gideon, message, args) => {
     }      
 }
 
-module.exports.help = {
+export const help = {
     name: ["slowmode", "slowmo", "slow", "sm"],
     type: "admin",
     help_text: "slowmode [channel] <seconds> <:perms:686681300156940349>",

@@ -1,6 +1,8 @@
-const SQLite = require("better-sqlite3");
-const path = require('path');
-const sql = new SQLite(path.resolve(__dirname, "../data/SQL/gideon.sqlite"));
+import SQLite from "better-sqlite3";
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const sql = new SQLite(path.join(__dirname, '../data/SQL/gideon.sqlite'));
 
 class SQL {
     constructor() {
@@ -90,4 +92,4 @@ class SQL {
     }
 }
 
-module.exports = SQL;
+export default SQL;

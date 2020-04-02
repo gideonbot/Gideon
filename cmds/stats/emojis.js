@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {     
+export async function run(gideon, message, args) {     
     const guild = message.guild;
     const emojis = guild.emojis.cache.map(emojis => emojis.toString()).join(' ');
     const escaped = Util.truncate(emojis, 1024, true);
@@ -33,7 +33,7 @@ module.exports.run = async (gideon, message) => {
     message.channel.send(embed);
 }
 
-module.exports.help = {
+export const help = {
     name: ['emojis', 'emotes'],
     type: "stats",
     help_text: "emojis",

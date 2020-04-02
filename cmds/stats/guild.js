@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const moment = require('moment');
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import moment from 'moment';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {     
+export async function run(gideon, message, args) {     
     const guild = message.guild;
     let premiumtier;
     if (guild.premiumTier === 0) premiumtier = 'None';
@@ -37,7 +37,7 @@ module.exports.run = async (gideon, message) => {
     message.channel.send(embed);
 }
 
-module.exports.help = {
+export const help = {
     name: ['guild', 'server'],
     type: "stats",
     help_text: "guild",

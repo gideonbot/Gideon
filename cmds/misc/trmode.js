@@ -1,11 +1,11 @@
-const Discord = require("discord.js");
+import Discord from "discord.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
     let trmode = gideon.getTrmode.get(message.author.id);
     if (!trmode) {
         trmode = {
@@ -27,7 +27,7 @@ module.exports.run = async (gideon, message) => {
     }
 }
 
-module.exports.help = {
+export const help = {
     name: "trmode",
     type: "misc",
     help_text: "trmode",

@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
     message.channel.send(Util.CreateEmbed('Gideon - Selfhosting Documentation', {
         description: 'Click the link below to read the GitHub documentation on how to selfhost me!',
         thumbnail: gideon.user.avatarURL(),
@@ -19,7 +19,7 @@ module.exports.run = async (gideon, message) => {
     }));
 }
 
-module.exports.help = {
+export const help = {
     name: ["docs", "hosting"],
     type: "misc",
     help_text: "docs",

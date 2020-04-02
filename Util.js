@@ -1,12 +1,15 @@
-const Discord = require("discord.js");
-const fetch = require('node-fetch');
-const config = require("./data/JSON/config.json");
-const path = require('path');
-const SQL = require(path.resolve(__dirname,'./Util/SQL'))
-const Voice = require(path.resolve(__dirname,'./Util/Voice'))
-const Checks = require(path.resolve(__dirname,'./Util/Checks'))
-const TR = require(path.resolve(__dirname,'./Util/Translation'))
-const MsgHandler = require(path.resolve(__dirname,'./Util/MessageHandler'))
+import Discord from "discord.js";
+import fetch from 'node-fetch';
+import config from "./data/config/config.js";
+import SQL from './Util/SQL.js';
+import Voice from './Util/Voice.js';
+import Checks from './Util/Checks.js';
+import TR from './Util/Translation.js';
+import MsgHandler from './Util/MessageHandler.js';
+import Imgur from 'imgur-node';
+import zip from 'zip-a-folder';
+import del from 'del';
+import recursive from "recursive-readdir";
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -208,8 +211,6 @@ class Util {
      * @param {boolean} nsfw
      */
     static async IMG(imgid, message, nsfw) {
-        const Imgur = require('imgur-node');
-
         if (!process.env.IMG_CL) return;
 
         const imgclient = new Imgur.Client(process.env.IMG_CL);
@@ -437,8 +438,6 @@ class Util {
      * DB Backup
      */
     static async SQLBkup(gideon) {
-        const { zip } = require('zip-a-folder');
-        const del = require('del');
         const db = './data/SQL';
         const arc = './data/SQL.zip';
         const date = new Date();
@@ -569,7 +568,6 @@ class Util {
      * @param {Discord.Client} gideon
      */
     static LoadCommands(gideon) {
-        const recursive = require("recursive-readdir");
         console.log(process.cwd());
         let start = process.hrtime.bigint();
     
@@ -587,10 +585,10 @@ class Util {
             }
             console.log(`Found ${jsfiles.length} commands`);
     
-            jsfiles.forEach((fileName, i) => {
+            jsfiles.forEach(async (fileName, i) => {
                 let cmd_start = process.hrtime.bigint();
-                let props = require(`./${fileName}`);
-        
+                let props = await import(`./${fileName}`);
+
                 if (Array.isArray(props.help.name)) {
                     for (let item of props.help.name) gideon.commands.set(item, props);
                 }
@@ -618,4 +616,4 @@ class Util {
     }
 }
 
-module.exports = Util;
+export default Util;

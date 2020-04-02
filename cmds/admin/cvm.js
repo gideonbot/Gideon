@@ -1,11 +1,11 @@
-const Discord = require("discord.js");
+import Discord from "discord.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {   
+export async function run(gideon, message, args) {   
     let cvm = gideon.getCVM.get(message.guild.id);
     if (!cvm) {
         cvm = {
@@ -27,7 +27,7 @@ module.exports.run = async (gideon, message) => {
     } 
 }
 
-module.exports.help = {
+export const help = {
     name: "cvm",
     type: "admin",
     help_text: "cvm <:perms:686681300156940349>",

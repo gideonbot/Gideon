@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     try {
         message.channel.send('Performing database backup, please wait...');
         await Util.SQLBkup(gideon);
@@ -20,7 +20,7 @@ module.exports.run = async (gideon, message, args) => {
     }      
 }
 
-module.exports.help = {
+export const help = {
     name: ["backup", "bkup"],
     type: "admin",
     help_text: "backup `@Gideon Dev Team`",

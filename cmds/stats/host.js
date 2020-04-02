@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const si = require('systeminformation');
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import si from 'systeminformation';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {     
+export async function run(gideon, message, args) {     
     try {
         let sent = await message.channel.send(Util.CreateEmbed('Gathering host info, please wait...'));
 
@@ -49,7 +49,7 @@ module.exports.run = async (gideon, message) => {
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ['host', 'server'],
     type: "stats",
     help_text: "host",

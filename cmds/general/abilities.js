@@ -1,14 +1,14 @@
-const Discord = require("discord.js");
-const Pagination = require('discord-paginationembed');
-const gideonapi = require('gideon-api');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Pagination from 'discord-paginationembed';
+import gideonapi from 'gideon-api';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     const ia = new Discord.MessageEmbed()
     .setColor('#2791D3')
     .setTitle(`${args[0]} is not a valid argument!`)
@@ -179,7 +179,7 @@ module.exports.run = async (gideon, message, args) => {
     else return message.channel.send(ia);
 }   
 
-module.exports.help = {
+export const help = {
     name: ["abilities", "powers"],
     type: "general",
     help_text: "abilities <term>",

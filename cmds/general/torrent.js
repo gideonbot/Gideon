@@ -1,14 +1,14 @@
-const Discord = require("discord.js");
-const torrentSearch = require('torrent-search-api');
-const Util = require("../../Util");
-const Magnet2torrent = require('magnet2torrent-js');
+import Discord from "discord.js";
+import torrentSearch from 'torrent-search-api';
+import Util from "../../Util.js";
+import Magnet2torrent from 'magnet2torrent-js';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     let agc = args[0];
     const auth = message.author.id;
 
@@ -87,7 +87,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ["torrent", "download"],
     type: "general",
     help_text: "torrent <show> <NxNN/SNNENN> ~ N -> number",

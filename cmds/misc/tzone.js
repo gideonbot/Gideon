@@ -1,14 +1,14 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const fs = require('fs');
-const moment = require("moment-timezone");
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import fs from 'fs';;
+import moment from "moment-timezone";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     const path = './data/JSON/tzdb.json';
 
     if (!fs.existsSync(path)) {
@@ -77,7 +77,7 @@ module.exports.run = async (gideon, message, args) => {
     else return message.channel.send(Util.CreateEmbed('You must supply a valid argument!'));
 }
 
-module.exports.help = {
+export const help = {
     name: ["tz", "tzones", "timezone", "timezones"],
     type: "misc",
     help_text: "tz [<register>/<user>]",

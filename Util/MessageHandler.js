@@ -146,4 +146,4 @@ class MsgHandler {
     }
 }
 
-module.exports = MsgHandler;
+export default MsgHandler;

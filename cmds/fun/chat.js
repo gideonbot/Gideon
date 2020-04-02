@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const cleverbot = require("cleverbot-free");
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import cleverbot from "cleverbot-free";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {     
+export async function run(gideon, message, args) {     
     const text = args.join(' ');
 
     let arr = [];
@@ -57,7 +57,7 @@ module.exports.run = async (gideon, message, args) => {
     });
 }
 
-module.exports.help = {
+export const help = {
     name: ['chat', 'ai', 'speak'],
     type: 'fun',
     help_text: 'chat',

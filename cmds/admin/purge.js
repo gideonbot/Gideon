@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     const msgamt = args[0];
     if (!msgamt) return await Util.delay(200), await message.channel.bulkDelete(2);
     
@@ -17,7 +17,7 @@ module.exports.run = async (gideon, message, args) => {
     await message.channel.bulkDelete(msgamt);
 }
 
-module.exports.help = {
+export const help = {
     name: ["purge", "delete", "remove"],
     type: "admin",
     help_text: "purge [amount] <:perms:686681300156940349>",

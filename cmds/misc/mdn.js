@@ -1,14 +1,14 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const fetch = require('node-fetch');
-const Turndown = require('turndown');
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import fetch from 'node-fetch';;
+import Turndown from 'turndown';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     const as = Util.CreateEmbed("You must supply valid input!");
     if (!args[0]) return message.channel.send(as);
 
@@ -43,7 +43,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ["mdn", "mozilla", "js"],
     type: "misc",
     help_text: "mdn <query>",

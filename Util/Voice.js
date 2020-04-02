@@ -1,5 +1,6 @@
-const Discord = require('discord.js');
-const fetch = require('node-fetch');
+import Discord from "discord.js";
+import fetch from 'node-fetch';
+import { Transform } from 'stream';
 
 class Voice {
     constructor() {
@@ -23,8 +24,6 @@ class Voice {
      */
     static async SpeechRecognition(speech, channel, gideon) {
         if (!process.env.WITAI_TOKEN) return null;
-        
-        const { Transform } = require('stream')
 
         function convertBufferTo1Channel(buffer) {
             const convertedBuffer = Buffer.alloc(buffer.length / 2)
@@ -85,4 +84,4 @@ class Voice {
     }
 }
 
-module.exports = Voice;
+export default Voice;

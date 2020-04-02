@@ -1,7 +1,7 @@
-const Discord = require("discord.js");
-const randomFile = require('select-random-file');
-const path = require('path');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import randomFile from 'select-random-file';
+import path from 'path';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
@@ -9,7 +9,7 @@ const Util = require("../../Util");
  * @param {string[]} args
  * @param {Discord.VoiceConnection} connection
  */
-module.exports.run = async (gideon, message, args, connection) => {
+export async function run(gideon, message, args, connection) {
     const dir = path.resolve(__dirname, '../../data/audio/phrases');
     randomFile(dir, (err, file) => {
         let rfile = `${dir}/${file}`;
@@ -24,7 +24,7 @@ module.exports.run = async (gideon, message, args, connection) => {
     })
 }
 
-module.exports.help = {
+export const help = {
     name: "talk",
     type: "voice",
     help_text: "Talk to me <:voicerecognition:693521621184413777>",

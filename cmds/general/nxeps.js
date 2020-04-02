@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
-const Discord = require("discord.js");
-const path = require('path');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import path from 'path';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args, connection) => {
+export async function run(gideon, message, args, connection) {
     if (connection) {
         const confirm = connection.play(path.resolve(__dirname, '../../data/audio/captain/Right away, Captain!.m4a'));
         confirm.pause();
@@ -51,7 +51,7 @@ module.exports.run = async (gideon, message, args, connection) => {
     message.channel.send(embed);
 }
 
-module.exports.help = {
+export const help = {
     name: ["nxeps", "nexteps", "nextepisodes"],
     type: "general",
     help_text: "nxeps <:voicerecognition:693521621184413777>",

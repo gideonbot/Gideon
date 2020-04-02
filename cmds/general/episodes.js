@@ -1,14 +1,14 @@
-const Discord = require("discord.js");
-const fetch = require('node-fetch');
-const Util = require("../../Util");
-const moment = require('moment');
+import Discord from "discord.js";
+import fetch from 'node-fetch';;
+import Util from "../../Util.js";
+import moment from 'moment';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     let agc = args[0];
     let info = Util.parseSeriesEpisodeString(args[1]);
 
@@ -130,7 +130,7 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send(Util.CreateEmbed('An error occurred while trying to fetch the episodes!'));
     }
 }
-module.exports.help = {
+export const help = {
     name: ["ep", "episode"],
     type: "general",
     help_text: "ep <show> <NxNN|SNENN> ~ N -> number",

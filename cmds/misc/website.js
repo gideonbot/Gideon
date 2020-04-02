@@ -1,15 +1,15 @@
-const Discord = require("discord.js");
+import Discord from "discord.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {      
+export async function run(gideon, message, args) {      
     message.channel.send('https://gideonbot.co.vu');
 }
 
-module.exports.help = {
+export const help = {
     name: ['website', 'web', 'url', 'homepage'],
     type: "misc",
     help_text: "website",

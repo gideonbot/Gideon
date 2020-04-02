@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
     try {
         const embed = Util.CreateEmbed('Guilds:');
 
@@ -26,7 +26,7 @@ module.exports.run = async (gideon, message) => {
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ["guilds", "servers"],
     type: "stats",
     help_text: "guilds",

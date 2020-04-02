@@ -1,14 +1,13 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const fetch = require('node-fetch');
-const Turndown = require('turndown');
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import fetch from 'node-fetch';;
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     try {
         const source = `https://raw.githubusercontent.com/discordjs/discord.js/docs/12.0.2.json`;
         const queryString = encodeURI(args.join(' '));
@@ -24,7 +23,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ["djs", "discordjs", "lib"],
     type: "misc",
     help_text: "djs <query>",

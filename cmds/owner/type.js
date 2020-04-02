@@ -1,16 +1,16 @@
-const Discord = require("discord.js");
+import Discord from "discord.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
     if (gideon.user.typingIn(message.channel)) message.channel.stopTyping(true);
     else message.channel.startTyping();
 }
 
-module.exports.help = {
+export const help = {
     name: ["type", "typing"],
     type: "owner",
     help_text: "type <:gideon:686678560798146577>",

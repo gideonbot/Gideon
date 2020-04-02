@@ -1,14 +1,14 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const stringSimilarity = require('string-similarity');
-const moment = require('moment');
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import stringSimilarity from 'string-similarity';
+import moment from 'moment';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     const as = Util.CreateEmbed("You must supply valid input!");
     const auth = message.author;
     let user;
@@ -87,7 +87,7 @@ module.exports.run = async (gideon, message, args) => {
     message.channel.send(embed);
 }
 
-module.exports.help = {
+export const help = {
     name: ["user", "member"],
     type: "stats",
     help_text: "user <user>",

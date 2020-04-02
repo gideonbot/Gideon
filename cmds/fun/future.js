@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const path = require('path');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import path from 'path';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args, connection) => {
+export async function run(gideon, message, args, connection) {
     let agm;
     if (args) {
         agm = args.join("").toLowerCase();
@@ -33,7 +33,7 @@ module.exports.run = async (gideon, message, args, connection) => {
     }));
 }
 
-module.exports.help = {
+export const help = {
     name: ["show", "future"],
     type: "fun",
     help_text: "Gideon, show me the future!",

@@ -1,8 +1,9 @@
-require('dotenv').config();
-require('pretty-error').start().withoutColors();
-const Discord = require('discord.js');
+import 'dotenv/config.js';
+import PrettyError from 'pretty-error';
+PrettyError.start().withoutColors();
+import Discord from "discord.js";
 const gideon = new Discord.Client({ ws: { intents: Discord.Intents.ALL }, partials: ['MESSAGE', 'REACTION'] });
-const Util = require("./Util");
+import Util from "./Util.js";
 
 gideon.commands = new Discord.Collection();
 gideon.vcmdexec = false;

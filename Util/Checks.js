@@ -1,5 +1,5 @@
-const Discord = require("discord.js");
-const fetch = require('node-fetch');
+import Discord from "discord.js";
+import fetch from 'node-fetch';
 
 class Checks {
     constructor() {
@@ -317,4 +317,4 @@ class Checks {
         }
     }
 }
-module.exports = Checks;
+export default Checks;

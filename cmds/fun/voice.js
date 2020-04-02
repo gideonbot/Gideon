@@ -1,6 +1,6 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const { Readable } = require('stream');
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import { Readable } from 'stream';
 const SILENCE_FRAME = Buffer.from([0xF8, 0xFF, 0xFE]);
 
 class Silence extends Readable {
@@ -15,7 +15,7 @@ class Silence extends Readable {
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     let command = message.content.toLowerCase().split(' ')[0];
 
     const voicehelp = Util.CreateEmbed(`Usage of Voice™ Commands:`, {
@@ -89,7 +89,7 @@ module.exports.run = async (gideon, message, args) => {
     } 
 }
 
-module.exports.help = {
+export const help = {
     name: ["voice", "join", "leave"],
     type: "fun",
     help_text: "voice",

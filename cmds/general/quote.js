@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const gideonapi = require('gideon-api');
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import gideonapi from 'gideon-api';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
     try {
         const quote = await gideonapi.quote();
         message.channel.send(Util.CreateEmbed(null, {description: '**' + quote.text + '**', thumbnail: quote.img}));
@@ -21,7 +21,7 @@ module.exports.run = async (gideon, message) => {
     }
 }
 
-module.exports.help = {
+export const help = {
     name: "quote",
     type: "fun",
     help_text: "quote",

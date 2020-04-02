@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const fetch = require('node-fetch');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import fetch from 'node-fetch';;
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
     const api = 'https://api.github.com/repos/adrifcastr/Gideon';
 
     try {
@@ -27,7 +27,7 @@ module.exports.run = async (gideon, message) => {
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ["github", "git", "repo"],
     type: "stats",
     help_text: "github",

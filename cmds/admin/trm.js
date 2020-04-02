@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
         let check = message.guild.roles.cache.random();
 
         if (check.mentionable == false) {
@@ -36,7 +36,7 @@ module.exports.run = async (gideon, message) => {
         else return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 
-module.exports.help = {
+export const help = {
     name: "trm",
     type: "admin",
     help_text: "trm <:perms:686681300156940349>",

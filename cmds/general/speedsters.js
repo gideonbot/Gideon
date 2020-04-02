@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const gideonapi = require('gideon-api');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import gideonapi from 'gideon-api';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     if (!args[0]) return message.channel.send(Util.CreateEmbed('You must supply a speedsters name or alter ego and their home universe!'));
 
     let ssd = args.join(' ');
@@ -53,7 +53,7 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send(Util.CreateEmbed('Failed to fetch speedster data, please try again later!'));
     }
 }
-module.exports.help = {
+export const help = {
     name: ["sp", "speedster", "speedsters"],
     type: "general",
     help_text: "sp <name/alter ego> eN (earth number)",

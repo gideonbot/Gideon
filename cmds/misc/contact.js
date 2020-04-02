@@ -1,13 +1,13 @@
-const Discord = module.require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
     message.channel.send(Util.CreateEmbed('Contact:', {
         description: `Server: [Time Vault](https://discord.gg/h9SEQaU 'https://discord.gg/h9SEQaU')\nEmail: adrifcastr@gmail.com`
     }));  
 }
 
-module.exports.help = {
+export const help = {
     name: ["contact", "about"],
     type: "misc",
     help_text: "contact",

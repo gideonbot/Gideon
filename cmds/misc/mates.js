@@ -1,15 +1,15 @@
-const Discord = require("discord.js");
-const fetch = require('node-fetch');
-const parsePodcast = require("@activediscourse/podcast-parser")
-const moment = require('moment');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import fetch from 'node-fetch';
+import parsePodcast from "@activediscourse/podcast-parser";
+import moment from 'moment';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {   
+export async function run(gideon, message, args) {   
     const as = Util.CreateEmbed("You must supply valid input!");
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
@@ -224,7 +224,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ['mates', 'podcast'],
     type: "misc",
     help_text: "mates <episode>",

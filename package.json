@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "The Arrowverse Discord Bot",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "node gideon.js",
     "prestart": "npm install",
