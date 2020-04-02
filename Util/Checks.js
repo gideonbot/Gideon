@@ -196,19 +196,19 @@ class Checks {
      */
     static async LBG(guild, gideon, Util) {
         const id = guild.id;
-        let gbl = gideon.getGBL.get(id);
+        const gbl = gideon.getGBL.get(id);
         if (!gbl) return;
         if (gbl.guildval === 0) return;
 
-        let textchannels = guild.channels.cache.filter(c=> c.type == "text");
-        let channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
+        const textchannels = guild.channels.cache.filter(c=> c.type == "text");
+        const channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
         if (!channels.size) {
             await guild.leave();
             Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
         }
 
         else{
-            channels.random().send('This guild is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
+            await channels.first().send('This guild is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
             await guild.leave();
             Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
         }
@@ -220,7 +220,7 @@ class Checks {
      * @returns {boolean}
      */
     static IBU(message, gideon) {
-        let ubl = gideon.getGBL.get(message.author.id);
+        const ubl = gideon.getGBL.get(message.author.id);
         if (!ubl) return;
         return ubl.userval === 1;
     }
@@ -312,11 +312,43 @@ class Checks {
             const invcode = message.content.match(invregex)[1];
             const invite = await gideon.fetchInvite(invcode).catch(ex => console.log(ex));
             await message.delete({ timeout: 200 });
-            
+
             if (invite.guild.id !== '595318490240385037' || !invite.guild) {
                 await message.member.send('You have been kicked for sending a foreign guild invite!').catch(ex => console.log(ex));
                 await channel.send(`${message.author.tag} has been kicked for sending a foreign guild invite!`);
                 await message.member.kick();
+            }
+        }
+    }
+
+    /**
+     * Bot collection guild check 
+     * @param {Discord.Guild} guild 
+     * @param {Discord.Client} gideon 
+     */
+    static async BotCheck(guild, gideon, Util) {
+        if (!guild.members || !guild.members.cache) await guild.members.fetch();
+        const bots = guild.members.cache.filter(x => x.user.bot).size;
+
+        if (bots > 20) {
+            const gb = {
+                guild: guild.id,
+                guildval: 1,
+            }
+            gideon.setGBL.run(gb);
+            Util.log(`Guild \`${guild.name}\` has been blacklisted due to being a bot collecting guild with \`${bots}\` bots!`);
+
+            const textchannels = guild.channels.cache.filter(c=> c.type == "text");
+            const channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
+            if (!channels.size) {
+                await guild.leave();
+                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
+            }
+
+            else{
+                await channels.first().send('This guild is banned by the bot owner for being a bot collecting guild!\nNow leaving this guild!').catch(ex => console.log(ex));
+                await guild.leave();
+                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
             }
         }
     }

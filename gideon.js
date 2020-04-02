@@ -85,6 +85,7 @@ gideon.on("guildCreate", guild => {
     Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
     Util.Checks.LBG(guild, gideon, Util); //check if guild is blacklisted, if yes, leave
     Util.Invite(guild);
+    Util.Checks.BotCheck(guild, gideon, Util); //check if guild collects bots, if yes, leave
 });
 
 gideon.on("guildDelete", guild => {
