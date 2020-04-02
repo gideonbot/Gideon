@@ -113,8 +113,13 @@ gideon.on("messageReactionAdd", (messageReaction, user) => {
     Util.Starboard(messageReaction, user, gideon);
 });
 
-gideon.on("guildMemberAdd", async member => {
+gideon.on("guildMemberAdd", member => {
     Util.Welcome(member, gideon);
+});
+
+gideon.on("inviteCreate", Invite => {
+    if (Invite.guild.id !== '595318490240385037') return;
+    Util.log(`Invite for \`${Invite.guild.name}\` has been created:\n\n\`\`\`\nInviter: ${Invite.inviter.tag}\nChannel: ${Invite.channel.name}\n\`\`\`\n${Invite.url}`);
 });
 
 gideon.on("voiceStateUpdate", (oldState, newState) => {
