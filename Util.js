@@ -472,8 +472,9 @@ class Util {
             const board = gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
 
             if (reaction.partial) await reaction.fetch();
-            if (reaction.message.partial) await reaction.message.fetch();
+            if (!reaction.message) return;
             if (reaction.message.deleted) return;
+            if (reaction.message.partial) await reaction.message.fetch();
             if (reaction.message.guild.id !== '595318490240385037') return;
             if (reaction.emoji.name !== '⭐') return;
             if (reaction.message.embeds[0]) return;
