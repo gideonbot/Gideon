@@ -1,5 +1,7 @@
 import Discord from "discord.js";
 import fetch from 'node-fetch';
+import anyAscii from 'any-ascii';
+import Filter from 'bad-words';
 
 class Checks {
     constructor() {
@@ -350,6 +352,56 @@ class Checks {
                 await channels.first().send(`This guild is banned by the bot owner for being a bot collecting guild!\nThis guild has \`${bots}\` bots!\nIf you beleive this is an arror please contact \`adrifcastr#4530\`.\nNow leaving this guild!`).catch(ex => console.log(ex));
                 await guild.leave();
                 Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
+            }
+        }
+    }
+
+    /**
+     * Check nickname & username 
+     * @param {Discord.GuildMember} newMember 
+     * @param {Discord.User} newUser 
+     * @param {Discord.Client} gideon
+     */
+    static async NameCheck(newMember, newUser, gideon) {
+        if (newMember) {
+            const member = newMember;
+
+            if (member.guild.id !== '595318490240385037') return;
+            const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('669243069878501385');
+            const noascii = /[^\x00-\x7F]+/gi;
+            const filter = new Filter();
+
+            if (member.nickname && member.nickname.match(noascii)) {
+                let ascii = anyAscii(member.nickname);
+                if (ascii.length > 32) ascii = 'nickname';
+                await member.setNickname(ascii);
+                await channel.send(`${member} your nickname has been set to \`${ascii}\` because it contained unusual unicode!`);
+            }
+
+            if (member.nickname && filter.isProfane(member.nickname)) {
+                let clean = filter.clean(member.nickname);
+                if (clean.length > 32) clean = 'nickname';
+                await member.setNickname(clean);
+                await channel.send(`${member} your nickname has been set to \`${clean}\` because it contained strong language!`);
+            }
+        }
+
+        if (newUser) {
+            const member = gideon.guilds.cache.get('595318490240385037').members.cache.get(newUser.id);
+            if (!member) return;
+
+            if (newUser.username && newUser.username.match(noascii)) {
+                let ascii = anyAscii(newUser.username);
+                if (ascii.length > 32) ascii = 'nickname';
+                await member.setNickname(ascii);
+                await channel.send(`${member} your nickname has been set to \`${ascii}\` because your username contained unusual unicode!`);
+            }
+
+            if (newUser.username && filter.isProfane(newUser.username)) {
+                let clean = filter.clean(newUser.username);
+                if (clean.length > 32) clean = 'nickname';
+                await member.setNickname(clean);
+                await channel.send(`${member} your nickname has been set to \`${clean}\` because your username contained strong language!`);
             }
         }
     }

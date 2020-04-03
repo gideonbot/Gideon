@@ -20,6 +20,7 @@
     "@activediscourse/podcast-parser": "^1.0.0",
     "@discordjs/opus": "^0.1.0",
     "any-ascii": "^0.1.4",
+    "bad-words": "^3.0.3",
     "better-sqlite3": "^5.4.3",
     "cleverbot-free": "^1.0.3",
     "del": "^5.1.0",

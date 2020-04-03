@@ -115,6 +115,15 @@ gideon.on("messageReactionAdd", (messageReaction, user) => {
 
 gideon.on("guildMemberAdd", member => {
     Util.Welcome(member, gideon);
+    Util.Checks.NameCheck(null, member.user, gideon);
+});
+
+gideon.on("guildMemberUpdate", (oldMember, newMember) => {
+    Util.Checks.NameCheck(newMember, null, gideon);
+});
+
+gideon.on("userUpdate", (oldUser, newUser) => {
+    Util.Checks.NameCheck(null, newUser, gideon);
 });
 
 gideon.on("inviteCreate", Invite => {
