@@ -304,11 +304,11 @@ class Checks {
      * @param {Discord.Client} gideon 
      */
     static async Ads(message, gideon) {
-        const invregex = /(?:(?:http|https):\/\/)?(?:www.)?(?:disco|discord|discordapp).(?:com|gg|io|li|me|net|org)(?:\/(?:invite))?\/([a-z0-9-.]+)/i;
-        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
-
         if (message.guild.id !== '595318490240385037') return;
         if (message.channel.permissionsFor(message.member).has('MANAGE_MESSAGES')) return;
+
+        const invregex = /(?:(?:http|https):\/\/)?(?:www.)?(?:disco|discord|discordapp).(?:com|gg|io|li|me|net|org)(?:\/(?:invite))?\/([a-z0-9-.]+)/i;
+        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
 
         if (message.content.match(invregex)) {
             const invcode = message.content.match(invregex)[1];
