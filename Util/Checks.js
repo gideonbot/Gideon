@@ -327,6 +327,7 @@ class Checks {
      * @param {Discord.Client} gideon 
      */
     static async BotCheck(guild, gideon, Util) {
+        if (['595318490240385037', '264445053596991498', '110373943822540800'].includes(guild.id)) return; 
         if (!guild.members || !guild.members.cache) await guild.members.fetch();
         const bots = guild.members.cache.filter(x => x.user.bot).size;
 
@@ -336,7 +337,7 @@ class Checks {
                 guildval: 1,
             }
             gideon.setGBL.run(gb);
-            Util.log(`Guild \`${guild.name}\` has been blacklisted due to being a bot collecting guild with \`${bots}\` bots!`);
+            Util.log(`Guild \`${guild.name}\` has been blacklisted due to it being a bot collecting guild with \`${bots}\` bots!`);
 
             const textchannels = guild.channels.cache.filter(c=> c.type == "text");
             const channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
@@ -346,7 +347,7 @@ class Checks {
             }
 
             else{
-                await channels.first().send('This guild is banned by the bot owner for being a bot collecting guild!\nNow leaving this guild!').catch(ex => console.log(ex));
+                await channels.first().send(`This guild is banned by the bot owner for being a bot collecting guild!\nThis guild has \`${bots}\` bots!\nIf you beleive this is an arror please contact \`adrifcastr#4530\`.\nNow leaving this guild!`).catch(ex => console.log(ex));
                 await guild.leave();
                 Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
             }
