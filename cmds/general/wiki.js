@@ -1,13 +1,13 @@
-const Discord = require('discord.js');
-const fetch = require('node-fetch');
-const Util = require('../../Util');
+import Discord from "discord.js";
+import fetch from 'node-fetch';;
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     let wikis = [
         {
             url: 'arrow.fandom.com',
@@ -22,7 +22,7 @@ module.exports.run = async (gideon, message, args) => {
             title: 'DC'
         },
         {
-            url: 'krypton-series.fandom.com',
+            url: 'krypton.fandom.com',
             title: 'Krypton'
         },
         {
@@ -57,8 +57,8 @@ module.exports.run = async (gideon, message, args) => {
 
         const body = await fetch(api).then(res => res.json());
 
-        //stargirl does some weird stuff, therefore the actual result is the 2nd element
-        const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 ? 1 : 0];
+        //stargirl & krypton do some weird stuff, therefore the actual result is the 2nd element
+        const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 || wikis.indexOf(wiki) == 3 ? 1 : 0];
 
         if (Object.keys(body.items).length < 1) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!`));
         
@@ -78,15 +78,23 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     catch (ex) {
-        console.log('Error occurred while fetching data from wiki: ' + ex);
-        Util.log('Error occurred while fetching data from wiki: ' + ex);
+        console.log('Error occurred while fetching data from wiki: ' + ex.stack);
+        Util.log('Error occurred while fetching data from wiki: ' + ex.stack);
         message.channel.send(Util.CreateEmbed('Failed to fetch info from wiki!'));
     } 
 }
 
-module.exports.help = {
+export const help = {
     name: ['wiki', 'wikistg', 'wikidc', 'wikikr', 'wikilu'],
     type: "general",
     help_text: "wiki[stg|kr|lu|dc] <term>",
-    help_desc: "Searches the specified wiki for the given term | stg - Stargirl | kr - Krypton | lu - Lucifer | dc - DC |"
+    help_desc: "Searches the specified wiki for the given term | stg - Stargirl | kr - Krypton | lu - Lucifer | dc - DC |",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {force: true},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

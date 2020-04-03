@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const cleverbot = require("cleverbot-free");
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import cleverbot from "cleverbot-free";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {     
+export async function run(gideon, message, args) {     
     const text = args.join(' ');
 
     let arr = [];
@@ -50,16 +50,24 @@ module.exports.run = async (gideon, message, args) => {
         message.channel.send(response).then(sent => {
             sent.cleverbot = true;
             message.cleverbot = true;
-        }).finally(() => message.channel.stopTyping());
+        }).finally(() => message.channel.stopTyping(true));
     }, failed => {
         console.log(failed);
-        message.channel.stopTyping();
+        message.channel.stopTyping(true);
     });
 }
 
-module.exports.help = {
-    name: ['chat', 'talk', 'speak'],
+export const help = {
+    name: ['chat', 'ai', 'speak'],
     type: 'fun',
     help_text: 'chat',
-    help_desc: 'Chat with an AI'
+    help_desc: 'Chat with an AI',
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {force: true},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

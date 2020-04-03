@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const fetch = require('node-fetch');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import fetch from 'node-fetch';;
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
     const api = 'https://api.myjson.com/bins/zixur';
     try {
         const body = await fetch(api).then(res => res.json()); 
@@ -19,15 +19,23 @@ module.exports.run = async (gideon, message) => {
     }
     
     catch (ex) {
-        console.log("An error occurred while trying to fetch a timeline change: " + ex);
-        Util.log("An error occurred while trying to fetch a timeline change: " + ex);
+        console.log("An error occurred while trying to fetch a timeline change: " + ex.stack);
+        Util.log("An error occurred while trying to fetch a timeline change: " + ex.stack);
         return message.channel.send(Util.CreateEmbed('Failed to fetch a timeline change!'));
     }
 }
 
-module.exports.help = {
+export const help = {
     name: "timeline",
     type: "fun",
     help_text: "timeline",
-    help_desc: "Scans for changes in the timeline"
+    help_desc: "Scans for changes in the timeline",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

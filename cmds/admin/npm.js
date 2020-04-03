@@ -1,20 +1,16 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const exec = require('child_process').exec;
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import exec from 'child_process';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {   
-    if (!message.member.roles.cache.has('621399916283035658')) return message.channel.send('You don\'t have the required permissions to use this command!');
-    const as = Util.CreateEmbed("You must supply valid input!");
-    if (!args[0]) return message.channel.send(as);
-
+export async function run(gideon, message, args) {   
     if (args[0].match(/(?:install)/i)) {
         message.reply('running `npm install` please check <#622415301144870932> for console output!');
-        const install = exec('npm install');
+        const install = exec.exec('npm install');
 
         install.stdout.on('data', data => Util.log("```\n" + data + "```"));
 
@@ -26,7 +22,7 @@ module.exports.run = async (gideon, message, args) => {
     
     if (args[0].match(/(?:update)/i)) {
         message.reply('running `npm update` please check <#622415301144870932> for console output!');
-        const update = exec('npm update');
+        const update = exec.exec('npm update');
 
         update.stdout.on('data', data => Util.log("```\n" + data + "```"));
 
@@ -49,9 +45,17 @@ module.exports.run = async (gideon, message, args) => {
     }
 }
 
-module.exports.help = {
+export const help = {
     name: "npm",
     type: "admin",
     help_text: "npm install/update `@Gideon Dev Team`",
-    help_desc: "Runs npm command"
+    help_desc: "Runs npm command",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {force: true},
+    roles: ['621399916283035658'],
+    user_perms: [],
+    bot_perms: []
 }

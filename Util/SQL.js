@@ -1,15 +1,12 @@
-const config = require("../data/JSON/config.json");
-const SQLite = require("better-sqlite3");
-const path = require('path');
-const sql = new SQLite(path.resolve(__dirname, "../data/SQL/gideon.sqlite"));
+import SQLite from "better-sqlite3";
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const sql = new SQLite(path.join(__dirname, '../data/SQL/gideon.sqlite'));
 
 class SQL {
     constructor() {
         throw new Error('This class cannot be instantiated!');
-    }
-
-    static get config() {
-        return config;
     }
 
     static InitDB(gideon) {
@@ -44,10 +41,27 @@ class SQL {
             sql.pragma("synchronous = 1");
             sql.pragma("journal_mode = wal");
         }
+
         const ubldb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'userblacklist';").get();
         if (!ubldb['count(*)']) {
             sql.prepare("CREATE TABLE userblacklist (user TEXT PRIMARY KEY, userval BIT);").run();
             sql.prepare("CREATE UNIQUE INDEX idx_ubl_id ON userblacklist (user);").run();
+            sql.pragma("synchronous = 1");
+            sql.pragma("journal_mode = wal");
+        }
+
+        const eggsdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'eastereggs';").get();
+        if (!eggsdb['count(*)']) {
+            sql.prepare("CREATE TABLE eastereggs (guild TEXT PRIMARY KEY, eggsval BIT);").run();
+            sql.prepare("CREATE UNIQUE INDEX idx_eggs_id ON eastereggs (guild);").run();
+            sql.pragma("synchronous = 1");
+            sql.pragma("journal_mode = wal");
+        }
+
+        const prefixdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'prefixes';").get();
+        if (!prefixdb['count(*)']) {
+            sql.prepare("CREATE TABLE prefixes (guild TEXT PRIMARY KEY, prefix TEXT);").run();
+            sql.prepare("CREATE UNIQUE INDEX idx_prefixes_id ON prefixes (guild);").run();
             sql.pragma("synchronous = 1");
             sql.pragma("journal_mode = wal");
         }
@@ -67,6 +81,15 @@ class SQL {
     
         gideon.getUBL = sql.prepare("SELECT * FROM userblacklist WHERE user = ?");
         gideon.setUBL = sql.prepare("INSERT OR REPLACE INTO userblacklist (user, userval) VALUES (@user, @userval);");
+
+        gideon.getEggs = sql.prepare("SELECT * FROM eastereggs WHERE guild = ?");
+        gideon.setEggs = sql.prepare("INSERT OR REPLACE INTO eastereggs (guild, eggsval) VALUES (@guild, @eggsval);");
+
+        gideon.getPrefix = sql.prepare("SELECT * FROM prefixes WHERE guild = ?");
+        gideon.setPrefix = sql.prepare("INSERT OR REPLACE INTO prefixes (guild, prefix) VALUES (@guild, @prefix);");
+
+        gideon.db = sql;
     }
 }
-module.exports = SQL;
+
+export default SQL;

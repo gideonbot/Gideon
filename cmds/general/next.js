@@ -1,17 +1,14 @@
-const Discord = require("discord.js");
-const fetch = require('node-fetch');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import fetch from 'node-fetch';;
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
-    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without `MANAGE_MESSAGES`!');
-    
+export async function run(gideon, message, args) {
     let agc = args[0];
-    if (!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
     const url = 'https://arrowverse.info';
     const api = 'https://arrowverse.info/api';
     let showtitle;
@@ -47,8 +44,6 @@ module.exports.run = async (gideon, message, args) => {
         });
 
         let fiep = Util.parseSeriesEpisodeString(args[1]);
-        if (!fiep) return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}));
-
         fiep = "S" + Util.normalize(fiep.season) + "E" + Util.normalize(fiep.episode);
 
         let shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
@@ -143,15 +138,23 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     catch (ex) {
-        console.log("Failed to fetch next episode: " + ex);
-        Util.log("Failed to fetch next episode: " + ex);
+        console.log("Failed to fetch next episode: " + ex.stack);
+        Util.log("Failed to fetch next episode: " + ex.stack);
         message.channel.send(Util.CreateEmbed('Failed to fetch episode list, please try again later!'));
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ["next", "nx"],
     type: "general",
     help_text: "next <show> <NxNN/SNNENN> ~ N -> number",
-    help_desc: "Fetches next episode in watching order"
+    help_desc: "Fetches next episode in watching order",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {force: true, amount: 2, type: 'episode'},
+    roles: [],
+    user_perms: [],
+    bot_perms: ['MANAGE_MESSAGES']
 }

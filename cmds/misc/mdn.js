@@ -1,14 +1,14 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const fetch = require('node-fetch');
-const Turndown = require('turndown');
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import fetch from 'node-fetch';;
+import Turndown from 'turndown';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     const as = Util.CreateEmbed("You must supply valid input!");
     if (!args[0]) return message.channel.send(as);
 
@@ -37,15 +37,23 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     catch (ex) {
-        console.log("Caught an exception while running mdn.js: " + ex);
-        Util.log("Caught an exception while running mdn.js: " + ex);
+        console.log("Caught an exception while running mdn.js: " + ex.stack);
+        Util.log("Caught an exception while running mdn.js: " + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ["mdn", "mozilla", "js"],
     type: "misc",
     help_text: "mdn <query>",
-    help_desc: "Searches MDN"
+    help_desc: "Searches MDN",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

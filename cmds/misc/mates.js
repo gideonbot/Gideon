@@ -1,18 +1,15 @@
-const Discord = require("discord.js");
-const fetch = require('node-fetch');
-const parsePodcast = require("@activediscourse/podcast-parser")
-const moment = require('moment');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import fetch from 'node-fetch';
+import parsePodcast from "@activediscourse/podcast-parser";
+import moment from 'moment';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {   
-    if (!message.channel.permissionsFor(message.guild.me).has('CONNECT')) return message.reply('sorry can\'t do that without \`CONNECT\`!');
-    if (!message.channel.permissionsFor(message.guild.me).has('SPEAK')) return message.reply('sorry can\'t do that without \`SPEAK\`!');
-      
+export async function run(gideon, message, args) {   
     const as = Util.CreateEmbed("You must supply valid input!");
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
@@ -56,7 +53,7 @@ module.exports.run = async (gideon, message, args) => {
 
         let matescast = await PodCast(epnum);
 
-        const matesembed = Util.CreateEmbed(matescast[0], {
+        let matesembed = Util.CreateEmbed(matescast[0], {
             description: matescast[1],
             thumbnail: matescast[2],
             author: {
@@ -161,7 +158,7 @@ module.exports.run = async (gideon, message, args) => {
         const rcollector = sent.createReactionCollector(rfilter, {time: matescast[6] * 1000});
     
         rcollector.on('collect', async (reaction, user) => {
-            if (reaction.emoji.name == emotes[0]) {
+            if (reaction.emoji.name === emotes[0]) {
                 if (cast.paused) {
                     cast.resume()
                     sent.edit(matesembed)
@@ -171,10 +168,10 @@ module.exports.run = async (gideon, message, args) => {
                     cast.pause()
                     sent.edit(pauseembed)
                 }
-                sent.reactions.cache.find(x => x.emoji.name == emotes[0]).users.remove(user.id);
+                sent.reactions.cache.find(x => x.emoji.name === emotes[0]).users.remove(user.id);
             }
 
-            if (reaction.emoji.name == emotes[1]) {
+            if (reaction.emoji.name === emotes[1]) {
                 cast.destroy();
                 gideon.listening.remove(message.author.id);
                 await sent.reactions.removeAll();
@@ -182,32 +179,32 @@ module.exports.run = async (gideon, message, args) => {
                 return sent.edit(stopembed);
             }
 
-            if (reaction.emoji.name == emotes[2]) {
-                cast.destroy();
+            if (reaction.emoji.name === emotes[2]) {
+                cast.end();
                 epnum - 1;
 
                 matescast = await PodCast(epnum);
 
-                await sent.reactions.cache.find(x => x.emoji.name == emotes[0]).users.remove(user.id);
                 await sent.edit(matesembed);
 
                 cast = connection.play(matescast[5]);
                 cast.pause();
                 cast.resume();
+                sent.reactions.cache.find(x => x.emoji.name === emotes[2]).users.remove(user.id);
             }
 
-            if (reaction.emoji.name == emotes[2]) {
-                cast.destroy();
+            if (reaction.emoji.name === emotes[3]) {
+                cast.end();
                 epnum + 1;
 
                 matescast = await PodCast(epnum);
 
-                await sent.reactions.cache.find(x => x.emoji.name == emotes[0]).users.remove(user.id);
                 await sent.edit(matesembed);
 
                 cast = connection.play(matescast[5]);
                 cast.pause();
                 cast.resume();
+                sent.reactions.cache.find(x => x.emoji.name === emotes[3]).users.remove(user.id);
             }
         }); 
 
@@ -221,15 +218,23 @@ module.exports.run = async (gideon, message, args) => {
     } 
     
     catch (ex) {
-        console.log("Caught an exception while playing podcast: " + ex);
-        Util.log("Caught an exception while playing podcast: " + ex);
+        console.log("Caught an exception while playing podcast: " + ex.stack);
+        Util.log("Caught an exception while playing podcast: " + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while fetching podcast data!'));
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ['mates', 'podcast'],
     type: "misc",
     help_text: "mates <episode>",
-    help_desc: "Listen to the MATES podcast"
+    help_desc: "Listen to the MATES podcast",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: ['CONNECT', 'SPEAK', 'USE_VAD'],
+    bot_perms: ['CONNECT', 'SPEAK', 'USE_VAD']
 }

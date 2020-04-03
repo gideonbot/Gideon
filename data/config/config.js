@@ -1,6 +1,6 @@
+export default
 {
     "prefixes": [
-        "!",
         "Gideon,",
         "Gideon"
     ],

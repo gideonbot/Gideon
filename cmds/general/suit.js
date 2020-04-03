@@ -1,17 +1,15 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {     
+export async function run(gideon, message, args) {     
     const st = Util.CreateEmbed('You must choose a valid character!', {
         description: 'Currently available:\n**killer frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**\n**kingdom come superman**'
     });
-
-    if (!args[0]) return message.channel.send();
 
     const suits = [
         {
@@ -77,9 +75,17 @@ module.exports.run = async (gideon, message, args) => {
     message.channel.send(Util.CreateEmbed(suit.title, {description: suit.desc, image: suit.image}));  
 }
 
-module.exports.help = {
+export const help = {
     name: ["suit", "suits", "costume", "costumes"],
     type: "general",
     help_text: "suit <character>",
-    help_desc: "Displays newly revealed suits"
+    help_desc: "Displays newly revealed suits",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {force: true, amount: 1},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

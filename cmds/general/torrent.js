@@ -1,25 +1,16 @@
-const Discord = require("discord.js");
-const torrentSearch = require('torrent-search-api');
-const Util = require("../../Util");
-const Magnet2torrent = require('magnet2torrent-js');
+import Discord from "discord.js";
+import torrentSearch from 'torrent-search-api';
+import Util from "../../Util.js";
+import Magnet2torrent from 'magnet2torrent-js';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
-    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without `MANAGE_MESSAGES`!');
-    
+export async function run(gideon, message, args) {
     let agc = args[0];
     const auth = message.author.id;
-
-    if (!agc) return message.channel.send(Util.CreateEmbed('You must supply the shows name, season and its episode number!'));
-
-    let season_and_ep = Util.parseSeriesEpisodeString(args[1]);
-    if (!season_and_ep) {
-        return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}));
-    }
 
     let showtitle = "";
 
@@ -91,14 +82,22 @@ module.exports.run = async (gideon, message, args) => {
     }
     catch (ex) {
         console.log(ex);
-        Util.log("Caught an exception while running torrent.js: " + ex);
+        Util.log("Caught an exception while running torrent.js: " + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ["torrent", "download"],
     type: "general",
     help_text: "torrent <show> <NxNN/SNNENN> ~ N -> number",
-    help_desc: "Searches torrent providers for the specified episode"
+    help_desc: "Searches torrent providers for the specified episode",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {force: true, amount: 2, type: 'episode'},
+    roles: [],
+    user_perms: [],
+    bot_perms: ['MANAGE_MESSAGES']
 }

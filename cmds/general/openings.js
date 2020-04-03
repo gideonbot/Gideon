@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     const ia = Util.CreateEmbed('You must supply a valid show!', {description: 'Available shows:\n**flash**\n**legends**'});
 
     if (!args[0]) return message.channel.send(ia);   
@@ -15,12 +15,20 @@ module.exports.run = async (gideon, message, args) => {
     
     if (args[0].match(/(?:flash)/i)) return message.channel.send(flashopening);
     if (args[0].match(/(?:legends)/i)) return message.channel.send(lotopening);
-    else return message.channel.send();
+    else return message.channel.send(ia);
 }
 
-module.exports.help = {
+export const help = {
     name: ["opening", "intro"],
-    type: "misc",
+    type: "general",
     help_text: "opening",
-    help_desc: "Sends the specified opening"
+    help_desc: "Sends the specified opening",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

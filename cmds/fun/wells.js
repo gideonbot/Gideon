@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {      
+export async function run(gideon, message, args) {      
     message.channel.send("Booting up the Multiverse Holo Projector...");
     await Util.delay(1000);
     message.channel.send("Calling...");
@@ -75,9 +75,17 @@ module.exports.run = async (gideon, message) => {
     message.channel.send(`You have reached out to Earth-${result.en}`, {embed: Util.CreateEmbed(result.title, {description: result.desc, image: result.gif})});  
 }
 
-module.exports.help = {
+export const help = {
     name: "wells",
     type: "fun",
     help_text: "wells",
-    help_desc: "Reaches out to a random Wells"
+    help_desc: "Reaches out to a random Wells",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

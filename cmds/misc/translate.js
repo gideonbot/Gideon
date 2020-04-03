@@ -1,15 +1,13 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
-    if (!args[0]) return message.reply('you must provide input to translate something!');
-
-    let tr = await Util.Translate(args.join(' '));
+export async function run(gideon, message, args) {
+    let tr = await Util.TR.Translate(args.join(' '));
 
     message.channel.send(Util.CreateEmbed(null, {
         author: {
@@ -29,9 +27,17 @@ module.exports.run = async (gideon, message, args) => {
     }));
 }
 
-module.exports.help = {
+export const help = {
     name: ["tr", "translate"],
     type: "misc",
-    help_text: "!tr <text>",
-    help_desc: "Translates text"
+    help_text: "tr <text>",
+    help_desc: "Translates text",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {force: true},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

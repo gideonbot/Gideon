@@ -1,13 +1,11 @@
-const Discord = require("discord.js");
+import Discord from "discord.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {   
-    if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send('You don\'t have the required permissions to use this command!');
-
+export async function run(gideon, message, args) {   
     let cvm = gideon.getCVM.get(message.guild.id);
     if (!cvm) {
         cvm = {
@@ -29,9 +27,17 @@ module.exports.run = async (gideon, message) => {
     } 
 }
 
-module.exports.help = {
+export const help = {
     name: "cvm",
     type: "admin",
     help_text: "cvm <:perms:686681300156940349>",
-    help_desc: "Toggles crossover mode"
+    help_desc: "Toggles crossover mode",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: ['MANAGE_MESSAGES'],
+    bot_perms: ['MANAGE_MESSAGES']
 }

@@ -1,18 +1,16 @@
-const Discord = require("discord.js");
-const fetch = require('node-fetch');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import fetch from 'node-fetch';;
+import Util from "../../Util.js";
+import moment from 'moment';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     let agc = args[0];
-    if (!agc) return message.channel.send("You must supply the shows name, season and its episode number!");
-
     let info = Util.parseSeriesEpisodeString(args[1]);
-    if (!info) return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}));
 
     let shows = [
         {
@@ -101,8 +99,12 @@ module.exports.run = async (gideon, message, args) => {
         const body = await fetch(api).then(res => res.json());
 
         if (body.status === 404) return message.channel.send(Util.CreateEmbed('There was no data for this episode!'));
-    
+        
+        let sp = '';
+        let today = new Date();
         let airdate = new Date(body.airdate);
+        if (!moment(airdate).isValid()) sp = '||';
+        if (today < airdate) sp = '||';
         let airtime = body.airtime;
         let desc = !body.summary ? 'No summary available' : body.summary.replace("<p>", "").replace("</p>", "");
         let img;
@@ -117,20 +119,28 @@ module.exports.run = async (gideon, message, args) => {
         timeString = h + ":" + timeString.split(":")[1] + am_pm;
     
         message.channel.send(Util.CreateEmbed(`${show.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
-            description: desc + `\n\nAirdate: \`${airdate.toDateString()}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`,
+            description: sp + desc + sp + `\n\nAirdate: \`${moment(airdate).isValid() ? airdate.toDateString() : 'No Airdate Available'}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`,
             image: img
         }));
     }
     
     catch (ex) {
-        console.log("Exception occurred while fetching the episodes " + ex);
-        Util.log("Exception occurred while fetching the episodes " + ex);
+        console.log("Exception occurred while fetching the episodes " + ex.stack);
+        Util.log("Exception occurred while fetching the episodes " + ex.stack);
         message.channel.send(Util.CreateEmbed('An error occurred while trying to fetch the episodes!'));
     }
 }
-module.exports.help = {
+export const help = {
     name: ["ep", "episode"],
     type: "general",
     help_text: "ep <show> <NxNN|SNENN> ~ N -> number",
-    help_desc: "Fetches episode info"
+    help_desc: "Fetches episode info",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {force: true, amount: 2, type: 'episode'},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

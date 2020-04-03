@@ -1,15 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
-    if (message.guild.id !== '595318490240385037') return message.channel.send('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
-    if (!message.member.roles.cache.has('602311948809273344')) return message.channel.send('You don\'t have the required permissions to use this command!');
-
+export async function run(gideon, message, args) {
     const emoji_ids = ['598886586284900354', '607658682246758445', '598886597244485654', '598886605641613353', '598886588545499186', '598886601476800513', '607657873534746634', '634764613434474496', '638489255169228830', '668513166380105770'];
 
     const auth = message.author.id;
@@ -99,9 +96,17 @@ module.exports.run = async (gideon, message) => {
     });
 }
 
-module.exports.help = {
+export const help = {
     name: "news",
     type: "admin",
     help_text: "news <text> [img] <:timevault:686676561298063361>`@News Team`",
-    help_desc: "News Team can use this to post news"
+    help_desc: "News Team can use this to post news",
+    owner: false,
+    voice: false,
+    timevault: true,
+    nsfw: false,
+    args: {},
+    roles: ['602311948809273344'],
+    user_perms: [],
+    bot_perms: []
 }

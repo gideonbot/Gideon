@@ -1,14 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
-    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without `MANAGE_MESSAGES`!');
-    
+export async function run(gideon, message, args) {
     try {
         let sent = await message.channel.send("Engaging S.T.A.R. Labs. particle accelerator...");
         await Util.delay(1000);
@@ -23,8 +21,8 @@ module.exports.run = async (gideon, message) => {
     }
     
     catch (ex) {
-        console.log("Exception occurred while starting up the particle accelerator " + ex);
-        Util.log("Exception occurred while starting up the particle accelerator " + ex);
+        console.log("Exception occurred while starting up the particle accelerator " + ex.stack);
+        Util.log("Exception occurred while starting up the particle accelerator " + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while trying to start the particle accelerator!'));
     }
 
@@ -66,9 +64,17 @@ module.exports.run = async (gideon, message) => {
     }));  
 }
 
-module.exports.help = {
+export const help = {
     name: "accelerator",
     type: "fun",
     help_text: "accelerator",
-    help_desc: "Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability"
+    help_desc: "Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: ['MANAGE_MESSAGES']
 }

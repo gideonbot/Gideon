@@ -1,17 +1,17 @@
-const Discord = require("discord.js");
-const OpenSubtitles = require('opensubtitles-api');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import OpenSubtitles from 'opensubtitles-api';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
         Util.log("Missing env variables for subs command!");
         console.log("Missing env variables for subs command!");
-        return message.channel.send(Util.CreateEmbed('This command is not available currently'));
+        return message.channel.send(Util.CreateEmbed('This command is currently not available'));
     }
 
     const OS = new OpenSubtitles({
@@ -128,9 +128,17 @@ module.exports.run = async (gideon, message, args) => {
     });
 }
 
-module.exports.help = {
+export const help = {
     name: ["subs", "subtitles"],
     type: "general",
     help_text: "subs <lang> <show> <NxNN/SNNENN> ~ N -> number",
-    help_desc: "Searches opensubtitles.org for the specified episode"
+    help_desc: "Searches opensubtitles.org for the specified episode",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

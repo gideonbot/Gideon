@@ -1,13 +1,14 @@
-const Discord = require("discord.js");
-const fetch = require('node-fetch');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import fetch from 'node-fetch';;
+import path from 'path';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args, connection) {
     let agm;
     if (args) {
         agm = args.join("").toLowerCase();
@@ -15,6 +16,25 @@ module.exports.run = async (gideon, message, args) => {
             message.channel.send('Yes Captain Lance!');
         } 
     }     
+
+    if (connection) {
+        const confirm = connection.play(path.resolve(__dirname, '../../data/audio/captain/Right away, Captain!.m4a'));
+        confirm.pause();
+        confirm.resume();
+
+        confirm.on('finish', () => {
+            confirm.destroy();
+
+            const timejump = connection.play(path.resolve(__dirname, '../../data/audio/phrases/Executing timejump now.m4a'));
+            timejump.pause();
+            timejump.resume();
+
+            timejump.on('finish', () => {
+                timejump.destroy();
+                gideon.vcmdexec = false;
+            });
+        });
+    }
 
     try {
         const api1 = 'http://geodb-free-service.wirefreethought.com/v1/geo/cities?hateoasMode=off';
@@ -34,16 +54,24 @@ module.exports.run = async (gideon, message, args) => {
     }
     
     catch (ex) {
-        console.log("Caught an exception while plotting a course: " + ex);
-        Util.log("Caught an exception while plotting a course: " + ex);
+        console.log("Caught an exception while plotting a course: " + ex.stack);
+        Util.log("Caught an exception while plotting a course: " + ex.stack);
         
         return message.channel.send(Util.CreateEmbed('An error occurred while trying to plot a course!'));
     }
 }
 
-module.exports.help = {
-    name: "plot",
+export const help = {
+    name: ["plot", "timejump"],
     type: "fun",
-    help_text: "Gideon, plot a course!",
-    help_desc: "Plots a course"
+    help_text: "Gideon, plot a course! <:voicerecognition:693521621184413777>",
+    help_desc: "Plots a course",
+    owner: false,
+    voice: true,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

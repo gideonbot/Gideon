@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
     try {
         const embed = Util.CreateEmbed('Guilds:');
 
@@ -21,14 +21,22 @@ module.exports.run = async (gideon, message) => {
     }
     catch (ex) {
         console.log(ex);
-        Util.log("Caught an exception while running torrent.js: " + ex);
+        Util.log("Caught an exception while running torrent.js: " + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ["guilds", "servers"],
     type: "stats",
     help_text: "guilds",
-    help_desc: "Displays all guilds the bot is in"
+    help_desc: "Displays all guilds the bot is in",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

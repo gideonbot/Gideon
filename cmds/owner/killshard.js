@@ -1,16 +1,12 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
-    if (message.author.id !== gideon.owner) {
-        return message.channel.send('You do not have the required permissions to use this command!');
-    }
-
+export async function run(gideon, message, args) {
     const as = Util.CreateEmbed('You must supply valid input!');
     
     if (!args[0]) return message.channel.send(as);
@@ -24,9 +20,17 @@ module.exports.run = async (gideon, message, args) => {
     gideon.shard.broadcastEval(`if (this.shard.ids[0] === ${shardid}) process.exit();`);
 }
 
-module.exports.help = {
+export const help = {
     name: ["ks", "kill"],
     type: "owner",
     help_text: "ks <shardid> <:gideon:686678560798146577>",
-    help_desc: "Kills the specified shard"
+    help_desc: "Kills the specified shard",
+    owner: true,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

@@ -1,17 +1,17 @@
-const Discord = require("discord.js");
-const Imgur = require('imgur-node');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Imgur from 'imgur-node';
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
     if (!process.env.IMG_CL) {
         Util.log("Missing env variable for meme command!");
         console.log("Missing env variable for meme command!");
-        return message.channel.send('This command is not available currently');
+        return message.channel.send('This command is currently not available');
     }
 
     const imgclient = new Imgur.Client(process.env.IMG_CL);
@@ -32,9 +32,17 @@ module.exports.run = async (gideon, message) => {
     });   
 }
 
-module.exports.help = {
+export const help = {
     name: "meme",
     type: "fun",
     help_text: "meme",
-    help_desc: "Displays a random Arrowverse meme"
+    help_desc: "Displays a random Arrowverse meme",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

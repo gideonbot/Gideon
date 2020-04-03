@@ -1,25 +1,21 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const stringSimilarity = require('string-similarity');
-const moment = require('moment');
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import stringSimilarity from 'string-similarity';
+import moment from 'moment';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     const as = Util.CreateEmbed("You must supply valid input!");
-    if (!args[0]) return message.channel.send(as);
-    if (args[1]) return message.channel.send(as);
-
-    let noid = isNaN(args[0]);
     const auth = message.author;
     let user;
 
-    if (noid && message.mentions.users.first()) user = message.mentions.users.first();
-    else if (!noid && args[0].length >= 18) user = gideon.users.cache.get(args[0]);
-    else if (noid && !message.mentions.users.first()) {
+    if (!Util.ValID(args[0]) && message.mentions.users.first()) user = message.mentions.users.first();
+    else if (Util.ValID(args[0])) user = gideon.users.cache.get(args[0]);
+    else if (!Util.ValID(args[0]) && !message.mentions.users.first()) {
         const match = stringSimilarity.findBestMatch(args[0].toLowerCase(), gideon.users.cache.map(x => x.username.toLowerCase())).bestMatch;
 
         if (match.rating == 0) return message.channel.send(as);
@@ -65,6 +61,7 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     const member = message.guild.member(user);
+    if (member.lastMessage.partial) await member.lastMessage.fetch();
     const perms = Util.truncate(member.permissions.toArray().map(perms => `\`${perms}\``).join(' '), 200, true);
 
     const embed = Util.CreateEmbed(null, {
@@ -90,9 +87,17 @@ module.exports.run = async (gideon, message, args) => {
     message.channel.send(embed);
 }
 
-module.exports.help = {
+export const help = {
     name: ["user", "member"],
     type: "stats",
     help_text: "user <user>",
-    help_desc: "Displays a user's info"
+    help_desc: "Displays a user's info",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {force: true, amount: 1},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

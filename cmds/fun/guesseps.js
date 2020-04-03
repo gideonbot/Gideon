@@ -1,16 +1,14 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
-const fetch = require('node-fetch');
-const stringSimilarity = require('string-similarity');
+import Discord from "discord.js";
+import Util from "../../Util.js";
+import fetch from 'node-fetch';;
+import stringSimilarity from 'string-similarity';
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
-    if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return message.reply('sorry can\'t do that without `MANAGE_MESSAGES`!');
-    
+export async function run(gideon, message, args) {
     const url = 'https://arrowverse.info';
     const emotes = ['▶️', '669309980209446912'];
     let s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
@@ -273,15 +271,23 @@ module.exports.run = async (gideon, message, args) => {
     }
 
     catch (ex) {
-        console.log("Caught an exception while running guesseps.js: " + ex);
-        Util.log("Caught an exception while running guesseps.js: " + ex);
+        console.log("Caught an exception while running guesseps.js: " + ex.stack);
+        Util.log("Caught an exception while running guesseps.js: " + ex.stack);
         message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ["guess", "guesseps", "points", "score", "leaderboard", "highscores", "lb"],
     type: "fun",
-    help_text: "guess",
-    help_desc: "Arrowverse episode guessing game"
+    help_text: "guess [show]",
+    help_desc: "Arrowverse episode guessing game",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: ['MANAGE_MESSAGES']
 }

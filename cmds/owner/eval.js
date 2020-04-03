@@ -1,20 +1,13 @@
-const Discord = require('discord.js');
-const Util = require('../../Util');
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
-    if (message.author.id !== gideon.owner) {
-        return message.channel.send('You do not have the required permissions to use this command!');
-    }
-
+export async function run(gideon, message, args) {
     try {
-
-        if (args.length < 1) return message.channel.send('No code provided!');
-
         const code = args.join(' ');
         const returnedValue = eval(code);
 
@@ -39,9 +32,19 @@ module.exports.run = async (gideon, message, args) => {
     }
 }
 
-module.exports.help = {
+export const help = {
     name: 'eval',
     type: 'owner',
     help_text: 'eval <code> <:gideon:686678560798146577>:warning:',
-    help_desc: 'Evaluates provided code'
+    help_desc: 'Evaluates provided code',
+    owner: true,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    nsfw: false,
+    args: {force: true},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

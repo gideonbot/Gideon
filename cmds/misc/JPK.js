@@ -1,16 +1,16 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
+export async function run(gideon, message, args) {
     if (!process.env.IMG_CL) {
         Util.log("Missing env variable for JPK command!");
         console.log("Missing env variable for JPK command!");
-        return message.channel.send(Util.CreateEmbed('This command is not available currently'));
+        return message.channel.send(Util.CreateEmbed('This command is currently not available'));
     }
 
     const jpkArray = ["FqCwt1J", "8bFXk0z", "2yz4RWt", "kxpGHYM", "f8mENXa", "Xy2SoEw", "UcPxCV5", "JhTWxoJ", "eLugrZD"];
@@ -24,7 +24,8 @@ module.exports.run = async (gideon, message, args) => {
     .addField('!JPK DM', 'Deep Murder')
     .addField('!JPK TSC', 'The Secret Circle')
     .addField('!JPK ILBAL', 'I Love Bekka & Lucy')
-    .addField('!JPK FS5GR', 'The Flash - S5 Gag Reel');
+    .addField('!JPK FS5GR', 'The Flash - S5 Gag Reel')
+    .addField('!JPK NSFW', 'NSFW');
 
     let rjpka;  
 
@@ -39,14 +40,23 @@ module.exports.run = async (gideon, message, args) => {
     else if (args[0].match(/(?:tsc)/i)) rjpka = "UcPxCV5";
     else if (args[0].match(/(?:ilbal)/i)) rjpka = "f8mENXa";
     else if (args[0].match(/(?:fs5gr)/i)) rjpka = "eLugrZD";
+    else if (args[0].match(/(?:nsfw)/i)) return Util.IMG('AwPimhP', message, true);
     else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`)); 
 
     Util.IMG(rjpka, message);
 }
 
-module.exports.help = {
+export const help = {
     name: "jpk",
     type: "fun",
-    help_text: "jpk",
-    help_desc: "Displays a random JPK gif"
+    help_text: "jpk [help]/[album] <:18:693135780796694668>",
+    help_desc: "Displays a random JPK gif",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: true,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

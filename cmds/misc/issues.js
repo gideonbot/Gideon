@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const fetch = require('node-fetch');
-const Util = require("../../Util");
+import Discord from "discord.js";
+import fetch from 'node-fetch';;
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message) => {
+export async function run(gideon, message, args) {
     const api = 'https://api.github.com/repos/adrifcastr/Gideon/issues';
     const token = process.env.GITHUB_OAUTH_TOKEN;
 
@@ -75,8 +75,8 @@ module.exports.run = async (gideon, message) => {
         }
 
         catch (ex) {
-            console.log("Caught an exception while running issues.js: " + ex);
-            Util.log("Caught an exception while running issues.js: " + ex);
+            console.log("Caught an exception while running issues.js: " + ex.stack);
+            Util.log("Caught an exception while running issues.js: " + ex.stack);
             return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
         }
     }
@@ -101,15 +101,23 @@ module.exports.run = async (gideon, message) => {
     }
     
     catch (ex) {
-        console.log("Caught an exception while fetching issues: " + ex);
-        Util.log("Caught an exception while fetching issues: " + ex);
+        console.log("Caught an exception while fetching issues: " + ex.stack);
+        Util.log("Caught an exception while fetching issues: " + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
     }
 }
 
-module.exports.help = {
+export const help = {
     name: ["issues", "issue", "bug"],
     type: "misc",
     help_text: "issues",
-    help_desc: "Displays Github issues and allows to submit new ones."
+    help_desc: "Displays Github issues and allows to submit new ones.",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }

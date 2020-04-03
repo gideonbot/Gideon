@@ -1,20 +1,14 @@
-const Discord = require("discord.js");
-const Util = require("../../Util");
+import Discord from "discord.js";
+import Util from "../../Util.js";
 
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-module.exports.run = async (gideon, message, args) => {
-    let guild;
-
-    if (!args[0]) return message.channel.send(as);
-    if (args[1]) return message.channel.send(as);
-    let noid = isNaN(args[0]);
-
-    if (!noid && args[0].length === 18) guild = gideon.guilds.cache.get(args[0]);
-    else return message.channel.send(as);
+export async function run(gideon, message, args) {
+    const id = Util.ValID(args.join(' '))[0];
+    let guild = gideon.guilds.cache.get(id);
 
     try {
         let textchannels = guild.channels.cache.filter(c=> c.type == "text");
@@ -25,15 +19,23 @@ module.exports.run = async (gideon, message, args) => {
     }
     
     catch (ex) {
-        console.log("Caught an exception while creating invites!: " + ex);
-        Util.log("Caught an exception while creating invites!: " + ex);
+        console.log("Caught an exception while creating invites!: " + ex.stack);
+        Util.log("Caught an exception while creating invites!: " + ex.stack);
         return message.channel.send(er);
     }      
 }
 
-module.exports.help = {
+export const help = {
     name: ["civ", "create"],
     type: "misc",
     help_text: "civ <guildid>",
-    help_desc: "Attempts to create instant invite"
+    help_desc: "Attempts to create instant invite",
+    owner: false,
+    voice: false,
+    timevault: false,
+    nsfw: false,
+    args: {force: true, amount: 1, type: 'snowflake'},
+    roles: [],
+    user_perms: [],
+    bot_perms: []
 }
