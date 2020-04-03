@@ -209,7 +209,7 @@ class Checks {
             Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
         }
 
-        else{
+        else {
             await channels.first().send('This guild is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
             await guild.leave();
             Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
@@ -342,17 +342,13 @@ class Checks {
             Util.log(`Guild \`${guild.name}\` has been blacklisted due to it being a bot collecting guild with \`${bots}\` bots!`);
 
             const textchannels = guild.channels.cache.filter(c=> c.type == "text");
-            const channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
-            if (!channels.size) {
-                await guild.leave();
-                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
-            }
+            const channels = textchannels.filter(c => c.permissionsFor(guild.me).has('SEND_MESSAGES'));
+            
+            if (channels.size) await channels.first().send(`This guild is banned for being a bot collecting guild (\`${bots}\` bots!)\nIf you believe this is an arror please contact \`adrifcastr#4530\`.\nNow leaving this guild!`).catch(ex => console.log(ex));
 
-            else{
-                await channels.first().send(`This guild is banned by the bot owner for being a bot collecting guild!\nThis guild has \`${bots}\` bots!\nIf you beleive this is an arror please contact \`adrifcastr#4530\`.\nNow leaving this guild!`).catch(ex => console.log(ex));
-                await guild.leave();
-                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
-            }
+            await guild.leave();
+
+            Util.log(`Leaving guild \`${guild.id}\` due to it being blacklisted!`);
         }
     }
 

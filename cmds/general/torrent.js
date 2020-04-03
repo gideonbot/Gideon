@@ -34,6 +34,11 @@ export async function run(gideon, message, args) {
      */
     const torrent_channel = emotes.channels.cache.get('677861559682465802');
     if (!torrent_channel) return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+
+    let season_and_ep = Util.parseSeriesEpisodeString(args[1]);
+    if (!season_and_ep) {
+        return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}));
+    }
         
     let ts = `${showtitle} S${Util.normalize(season_and_ep.season)}E${Util.normalize(season_and_ep.episode)}`;
 

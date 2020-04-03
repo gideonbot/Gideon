@@ -1,6 +1,6 @@
 import Discord from "discord.js";
 import Util from "../../Util.js";
-import fs from 'fs';;
+import fs from 'fs';
 import moment from "moment-timezone";
 
 /**

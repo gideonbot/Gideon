@@ -1,6 +1,6 @@
 import Discord from "discord.js";
 import Util from "../../Util.js";
-import fetch from 'node-fetch';;
+import fetch from 'node-fetch';
 
 /**
  * @param {Discord.Client} gideon

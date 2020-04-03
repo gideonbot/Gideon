@@ -21,7 +21,7 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log("Caught an exception while creating invites!: " + ex.stack);
         Util.log("Caught an exception while creating invites!: " + ex.stack);
-        return message.channel.send(er);
+        return message.channel.send(ex);
     }      
 }
 

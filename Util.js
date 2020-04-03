@@ -411,8 +411,6 @@ class Util {
      * @param {Discord.Client} gideon 
      */
     static async AutoKick(member, gideon) {
-        let t;
-        let k;
         const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
 
         async function check() {
@@ -589,6 +587,7 @@ class Util {
                 let cmd_start = process.hrtime.bigint();
 
                 let props = await import(`./${fileName}`);
+                
                 if (Array.isArray(props.help.name)) {
                     for (let item of props.help.name) gideon.commands.set(item, props);
                 }

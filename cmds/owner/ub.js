@@ -1,6 +1,5 @@
 import Discord from "discord.js";
 import Util from "../../Util.js";
-import fs from 'fs';;
 
 /**
  * @param {Discord.Client} gideon

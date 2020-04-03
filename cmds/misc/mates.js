@@ -28,25 +28,6 @@ export async function run(gideon, message, args) {
     const emotes = ['⏯️','⏹️','⏮️','⏭️'];
 
     try {
-        async function PodCast(num) {
-            const api = `https://matescast.com/rss/mates_archive.rss`;
-            const rss = await fetch(api).then(res => res.text());
-            const mates = await parsePodcast(rss).catch(ex => console.log(ex));
-            const episodes = mates.episodes.reverse();
-
-            let ep = episodes[num-1];
-            let title = mates.title;
-            let desc = mates.description.long;
-            let img = mates.image;
-            let eptitle = ep.title;
-            let epdesc = ep.rawDescription;
-            let stream = ep.enclosure.url;
-            let duration = moment.utc(ep.duration*1000).format('mm:ss');
-            let pubdate = moment.utc(ep.published).local().format('YYYY-MM-DD HH:mm:ss');
-
-            return [title, desc, img, eptitle, epdesc, stream, duration, pubdate];
-        }
-
         let vcname = message.member.voice.channel.name;
         message.reply(`now joining voice channel: \`${vcname}\`!`);
         const connection = await message.member.voice.channel.join();
@@ -222,6 +203,25 @@ export async function run(gideon, message, args) {
         Util.log("Caught an exception while playing podcast: " + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while fetching podcast data!'));
     }
+}
+
+async function PodCast(num) {
+    const api = `https://matescast.com/rss/mates_archive.rss`;
+    const rss = await fetch(api).then(res => res.text());
+    const mates = await parsePodcast(rss).catch(ex => console.log(ex));
+    const episodes = mates.episodes.reverse();
+
+    let ep = episodes[num - 1];
+    let title = mates.title;
+    let desc = mates.description.long;
+    let img = mates.image;
+    let eptitle = ep.title;
+    let epdesc = ep.rawDescription;
+    let stream = ep.enclosure.url;
+    let duration = moment.utc(ep.duration*1000).format('mm:ss');
+    let pubdate = moment.utc(ep.published).local().format('YYYY-MM-DD HH:mm:ss');
+
+    return [title, desc, img, eptitle, epdesc, stream, duration, pubdate];
 }
 
 export const help = {
