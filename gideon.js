@@ -11,6 +11,7 @@ gideon.emptyvc = false;
 gideon.guessing = [];
 gideon.listening = [];
 gideon.spamcount = new Map();
+gideon.cache = new Map();
 
 if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
 else {
@@ -34,9 +35,11 @@ gideon.once('ready', async () => {
 
     Util.config.prefixes.push(`<@!${gideon.user.id}>`, `<@${gideon.user.id}>`);
     
+    const oneday = 1000 * 60 * 60;
     const twodays = 1000 * 60 * 60 * 48;
     setInterval(Util.status, 30e3, gideon);
     setInterval(Util.SQLBkup, twodays, gideon);
+    setInterval(Util.ClearCache, oneday, gideon);
 
     gideon.fetchApplication().then(app => {
         //When the bot is owned by a team owner id is stored under ownerID, otherwise id

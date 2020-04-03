@@ -35,7 +35,13 @@ export async function run(gideon, message, args, connection) {
 
     for (let show in api_urls) {
         try {
-            let info = await Util.GetNextEpisodeInfo(api_urls[show]);
+            let info = gideon.cache.get(show);
+
+            if (!info) {
+                info = await Util.GetNextEpisodeInfo(api_urls[show]);
+                gideon.cache.set(show, info);
+            }
+            
             embed.addField(`${info.title} ${info.name}`, `${info.value}`);
         }
         

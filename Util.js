@@ -613,6 +613,14 @@ class Util {
         if (!input.match(/\d{17,19}/)) return;
         else return input.match(/\d{17,19}/)[0];
     }
+
+    /**
+     * Clear cache
+     * @param {Discord.Client} gideon
+     */
+    static ClearCache(gideon) {
+
+    }
 }
 
 export default Util;
