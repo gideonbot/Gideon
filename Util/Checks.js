@@ -367,7 +367,7 @@ class Checks {
             const member = newMember;
 
             if (member.guild.id !== '595318490240385037') return;
-            const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('669243069878501385');
+            const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
             const noascii = /[^\x00-\x7F]+/gi;
             const filter = new Filter();
 
@@ -389,6 +389,10 @@ class Checks {
         if (newUser) {
             const member = gideon.guilds.cache.get('595318490240385037').members.cache.get(newUser.id);
             if (!member) return;
+
+            const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
+            const noascii = /[^\x00-\x7F]+/gi;
+            const filter = new Filter();
 
             if (newUser.username && newUser.username.match(noascii)) {
                 let ascii = anyAscii(newUser.username);
