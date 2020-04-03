@@ -126,6 +126,8 @@ class MsgHandler {
             const noepisode = Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'});
             const nomention = Util.CreateEmbed("You must supply a valid mention!");
 
+            if (!args.length) return message.channel.send(noinput);
+
             if (command.help.args.amount && command.help.args.amount > 0) {
                 if (args.length !== command.help.args.amount) return message.channel.send(noinput);
             }
