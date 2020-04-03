@@ -278,10 +278,10 @@ class Checks {
      * @param {Discord.Client} gideon 
      */
     static Spamcounter(id, gideon) {
-		if(id === gideon.owner) return null;
+		if (id === gideon.owner) return null;
 
 		let spamcount = gideon.spamcount.get(id);
-		if(!spamcount) {
+		if (!spamcount) {
 			spamcount = {
 				start: Date.now(),
 				usages: 1,
