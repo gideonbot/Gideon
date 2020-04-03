@@ -619,7 +619,7 @@ class Util {
      * @param {Discord.Client} gideon
      */
     static ClearCache(gideon) {
-
+        gideon.cache.clear();
     }
 }
 
