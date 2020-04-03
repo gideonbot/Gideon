@@ -62,7 +62,7 @@ export async function run(gideon, message, args) {
         return message.channel.send(help);
     }
 
-    let marks = [];
+    let type = ''
     if (args[0].match(/(?:general)/i)) type = "general";
     else if (args[0].match(/(?:fun)/i)) type = "fun";
     else if (args[0].match(/(?:admin)/i)) type = "admin";
@@ -75,7 +75,6 @@ export async function run(gideon, message, args) {
     let commands = {};
     for (let filename of gideon.commands.keys()) {
         let cmd = gideon.commands.get(filename);
-
         if (!cmd.help || !cmd.help.help_text || !cmd.help.help_desc) {
             console.log(filename + " is missing help properties!");
             Util.log(filename + " is missing help properties, please fix");
@@ -110,7 +109,7 @@ export async function run(gideon, message, args) {
     else {
         const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__');
         embed.setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes)
-        for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : customprefix.prefix + item + marks, commands[item]);
+        for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : customprefix.prefix + item, commands[item]);
         embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
         message.channel.send(embed);
     }

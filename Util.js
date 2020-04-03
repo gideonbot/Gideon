@@ -588,7 +588,6 @@ class Util {
             jsfiles.forEach(async (fileName, i) => {
                 let cmd_start = process.hrtime.bigint();
                 let props = await import(`./${fileName}`);
-
                 if (Array.isArray(props.help.name)) {
                     for (let item of props.help.name) gideon.commands.set(item, props);
                 }
