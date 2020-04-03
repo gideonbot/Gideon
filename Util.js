@@ -411,8 +411,6 @@ class Util {
      * @param {Discord.Client} gideon 
      */
     static async AutoKick(member, gideon) {
-        let t;
-        let k;
         const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
 
         async function check() {
@@ -568,10 +566,9 @@ class Util {
      * @param {Discord.Client} gideon
      */
     static LoadCommands(gideon) {
-        console.log(process.cwd());
         let start = process.hrtime.bigint();
     
-        recursive("./cmds", (err, files) => {
+        recursive("./cmds", async (err, files) => {
             if (err) {
                 Util.log("Error while reading commands:\n" + err);
                 console.log(err);
@@ -583,11 +580,14 @@ class Util {
                 console.log("No commands to load!");
                 return;
             }
+
             console.log(`Found ${jsfiles.length} commands`);
-    
-            jsfiles.forEach(async (fileName, i) => {
+
+            for (let fileName of jsfiles) {
                 let cmd_start = process.hrtime.bigint();
+
                 let props = await import(`./${fileName}`);
+                
                 if (Array.isArray(props.help.name)) {
                     for (let item of props.help.name) gideon.commands.set(item, props);
                 }
@@ -596,8 +596,8 @@ class Util {
                 let cmd_end = process.hrtime.bigint();
                 let took = (cmd_end - cmd_start) / BigInt("1000000");
         
-                console.log(`${Util.normalize(i + 1)} - ${fileName} loaded in ${took}ms`);
-            });
+                console.log(`${Util.normalize(jsfiles.indexOf(fileName) + 1)} - ${fileName} loaded in ${took}ms`);
+            }
     
             let end = process.hrtime.bigint();
             let took = (end - start) / BigInt("1000000");

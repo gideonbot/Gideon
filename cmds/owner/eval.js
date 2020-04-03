@@ -41,8 +41,6 @@ export const help = {
     voice: false,
     timevault: false,
     nsfw: false,
-    args: {},
-    nsfw: false,
     args: {force: true},
     roles: [],
     user_perms: [],

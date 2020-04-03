@@ -1,6 +1,7 @@
 import SQLite from "better-sqlite3";
 import path from 'path';
 import { fileURLToPath } from 'url';
+import Discord from "discord.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const sql = new SQLite(path.join(__dirname, '../data/SQL/gideon.sqlite'));
 
@@ -9,6 +10,9 @@ class SQL {
         throw new Error('This class cannot be instantiated!');
     }
 
+    /**
+     * @param {Discord.Client} gideon 
+     */
     static InitDB(gideon) {
         const scoresdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
         if (!scoresdb['count(*)']) {

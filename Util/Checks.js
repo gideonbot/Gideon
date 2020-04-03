@@ -209,7 +209,7 @@ class Checks {
             Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
         }
 
-        else{
+        else {
             await channels.first().send('This guild is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
             await guild.leave();
             Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
@@ -278,10 +278,10 @@ class Checks {
      * @param {Discord.Client} gideon 
      */
     static Spamcounter(id, gideon) {
-		if(id === gideon.owner) return null;
+		if (id === gideon.owner) return null;
 
 		let spamcount = gideon.spamcount.get(id);
-		if(!spamcount) {
+		if (!spamcount) {
 			spamcount = {
 				start: Date.now(),
 				usages: 1,
@@ -304,11 +304,11 @@ class Checks {
      * @param {Discord.Client} gideon 
      */
     static async Ads(message, gideon) {
-        const invregex = /(?:(?:http|https):\/\/)?(?:www.)?(?:disco|discord|discordapp).(?:com|gg|io|li|me|net|org)(?:\/(?:invite))?\/([a-z0-9-.]+)/i;
-        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
-
         if (message.guild.id !== '595318490240385037') return;
         if (message.channel.permissionsFor(message.member).has('MANAGE_MESSAGES')) return;
+
+        const invregex = /(?:(?:http|https):\/\/)?(?:www.)?(?:disco|discord|discordapp).(?:com|gg|io|li|me|net|org)(?:\/(?:invite))?\/([a-z0-9-.]+)/i;
+        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
 
         if (message.content.match(invregex)) {
             const invcode = message.content.match(invregex)[1];
@@ -342,17 +342,13 @@ class Checks {
             Util.log(`Guild \`${guild.name}\` has been blacklisted due to it being a bot collecting guild with \`${bots}\` bots!`);
 
             const textchannels = guild.channels.cache.filter(c=> c.type == "text");
-            const channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
-            if (!channels.size) {
-                await guild.leave();
-                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
-            }
+            const channels = textchannels.filter(c => c.permissionsFor(guild.me).has('SEND_MESSAGES'));
+            
+            if (channels.size) await channels.first().send(`This guild is banned for being a bot collecting guild (\`${bots}\` bots!)\nIf you believe this is an arror please contact \`adrifcastr#4530\`.\nNow leaving this guild!`).catch(ex => console.log(ex));
 
-            else{
-                await channels.first().send(`This guild is banned by the bot owner for being a bot collecting guild!\nThis guild has \`${bots}\` bots!\nIf you beleive this is an arror please contact \`adrifcastr#4530\`.\nNow leaving this guild!`).catch(ex => console.log(ex));
-                await guild.leave();
-                Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
-            }
+            await guild.leave();
+
+            Util.log(`Leaving guild \`${guild.id}\` due to it being blacklisted!`);
         }
     }
 

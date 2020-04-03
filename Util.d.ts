@@ -154,7 +154,7 @@ interface Command {
         user_perms: string[];
         bot_perms: string[];
     },
-    run: Function;
+    run: (gideon: Discord.Client, message: Discord.Message, args: string[], connection?: Discord.VoiceConnection) => void;
 }
 
 interface EpisodeInfo {

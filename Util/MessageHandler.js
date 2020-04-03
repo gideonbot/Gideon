@@ -1,8 +1,17 @@
+import Discord from "discord.js";
+
 class MsgHandler {
     constructor() {
         throw new Error('This class cannot be instantiated!');
     }
 
+    /**
+     * 
+     * @param {Discord.Client} gideon 
+     * @param {Discord.Message} message 
+     * @param {*} Util 
+     * @param {Discord.VoiceConnection} connection 
+     */
     static async Handle(gideon, message, Util, connection) {
         if (!message || !message.author || message.author.bot || !message.guild || message.partial) return;
         if (!message.guild.me) await message.guild.members.fetch(gideon.user.id);
@@ -34,7 +43,7 @@ class MsgHandler {
         if (usedCustom) usedPrefix = customprefix.prefix;
         if (!usedPrefix) return;
 
-        const inputString = usedPrefix ? message.content.slice(usedPrefix.length).trim() : message.content.slice(customprefix.prefix.length).trim();
+        const inputString = message.content.slice(usedPrefix.length).trim();
         const args = inputString.split(' ').filter(arg => arg);
 
         let cmd = args.shift();
@@ -47,7 +56,7 @@ class MsgHandler {
 
         const spamcount = gideon.spamcount.get(message.author.id);
    
-        if(spamcount && spamcount.usages + 1 > 10) {
+        if (spamcount && spamcount.usages + 1 > 10) {
             const ub = {
                 user: message.author.id,
                 userval: 1,
