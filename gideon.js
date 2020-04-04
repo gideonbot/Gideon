@@ -129,6 +129,11 @@ gideon.on("userUpdate", (oldUser, newUser) => {
     Util.Checks.NameCheck(null, newUser, gideon);
 });
 
+gideon.on("messageUpdate", async (oldMessage, newMessage) => {
+    if (newMessage.partial) await newMessage.fetch();
+    if (newMessage.createdAt) Util.MsgHandler.Handle(gideon, newMessage, Util);
+});
+
 gideon.on("inviteCreate", Invite => {
     if (Invite.guild.id !== '595318490240385037') return;
     Util.log(`Invite for \`${Invite.guild.name ? Invite.guild.name : 'Not available'}\` has been created:\n\n\`\`\`\nInviter: ${Invite.inviter.tag ? Invite.inviter.tag : 'Not available'}\nChannel: ${Invite.channel.name}\n\`\`\`\n${Invite.url}`);
