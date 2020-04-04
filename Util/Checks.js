@@ -387,6 +387,22 @@ class Checks {
                 await member.setNickname(clean);
                 await channel.send(`${member} your nickname has been set to \`${clean}\` because it contained strong language!`);
             }
+
+            if (!member.nickname) {
+                if (member.user.username && member.user.username.match(noascii)) {
+                    let ascii = anyAscii(member.user.username);
+                    if (ascii.length > 32) ascii = 'nickname';
+                    await member.setNickname(ascii);
+                    await channel.send(`${member} your nickname has been set to \`${ascii}\` because your username contained unusual unicode!`);
+                }
+    
+                if (member.user.username && filter.isProfane(member.user.username)) {
+                    let clean = filter.clean(member.user.username);
+                    if (clean.length > 32) clean = 'nickname';
+                    await member.setNickname(clean);
+                    await channel.send(`${member} your nickname has been set to \`${clean}\` because your username contained strong language!`);
+                }
+            }
         }
 
         if (newUser) {
