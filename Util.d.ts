@@ -34,7 +34,7 @@ export function Welcome(member: Discord.GuildMember, gideon: Discord.Client): Pr
 export function GetNextEpisodeInfo(url: string): Promise<EpisodeInfo>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
 export function normalize(num: number): string;
-export function CreateEmbed(title: string, options?: EmbedOptions): Discord.MessageEmbed;
+export function CreateEmbed(title: string, options?: EmbedOptions, member?: Discord.GuildMember): Discord.MessageEmbed;
 
 declare module "discord.js" {
     interface Client {
