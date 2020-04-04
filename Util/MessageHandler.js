@@ -23,6 +23,7 @@ class MsgHandler {
         Util.Checks.Ads(message, gideon); //check for foreign invites
         Util.Checks.ABM(message, Util); //apply content filter
         Util.Checks.RulesCheck(message); //check if member read the guilds rules
+        Util.Checks.NameCheck(message.member, null, gideon); //check nicknames & usernames
         Util.Checks.CVM(message, gideon, Util); //apply crossover mode if enabled
         Util.Checks.CSD(message, gideon, Util); //eastereggs
         Util.TR.TRMode(message, gideon, Util); //apply trmode if enabled
