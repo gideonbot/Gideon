@@ -64,7 +64,7 @@ export async function run(gideon, message, args, connection) {
 export const help = {
     name: ["plot", "timejump"],
     type: "fun",
-    help_text: "Gideon, plot a course! <:voicerecognition:693521621184413777>",
+    help_text: "Gideon, plot a course!",
     help_desc: "Plots a course",
     owner: false,
     voice: true,

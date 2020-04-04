@@ -40,7 +40,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: ["gb", "gblacklist", "gbrm"],
     type: "owner",
-    help_text: "gb <guildid> <:gideon:686678560798146577>",
+    help_text: "gb <guildid>",
     help_desc: "Blacklists a guild",
     owner: true,
     voice: false,

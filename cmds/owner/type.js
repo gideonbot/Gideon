@@ -13,7 +13,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: ["type", "typing"],
     type: "owner",
-    help_text: "type <:gideon:686678560798146577>",
+    help_text: "type",
     help_desc: "Toggles typing",
     owner: true,
     voice: false,

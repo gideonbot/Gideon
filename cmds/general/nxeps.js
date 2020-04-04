@@ -60,7 +60,7 @@ export async function run(gideon, message, args, connection) {
 export const help = {
     name: ["nxeps", "nexteps", "nextepisodes"],
     type: "general",
-    help_text: "nxeps <:voicerecognition:693521621184413777>",
+    help_text: "nxeps",
     help_desc: "Displays a countdown to the next airing Arrowverse episodes",
     owner: false,
     voice: true,

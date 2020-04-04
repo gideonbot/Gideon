@@ -43,7 +43,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: ["restore", "rs"],
     type: "admin",
-    help_text: "restore `@Gideon Dev Team`",
+    help_text: "restore",
     help_desc: "Restores the latest database backup",
     owner: false,
     voice: false,

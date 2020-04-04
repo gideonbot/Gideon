@@ -99,7 +99,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: "news",
     type: "admin",
-    help_text: "news <text> [img] <:timevault:686676561298063361>`@News Team`",
+    help_text: "news <text> [img]",
     help_desc: "News Team can use this to post news",
     owner: false,
     voice: false,

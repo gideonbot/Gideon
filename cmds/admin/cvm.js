@@ -30,7 +30,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: "cvm",
     type: "admin",
-    help_text: "cvm <:perms:686681300156940349>",
+    help_text: "cvm",
     help_desc: "Toggles crossover mode",
     owner: false,
     voice: false,

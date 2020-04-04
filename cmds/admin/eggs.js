@@ -30,7 +30,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: "eggs",
     type: "admin",
-    help_text: "eggs <:perms:686681300156940349>",
+    help_text: "eggs",
     help_desc: "Toggles eastereggs",
     owner: false,
     voice: false,

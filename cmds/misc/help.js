@@ -73,6 +73,8 @@ export async function run(gideon, message, args) {
     else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`, null, message.member));
 
     let commands = {};
+    let marks = {};
+
     for (let filename of gideon.commands.keys()) {
         let cmd = gideon.commands.get(filename);
         if (!cmd.help || !cmd.help.help_text || !cmd.help.help_desc) {
@@ -80,19 +82,56 @@ export async function run(gideon, message, args) {
             Util.log(filename + " is missing help properties, please fix");
         }
 
-        if (cmd.help.type == type) commands[cmd.help.help_text] = cmd.help.help_desc;
+        if (cmd.help.type == type) commands[cmd.help.help_text] = cmd.help;
     }
+
+    const helpemotes = ['<:timevault:686676561298063361>',
+                        '<:gideon:686678560798146577>',
+                        '<:18:693135780796694668>',
+                        '<:perms:686681300156940349>',
+                        '<:voicerecognition:693521621184413777>'];
 
     if (Object.keys(commands).length > 10) {
         const arrs = Util.Split(Object.keys(commands), 10);
         let pages = [];
-
+        
         for (let i = 0; i < arrs.length; i++) {
             const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__', null, message.member);
             embed.setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes);
 
-            for (let item of arrs[i]) embed.addField(item.toLowerCase().startsWith("gideon") ? item : customprefix.prefix + item, commands[item]);
-            
+            for (let item of arrs[i]) {
+                let mo = { emotes: [], roles: [] }
+                if (commands[item].owner) mo.emotes.push(helpemotes[1]);
+                if (commands[item].voice) mo.emotes.push(helpemotes[4]);
+                if (commands[item].timevault) mo.emotes.push(helpemotes[0]);
+                if (commands[item].nsfw) mo.emotes.push(helpemotes[2]);
+                if (commands[item].user_perms && commands[item].user_perms.length > 0) mo.emotes.push(helpemotes[3]);
+
+                if (commands[item].roles && commands[item].roles.length > 0) {
+                    for (let role of commands[item].roles) {
+                    
+                        const rolename = await gideon.shard.broadcastEval(`
+                            (async () => {
+                                let rolename;
+                                const guilds = this.guilds.cache;
+                                
+                                guilds.forEach(guild => {
+                                    if (guild.roles.cache.get('${role}')) {
+                                    rolename = guild.roles.cache.get('${role}').name;
+                                    }
+                                });
+                                
+                                if (rolename) return rolename;
+                            })();
+                        `);
+                        mo.roles.push('@' + rolename.toString());
+                    }
+                }
+
+                marks[item] = mo;
+                
+                embed.addField(item[0].toLowerCase().startsWith("gideon") ? item + ` ${marks[item].emotes.join('')}${marks[item].roles.length > 0 ? '\`' + marks[item].roles.join(' ') + '\`' : ''}` : customprefix.prefix + item + ` ${marks[item].emotes.join('')}${marks[item].roles.length > 0 ? '\`' + marks[item].roles.join(' ') + '\`' : ''}`, commands[item].help_desc);
+            }
             embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
             pages.push(embed);
         }
@@ -109,7 +148,40 @@ export async function run(gideon, message, args) {
     else {
         const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__', null, message.member);
         embed.setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes)
-        for (let item in commands) embed.addField(item[0].toLowerCase().startsWith("gideon") ? item : customprefix.prefix + item, commands[item]);
+        for (let item in commands) {
+
+            let mo = { emotes: [], roles: [] }
+            if (commands[item].owner) mo.emotes.push(helpemotes[1]);
+            if (commands[item].voice) mo.emotes.push(helpemotes[4]);
+            if (commands[item].timevault) mo.emotes.push(helpemotes[0]);
+            if (commands[item].nsfw) mo.emotes.push(helpemotes[2]);
+            if (commands[item].user_perms && commands[item].user_perms.length > 0) mo.emotes.push(helpemotes[3]);
+
+            if (commands[item].roles && commands[item].roles.length > 0) {
+                for (let role of commands[item].roles) {
+                
+                    const rolename = await gideon.shard.broadcastEval(`
+                        (async () => {
+                            let rolename;
+                            const guilds = this.guilds.cache;
+                            
+                            guilds.forEach(guild => {
+                                if (guild.roles.cache.get('${role}')) {
+                                rolename = guild.roles.cache.get('${role}').name;
+                                }
+                            });
+                            
+                            if (rolename) return rolename;
+                        })();
+                    `);
+                    mo.roles.push('@' + rolename.toString());
+                }
+            }
+
+            marks[item] = mo;
+
+            embed.addField(item[0].toLowerCase().startsWith("gideon") ? item + ` ${marks[item].emotes.join('')}${marks[item].roles.length > 0 ? '\`' + marks[item].roles.join(' ') + '\`' : ''}` : customprefix.prefix + item + ` ${marks[item].emotes.join('')}${marks[item].roles.length > 0 ? '\`' + marks[item].roles.join(' ') + '\`' : ''}`, commands[item].help_desc);
+        }
         embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
         message.channel.send(embed);
     }

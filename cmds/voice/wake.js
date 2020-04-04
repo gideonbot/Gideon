@@ -22,7 +22,7 @@ export async function run(gideon, message, args, connection) {
 export const help = {
     name: "wakeword",
     type: "voice",
-    help_text: "Hello Gideon <:voicerecognition:693521621184413777>",
+    help_text: "Hello Gideon",
     help_desc: "Greets the user",
     owner: false,
     voice: true,

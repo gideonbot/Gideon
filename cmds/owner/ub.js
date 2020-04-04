@@ -40,7 +40,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: ["ub", "UBLacklist", "ubrm"],
     type: "owner",
-    help_text: "ub <userid> <:gideon:686678560798146577>",
+    help_text: "ub <userid>",
     help_desc: "Blacklists a user",
     owner: true,
     voice: false,

@@ -30,7 +30,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: "devmode",
     type: "owner",
-    help_text: "devmode <:gideon:686678560798146577>",
+    help_text: "devmode",
     help_desc: "Toggles devmode",
     owner: true,
     voice: false,

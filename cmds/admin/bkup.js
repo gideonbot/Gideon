@@ -23,7 +23,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: ["backup", "bkup"],
     type: "admin",
-    help_text: "backup `@Gideon Dev Team`",
+    help_text: "backup",
     help_desc: "Performs a database backup",
     owner: false,
     voice: false,

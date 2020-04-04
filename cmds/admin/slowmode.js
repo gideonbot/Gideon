@@ -33,7 +33,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: ["slowmode", "slowmo", "slow", "sm"],
     type: "admin",
-    help_text: "slowmode [channel] <seconds> <:perms:686681300156940349>",
+    help_text: "slowmode [channel] <seconds>",
     help_desc: "Enables slowmode",
     owner: false,
     voice: false,

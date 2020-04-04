@@ -49,7 +49,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: "jpk",
     type: "fun",
-    help_text: "jpk [help]/[album] <:18:693135780796694668>",
+    help_text: "jpk [help]/[album]",
     help_desc: "Displays a random JPK gif",
     owner: false,
     voice: false,

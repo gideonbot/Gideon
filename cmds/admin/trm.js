@@ -39,7 +39,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: "trm",
     type: "admin",
-    help_text: "trm <:perms:686681300156940349>",
+    help_text: "trm",
     help_desc: "Toggles server role mentionability",
     owner: false,
     voice: false,
