@@ -136,7 +136,7 @@ gideon.on("messageUpdate", async (oldMessage, newMessage) => {
 
 gideon.on("inviteCreate", Invite => {
     if (Invite.guild.id !== '595318490240385037') return;
-    Util.log(`Invite for \`${Invite.guild.name ? Invite.guild.name : 'Not available'}\` has been created:\n\n\`\`\`\nInviter: ${Invite.inviter.tag ? Invite.inviter.tag : 'Not available'}\nChannel: ${Invite.channel.name}\n\`\`\`\n${Invite.url}`);
+    Util.log(`Invite for \`${Invite.guild.name ? Invite.guild.name : 'Not available'}\` has been created:\n\nChannel: \`${Invite.channel.name}\`\n${Invite.url}`);
 });
 
 gideon.on("voiceStateUpdate", (oldState, newState) => {
