@@ -219,7 +219,7 @@ class Util {
             if (err) {
                 console.log(err);
                 Util.log(err);
-                return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
+                return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!', null, message.member));
             }
     
             let min = 0;
@@ -236,7 +236,7 @@ class Util {
                 return message.channel.send(img);
             }
 
-            message.channel.send(Util.CreateEmbed(imgid == 'ngJQmxL' ? 'Germ approves!:white_check_mark:' : '', {image: rimg}));
+            message.channel.send(Util.CreateEmbed(imgid == 'ngJQmxL' ? 'Germ approves!:white_check_mark:' : '', {image: rimg}, message.member));
         });
     }
 
@@ -323,14 +323,16 @@ class Util {
         footer?: {text: string, icon: string};
         thumbnail?: string;
        }} options
+     * @param {Discord.GuildMember} member
      */
-    static CreateEmbed(title, options) {
+    static CreateEmbed(title, options, member) {
         if (!options) options = {};
         
         const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
 
         const embed = new Discord.MessageEmbed()
-        .setColor('#2791D3')
+        if (member && member.guild.id === '595318490240385037' && member.premiumSince) embed.setColor('#CB45CC');
+        else embed.setColor('#2791D3')
         .setFooter(Util.config.footer, Util.config.avatar)
 
         if (title && typeof(title) == "string") embed.setTitle(title);
@@ -347,6 +349,8 @@ class Util {
                 embed.fields = options.fields.map(x => ({name: x.name, value: x.value, inline: x.inline}));
             }
         }
+
+        if (member && member.guild.id === '595318490240385037' && member.premiumSince) embed.addField(`<:boost:678746359549132812>\`${member.user.tag}\` you're awesome!<:boost:678746359549132812>`, `<:boost:678746359549132812>Nitro boosting Time Vault<:timevault:686676561298063361> since \`${member.premiumSince.toDateString()}\`<:boost:678746359549132812>`);
 
         return embed;
     }

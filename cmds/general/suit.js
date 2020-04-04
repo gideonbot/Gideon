@@ -9,7 +9,7 @@ import Util from "../../Util.js";
 export async function run(gideon, message, args) {     
     const st = Util.CreateEmbed('You must choose a valid character!', {
         description: 'Currently available:\n**killer frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**\n**kingdom come superman**'
-    });
+    }, message.member);
 
     const suits = [
         {
@@ -72,7 +72,7 @@ export async function run(gideon, message, args) {
     else if (args[0].match(/(?:harbinger)/i)) suit = suits[8];
     else return message.channel.send(st);
 
-    message.channel.send(Util.CreateEmbed(suit.title, {description: suit.desc, image: suit.image}));  
+    message.channel.send(Util.CreateEmbed(suit.title, {description: suit.desc, image: suit.image}, message.member));  
 }
 
 export const help = {

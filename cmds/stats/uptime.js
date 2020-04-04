@@ -7,7 +7,7 @@ import Util from "../../Util.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
-    message.channel.send(Util.CreateEmbed('Enter Flashtime!', {description: Util.secondsToDifferenceString(gideon.uptime / 1000, { enableSeconds: true })}));
+    message.channel.send(Util.CreateEmbed('Enter Flashtime!', {description: Util.secondsToDifferenceString(gideon.uptime / 1000, { enableSeconds: true })}, message.member));
 }
 
 export const help = {

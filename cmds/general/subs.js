@@ -11,7 +11,7 @@ export async function run(gideon, message, args) {
     if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
         Util.log("Missing env variables for subs command!");
         console.log("Missing env variables for subs command!");
-        return message.channel.send(Util.CreateEmbed('This command is currently not available'));
+        return message.channel.send(Util.CreateEmbed('This command is currently not available', null, message.member));
     }
 
     const OS = new OpenSubtitles({
@@ -23,14 +23,14 @@ export async function run(gideon, message, args) {
 
     if (!args[0]) return message.channel.send(Util.CreateEmbed('You must supply a lang code, the shows name, season and its episode number!', {
         description: `You can find ISO 639-2 codes [here](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes 'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes')!`
-    }));
+    }, message.member));
 
     if (args[0].length !== 3) return message.channel.send(Util.CreateEmbed('You must supply a valid ISO 639-2 code!', {
         description: `[ISO 639-2 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes 'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes')`
-    }));
+    }, message.member));
 
     let seasonAndEpisode = Util.parseSeriesEpisodeString(args[2]);
-    if (!seasonAndEpisode) return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}));
+    if (!seasonAndEpisode) return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}, message.member));
 
     const shows = [
         {
@@ -88,7 +88,7 @@ export async function run(gideon, message, args) {
 
     const ia = Util.CreateEmbed(`"${agc}" is not a valid argument!`, {
         description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**'
-    });
+    }, message.member);
 
     if (agc.match(/(?:flash)/i)) show = shows[0];
     else if (agc.match(/(?:arrow)/i)) show = shows[1];
@@ -114,7 +114,7 @@ export async function run(gideon, message, args) {
         imdbid: show.id,           
 
     }).then(subtitles => {
-        const embed = Util.CreateEmbed(`Subtitles for: ${show.title} ${seasonAndEpisode.season}x${seasonAndEpisode.episode}`, {description: `Here are the 5 best results from opensubtitles.org:`});
+        const embed = Util.CreateEmbed(`Subtitles for: ${show.title} ${seasonAndEpisode.season}x${seasonAndEpisode.episode}`, {description: `Here are the 5 best results from opensubtitles.org:`}, message.member);
 
         for (let sub of Object.values(subtitles)[0]) {
             embed.addField(sub.filename, `**[Download SRT](${sub.url} '${sub.url}')** Lang: \`${sub.lang}\` Score: \`${sub.score}\``)
@@ -124,7 +124,7 @@ export async function run(gideon, message, args) {
     }).catch(async err => {
         console.log("An error occurred while trying to fetch subtitles: " + err);
         Util.log("An error occurred while trying to fetch subtitles: " + err);
-        return message.channel.send(Util.CreateEmbed('There were no results for this episode on opensubtitles.org!', {description: 'Try another episode or another language code!'}));
+        return message.channel.send(Util.CreateEmbed('There were no results for this episode on opensubtitles.org!', {description: 'Try another episode or another language code!'}, message.member));
     });
 }
 

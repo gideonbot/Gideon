@@ -24,31 +24,31 @@ export async function run(gideon, message, args) {
     //else if (agc.match(/(?:canaries)/i)) showtitle = "Green Arrow and the Canaries"; 
     //else if (agc.match(/(?:supesnlois)/i)) showtitle = "Superman & Lois"; 
     //else if (agc.match(/(?:stargirl)/i)) showtitle = "Stargirl"; 
-    else return message.channel.send(Util.CreateEmbed(`"${agc}" is not a valid argument!`, {description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**supesnlois**\n**stargirl**'}));
+    else return message.channel.send(Util.CreateEmbed(`"${agc}" is not a valid argument!`, {description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**supesnlois**\n**stargirl**'}, message.member));
 
     const emotes = gideon.guilds.cache.get('525341081727008788');
-    if (!emotes) return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+    if (!emotes) return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
 
     /**
      * @type {Discord.TextChannel}
      */
     const torrent_channel = emotes.channels.cache.get('677861559682465802');
-    if (!torrent_channel) return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+    if (!torrent_channel) return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
 
     let season_and_ep = Util.parseSeriesEpisodeString(args[1]);
     if (!season_and_ep) {
-        return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}));
+        return message.channel.send(Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}, message.member));
     }
         
     let ts = `${showtitle} S${Util.normalize(season_and_ep.season)}E${Util.normalize(season_and_ep.episode)}`;
 
-    let sent = await message.channel.send(Util.CreateEmbed('Gathering torrents: ' + ts, {description: `Please stand by... This may take up to a minute`}));
+    let sent = await message.channel.send(Util.CreateEmbed('Gathering torrents: ' + ts, {description: `Please stand by... This may take up to a minute`}, message.member));
     try {
         torrentSearch.enablePublicProviders();
 
         const torrents = await torrentSearch.search(['1337x', 'TorrentProject', 'ThePirateBay', 'KickassTorrents', 'Torrentz2'], ts, 'TV', 5);
 
-        if (torrents.length < 1) return message.channel.send(Util.CreateEmbed('No torrents available for this episode!'));
+        if (torrents.length < 1) return message.channel.send(Util.CreateEmbed('No torrents available for this episode!', null, message.member));
 
         const embed = Util.CreateEmbed(ts, {description: `:warning:Always enable a VPN before downloading!:warning:`});
         const m2t = new Magnet2torrent({timeout: 60});
@@ -88,7 +88,7 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log(ex);
         Util.log("Caught an exception while running torrent.js: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 

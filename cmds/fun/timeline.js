@@ -15,13 +15,13 @@ export async function run(gideon, message, args) {
         let max = body.content.length - 1;
         let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
     
-        message.channel.send(Util.CreateEmbed('Timeline change detected!', {description: body.content[ranum].text, image: 'https://i.imgur.com/qWN3luc.gif'}));
+        message.channel.send(Util.CreateEmbed('Timeline change detected!', {description: body.content[ranum].text, image: 'https://i.imgur.com/qWN3luc.gif'}, message.member));
     }
     
     catch (ex) {
         console.log("An error occurred while trying to fetch a timeline change: " + ex.stack);
         Util.log("An error occurred while trying to fetch a timeline change: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('Failed to fetch a timeline change!'));
+        return message.channel.send(Util.CreateEmbed('Failed to fetch a timeline change!', null, message.member));
     }
 }
 

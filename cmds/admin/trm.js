@@ -18,7 +18,7 @@ export async function run(gideon, message, args) {
             catch (ex) {
                 console.log("Caught an exception while toggling roles: " + ex.stack);
                 Util.log("Caught an exception while toggling roles: " + ex.stack);
-                return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+                return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
             }
         }
         else if (check.mentionable) {
@@ -30,10 +30,10 @@ export async function run(gideon, message, args) {
             catch (ex) {
                 console.log("Caught an exception while toggling roles: " + ex.stack);
                 Util.log("Caught an exception while toggling roles: " + ex.stack);
-                return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+                return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
             }
         }
-        else return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        else return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 
 export const help = {

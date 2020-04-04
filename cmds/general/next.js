@@ -26,7 +26,7 @@ export async function run(gideon, message, args) {
     //else if (agc.match(/(?:stargirl)/i)) showtitle = "Stargirl";
     else return message.channel.send(Util.CreateEmbed('You must supply a valid show!', {
         description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**canaries**\n**supesnlois**\n**stargirl**'
-    }));
+    }, message.member));
 
     try {
         const body = await fetch(api).then(res => res.json());
@@ -86,7 +86,7 @@ export async function run(gideon, message, args) {
                         value: `**[arrowverse.info](${url} '${url}')**`
                     }
                 ]
-            });
+            }, message.member);
 
             return embed;
         }
@@ -140,7 +140,7 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log("Failed to fetch next episode: " + ex.stack);
         Util.log("Failed to fetch next episode: " + ex.stack);
-        message.channel.send(Util.CreateEmbed('Failed to fetch episode list, please try again later!'));
+        message.channel.send(Util.CreateEmbed('Failed to fetch episode list, please try again later!', null, message.member));
     }
 }
 

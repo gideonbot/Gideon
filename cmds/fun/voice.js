@@ -19,7 +19,7 @@ export async function run(gideon, message, args) {
     let command = message.content.toLowerCase().split(' ')[0];
 
     const voicehelp = Util.CreateEmbed(`Usage of Voice™ Commands:`, {
-    description: `Use \`!voice tutorial\` for a video tutorial.\n\nUse Gideon Voice™ commands by speaking into your microphone\n\`'Gideon is typing...'\` means your Voice™ command is being processed\n\nNo further response means the input was not recognized or no Voice™ enabled command was used`})
+    description: `Use \`!voice tutorial\` for a video tutorial.\n\nUse Gideon Voice™ commands by speaking into your microphone\n\`'Gideon is typing...'\` means your Voice™ command is being processed\n\nNo further response means the input was not recognized or no Voice™ enabled command was used`}, message.member)
     .setAuthor(`Note: Not all commands are Voice™ compatible!`, message.author.avatarURL())
 
     if (command.endsWith('leave')) {
@@ -85,7 +85,7 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log("Caught an exception while running voice.js: " + ex.stack);
         Util.log("Caught an exception while running voice.js: " + ex.stack);
-        message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     } 
 }
 

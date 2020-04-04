@@ -21,13 +21,13 @@ export async function run(gideon, message, args) {
         if (!token) {
             Util.log("Missing env variable for issues command!");
             console.log("Missing env variable for issues command!");
-            return message.channel.send(Util.CreateEmbed('This command is not available currently'));
+            return message.channel.send(Util.CreateEmbed('This command is currently not avilable', null, message.member));
         }
 
         const filter = m => m.author.id === message.author.id;
         const collector = message.channel.createMessageCollector(filter, {time: 120 * 1000});
 
-        let sent = await message.channel.send(Util.CreateEmbed('Post an issue to GitHub:', {description: 'Please type the issue\'s title below:\nYou\'ve got `2` minutes.\n\n(Press <:stop:669309980209446912> to cancel your post)'}));
+        let sent = await message.channel.send(Util.CreateEmbed('Post an issue to GitHub:', {description: 'Please type the issue\'s title below:\nYou\'ve got `2` minutes.\n\n(Press <:stop:669309980209446912> to cancel your post)'}, message.member));
         await sent.react(stopid).catch(failed => console.log("Failed to react with " + stopid + ": " + failed));
 
         const rfilter = (reaction, user) => user.id === auth;
@@ -37,12 +37,12 @@ export async function run(gideon, message, args) {
             if (reaction.emoji.id == stopid) {
                 collector.stop();
                 await sent.reactions.removeAll();
-                await sent.edit(Util.CreateEmbed('Post an issue to GitHub:', {description: 'Your issue post has been cancelled! :white_check_mark:'}));
+                await sent.edit(Util.CreateEmbed('Post an issue to GitHub:', {description: 'Your issue post has been cancelled! :white_check_mark:'}, message.member));
             }
         }); 
 
         rcollector.on('end', async (collected, reason) => {
-            if (reason === 'time') sent.edit(Util.CreateEmbed('Post an issue to GitHub:', {description: 'You ran out of time!'}));
+            if (reason === 'time') sent.edit(Util.CreateEmbed('Post an issue to GitHub:', {description: 'You ran out of time!'}, message.member));
         });
 
         try {
@@ -52,7 +52,7 @@ export async function run(gideon, message, args) {
             let issuetitle = collected1.first().content;
             await Util.delay(200);
             await collected1.first().delete();
-            await sent.edit(Util.CreateEmbed('Post an issue to GitHub:', {description: 'Please type the issue\'s body below:\nYou\'ve got `2` minutes.\n\n(Press <:stop:669309980209446912> to cancel your post)'}));
+            await sent.edit(Util.CreateEmbed('Post an issue to GitHub:', {description: 'Please type the issue\'s body below:\nYou\'ve got `2` minutes.\n\n(Press <:stop:669309980209446912> to cancel your post)'}, message.member));
 
             let collected2 = await message.channel.awaitMessages(filter, { max: 1, time: 120 * 1000, errors: ['time'] });
             if (!collected2 || !collected2.first() || !collected2.first().content) return;
@@ -60,7 +60,7 @@ export async function run(gideon, message, args) {
             let issuebody = collected2.first().content;
             await Util.delay(200);
             await collected2.first().delete();
-            await sent.edit(Util.CreateEmbed('Post an issue to GitHub:', {description: 'Thank you!\nYour issue has been submitted to GitHub! :white_check_mark:'}));
+            await sent.edit(Util.CreateEmbed('Post an issue to GitHub:', {description: 'Thank you!\nYour issue has been submitted to GitHub! :white_check_mark:'}, message.member));
             await sent.reactions.removeAll();
             
             rcollector.stop();
@@ -77,13 +77,13 @@ export async function run(gideon, message, args) {
         catch (ex) {
             console.log("Caught an exception while running issues.js: " + ex.stack);
             Util.log("Caught an exception while running issues.js: " + ex.stack);
-            return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+            return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
         }
     }
 
     else try {
         const body = await fetch(api).then(res => res.json()); 
-        const issues = Util.CreateEmbed('Issues: ' + body.length);
+        const issues = Util.CreateEmbed('Issues: ' + body.length, null, message.member);
 
         let issues_array = body.reverse();
         for (let item of issues_array) {
@@ -103,7 +103,7 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log("Caught an exception while fetching issues: " + ex.stack);
         Util.log("Caught an exception while fetching issues: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 

@@ -7,7 +7,7 @@ import Util from "../../Util.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
-    const ia = Util.CreateEmbed('You must supply a valid show!', {description: 'Available shows:\n**flash**\n**legends**'});
+    const ia = Util.CreateEmbed('You must supply a valid show!', {description: 'Available shows:\n**flash**\n**legends**'}, message.member);
 
     if (!args[0]) return message.channel.send(ia);   
     const flashopening = 'https://cdn.discordapp.com/attachments/595934699285905409/674586782494621696/YouCut_20200205_130726276.mp4';

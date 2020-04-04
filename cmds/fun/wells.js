@@ -72,7 +72,7 @@ export async function run(gideon, message, args) {
     ];
 
     let result = arr[Math.floor(Math.random() * arr.length)];
-    message.channel.send(`You have reached out to Earth-${result.en}`, {embed: Util.CreateEmbed(result.title, {description: result.desc, image: result.gif})});  
+    message.channel.send(`You have reached out to Earth-${result.en}`, {embed: Util.CreateEmbed(result.title, {description: result.desc, image: result.gif}, message.member)});  
 }
 
 export const help = {

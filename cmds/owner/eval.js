@@ -28,7 +28,7 @@ export async function run(gideon, message, args) {
             code: true
         });
     } catch (e) {
-        return message.channel.send(Util.CreateEmbed('An error occured while processing your request:', {description: "```\n" + Util.truncate(e.stack, 400, true) + "```"}));
+        return message.channel.send(Util.CreateEmbed('An error occured while processing your request:', {description: "```\n" + Util.truncate(e.stack, 400, true) + "```"}, message.member));
     }
 }
 

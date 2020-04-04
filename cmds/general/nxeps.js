@@ -31,7 +31,7 @@ export async function run(gideon, message, args, connection) {
         supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode'
     };
 
-    const embed = Util.CreateEmbed('__Upcoming Arrowverse episodes:__');
+    const embed = Util.CreateEmbed('__Upcoming Arrowverse episodes:__', null, message.member);
 
     for (let show in api_urls) {
         try {

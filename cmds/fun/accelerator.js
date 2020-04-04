@@ -23,7 +23,7 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log("Exception occurred while starting up the particle accelerator " + ex.stack);
         Util.log("Exception occurred while starting up the particle accelerator " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occurred while trying to start the particle accelerator!'));
+        return message.channel.send(Util.CreateEmbed('An error occurred while trying to start the particle accelerator!', null, message.member));
     }
 
     await Util.delay(10000);
@@ -61,7 +61,7 @@ export async function run(gideon, message, args) {
     message.channel.send(Util.CreateEmbed(result.title, {
         description: result.desc,
         image: result.gif
-    }));  
+    }, message.member));  
 }
 
 export const help = {

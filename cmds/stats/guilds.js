@@ -8,7 +8,7 @@ import Util from "../../Util.js";
  */
 export async function run(gideon, message, args) {
     try {
-        const embed = Util.CreateEmbed('Guilds:');
+        const embed = Util.CreateEmbed('Guilds:', null, message.member);
 
         let shard = await gideon.shard.broadcastEval(`this.shard.ids`).then(results => {return results}).catch(console.error);
         let guilds = await gideon.shard.broadcastEval(`this.guilds.cache.size`).then(results => {return results}).catch(console.error);
@@ -22,7 +22,7 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log(ex);
         Util.log("Caught an exception while running torrent.js: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 

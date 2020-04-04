@@ -10,7 +10,7 @@ import Util from "../../Util.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {   
-    const as = Util.CreateEmbed("You must supply valid input!");
+    const as = Util.CreateEmbed("You must supply valid input!", null, message.member);
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
     let noep = isNaN(args[0]);
@@ -21,7 +21,7 @@ export async function run(gideon, message, args) {
 
     if (!message.member.voice.channel) return message.reply('You need to join a voice channel first!');
 
-    if (gideon.listening.includes(message.author.id)) return message.channel.send(Util.CreateEmbed('A podcast episode is already playing!'));
+    if (gideon.listening.includes(message.author.id)) return message.channel.send(Util.CreateEmbed('A podcast episode is already playing!', null, message.member));
     gideon.listening.push(message.author.id);
     
     let epnum = args[0];
@@ -55,7 +55,7 @@ export async function run(gideon, message, args) {
                     value: `\`${matescast[7]}\``
                 },
             ]
-        })
+        }, message.member)
 
         const stopembed = Util.CreateEmbed(matescast[0], {
             description: matescast[1],
@@ -78,7 +78,7 @@ export async function run(gideon, message, args) {
                     value: `\`${matescast[7]}\``
                 },
             ]
-        })
+        }, message.member)
 
         const pauseembed = Util.CreateEmbed(matescast[0], {
             description: matescast[1],
@@ -101,7 +101,7 @@ export async function run(gideon, message, args) {
                     value: `\`${matescast[7]}\``
                 },
             ]
-        })
+        }, message.member)
 
         const finishedembed = Util.CreateEmbed(matescast[0], {
             description: matescast[1],
@@ -124,7 +124,7 @@ export async function run(gideon, message, args) {
                     value: `\`${matescast[7]}\``
                 },
             ]
-        })
+        }, message.member)
 
         let sent = await message.channel.send(matesembed);
         for (let emoji of emotes) {
@@ -201,7 +201,7 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log("Caught an exception while playing podcast: " + ex.stack);
         Util.log("Caught an exception while playing podcast: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occurred while fetching podcast data!'));
+        return message.channel.send(Util.CreateEmbed('An error occurred while fetching podcast data!', null, message.member));
     }
 }
 

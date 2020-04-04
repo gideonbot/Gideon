@@ -20,7 +20,7 @@ export async function run(gideon, message, args) {
                 value: `[Patreon.com](https://www.patreon.com/gideonbot 'https://www.patreon.com/gideonbot')`
             }
         ]
-    }));
+    }, message.member));
 }
 
 export const help = {

@@ -7,7 +7,7 @@ import Util from "../../Util.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
-    const as = Util.CreateEmbed("You must supply valid input!");
+    const as = Util.CreateEmbed("You must supply valid input!", null, message.member);
     if (!args[0].match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)) return message.channel.send(as);  
 
     const emoji = gideon.emojis.cache.get(args[0].match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)[3])
@@ -24,7 +24,7 @@ export async function run(gideon, message, args) {
                 `
             }
         ]
-    })
+    }, message.member)
 
     message.channel.send(embed);
 }

@@ -7,7 +7,7 @@ import Util from "../../Util.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
-    message.channel.send(Util.CreateEmbed('The fastest bot alive!', {description: `WebSocket ping: ${gideon.ws.ping.toFixed(2)} ms`}));  
+    message.channel.send(Util.CreateEmbed('The fastest bot alive!', {description: `WebSocket ping: ${gideon.ws.ping.toFixed(2)} ms`}, message.member));  
 }
 
 export const help = {

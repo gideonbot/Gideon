@@ -24,7 +24,7 @@ export async function run(gideon, message, args) {
                 value: '```' + tr[0] + '```'
             }
         ]
-    }));
+    }, message.member));
 }
 
 export const help = {

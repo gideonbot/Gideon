@@ -50,14 +50,14 @@ export async function run(gideon, message, args, connection) {
         let tmax = 3000;
         let year = Math.floor(Math.random() * (tmax - tmin + 1)) + tmin;
 
-        message.channel.send(Util.CreateEmbed(`Course set to ${destination} ${year}`, {image: 'https://i.imgur.com/I3UQhVu.gif'}));
+        message.channel.send(Util.CreateEmbed(`Course set to ${destination} ${year}`, {image: 'https://i.imgur.com/I3UQhVu.gif'}, message.member));
     }
     
     catch (ex) {
         console.log("Caught an exception while plotting a course: " + ex.stack);
         Util.log("Caught an exception while plotting a course: " + ex.stack);
         
-        return message.channel.send(Util.CreateEmbed('An error occurred while trying to plot a course!'));
+        return message.channel.send(Util.CreateEmbed('An error occurred while trying to plot a course!', null, message.member));
     }
 }
 

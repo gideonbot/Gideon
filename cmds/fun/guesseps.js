@@ -17,7 +17,7 @@ export async function run(gideon, message, args) {
     let points = 0;
     let timerstart = new Date();
 
-    if (gideon.guessing.includes(message.author.id)) return message.channel.send(Util.CreateEmbed('A guessing game is already running!'));
+    if (gideon.guessing.includes(message.author.id)) return message.channel.send(Util.CreateEmbed('A guessing game is already running!', null, message.member));
     
     gideon.guessing.push(message.author.id);
 
@@ -36,7 +36,7 @@ export async function run(gideon, message, args) {
     let command = message.content.toLowerCase().split(' ')[0];
 
     if (command.endsWith('leaderboard') || command.endsWith('highscores') || command.endsWith('lb')) {
-        let leaderboard = Util.CreateEmbed(`Top 10 Leaderboard:`);
+        let leaderboard = Util.CreateEmbed(`Top 10 Leaderboard:`, null, message.member);
 
         let top10 = gideon.getTop10.all().filter(x => x.points > 0);
 
@@ -78,7 +78,7 @@ export async function run(gideon, message, args) {
     else if (agc.match(/(?:constantine)/i)) chosenfilter = filters[7];
     else return message.channel.send(Util.CreateEmbed('You must supply a valid show!', {
         description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**'
-    }));
+    }, message.member));
 
     function Countdown() {
         let timerdiff = (Date.now() - timerstart.getTime()) / 1000;
@@ -124,7 +124,7 @@ export async function run(gideon, message, args) {
                     value: `**[arrowverse.info](${url} '${url}')**`
                 }
             ]
-        });
+        }, message.member);
 
         return {embed: gameembed, show: show, ep_and_s: epnum, ep_name: epname, airdate: epairdate};
     }
@@ -177,7 +177,7 @@ export async function run(gideon, message, args) {
                             value: `**[arrowverse.info](${url} '${url}')**`   
                         }
                     ]
-                });
+                }, message.member);
 
                 gideon.guessing.remove(message.author.id);
                 return sent.edit(stopembed);
@@ -212,7 +212,7 @@ export async function run(gideon, message, args) {
                             value: `**[arrowverse.info](${url} '${url}')**`
                         }
                     ]
-                })
+                }, message.member)
 
                 gideon.guessing.remove(message.author.id);
                 await sent.edit(correctembed);
@@ -235,7 +235,7 @@ export async function run(gideon, message, args) {
                         value: `**[arrowverse.info](${url} '${url}')**`
                     }
                 ]
-            })
+            }, message.member)
 
             if (tries == 0) {
                 collector.stop();
@@ -261,7 +261,7 @@ export async function run(gideon, message, args) {
                             value: `**[arrowverse.info](${url} '${url}')**`
                         }
                     ]
-                });
+                }, message.member);
 
                 gideon.guessing.remove(message.author.id);
                 await sent.reactions.removeAll();
@@ -273,7 +273,7 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log("Caught an exception while running guesseps.js: " + ex.stack);
         Util.log("Caught an exception while running guesseps.js: " + ex.stack);
-        message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 

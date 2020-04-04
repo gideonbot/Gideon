@@ -91,14 +91,14 @@ export async function run(gideon, message, args) {
     else if (agc.match(/(?:stargirl)/i)) show = shows[11];
     else return message.channel.send(Util.CreateEmbed('You must supply a valid show!', {
         description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**'
-    }));
+    }, message.member));
 
     const api = `http://api.tvmaze.com/shows/${show.id}/episodebynumber?season=${info.season}&number=${info.episode}`;
 
     try {
         const body = await fetch(api).then(res => res.json());
 
-        if (body.status === 404) return message.channel.send(Util.CreateEmbed('There was no data for this episode!'));
+        if (body.status === 404) return message.channel.send(Util.CreateEmbed('There was no data for this episode!', null, message.member));
         
         let sp = '';
         let today = new Date();
@@ -121,13 +121,13 @@ export async function run(gideon, message, args) {
         message.channel.send(Util.CreateEmbed(`${show.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
             description: sp + desc + sp + `\n\nAirdate: \`${moment(airdate).isValid() ? airdate.toDateString() : 'No Airdate Available'}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`,
             image: img
-        }));
+        }, message.member));
     }
     
     catch (ex) {
         console.log("Exception occurred while fetching the episodes " + ex.stack);
         Util.log("Exception occurred while fetching the episodes " + ex.stack);
-        message.channel.send(Util.CreateEmbed('An error occurred while trying to fetch the episodes!'));
+        message.channel.send(Util.CreateEmbed('An error occurred while trying to fetch the episodes!', null, message.member));
     }
 }
 export const help = {

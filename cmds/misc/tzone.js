@@ -21,7 +21,7 @@ export async function run(gideon, message, args) {
             
             if (members.map(x => x.username).includes(message.author.tag)) return message.reply('you have already registered a timezone!');
 
-            if (!args[1]) return message.channel.send(Util.CreateEmbed('You must supply a valid argument!'));
+            if (!args[1]) return message.channel.send(Util.CreateEmbed('You must supply a valid argument!', null, message.member));
 
             message.channel.send('Registering, please stand by...');
 
@@ -45,7 +45,7 @@ export async function run(gideon, message, args) {
         catch (ex) {
             console.log("Caught an exception while running tzone.js: " + ex.stack);
             Util.log("Caught an exception while running tzone.js: " + ex.stack);
-            return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+            return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
         }
         return;
     }
@@ -53,7 +53,7 @@ export async function run(gideon, message, args) {
     else if (args[0] && !args[1]) {
         try {
             const user = message.mentions.users.first();
-            if (!user) return message.channel.send(Util.CreateEmbed('You must use a proper mention if you want to check someone\'s timezone!'));
+            if (!user) return message.channel.send(Util.CreateEmbed('You must use a proper mention if you want to check someone\'s timezone!', null, message.member));
 
             let members = JSON.parse(fs.readFileSync(path));
 
@@ -64,17 +64,17 @@ export async function run(gideon, message, args) {
             let formattedTime = date.toLocaleTimeString('en-US',{timeZone: found.timezone});
             let formattedDay = date.toLocaleDateString('en-US',{timeZone: found.timezone});
 
-            message.channel.send(Util.CreateEmbed(`${found.username}'s current local time:`, {description: `\`${formattedDay} ${formattedTime} (${found.timezone})\``}));
+            message.channel.send(Util.CreateEmbed(`${found.username}'s current local time:`, {description: `\`${formattedDay} ${formattedTime} (${found.timezone})\``}, message.member));
         }
 
         catch (ex) {
             console.log("Caught an exception while running tzone.js: " + ex.stack);
             Util.log("Caught an exception while running tzone.js: " + ex.stack);
-            message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+            message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
         }
     }
 
-    else return message.channel.send(Util.CreateEmbed('You must supply a valid argument!'));
+    else return message.channel.send(Util.CreateEmbed('You must supply a valid argument!', null, message.member));
 }
 
 export const help = {

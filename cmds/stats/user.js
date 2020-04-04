@@ -9,7 +9,7 @@ import moment from 'moment';
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
-    const as = Util.CreateEmbed("You must supply valid input!");
+    const as = Util.CreateEmbed("You must supply valid input!", null, message.member);
     const auth = message.author;
     let user;
 
@@ -82,7 +82,7 @@ export async function run(gideon, message, args) {
                 value: `• Nickname: \`${!member.nickname ? 'None' : member.nickname}\`\n• Joined at: \`${moment.utc(member.joinedAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Boosted: ${!member.premiumSince ? '\`No\`' : '\`Yes\` <:boost:678746359549132812>'}\n• Roles: ${member.roles.cache.filter(x => x.id != member.guild.roles.everyone.id).map(roles => roles.toString()).join(' ')}\n• Permissions: ${perms}\n• Last Message: ${member.lastMessage === null ? '\`None\`' : `[Click Here](${member.lastMessage.url} '${member.lastMessage.url}')`}`
             }
         ]
-    })
+    }, message.member)
 
     message.channel.send(embed);
 }
