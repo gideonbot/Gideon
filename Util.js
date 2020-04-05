@@ -620,11 +620,12 @@ class Util {
     }
 
     /**
-     * Clear cache
+     * Init cache
      * @param {Discord.Client} gideon
      */
-    static ClearCache(gideon) {
-        gideon.cache.clear();
+    static InitCache(gideon) {
+        const nxeps = new Discord.Collection();
+        gideon.cache.set('nxeps', nxeps);
     }
 }
 

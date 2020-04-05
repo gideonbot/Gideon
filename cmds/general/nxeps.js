@@ -32,14 +32,14 @@ export async function run(gideon, message, args, connection) {
     };
 
     const embed = Util.CreateEmbed('__Upcoming Arrowverse episodes:__', null, message.member);
-
+    
     for (let show in api_urls) {
         try {
-            let info = gideon.cache.get(show);
-
+            let info = gideon.cache.get('nxeps').get(show);
+            console.log(info);
             if (!info) {
                 info = await Util.GetNextEpisodeInfo(api_urls[show]);
-                gideon.cache.set(show, info);
+                gideon.cache.get('nxeps').set(show, info);
             }
             
             embed.addField(`${info.title} ${info.name}`, `${info.value}`);

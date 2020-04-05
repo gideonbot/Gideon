@@ -45,7 +45,7 @@ declare module "discord.js" {
         guessing: string[];
         listening: string[];
         spamcount: Map;
-        cache: Map;
+        cache: Discord.Collection;
         getScore: BetterSqlite3.Statement<any[]>;
         setScore: BetterSqlite3.Statement<any[]>;
         getTop10: BetterSqlite3.Statement<any[]>;
