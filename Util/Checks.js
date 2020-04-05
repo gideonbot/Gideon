@@ -71,6 +71,7 @@ class Checks {
      * @param {Discord.Message} message 
      */
     static ABM(message, Util) {
+        if (!message.guild) return;
         if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return;
         
         const siren = '<a:siren:669518972407775265>';
@@ -90,6 +91,7 @@ class Checks {
      * @param {Discord.Client} gideon 
      */
     static async CVM(message, gideon, Util) {
+        if (!message.guild) return;
         let cvm = gideon.getCVM.get(message.guild.id);
         if (!cvm) return;
         if (cvm.cvmval === 0) return;
@@ -154,6 +156,7 @@ class Checks {
      * @param {Discord.Message} message 
      */
     static async CSD(message, gideon, Util) {
+        if (!message.guild) return;
         let eggs = gideon.getEggs.get(message.guild.id);
         if (!eggs) {
             eggs = {
@@ -240,6 +243,7 @@ class Checks {
      * @param {Discord.Message} message 
      */
     static async RulesCheck(message) {
+        if (!message.guild) return;
         if (message.guild.id !== '595318490240385037') return;
         if (message.member.roles.cache.has('688430418466177082')) return;
 
@@ -312,6 +316,7 @@ class Checks {
      * @param {Discord.Client} gideon 
      */
     static async Ads(message, gideon) {
+        if (!message.guild) return;
         if (message.guild.id !== '595318490240385037') return;
         if (message.channel.permissionsFor(message.member).has('MANAGE_MESSAGES')) return;
 

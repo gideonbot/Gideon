@@ -10,7 +10,6 @@ import Imgur from 'imgur-node';
 import zip from 'zip-a-folder';
 import del from 'del';
 import recursive from "recursive-readdir";
-import moment from 'moment';
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -212,6 +211,7 @@ class Util {
      * @param {boolean} nsfw
      */
     static async IMG(imgid, message, nsfw) {
+        if (!message.guild) return;
         if (!process.env.IMG_CL) return;
 
         const imgclient = new Imgur.Client(process.env.IMG_CL);
