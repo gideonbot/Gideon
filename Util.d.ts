@@ -28,7 +28,8 @@ export function Starboard(reaction: Discord.MessageReaction, user: Discord.User,
 export function Selfhostlog(gideon: Discord.Client): Promise<void>;
 export function SQLBkup(gideon: Discord.Client): Promise<void>;
 export function status(gideon: Discord.Client): Promise<void>;
-export function ClearCache(gideon: Discord.Client): void;
+export function InitCache(gideon: Discord.Client): void;
+export function ClosestDate(dates: string[]): Promise<string>;
 export function Invite(guild: Discord.Guild): Promise<void>;
 export function Welcome(member: Discord.GuildMember, gideon: Discord.Client): Promise<void>;
 export function GetNextEpisodeInfo(url: string): Promise<EpisodeInfo>;

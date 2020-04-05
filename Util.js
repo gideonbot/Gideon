@@ -10,6 +10,7 @@ import Imgur from 'imgur-node';
 import zip from 'zip-a-folder';
 import del from 'del';
 import recursive from "recursive-readdir";
+import moment from 'moment';
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -255,7 +256,7 @@ class Util {
                 res.json().then(body => {
                     let title = body.name;
     
-                    let result = { title: title, name: null, value: null };
+                    let result = { title: title, name: null, value: null, date: null };
     
                     if (!body._embedded) {
                         result.name = '';
@@ -301,6 +302,7 @@ class Util {
 
                         result.name = `${season}x${number < 10 ? `0` + number : number} - ${name}`;
                         result.value = res_value;
+                        result.date = date;
                     }
     
                     return resolve(result);
@@ -626,6 +628,17 @@ class Util {
     static InitCache(gideon) {
         const nxeps = new Discord.Collection();
         gideon.cache.set('nxeps', nxeps);
+    }
+
+    /**
+     * get closest date to now from array
+     * @param {Date} now
+     * @param {string[]} dates
+     */
+    static async ClosestDate(dates) {
+        const temp = dates.map(d => Math.abs(new Date() - new Date(d).getTime()));
+        const idx = temp.indexOf(Math.min(...temp));
+        return dates[idx];
     }
 }
 
