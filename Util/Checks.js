@@ -185,6 +185,17 @@ class Checks {
         const lwstring = '**Grant Gustin:**\n_"Just hearing the devastating news that Logan Williams has passed away suddenly. This picture was early in the filming of The Flash pilot episode back in 2014. I was so impressed by not only Logan’s talent but his professionalism on set. My thoughts and prayers will be with him and his family during what is I’m sure an unimaginably difficult time for them. Please keep Logan and his family in your thoughts and prayers during what has been a strange and trying time for us all. Sending love to everyone."_'
         const lw = Util.CreateEmbed('<a:flash360:686326039525326946>R.I.P. Logan Williams<a:flash360:686326039525326946>', 
         {description: lwstring, thumbnail: lwimg2, image: lwgif, author: {name: '04/09/2003 - 04/02/2020', icon: lwimg}});
+        const whoa = Util.CreateEmbed(null, { image: 'https://images-ext-2.discordapp.net/external/T_LsRBWhC8qcPUFrFa-mn1Gpgq9GIKI-m6tfRj7-yWQ/https/i.imgur.com/AyfOFy9.gif' }, message.member);
+        const omelette = 'https://cdn.discordapp.com/attachments/669243069878501385/696770901185921106/You_have_failed_this_omelette.mp4'; 
+        const punching = 'https://cdn.discordapp.com/attachments/669243069878501385/696774257279107293/why_the_punching.mp4';
+        const donttouchme = 'https://cdn.discordapp.com/attachments/669243069878501385/696774255131492443/If_you_touch_me_with_that_thing.mp4';
+        const justabitdead = 'https://cdn.discordapp.com/attachments/669243069878501385/696774250845175868/I_feel_like_I_was_dead_or_something.mp4';
+        const notorture = 'https://cdn.discordapp.com/attachments/669243069878501385/696774256473931886/thanks_for_explaining.mp4';
+        const skirt = 'https://cdn.discordapp.com/attachments/669243069878501385/696774255559442452/skirt.mp4';
+        const eternalahole = 'https://cdn.discordapp.com/attachments/669243069878501385/696774249897132052/eternal_asshole.mp4';
+        const surpressedanger = 'https://cdn.discordapp.com/attachments/669243069878501385/696828835525820507/were_gonna_need_the_icequeen.mp4';
+        const superman = 'https://cdn.discordapp.com/attachments/669243069878501385/696784552764375100/Its_a_bird...its_a_plane_its_Superman.mp4';
+        const marshmallows = 'https://cdn.discordapp.com/attachments/669243069878501385/696787036304048229/the_marshmallows_are_talking.mp4';
 
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
         if (message.content.match(/(?:deckerstar)/i)) Util.IMG('rJpbLQx', message);
@@ -201,6 +212,17 @@ class Checks {
         if (message.content.match(/(?:occupied)/i)) message.channel.send(occupied);
         if (message.content.match(/(?:katic)/i)) message.channel.send(katicarray[Math.floor(Math.random() * katicarray.length)]);
         if (message.content.match(/(?:rip)/i) && message.content.match(/(?:logan)/i)) message.channel.send(lw);
+        if (message.content.match(/(?:wow)/i) || message.content.match(/(?:whoa)/i)) message.channel.send(whoa);
+        if (message.content.match(/(?:omelette)/i)) message.channel.send(omelette);
+        if (message.content.match(/(?:punching)/i)) message.channel.send(punching);
+        if (message.content.match(/(?:touch)/i)) message.channel.send(donttouchme);
+        if (message.content.match(/(?:dead)/i)) message.channel.send(justabitdead);
+        if (message.content.match(/(?:torture)/i)) message.channel.send(notorture);
+        if (message.content.match(/(?:skirt)/i)) message.channel.send(skirt);
+        if (message.content.match(/(?:asshole)/i)) message.channel.send(eternalahole);
+        if (message.content.match(/(?:lexi)/i) || message.content.match(/(?:icequeen)/i)) message.channel.send(surpressedanger);
+        if (message.content.match(/(?:superman)/i)) message.channel.send(superman);
+        if (message.content.match(/(?:marshmallows)/i)) message.channel.send(marshmallows);
     }
 
     /**
