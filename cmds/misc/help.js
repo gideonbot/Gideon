@@ -12,23 +12,25 @@ export async function run(gideon, message, args) {
     const customprefix = gideon.getPrefix.get(message.guild.id);
     const _prefixes = Util.config.prefixes.filter((x, i) => i < Util.config.prefixes.length - 1); //we remove the last prefix (.pop modifies the original array - BAD!)
     const prefixes = `\`${customprefix.prefix}\` | ` + _prefixes.map(x => (Util.getIdFromString(x) == gideon.user.id ? "" : "`") + x + (Util.getIdFromString(x) == gideon.user.id ? "" : "`")).join(" | ");
+    const cmdamount = Array.from(new Set(gideon.commands.map(x=>JSON.stringify(x)))).map(x=>JSON.parse(x));
 
     if (!args[0]) {
-        const help = Util.CreateEmbed('__Use ' + customprefix.prefix + 'help <module> to get a list of commands\nYou can check the list of available modules below:__', null, message.member)
-        .setDescription('Gideon\'s prefixes are: ' + prefixes)
-        .addField('general', 'General helpful Arrowverse commands')  
-        .addField('fun', 'Fun and interactive Arrowverse commands')  
-        .addField('admin', 'Commands for people with higher roles then the average Metahuman')  
-        .addField('misc', 'Miscellaneous commands')    
-        .addField('voice', 'Gideon Voice™ only commands')    
-        .addField('stats', 'Useful bot/user/guild statistics')    
-        .addField('owner', 'Application owner only commands')    
-        .addField('tags', 'List of promptable tags')    
+        const help = Util.CreateEmbed('__Use ' + customprefix.prefix + 'help <module> to get a list of commands__', null, message.member)
+        .setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes)
+        .addField('general (`'+ cmdamount.filter(x => x.help.type === 'general').length + ' available`)', 'General helpful Arrowverse commands')  
+        .addField('fun (`'+ cmdamount.filter(x => x.help.type === 'fun').length + ' available`)', 'Fun and interactive Arrowverse commands') 
+        .addField('admin (`'+ cmdamount.filter(x => x.help.type === 'admin').length + ' available`)', 'Administrative commands')  
+        .addField('misc (`'+ cmdamount.filter(x => x.help.type === 'misc').length + ' available`)', 'Miscellaneous commands')    
+        .addField('voice (`'+ cmdamount.filter(x => x.help.type === 'voice').length + ' available`)', 'Gideon Voice™ only commands')    
+        .addField('stats (`'+ cmdamount.filter(x => x.help.type === 'stats').length + ' available`)', 'Useful bot/user/guild statistics')    
+        .addField('owner (`'+ cmdamount.filter(x => x.help.type === 'owner').length + ' available`)', 'Application owner only commands')    
+        .addField('tags (`'+ cmdamount.filter(x => x.help.type === 'tags').length + ' available`)', 'List of promptable tags') 
+        .addField(`Total amount:`, `\`${cmdamount.length}\` commands available`)   
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
         return message.channel.send(help);
     }
-
+    
     if (args[0].match(/(?:syntax)/i)) {
         const help = Util.CreateEmbed('__Command Syntax:__', null, message.member)
         .setDescription('Gideon\'s prefixes are: ' + prefixes + '\nArguments wrapped in `<>` are variables. _do not actually add brackets_\nArguments seperated by `/` mean `this or(/) this`.\nArguments wrapped in `[]` are optional arguments.\nCommands marked with :warning: are potentially dangerous.\nCommands marked with <:18:693135780796694668> are potentially NSFW.\nCommands marked with <:timevault:686676561298063361> are Time Vault only.\nCommands marked with <:gideon:686678560798146577> are application owner only.\nCommands marked with <:voicerecognition:693521621184413777> are Gideon Voice™ compatible.\nCommands marked with <:perms:686681300156940349> require certain permissions.\nCommands marked with `@role` require the mentioned role.')  
@@ -56,7 +58,7 @@ export async function run(gideon, message, args) {
         const tagnames = tags.map(x => `\`${x}\``).join(' ');
 
         const help = Util.CreateEmbed('__Available tags:__ <:timevault:686676561298063361>', null, message.member)
-        .setDescription('Gideon\'s prefixes are: ' + prefixes + '\n\n' + tagnames)  
+        .setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes + '\n\n' + tagnames)  
         .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
         return message.channel.send(help);
