@@ -8,6 +8,7 @@ import Util from "../../Util.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
+    return message.reply('this command is currently fucked. sorry.');
     const api = 'https://api.myjson.com/bins/zixur';
     try {
         const body = await fetch(api).then(res => res.json()); 
