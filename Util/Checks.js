@@ -379,7 +379,7 @@ class Checks {
             const textchannels = guild.channels.cache.filter(c=> c.type == "text");
             const channels = textchannels.filter(c => c.permissionsFor(guild.me).has('SEND_MESSAGES'));
             
-            if (channels.size) await channels.first().send(`This guild is banned for being a bot collecting guild (\`${bots}\` bots!)\nIf you believe this is an arror please contact \`adrifcastr#4530\`.\nNow leaving this guild!`).catch(ex => console.log(ex));
+            if (channels.size) await channels.first().send(`This guild is banned for being a bot collecting guild (\`${bots}\` bots!)\nIf you believe this is an error please contact \`adrifcastr#4530\`.\nNow leaving this guild!`).catch(ex => console.log(ex));
 
             await guild.leave();
 
