@@ -70,11 +70,17 @@ class MsgHandler {
         if (command.help.type === 'voice' && !message.voice) return;
 
         if (command.help.owner) {
-            if (message.author.id !== gideon.owner) return message.reply('you do not have the required permission to use this command!\nRequired permission: `Application Owner`');
+            if (message.author.id !== gideon.owner) {
+                gideon.emit('commandRefused', message, 'NOT_APPLICATION_OWNER');
+                return message.reply('you do not have the required permission to use this command!\nRequired permission: `Application Owner`');
+            } 
         } 
 
         if (command.help.timevault) {
-            if (message.guild.id !== '595318490240385037') return message.reply('this command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
+            if (message.guild.id !== '595318490240385037') {
+                gideon.emit('commandRefused', message, 'TIMEVAULT_ONLY');
+                return message.reply('this command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
+            } 
         }
 
         if (message.author.id !== gideon.owner) {
@@ -83,11 +89,17 @@ class MsgHandler {
                 for (let perms of command.help.user_perms) {
                     if (!message.member.hasPermission(perms)) missingperms.push(perms);
                 }
-                if (missingperms && missingperms.length > 0) return message.reply('you do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
-            }
+                if (missingperms && missingperms.length > 0) {
+                    gideon.emit('commandRefused', message, command, 'Missing: ' + missingperms.map(x => `\`${x}\``).join(' '));
+                    return message.reply('you do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
+                }
+            }   
 
             if (command.help.nsfw) {
-                if (!message.channel.nsfw) return message.reply('this command requires a `NSFW` channel!');
+                if (!message.channel.nsfw) {
+                    gideon.emit('commandRefused', message, 'NSFW_REQUIRED');
+                    return message.reply('this command requires a `NSFW` channel!');
+                }
             }
 
             if (command.help.roles && command.help.roles.length > 0) {
@@ -118,7 +130,10 @@ class MsgHandler {
                         rolenames.push(rolename.toString());
                     }
                 }
-                if (rolenames && rolenames.length > 0) return message.reply('you do not have the required roles to use this command!\nRequired roles: ' + rolenames.map(x => `\`${x}\``).join(' '));
+                if (rolenames && rolenames.length > 0) {
+                    gideon.emit('commandRefused', message, 'Missing: ' + rolenames.map(x => `\`@${x}\``).join(' '));
+                    return message.reply('you do not have the required roles to use this command!\nRequired roles: ' + rolenames.map(x => `\`${x}\``).join(' '));
+                } 
             }
         }
 
