@@ -66,6 +66,7 @@ process.on("uncaughtException", err => {
 });
 
 process.on("unhandledRejection", err => {
+    if (err.code === Discord.Constants.APIErrors.UNKNOWN_MESSAGE || err.code === Discord.Constants.APIErrors.MISSING_ACCESS || err.code === Discord.Constants.APIErrors.CANNOT_MESSAGE_USER) return;
     console.log(err);
     Util.log("Unhandled Rejection: " + `\`\`\`\n${err.stack + "\n\nJSON: " + JSON.stringify(err, null, 2)}\n\`\`\``);
 
