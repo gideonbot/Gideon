@@ -626,8 +626,7 @@ class Util {
      * @param {Discord.Client} gideon
      */
     static InitCache(gideon) {
-        const nxeps = new Discord.Collection();
-        gideon.cache.set('nxeps', nxeps);
+        gideon.cache.nxeps = new Discord.Collection();
     }
 
     /**

@@ -46,7 +46,7 @@ declare module "discord.js" {
         guessing: string[];
         listening: string[];
         spamcount: Map;
-        cache: Discord.Collection;
+        cache: Cache;
         getScore: BetterSqlite3.Statement<any[]>;
         setScore: BetterSqlite3.Statement<any[]>;
         getTop10: BetterSqlite3.Statement<any[]>;
@@ -89,6 +89,9 @@ interface Translation {
     TRMode(message: Discord.Message, gideon: Discord.Client): Promise<void>;
 }
 
+interface Cache {
+    nxeps: Discord.Collection;
+}
 interface CheckUtil {
     ABM_Test(message: Discord.Message): Promise<ABMResult>;
     ABM(message: Discord.Message): void;

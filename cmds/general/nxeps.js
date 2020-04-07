@@ -33,23 +33,23 @@ export async function run(gideon, message, args, connection) {
 
     const embed = Util.CreateEmbed('__Upcoming Arrowverse episodes:__', null, message.member);
 
-    let dates = gideon.cache.get('nxeps').map(x => x.date).filter(x => x !== null);
+    let dates = gideon.cache.nxeps.map(x => x.date).filter(x => x !== null);
     let closestdate;
 
     if (dates.length > 0) {
         closestdate = await Util.ClosestDate(dates);
         let now = new Date();
         let nextairdate = new Date(closestdate);
-        if (nextairdate < now) gideon.cache.get('nxeps').clear(); //clear cache if surpassed airdate
+        if (nextairdate < now) gideon.cache.nxeps.clear(); //clear cache if surpassed airdate
     } 
 
     for (let show in api_urls) {
         try {
-            let info = gideon.cache.get('nxeps').get(show);
+            let info = gideon.cache.nxeps.get(show);
 
             if (!info) {
                 info = await Util.GetNextEpisodeInfo(api_urls[show]);
-                gideon.cache.get('nxeps').set(show, info);
+                gideon.cache.nxeps.set(show, info);
             }
             
             embed.addField(`${info.title} ${info.name}`, `${info.value}`);
