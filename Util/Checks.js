@@ -196,6 +196,7 @@ class Checks {
         const surpressedanger = 'https://cdn.discordapp.com/attachments/669243069878501385/696828835525820507/were_gonna_need_the_icequeen.mp4';
         const superman = 'https://cdn.discordapp.com/attachments/669243069878501385/696784552764375100/Its_a_bird...its_a_plane_its_Superman.mp4';
         const marshmallows = 'https://cdn.discordapp.com/attachments/669243069878501385/696787036304048229/the_marshmallows_are_talking.mp4';
+        const unclear = 'https://cdn.discordapp.com/attachments/595934699285905409/602631699083558933/unclear.mp4';
 
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
         if (message.content.match(/(?:deckerstar)/i)) Util.IMG('rJpbLQx', message);
@@ -223,6 +224,7 @@ class Checks {
         if (message.content.match(/(?:lexi)/i) || message.content.match(/(?:icequeen)/i)) message.channel.send(surpressedanger);
         if (message.content.match(/(?:superman)/i)) message.channel.send(superman);
         if (message.content.match(/(?:marshmallows)/i)) message.channel.send(marshmallows);
+        if (message.content.match(/(?:unclear)/i) || message.content.match(/(?:kidnapped)/i)) message.channel.send(unclear);
     }
 
     /**
