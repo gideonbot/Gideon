@@ -205,7 +205,7 @@ class Checks {
         if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.CreateEmbed(null, {image: ctm}));
         if (message.content.match(/(?:callback)/i)) message.channel.send(Util.CreateEmbed(null, {image: img}));
         if (message.content.match(/(?:castle)/i)) message.channel.send(vid2);
-        if (message.content.match(/(?:constantine)/i)) message.channel.send(yombo);
+        if (message.content.match(/(?:magic)/i)) message.channel.send(yombo);
         if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) message.channel.send(train);
         if (message.content.match(/(?:nuts)/i)) message.channel.send(nuts);
         if (message.content.match(/(?:titanic)/i)) message.channel.send(titanic);

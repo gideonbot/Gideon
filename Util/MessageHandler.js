@@ -70,7 +70,7 @@ class MsgHandler {
         if (command.help.type === 'voice' && !message.voice) return;
 
         if (command.help.owner) {
-            if (message.author.id !== gideon.owner) return message.reply('you do not have the required permission to use this command!\n Required permission: `Application Owner`');
+            if (message.author.id !== gideon.owner) return message.reply('you do not have the required permission to use this command!\nRequired permission: `Application Owner`');
         } 
 
         if (command.help.timevault) {
