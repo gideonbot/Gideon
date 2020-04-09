@@ -161,7 +161,7 @@ class Checks {
         if (!eggs) {
             eggs = {
                 guild: message.guild.id,
-                eggsval: 1,
+                eggsval: 0,
             }
         }
         if (eggs.eggsval === 0) return;
