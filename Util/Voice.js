@@ -79,7 +79,7 @@ class Voice {
         }
         
         const voicemsg = new Discord.Message(gideon, data, message.channel);
-        
+        console.log(intent);
         Util.MsgHandler.Handle(gideon, voicemsg, Util, connection);
     }
 }

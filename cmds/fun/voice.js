@@ -45,7 +45,6 @@ export async function run(gideon, message, args) {
         message.reply(`now joining voice channel: \`${vcname}\`!`);
         const connection = await message.member.voice.channel.join();
         connection.play(new Silence(), { type: 'opus' }); //enable voice receive by sending silence buffer
-        connection.setSpeaking(0);
 
         await message.channel.send(message.author.toString(), { embed: voicehelp });
 
@@ -73,8 +72,7 @@ export async function run(gideon, message, args) {
                     if (!intent) return;
     
                     let value = intent[0].value;
-                    
-                    gideon.vcmdexec = true;
+                    console.log(value);
                     await Util.Voice.VoiceResponse(value, gideon, message, connection, Util);
                 }
             }
