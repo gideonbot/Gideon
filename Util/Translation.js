@@ -34,7 +34,19 @@ class TR {
         const lowercaseContent = message.content.toLowerCase();
 
         // Find the prefix that was used
-        const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+        let customprefix = gideon.getPrefix.get(message.guild.id);
+        if (!customprefix) {
+            customprefix = {
+                guild: message.guild.id,
+                prefix: '!',
+            }
+            gideon.setPrefix.run(customprefix);
+        }
+ 
+        const usedCustom = lowercaseContent.startsWith(customprefix.prefix.toLowerCase());
+        let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+        if (usedCustom) usedPrefix = customprefix.prefix;
+        
         let args = '';
 
         if (!usedPrefix) args = message.content.split(' ').map(x => x.trim()).filter(x => x);
