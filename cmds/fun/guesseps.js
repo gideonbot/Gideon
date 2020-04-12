@@ -260,7 +260,7 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: ["guess", "guesseps", "points", "score", "leaderboard", "highscores", "lb"],
+    name: ["guess", "guesseps", "points", "score"],
     type: "fun",
     help_text: "guess [show]",
     help_desc: "Arrowverse episode guessing game",
