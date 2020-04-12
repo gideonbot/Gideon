@@ -123,11 +123,11 @@ gideon.on("guildMemberAdd", member => {
 });
 
 gideon.on("guildMemberUpdate", (oldMember, newMember) => {
-    Util.Checks.NameCheck(newMember, null, gideon);
+    if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null, gideon);
 });
 
 gideon.on("userUpdate", (oldUser, newUser) => {
-    Util.Checks.NameCheck(null, newUser, gideon);
+    if (newUser.username !== oldUser.username) Util.Checks.NameCheck(null, newUser, gideon);
 });
 
 gideon.on("messageUpdate", async (oldMessage, newMessage) => {
