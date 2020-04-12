@@ -157,6 +157,8 @@ class Checks {
      */
     static async CSD(message, gideon, Util) {
         if (!message.guild) return;
+        if (message.editedAt) return;
+        
         let eggs = gideon.getEggs.get(message.guild.id);
         if (!eggs) {
             eggs = {

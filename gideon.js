@@ -132,7 +132,7 @@ gideon.on("userUpdate", (oldUser, newUser) => {
 
 gideon.on("messageUpdate", async (oldMessage, newMessage) => {
     if (newMessage.partial) await newMessage.fetch();
-    if (newMessage.createdAt) Util.MsgHandler.Handle(gideon, newMessage, Util);
+    if (newMessage.editedAt) Util.MsgHandler.Handle(gideon, newMessage, Util);
 });
 
 gideon.on("commandRefused", (message, reason) => {
