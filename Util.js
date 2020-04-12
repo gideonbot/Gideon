@@ -445,10 +445,11 @@ class Util {
         const db = './data/SQL';
         const arc = './data/SQL.zip';
         const date = new Date();
+        const zipfolder = new zip;
 
         try {
             const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('622415301144870932');
-            await zip(db, arc);
+            await zipfolder(db, arc);
             channel.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
             await del(arc);
             const lastbkup = await channel.messages.fetchPinned({ limit: 1 });
