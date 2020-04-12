@@ -86,7 +86,7 @@ interface Cache {
 }
 interface CheckUtil {
     ABM_Test(message: Discord.Message): Promise<ABMResult>;
-    ABM(message: Discord.Message): void;
+    ABM(message: Discord.Message, gideon: Discord.Client): void;
     CVM(message: Discord.Message, gideon: Discord.Client): Promise<Discord.Message>;
     CSD(message: Discord.Message): Promise<void>;
     LBG(guild: Discord.Guild, gideon: Discord.Client): Promise<void>;

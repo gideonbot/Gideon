@@ -70,9 +70,13 @@ class Checks {
     /**
      * @param {Discord.Message} message 
      */
-    static ABM(message, Util) {
+    static ABM(message, gideon, Util) {
         if (!message.guild) return;
         if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return;
+
+        let abm = gideon.getGuild.get(message.guild.id);
+        if (!abm) return;
+        if (abm.abmval === 0) return;
         
         const siren = '<a:siren:669518972407775265>';
 
@@ -81,7 +85,7 @@ class Checks {
                 await message.delete({ timeout: 200 });
                 Util.log("ABM triggered by: " + message.author.tag + " (" + res.content + ")");
                 const abmsg = await message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-Bitch-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}, message.member) });
-                await abmsg.delete({ timeout: 2000 });
+                await abmsg.delete({ timeout: 3500 });
             }
         }, failed => console.log(failed));
     }
