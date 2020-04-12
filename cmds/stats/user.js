@@ -13,8 +13,8 @@ export async function run(gideon, message, args) {
     const auth = message.author;
     let user;
 
-    if (!Util.ValID(args[0]) && message.mentions.users.first()) user = message.mentions.users.first();
-    else if (Util.ValID(args[0])) user = gideon.users.cache.get(args[0]);
+    if (message.mentions.users.first()) user = message.mentions.users.first();
+    else if (Util.ValID(args[0]) && !message.mentions.users.first()) user = gideon.users.cache.get(args[0]);
     else if (!Util.ValID(args[0]) && !message.mentions.users.first()) {
         const match = stringSimilarity.findBestMatch(args[0].toLowerCase(), gideon.users.cache.map(x => x.username.toLowerCase())).bestMatch;
 

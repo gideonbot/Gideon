@@ -11,10 +11,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: ["abm", "banned"],
+    name: ["content", "banned"],
     type: "tags",
-    help_text: "abm",
-    help_desc: "ABM Tag",
+    help_text: "content",
+    help_desc: "Content Tag",
     owner: false,
     voice: false,
     timevault: true,
