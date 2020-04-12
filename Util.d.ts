@@ -50,18 +50,10 @@ declare module "discord.js" {
         getScore: BetterSqlite3.Statement<any[]>;
         setScore: BetterSqlite3.Statement<any[]>;
         getTop10: BetterSqlite3.Statement<any[]>;
-        getTrmode: BetterSqlite3.Statement<any[]>;
-        setTrmode: BetterSqlite3.Statement<any[]>;
-        getCVM: BetterSqlite3.Statement<any[]>;
-        setCVM: BetterSqlite3.Statement<any[]>;
-        getGBL: BetterSqlite3.Statement<any[]>;
-        setGBL: BetterSqlite3.Statement<any[]>;
-        getUBL: BetterSqlite3.Statement<any[]>;
-        setUBL: BetterSqlite3.Statement<any[]>;
-        getEggs: BetterSqlite3.Statement<any[]>;
-        setEggs: BetterSqlite3.Statement<any[]>;
-        getPrefix: BetterSqlite3.Statement<any[]>;
-        setPrefix: BetterSqlite3.Statement<any[]>;
+        getUser: BetterSqlite3.Statement<any[]>;
+        setUser: BetterSqlite3.Statement<any[]>;
+        getGuild: BetterSqlite3.Statement<any[]>;
+        setGuild: BetterSqlite3.Statement<any[]>;
         db: BetterSqlite3.Database;
     }
 

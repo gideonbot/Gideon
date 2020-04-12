@@ -22,75 +22,31 @@ class SQL {
             sql.pragma("journal_mode = wal");
         }
     
-        const trmodedb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'trmode';").get();
-        if (!trmodedb['count(*)']) {
-            sql.prepare("CREATE TABLE trmode (id TEXT PRIMARY KEY, trmodeval BIT);").run();
-            sql.prepare("CREATE UNIQUE INDEX idx_trmode_id ON trmode (id);").run();
+        const userdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'users';").get();
+        if (!userdb['count(*)']) {
+            sql.prepare("CREATE TABLE users (id TEXT PRIMARY KEY, trmode BIT, blacklist BIT,);").run();
+            sql.prepare("CREATE UNIQUE INDEX idx_users_id ON users (id);").run();
             sql.pragma("synchronous = 1");
             sql.pragma("journal_mode = wal");
         }
     
-        const cvmdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'cvm';").get();
-        if (!cvmdb['count(*)']) {
-            sql.prepare("CREATE TABLE cvm (guild TEXT PRIMARY KEY, cvmval BIT);").run();
-            sql.prepare("CREATE UNIQUE INDEX idx_cvm_id ON cvm (guild);").run();
-            sql.pragma("synchronous = 1");
-            sql.pragma("journal_mode = wal");
-        }
-    
-        const gbldb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'guildblacklist';").get();
-        if (!gbldb['count(*)']) {
-            sql.prepare("CREATE TABLE guildblacklist (guild TEXT PRIMARY KEY, guildval BIT);").run();
-            sql.prepare("CREATE UNIQUE INDEX idx_gbl_id ON guildblacklist (guild);").run();
+        const guilddb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'guilds';").get();
+        if (!guilddb['count(*)']) {
+            sql.prepare("CREATE TABLE guilds (guild TEXT PRIMARY KEY, prefix TEXT, cvm BIT, abm BIT, eastereggs BIT, blacklist BIT);").run();
+            sql.prepare("CREATE UNIQUE INDEX idx_guilds_id ON guilds (guild);").run();
             sql.pragma("synchronous = 1");
             sql.pragma("journal_mode = wal");
         }
 
-        const ubldb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'userblacklist';").get();
-        if (!ubldb['count(*)']) {
-            sql.prepare("CREATE TABLE userblacklist (user TEXT PRIMARY KEY, userval BIT);").run();
-            sql.prepare("CREATE UNIQUE INDEX idx_ubl_id ON userblacklist (user);").run();
-            sql.pragma("synchronous = 1");
-            sql.pragma("journal_mode = wal");
-        }
-
-        const eggsdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'eastereggs';").get();
-        if (!eggsdb['count(*)']) {
-            sql.prepare("CREATE TABLE eastereggs (guild TEXT PRIMARY KEY, eggsval BIT);").run();
-            sql.prepare("CREATE UNIQUE INDEX idx_eggs_id ON eastereggs (guild);").run();
-            sql.pragma("synchronous = 1");
-            sql.pragma("journal_mode = wal");
-        }
-
-        const prefixdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'prefixes';").get();
-        if (!prefixdb['count(*)']) {
-            sql.prepare("CREATE TABLE prefixes (guild TEXT PRIMARY KEY, prefix TEXT);").run();
-            sql.prepare("CREATE UNIQUE INDEX idx_prefixes_id ON prefixes (guild);").run();
-            sql.pragma("synchronous = 1");
-            sql.pragma("journal_mode = wal");
-        }
-    
         gideon.getScore = sql.prepare("SELECT * FROM scores WHERE id = ?");
         gideon.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);");
         gideon.getTop10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;");
     
-        gideon.getTrmode = sql.prepare("SELECT * FROM trmode WHERE id = ?");
-        gideon.setTrmode = sql.prepare("INSERT OR REPLACE INTO trmode (id, trmodeval) VALUES (@id, @trmodeval);");
+        gideon.getUser = sql.prepare("SELECT * FROM users WHERE id = ?");
+        gideon.setUser = sql.prepare("INSERT OR REPLACE INTO users (id, trmode, blacklist) VALUES (@id, @trmode, @blacklist);");
     
-        gideon.getCVM = sql.prepare("SELECT * FROM cvm WHERE guild = ?");
-        gideon.setCVM = sql.prepare("INSERT OR REPLACE INTO cvm (guild, cvmval) VALUES (@guild, @cvmval);");
-    
-        gideon.getGBL = sql.prepare("SELECT * FROM guildblacklist WHERE guild = ?");
-        gideon.setGBL = sql.prepare("INSERT OR REPLACE INTO guildblacklist (guild, guildval) VALUES (@guild, @guildval);");
-    
-        gideon.getUBL = sql.prepare("SELECT * FROM userblacklist WHERE user = ?");
-        gideon.setUBL = sql.prepare("INSERT OR REPLACE INTO userblacklist (user, userval) VALUES (@user, @userval);");
-
-        gideon.getEggs = sql.prepare("SELECT * FROM eastereggs WHERE guild = ?");
-        gideon.setEggs = sql.prepare("INSERT OR REPLACE INTO eastereggs (guild, eggsval) VALUES (@guild, @eggsval);");
-
-        gideon.getPrefix = sql.prepare("SELECT * FROM prefixes WHERE guild = ?");
-        gideon.setPrefix = sql.prepare("INSERT OR REPLACE INTO prefixes (guild, prefix) VALUES (@guild, @prefix);");
+        gideon.getGuild = sql.prepare("SELECT * FROM guilds WHERE guild = ?");
+        gideon.setGuild = sql.prepare("INSERT OR REPLACE INTO guilds (guild, prefix, cvm, abm, eastereggs, blacklist) VALUES (@guild, @prefix, @cvm, @abm, @eastereggs, @blacklist);");
 
         gideon.db = sql;
     }
