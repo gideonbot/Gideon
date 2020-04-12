@@ -17,7 +17,7 @@ export async function run(gideon, message, args) {
         leaderboard.setDescription(top10.map((data, i) => {
             let guild = gideon.guilds.cache.get(data.guild);
             let user = guild && guild.members.cache.get(data.user) ? guild.members.cache.get(data.user).user.tag : data.user;
-            return "**#" + (i + 1) + "** - " + user + " in `" + (guild ? guild.name : "Unknown") + "`: **" + data.points + "** " + (data.points != 1 ? s[2] + "s" : s[2]);
+            return "**#" + (i + 1) + "** - " + user + " in `" + (guild ? guild.name : "Unknown") + "`: **" + data.points + "** " + (data.points != 1 ? 'point' + "s" : 'point');
         }).join("\n"));
     }
 
