@@ -35,24 +35,6 @@ export async function run(gideon, message, args) {
 
     let command = message.content.toLowerCase().split(' ')[0];
 
-    if (command.endsWith('leaderboard') || command.endsWith('highscores') || command.endsWith('lb')) {
-        let leaderboard = Util.CreateEmbed(`Top 10 Leaderboard:`, null, message.member);
-
-        let top10 = gideon.getTop10.all().filter(x => x.points > 0);
-
-        if (top10.length < 1) leaderboard.setDescription("No entries yet!");
-
-        else {
-            leaderboard.setDescription(top10.map((data, i) => {
-                let guild = gideon.guilds.cache.get(data.guild);
-                let user = guild && guild.members.cache.get(data.user) ? guild.members.cache.get(data.user).user.tag : data.user;
-                return "**#" + (i + 1) + "** - " + user + " in `" + (guild ? guild.name : "Unknown") + "`: **" + data.points + "** " + (data.points != 1 ? s[2] + "s" : s[2]);
-            }).join("\n"));
-        }
-
-        return message.channel.send(leaderboard);
-    }
-
     let score = gideon.getScore.get(message.author.id);
     if (!score) {
         score = {
