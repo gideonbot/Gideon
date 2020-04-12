@@ -33,7 +33,7 @@ export async function run(gideon, message, args) {
     }
 
     if (args[0] === 'tutorial') {
-       const url = 'https://drive.google.com/open?id=1or3CxJCQXkEaaKTU0jz7ZDGO4zwfRP8L';
+       const url = '';
        await message.channel.send(url);
        return;
     }
@@ -53,7 +53,6 @@ export async function run(gideon, message, args) {
             if (gideon.vcmdexec) return; //disable speechrocgnition while voice command is running
             
             if (speaking.has('SPEAKING')) {
-                message.channel.startTyping();
  
                 console.log(`Listening to ${user.username}`);
                 console.log(`SPEAKING:`, speaking);
@@ -77,7 +76,6 @@ export async function run(gideon, message, args) {
                     
                     gideon.vcmdexec = true;
                     await Util.Voice.VoiceResponse(value, gideon, message, connection, Util);
-                    await message.channel.stopTyping(true);
                 }
             }
         }); 
