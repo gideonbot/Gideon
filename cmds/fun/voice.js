@@ -19,7 +19,7 @@ export async function run(gideon, message, args) {
     let command = message.content.toLowerCase().split(' ')[0];
 
     const voicehelp = Util.CreateEmbed(`Usage of Voice™ Commands:`, {
-    description: `Use \`!voice tutorial\` for a video tutorial.\n\nUse Gideon Voice™ commands by speaking into your microphone\n\`'Gideon is typing...'\` means your Voice™ command is being processed\n\nNo further response means the input was not recognized or no Voice™ enabled command was used`}, message.member)
+    description: `Use \`!voice tutorial\` for a video tutorial.\n\nUse Gideon Voice™ commands by speaking into your microphone\n\nNo further response means the input was not recognized or no Voice™ enabled command was used`}, message.member)
     .setAuthor(`Note: Not all commands are Voice™ compatible!`, message.author.avatarURL())
 
     if (command.endsWith('leave')) {
@@ -45,6 +45,7 @@ export async function run(gideon, message, args) {
         message.reply(`now joining voice channel: \`${vcname}\`!`);
         const connection = await message.member.voice.channel.join();
         connection.play(new Silence(), { type: 'opus' }); //enable voice receive by sending silence buffer
+        connection.setSpeaking(0);
 
         await message.channel.send(message.author.toString(), { embed: voicehelp });
 
