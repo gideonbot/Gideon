@@ -92,7 +92,7 @@ class Checks {
      */
     static async CVM(message, gideon, Util) {
         if (!message.guild) return;
-        let cvm = gideon.getCVM.get(message.guild.id);
+        let cvm = gideon.getGuild.get(message.guild.id);
         if (!cvm) return;
         if (cvm.cvmval === 0) return;
 
@@ -105,14 +105,7 @@ class Checks {
         const lowercaseContent = message.content.toLowerCase();
 
         // Find the prefix that was used
-        let customprefix = gideon.getPrefix.get(message.guild.id);
-        if (!customprefix) {
-            customprefix = {
-                guild: message.guild.id,
-                prefix: '!',
-            }
-            gideon.setPrefix.run(customprefix);
-        }
+        let customprefix = gideon.getGuild.get(message.guild.id);
  
         const usedCustom = lowercaseContent.startsWith(customprefix.prefix.toLowerCase());
         let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
@@ -133,7 +126,7 @@ class Checks {
             return message.reply('Links are not allowed meanwhile Crossover-Mode is active!');
         }
 
-        let trmode = gideon.getTrmode.get(message.author.id);
+        let trmode = gideon.getUser.get(message.author.id);
         if (trmode) if (trmode.trmodeval === 1) {
             let tr = await Util.TR.Translate(plainText);
             plainText = `(${tr[1]}) ${tr[0]}`;
@@ -168,15 +161,9 @@ class Checks {
         if (!message.guild) return;
         if (message.editedAt) return;
 
-        let eggs = gideon.getEggs.get(message.guild.id);
-        if (!eggs) {
-            eggs = {
-                guild: message.guild.id,
-                eggsval: 0,
-            }
-            gideon.setEggs.run(eggs);
-        }
-        if (eggs.eggsval === 0) return;
+        let eggs = gideon.getGuild.get(message.guild.id);
+        if (!eggs) return;
+        if (eggs.eastereggs === 0) return;
 
         const vid = 'https://cdn.discordapp.com/attachments/525341082435715085/638782331791867930/Crime_Solving_Devil.mp4';
         const tls = 'https://twitter.com/LaurenGerman/status/996886094305050627\nhttps://twitter.com/tomellis17/status/996889307506864128';
@@ -247,9 +234,9 @@ class Checks {
      */
     static async LBG(guild, gideon, Util) {
         const id = guild.id;
-        const gbl = gideon.getGBL.get(id);
+        const gbl = gideon.getGuild.get(id);
         if (!gbl) return;
-        if (gbl.guildval === 0) return;
+        if (gbl.blacklist === 0) return;
 
         const textchannels = guild.channels.cache.filter(c=> c.type == "text");
         const channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
@@ -271,9 +258,9 @@ class Checks {
      * @returns {boolean}
      */
     static IBU(message, gideon) {
-        const ubl = gideon.getGBL.get(message.author.id);
-        if (!ubl) return;
-        return ubl.userval === 1;
+        const ubl = gideon.getUser.get(message.author.id);
+        if (!ubl || !ubl.blacklist) return;
+        return ubl.blacklist === 1;
     }
 
     /**
@@ -387,9 +374,13 @@ class Checks {
         if (bots > 20) {
             const gb = {
                 guild: guild.id,
-                guildval: 1,
+                prefix: '!',
+                cvmval: 0,
+                abmval: 1,
+                eastereggs: 0,
+                blacklist: 1
             }
-            gideon.setGBL.run(gb);
+            gideon.setGuild.run(gb);
             Util.log(`Guild \`${guild.name}\` has been blacklisted due to it being a bot collecting guild with \`${bots}\` bots!`);
 
             const textchannels = guild.channels.cache.filter(c=> c.type == "text");

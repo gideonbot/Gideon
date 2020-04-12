@@ -65,7 +65,7 @@ export async function run(gideon, message, args) {
         const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
 
         let st = ''
-        let cvm = gideon.getCVM.get(message.guild.id);
+        let cvm = gideon.getGuild.get(message.guild.id);
         if (cvm) {
             if (cvm.cvmval === 1) st = '||';
         }

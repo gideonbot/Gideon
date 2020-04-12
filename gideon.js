@@ -36,7 +36,6 @@ gideon.once('ready', async () => {
 
     Util.config.prefixes.push(`<@!${gideon.user.id}>`, `<@${gideon.user.id}>`);
     
-    const oneday = 1000 * 60 * 60;
     const twodays = 1000 * 60 * 60 * 48;
     setInterval(Util.status, 30e3, gideon);
     setInterval(Util.SQLBkup, twodays, gideon);
@@ -70,7 +69,7 @@ process.on("unhandledRejection", err => {
                     Discord.Constants.APIErrors.MISSING_ACCESS,
                     Discord.Constants.APIErrors.CANNOT_MESSAGE_USER,
                     Discord.Constants.APIErrors.UNKNOWN_CHANNEL];
-                    
+
     if (ignore.includes(err.code)) return;
     console.log(err);
     Util.log("Unhandled Rejection: " + `\`\`\`\n${err.stack + "\n\nJSON: " + JSON.stringify(err, null, 2)}\n\`\`\``);
@@ -92,6 +91,20 @@ gideon.on('message', message => {
 
 gideon.on("guildCreate", guild => {
     Util.log("Joined a new guild:\n" + guild.id + ' - `' + guild.name + '`');
+
+    let currentguild = gideon.getGuild.get(guild.id);
+    if (!currentguild) {
+        currentguild = {
+            guild: guild.id,
+            prefix: '!',
+            cvmval: 0,
+            abmval: 1,
+            eastereggs: 0,
+            blacklist: 0
+        }
+        gideon.setGuild.run(currentguild);
+    }
+
     Util.Checks.LBG(guild, gideon, Util); //check if guild is blacklisted, if yes, leave
     //Util.Invite(guild);
     Util.Checks.BotCheck(guild, gideon, Util); //check if guild collects bots, if yes, leave

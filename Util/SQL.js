@@ -24,7 +24,7 @@ class SQL {
     
         const userdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'users';").get();
         if (!userdb['count(*)']) {
-            sql.prepare("CREATE TABLE users (id TEXT PRIMARY KEY, trmode BIT, blacklist BIT,);").run();
+            sql.prepare("CREATE TABLE users (id TEXT PRIMARY KEY, trmodeval BIT, blacklist BIT);").run();
             sql.prepare("CREATE UNIQUE INDEX idx_users_id ON users (id);").run();
             sql.pragma("synchronous = 1");
             sql.pragma("journal_mode = wal");
@@ -32,7 +32,7 @@ class SQL {
     
         const guilddb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'guilds';").get();
         if (!guilddb['count(*)']) {
-            sql.prepare("CREATE TABLE guilds (guild TEXT PRIMARY KEY, prefix TEXT, cvm BIT, abm BIT, eastereggs BIT, blacklist BIT);").run();
+            sql.prepare("CREATE TABLE guilds (guild TEXT PRIMARY KEY, prefix TEXT, cvmval BIT, abmval BIT, eastereggs BIT, blacklist BIT);").run();
             sql.prepare("CREATE UNIQUE INDEX idx_guilds_id ON guilds (guild);").run();
             sql.pragma("synchronous = 1");
             sql.pragma("journal_mode = wal");
@@ -43,10 +43,10 @@ class SQL {
         gideon.getTop10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;");
     
         gideon.getUser = sql.prepare("SELECT * FROM users WHERE id = ?");
-        gideon.setUser = sql.prepare("INSERT OR REPLACE INTO users (id, trmode, blacklist) VALUES (@id, @trmode, @blacklist);");
+        gideon.setUser = sql.prepare("INSERT OR REPLACE INTO users (id, trmodeval, blacklist) VALUES (@id, @trmodeval, @blacklist);");
     
         gideon.getGuild = sql.prepare("SELECT * FROM guilds WHERE guild = ?");
-        gideon.setGuild = sql.prepare("INSERT OR REPLACE INTO guilds (guild, prefix, cvm, abm, eastereggs, blacklist) VALUES (@guild, @prefix, @cvm, @abm, @eastereggs, @blacklist);");
+        gideon.setGuild = sql.prepare("INSERT OR REPLACE INTO guilds (guild, prefix, cvmval, abmval, eastereggs, blacklist) VALUES (@guild, @prefix, @cvmval, @abmval, @eastereggs, @blacklist);");
 
         gideon.db = sql;
     }

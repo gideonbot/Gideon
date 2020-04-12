@@ -9,7 +9,7 @@ import Util from "../../Util.js";
  */
 export async function run(gideon, message, args) {
     const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
-    const customprefix = gideon.getPrefix.get(message.guild.id);
+    const customprefix = gideon.getGuild.get(message.guild.id);
     const _prefixes = Util.config.prefixes.filter((x, i) => i < Util.config.prefixes.length - 1); //we remove the last prefix (.pop modifies the original array - BAD!)
     const prefixes = `\`${customprefix.prefix}\` | ` + _prefixes.map(x => (Util.getIdFromString(x) == gideon.user.id ? "" : "`") + x + (Util.getIdFromString(x) == gideon.user.id ? "" : "`")).join(" | ");
     const cmdamount = Array.from(new Set(gideon.commands.map(x=>JSON.stringify(x)))).map(x=>JSON.parse(x));

@@ -17,7 +17,22 @@ class MsgHandler {
         if (!message.guild.me) await message.guild.members.fetch(gideon.user.id);
         if (message.channel.type !== 'text') return;
         if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
-        
+
+        const lowercaseContent = message.content.toLowerCase();
+
+        let currentguild = gideon.getGuild.get(message.guild.id);
+        if (!currentguild) {
+            currentguild = {
+                guild: message.guild.id,
+                prefix: '!',
+                cvmval: 0,
+                abmval: 1,
+                eastereggs: 0,
+                blacklist: 0
+            }
+            gideon.setGuild.run(currentguild);
+        }
+
         if (Util.Checks.IBU(message, gideon)) return; //check if user is blacklisted, if yes, return
         Util.Checks.LBG(message.guild, gideon, Util); //check if guild is blacklisted, if yes, leave
         //Util.Checks.Ads(message, gideon); //check for foreign invites
@@ -27,21 +42,10 @@ class MsgHandler {
         Util.Checks.CVM(message, gideon, Util); //apply crossover mode if enabled
         Util.Checks.CSD(message, gideon, Util); //eastereggs
         Util.TR.TRMode(message, gideon, Util); //apply trmode if enabled
-
-        const lowercaseContent = message.content.toLowerCase();
-
-        let customprefix = gideon.getPrefix.get(message.guild.id);
-        if (!customprefix) {
-            customprefix = {
-                guild: message.guild.id,
-                prefix: '!',
-            }
-            gideon.setPrefix.run(customprefix);
-        }
  
-        const usedCustom = lowercaseContent.startsWith(customprefix.prefix.toLowerCase());
+        const usedCustom = lowercaseContent.startsWith(currentguild.prefix.toLowerCase());
         let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
-        if (usedCustom) usedPrefix = customprefix.prefix;
+        if (usedCustom) usedPrefix = currentguild.prefix;
         if (!usedPrefix) return;
 
         const inputString = message.content.slice(usedPrefix.length).trim();
@@ -58,11 +62,13 @@ class MsgHandler {
         const spamcount = gideon.spamcount.get(message.author.id);
    
         if (spamcount && spamcount.usages + 1 > 10) {
-            const ub = {
+            let ub = gideon.getUser.get(message.author.id);
+            if (!ub) ub = {
                 user: message.author.id,
-                userval: 1,
+                blacklist: 1,
             }
-            gideon.setUBL.run(ub);
+            else ub.blacklist = 1;
+            gideon.setUser.run(ub);
             Util.log(`${message.author.tag} had their access revoked due to command spam:\`\`\`\nUser: ${message.author.tag} - ${message.author.id}\nMessage: ${message.content} - ${message.id}\n\`\`\`\n${message.url}`);
             return message.reply('your access to ' + gideon.user.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
         }
