@@ -172,8 +172,9 @@ class Checks {
         if (!eggs) {
             eggs = {
                 guild: message.guild.id,
-                eggsval: 1,
+                eggsval: 0,
             }
+            gideon.setEggs.run(eggs);
         }
         if (eggs.eggsval === 0) return;
 
