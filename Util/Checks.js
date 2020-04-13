@@ -347,20 +347,28 @@ class Checks {
     static async Ads(message, gideon) {
         if (!message.guild) return;
         if (message.guild.id !== '595318490240385037') return;
-        if (message.channel.permissionsFor(message.member).has('MANAGE_MESSAGES')) return;
+        if (message.member.roles.cache.has('596402255066955783')) return;
+        else if (message.member.roles.cache.has('596402530989375539')) return;
 
-        const invregex = /(?:(?:http|https):\/\/)?(?:www.)?(?:disco|discord|discordapp).(?:com|gg|io|li|me|net|org)(?:\/(?:invite))?\/([a-z0-9-.]+)/i;
+        const invregex = /(http:\/\/|https:\/\/)?(discord.gg\/|discordapp.com\/invite\/)([a-zA-Z0-9]){7}/g;
         const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
+        const admin = gideon.guilds.cache.get('595318490240385037').roles.cache.get('596402255066955783');
 
         if (message.content.match(invregex)) {
-            const invcode = message.content.match(invregex)[1];
+            const invcode = message.content.match(invregex)[0];
             const invite = await gideon.fetchInvite(invcode).catch(ex => console.log(ex));
+            
+            if (!invite.guild) {
+                await admin.setMentionable(true).catch(ex => console.log(ex));
+                await channel.send(`Couldn't resolve the guild this invite belongs to!\n${admin} please review and kick \`${message.author.tag}\` if it's a non Time Vault invite.`);
+                await admin.setMentionable(false).catch(ex => console.log(ex));
+            }
 
-            if (invite.guild.id !== '595318490240385037' || !invite.guild) {
-                await message.delete({ timeout: 200 });
-                await message.member.send('You have been kicked for sending a foreign guild invite!').catch(ex => console.log(ex));
-                await channel.send(`${message.author.tag} has been kicked for sending a foreign guild invite!`);
-                await message.member.kick();
+            else if (invite.guild.id !== '595318490240385037') {
+            await message.delete({ timeout: 200 });
+            await message.member.send('You have been kicked for sending a foreign guild invite!').catch(ex => console.log(ex));
+            await channel.send(`${message.author.tag} has been kicked for sending a foreign guild invite!`);
+            await message.member.kick();
             }
         }
     }
