@@ -132,7 +132,7 @@ export async function run(gideon, message, args) {
 
                 marks[item] = mo;
                 
-                embed.addField(item[0].toLowerCase().startsWith("gideon") ? item + ` ${marks[item].emotes.join('')}${marks[item].roles.length > 0 ? '\`' + marks[item].roles.join(' ') + '\`' : ''}` : customprefix.prefix + item + ` ${marks[item].emotes.join('')}${marks[item].roles.length > 0 ? '\`' + marks[item].roles.join(' ') + '\`' : ''}`, commands[item].help_desc);
+                embed.addField(commands[item].help_text.toLowerCase().startsWith("gideon") ? item + ` ${marks[item].emotes.join('')}${marks[item].roles.length > 0 ? '\`' + marks[item].roles.join(' ') + '\`' : ''}` : customprefix.prefix + item + ` ${marks[item].emotes.join('')}${marks[item].roles.length > 0 ? '\`' + marks[item].roles.join(' ') + '\`' : ''}`, commands[item].help_desc);
             }
             embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
             pages.push(embed);
@@ -182,7 +182,7 @@ export async function run(gideon, message, args) {
 
             marks[item] = mo;
 
-            embed.addField(item[0].toLowerCase().startsWith("gideon") ? item + ` ${marks[item].emotes.join('')}${marks[item].roles.length > 0 ? '\`' + marks[item].roles.join(' ') + '\`' : ''}` : customprefix.prefix + item + ` ${marks[item].emotes.join('')}${marks[item].roles.length > 0 ? '\`' + marks[item].roles.join(' ') + '\`' : ''}`, commands[item].help_desc);
+            embed.addField(commands[item].help_text.toLowerCase().startsWith("gideon") ? item + ` ${marks[item].emotes.join('')}${marks[item].roles.length > 0 ? '\`' + marks[item].roles.join(' ') + '\`' : ''}` : customprefix.prefix + item + ` ${marks[item].emotes.join('')}${marks[item].roles.length > 0 ? '\`' + marks[item].roles.join(' ') + '\`' : ''}`, commands[item].help_desc);
         }
         embed.addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
         message.channel.send(embed);
