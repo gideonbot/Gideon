@@ -536,25 +536,6 @@ class Util {
     }
 
     /**
-     * Invite
-     * @param {Discord.Guild} guild
-     */
-    static async Invite(guild) {
-        try {
-            let textchannels = guild.channels.cache.filter(c=> c.type == "text");
-            let invitechannels = textchannels.filter(c=> c.permissionsFor(guild.me).has('CREATE_INSTANT_INVITE'));
-            if (!invitechannels.size) return;
-    
-            invitechannels.random().createInvite().then(invite=> Util.log('Found Invite:\n' + 'https://discord.gg/' + invite.code));
-        }
-        
-        catch (ex) {
-            console.log("Caught an exception while creating invites!: " + ex.stack);
-            Util.log("Caught an exception while creating invites!: " + ex.stack);
-        }      
-    }
-
-    /**
      * Welcome stuff
      * @param {Discord.GuildMember} member
      * @param {Discord.Client} gideon

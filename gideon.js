@@ -107,7 +107,6 @@ gideon.on("guildCreate", guild => {
     }
 
     Util.Checks.LBG(guild, gideon, Util); //check if guild is blacklisted, if yes, leave
-    //Util.Invite(guild);
     Util.Checks.BotCheck(guild, gideon, Util); //check if guild collects bots, if yes, leave
 });
 
