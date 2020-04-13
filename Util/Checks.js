@@ -232,7 +232,7 @@ class Checks {
         else if (message.content.match(/(?:marshmallows)/i)) message.channel.send(marshmallows);
         else if (message.content.match(/(?:unclear)/i) || message.content.match(/(?:kidnapped)/i)) message.channel.send(unclear);
         else if (message.content.match(/(?:kneel)/i)) message.channel.send(kneel);
-        else if (message.content.match(/(?:flotation)/i) || message.content.match(/(?:mode)/i)) message.channel.send(flotationmode);
+        else if (message.content.match(/(?:flotation)/i) && message.content.match(/(?:mode)/i)) message.channel.send(flotationmode);
     }
 
     /**
