@@ -65,7 +65,8 @@ process.on("uncaughtException", err => {
 });
 
 process.on("unhandledRejection", err => {
-    const ignore = [Discord.Constants.APIErrors.UNKNOWN_MESSAGE,
+    const ignore = [Discord.Constants.APIErrors.MISSING_PERMISSIONS,
+                    Discord.Constants.APIErrors.UNKNOWN_MESSAGE,
                     Discord.Constants.APIErrors.MISSING_ACCESS,
                     Discord.Constants.APIErrors.CANNOT_MESSAGE_USER,
                     Discord.Constants.APIErrors.UNKNOWN_CHANNEL];
