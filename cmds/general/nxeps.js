@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import Discord from "discord.js";
 import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import Util from "../../Util.js";
 
 /**
@@ -31,11 +33,27 @@ export async function run(gideon, message, args, connection) {
         supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode'
     };
 
-    const embed = Util.CreateEmbed('__Upcoming Arrowverse episodes:__');
+    const embed = Util.CreateEmbed('__Upcoming Arrowverse episodes:__', null, message.member);
+
+    let dates = gideon.cache.nxeps.map(x => x.date).filter(x => x !== null);
+    let closestdate;
+
+    if (dates.length > 0) {
+        closestdate = await Util.ClosestDate(dates);
+        let now = new Date();
+        let nextairdate = new Date(closestdate);
+        if (nextairdate < now) gideon.cache.nxeps.clear(); //clear cache if surpassed airdate
+    } 
 
     for (let show in api_urls) {
         try {
-            let info = await Util.GetNextEpisodeInfo(api_urls[show]);
+            let info = gideon.cache.nxeps.get(show);
+
+            if (!info) {
+                info = await Util.GetNextEpisodeInfo(api_urls[show]);
+                gideon.cache.nxeps.set(show, info);
+            }
+            
             embed.addField(`${info.title} ${info.name}`, `${info.value}`);
         }
         
@@ -54,7 +72,7 @@ export async function run(gideon, message, args, connection) {
 export const help = {
     name: ["nxeps", "nexteps", "nextepisodes"],
     type: "general",
-    help_text: "nxeps <:voicerecognition:693521621184413777>",
+    help_text: "nxeps",
     help_desc: "Displays a countdown to the next airing Arrowverse episodes",
     owner: false,
     voice: true,

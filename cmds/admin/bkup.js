@@ -16,14 +16,14 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log("Caught an exception while running bkup.js: " + ex.stack);
         Util.log("Caught an exception while running bkup.js: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }      
 }
 
 export const help = {
     name: ["backup", "bkup"],
     type: "admin",
-    help_text: "backup `@Gideon Dev Team`",
+    help_text: "backup",
     help_desc: "Performs a database backup",
     owner: false,
     voice: false,

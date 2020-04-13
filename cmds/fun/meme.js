@@ -28,7 +28,7 @@ export async function run(gideon, message, args) {
         let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
         let ravm = res.images[ranum].link;
 
-        message.channel.send(Util.CreateEmbed(null, {image: ravm}));
+        message.channel.send(Util.CreateEmbed(null, {image: ravm}, message.member));
     });   
 }
 

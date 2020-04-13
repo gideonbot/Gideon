@@ -16,7 +16,7 @@ export async function run(gideon, message, args) {
                 value: `**[Read Docs](https://github.com/adrifcastr/Gideon/wiki 'https://github.com/adrifcastr/Gideon/wiki')**`
             }
         ]
-    }));
+    }, message.member));
 }
 
 export const help = {

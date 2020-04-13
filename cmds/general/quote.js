@@ -10,14 +10,14 @@ import gideonapi from 'gideon-api';
 export async function run(gideon, message, args) {
     try {
         const quote = await gideonapi.quote();
-        message.channel.send(Util.CreateEmbed(null, {description: '**' + quote.text + '**', thumbnail: quote.img}));
+        message.channel.send(Util.CreateEmbed(null, {description: '**' + quote.text + '**', thumbnail: quote.img}, message.member));
     }
 
     catch (ex) {
         console.log("An error occurred while trying to fetch a quote: " + ex.stack);
         Util.log("An error occurred while trying to fetch a quote: " + ex.stack);
 
-        return message.channel.send(Util.CreateEmbed('Failed to fetch a quote, please try again later!'));
+        return message.channel.send(Util.CreateEmbed('Failed to fetch a quote, please try again later!', null, message.member));
     }
 }
 

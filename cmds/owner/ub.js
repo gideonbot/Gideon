@@ -9,23 +9,24 @@ import Util from "../../Util.js";
 export async function run(gideon, message, args) {
     const id = Util.ValID(args.join(' '));
     try {
-        let ub = gideon.getUBL.get(id);
+        let ub = gideon.getUser.get(id);
         if (!ub) {
             ub = {
-                user: id,
-                userval: 0,
+                id: id,
+                trmodeval: 0,
+                blacklist: 0
             }
         }
 
-        if (ub.userval === 0) {
-            ub.userval = 1;
-            gideon.setUBL.run(ub);
+        if (ub.blacklist === 0) {
+            ub.blacklist = 1;
+            gideon.setUser.run(ub);
             message.reply(`user \`${id}\` has been blacklisted!`);
         }
 
         else {
-            ub.userval = 0;
-            gideon.setUBL.run(ub);
+            ub.blacklist = 0;
+            gideon.setUser.run(ub);
             message.reply(`user \`${id}\` has been un-blacklisted!`); 
         }
     }
@@ -33,14 +34,14 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log("Caught an exception while running ub.js: " + ex.stack);
         Util.log("Caught an exception while running ub.js: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 
 export const help = {
-    name: ["ub", "UBLacklist", "ubrm"],
+    name: ["ub", "Useracklist", "ubrm"],
     type: "owner",
-    help_text: "ub <userid> <:gideon:686678560798146577>",
+    help_text: "ub <userid>",
     help_desc: "Blacklists a user",
     owner: true,
     voice: false,

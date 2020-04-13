@@ -7,30 +7,26 @@ import Util from "../../Util.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
+    let prefix = gideon.getGuild.get(message.guild.id);
+
     try {
         if (args[0].match(/(?:default)/i)) {
-            const defaultprefix = {
-                guild: message.guild.id,
-                prefix: '!',
-            }
-            gideon.setPrefix.run(defaultprefix);
-            message.reply(`restored the default prefix \`${defaultprefix.prefix}\` for \`${message.guild.name}\`:white_check_mark:`);
+            prefix.prefix = '!';
+            gideon.setGuild.run(prefix);
+            message.reply(`restored the default prefix \`${prefix.prefix}\` for \`${message.guild.name}\`:white_check_mark:`);
         }
 
         else {
-            const customprefix = {
-                guild: message.guild.id,
-                prefix: args[0],
-            }
-            gideon.setPrefix.run(customprefix);
-            message.reply(`set custom prefix for \`${message.guild.name}\` to \`${customprefix.prefix}\`:white_check_mark:`);
+            prefix.prefix = args[0];
+            gideon.setGuild.run(prefix);
+            message.reply(`set custom prefix for \`${message.guild.name}\` to \`${prefix.prefix}\`:white_check_mark:`);
         }
     }
     
     catch (ex) {
         console.log("Caught an exception while running prefix.js: " + ex.stack);
         Util.log("Caught an exception while running prefix.js: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }      
 }
 

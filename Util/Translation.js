@@ -34,7 +34,12 @@ class TR {
         const lowercaseContent = message.content.toLowerCase();
 
         // Find the prefix that was used
-        const usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+        let customprefix = gideon.getGuild.get(message.guild.id);
+
+        const usedCustom = lowercaseContent.startsWith(customprefix.prefix.toLowerCase());
+        let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+        if (usedCustom) usedPrefix = customprefix.prefix;
+        
         let args = '';
 
         if (!usedPrefix) args = message.content.split(' ').map(x => x.trim()).filter(x => x);
@@ -42,18 +47,11 @@ class TR {
 
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
-        let cvm = gideon.getCVM.get(message.guild.id); //if CVM is enabled, return
+        let cvm = gideon.getGuild.get(message.guild.id); //if CVM is enabled, return
         if (cvm) if (cvm.cvmval === 1) return;
         
-        let trmode = gideon.getTrmode.get(message.author.id);
-        if (!trmode) {
-            trmode = {
-                id: message.author.id,
-                trmodeval: 0,
-            }
-            gideon.setTrmode.run(trmode);
-        }
-        
+        let trmode = gideon.getUser.get(message.author.id);
+        if (!trmode || !trmode.trmodeval) return
         if (trmode.trmodeval === 0) return;
 
         else {

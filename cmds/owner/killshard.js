@@ -7,7 +7,7 @@ import Util from "../../Util.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
-    const as = Util.CreateEmbed('You must supply valid input!');
+    const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
     
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
@@ -23,7 +23,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: ["ks", "kill"],
     type: "owner",
-    help_text: "ks <shardid> <:gideon:686678560798146577>",
+    help_text: "ks <shardid>",
     help_desc: "Kills the specified shard",
     owner: true,
     voice: false,

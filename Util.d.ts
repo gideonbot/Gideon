@@ -28,12 +28,14 @@ export function Starboard(reaction: Discord.MessageReaction, user: Discord.User,
 export function Selfhostlog(gideon: Discord.Client): Promise<void>;
 export function SQLBkup(gideon: Discord.Client): Promise<void>;
 export function status(gideon: Discord.Client): Promise<void>;
+export function InitCache(gideon: Discord.Client): void;
+export function ClosestDate(dates: string[]): Promise<string>;
 export function Invite(guild: Discord.Guild): Promise<void>;
 export function Welcome(member: Discord.GuildMember, gideon: Discord.Client): Promise<void>;
 export function GetNextEpisodeInfo(url: string): Promise<EpisodeInfo>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
 export function normalize(num: number): string;
-export function CreateEmbed(title: string, options?: EmbedOptions): Discord.MessageEmbed;
+export function CreateEmbed(title: string, options?: EmbedOptions, member?: Discord.GuildMember): Discord.MessageEmbed;
 
 declare module "discord.js" {
     interface Client {
@@ -44,21 +46,14 @@ declare module "discord.js" {
         guessing: string[];
         listening: string[];
         spamcount: Map;
+        cache: Cache;
         getScore: BetterSqlite3.Statement<any[]>;
         setScore: BetterSqlite3.Statement<any[]>;
         getTop10: BetterSqlite3.Statement<any[]>;
-        getTrmode: BetterSqlite3.Statement<any[]>;
-        setTrmode: BetterSqlite3.Statement<any[]>;
-        getCVM: BetterSqlite3.Statement<any[]>;
-        setCVM: BetterSqlite3.Statement<any[]>;
-        getGBL: BetterSqlite3.Statement<any[]>;
-        setGBL: BetterSqlite3.Statement<any[]>;
-        getUBL: BetterSqlite3.Statement<any[]>;
-        setUBL: BetterSqlite3.Statement<any[]>;
-        getEggs: BetterSqlite3.Statement<any[]>;
-        setEggs: BetterSqlite3.Statement<any[]>;
-        getPrefix: BetterSqlite3.Statement<any[]>;
-        setPrefix: BetterSqlite3.Statement<any[]>;
+        getUser: BetterSqlite3.Statement<any[]>;
+        setUser: BetterSqlite3.Statement<any[]>;
+        getGuild: BetterSqlite3.Statement<any[]>;
+        setGuild: BetterSqlite3.Statement<any[]>;
         db: BetterSqlite3.Database;
     }
 
@@ -86,9 +81,12 @@ interface Translation {
     TRMode(message: Discord.Message, gideon: Discord.Client): Promise<void>;
 }
 
+interface Cache {
+    nxeps: Discord.Collection;
+}
 interface CheckUtil {
     ABM_Test(message: Discord.Message): Promise<ABMResult>;
-    ABM(message: Discord.Message): void;
+    ABM(message: Discord.Message, gideon: Discord.Client): void;
     CVM(message: Discord.Message, gideon: Discord.Client): Promise<Discord.Message>;
     CSD(message: Discord.Message): Promise<void>;
     LBG(guild: Discord.Guild, gideon: Discord.Client): Promise<void>;

@@ -32,7 +32,7 @@ export async function run(gideon, message, args) {
                 value: guild.emojis.cache.map(emojis => emojis.toString()).join(' ')
             }
         ]
-    })
+    }, message.member)
 
     message.channel.send(embed);
 }

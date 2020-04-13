@@ -9,7 +9,7 @@ import Turndown from 'turndown';
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
-    const as = Util.CreateEmbed("You must supply valid input!");
+    const as = Util.CreateEmbed("You must supply valid input!", null, message.member);
     if (!args[0]) return message.channel.send(as);
 
     try {
@@ -32,14 +32,14 @@ export async function run(gideon, message, args) {
                 url: `https://developer.mozilla.org/`
             },
             url: `https://developer.mozilla.org${body.URL}`
-        })
+        }, message.member)
         message.channel.send(mdnembed);
     }
 
     catch (ex) {
         console.log("Caught an exception while running mdn.js: " + ex.stack);
         Util.log("Caught an exception while running mdn.js: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 

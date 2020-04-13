@@ -13,7 +13,7 @@ export async function run(gideon, message, args) {
     message.channel.send(Util.CreateEmbed(null, {
         description: `**${auth} you have cuddled ${user}!**\n\nA Beebo-tastic cuddle always brightens the mood!`,
         image: 'https://i.imgur.com/IOpmt2j.gif'
-    }));
+    }, message.member));
 }
 
 export const help = {

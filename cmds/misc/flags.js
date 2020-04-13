@@ -9,7 +9,7 @@ import Util from "../../Util.js";
 export async function run(gideon, message, args) {
     message.channel.send(Util.CreateEmbed('Discord Permission Flags:', {
         description: Object.keys(Discord.Permissions.FLAGS).map(perms => `\`${perms}\``).join(' ')
-    }));       
+    }, message.member));       
 }
 
 export const help = {

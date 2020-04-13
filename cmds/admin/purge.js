@@ -20,7 +20,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: ["purge", "delete", "remove"],
     type: "admin",
-    help_text: "purge [amount] <:perms:686681300156940349>",
+    help_text: "purge [amount]",
     help_desc: "Deletes the specified amount of messages in the current channel",
     owner: false,
     voice: false,

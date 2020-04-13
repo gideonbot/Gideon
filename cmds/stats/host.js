@@ -9,7 +9,7 @@ import si from 'systeminformation';
  */
 export async function run(gideon, message, args) {     
     try {
-        let sent = await message.channel.send(Util.CreateEmbed('Gathering host info, please wait...'));
+        let sent = await message.channel.send(Util.CreateEmbed('Gathering host info, please wait...', null, message.member));
 
         const cpu = await si.cpu().catch(console.error);
         const curspeed = await si.cpuCurrentspeed().catch(console.error);
@@ -38,14 +38,14 @@ export async function run(gideon, message, args) {
                     value: `Current CPU Load: \`${Math.round(load.currentload)} %\``
                 }
             ]
-        })
+        }, message.member)
     
         await sent.edit(embed);
         
     } catch (ex) {
         console.log(ex);
         Util.log("Caught an exception while running host.js: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 

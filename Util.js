@@ -211,6 +211,7 @@ class Util {
      * @param {boolean} nsfw
      */
     static async IMG(imgid, message, nsfw) {
+        if (!message.guild) return;
         if (!process.env.IMG_CL) return;
 
         const imgclient = new Imgur.Client(process.env.IMG_CL);
@@ -219,7 +220,7 @@ class Util {
             if (err) {
                 console.log(err);
                 Util.log(err);
-                return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
+                return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!', null, message.member));
             }
     
             let min = 0;
@@ -236,7 +237,7 @@ class Util {
                 return message.channel.send(img);
             }
 
-            message.channel.send(Util.CreateEmbed(imgid == 'ngJQmxL' ? 'Germ approves!:white_check_mark:' : '', {image: rimg}));
+            message.channel.send(Util.CreateEmbed(imgid == 'ngJQmxL' ? 'Germ approves!:white_check_mark:' : '', {image: rimg}, message.member));
         });
     }
 
@@ -255,7 +256,7 @@ class Util {
                 res.json().then(body => {
                     let title = body.name;
     
-                    let result = { title: title, name: null, value: null };
+                    let result = { title: title, name: null, value: null, date: null };
     
                     if (!body._embedded) {
                         result.name = '';
@@ -301,6 +302,7 @@ class Util {
 
                         result.name = `${season}x${number < 10 ? `0` + number : number} - ${name}`;
                         result.value = res_value;
+                        result.date = date;
                     }
     
                     return resolve(result);
@@ -323,14 +325,16 @@ class Util {
         footer?: {text: string, icon: string};
         thumbnail?: string;
        }} options
+     * @param {Discord.GuildMember} member
      */
-    static CreateEmbed(title, options) {
+    static CreateEmbed(title, options, member) {
         if (!options) options = {};
         
         const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
 
         const embed = new Discord.MessageEmbed()
-        .setColor('#2791D3')
+        if (member && member.guild.id === '595318490240385037' && member.premiumSince) embed.setColor('#CB45CC');
+        else embed.setColor('#2791D3')
         .setFooter(Util.config.footer, Util.config.avatar)
 
         if (title && typeof(title) == "string") embed.setTitle(title);
@@ -347,6 +351,8 @@ class Util {
                 embed.fields = options.fields.map(x => ({name: x.name, value: x.value, inline: x.inline}));
             }
         }
+
+        if (member && member.guild.id === '595318490240385037' && member.premiumSince) embed.addField(`<:boost:678746359549132812>\`${member.user.tag}\` you're awesome!<:boost:678746359549132812>`, `<:boost:678746359549132812>Nitro boosting Time Vault<:timevault:686676561298063361> since \`${member.premiumSince.toDateString()}\`<:boost:678746359549132812>`);
 
         return embed;
     }
@@ -439,10 +445,11 @@ class Util {
         const db = './data/SQL';
         const arc = './data/SQL.zip';
         const date = new Date();
+        const zipfolder = new zip;
 
         try {
             const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('622415301144870932');
-            await zip(db, arc);
+            await zipfolder(db, arc);
             channel.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
             await del(arc);
             const lastbkup = await channel.messages.fetchPinned({ limit: 1 });
@@ -472,6 +479,7 @@ class Util {
             if (!reaction.message) return;
             if (reaction.message.deleted) return;
             if (reaction.message.partial) await reaction.message.fetch();
+            if (!reaction.message.guild) return;
             if (reaction.message.guild.id !== '595318490240385037') return;
             if (reaction.emoji.name !== '⭐') return;
             if (reaction.message.embeds[0]) return;
@@ -612,6 +620,25 @@ class Util {
     static ValID(input) {
         if (!input.match(/\d{17,19}/)) return;
         else return input.match(/\d{17,19}/)[0];
+    }
+
+    /**
+     * Init cache
+     * @param {Discord.Client} gideon
+     */
+    static InitCache(gideon) {
+        gideon.cache.nxeps = new Discord.Collection();
+    }
+
+    /**
+     * get closest date to now from array
+     * @param {Date} now
+     * @param {string[]} dates
+     */
+    static async ClosestDate(dates) {
+        const temp = dates.map(d => Math.abs(new Date() - new Date(d).getTime()));
+        const idx = temp.indexOf(Math.min(...temp));
+        return dates[idx];
     }
 }
 

@@ -16,13 +16,13 @@ export async function run(gideon, message, args) {
         message.channel.send(Util.CreateEmbed('Gideon API status:', {
             description: `${body.API.status}`,
             thumbnail: Util.config.avatar
-        }));
+        }, message.member));
     }
     
     catch (ex) {
         console.log("Caught an exception while fetching API data: " + ex.stack);
         Util.log("Caught an exception while fetching API data: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occurred while fetching github data!'));
+        return message.channel.send(Util.CreateEmbed('An error occurred while fetching github data!', null, message.member));
     }
 }
 

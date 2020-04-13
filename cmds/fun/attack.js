@@ -17,8 +17,8 @@ export async function run(gideon, message, args) {
     if (!atc) return message.channel.send(at);
 
     const user = message.mentions.users.first();
-    if (!user) return message.channel.send(Util.CreateEmbed('You must use a proper mention if you want to attack someone!'));
-    if (user.id === auth.id || user.id === gideon.user.id) return message.channel.send(Util.CreateEmbed('My protocols forbid any kind of self-harm!'));
+    if (!user) return message.channel.send(Util.CreateEmbed('You must use a proper mention if you want to attack someone!', null, message.member));
+    if (user.id === auth.id || user.id === gideon.user.id) return message.channel.send(Util.CreateEmbed('My protocols forbid any kind of self-harm!', null, message.member));
 
     const attacks = [
         {
@@ -130,7 +130,7 @@ export async function run(gideon, message, args) {
     message.channel.send(Util.CreateEmbed(null, {
         description: `**${attack.emote}${auth} ${attack.text}${attack.emote}**\n\n${attack.desc}`,
         image: attack.attackgif
-    }));
+    }, message.member));
 }
 
 export const help = {

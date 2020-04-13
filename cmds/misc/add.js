@@ -18,7 +18,7 @@ export async function run(gideon, message, args) {
                 value: `**[Add to server](${url} '${url}')**`
             }
         ]
-    }));       
+    }, message.member));       
 }
 
 export const help = {

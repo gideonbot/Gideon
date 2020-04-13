@@ -9,7 +9,7 @@ import Util from "../../Util.js";
 export async function run(gideon, message, args) {
     let shards = gideon.shard.count;
 
-    message.channel.send(Util.CreateEmbed('Shard Count:', {description: `Gideon is currently running on \`${shards}\` ${shards > 1 ? 'shards' : 'shard'}`}));
+    message.channel.send(Util.CreateEmbed('Shard Count:', {description: `Gideon is currently running on \`${shards}\` ${shards > 1 ? 'shards' : 'shard'}`}, message.member));
 }
 
 export const help = {

@@ -36,14 +36,14 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log("Caught an exception while running restore.js: " + ex.stack);
         Util.log("Caught an exception while running restore.js: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }      
 }
 
 export const help = {
     name: ["restore", "rs"],
     type: "admin",
-    help_text: "restore `@Gideon Dev Team`",
+    help_text: "restore",
     help_desc: "Restores the latest database backup",
     owner: false,
     voice: false,

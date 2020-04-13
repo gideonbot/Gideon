@@ -15,7 +15,7 @@ export async function run(gideon, message, args) {
             icon: message.author.displayAvatarURL()
         },
         description: perms,
-    })
+    }, message.member)
 
     message.channel.send(embed);
 }

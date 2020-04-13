@@ -28,7 +28,7 @@ export async function run(gideon, message, args) {
                 value: urls
             },
         ]
-    })
+    }, message.member)
 
     message.channel.send(embed);
 }

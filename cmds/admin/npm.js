@@ -48,7 +48,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: "npm",
     type: "admin",
-    help_text: "npm install/update `@Gideon Dev Team`",
+    help_text: "npm install/update",
     help_desc: "Runs npm command",
     owner: false,
     voice: false,

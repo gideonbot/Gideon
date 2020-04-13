@@ -13,7 +13,7 @@ export async function run(gideon, message, args) {
 export const help = {
     name: ["rs", "respawn"],
     type: "owner",
-    help_text: "rs <:gideon:686678560798146577>",
+    help_text: "rs",
     help_desc: "Respawns all shards",
     owner: true,
     voice: false,

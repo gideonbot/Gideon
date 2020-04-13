@@ -9,23 +9,27 @@ import Util from "../../Util.js";
 export async function run(gideon, message, args) {
     const id = Util.ValID(args.join(' '));
     try {
-        let gb = gideon.getGBL.get(id);
+        let gb = gideon.getGuild.get(id);
         if (!gb) {
             gb = {
                 guild: id,
-                guildval: 0,
+                prefix: '!',
+                cvmval: 0,
+                abmval: 1,
+                eastereggs: 0,
+                blacklist: 0
             }
         }
 
-        if (gb.guildval === 0) {
-            gb.guildval = 1;
-            gideon.setGBL.run(gb);
+        if (gb.blacklist === 0) {
+            gb.blacklist = 1;
+            gideon.setGuild.run(gb);
             message.reply(`guild \`${id}\` has been blacklisted!`);
         }
 
-        else if (gb.guildval === 1) {
-            gb.guildval = 0;
-            gideon.setGBL.run(gb);
+        else if (gb.blacklist === 1) {
+            gb.blacklist = 0;
+            gideon.setGuild.run(gb);
             message.reply(`guild \`${id}\` has been un-blacklisted!`); 
         }
     }
@@ -33,14 +37,14 @@ export async function run(gideon, message, args) {
     catch (ex) {
         console.log("Caught an exception while running gb.js: " + ex.stack);
         Util.log("Caught an exception while running gb.js: " + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!'));
+        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 
 export const help = {
     name: ["gb", "gblacklist", "gbrm"],
     type: "owner",
-    help_text: "gb <guildid> <:gideon:686678560798146577>",
+    help_text: "gb <guildid>",
     help_desc: "Blacklists a guild",
     owner: true,
     voice: false,

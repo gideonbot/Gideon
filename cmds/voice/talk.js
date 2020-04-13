@@ -1,6 +1,8 @@
 import Discord from "discord.js";
 import randomFile from 'select-random-file';
 import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import Util from "../../Util.js";
 
 /**
@@ -27,7 +29,7 @@ export async function run(gideon, message, args, connection) {
 export const help = {
     name: "talk",
     type: "voice",
-    help_text: "Talk to me <:voicerecognition:693521621184413777>",
+    help_text: "Talk to me",
     help_desc: "Talks to the user",
     owner: false,
     voice: true,

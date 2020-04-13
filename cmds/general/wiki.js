@@ -60,12 +60,12 @@ export async function run(gideon, message, args) {
         //stargirl & krypton do some weird stuff, therefore the actual result is the 2nd element
         const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 || wikis.indexOf(wiki) == 3 ? 1 : 0];
 
-        if (Object.keys(body.items).length < 1) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!`));
+        if (Object.keys(body.items).length < 1) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!`, null, message.member));
         
         const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
 
         let st = ''
-        let cvm = gideon.getCVM.get(message.guild.id);
+        let cvm = gideon.getGuild.get(message.guild.id);
         if (cvm) {
             if (cvm.cvmval === 1) st = '||';
         }
@@ -74,13 +74,13 @@ export async function run(gideon, message, args) {
         message.channel.send(Util.CreateEmbed(article.title, {
             description: `${st}${article.abstract}${st}\n\n**[Click here to read the full article](https://${wiki.url}${url} 'https://${wiki.url}${url}')**`,
             thumbnail: article.thumbnail
-        })); 
+        }, message.member)); 
     }
 
     catch (ex) {
         console.log('Error occurred while fetching data from wiki: ' + ex.stack);
         Util.log('Error occurred while fetching data from wiki: ' + ex.stack);
-        message.channel.send(Util.CreateEmbed('Failed to fetch info from wiki!'));
+        message.channel.send(Util.CreateEmbed('Failed to fetch info from wiki!', null, message.member));
     } 
 }
 
