@@ -33,7 +33,7 @@ export async function run(gideon, message, args) {
     }
 
     if (args[0] === 'tutorial') {
-       const url = '';
+       const url = 'https://drive.google.com/file/d/1nShWSKfnMoksKgcWao-kdLeeZjJ9K2-e/view';
        await message.channel.send(url);
        return;
     }
