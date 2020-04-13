@@ -164,6 +164,7 @@ class Checks {
     static async CSD(message, gideon, Util) {
         if (!message.guild) return;
         if (message.editedAt) return;
+        if (message.content.match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)) return;
 
         let eggs = gideon.getGuild.get(message.guild.id);
         if (!eggs) return;
