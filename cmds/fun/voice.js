@@ -72,7 +72,6 @@ export async function run(gideon, message, args) {
                     if (!intent) return;
     
                     let value = intent[0].value;
-                    console.log(value);
                     await Util.Voice.VoiceResponse(value, gideon, message, connection, Util);
                 }
             }

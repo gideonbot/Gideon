@@ -74,12 +74,11 @@ class Voice {
             type: message.type,
             content: '!' + intent,
             author: message.author,
-            partial: message.partial,
-            voice: true
+            partial: message.partial
         }
         
-        const voicemsg = new Discord.Message(gideon, data, message.channel);
-        console.log(intent);
+        let voicemsg = new Discord.Message(gideon, data, message.channel);
+        voicemsg.voice = true;
         Util.MsgHandler.Handle(gideon, voicemsg, Util, connection);
     }
 }
