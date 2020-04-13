@@ -201,6 +201,7 @@ class Checks {
         const marshmallows = 'https://cdn.discordapp.com/attachments/669243069878501385/696787036304048229/the_marshmallows_are_talking.mp4';
         const unclear = 'https://cdn.discordapp.com/attachments/595934699285905409/602631699083558933/unclear.mp4';
         const kneel = 'https://cdn.discordapp.com/attachments/679864620864765983/697074511312322580/Kneel_before_Zod.mp4';
+        const flotationmode = 'https://cdn.discordapp.com/attachments/669243069878501385/699293813545631784/flotationmode.mp4';
 
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
         else if (message.content.match(/(?:deckerstar)/i)) Util.IMG('rJpbLQx', message);
@@ -230,6 +231,7 @@ class Checks {
         else if (message.content.match(/(?:marshmallows)/i)) message.channel.send(marshmallows);
         else if (message.content.match(/(?:unclear)/i) || message.content.match(/(?:kidnapped)/i)) message.channel.send(unclear);
         else if (message.content.match(/(?:kneel)/i)) message.channel.send(kneel);
+        else if (message.content.match(/(?:flotation)/i) || message.content.match(/(?:mode)/i)) message.channel.send(flotationmode);
     }
 
     /**
