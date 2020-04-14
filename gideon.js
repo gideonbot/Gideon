@@ -65,7 +65,8 @@ process.on("uncaughtException", err => {
 });
 
 process.on("unhandledRejection", err => {
-    const ignore = [Discord.Constants.APIErrors.UNKNOWN_MESSAGE,
+    const ignore = [Discord.Constants.APIErrors.MISSING_PERMISSIONS,
+                    Discord.Constants.APIErrors.UNKNOWN_MESSAGE,
                     Discord.Constants.APIErrors.MISSING_ACCESS,
                     Discord.Constants.APIErrors.CANNOT_MESSAGE_USER,
                     Discord.Constants.APIErrors.UNKNOWN_CHANNEL];
@@ -106,7 +107,6 @@ gideon.on("guildCreate", guild => {
     }
 
     Util.Checks.LBG(guild, gideon, Util); //check if guild is blacklisted, if yes, leave
-    //Util.Invite(guild);
     Util.Checks.BotCheck(guild, gideon, Util); //check if guild collects bots, if yes, leave
 });
 

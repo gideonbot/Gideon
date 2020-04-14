@@ -445,11 +445,10 @@ class Util {
         const db = './data/SQL';
         const arc = './data/SQL.zip';
         const date = new Date();
-        const zipfolder = new zip;
 
         try {
             const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('622415301144870932');
-            await zipfolder(db, arc);
+            await new zip(db, arc);
             channel.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
             await del(arc);
             const lastbkup = await channel.messages.fetchPinned({ limit: 1 });
@@ -533,25 +532,6 @@ class Util {
             await Util.delay(10000);
             gideon.user.setActivity(st3, { type: 'WATCHING' });
         }
-    }
-
-    /**
-     * Invite
-     * @param {Discord.Guild} guild
-     */
-    static async Invite(guild) {
-        try {
-            let textchannels = guild.channels.cache.filter(c=> c.type == "text");
-            let invitechannels = textchannels.filter(c=> c.permissionsFor(guild.me).has('CREATE_INSTANT_INVITE'));
-            if (!invitechannels.size) return;
-    
-            invitechannels.random().createInvite().then(invite=> Util.log('Found Invite:\n' + 'https://discord.gg/' + invite.code));
-        }
-        
-        catch (ex) {
-            console.log("Caught an exception while creating invites!: " + ex.stack);
-            Util.log("Caught an exception while creating invites!: " + ex.stack);
-        }      
     }
 
     /**
