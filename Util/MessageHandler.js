@@ -44,7 +44,7 @@ class MsgHandler {
         Util.TR.TRMode(message, gideon, Util); //apply trmode if enabled
  
         const usedCustom = lowercaseContent.startsWith(currentguild.prefix.toLowerCase());
-        let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+        let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
         if (usedCustom) usedPrefix = currentguild.prefix;
         if (!usedPrefix) return;
 

@@ -112,7 +112,7 @@ class Checks {
         let customprefix = gideon.getGuild.get(message.guild.id);
  
         const usedCustom = lowercaseContent.startsWith(customprefix.prefix.toLowerCase());
-        let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix));
+        let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
         if (usedCustom) usedPrefix = customprefix.prefix;
         
         let args = '';
