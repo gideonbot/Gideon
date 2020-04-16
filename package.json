@@ -10,12 +10,6 @@
     "start": "node index.js"
   },
   "author": "adrifcastr",
-  "license": "LGPL-2.0-only",
-  "nodemonConfig": {
-    "ignore": [
-      "data/JSON/*.json"
-    ]
-  },
   "dependencies": {
     "@activediscourse/podcast-parser": "^1.0.0",
     "@discordjs/opus": "^0.1.0",
