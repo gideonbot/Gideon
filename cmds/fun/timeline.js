@@ -1,6 +1,7 @@
 import Discord from "discord.js";
 import fetch from 'node-fetch';
 import Util from "../../Util.js";
+import gideonapi from 'gideon-api';
 
 /**
  * @param {Discord.Client} gideon
@@ -8,15 +9,9 @@ import Util from "../../Util.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
-    return message.reply('this command is currently unavailable. sorry.');
-    const api = 'https://api.myjson.com/bins/zixur';
     try {
-        const body = await fetch(api).then(res => res.json()); 
-        let min = 0;
-        let max = body.content.length - 1;
-        let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
-    
-        message.channel.send(Util.CreateEmbed('Timeline change detected!', {description: body.content[ranum].text, image: 'https://i.imgur.com/qWN3luc.gif'}, message.member));
+        const timeline = await gideonapi.timeline();
+        message.channel.send(Util.CreateEmbed('Timeline change detected!', {description: timeline, image: 'https://i.imgur.com/qWN3luc.gif'}, message.member));
     }
     
     catch (ex) {
