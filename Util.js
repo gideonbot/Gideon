@@ -412,33 +412,6 @@ class Util {
     }
 
     /**
-     * Auto-kick
-     * @param {Discord.GuildMember} member 
-     * @param {Discord.Client} gideon 
-     */
-    static async AutoKick(member, gideon) {
-        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
-
-        async function check() {
-            if (member.deleted) return;
-            if (member.roles.cache.has('688430418466177082')) return; 
-            
-            channel.send(`${member} you have 30 minutes left to read <#595935345598529546> otherwise you will be kicked!`);
-            setTimeout(kick, 30 * 60 * 1000);
-        }
-
-        setTimeout(check, 30 * 60 * 1000);
-
-        async function kick() {
-            if (member.deleted) return;
-            if (member.roles.cache.has('688430418466177082')) return;
-            await member.send('You have been kicked for not reading the rules!').catch(ex => console.log(ex));
-            await channel.send(`${member.user.tag} has been kicked for not reading the rules!`);
-            await member.kick();
-        }
-    }
-
-    /**
      * DB Backup
      */
     static async SQLBkup(gideon) {
@@ -544,10 +517,9 @@ class Util {
         if (member.guild.id !== '595318490240385037') return;
         const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
         const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
-        const welcome = `Greetings Earth-Prime-ling ${member}!\nWelcome to the Time Vault<:timevault:686676561298063361>!\nIf you want full server access make sure to read <#595935345598529546>!\nIgnoring this will get you kicked in 60 minutes!\n${logos}`;
+        const welcome = `Greetings Earth-Prime-ling ${member}!\nWelcome to the Time Vault<:timevault:686676561298063361>!\nIf you want full server access make sure to read <#595935345598529546>!\n${logos}`;
         channel.send(welcome);
         member.send(welcome).catch(ex => console.log(ex));
-        Util.AutoKick(member, gideon);
     }
 
     /**
