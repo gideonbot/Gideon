@@ -504,6 +504,7 @@ class Util {
         }
         
         catch (ex) {
+            if (ex.code === Discord.Constants.APIErrors.MISSING_PERMISSIONS) return;
             console.log("Caught an exception while starboarding!: " + ex.stack);
             Util.log("Caught an exception while starboarding!: " + ex.stack);
         }      
