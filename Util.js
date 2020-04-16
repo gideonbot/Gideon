@@ -7,9 +7,12 @@ import Checks from './Util/Checks.js';
 import TR from './Util/Translation.js';
 import MsgHandler from './Util/MessageHandler.js';
 import Imgur from 'imgur-node';
-import zip from 'zip-a-folder';
+import zip from 'zip-promise';
 import del from 'del';
 import recursive from "recursive-readdir";
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -421,7 +424,7 @@ class Util {
 
         try {
             const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('622415301144870932');
-            await new zip(db, arc);
+            await zip.folder(path.resolve(__dirname, db), path.resolve(__dirname, arc));
             channel.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
             await del(arc);
             const lastbkup = await channel.messages.fetchPinned({ limit: 1 });
