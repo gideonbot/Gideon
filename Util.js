@@ -7,9 +7,12 @@ import Checks from './Util/Checks.js';
 import TR from './Util/Translation.js';
 import MsgHandler from './Util/MessageHandler.js';
 import Imgur from 'imgur-node';
-import zip from 'zip-a-folder';
+import zip from 'zip-promise';
 import del from 'del';
 import recursive from "recursive-readdir";
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -334,8 +337,8 @@ class Util {
 
         const embed = new Discord.MessageEmbed()
         if (member && member.guild.id === '595318490240385037' && member.premiumSince) embed.setColor('#CB45CC');
-        else embed.setColor('#2791D3')
-        .setFooter(Util.config.footer, Util.config.avatar)
+        else embed.setColor('#2791D3');
+        embed.setFooter(Util.config.footer, Util.config.avatar)
 
         if (title && typeof(title) == "string") embed.setTitle(title);
         if (options.description && typeof(options.description) == "string") embed.setDescription(options.description + `\n${logos}`);
@@ -412,33 +415,6 @@ class Util {
     }
 
     /**
-     * Auto-kick
-     * @param {Discord.GuildMember} member 
-     * @param {Discord.Client} gideon 
-     */
-    static async AutoKick(member, gideon) {
-        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
-
-        async function check() {
-            if (member.deleted) return;
-            if (member.roles.cache.has('688430418466177082')) return; 
-            
-            channel.send(`${member} you have 30 minutes left to read <#595935345598529546> otherwise you will be kicked!`);
-            setTimeout(kick, 30 * 60 * 1000);
-        }
-
-        setTimeout(check, 30 * 60 * 1000);
-
-        async function kick() {
-            if (member.deleted) return;
-            if (member.roles.cache.has('688430418466177082')) return;
-            await member.send('You have been kicked for not reading the rules!').catch(ex => console.log(ex));
-            await channel.send(`${member.user.tag} has been kicked for not reading the rules!`);
-            await member.kick();
-        }
-    }
-
-    /**
      * DB Backup
      */
     static async SQLBkup(gideon) {
@@ -448,7 +424,7 @@ class Util {
 
         try {
             const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('622415301144870932');
-            await new zip(db, arc);
+            await zip.folder(path.resolve(__dirname, db), path.resolve(__dirname, arc));
             channel.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
             await del(arc);
             const lastbkup = await channel.messages.fetchPinned({ limit: 1 });
@@ -471,42 +447,35 @@ class Util {
      * @param {Discord.Client} gideon
      */
     static async Starboard(reaction, user, gideon) {
-        try {
-            const board = gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
+        if (reaction.partial) await reaction.fetch();
+        if (!reaction.message) return;
+        if (reaction.message.deleted) return;
+        if (reaction.message.partial) await reaction.message.fetch();
+        if (!reaction.message.guild) return;
+        if (reaction.message.guild.id !== '595318490240385037') return;
+        if (reaction.emoji.name !== '⭐') return;
+        if (reaction.message.embeds[0]) return;
+        if (reaction.users.cache.size > 1) return;
 
-            if (reaction.partial) await reaction.fetch();
-            if (!reaction.message) return;
-            if (reaction.message.deleted) return;
-            if (reaction.message.partial) await reaction.message.fetch();
-            if (!reaction.message.guild) return;
-            if (reaction.message.guild.id !== '595318490240385037') return;
-            if (reaction.emoji.name !== '⭐') return;
-            if (reaction.message.embeds[0]) return;
-            if (reaction.users.cache.size > 1) return;
+        const board = gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
 
-            const starmsg = Util.CreateEmbed(null, {
-                author: {
-                    name: reaction.message.author.tag,
-                    icon: reaction.message.author.displayAvatarURL()
-                },
-                description: reaction.message.content,
-                fields: [ 
-                    {
-                        name: 'Message Info:',
-                        value: 'Sent in: ' + reaction.message.channel.toString() + ' | Starred by: ' + user.tag + ` | [Jump](${reaction.message.url})`
-                    }
-                ]
-            })
+        const starmsg = Util.CreateEmbed(null, {
+            author: {
+                name: reaction.message.author.tag,
+                icon: reaction.message.author.displayAvatarURL()
+            },
+            description: reaction.message.content,
+            fields: [ 
+                {
+                    name: 'Message Info:',
+                    value: 'Sent in: ' + reaction.message.channel.toString() + ' | Starred by: ' + user.tag + ` | [Jump](${reaction.message.url})`
+                }
+            ]
+        })
 
-            if (reaction.message.attachments.size > 0) starmsg.setImage(reaction.message.attachments.first().proxyURL);
+        if (reaction.message.attachments.size > 0) starmsg.setImage(reaction.message.attachments.first().proxyURL);
 
-            await board.send(starmsg);
-        }
-        
-        catch (ex) {
-            console.log("Caught an exception while starboarding!: " + ex.stack);
-            Util.log("Caught an exception while starboarding!: " + ex.stack);
-        }      
+        await board.send(starmsg);    
     }
 
     /**
@@ -543,10 +512,9 @@ class Util {
         if (member.guild.id !== '595318490240385037') return;
         const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
         const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
-        const welcome = `Greetings Earth-Prime-ling ${member}!\nWelcome to the Time Vault<:timevault:686676561298063361>!\nIf you want full server access make sure to read <#595935345598529546>!\nIgnoring this will get you kicked in 60 minutes!\n${logos}`;
+        const welcome = `Greetings Earth-Prime-ling ${member}!\nWelcome to the Time Vault<:timevault:686676561298063361>!\nIf you want full server access make sure to read <#595935345598529546>!\n${logos}`;
         channel.send(welcome);
         member.send(welcome).catch(ex => console.log(ex));
-        Util.AutoKick(member, gideon);
     }
 
     /**
