@@ -111,8 +111,6 @@ export async function run(gideon, message, args) {
                 if (diff >= 60 * 5 || embed.fields[0].name.toLowerCase().includes("black lightning")) {
                     LastEdit = Date.now();
 
-                    
-
                     //Arrow S01E02 - Honor Thy Father
                     let name = embed.fields[0].name;
 
