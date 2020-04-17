@@ -511,7 +511,7 @@ class Util {
     static async Welcome(member, gideon) {
         if (member.guild.id !== '595318490240385037') return;
         const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
-        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
+        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('700815626972823572');
         const welcome = `Greetings Earth-Prime-ling ${member}!\nWelcome to the Time Vault<:timevault:686676561298063361>!\nIf you want full server access make sure to read <#595935345598529546>!\n${logos}`;
         channel.send(welcome);
         member.send(welcome).catch(ex => console.log(ex));
