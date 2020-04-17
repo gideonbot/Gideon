@@ -111,8 +111,6 @@ export async function run(gideon, message, args) {
                 if (diff >= 60 * 5 || embed.fields[0].name.toLowerCase().includes("black lightning")) {
                     LastEdit = Date.now();
 
-                    
-
                     //Arrow S01E02 - Honor Thy Father
                     let name = embed.fields[0].name;
 
@@ -132,7 +130,7 @@ export async function run(gideon, message, args) {
                 }
 
                 //we remove the reaction even when the user is rate limited... I guess
-                reaction.message.reactions.find(x => x.emoji.name === "▶").users.remove(user.id);
+                reaction.message.reactions.cache.find(x => x.emoji.name === "▶").users.remove(user.id);
             });
         });
     }
