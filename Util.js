@@ -447,43 +447,35 @@ class Util {
      * @param {Discord.Client} gideon
      */
     static async Starboard(reaction, user, gideon) {
-        try {
-            const board = gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
+        const board = gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
 
-            if (reaction.partial) await reaction.fetch();
-            if (!reaction.message) return;
-            if (reaction.message.deleted) return;
-            if (reaction.message.partial) await reaction.message.fetch();
-            if (!reaction.message.guild) return;
-            if (reaction.message.guild.id !== '595318490240385037') return;
-            if (reaction.emoji.name !== '⭐') return;
-            if (reaction.message.embeds[0]) return;
-            if (reaction.users.cache.size > 1) return;
+        if (reaction.partial) await reaction.fetch();
+        if (!reaction.message) return;
+        if (reaction.message.deleted) return;
+        if (reaction.message.partial) await reaction.message.fetch();
+        if (!reaction.message.guild) return;
+        if (reaction.message.guild.id !== '595318490240385037') return;
+        if (reaction.emoji.name !== '⭐') return;
+        if (reaction.message.embeds[0]) return;
+        if (reaction.users.cache.size > 1) return;
 
-            const starmsg = Util.CreateEmbed(null, {
-                author: {
-                    name: reaction.message.author.tag,
-                    icon: reaction.message.author.displayAvatarURL()
-                },
-                description: reaction.message.content,
-                fields: [ 
-                    {
-                        name: 'Message Info:',
-                        value: 'Sent in: ' + reaction.message.channel.toString() + ' | Starred by: ' + user.tag + ` | [Jump](${reaction.message.url})`
-                    }
-                ]
-            })
+        const starmsg = Util.CreateEmbed(null, {
+            author: {
+                name: reaction.message.author.tag,
+                icon: reaction.message.author.displayAvatarURL()
+            },
+            description: reaction.message.content,
+            fields: [ 
+                {
+                    name: 'Message Info:',
+                    value: 'Sent in: ' + reaction.message.channel.toString() + ' | Starred by: ' + user.tag + ` | [Jump](${reaction.message.url})`
+                }
+            ]
+        })
 
-            if (reaction.message.attachments.size > 0) starmsg.setImage(reaction.message.attachments.first().proxyURL);
+        if (reaction.message.attachments.size > 0) starmsg.setImage(reaction.message.attachments.first().proxyURL);
 
-            await board.send(starmsg);
-        }
-        
-        catch (ex) {
-            if (ex.code === Discord.Constants.APIErrors.MISSING_PERMISSIONS) return;
-            console.log("Caught an exception while starboarding!: " + ex.stack);
-            Util.log("Caught an exception while starboarding!: " + ex.stack);
-        }      
+        await board.send(starmsg);    
     }
 
     /**
