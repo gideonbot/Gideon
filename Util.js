@@ -337,8 +337,8 @@ class Util {
 
         const embed = new Discord.MessageEmbed()
         if (member && member.guild.id === '595318490240385037' && member.premiumSince) embed.setColor('#CB45CC');
-        else embed.setColor('#2791D3')
-        .setFooter(Util.config.footer, Util.config.avatar)
+        else embed.setColor('#2791D3');
+        embed.setFooter(Util.config.footer, Util.config.avatar)
 
         if (title && typeof(title) == "string") embed.setTitle(title);
         if (options.description && typeof(options.description) == "string") embed.setDescription(options.description + `\n${logos}`);
