@@ -447,8 +447,6 @@ class Util {
      * @param {Discord.Client} gideon
      */
     static async Starboard(reaction, user, gideon) {
-        const board = gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
-
         if (reaction.partial) await reaction.fetch();
         if (!reaction.message) return;
         if (reaction.message.deleted) return;
@@ -458,6 +456,8 @@ class Util {
         if (reaction.emoji.name !== '⭐') return;
         if (reaction.message.embeds[0]) return;
         if (reaction.users.cache.size > 1) return;
+
+        const board = gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
 
         const starmsg = Util.CreateEmbed(null, {
             author: {
