@@ -132,7 +132,7 @@ export async function run(gideon, message, args) {
                 }
 
                 //we remove the reaction even when the user is rate limited... I guess
-                reaction.message.reactions.find(x => x.emoji.name === "▶").users.remove(user.id);
+                reaction.message.reactions.cache.find(x => x.emoji.name === "▶").users.remove(user.id);
             });
         });
     }
