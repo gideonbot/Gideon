@@ -1,4 +1,3 @@
-![License](https://img.shields.io/badge/License-GPLv2-blue.svg)
 ![node](https://img.shields.io/node/v/discord.js)
 ![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/discordjs/discord.js/master)
 ![Node.js CI](https://github.com/gideonbot/Gideon/workflows/Node.js%20CI/badge.svg)
