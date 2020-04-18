@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -13,21 +13,21 @@ export async function run(gideon, message, args) {
         fields: [
             {
                 name: 'PayPal',
-                value: `[Paypal.me](https://www.paypal.me/adrifcastr 'https://www.paypal.me/adrifcastr')`
+                value: '[Paypal.me](https://www.paypal.me/adrifcastr \'https://www.paypal.me/adrifcastr\')'
             },
             {
                 name: 'Patreon',
-                value: `[Patreon.com](https://www.patreon.com/gideonbot 'https://www.patreon.com/gideonbot')`
+                value: '[Patreon.com](https://www.patreon.com/gideonbot \'https://www.patreon.com/gideonbot\')'
             }
         ]
     }, message.member));
 }
 
 export const help = {
-    name: ["donate", "paypal", "patreon"],
-    type: "misc",
-    help_text: "donate",
-    help_desc: "Displays info to support maintainance and hosting of Gideon",
+    name: ['donate', 'paypal', 'patreon'],
+    type: 'misc',
+    help_text: 'donate',
+    help_desc: 'Displays info to support maintainance and hosting of Gideon',
     owner: false,
     voice: false,
     timevault: false,
@@ -36,4 +36,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -7,7 +7,7 @@ import Util from "../../Util.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
-    const as = Util.CreateEmbed("You must supply valid input!", null, message.member);
+    const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
     
     try {
         if (isNaN(args[0])) {
@@ -24,17 +24,17 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log("Caught an exception while running slowmode.js: " + ex.stack);
-        Util.log("Caught an exception while running slowmode.js: " + ex.stack);
+        console.log('Caught an exception while running slowmode.js: ' + ex.stack);
+        Util.log('Caught an exception while running slowmode.js: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }      
 }
 
 export const help = {
-    name: ["slowmode", "slowmo", "slow", "sm"],
-    type: "admin",
-    help_text: "slowmode [channel] <seconds>",
-    help_desc: "Enables slowmode",
+    name: ['slowmode', 'slowmo', 'slow', 'sm'],
+    type: 'admin',
+    help_text: 'slowmode [channel] <seconds>',
+    help_desc: 'Enables slowmode',
     owner: false,
     voice: false,
     timevault: false,
@@ -43,4 +43,4 @@ export const help = {
     roles: [],
     user_perms: ['MANAGE_CHANNELS'],
     bot_perms: ['MANAGE_CHANNELS']
-}
+};

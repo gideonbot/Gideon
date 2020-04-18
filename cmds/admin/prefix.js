@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -24,17 +24,17 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log("Caught an exception while running prefix.js: " + ex.stack);
-        Util.log("Caught an exception while running prefix.js: " + ex.stack);
+        console.log('Caught an exception while running prefix.js: ' + ex.stack);
+        Util.log('Caught an exception while running prefix.js: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }      
 }
 
 export const help = {
-    name: "prefix",
-    type: "admin",
-    help_text: "prefix [default] <prefix>",
-    help_desc: "Set custom prefix",
+    name: 'prefix',
+    type: 'admin',
+    help_text: 'prefix [default] <prefix>',
+    help_desc: 'Set custom prefix',
     owner: false,
     voice: false,
     timevault: false,
@@ -43,4 +43,4 @@ export const help = {
     roles: [],
     user_perms: ['MANAGE_GUILD'],
     bot_perms: []
-}
+};

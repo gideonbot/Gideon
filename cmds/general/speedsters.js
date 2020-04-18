@@ -1,6 +1,6 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import gideonapi from 'gideon-api';
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -38,26 +38,26 @@ export async function run(gideon, message, args) {
         const speedsters = await gideonapi.speedsters();
 
         const speedster = Util.CreateEmbed(speedsters[spnum].speedster, {thumbnail: speedsters[spnum].image}, message.member)
-        .addField(`*Lightning Color(s) (Electrokinesis)*`, `${speedsters[spnum].lightningColorsElectrokinesis}`)
-        .addField(`*Universe*`, `${speedsters[spnum].universe}`)
-        .addField(`*Actor/Actress*`, `${speedsters[spnum].actoractress}`)
-        .addField(`*First Appearance*`, `${speedsters[spnum].firstAppearance}`)
-        .addField(`*First Appearance as Speedster*`, `${speedsters[spnum].firstAppearanceAsSpeedster}`);
+            .addField('*Lightning Color(s) (Electrokinesis)*', `${speedsters[spnum].lightningColorsElectrokinesis}`)
+            .addField('*Universe*', `${speedsters[spnum].universe}`)
+            .addField('*Actor/Actress*', `${speedsters[spnum].actoractress}`)
+            .addField('*First Appearance*', `${speedsters[spnum].firstAppearance}`)
+            .addField('*First Appearance as Speedster*', `${speedsters[spnum].firstAppearanceAsSpeedster}`);
     
         message.channel.send(speedster);
     }
     
     catch (err) {
-        console.log("An error occurred while trying to fetch speedsters: " + err);
-        Util.log("An error occurred while trying to fetch speedsters: " + err);
+        console.log('An error occurred while trying to fetch speedsters: ' + err);
+        Util.log('An error occurred while trying to fetch speedsters: ' + err);
         message.channel.send(Util.CreateEmbed('Failed to fetch speedster data, please try again later!', null, message.member));
     }
 }
 export const help = {
-    name: ["sp", "speedster", "speedsters"],
-    type: "general",
-    help_text: "sp <name/alter ego> eN (earth number)",
-    help_desc: "Fetches Speedster info",
+    name: ['sp', 'speedster', 'speedsters'],
+    type: 'general',
+    help_text: 'sp <name/alter ego> eN (earth number)',
+    help_desc: 'Fetches Speedster info',
     owner: false,
     voice: false,
     timevault: false,
@@ -66,4 +66,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

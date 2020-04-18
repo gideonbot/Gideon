@@ -1,6 +1,6 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import fetch from 'node-fetch';
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -14,13 +14,13 @@ export async function run(gideon, message, args) {
     let showtitle;
     let thimg;
     
-    if (agc.match(/(?:flash)/i)) showtitle = "The Flash";
-    else if (agc.match(/(?:arrow)/i)) showtitle = "Arrow";
-    else if (agc.match(/(?:supergirl)/i)) showtitle = "Supergirl";
-    else if (agc.match(/(?:legends)/i)) showtitle = "DC's Legends of Tomorrow";
-    else if (agc.match(/(?:constantine)/i)) showtitle = "Constantine";
-    else if (agc.match(/(?:batwoman)/i)) showtitle = "Batwoman";
-    else if (agc.match(/(?:blacklightning)/i)) showtitle = "Black Lightning";
+    if (agc.match(/(?:flash)/i)) showtitle = 'The Flash';
+    else if (agc.match(/(?:arrow)/i)) showtitle = 'Arrow';
+    else if (agc.match(/(?:supergirl)/i)) showtitle = 'Supergirl';
+    else if (agc.match(/(?:legends)/i)) showtitle = 'DC\'s Legends of Tomorrow';
+    else if (agc.match(/(?:constantine)/i)) showtitle = 'Constantine';
+    else if (agc.match(/(?:batwoman)/i)) showtitle = 'Batwoman';
+    else if (agc.match(/(?:blacklightning)/i)) showtitle = 'Black Lightning';
     //else if (agc.match(/(?:canaries)/i)) showtitle = "Green Arrow and the Canaries";
     //else if (agc.match(/(?:supesnlois)/i)) showtitle = "Superman & Lois";
     //else if (agc.match(/(?:stargirl)/i)) showtitle = "Stargirl";
@@ -34,7 +34,7 @@ export async function run(gideon, message, args) {
         //remove previous !next collectors for that specific user (found by searching for embeds with users name#discriminator in title)
         message.channel.messages.fetch({limit: 50}).then(messages => {
             //really big filter
-            let filtered = messages.filter(x => x && x.author && x.author.id === gideon.user.id && x.nextCollector && x.embeds && x.embeds.length > 0 && x.embeds[0] && x.embeds[0].title && x.embeds[0].title.endsWith(message.author.tag + ":"));
+            let filtered = messages.filter(x => x && x.author && x.author.id === gideon.user.id && x.nextCollector && x.embeds && x.embeds.length > 0 && x.embeds[0] && x.embeds[0].title && x.embeds[0].title.endsWith(message.author.tag + ':'));
 
             filtered.each(msg => {
                 if (msg.reactions.size > 0) msg.reactions.removeAll();
@@ -44,7 +44,7 @@ export async function run(gideon, message, args) {
         });
 
         let fiep = Util.parseSeriesEpisodeString(args[1]);
-        fiep = "S" + Util.normalize(fiep.season) + "E" + Util.normalize(fiep.episode);
+        fiep = 'S' + Util.normalize(fiep.season) + 'E' + Util.normalize(fiep.episode);
 
         let shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
 
@@ -82,71 +82,71 @@ export async function run(gideon, message, args) {
                         value: nxepard
                     },
                     {
-                        name: `Powered by:`,
+                        name: 'Powered by:',
                         value: `**[arrowverse.info](${url} '${url}')**`
                     }
                 ]
             }, message.member);
 
             return embed;
-        }
+        };
     
         let embed = GetNextEmbed(showtitle, fiep);
 
         message.channel.send(embed).then(sent => {
             //don't react with ▶ to error messages
-            if (typeof embed === "string") return;
-            sent.react("▶");
+            if (typeof embed === 'string') return;
+            sent.react('▶');
             let LastEdit = Date.now();
-            let filter = (reaction, user) => user.id === message.author.id && reaction.emoji.name === "▶";
+            let filter = (reaction, user) => user.id === message.author.id && reaction.emoji.name === '▶';
             let collector = sent.createReactionCollector(filter);
             sent.nextCollector = collector;
 
-            collector.on("collect", async (reaction, user) => {
+            collector.on('collect', async (reaction, user) => {
                 let now = Date.now();
                 let diff = (now - LastEdit) / 1000;
 
                 let embed = collector.message.embeds[0];
 
-                if (diff >= 60 * 5 || embed.fields[0].name.toLowerCase().includes("black lightning")) {
+                if (diff >= 60 * 5 || embed.fields[0].name.toLowerCase().includes('black lightning')) {
                     LastEdit = Date.now();
 
                     //Arrow S01E02 - Honor Thy Father
                     let name = embed.fields[0].name;
 
                     // we split using " - " to get the tv show & season+ep (Arrow S01E02)
-                    let data = name.split(" - ")[0];
+                    let data = name.split(' - ')[0];
                     
                     //then we split using " " to get the ep info (last item of array) and tv show name (what is left of the array)
                     
-                    let data_split = data.split(" ");
+                    let data_split = data.split(' ');
                     //we get the last item of array using array.pop()
                     let ep_info = data_split.pop();
                     //what's left is the TV show name
-                    let tv_show_name = data_split.join(" ");
+                    let tv_show_name = data_split.join(' ');
 
                     //with data we have we just request the next episode, easy
                     collector.message.edit(GetNextEmbed(tv_show_name, ep_info));
                 }
 
                 //we remove the reaction even when the user is rate limited... I guess
-                reaction.message.reactions.cache.find(x => x.emoji.name === "▶").users.remove(user.id);
+                reaction.message.reactions.cache.find(x => x.emoji.name === '▶').users.remove(user.id);
             });
         });
     }
 
     catch (ex) {
-        console.log("Failed to fetch next episode: " + ex.stack);
-        Util.log("Failed to fetch next episode: " + ex.stack);
+        console.log('Failed to fetch next episode: ' + ex.stack);
+        Util.log('Failed to fetch next episode: ' + ex.stack);
         message.channel.send(Util.CreateEmbed('Failed to fetch episode list, please try again later!', null, message.member));
     }
 }
 
 export const help = {
-    name: ["next", "nx"],
-    type: "general",
-    help_text: "next <show> <NxNN/SNNENN> ~ N -> number",
-    help_desc: "Fetches next episode in watching order",
+    name: ['next', 'nx'],
+    type: 'general',
+    help_text: 'next <show> <NxNN/SNNENN> ~ N -> number',
+    help_desc: 'Fetches next episode in watching order',
     owner: false,
     voice: false,
     timevault: false,
@@ -155,4 +155,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: ['MANAGE_MESSAGES']
-}
+};

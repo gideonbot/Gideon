@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 
 class MsgHandler {
     constructor() {
@@ -29,7 +29,8 @@ class MsgHandler {
                 abmval: 1,
                 eastereggs: 0,
                 blacklist: 0
-            }
+            };
+
             gideon.setGuild.run(currentguild);
         }
 
@@ -63,11 +64,13 @@ class MsgHandler {
    
         if (spamcount && spamcount.usages + 1 > 10) {
             let ub = gideon.getUser.get(message.author.id);
+
             if (!ub) ub = {
                 user: message.author.id,
                 blacklist: 1,
-            }
+            };
             else ub.blacklist = 1;
+            
             gideon.setUser.run(ub);
             Util.log(`${message.author.tag} had their access revoked due to command spam:\`\`\`\nUser: ${message.author.tag} - ${message.author.id}\nMessage: ${message.content} - ${message.id}\n\`\`\`\n${message.url}`);
             return message.reply('your access to ' + gideon.user.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
@@ -152,10 +155,10 @@ class MsgHandler {
         }
 
         if (command.help.args.force) {
-            const noinput = Util.CreateEmbed("You must supply valid input!", null, message.member);
-            const noid = Util.CreateEmbed("You must supply a valid ID!", null, message.member);
+            const noinput = Util.CreateEmbed('You must supply valid input!', null, message.member);
+            const noid = Util.CreateEmbed('You must supply a valid ID!', null, message.member);
             const noepisode = Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}, message.member);
-            const nomention = Util.CreateEmbed("You must supply a valid mention!", null, message.member);
+            const nomention = Util.CreateEmbed('You must supply a valid mention!', null, message.member);
 
             if (!args.length) return message.channel.send(noinput);
 

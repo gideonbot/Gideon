@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -6,15 +6,15 @@ import Discord from "discord.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
-    await message.reply(`now respawning all shards... :white_check_mark:`);
+    await message.reply('now respawning all shards... :white_check_mark:');
     gideon.shard.respawnAll();
 }
 
 export const help = {
-    name: ["rs", "respawn"],
-    type: "owner",
-    help_text: "rs",
-    help_desc: "Respawns all shards",
+    name: ['rs', 'respawn'],
+    type: 'owner',
+    help_text: 'rs',
+    help_desc: 'Respawns all shards',
     owner: true,
     voice: false,
     timevault: false,
@@ -23,4 +23,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

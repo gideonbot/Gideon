@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -7,11 +7,11 @@ import Util from "../../Util.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {      
-    message.channel.send("Booting up the Multiverse Holo Projector...");
+    message.channel.send('Booting up the Multiverse Holo Projector...');
     await Util.delay(1000);
-    message.channel.send("Calling...");
+    message.channel.send('Calling...');
     await Util.delay(1000);
-    message.channel.send("...");
+    message.channel.send('...');
     await Util.delay(1000);
 
     const arr = [
@@ -76,10 +76,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: "wells",
-    type: "fun",
-    help_text: "wells",
-    help_desc: "Reaches out to a random Wells",
+    name: 'wells',
+    type: 'fun',
+    help_text: 'wells',
+    help_desc: 'Reaches out to a random Wells',
     owner: false,
     voice: false,
     timevault: false,
@@ -88,4 +88,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

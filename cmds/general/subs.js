@@ -1,6 +1,6 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import OpenSubtitles from 'opensubtitles-api';
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -9,8 +9,8 @@ import Util from "../../Util.js";
  */
 export async function run(gideon, message, args) {
     if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
-        Util.log("Missing env variables for subs command!");
-        console.log("Missing env variables for subs command!");
+        Util.log('Missing env variables for subs command!');
+        console.log('Missing env variables for subs command!');
         return message.channel.send(Util.CreateEmbed('This command is currently not available', null, message.member));
     }
 
@@ -22,11 +22,11 @@ export async function run(gideon, message, args) {
     });
 
     if (!args[0]) return message.channel.send(Util.CreateEmbed('You must supply a lang code, the shows name, season and its episode number!', {
-        description: `You can find ISO 639-2 codes [here](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes 'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes')!`
+        description: 'You can find ISO 639-2 codes [here](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes \'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes\')!'
     }, message.member));
 
     if (args[0].length !== 3) return message.channel.send(Util.CreateEmbed('You must supply a valid ISO 639-2 code!', {
-        description: `[ISO 639-2 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes 'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes')`
+        description: '[ISO 639-2 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes \'https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes\')'
     }, message.member));
 
     let seasonAndEpisode = Util.parseSeriesEpisodeString(args[2]);
@@ -81,7 +81,7 @@ export async function run(gideon, message, args) {
             id: 'tt8722888',
             title: 'Stargirl'
         }
-    ]
+    ];
 
     let show = shows[-1];
     let agc = args[1];
@@ -114,25 +114,25 @@ export async function run(gideon, message, args) {
         imdbid: show.id,           
 
     }).then(subtitles => {
-        const embed = Util.CreateEmbed(`Subtitles for: ${show.title} ${seasonAndEpisode.season}x${seasonAndEpisode.episode}`, {description: `Here are the 5 best results from opensubtitles.org:`}, message.member);
+        const embed = Util.CreateEmbed(`Subtitles for: ${show.title} ${seasonAndEpisode.season}x${seasonAndEpisode.episode}`, {description: 'Here are the 5 best results from opensubtitles.org:'}, message.member);
 
         for (let sub of Object.values(subtitles)[0]) {
-            embed.addField(sub.filename, `**[Download SRT](${sub.url} '${sub.url}')** Lang: \`${sub.lang}\` Score: \`${sub.score}\``)
+            embed.addField(sub.filename, `**[Download SRT](${sub.url} '${sub.url}')** Lang: \`${sub.lang}\` Score: \`${sub.score}\``);
         }
         
         message.channel.send(embed);
     }).catch(async err => {
-        console.log("An error occurred while trying to fetch subtitles: " + err);
-        Util.log("An error occurred while trying to fetch subtitles: " + err);
+        console.log('An error occurred while trying to fetch subtitles: ' + err);
+        Util.log('An error occurred while trying to fetch subtitles: ' + err);
         return message.channel.send(Util.CreateEmbed('There were no results for this episode on opensubtitles.org!', {description: 'Try another episode or another language code!'}, message.member));
     });
 }
 
 export const help = {
-    name: ["subs", "subtitles"],
-    type: "general",
-    help_text: "subs <lang> <show> <NxNN/SNNENN> ~ N -> number",
-    help_desc: "Searches opensubtitles.org for the specified episode",
+    name: ['subs', 'subtitles'],
+    type: 'general',
+    help_text: 'subs <lang> <show> <NxNN/SNNENN> ~ N -> number',
+    help_desc: 'Searches opensubtitles.org for the specified episode',
     owner: false,
     voice: false,
     timevault: false,
@@ -141,4 +141,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

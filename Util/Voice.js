@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import fetch from 'node-fetch';
 import { Transform } from 'stream';
 
@@ -22,15 +22,15 @@ class Voice {
      * Voicechannel Speech-To-Text 
      * @param {ReadableStream} speech 
      */
-    static async SpeechRecognition(speech, channel, gideon) {
+    static async SpeechRecognition(speech) {
         if (!process.env.WITAI_TOKEN) return null;
 
         function convertBufferTo1Channel(buffer) {
-            const convertedBuffer = Buffer.alloc(buffer.length / 2)
+            const convertedBuffer = Buffer.alloc(buffer.length / 2);
 
             for (let i = 0; i < convertedBuffer.length / 2; i++) {
-                const uint16 = buffer.readUInt16LE(i * 4)
-                convertedBuffer.writeUInt16LE(uint16, i * 2)
+                const uint16 = buffer.readUInt16LE(i * 4);
+                convertedBuffer.writeUInt16LE(uint16, i * 2);
             }
 
             return convertedBuffer;
@@ -42,7 +42,7 @@ class Voice {
             }
 
             _transform(data, encoding, next) {
-                next(null, convertBufferTo1Channel(data))
+                next(null, convertBufferTo1Channel(data));
             }
         }
 
@@ -75,7 +75,7 @@ class Voice {
             content: '!' + intent,
             author: message.author,
             partial: message.partial
-        }
+        };
         
         let voicemsg = new Discord.Message(gideon, data, message.channel);
         voicemsg.voice = true;

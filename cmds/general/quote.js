@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 import gideonapi from 'gideon-api';
 
 /**
@@ -14,18 +14,18 @@ export async function run(gideon, message, args) {
     }
 
     catch (ex) {
-        console.log("An error occurred while trying to fetch a quote: " + ex.stack);
-        Util.log("An error occurred while trying to fetch a quote: " + ex.stack);
+        console.log('An error occurred while trying to fetch a quote: ' + ex.stack);
+        Util.log('An error occurred while trying to fetch a quote: ' + ex.stack);
 
         return message.channel.send(Util.CreateEmbed('Failed to fetch a quote, please try again later!', null, message.member));
     }
 }
 
 export const help = {
-    name: "quote",
-    type: "fun",
-    help_text: "quote",
-    help_desc: "Displays a random quote",
+    name: 'quote',
+    type: 'fun',
+    help_text: 'quote',
+    help_desc: 'Displays a random quote',
     owner: false,
     voice: false,
     timevault: false,
@@ -34,4 +34,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

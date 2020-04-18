@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -12,14 +12,14 @@ export async function run(gideon, message, args) {
     const role = gideon.guilds.cache.get('595318490240385037').roles.cache.get('595334594149220368');
 
     if (channel.permissionsFor(role).has('VIEW_CHANNEL')) {
-        message.reply('devmode enabled! :white_check_mark:')
+        message.reply('devmode enabled! :white_check_mark:');
         channel.permissionOverwrites.get(role.id).update({
             VIEW_CHANNEL: false
         }).catch(ex => console.log(ex));
     }
 
     else {
-        message.reply('devmode disabled! :white_check_mark:')
+        message.reply('devmode disabled! :white_check_mark:');
         channel.permissionOverwrites.get(role.id).update({
             VIEW_CHANNEL: true
         }).catch(ex => console.log(ex));
@@ -28,10 +28,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: "devmode",
-    type: "owner",
-    help_text: "devmode",
-    help_desc: "Toggles devmode",
+    name: 'devmode',
+    type: 'owner',
+    help_text: 'devmode',
+    help_desc: 'Toggles devmode',
     owner: true,
     voice: false,
     timevault: false,
@@ -40,4 +40,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

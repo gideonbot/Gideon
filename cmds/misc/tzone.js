@@ -1,7 +1,7 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 import fs from 'fs';
-import moment from "moment-timezone";
+import moment from 'moment-timezone';
 
 /**
  * @param {Discord.Client} gideon
@@ -43,8 +43,8 @@ export async function run(gideon, message, args) {
         }
 
         catch (ex) {
-            console.log("Caught an exception while running tzone.js: " + ex.stack);
-            Util.log("Caught an exception while running tzone.js: " + ex.stack);
+            console.log('Caught an exception while running tzone.js: ' + ex.stack);
+            Util.log('Caught an exception while running tzone.js: ' + ex.stack);
             return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
         }
         return;
@@ -68,8 +68,8 @@ export async function run(gideon, message, args) {
         }
 
         catch (ex) {
-            console.log("Caught an exception while running tzone.js: " + ex.stack);
-            Util.log("Caught an exception while running tzone.js: " + ex.stack);
+            console.log('Caught an exception while running tzone.js: ' + ex.stack);
+            Util.log('Caught an exception while running tzone.js: ' + ex.stack);
             message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
         }
     }
@@ -78,10 +78,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: ["tz", "tzones", "timezone", "timezones"],
-    type: "misc",
-    help_text: "tz [<register>/<user>]",
-    help_desc: "Displays users timezones",
+    name: ['tz', 'tzones', 'timezone', 'timezones'],
+    type: 'misc',
+    help_text: 'tz [<register>/<user>]',
+    help_desc: 'Displays users timezones',
     owner: false,
     voice: false,
     timevault: false,
@@ -90,4 +90,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

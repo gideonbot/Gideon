@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -13,17 +13,17 @@ export async function run(gideon, message, args) {
         fields: [
             {
                 name: 'GitHub Wiki:',
-                value: `**[Read Docs](https://github.com/adrifcastr/Gideon/wiki 'https://github.com/adrifcastr/Gideon/wiki')**`
+                value: '**[Read Docs](https://github.com/adrifcastr/Gideon/wiki \'https://github.com/adrifcastr/Gideon/wiki\')**'
             }
         ]
     }, message.member));
 }
 
 export const help = {
-    name: ["docs", "hosting"],
-    type: "misc",
-    help_text: "docs",
-    help_desc: "Displays Gideon's Github Wiki link",
+    name: ['docs', 'hosting'],
+    type: 'misc',
+    help_text: 'docs',
+    help_desc: 'Displays Gideon\'s Github Wiki link',
     owner: false,
     voice: false,
     timevault: false,
@@ -32,4 +32,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

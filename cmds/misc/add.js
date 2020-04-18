@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -22,10 +22,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: ["add", "oauth"],
-    type: "misc",
-    help_text: "add",
-    help_desc: "Displays Gideon's oauth2 invite link",
+    name: ['add', 'oauth'],
+    type: 'misc',
+    help_text: 'add',
+    help_desc: 'Displays Gideon\'s oauth2 invite link',
     owner: false,
     voice: false,
     timevault: false,
@@ -34,4 +34,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

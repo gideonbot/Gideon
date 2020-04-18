@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -57,7 +57,7 @@ export async function run(gideon, message, args) {
             title: 'Harbinger',
             desc: 'This is Audrey Marie Anderson\'s new suit for COIE!'
         },
-    ]
+    ];
 
     let suit = suits[-1];
 
@@ -76,10 +76,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: ["suit", "suits", "costume", "costumes"],
-    type: "general",
-    help_text: "suit <character>",
-    help_desc: "Displays newly revealed suits",
+    name: ['suit', 'suits', 'costume', 'costumes'],
+    type: 'general',
+    help_text: 'suit <character>',
+    help_desc: 'Displays newly revealed suits',
     owner: false,
     voice: false,
     timevault: false,
@@ -88,4 +88,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

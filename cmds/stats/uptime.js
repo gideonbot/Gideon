@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -11,10 +11,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: "uptime",
-    type: "stats",
-    help_text: "uptime",
-    help_desc: "Displays the bot's uptime",
+    name: 'uptime',
+    type: 'stats',
+    help_text: 'uptime',
+    help_desc: 'Displays the bot\'s uptime',
     owner: false,
     voice: false,
     timevault: false,
@@ -23,4 +23,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

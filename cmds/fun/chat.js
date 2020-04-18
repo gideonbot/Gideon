@@ -1,6 +1,6 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
-import cleverbot from "cleverbot-free";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
+import cleverbot from 'cleverbot-free';
 
 /**
  * @param {Discord.Client} gideon
@@ -70,4 +70,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

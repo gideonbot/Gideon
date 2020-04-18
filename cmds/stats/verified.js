@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -20,16 +20,16 @@ export async function run(gideon, message, args) {
     }
     catch (ex) {
         console.log(ex);
-        Util.log("Caught an exception while running verified.js: " + ex.stack);
+        Util.log('Caught an exception while running verified.js: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 
 export const help = {
-    name: ["verified", "75"],
-    type: "stats",
-    help_text: "verified",
-    help_desc: "Road to 75 guilds",
+    name: ['verified', '75'],
+    type: 'stats',
+    help_text: 'verified',
+    help_desc: 'Road to 75 guilds',
     owner: false,
     voice: false,
     timevault: false,
@@ -38,4 +38,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

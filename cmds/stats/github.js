@@ -1,6 +1,6 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import fetch from 'node-fetch';
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -21,17 +21,17 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log("Caught an exception while fetching github data: " + ex.stack);
-        Util.log("Caught an exception while fetching github data: " + ex.stack);
+        console.log('Caught an exception while fetching github data: ' + ex.stack);
+        Util.log('Caught an exception while fetching github data: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while fetching github data!', null, message.member));
     }
 }
 
 export const help = {
-    name: ["github", "git", "repo"],
-    type: "stats",
-    help_text: "github",
-    help_desc: "Displays Github repository info",
+    name: ['github', 'git', 'repo'],
+    type: 'stats',
+    help_text: 'github',
+    help_desc: 'Displays Github repository info',
     owner: false,
     voice: false,
     timevault: false,
@@ -40,4 +40,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

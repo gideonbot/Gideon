@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -20,7 +20,7 @@ export async function run(gideon, message, args) {
                 value: '```' + args.join(' ') + '```'
             },
             {
-                name: `Translated Text: :flag_gb:`,
+                name: 'Translated Text: :flag_gb:',
                 value: '```' + tr[0] + '```'
             }
         ]
@@ -28,10 +28,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: ["tr", "translate"],
-    type: "misc",
-    help_text: "tr <text>",
-    help_desc: "Translates text",
+    name: ['tr', 'translate'],
+    type: 'misc',
+    help_text: 'tr <text>',
+    help_desc: 'Translates text',
     owner: false,
     voice: false,
     timevault: false,
@@ -40,4 +40,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

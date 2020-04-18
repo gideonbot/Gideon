@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -11,9 +11,9 @@ export async function run(gideon, message, args) {
 
 export const help = {
     name: ['website', 'web', 'url', 'homepage'],
-    type: "misc",
-    help_text: "website",
-    help_desc: "Displays a link to Gideon's homepage",
+    type: 'misc',
+    help_text: 'website',
+    help_desc: 'Displays a link to Gideon\'s homepage',
     owner: false,
     voice: false,
     timevault: false,
@@ -22,4 +22,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

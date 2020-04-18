@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import fetch from 'node-fetch';
 
 class TR {
@@ -13,16 +13,16 @@ class TR {
     static async Translate(input) {
         const sourceLang = 'auto';
         const targetLang = 'en';
-        const sourceText = input
+        const sourceText = input;
 
-        const api = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
-        + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
+        const api = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl='
+        + sourceLang + '&tl=' + targetLang + '&dt=t&q=' + encodeURI(sourceText);
 
         const body = await fetch(api).then(res => res.json());
         let sourceflag = `:flag_${body[2]}:`;
         if (body[2] == targetLang) sourceflag = ':flag_gb:';
 
-        return [body[0][0][0], sourceflag]
+        return [body[0][0][0], sourceflag];
     }
 
     /** 
@@ -43,7 +43,7 @@ class TR {
         let args = '';
 
         if (!usedPrefix) args = message.content.split(' ').map(x => x.trim()).filter(x => x);
-        else args = message.content.slice(usedPrefix.length).trim().split(" ");
+        else args = message.content.slice(usedPrefix.length).trim().split(' ');
 
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
@@ -51,7 +51,7 @@ class TR {
         if (cvm) if (cvm.cvmval === 1) return;
         
         let trmode = gideon.getUser.get(message.author.id);
-        if (!trmode || !trmode.trmodeval) return
+        if (!trmode || !trmode.trmodeval) return;
         if (trmode.trmodeval === 0) return;
 
         else {

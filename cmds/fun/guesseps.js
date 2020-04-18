@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 import fetch from 'node-fetch';
 import stringSimilarity from 'string-similarity';
 
@@ -31,7 +31,7 @@ export async function run(gideon, message, args) {
         (x => x.series == 'Black Lightning'),
         (x => x.series == 'Batwoman'),
         (x => x.series == 'Constantine')
-    ]
+    ];
 
     let command = message.content.toLowerCase().split(' ')[0];
 
@@ -42,7 +42,7 @@ export async function run(gideon, message, args) {
             user: message.author.tag,
             guild: message.guild.id,
             points: 0
-        }
+        };
         gideon.setScore.run(score);
     }
 
@@ -84,7 +84,7 @@ export async function run(gideon, message, args) {
      * @returns {Promise<{embed: Discord.MessageEmbed, show: string, ep_and_s: string, airdate: Date, ep_name: string}>}
      */
     async function GetGame(showfilter) {
-        const body = await fetch("https://arrowverse.info/api").then(res => res.json());
+        const body = await fetch('https://arrowverse.info/api').then(res => res.json());
 
         const shows = body.filter(showfilter);
 
@@ -97,12 +97,12 @@ export async function run(gideon, message, args) {
         const gameembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
             description: `Please guess the following Arrowverse episode's name:\n\`${show} ${epnum}\`\n\n(Press :arrow_forward: to skip this episode or <:stop:669309980209446912> to end this round)`,
             author: {
-                name: `You've got ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`,
+                name: `You've got ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + 's' : s[1]} left!`,
                 value: message.author.avatarURL()
             },
             fields: [
                 {
-                    name: `Powered by:`,
+                    name: 'Powered by:',
                     value: `**[arrowverse.info](${url} '${url}')**`
                 }
             ]
@@ -119,7 +119,7 @@ export async function run(gideon, message, args) {
 
         let sent = await message.channel.send(game.embed);
         for (let emoji of emotes) {
-            await sent.react(emoji).then(() => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
+            await sent.react(emoji).then(() => {}, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
         }
 
         const rfilter = (reaction, user) => (emotes.includes(reaction.emoji.name) || emotes.includes(reaction.emoji.id)) && user.id === message.author.id;
@@ -148,14 +148,14 @@ export async function run(gideon, message, args) {
                 await sent.reactions.removeAll();
 
                 const stopembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
-                    description: `Your game round has been cancelled! :white_check_mark:`,
+                    description: 'Your game round has been cancelled! :white_check_mark:',
                     author: {
-                        name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() > 1 ? s[1] + "s" : s[1]} left!`,
+                        name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() > 1 ? s[1] + 's' : s[1]} left!`,
                         icon: message.author.avatarURL()
                     },
                     fields: [
                         {
-                            name: `Powered by:`,
+                            name: 'Powered by:',
                             value: `**[arrowverse.info](${url} '${url}')**`   
                         }
                     ]
@@ -167,7 +167,7 @@ export async function run(gideon, message, args) {
         }); 
 
         collector.on('collect', async message => {
-            const similarity = stringSimilarity.compareTwoStrings(game.ep_name.toLowerCase().replace(/\s/g, ""), message.content.toLowerCase().replace(/\s/g, ""));
+            const similarity = stringSimilarity.compareTwoStrings(game.ep_name.toLowerCase().replace(/\s/g, ''), message.content.toLowerCase().replace(/\s/g, ''));
 
             if (similarity >= 0.65) {
                 collector.stop();
@@ -183,18 +183,18 @@ export async function run(gideon, message, args) {
                 tries--;
 
                 const correctembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
-                    description: `That is correct! :white_check_mark:\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\`\n\n**You have gained \`${points}\` ${points > 1 ? s[2] + "s" : s[2]}!**\n(Airdate point bonus: \`+${airdate_bonus}\`)`,
+                    description: `That is correct! :white_check_mark:\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\`\n\n**You have gained \`${points}\` ${points > 1 ? s[2] + 's' : s[2]}!**\n(Airdate point bonus: \`+${airdate_bonus}\`)`,
                     author: {
-                        name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`,
+                        name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + 's' : s[1]} left!`,
                         icon: message.author.avatarURL()
                     },
                     fields: [
                         {
-                            name: `Powered by:`,
+                            name: 'Powered by:',
                             value: `**[arrowverse.info](${url} '${url}')**`
                         }
                     ]
-                }, message.member)
+                }, message.member);
 
                 gideon.guessing.remove(message.author.id);
                 await sent.edit(correctembed);
@@ -208,16 +208,16 @@ export async function run(gideon, message, args) {
             const incorrectembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
                 description: `That is incorrect! :x:\n${tries == 0 ? solution : question}`,
                 author: {
-                    name: `You've ${tries == 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + "s" : s[1]} left!`,
+                    name: `You've ${tries == 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + 's' : s[1]} left!`,
                     icon: message.author.avatarURL()
                 },
                 fields: [
                     {
-                        name: `Powered by:`,
+                        name: 'Powered by:',
                         value: `**[arrowverse.info](${url} '${url}')**`
                     }
                 ]
-            }, message.member)
+            }, message.member);
 
             if (tries == 0) {
                 collector.stop();
@@ -239,7 +239,7 @@ export async function run(gideon, message, args) {
                     },
                     fields: [
                         {
-                            name: `Powered by:`,
+                            name: 'Powered by:',
                             value: `**[arrowverse.info](${url} '${url}')**`
                         }
                     ]
@@ -253,17 +253,17 @@ export async function run(gideon, message, args) {
     }
 
     catch (ex) {
-        console.log("Caught an exception while running guesseps.js: " + ex.stack);
-        Util.log("Caught an exception while running guesseps.js: " + ex.stack);
+        console.log('Caught an exception while running guesseps.js: ' + ex.stack);
+        Util.log('Caught an exception while running guesseps.js: ' + ex.stack);
         message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 
 export const help = {
-    name: ["guess", "guesseps", "points", "score"],
-    type: "fun",
-    help_text: "guess [show]",
-    help_desc: "Arrowverse episode guessing game",
+    name: ['guess', 'guesseps', 'points', 'score'],
+    type: 'fun',
+    help_text: 'guess [show]',
+    help_desc: 'Arrowverse episode guessing game',
     owner: false,
     voice: false,
     timevault: false,
@@ -272,4 +272,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: ['MANAGE_MESSAGES']
-}
+};

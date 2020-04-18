@@ -1,6 +1,6 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import fetch from 'node-fetch';
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 import moment from 'moment';
 
 /**
@@ -14,66 +14,66 @@ export async function run(gideon, message, args) {
 
     let shows = [
         {
-            id: "13",
-            title: "The Flash",
+            id: '13',
+            title: 'The Flash',
             channel: 'The CW'
         },
         {
-            id: "4",
-            title: "Arrow",
+            id: '4',
+            title: 'Arrow',
             channel: 'The CW'
         },
         {
-            id: "1850",
-            title: "Supergirl",
-            channel: info.season === "1" ? "CBS" : "The CW"
+            id: '1850',
+            title: 'Supergirl',
+            channel: info.season === '1' ? 'CBS' : 'The CW'
         },
         {
-            id: "1851",
-            title: "DC's Legends of Tomorrow",
+            id: '1851',
+            title: 'DC\'s Legends of Tomorrow',
             channel: 'The CW'
         },
         {
-            id: "15",
-            title: "Constantine",
+            id: '15',
+            title: 'Constantine',
             channel: 'NBC'
         },
         {
-            id: "37776",
-            title: "Batwoman",
+            id: '37776',
+            title: 'Batwoman',
             channel: 'The CW'
         },
         {
-            id: "20683",
-            title: "Black Lightning",
+            id: '20683',
+            title: 'Black Lightning',
             channel: 'The CW'
         },
         {
-            id: "44496",
-            title: "Green Arrow and the Canaries",
+            id: '44496',
+            title: 'Green Arrow and the Canaries',
             channel: 'The CW'
         },
         {
-            id: "3082",
-            title: "Krypton",
+            id: '3082',
+            title: 'Krypton',
             channel: 'Syfy'
         },
         {
-            id: "1859",
-            title: "Lucifer",
-            channel: info.season == "1" || info.season == "2" || info.season == "3" ? "Fox" : "Netflix"
+            id: '1859',
+            title: 'Lucifer',
+            channel: info.season == '1' || info.season == '2' || info.season == '3' ? 'Fox' : 'Netflix'
         },
         {
-            id: "44751",
-            title: "Superman & Lois",
-            channel: "The CW"
+            id: '44751',
+            title: 'Superman & Lois',
+            channel: 'The CW'
         },
         {
-            id: "37809",
-            title: "Stargirl",
-            channel: "DC Universe/The CW"
+            id: '37809',
+            title: 'Stargirl',
+            channel: 'DC Universe/The CW'
         }
-    ]
+    ];
 
     let show = shows[-1];
 
@@ -106,17 +106,17 @@ export async function run(gideon, message, args) {
         if (!moment(airdate).isValid()) sp = '||';
         if (today < airdate) sp = '||';
         let airtime = body.airtime;
-        let desc = !body.summary ? 'No summary available' : body.summary.replace("<p>", "").replace("</p>", "");
+        let desc = !body.summary ? 'No summary available' : body.summary.replace('<p>', '').replace('</p>', '');
         let img;
         if (body.image == null) img = '';
         else img = body.image.original;        
            
     
         let timeString = airtime;
-        let H = timeString.split(":")[0];
+        let H = timeString.split(':')[0];
         let h = H % 12 || 12;
-        let am_pm = (H < 12 || H === 24) ? " AM" : " PM";
-        timeString = h + ":" + timeString.split(":")[1] + am_pm;
+        let am_pm = (H < 12 || H === 24) ? ' AM' : ' PM';
+        timeString = h + ':' + timeString.split(':')[1] + am_pm;
     
         message.channel.send(Util.CreateEmbed(`${show.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
             description: sp + desc + sp + `\n\nAirdate: \`${moment(airdate).isValid() ? airdate.toDateString() : 'No Airdate Available'}\`\nAirtime: \`${timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Click here to read the full recap and watch the episode's trailer](${body.url} '${body.url}')**`,
@@ -125,16 +125,16 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log("Exception occurred while fetching the episodes " + ex.stack);
-        Util.log("Exception occurred while fetching the episodes " + ex.stack);
+        console.log('Exception occurred while fetching the episodes ' + ex.stack);
+        Util.log('Exception occurred while fetching the episodes ' + ex.stack);
         message.channel.send(Util.CreateEmbed('An error occurred while trying to fetch the episodes!', null, message.member));
     }
 }
 export const help = {
-    name: ["ep", "episode"],
-    type: "general",
-    help_text: "ep <show> <NxNN|SNENN> ~ N -> number",
-    help_desc: "Fetches episode info",
+    name: ['ep', 'episode'],
+    type: 'general',
+    help_text: 'ep <show> <NxNN|SNENN> ~ N -> number',
+    help_desc: 'Fetches episode info',
     owner: false,
     voice: false,
     timevault: false,
@@ -143,4 +143,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import fetch from 'node-fetch';
 import anyAscii from 'any-ascii';
 import Filter from 'bad-words';
@@ -15,7 +15,7 @@ class Checks {
     static ABM_Test(message, Util) {
         // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
-            const content = message.content.replace(/ /g, "").replace(/\n/g, "").toLowerCase().trim();
+            const content = message.content.replace(/ /g, '').replace(/\n/g, '').toLowerCase().trim();
 
             const abm = [
                 'twitter.com/Pagmyst',
@@ -44,7 +44,7 @@ class Checks {
                 const id = message.content.match(ytrg);
                 const google_api_key = process.env.GOOGLE_API_KEY;
 
-                if (!google_api_key) return reject("No google API key");
+                if (!google_api_key) return reject('No google API key');
 
                 const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
 
@@ -52,13 +52,13 @@ class Checks {
                     const body = await fetch(api).then(res => res.json());
 
                     const channel_id = body && body.items && body.items[0] && body.items[0].snippet && body.items[0].snippet.channelId ? body.items[0].snippet.channelId : null;
-                    if (!channel_id) return reject("Failed to get data from API");
+                    if (!channel_id) return reject('Failed to get data from API');
 
-                    if (cids.includes(channel_id)) return resolve({match: true, content: "`" + message.content + "`"});
+                    if (cids.includes(channel_id)) return resolve({match: true, content: '`' + message.content + '`'});
                 }
 
                 catch (e) {
-                    Util.log("Failed to fetch data from YT API: " + e);
+                    Util.log('Failed to fetch data from YT API: ' + e);
                     return reject(e);
                 }
             }
@@ -83,7 +83,7 @@ class Checks {
         this.ABM_Test(message, Util).then(async res => {
             if (res.match) {
                 await message.delete({ timeout: 200 });
-                Util.log("ABM triggered by: " + message.author.tag + " (" + res.content + ")");
+                Util.log('ABM triggered by: ' + message.author.tag + ' (' + res.content + ')');
                 const abmsg = await message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-BS-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}, message.member) });
                 await abmsg.delete({ timeout: 3500 });
             }
@@ -118,7 +118,7 @@ class Checks {
         let args = '';
 
         if (!usedPrefix) args = message.content.split(' ').map(x => x.trim()).filter(x => x);
-        else args = message.content.slice(usedPrefix.length).trim().split(" ");
+        else args = message.content.slice(usedPrefix.length).trim().split(' ');
 
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
@@ -148,7 +148,7 @@ class Checks {
         if (message.attachments.filter(x => x.size / 1024 <= 1000).size > 0) {
             //we reupload attachments smaller than ~1000 KB
             await message.channel.send({files: message.attachments.filter(x => x.size / 1024 <= 1000).map(x => {
-                let split = x.url.split("/");
+                let split = x.url.split('/');
                 let filename = split[split.length - 1];
                 return new Discord.MessageAttachment(x.url, 'SPOILER_' + filename);
             })});
@@ -186,9 +186,9 @@ class Checks {
         const lwimg = 'https://images.glaciermedia.ca/polopoly_fs/1.24112192.1585937959!/fileImage/httpImage/image.jpg_gen/derivatives/landscape_804/logan-williams-a-coquitlam-actor-who-played-young-flash-in-the-tv-series-died-suddenly.jpg';
         const lwimg2 = 'https://pmctvline2.files.wordpress.com/2020/04/logan-williams-dies-the-flash.jpg';
         const lwgif = 'https://i.imgur.com/LHdTBnw.gif';
-        const lwstring = '**Grant Gustin:**\n_"Just hearing the devastating news that Logan Williams has passed away suddenly. This picture was early in the filming of The Flash pilot episode back in 2014. I was so impressed by not only Logan’s talent but his professionalism on set. My thoughts and prayers will be with him and his family during what is I’m sure an unimaginably difficult time for them. Please keep Logan and his family in your thoughts and prayers during what has been a strange and trying time for us all. Sending love to everyone."_'
+        const lwstring = '**Grant Gustin:**\n_"Just hearing the devastating news that Logan Williams has passed away suddenly. This picture was early in the filming of The Flash pilot episode back in 2014. I was so impressed by not only Logan’s talent but his professionalism on set. My thoughts and prayers will be with him and his family during what is I’m sure an unimaginably difficult time for them. Please keep Logan and his family in your thoughts and prayers during what has been a strange and trying time for us all. Sending love to everyone."_';
         const lw = Util.CreateEmbed('<a:flash360:686326039525326946>R.I.P. Logan Williams<a:flash360:686326039525326946>', 
-        {description: lwstring, thumbnail: lwimg2, image: lwgif, author: {name: '04/09/2003 - 04/02/2020', icon: lwimg}});
+            {description: lwstring, thumbnail: lwimg2, image: lwgif, author: {name: '04/09/2003 - 04/02/2020', icon: lwimg}});
         const whoa = Util.CreateEmbed(null, { image: 'https://images-ext-2.discordapp.net/external/T_LsRBWhC8qcPUFrFa-mn1Gpgq9GIKI-m6tfRj7-yWQ/https/i.imgur.com/AyfOFy9.gif' }, message.member);
         const omelette = 'https://cdn.discordapp.com/attachments/669243069878501385/696770901185921106/You_have_failed_this_omelette.mp4'; 
         const punching = 'https://cdn.discordapp.com/attachments/669243069878501385/696774257279107293/why_the_punching.mp4';
@@ -245,7 +245,7 @@ class Checks {
         if (!gbl) return;
         if (gbl.blacklist === 0) return;
 
-        const textchannels = guild.channels.cache.filter(c=> c.type == "text");
+        const textchannels = guild.channels.cache.filter(c=> c.type == 'text');
         const channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
         if (!channels.size) {
             await guild.leave();
@@ -322,24 +322,24 @@ class Checks {
      * @param {Discord.Client} gideon 
      */
     static Spamcounter(id, gideon) {
-		if (id === gideon.owner) return null;
+        if (id === gideon.owner) return null;
 
-		let spamcount = gideon.spamcount.get(id);
-		if (!spamcount) {
-			spamcount = {
-				start: Date.now(),
-				usages: 1,
-				timeout: gideon.setTimeout(() => {
-					gideon.spamcount.delete(id);
-				}, 10 * 1000)
-			};
-			gideon.spamcount.set(id, spamcount);
+        let spamcount = gideon.spamcount.get(id);
+        if (!spamcount) {
+            spamcount = {
+                start: Date.now(),
+                usages: 1,
+                timeout: gideon.setTimeout(() => {
+                    gideon.spamcount.delete(id);
+                }, 10 * 1000)
+            };
+            gideon.spamcount.set(id, spamcount);
         }
         else {
             spamcount.usages++;
             gideon.spamcount.set(id, spamcount);
         }
-		return spamcount;
+        return spamcount;
     }
 
     /**
@@ -368,10 +368,10 @@ class Checks {
             }
 
             else if (invite.guild.id !== '595318490240385037') {
-            await message.delete({ timeout: 200 });
-            await message.member.send('You have been kicked for sending a foreign guild invite!').catch(ex => console.log(ex));
-            await channel.send(`${message.author.tag} has been kicked for sending a foreign guild invite!`);
-            await message.member.kick();
+                await message.delete({ timeout: 200 });
+                await message.member.send('You have been kicked for sending a foreign guild invite!').catch(ex => console.log(ex));
+                await channel.send(`${message.author.tag} has been kicked for sending a foreign guild invite!`);
+                await message.member.kick();
             }
         }
     }
@@ -394,11 +394,12 @@ class Checks {
                 abmval: 1,
                 eastereggs: 0,
                 blacklist: 1
-            }
+            };
+
             gideon.setGuild.run(gb);
             Util.log(`Guild \`${guild.name}\` has been blacklisted due to it being a bot collecting guild with \`${bots}\` bots!`);
 
-            const textchannels = guild.channels.cache.filter(c=> c.type == "text");
+            const textchannels = guild.channels.cache.filter(c=> c.type == 'text');
             const channels = textchannels.filter(c => c.permissionsFor(guild.me).has('SEND_MESSAGES'));
             
             if (channels.size) await channels.first().send(`This guild is banned for being a bot collecting guild (\`${bots}\` bots!)\nIf you believe this is an error please contact \`adrifcastr#4530\`.\nNow leaving this guild!\nhttps://discord.gg/h9SEQaU`).catch(ex => console.log(ex));
@@ -421,6 +422,7 @@ class Checks {
 
             if (member.guild.id !== '595318490240385037') return;
             const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
+            // eslint-disable-next-line no-control-regex
             const noascii = /[^\x00-\x7F]+/gi;
             const filter = new Filter();
 

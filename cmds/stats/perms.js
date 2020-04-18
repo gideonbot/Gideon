@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
@@ -15,16 +15,16 @@ export async function run(gideon, message, args) {
             icon: message.author.displayAvatarURL()
         },
         description: perms,
-    }, message.member)
+    }, message.member);
 
     message.channel.send(embed);
 }
 
 export const help = {
-    name: ["perms", "permissions"],
-    type: "stats",
-    help_text: "perms",
-    help_desc: "Displays a members perms",
+    name: ['perms', 'permissions'],
+    type: 'stats',
+    help_text: 'perms',
+    help_desc: 'Displays a members perms',
     owner: false,
     voice: false,
     timevault: false,
@@ -33,4 +33,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

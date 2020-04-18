@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 /**
  * @param {Discord.Client} gideon
  * @param {Discord.Message} message
@@ -11,10 +11,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: ["spoilers", "spoiler"],
-    type: "tags",
-    help_text: "spoilers",
-    help_desc: "Spoilers Tag",
+    name: ['spoilers', 'spoiler'],
+    type: 'tags',
+    help_text: 'spoilers',
+    help_desc: 'Spoilers Tag',
     owner: false,
     voice: false,
     timevault: true,

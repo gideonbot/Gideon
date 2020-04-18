@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -23,10 +23,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: "eggs",
-    type: "admin",
-    help_text: "eggs",
-    help_desc: "Toggles eastereggs",
+    name: 'eggs',
+    type: 'admin',
+    help_text: 'eggs',
+    help_desc: 'Toggles eastereggs',
     owner: false,
     voice: false,
     timevault: false,
@@ -35,4 +35,4 @@ export const help = {
     roles: [],
     user_perms: ['MANAGE_MESSAGES'],
     bot_perms: []
-}
+};
