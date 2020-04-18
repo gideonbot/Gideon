@@ -420,7 +420,6 @@ class Checks {
             const member = newMember;
 
             if (member.guild.id !== '595318490240385037') return;
-            const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
             const noascii = /[^\x00-\x7F]+/gi;
             const filter = new Filter();
 
@@ -434,7 +433,6 @@ class Checks {
                 let clean = filter.clean(member.nickname);
                 if (clean.length > 32) clean = 'nickname';
                 await member.setNickname(clean);
-                await channel.send(`${member} your nickname has been set to \`${clean}\` because it contained strong language!`);
             }
 
             if (!member.nickname) {
@@ -456,7 +454,6 @@ class Checks {
             const member = gideon.guilds.cache.get('595318490240385037').members.cache.get(newUser.id);
             if (!member) return;
 
-            const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
             const noascii = /[^\x00-\x7F]+/gi;
             const filter = new Filter();
 
