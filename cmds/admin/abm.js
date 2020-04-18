@@ -26,7 +26,7 @@ export const help = {
     name: 'abm',
     type: 'admin',
     help_text: 'abm',
-    help_desc: 'Toggles content filter',
+    help_desc: 'Toggles Anti-BS-Mode',
     owner: false,
     voice: false,
     timevault: false,

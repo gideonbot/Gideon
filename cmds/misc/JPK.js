@@ -12,22 +12,23 @@ export async function run(gideon, message, args) {
         console.log('Missing env variable for JPK command!');
         return message.channel.send(Util.CreateEmbed('This command is currently not available', null, message.member));
     }
-
+    
+    const customprefix = gideon.getGuild.get(message.guild.id);
     const jpkArray = ['FqCwt1J', '8bFXk0z', '2yz4RWt', 'kxpGHYM', 'f8mENXa', 'Xy2SoEw', 'UcPxCV5', 'JhTWxoJ', 'eLugrZD'];
     const jpkas = Util.CreateEmbed('You can choose an album!', {description: 'Currently available:'}, message.member)
-        .addField('!JPK', 'All Albums')
-        .addField('!JPK GN', 'General')
-        .addField('!JPK TF', 'The Flash')
-        .addField('!JPK BS', 'Black Sails')
-        .addField('!JPK AKOW', 'Another Kind of Wedding')
-        .addField('!JPK NW', 'Nearlyweds')
-        .addField('!JPK DM', 'Deep Murder')
-        .addField('!JPK TSC', 'The Secret Circle')
-        .addField('!JPK ILBAL', 'I Love Bekka & Lucy')
-        .addField('!JPK FS5GR', 'The Flash - S5 Gag Reel')
-        .addField('!JPK NSFW', 'NSFW');
+        .addField(`${customprefix.prefix}JPK`, 'All Albums (except NSFW)')
+        .addField(`${customprefix.prefix}JPK GN`, 'General')
+        .addField(`${customprefix.prefix}JPK TF`, 'The Flash')
+        .addField(`${customprefix.prefix}JPK BS`, 'Black Sails')
+        .addField(`${customprefix.prefix}JPK AKOW`, 'Another Kind of Wedding')
+        .addField(`${customprefix.prefix}JPK NW`, 'Nearlyweds')
+        .addField(`${customprefix.prefix}JPK DM`, 'Deep Murder')
+        .addField(`${customprefix.prefix}JPK TSC`, 'The Secret Circle')
+        .addField(`${customprefix.prefix}JPK ILBAL`, 'I Love Bekka & Lucy')
+        .addField(`${customprefix.prefix}JPK FS5GR`, 'The Flash - S5 Gag Reel')
+        .addField(`${customprefix.prefix}JPK NSFW`, 'NSFW');
 
-    let rjpka;  
+    let rjpka;
 
     if (!args[0]) rjpka = jpkArray[Math.floor(Math.random() * jpkArray.length)];
     else if (args[0].match(/(?:help)/i)) return message.channel.send(jpkas);
