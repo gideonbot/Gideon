@@ -421,6 +421,7 @@ class Checks {
             const member = newMember;
 
             if (member.guild.id !== '595318490240385037') return;
+            // eslint-disable-next-line no-control-regex
             const noascii = /[^\x00-\x7F]+/gi;
             const filter = new Filter();
 
