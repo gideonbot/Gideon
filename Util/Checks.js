@@ -428,7 +428,6 @@ class Checks {
                 let ascii = anyAscii(member.nickname);
                 if (ascii.length > 32) ascii = 'nickname';
                 await member.setNickname(ascii);
-                await channel.send(`${member} your nickname has been set to \`${ascii}\` because it contained unusual unicode!`);
             }
 
             if (member.nickname && filter.isProfane(member.nickname)) {
@@ -443,14 +442,12 @@ class Checks {
                     let ascii = anyAscii(member.user.username);
                     if (ascii.length > 32) ascii = 'nickname';
                     await member.setNickname(ascii);
-                    await channel.send(`${member} your nickname has been set to \`${ascii}\` because your username contained unusual unicode!`);
                 }
     
                 if (member.user.username && filter.isProfane(member.user.username)) {
                     let clean = filter.clean(member.user.username);
                     if (clean.length > 32) clean = 'nickname';
                     await member.setNickname(clean);
-                    await channel.send(`${member} your nickname has been set to \`${clean}\` because your username contained strong language!`);
                 }
             }
         }
@@ -467,14 +464,12 @@ class Checks {
                 let ascii = anyAscii(newUser.username);
                 if (ascii.length > 32) ascii = 'nickname';
                 await member.setNickname(ascii);
-                await channel.send(`${member} your nickname has been set to \`${ascii}\` because your username contained unusual unicode!`);
             }
 
             if (newUser.username && filter.isProfane(newUser.username)) {
                 let clean = filter.clean(newUser.username);
                 if (clean.length > 32) clean = 'nickname';
                 await member.setNickname(clean);
-                await channel.send(`${member} your nickname has been set to \`${clean}\` because your username contained strong language!`);
             }
         }
     }
