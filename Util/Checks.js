@@ -456,6 +456,7 @@ class Checks {
             const member = gideon.guilds.cache.get('595318490240385037').members.cache.get(newUser.id);
             if (!member) return;
 
+            // eslint-disable-next-line no-control-regex
             const noascii = /[^\x00-\x7F]+/gi;
             const filter = new Filter();
 

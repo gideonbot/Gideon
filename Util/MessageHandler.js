@@ -99,7 +99,7 @@ class MsgHandler {
                     if (!message.member.hasPermission(perms)) missingperms.push(perms);
                 }
                 if (missingperms && missingperms.length > 0) {
-                    gideon.emit('commandRefused', message, 'Missing: ' + missingperms.map(x => x).join(' '));
+                    gideon.emit('commandRefused', message, 'Missing: ' + missingperms.join(' '));
                     return message.reply('you do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
                 }
             }   
