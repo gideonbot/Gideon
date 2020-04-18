@@ -96,7 +96,7 @@ class MsgHandler {
                     if (!message.member.hasPermission(perms)) missingperms.push(perms);
                 }
                 if (missingperms && missingperms.length > 0) {
-                    gideon.emit('commandRefused', message, command, 'Missing: ' + missingperms.map(x => `\`${x}\``).join(' '));
+                    gideon.emit('commandRefused', message, 'Missing: ' + missingperms.map(x => x).join(' '));
                     return message.reply('you do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
                 }
             }   
@@ -137,7 +137,7 @@ class MsgHandler {
                     }
                 }
                 if (rolenames && rolenames.length > 0) {
-                    gideon.emit('commandRefused', message, 'Missing: ' + rolenames.map(x => `\`@${x}\``).join(' '));
+                    gideon.emit('commandRefused', message, 'Missing: ' + rolenames.map(x => `@${x}`).join(' '));
                     return message.reply('you do not have the required roles to use this command!\nRequired roles: ' + rolenames.map(x => `\`${x}\``).join(' '));
                 } 
             }
