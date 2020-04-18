@@ -1,8 +1,8 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import fetch from 'node-fetch';
-import parsePodcast from "@activediscourse/podcast-parser";
+import parsePodcast from '@activediscourse/podcast-parser';
 import moment from 'moment';
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -10,7 +10,7 @@ import Util from "../../Util.js";
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {   
-    const as = Util.CreateEmbed("You must supply valid input!", null, message.member);
+    const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
     let noep = isNaN(args[0]);
@@ -43,19 +43,19 @@ export async function run(gideon, message, args) {
             },
             fields: [
                 {
-                    name: `Currently playing:`,
+                    name: 'Currently playing:',
                     value: `\`${matescast[0]} ${matescast[3]}\`\n\n\`\`\`\n${matescast[4]}\n\`\`\``
                 },
                 {
-                    name: `Episode duration:`,
+                    name: 'Episode duration:',
                     value: `\`${matescast[6]} min\``
                 },
                 {
-                    name: `Published at:`,
+                    name: 'Published at:',
                     value: `\`${matescast[7]}\``
                 },
             ]
-        }, message.member)
+        }, message.member);
 
         const stopembed = Util.CreateEmbed(matescast[0], {
             description: matescast[1],
@@ -66,19 +66,19 @@ export async function run(gideon, message, args) {
             },
             fields: [
                 {
-                    name: `Playback stopped:`,
+                    name: 'Playback stopped:',
                     value: `\`${matescast[0]} ${matescast[3]}\`\n\n\`\`\`\n${matescast[4]}\n\`\`\``
                 },
                 {
-                    name: `Episode duration:`,
+                    name: 'Episode duration:',
                     value: `\`${matescast[6]} min\``
                 },
                 {
-                    name: `Published at:`,
+                    name: 'Published at:',
                     value: `\`${matescast[7]}\``
                 },
             ]
-        }, message.member)
+        }, message.member);
 
         const pauseembed = Util.CreateEmbed(matescast[0], {
             description: matescast[1],
@@ -89,19 +89,19 @@ export async function run(gideon, message, args) {
             },
             fields: [
                 {
-                    name: `Playback paused:`,
+                    name: 'Playback paused:',
                     value: `\`${matescast[0]} ${matescast[3]}\`\n\n\`\`\`\n${matescast[4]}\n\`\`\``
                 },
                 {
-                    name: `Episode duration:`,
+                    name: 'Episode duration:',
                     value: `\`${matescast[6]} min\``
                 },
                 {
-                    name: `Published at:`,
+                    name: 'Published at:',
                     value: `\`${matescast[7]}\``
                 },
             ]
-        }, message.member)
+        }, message.member);
 
         const finishedembed = Util.CreateEmbed(matescast[0], {
             description: matescast[1],
@@ -112,23 +112,23 @@ export async function run(gideon, message, args) {
             },
             fields: [
                 {
-                    name: `Playback finished:`,
+                    name: 'Playback finished:',
                     value: `\`${matescast[0]} ${matescast[3]}\`\n\n\`\`\`\n${matescast[4]}\n\`\`\``
                 },
                 {
-                    name: `Episode duration:`,
+                    name: 'Episode duration:',
                     value: `\`${matescast[6]} min\``
                 },
                 {
-                    name: `Published at:`,
+                    name: 'Published at:',
                     value: `\`${matescast[7]}\``
                 },
             ]
-        }, message.member)
+        }, message.member);
 
         let sent = await message.channel.send(matesembed);
         for (let emoji of emotes) {
-            await sent.react(emoji).then(() => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
+            await sent.react(emoji).then(() => {}, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
         }
 
         let cast = connection.play(matescast[5]);
@@ -141,13 +141,13 @@ export async function run(gideon, message, args) {
         rcollector.on('collect', async (reaction, user) => {
             if (reaction.emoji.name === emotes[0]) {
                 if (cast.paused) {
-                    cast.resume()
-                    sent.edit(matesembed)
+                    cast.resume();
+                    sent.edit(matesembed);
                 }
 
                 else {
-                    cast.pause()
-                    sent.edit(pauseembed)
+                    cast.pause();
+                    sent.edit(pauseembed);
                 }
                 sent.reactions.cache.find(x => x.emoji.name === emotes[0]).users.remove(user.id);
             }
@@ -190,23 +190,23 @@ export async function run(gideon, message, args) {
         }); 
 
         cast.on('finish', async () => {
-           cast.destroy();
-           rcollector.stop();
-           gideon.listening.remove(message.author.id);
-           sent.edit(finishedembed);
-           await sent.reactions.removeAll();
+            cast.destroy();
+            rcollector.stop();
+            gideon.listening.remove(message.author.id);
+            sent.edit(finishedembed);
+            await sent.reactions.removeAll();
         }); 
     } 
     
     catch (ex) {
-        console.log("Caught an exception while playing podcast: " + ex.stack);
-        Util.log("Caught an exception while playing podcast: " + ex.stack);
+        console.log('Caught an exception while playing podcast: ' + ex.stack);
+        Util.log('Caught an exception while playing podcast: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while fetching podcast data!', null, message.member));
     }
 }
 
 async function PodCast(num) {
-    const api = `https://matescast.com/rss/mates_archive.rss`;
+    const api = 'https://matescast.com/rss/mates_archive.rss';
     const rss = await fetch(api).then(res => res.text());
     const mates = await parsePodcast(rss).catch(ex => console.log(ex));
     const episodes = mates.episodes.reverse();
@@ -226,9 +226,9 @@ async function PodCast(num) {
 
 export const help = {
     name: ['mates', 'podcast'],
-    type: "misc",
-    help_text: "mates <episode>",
-    help_desc: "Listen to the MATES podcast",
+    type: 'misc',
+    help_text: 'mates <episode>',
+    help_desc: 'Listen to the MATES podcast',
     owner: false,
     voice: false,
     timevault: false,
@@ -237,4 +237,4 @@ export const help = {
     roles: [],
     user_perms: ['CONNECT', 'SPEAK', 'USE_VAD'],
     bot_perms: ['CONNECT', 'SPEAK', 'USE_VAD']
-}
+};

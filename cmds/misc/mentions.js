@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -14,10 +14,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: "mentions",
-    type: "misc",
-    help_text: "mentions",
-    help_desc: "Displays Discord mentions syntax",
+    name: 'mentions',
+    type: 'misc',
+    help_text: 'mentions',
+    help_desc: 'Displays Discord mentions syntax',
     owner: false,
     voice: false,
     timevault: false,
@@ -26,4 +26,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

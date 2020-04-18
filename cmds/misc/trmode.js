@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -11,7 +11,7 @@ export async function run(gideon, message, args) {
         id: message.author.id,
         trmodeval: 0,
         blacklist: 0
-    }
+    };
 
     if (trmode.trmodeval === 0) {
         trmode.trmodeval = 1;
@@ -27,10 +27,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: "trmode",
-    type: "misc",
-    help_text: "trmode",
-    help_desc: "Toggles translation mode",
+    name: 'trmode',
+    type: 'misc',
+    help_text: 'trmode',
+    help_desc: 'Toggles translation mode',
     owner: false,
     voice: false,
     timevault: false,
@@ -39,4 +39,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

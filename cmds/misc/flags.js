@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -13,10 +13,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: ["flags", "permflags"],
-    type: "misc",
-    help_text: "flags",
-    help_desc: "Displays Discord permission flags",
+    name: ['flags', 'permflags'],
+    type: 'misc',
+    help_text: 'flags',
+    help_desc: 'Displays Discord permission flags',
     owner: false,
     voice: false,
     timevault: false,
@@ -25,4 +25,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

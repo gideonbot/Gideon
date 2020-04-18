@@ -1,6 +1,6 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import torrentSearch from 'torrent-search-api';
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 import Magnet2torrent from 'magnet2torrent-js';
 
 /**
@@ -12,15 +12,15 @@ export async function run(gideon, message, args) {
     let agc = args[0];
     const auth = message.author.id;
 
-    let showtitle = "";
+    let showtitle = '';
 
-    if (agc.match(/(?:flash)/i)) showtitle = "The Flash";
-    else if (agc.match(/(?:arrow)/i)) showtitle = "Arrow";
-    else if (agc.match(/(?:supergirl)/i)) showtitle = "Supergirl";
-    else if (agc.match(/(?:legends)/i)) showtitle = "DC's Legends of Tomorrow";
-    else if (agc.match(/(?:constantine)/i)) showtitle = "Constantine";
-    else if (agc.match(/(?:batwoman)/i)) showtitle = "Batwoman"; 
-    else if (agc.match(/(?:blacklightning)/i)) showtitle = "Black Lightning";
+    if (agc.match(/(?:flash)/i)) showtitle = 'The Flash';
+    else if (agc.match(/(?:arrow)/i)) showtitle = 'Arrow';
+    else if (agc.match(/(?:supergirl)/i)) showtitle = 'Supergirl';
+    else if (agc.match(/(?:legends)/i)) showtitle = 'DC\'s Legends of Tomorrow';
+    else if (agc.match(/(?:constantine)/i)) showtitle = 'Constantine';
+    else if (agc.match(/(?:batwoman)/i)) showtitle = 'Batwoman'; 
+    else if (agc.match(/(?:blacklightning)/i)) showtitle = 'Black Lightning';
     //else if (agc.match(/(?:canaries)/i)) showtitle = "Green Arrow and the Canaries"; 
     //else if (agc.match(/(?:supesnlois)/i)) showtitle = "Superman & Lois"; 
     //else if (agc.match(/(?:stargirl)/i)) showtitle = "Stargirl"; 
@@ -42,7 +42,7 @@ export async function run(gideon, message, args) {
         
     let ts = `${showtitle} S${Util.normalize(season_and_ep.season)}E${Util.normalize(season_and_ep.episode)}`;
 
-    let sent = await message.channel.send(Util.CreateEmbed('Gathering torrents: ' + ts, {description: `Please stand by... This may take up to a minute`}, message.member));
+    let sent = await message.channel.send(Util.CreateEmbed('Gathering torrents: ' + ts, {description: 'Please stand by... This may take up to a minute'}, message.member));
     try {
         torrentSearch.enablePublicProviders();
 
@@ -50,7 +50,7 @@ export async function run(gideon, message, args) {
 
         if (torrents.length < 1) return message.channel.send(Util.CreateEmbed('No torrents available for this episode!', null, message.member));
 
-        const embed = Util.CreateEmbed(ts, {description: `:warning:Always enable a VPN before downloading!:warning:`});
+        const embed = Util.CreateEmbed(ts, {description: ':warning:Always enable a VPN before downloading!:warning:'});
         const m2t = new Magnet2torrent({timeout: 60});
         let list = [];
 
@@ -66,7 +66,7 @@ export async function run(gideon, message, args) {
             }
 
             catch (ex) {
-                if (ex == "Timeout") continue;
+                if (ex == 'Timeout') continue;
             }
         }
 
@@ -87,16 +87,16 @@ export async function run(gideon, message, args) {
     }
     catch (ex) {
         console.log(ex);
-        Util.log("Caught an exception while running torrent.js: " + ex.stack);
+        Util.log('Caught an exception while running torrent.js: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 
 export const help = {
-    name: ["torrent", "download"],
-    type: "general",
-    help_text: "torrent <show> <NxNN/SNNENN> ~ N -> number",
-    help_desc: "Searches torrent providers for the specified episode",
+    name: ['torrent', 'download'],
+    type: 'general',
+    help_text: 'torrent <show> <NxNN/SNNENN> ~ N -> number',
+    help_desc: 'Searches torrent providers for the specified episode',
     owner: false,
     voice: false,
     timevault: false,
@@ -105,4 +105,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: ['MANAGE_MESSAGES']
-}
+};

@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -28,7 +28,7 @@ export async function run(gideon, message, args) {
             code: true
         });
     } catch (e) {
-        return message.channel.send(Util.CreateEmbed('An error occured while processing your request:', {description: "```\n" + Util.truncate(e.stack, 400, true) + "```"}, message.member));
+        return message.channel.send(Util.CreateEmbed('An error occured while processing your request:', {description: '```\n' + Util.truncate(e.stack, 400, true) + '```'}, message.member));
     }
 }
 
@@ -45,4 +45,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

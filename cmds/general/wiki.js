@@ -1,6 +1,6 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import fetch from 'node-fetch';
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -29,7 +29,7 @@ export async function run(gideon, message, args) {
             url: 'lucifer.fandom.com',
             title: 'Lucifer'
         },
-    ]
+    ];
     
     let wiki = wikis[-1];
 
@@ -64,7 +64,7 @@ export async function run(gideon, message, args) {
         
         const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
 
-        let st = ''
+        let st = '';
         let cvm = gideon.getGuild.get(message.guild.id);
         if (cvm) {
             if (cvm.cvmval === 1) st = '||';
@@ -86,9 +86,9 @@ export async function run(gideon, message, args) {
 
 export const help = {
     name: ['wiki', 'wikistg', 'wikidc', 'wikikr', 'wikilu'],
-    type: "general",
-    help_text: "wiki[stg|kr|lu|dc] <term>",
-    help_desc: "Searches the specified wiki for the given term | stg - Stargirl | kr - Krypton | lu - Lucifer | dc - DC |",
+    type: 'general',
+    help_text: 'wiki[stg|kr|lu|dc] <term>',
+    help_desc: 'Searches the specified wiki for the given term | stg - Stargirl | kr - Krypton | lu - Lucifer | dc - DC |',
     owner: false,
     voice: false,
     timevault: false,
@@ -97,4 +97,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

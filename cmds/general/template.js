@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -11,10 +11,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: "template",
-    type: "general",
-    help_text: "template",
-    help_desc: "Sends a Time Vault template",
+    name: 'template',
+    type: 'general',
+    help_text: 'template',
+    help_desc: 'Sends a Time Vault template',
     owner: false,
     voice: false,
     timevault: false,
@@ -23,4 +23,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

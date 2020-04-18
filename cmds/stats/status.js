@@ -1,6 +1,6 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import fetch from 'node-fetch';
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -20,17 +20,17 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log("Caught an exception while fetching API data: " + ex.stack);
-        Util.log("Caught an exception while fetching API data: " + ex.stack);
+        console.log('Caught an exception while fetching API data: ' + ex.stack);
+        Util.log('Caught an exception while fetching API data: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while fetching github data!', null, message.member));
     }
 }
 
 export const help = {
     name: ['status', 'api'],
-    type: "stats",
-    help_text: "status",
-    help_desc: "Checks Gideon's API status",
+    type: 'stats',
+    help_text: 'status',
+    help_desc: 'Checks Gideon\'s API status',
     owner: false,
     voice: false,
     timevault: false,
@@ -39,4 +39,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

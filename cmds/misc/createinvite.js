@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -11,7 +11,7 @@ export async function run(gideon, message, args) {
     let guild = gideon.guilds.cache.get(id);
 
     try {
-        let textchannels = guild.channels.cache.filter(c=> c.type == "text");
+        let textchannels = guild.channels.cache.filter(c=> c.type == 'text');
         let invitechannels = textchannels.filter(c=> c.permissionsFor(guild.me).has('CREATE_INSTANT_INVITE'));
         if (!invitechannels.size) return message.reply('no channels found to create instant invite!');
 
@@ -19,17 +19,17 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log("Caught an exception while creating invites!: " + ex.stack);
-        Util.log("Caught an exception while creating invites!: " + ex.stack);
+        console.log('Caught an exception while creating invites!: ' + ex.stack);
+        Util.log('Caught an exception while creating invites!: ' + ex.stack);
         return message.channel.send(ex);
     }      
 }
 
 export const help = {
-    name: ["civ", "create"],
-    type: "misc",
-    help_text: "civ <guildid>",
-    help_desc: "Attempts to create instant invite",
+    name: ['civ', 'create'],
+    type: 'misc',
+    help_text: 'civ <guildid>',
+    help_desc: 'Attempts to create instant invite',
     owner: false,
     voice: false,
     timevault: false,
@@ -38,4 +38,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

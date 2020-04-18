@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -14,17 +14,17 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log("Caught an exception while running bkup.js: " + ex.stack);
-        Util.log("Caught an exception while running bkup.js: " + ex.stack);
+        console.log('Caught an exception while running bkup.js: ' + ex.stack);
+        Util.log('Caught an exception while running bkup.js: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }      
 }
 
 export const help = {
-    name: ["backup", "bkup"],
-    type: "admin",
-    help_text: "backup",
-    help_desc: "Performs a database backup",
+    name: ['backup', 'bkup'],
+    type: 'admin',
+    help_text: 'backup',
+    help_desc: 'Performs a database backup',
     owner: false,
     voice: false,
     timevault: false,
@@ -33,4 +33,4 @@ export const help = {
     roles: ['621399916283035658'],
     user_perms: [],
     bot_perms: []
-}
+};

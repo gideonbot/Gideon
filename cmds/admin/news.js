@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -22,7 +22,7 @@ export async function run(gideon, message, args) {
         canaries: '610867040961560625',
         supesnlois: '638486598203473958',
         stargirl: '658355462055395358'
-    }
+    };
 
     const f = m => m.author.id === message.author.id;
     const collector = message.channel.createMessageCollector(f, {time: 120 * 1000});
@@ -32,13 +32,13 @@ export async function run(gideon, message, args) {
     let cvm = gideon.getGuild.get(message.guild.id);
 
     if (cvm.cvmval === 1) {
-        cvmen = true
+        cvmen = true;
         cvm.cvmval = 0,
         gideon.setGuild.run(cvm);
     } 
 
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.').then(async message => {
-        for (let emoji of emoji_ids) message.react(emoji).then(() => {}, failed => console.log("Failed to react with " + emoji + ": " + failed));
+        for (let emoji of emoji_ids) message.react(emoji).then(() => {}, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
 
         await Util.TRM(message.guild, true);
 
@@ -55,7 +55,7 @@ export async function run(gideon, message, args) {
             let res = await Util.ABM_Test(message);
             if (res.match) {
                 collector.stop();
-                Util.log("ABM **in news** triggered by: " + message.author.tag + " (" + res.content + ")");
+                Util.log('ABM **in news** triggered by: ' + message.author.tag + ' (' + res.content + ')');
                 return;
             }
         }
@@ -85,7 +85,7 @@ export async function run(gideon, message, args) {
         }
 
         //<@&NUMBER> is how roles are represented | NUMBER - role id
-        let roles_ping_msg = roles_to_ping.length > 0 ? roles_to_ping.map(x => "<@&" + x + ">").join(" ") : null;
+        let roles_ping_msg = roles_to_ping.length > 0 ? roles_to_ping.map(x => '<@&' + x + '>').join(' ') : null;
         news_channel.send(roles_ping_msg, {embed: news}).then(async () => {
             await Util.delay(200);
             await message.channel.bulkDelete(3);
@@ -101,15 +101,15 @@ export async function run(gideon, message, args) {
     });
 
     collector.on('end', (collected, reason) => {
-        if (reason === 'time') return message.reply("You ran out of time!");
+        if (reason === 'time') return message.reply('You ran out of time!');
     });
 }
 
 export const help = {
-    name: "news",
-    type: "admin",
-    help_text: "news <text> [img]",
-    help_desc: "News Team can use this to post news",
+    name: 'news',
+    type: 'admin',
+    help_text: 'news <text> [img]',
+    help_desc: 'News Team can use this to post news',
     owner: false,
     voice: false,
     timevault: true,
@@ -118,4 +118,4 @@ export const help = {
     roles: ['602311948809273344'],
     user_perms: [],
     bot_perms: []
-}
+};

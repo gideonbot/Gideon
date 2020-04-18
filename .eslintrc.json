@@ -1,5 +1,6 @@
 {
     "env": {
+        "commonjs": true,
         "es6": true,
         "node": true
     },
@@ -13,6 +14,22 @@
         "ecmaVersion": 2020,
         "sourceType": "module"
     },
-    "parser": "babel-eslint",
-    "rules": {}
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
 }

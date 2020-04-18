@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -8,7 +8,7 @@ import Util from "../../Util.js";
  */
 export async function run(gideon, message, args) {
     try {
-        const acembed = Util.CreateEmbed('Blowing up S.T.A.R. Labs. Particle Accelerator...', {image: 'https://i.imgur.com/opCbZTn.gif'}, message.member)
+        const acembed = Util.CreateEmbed('Blowing up S.T.A.R. Labs. Particle Accelerator...', {image: 'https://i.imgur.com/opCbZTn.gif'}, message.member);
         let sent = await message.channel.send(acembed);
 
         await Util.delay(10000);
@@ -39,30 +39,30 @@ export async function run(gideon, message, args) {
                 desc: ':giraffe:Congratulations Baby Giraffe! You are quite stretchy now!:giraffe:',
                 gif: 'https://i.imgur.com/7tb6t8v.gif',
             }
-        ]
+        ];
         
         let result = abilities[Math.floor(Math.random() * abilities.length)];
     
         const pwrembed = Util.CreateEmbed(result.title, {
             description: result.desc,
             image: result.gif
-        }, message.member)
+        }, message.member);
 
         await sent.edit(pwrembed);
     }
     
     catch (ex) {
-        console.log("Exception occurred while starting up the particle accelerator " + ex.stack);
-        Util.log("Exception occurred while starting up the particle accelerator " + ex.stack);
+        console.log('Exception occurred while starting up the particle accelerator ' + ex.stack);
+        Util.log('Exception occurred while starting up the particle accelerator ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while trying to start the particle accelerator!', null, message.member));
     } 
 }
 
 export const help = {
-    name: ["accelerator", "boom"],
-    type: "fun",
-    help_text: "accelerator",
-    help_desc: "Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability",
+    name: ['accelerator', 'boom'],
+    type: 'fun',
+    help_text: 'accelerator',
+    help_desc: 'Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability',
     owner: false,
     voice: false,
     timevault: false,
@@ -71,4 +71,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: ['MANAGE_MESSAGES']
-}
+};

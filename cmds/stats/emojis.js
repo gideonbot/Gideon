@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -10,34 +10,34 @@ export async function run(gideon, message, args) {
     const guild = message.guild;
     const emojis = guild.emojis.cache.map(emojis => emojis.toString()).join(' ');
     const escaped = Util.truncate(emojis, 1024, true);
-    const rawurls = guild.emojis.cache.map(x => x.toString() + " - " + `[URL](${x.url} '${x.url}')` + "").join(" ");
+    const rawurls = guild.emojis.cache.map(x => x.toString() + ' - ' + `[URL](${x.url} '${x.url}')` + '').join(' ');
     const urls = Util.truncate(rawurls, 1024, true);
 
     const embed = Util.CreateEmbed(null, {
         fields: [
             {
-                name: `❯ Emojis:`,
+                name: '❯ Emojis:',
                 value: emojis
             },
             {
-                name: `❯ Escaped Emojis:`,
+                name: '❯ Escaped Emojis:',
                 value: `\`${escaped}\``
             },
             {
-                name: `❯ Emoji URL's:`,
+                name: '❯ Emoji URL\'s:',
                 value: urls
             },
         ]
-    }, message.member)
+    }, message.member);
 
     message.channel.send(embed);
 }
 
 export const help = {
     name: ['emojis', 'emotes'],
-    type: "stats",
-    help_text: "emojis",
-    help_desc: "Get a list of guild emojis",
+    type: 'stats',
+    help_text: 'emojis',
+    help_desc: 'Get a list of guild emojis',
     owner: false,
     voice: false,
     timevault: false,
@@ -46,4 +46,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

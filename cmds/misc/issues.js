@@ -1,6 +1,6 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import fetch from 'node-fetch';
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -19,8 +19,8 @@ export async function run(gideon, message, args) {
 
     if (command.endsWith('issue') || command.endsWith('bug')) {
         if (!token) {
-            Util.log("Missing env variable for issues command!");
-            console.log("Missing env variable for issues command!");
+            Util.log('Missing env variable for issues command!');
+            console.log('Missing env variable for issues command!');
             return message.channel.send(Util.CreateEmbed('This command is currently not avilable', null, message.member));
         }
 
@@ -28,7 +28,7 @@ export async function run(gideon, message, args) {
         const collector = message.channel.createMessageCollector(filter, {time: 120 * 1000});
 
         let sent = await message.channel.send(Util.CreateEmbed('Post an issue to GitHub:', {description: 'Please type the issue\'s title below:\nYou\'ve got `2` minutes.\n\n(Press <:stop:669309980209446912> to cancel your post)'}, message.member));
-        await sent.react(stopid).catch(failed => console.log("Failed to react with " + stopid + ": " + failed));
+        await sent.react(stopid).catch(failed => console.log('Failed to react with ' + stopid + ': ' + failed));
 
         const rfilter = (reaction, user) => user.id === auth;
         const rcollector = sent.createReactionCollector(rfilter, {time: 30 * 1000});
@@ -69,14 +69,14 @@ export async function run(gideon, message, args) {
                 'title': `Bug report by ${author}: ` + issuetitle,
                 'body': issuebody + `\n\nSubmitted via Discord by ${author}.`,
                 'labels': ['bug']
-            }
+            };
             
-            fetch(api, { method: 'POST', body: JSON.stringify(issue), headers: { 'Content-Type': 'application/json', 'Authorization': "token " + token }});
+            fetch(api, { method: 'POST', body: JSON.stringify(issue), headers: { 'Content-Type': 'application/json', 'Authorization': 'token ' + token }});
         }
 
         catch (ex) {
-            console.log("Caught an exception while running issues.js: " + ex.stack);
-            Util.log("Caught an exception while running issues.js: " + ex.stack);
+            console.log('Caught an exception while running issues.js: ' + ex.stack);
+            Util.log('Caught an exception while running issues.js: ' + ex.stack);
             return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
         }
     }
@@ -101,17 +101,17 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log("Caught an exception while fetching issues: " + ex.stack);
-        Util.log("Caught an exception while fetching issues: " + ex.stack);
+        console.log('Caught an exception while fetching issues: ' + ex.stack);
+        Util.log('Caught an exception while fetching issues: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 
 export const help = {
-    name: ["issues", "issue", "bug"],
-    type: "misc",
-    help_text: "issues",
-    help_desc: "Displays Github issues and allows to submit new ones.",
+    name: ['issues', 'issue', 'bug'],
+    type: 'misc',
+    help_text: 'issues',
+    help_desc: 'Displays Github issues and allows to submit new ones.',
     owner: false,
     voice: false,
     timevault: false,
@@ -120,4 +120,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

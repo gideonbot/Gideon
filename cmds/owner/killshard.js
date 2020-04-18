@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -21,10 +21,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: ["ks", "kill"],
-    type: "owner",
-    help_text: "ks <shardid>",
-    help_desc: "Kills the specified shard",
+    name: ['ks', 'kill'],
+    type: 'owner',
+    help_text: 'ks <shardid>',
+    help_desc: 'Kills the specified shard',
     owner: true,
     voice: false,
     timevault: false,
@@ -33,4 +33,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

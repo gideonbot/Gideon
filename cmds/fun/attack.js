@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -105,7 +105,7 @@ export async function run(gideon, message, args) {
             emote: ':smiling_imp:',
             attackgif: 'https://media.giphy.com/media/RJW3H91jSJTWNV9u6Y/giphy.gif'
         },
-    ]
+    ];
 
     let attack = attacks[-1];
 
@@ -134,10 +134,10 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: ["at", "attack"],
-    type: "fun",
-    help_text: "at <attack> <user>",
-    help_desc: "Attacks the selected user with the selected attack",
+    name: ['at', 'attack'],
+    type: 'fun',
+    help_text: 'at <attack> <user>',
+    help_desc: 'Attacks the selected user with the selected attack',
     owner: false,
     voice: false,
     timevault: false,
@@ -146,4 +146,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

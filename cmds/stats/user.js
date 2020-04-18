@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 import stringSimilarity from 'string-similarity';
 import moment from 'moment';
 
@@ -9,7 +9,7 @@ import moment from 'moment';
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {
-    const as = Util.CreateEmbed("You must supply valid input!", null, message.member);
+    const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
     const auth = message.author;
     let user;
 
@@ -41,24 +41,24 @@ export async function run(gideon, message, args) {
         'online': 'Online',
         'idle': 'Idling',
         'dnd': 'Do Not Disturb'
-    }
+    };
 
     const status_emojis = {
         'offline': ':black_circle:',
         'online': ':green_circle:',
         'idle': ':crescent_moon:',
         'dnd': ':red_circle:'
-    }
+    };
 
     let status = statuses[user.presence.status];
     let semote = status_emojis[user.presence.status];
 
-    let activity = user.presence.activities.find(x => x.type == "CUSTOM_STATUS");
-    let other_activities = user.presence.activities.filter(x => x.type != "CUSTOM_STATUS");
+    let activity = user.presence.activities.find(x => x.type == 'CUSTOM_STATUS');
+    let other_activities = user.presence.activities.filter(x => x.type != 'CUSTOM_STATUS');
     let custom_status = {
-        text: activity ? activity.state : "",
-        emoji: !activity || !activity.emoji ? "" : gideon.guilds.cache.get(activity.emoji.id) ? activity.emoji.id : activity.emoji.identifier.includes(activity.emoji.name) ? "" : activity.emoji.name 
-    }
+        text: activity ? activity.state : '',
+        emoji: !activity || !activity.emoji ? '' : gideon.guilds.cache.get(activity.emoji.id) ? activity.emoji.id : activity.emoji.identifier.includes(activity.emoji.name) ? '' : activity.emoji.name 
+    };
 
     const member = message.guild.member(user);
     if (member.lastMessage.partial) await member.lastMessage.fetch();
@@ -73,25 +73,25 @@ export async function run(gideon, message, args) {
         thumbnail: user.displayAvatarURL(),
         fields: [
             {
-                name: `❯ User Info:`,
+                name: '❯ User Info:',
                 value: `• ID: \`${user.id}\`\n• Status: \`${status}\`${semote}\n• Custom Status: ${!custom_status.text ? custom_status.emoji ? '' : '`None`' : '`' + custom_status.text + '`'} ${custom_status.emoji}\n• Activity: \`${other_activities.length < 1 ? 'None' : other_activities[0].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot ? 'Yes' : 'No'}\`\n• Avatar: [Download](${user.avatarURL()})`
             },
             {
-                name: `❯ GuildMember Info:`,
+                name: '❯ GuildMember Info:',
                 // eslint-disable-next-line no-useless-escape
                 value: `• Nickname: \`${!member.nickname ? 'None' : member.nickname}\`\n• Joined at: \`${moment.utc(member.joinedAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Boosted: ${!member.premiumSince ? '\`No\`' : '\`Yes\` <:boost:678746359549132812>'}\n• Roles: ${member.roles.cache.filter(x => x.id != member.guild.roles.everyone.id).map(roles => roles.toString()).join(' ')}\n• Permissions: ${perms}\n• Last Message: ${member.lastMessage === null ? '\`None\`' : `[Click Here](${member.lastMessage.url} '${member.lastMessage.url}')`}`
             }
         ]
-    }, message.member)
+    }, message.member);
 
     message.channel.send(embed);
 }
 
 export const help = {
-    name: ["user", "member"],
-    type: "stats",
-    help_text: "user <user>",
-    help_desc: "Displays a user's info",
+    name: ['user', 'member'],
+    type: 'stats',
+    help_text: 'user <user>',
+    help_desc: 'Displays a user\'s info',
     owner: false,
     voice: false,
     timevault: false,
@@ -100,4 +100,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

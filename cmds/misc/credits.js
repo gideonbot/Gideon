@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -15,16 +15,16 @@ export async function run(gideon, message, args) {
         {name: 'Stevenson Johnson', value: 'Artwork'},
         {name: 'AceFire6', value: 'Development & hosting of [arrowverse.info](https://arrowverse.info) and its [API](https://arrowverse.info/api)'},
         {name: '7coil', value: 'PR [#24](https://github.com/adrifcastr/Gideon/pull/24) and [#25](https://github.com/adrifcastr/Gideon/pull/25)'}
-    ]
+    ];
 
     message.channel.send(Util.CreateEmbed('Development Credits:', {fields: fields, thumbnail: gideon.user.avatarURL()}, message.member));
 }
 
 export const help = {
-    name: ["credits", "creds"],
-    type: "misc",
-    help_text: "credits",
-    help_desc: "Displays people who contributed to development of this bot",
+    name: ['credits', 'creds'],
+    type: 'misc',
+    help_text: 'credits',
+    help_desc: 'Displays people who contributed to development of this bot',
     owner: false,
     voice: false,
     timevault: false,
@@ -33,4 +33,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

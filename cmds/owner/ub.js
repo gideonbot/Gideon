@@ -1,5 +1,5 @@
-import Discord from "discord.js";
-import Util from "../../Util.js";
+import Discord from 'discord.js';
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -15,7 +15,7 @@ export async function run(gideon, message, args) {
                 id: id,
                 trmodeval: 0,
                 blacklist: 0
-            }
+            };
         }
 
         if (ub.blacklist === 0) {
@@ -32,17 +32,17 @@ export async function run(gideon, message, args) {
     }
 
     catch (ex) {
-        console.log("Caught an exception while running ub.js: " + ex.stack);
-        Util.log("Caught an exception while running ub.js: " + ex.stack);
+        console.log('Caught an exception while running ub.js: ' + ex.stack);
+        Util.log('Caught an exception while running ub.js: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }
 }
 
 export const help = {
-    name: ["ub", "Useracklist", "ubrm"],
-    type: "owner",
-    help_text: "ub <userid>",
-    help_desc: "Blacklists a user",
+    name: ['ub', 'Useracklist', 'ubrm'],
+    type: 'owner',
+    help_text: 'ub <userid>',
+    help_desc: 'Blacklists a user',
     owner: true,
     voice: false,
     timevault: false,
@@ -51,4 +51,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};
