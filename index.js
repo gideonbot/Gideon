@@ -1,7 +1,7 @@
 import 'dotenv/config.js';
 import Discord from 'discord.js';
 import git from 'git-last-commit';
-import Util from './Util.js';
+import config from './data/config/config.js';
 
 const manager = new Discord.ShardingManager('./gideon.js', {token: process.env.CLIENT_TOKEN});
 manager.spawn().then(LogCount);
@@ -16,16 +16,38 @@ function LogCount() {
 
         let guild_list = '\n' + guilds.map(x => x.id + ' - ' + x.name + '').join('\n');
 
-        Util.log(`Gideon startup complete, \`${manager.shards.size}\` ${manager.shards.size > 1 ? 'shards' : 'shard'} and \`${guilds.length}\` guilds\`\`\`\n${guild_list.length < 1935 ? guild_list : ''}\n\`\`\``);
+        Log(`Gideon startup complete, \`${manager.shards.size}\` ${manager.shards.size > 1 ? 'shards' : 'shard'} and \`${guilds.length}\` guilds\`\`\`\n${guild_list.length < 1935 ? guild_list : ''}\n\`\`\``);
     });
+}
+
+/**
+ * Log to a webhook
+ * @param {string | Discord.MessageEmbed} message 
+ */
+function Log(message) {
+    let url = process.env.LOG_WEBHOOK_URL;
+    if (!url || !message) return false;
+
+    url = url.replace('https://discordapp.com/api/webhooks/', '');
+    let split = url.split('/');
+
+    if (split.length < 2) return false;
+
+    let client = new Discord.WebhookClient(split[0], split[1]);
+
+    for (let msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
+        client.send(msg, { avatarURL: config.avatar, username: 'Sharding Manager' });
+    }
+    
+    return true;
 }
 
 git.getLastCommit((err, commit) => {
     if (err) {
         console.log(err);
-        Util.log('Couldn\'t fetch last commit: ' + err);
+        Log('Couldn\'t fetch last commit: ' + err);
         return;
     }
 
-    Util.log(`Gideon starting, commit \`#${commit.shortHash}\` by \`${commit.committer.name}\`:\n\`${commit.subject}\``);
+    Log(`Gideon starting, commit \`#${commit.shortHash}\` by \`${commit.committer.name}\`:\n\`${commit.subject}\``);
 });
