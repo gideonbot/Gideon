@@ -1,9 +1,9 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import fetch from 'node-fetch';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -13,7 +13,7 @@ import Util from "../../Util.js";
 export async function run(gideon, message, args, connection) {
     let agm;
     if (args) {
-        agm = args.join("").toLowerCase();
+        agm = args.join('').toLowerCase();
         if (agm.match(/(?:course)/i)) {
             message.channel.send('Yes Captain Lance!');
         } 
@@ -56,18 +56,18 @@ export async function run(gideon, message, args, connection) {
     }
     
     catch (ex) {
-        console.log("Caught an exception while plotting a course: " + ex.stack);
-        Util.log("Caught an exception while plotting a course: " + ex.stack);
+        console.log('Caught an exception while plotting a course: ' + ex.stack);
+        Util.log('Caught an exception while plotting a course: ' + ex.stack);
         
         return message.channel.send(Util.CreateEmbed('An error occurred while trying to plot a course!', null, message.member));
     }
 }
 
 export const help = {
-    name: ["plot", "timejump"],
-    type: "fun",
-    help_text: "Gideon, plot a course!",
-    help_desc: "Plots a course",
+    name: ['plot', 'timejump'],
+    type: 'fun',
+    help_text: 'Gideon, plot a course!',
+    help_desc: 'Plots a course',
     owner: false,
     voice: true,
     timevault: false,
@@ -76,4 +76,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};
