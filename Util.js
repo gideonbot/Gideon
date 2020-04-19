@@ -423,6 +423,7 @@ class Util {
         if (files.length < 1) return null;
 
         let attempts = 0;
+        let max_attempts = files.length;
 
         do {
             let file = files[Math.floor(Math.random() * files.length)];
@@ -433,7 +434,7 @@ class Util {
             attempts++;
         }
         //this prevents it from freezing the process if there are no viable files
-        while (attempts < 100);
+        while (attempts < max_attempts);
 
         return null;
     }
