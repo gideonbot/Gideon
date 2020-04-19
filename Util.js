@@ -415,7 +415,7 @@ class Util {
         fetch(api, options);
     }
 
-    static SelectRandomFile(dir) {
+    static GetRandomFile(dir) {
         if (!fs.existsSync(dir)) return null;
 
         let files = fs.readdirSync(dir);

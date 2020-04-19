@@ -13,7 +13,7 @@ import Util from '../../Util.js';
 export async function run(gideon, message, args, connection) {
     const dir = path.resolve(__dirname, '../../data/audio/phrases');
 
-    let file = Util.SelectRandomFile(dir);
+    let file = Util.GetRandomFile(dir);
 
     if (!file) return;
 
