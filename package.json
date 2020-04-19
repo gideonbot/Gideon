@@ -34,6 +34,7 @@
     "pretty-error": "^2.1.1",
     "rarbg": "^1.2.7",
     "recursive-readdir": "^2.2.2",
+    "request": "^2.88.2",
     "string-similarity": "^4.0.1",
     "systeminformation": "^4.23.3",
     "torrent-search-api": "^2.1.1",
