@@ -425,8 +425,7 @@ class Util {
         let attempts = 0;
 
         do {
-            let random = Math.floor(Math.random() * files.length);
-            let file = files[random];
+            let file = files[Math.floor(Math.random() * files.length)];
 
             let info = fs.statSync(path.join(dir, file));
             if (info.isFile()) return file;
