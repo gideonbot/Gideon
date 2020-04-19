@@ -15,6 +15,8 @@ export async function run(gideon, message, args, connection) {
 
     let file = Util.SelectRandomFile(dir);
 
+    if (!file) return;
+
     let rfile = `${dir}/${file}`;
     const phrase = connection.play(rfile);
     phrase.pause();
