@@ -1,9 +1,8 @@
-import Discord from "discord.js";
-import randomFile from 'select-random-file';
+import Discord from 'discord.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -13,24 +12,27 @@ import Util from "../../Util.js";
  */
 export async function run(gideon, message, args, connection) {
     const dir = path.resolve(__dirname, '../../data/audio/phrases');
-    randomFile(dir, (err, file) => {
-        let rfile = `${dir}/${file}`;
-        const phrase = connection.play(rfile);
-        phrase.pause();
-        phrase.resume();
 
-        phrase.on('finish', () => {
-            phrase.destroy();
-            gideon.vcmdexec = false;
-        }); 
-    })
+    let file = Util.GetRandomFile(dir);
+
+    if (!file) return;
+
+    let rfile = `${dir}/${file}`;
+    const phrase = connection.play(rfile);
+    phrase.pause();
+    phrase.resume();
+
+    phrase.on('finish', () => {
+        phrase.destroy();
+        gideon.vcmdexec = false;
+    });
 }
 
 export const help = {
-    name: "talk",
-    type: "voice",
-    help_text: "Talk to me",
-    help_desc: "Talks to the user",
+    name: 'talk',
+    type: 'voice',
+    help_text: 'Talk to me',
+    help_desc: 'Talks to the user',
     owner: false,
     voice: true,
     timevault: false,
@@ -39,4 +41,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

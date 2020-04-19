@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -64,16 +64,16 @@ export async function run(gideon, message, args, connection) {
         }
     }
 
-    if (embed.fields.length < 1) return message.channel.send("Failed to fetch episode list, please try again later...");
+    if (embed.fields.length < 1) return message.channel.send('Failed to fetch episode list, please try again later...');
     
     message.channel.send(embed);
 }
 
 export const help = {
-    name: ["nxeps", "nexteps", "nextepisodes"],
-    type: "general",
-    help_text: "nxeps",
-    help_desc: "Displays a countdown to the next airing Arrowverse episodes",
+    name: ['nxeps', 'nexteps', 'nextepisodes'],
+    type: 'general',
+    help_text: 'nxeps',
+    help_desc: 'Displays a countdown to the next airing Arrowverse episodes',
     owner: false,
     voice: true,
     timevault: false,
@@ -82,4 +82,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};

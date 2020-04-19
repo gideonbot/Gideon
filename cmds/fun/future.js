@@ -1,8 +1,8 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-import Util from "../../Util.js";
+import Util from '../../Util.js';
 
 /**
  * @param {Discord.Client} gideon
@@ -12,7 +12,7 @@ import Util from "../../Util.js";
 export async function run(gideon, message, args, connection) {
     let agm;
     if (args) {
-        agm = args.join("").toLowerCase();
+        agm = args.join('').toLowerCase();
         if (agm.match(/(?:me)/i) && agm.match(/(?:the)/i) && agm.match(/(?:future)/i)) {
             message.channel.send('Yes Dr. Wells!');
         } 
@@ -30,16 +30,16 @@ export async function run(gideon, message, args, connection) {
     }
 
     message.channel.send(Util.CreateEmbed('The Central City Citizen\nFLASH MISSING VANISHES IN CRISIS', {
-        description: `BY IRIS WEST-ALLEN\nTHURSDAY, APRIL 25, 2024\n\nAfter an extreme street battle with the Reverse-Flash, our city's very own Scarlet Speedster disappeared in an explosion of light. The cause of the fight is currently unknown. According to witnesses, The Flash, The Atom, and Hawkgirl, began fighting the Reverse-Flash around midnight last night. The sky took on a deep crimson color as the ensuing battle created the most destruction this city has ever seen since The Flash first arrived in Central City.`,
+        description: 'BY IRIS WEST-ALLEN\nTHURSDAY, APRIL 25, 2024\n\nAfter an extreme street battle with the Reverse-Flash, our city\'s very own Scarlet Speedster disappeared in an explosion of light. The cause of the fight is currently unknown. According to witnesses, The Flash, The Atom, and Hawkgirl, began fighting the Reverse-Flash around midnight last night. The sky took on a deep crimson color as the ensuing battle created the most destruction this city has ever seen since The Flash first arrived in Central City.',
         image: 'https://i.imgur.com/cS3fZZv.jpg'
     }, message.member));
 }
 
 export const help = {
-    name: ["show", "future"],
-    type: "fun",
-    help_text: "Gideon, show me the future!",
-    help_desc: "Displays an easter egg",
+    name: ['show', 'future'],
+    type: 'fun',
+    help_text: 'Gideon, show me the future!',
+    help_desc: 'Displays an easter egg',
     owner: false,
     voice: true,
     timevault: false,
@@ -48,4 +48,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};
