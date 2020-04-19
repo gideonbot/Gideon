@@ -27,7 +27,7 @@ export function Starboard(reaction: Discord.MessageReaction, user: Discord.User,
 export function Selfhostlog(gideon: Discord.Client): Promise<void>;
 export function SQLBkup(gideon: Discord.Client): Promise<void>;
 export function status(gideon: Discord.Client): Promise<void>;
-export function GetRandomFile(path: string): string;
+export function GetRandomFile(dir: string): string;
 export function InitCache(gideon: Discord.Client): void;
 export function ClosestDate(dates: string[]): Promise<string>;
 export function Welcome(member: Discord.GuildMember, gideon: Discord.Client): Promise<void>;
