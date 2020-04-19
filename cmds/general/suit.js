@@ -8,7 +8,7 @@ import Util from '../../Util.js';
  */
 export async function run(gideon, message, args) {     
     const st = Util.CreateEmbed('You must choose a valid character!', {
-        description: 'Currently available:\n**killer frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**\n**kingdom come superman**'
+        description: 'Currently available:\n**frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**\n**kingdom come superman**'
     }, message.member);
 
     const suits = [
@@ -61,7 +61,7 @@ export async function run(gideon, message, args) {
 
     let suit = suits[-1];
 
-    if (args[0].match(/(?:killerfrost)/i) || args[0].match(/(?:killer)/i) && args[1].match(/(?:frost)/i)) suit = suits[0];
+    if (args[0].match(/(?:frost)/i)) suit = suits[0];
     else if (args[0].match(/(?:supergirl)/i)) suit = suits[1];
     else if (args[0].match(/(?:flash)/i)) suit = suits[2];
     else if (args[0].match(/(?:arrow)/i)) suit = suits[3];
