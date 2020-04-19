@@ -426,12 +426,13 @@ class Util {
 
         do {
             let file = files[Math.floor(Math.random() * files.length)];
-
             let info = fs.statSync(path.join(dir, file));
+
             if (info.isFile()) return file;
             else files.remove(file);
+            attempts++;
         }
-
+        //this prevents it from freezing the process if there are no viable files
         while (attempts < 100);
 
         return null;
