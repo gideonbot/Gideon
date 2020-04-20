@@ -107,7 +107,7 @@ gideon.on('guildCreate', guild => {
             guild: guild.id,
             prefix: '!',
             cvmval: 0,
-            abmval: 1,
+            abmval: 0,
             eastereggs: 0,
             blacklist: 0,
             chatchnl: ''
