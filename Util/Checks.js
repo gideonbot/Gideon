@@ -391,9 +391,10 @@ class Checks {
                 guild: guild.id,
                 prefix: '!',
                 cvmval: 0,
-                abmval: 1,
+                abmval: 0,
                 eastereggs: 0,
-                blacklist: 1
+                blacklist: 1,
+                chatchnl: ''
             };
 
             gideon.setGuild.run(gb);

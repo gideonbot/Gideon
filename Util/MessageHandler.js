@@ -41,6 +41,11 @@ class MsgHandler {
         Util.Checks.Ads(message, gideon); //check for foreign invites
         Util.Checks.ABM(message, gideon, Util); //apply content filter
         Util.Checks.RulesCheck(message); //check if member read the guilds rules
+
+        if (message.guild.id === '595318490240385037') {
+            if (!message.member.roles.cache.has('688430418466177082')) return; //NO COMMANDS FOR NON RULE READERS, FEEL MY WRATH
+        }
+
         Util.Checks.NameCheck(message.member, null, gideon); //check nicknames & usernames
         Util.Checks.CVM(message, gideon, Util); //apply crossover mode if enabled
         Util.Checks.CSD(message, gideon, Util); //eastereggs
