@@ -110,7 +110,7 @@ gideon.on('guildCreate', guild => {
             abmval: 1,
             eastereggs: 0,
             blacklist: 0,
-            chatchnl = ''
+            chatchnl: ''
         };
         
         gideon.setGuild.run(currentguild);
