@@ -20,7 +20,7 @@ export async function run(gideon, message, args) {
     
         chat.chatchnl = channel.id;
         gideon.setGuild.run(chat);
-        message.reply(`Set AI chat channel for \`${message.guild.name}\` to \`#${channel.name}\`! :white_check_mark:`);
+        message.reply(`Set AI chat channel for \`${message.guild.name}\` to \`#${channel.name}\`! :white_check_mark:\n\nAll messages in this channel will now be interpreted as AI chat and no commands will be usable!`);
     }
 }
 
