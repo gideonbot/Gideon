@@ -386,7 +386,7 @@ class Checks {
         if (!guild.members || !guild.members.cache) await guild.members.fetch();
         const bots = guild.members.cache.filter(x => x.user.bot).size;
 
-        if (bots > 20) {
+        if (bots > 25) {
             const gb = {
                 guild: guild.id,
                 prefix: '!',
