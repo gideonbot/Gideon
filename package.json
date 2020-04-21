@@ -19,7 +19,7 @@
     "cleverbot-free": "^1.0.3",
     "del": "^5.1.0",
     "discord-paginationembed": "^2.0.0-beta.4",
-    "discord.js": "github:discordjs/discord.js#a88b7239b5989f200ed87ce3e7ab63aa57fc696c",
+    "discord.js": "^12.2.0",
     "dotenv": "^8.0.0",
     "extract-zip": "^1.7.0",
     "ffmpeg-static": "^4.1.1",
