@@ -191,5 +191,5 @@ export const help = {
     args: {},
     roles: [],
     user_perms: [],
-    bot_perms: ['MANAGE_MESSAGES']
+    bot_perms: ['MANAGE_MESSAGES', 'ADD_REACTIONS']
 };

@@ -386,14 +386,15 @@ class Checks {
         if (!guild.members || !guild.members.cache) await guild.members.fetch();
         const bots = guild.members.cache.filter(x => x.user.bot).size;
 
-        if (bots > 20) {
+        if (bots > 25) {
             const gb = {
                 guild: guild.id,
                 prefix: '!',
                 cvmval: 0,
-                abmval: 1,
+                abmval: 0,
                 eastereggs: 0,
-                blacklist: 1
+                blacklist: 1,
+                chatchnl: ''
             };
 
             gideon.setGuild.run(gb);

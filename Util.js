@@ -14,6 +14,7 @@ import recursive from 'recursive-readdir';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import cleverbot from 'cleverbot-free';
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -480,7 +481,7 @@ class Util {
         if (reaction.message.guild.id !== '595318490240385037') return;
         if (reaction.emoji.name !== '⭐') return;
         if (reaction.message.embeds[0]) return;
-        if (reaction.users.cache.size > 1) return;
+        if (reaction.users.cache.size >= 1) return;
 
         const board = gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
 
@@ -591,7 +592,7 @@ class Util {
      * @param {string} input
      */
     static ValID(input) {
-        if (!input.match(/\d{17,19}/)) return;
+        if (!input.match(/\d{17,19}/)) return null;
         else return input.match(/\d{17,19}/)[0];
     }
 
@@ -612,6 +613,51 @@ class Util {
         const temp = dates.map(d => Math.abs(new Date() - new Date(d).getTime()));
         const idx = temp.indexOf(Math.min(...temp));
         return dates[idx];
+    }
+
+    /**
+     * AI chat
+     * @param {Discord.Message} message
+     */
+    static async Chat(message) {
+        const text = message.content;
+
+        let arr = [];
+        let last = null;
+    
+        for (let m of message.channel.messages.cache.array().reverse()) {
+            if (!last) last = m.createdAt;
+    
+            else {
+                //we ignore messages that were created 2+ mins ago
+                if (Math.abs(m.createdAt - last) < 1000 * 60 * 2) {
+                    let content = m.content;
+    
+                    if (m.cleverbot) {
+                        last = m.createdAt;
+                        arr.push(content);
+                    }
+                }
+    
+                else {
+                    m.cleverbot = null;
+                    break;
+                }
+            }
+        }
+    
+        arr = arr.reverse();
+        message.channel.startTyping().finally(() => {});
+    
+        cleverbot(text, arr).then(response => {
+            message.channel.send(response).then(sent => {
+                sent.cleverbot = true;
+                message.cleverbot = true;
+            }).finally(() => message.channel.stopTyping(true));
+        }, failed => {
+            console.log(failed);
+            message.channel.stopTyping(true);
+        });
     }
 }
 

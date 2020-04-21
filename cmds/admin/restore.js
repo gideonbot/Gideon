@@ -1,11 +1,13 @@
-import Discord from 'discord.js';
 import Util from '../../Util.js';
 import fs from 'fs';
 import util from 'util';
 import stream from 'stream';
+import SQLite from 'better-sqlite3';
 const streamPipeline = util.promisify(stream.pipeline);
 import unzipper from 'unzipper';
 import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import fetch from 'node-fetch';
 import del from 'del';
 
@@ -14,7 +16,7 @@ import del from 'del';
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(gideon, message) {
     try {
         message.channel.send('Performing database restore, please wait...');
         const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('622415301144870932');
@@ -26,8 +28,9 @@ export async function run(gideon, message, args) {
         fs.unlinkSync(path.resolve(__dirname, '../../data/SQL/gideon.sqlite'));
         await del(path.resolve(__dirname, '../../data/SQL'));
 
-        fs.createReadStream(path.resolve(__dirname, '../../data/SQL.zip')).pipe(unzipper.Extract({ path: path.resolve(__dirname, '../../data') }).on('close', async () => {
+        fs.createReadStream(path.resolve(__dirname, '../../data/SQL.zip')).pipe(unzipper.Extract({ path: path.resolve(__dirname, '../../data/SQL') }).on('close', async () => {
             await del(path.resolve(__dirname, '../../data/SQL.zip'));
+            new SQLite(path.join(__dirname, '../data/SQL/gideon.sqlite'));
             Util.SQL.InitDB(gideon);
             Util.log(`Successfully restored SQL Database Backup from \`${lastbkup.first().createdAt}\`!`);
             message.channel.send('Database restore complete! Please check <#622415301144870932>! :white_check_mark:');
@@ -41,7 +44,7 @@ export async function run(gideon, message, args) {
 }
 
 export const help = {
-    name: ['restore', 'rs'],
+    name: ['restore', 'rst'],
     type: 'admin',
     help_text: 'restore',
     help_desc: 'Restores the latest database backup',
