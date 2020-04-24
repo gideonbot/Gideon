@@ -126,11 +126,7 @@ gideon.on('guildDelete', guild => {
 
 gideon.on('shardReady', (id, unavailableGuilds) => {
     if (!unavailableGuilds) Util.log(`Shard \`${id}\` is connected!`);
-    else if (unavailableGuilds && !unavailableGuilds.map) {
-        console.log(unavailableGuilds);
-        Util.log(`Shard \`${id}\` is connected! (map function was undefined, check console)`);
-    }
-    else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to a server outage:\n${unavailableGuilds.map(x => x).join('\n')}`);
+    else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to a server outage:\n${Array.from(unavailableGuilds).join('\n')}`);
 });
 
 gideon.on('shardError', (error, shardID) => {

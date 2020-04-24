@@ -13,7 +13,7 @@ class MsgHandler {
      * @param {Discord.VoiceConnection} connection 
      */
     static async Handle(gideon, message, Util, connection) {
-        if (!message || !message.author || message.author.bot || !message.guild || message.partial) return;
+        if (!message || !message.author || message.author.bot || !message.guild || message.partial || message.type != 'DEFAULT') return;
         if (!message.guild.me) await message.guild.members.fetch(gideon.user.id);
         if (message.channel.type !== 'text') return;
         if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
