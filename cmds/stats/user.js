@@ -61,6 +61,26 @@ export async function run(gideon, message, args) {
     };
 
     const member = message.guild.member(user);
+
+    if (!member) {
+        const embed = Util.CreateEmbed(null, {
+            author: {
+                name: `Info requested by ${auth.tag}`,
+                icon: auth.displayAvatarURL()
+            },
+            description: `User **${user.tag}**:`,
+            thumbnail: user.displayAvatarURL(),
+            fields: [
+                {
+                    name: '❯ User Info:',
+                    value: `• ID: \`${user.id}\`\n• Status: \`${status}\`${semote}\n• Custom Status: ${!custom_status.text ? custom_status.emoji ? '' : '`None`' : '`' + custom_status.text + '`'} ${custom_status.emoji}\n• Activity: \`${other_activities.length < 1 ? 'None' : other_activities[0].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot ? 'Yes' : 'No'}\`\n• Avatar: [Download](${user.avatarURL()})`
+                },
+            ]
+        }, message.member);
+    
+        return message.channel.send(embed);
+    }
+
     if (member.lastMessage && member.lastMessage.partial) await member.lastMessage.fetch();
     const perms = Util.truncate(member.permissions.toArray().map(perms => `\`${perms}\``).join(' '), 200, true);
 
