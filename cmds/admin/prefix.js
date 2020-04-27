@@ -13,13 +13,13 @@ export async function run(gideon, message, args) {
         if (args[0].match(/(?:default)/i)) {
             prefix.prefix = '!';
             gideon.setGuild.run(prefix);
-            message.reply(`restored the default prefix \`${prefix.prefix}\` for \`${message.guild.name}\`:white_check_mark:`);
+            message.channel.send(`Restored the default prefix (\`${prefix.prefix}\`) for \`${message.guild.name}\` :white_check_mark:`);
         }
 
         else {
             prefix.prefix = args[0];
             gideon.setGuild.run(prefix);
-            message.reply(`set custom prefix for \`${message.guild.name}\` to \`${prefix.prefix}\`:white_check_mark:`);
+            message.channel.send(`Set custom prefix for \`${message.guild.name}\` to \`${prefix.prefix}\` :white_check_mark:`);
         }
     }
     

@@ -12,13 +12,13 @@ export async function run(gideon, message, args) {
     if (eggs.eastereggs === 0) {
         eggs.eastereggs = 1;
         gideon.setGuild.run(eggs);
-        message.reply('Eastereggs enabled! :white_check_mark:');
+        message.reply('Easter eggs enabled! :white_check_mark:');
     }
 
     else {
         eggs.eastereggs = 0;
         gideon.setGuild.run(eggs);
-        message.reply('Eastereggs disabled! :white_check_mark:');
+        message.reply('Easter eggs disabled! :white_check_mark:');
     } 
 }
 
@@ -26,7 +26,7 @@ export const help = {
     name: 'eggs',
     type: 'admin',
     help_text: 'eggs',
-    help_desc: 'Toggles eastereggs',
+    help_desc: 'Toggles easter eggs',
     owner: false,
     voice: false,
     timevault: false,

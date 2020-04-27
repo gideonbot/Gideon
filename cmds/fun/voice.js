@@ -42,7 +42,7 @@ export async function run(gideon, message, args) {
     
     try {
         let vcname = message.member.voice.channel.name;
-        message.reply(`now joining voice channel: \`${vcname}\`!`);
+        message.reply(`Now joining voice channel: \`${vcname}\`!`);
         const connection = await message.member.voice.channel.join();
         connection.play(new Silence(), { type: 'opus' }); //enable voice receive by sending silence buffer
 

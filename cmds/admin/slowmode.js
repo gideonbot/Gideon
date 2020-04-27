@@ -14,12 +14,12 @@ export async function run(gideon, message, args) {
             if (isNaN(args[1])) return message.channel.send(as);
             if (!message.mentions.channels.first()) return message.channel.send(as);
             await message.mentions.channels.first().setRateLimitPerUser(args[1]);
-            await message.reply(`set ratelimit for ${message.mentions.channels.first()} to \`${args[1]}\` ${args[1] == 1 ? 'second' : 'seconds'}!`);
+            await message.reply(`Set slowmode for ${message.mentions.channels.first()} to \`${args[1]}\` ${args[1] == 1 ? 'second' : 'seconds'}!`);
         }
     
         else {
             await message.channel.setRateLimitPerUser(args[0]);
-            await message.reply(`set ratelimit for ${message.channel} to \`${args[0]}\` ${args[0] == 1 ? 'second' : 'seconds'}!`);
+            await message.reply(`Set slowmode for ${message.channel} to \`${args[0]}\` ${args[0] == 1 ? 'second' : 'seconds'}!`);
         }
     }
     

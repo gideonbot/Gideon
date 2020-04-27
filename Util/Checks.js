@@ -36,17 +36,17 @@ class Checks {
                 if (content.includes(url.toLowerCase())) return resolve({match: true, content: url});
             }
 
-            // eslint-disable-next-line no-useless-escape
-            const ytrg = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
-            const cids = ['UCTbT2FgB9oMpi4jB9gNPadQ', 'UCvFS-R57UT1q2U_Jp4pi1eg', 'UC6mI3QJFH1m2V8ZHvvHimVA', 'UCDR8cvjALazMm2j9hOar8_g'];
+            const ytrg = /(.*?)(^|\/|v=)([a-z0-9_-]{11})(.*)?/im;
+            const cids = ['UCTbT2FgB9oMpi4jB9gNPadQ', 'UCvFS-R57UT1q2U_Jp4pi1eg', 'UC6mI3QJFH1m2V8ZHvvHimVA', 'UCDR8cvjALazMm2j9hOar8_g'];            
 
-            if (message.content.match(ytrg)) {
-                const id = message.content.match(ytrg);
+            const result = message.content.match(ytrg);
+
+            if (result && result[3]) {
                 const google_api_key = process.env.GOOGLE_API_KEY;
 
                 if (!google_api_key) return reject('No google API key');
 
-                const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
+                const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${result[3]}&key=${google_api_key}`;
 
                 try {
                     const body = await fetch(api).then(res => res.json());
