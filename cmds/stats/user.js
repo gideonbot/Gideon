@@ -60,10 +60,6 @@ export async function run(gideon, message, args) {
         emoji: !activity || !activity.emoji ? '' : gideon.guilds.cache.get(activity.emoji.id) ? activity.emoji.id : activity.emoji.identifier.includes(activity.emoji.name) ? '' : activity.emoji.name 
     };
 
-    const member = message.guild.member(user);
-    if (member.lastMessage.partial) await member.lastMessage.fetch();
-    const perms = Util.truncate(member.permissions.toArray().map(perms => `\`${perms}\``).join(' '), 200, true);
-
     const embed = Util.CreateEmbed(null, {
         author: {
             name: `Info requested by ${auth.tag}`,
@@ -74,15 +70,21 @@ export async function run(gideon, message, args) {
         fields: [
             {
                 name: '❯ User Info:',
-                value: `• ID: \`${user.id}\`\n• Status: \`${status}\`${semote}\n• Custom Status: ${!custom_status.text ? custom_status.emoji ? '' : '`None`' : '`' + custom_status.text + '`'} ${custom_status.emoji}\n• Activity: \`${other_activities.length < 1 ? 'None' : other_activities[0].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot ? 'Yes' : 'No'}\`\n• Avatar: [Download](${user.avatarURL()})`
+                value: `• ID: \`${user.id}\`\n• Status: \`${status}\` ${semote}\n• Custom Status: ${!custom_status.text ? custom_status.emoji ? '' : '`None`' : '`' + custom_status.text + '`'} ${custom_status.emoji}\n• Activity: \`${other_activities.length < 1 ? 'None' : other_activities[0].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot ? 'Yes' : 'No'}\`\n• Avatar: [Download](${user.avatarURL()})`
             },
-            {
-                name: '❯ GuildMember Info:',
-                // eslint-disable-next-line no-useless-escape
-                value: `• Nickname: \`${!member.nickname ? 'None' : member.nickname}\`\n• Joined at: \`${moment.utc(member.joinedAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Boosted: ${!member.premiumSince ? '\`No\`' : '\`Yes\` <:boost:678746359549132812>'}\n• Roles: ${member.roles.cache.filter(x => x.id != member.guild.roles.everyone.id).map(roles => roles.toString()).join(' ')}\n• Permissions: ${perms}\n• Last Message: ${member.lastMessage === null ? '\`None\`' : `[Click Here](${member.lastMessage.url} '${member.lastMessage.url}')`}`
-            }
         ]
     }, message.member);
+
+    const member = message.guild.member(user);
+    if (!member) return message.channel.send(embed);
+
+    if (member.lastMessage && member.lastMessage.partial) await member.lastMessage.fetch();
+    const perms = Util.truncate(member.permissions.toArray().map(perms => `\`${perms}\``).join(' '), 200, true);
+
+    embed.fields.push({
+        name: '❯ GuildMember Info:',
+        value: `• Nickname: \`${!member.nickname ? 'None' : member.nickname}\`\n• Joined at: \`${moment.utc(member.joinedAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Boosted: ${!member.premiumSince ? '`No`' : '`Yes` <:boost:678746359549132812>'}\n• Roles: ${member.roles.cache.filter(x => x.id != member.guild.roles.everyone.id).map(roles => roles.toString()).join(' ')}\n• Permissions: ${perms}\n• Last Message: ${!member.lastMessage ? '`None`' : `[Click Here](${member.lastMessage.url} '${member.lastMessage.url}')`}`
+    });
 
     message.channel.send(embed);
 }

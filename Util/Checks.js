@@ -418,6 +418,8 @@ class Checks {
      * @param {Discord.Client} gideon
      */
     static async NameCheck(newMember, newUser, gideon) {
+        if (!gideon.guilds.cache.get('595318490240385037')) return;
+        
         if (newMember) {
             const member = newMember;
 

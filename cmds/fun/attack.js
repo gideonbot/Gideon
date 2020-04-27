@@ -122,7 +122,7 @@ export async function run(gideon, message, args) {
     else if (atc.match(/(?:thunderclap)/i)) attack = attacks[10];
     else if (atc.match(/(?:elblast)/i)) attack = attacks[11];
     else if (atc.match(/(?:fireblast)/i)) attack = attacks[12];
-    else if (atc.match(/(?:shoot)/i) && message.member.roles.has('635744558499627009')) attack = attacks[13];
+    else if (atc.match(/(?:shoot)/i) && message.member.roles.cache.has('635744558499627009')) attack = attacks[13];
 
     else return message.channel.send(at);
     if (!attack) return message.channel.send(at);
