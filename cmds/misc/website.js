@@ -6,7 +6,7 @@ import Discord from 'discord.js';
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {      
-    message.channel.send('https://gideonbot.co.vu');
+    message.channel.send('https://gideonbot.com');
 }
 
 export const help = {
