@@ -1,6 +1,6 @@
 import Discord from 'discord.js';
 import fetch from 'node-fetch';
-import Util from '../Util';
+import Util from '../Util.js';
 
 class TR {
     constructor() {
