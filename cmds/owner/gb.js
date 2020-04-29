@@ -24,13 +24,13 @@ export async function run(gideon, message, args) {
         if (gb.blacklist === 0) {
             gb.blacklist = 1;
             gideon.setGuild.run(gb);
-            message.reply(`guild \`${id}\` has been blacklisted!`);
+            message.channel.send(`Guild \`${id}\` has been blacklisted!`);
         }
 
         else if (gb.blacklist === 1) {
             gb.blacklist = 0;
             gideon.setGuild.run(gb);
-            message.reply(`guild \`${id}\` has been un-blacklisted!`); 
+            message.channel.send(`Guild \`${id}\` has been un-blacklisted!`); 
         }
     }
 

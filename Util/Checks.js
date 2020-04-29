@@ -127,7 +127,7 @@ class Checks {
         // eslint-disable-next-line no-useless-escape
         if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
             await message.delete({ timeout: 200 });
-            return message.reply('Links are not allowed meanwhile Crossover-Mode is active!');
+            return message.reply('Links are not allowed while the Crossover-Mode is active!');
         }
 
         let trmode = gideon.getUser.get(message.author.id);
@@ -285,11 +285,11 @@ class Checks {
                 const role = message.guild.roles.cache.get('688430418466177082');
                 const member = message.member;
                 await member.roles.add(role);
-                await message.reply(`you have been given the ${role} role and gained access to <#595935317631172608>!`);
+                await message.reply(`You have been given the ${role} role and gained access to <#595935317631172608>!`);
             }
         }
         
-        else return message.reply('you have not yet read the rules. You will be kicked immediately if you keep refusing to.');
+        else return message.reply('You have not yet read the rules. You will be kicked immediately if you keep refusing to.');
     }
 
     /**

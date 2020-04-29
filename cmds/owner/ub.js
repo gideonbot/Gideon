@@ -21,13 +21,13 @@ export async function run(gideon, message, args) {
         if (ub.blacklist === 0) {
             ub.blacklist = 1;
             gideon.setUser.run(ub);
-            message.reply(`user \`${id}\` has been blacklisted!`);
+            message.channel.send(`User \`${id}\` has been blacklisted!`);
         }
 
         else {
             ub.blacklist = 0;
             gideon.setUser.run(ub);
-            message.reply(`user \`${id}\` has been un-blacklisted!`); 
+            message.channel.send(`User \`${id}\` has been un-blacklisted!`); 
         }
     }
 

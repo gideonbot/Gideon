@@ -16,7 +16,7 @@ export async function run(gideon, message, args) {
     if (args[0].length > 1) return message.channel.send(as);
     let shardid = args[0];
 
-    await message.reply(`now killing shard \`${shardid}\`... :white_check_mark:`);
+    await message.reply(`Now killing shard \`${shardid}\`... :white_check_mark:`);
     gideon.shard.broadcastEval(`if (this.shard.ids[0] === ${shardid}) process.exit();`);
 }
 

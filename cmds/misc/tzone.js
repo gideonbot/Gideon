@@ -19,7 +19,7 @@ export async function run(gideon, message, args) {
         try {
             let members = JSON.parse(fs.readFileSync(path));
             
-            if (members.map(x => x.username).includes(message.author.tag)) return message.reply('you have already registered a timezone!');
+            if (members.map(x => x.username).includes(message.author.tag)) return message.reply('You have already registered a timezone!');
 
             if (!args[1]) return message.channel.send(Util.CreateEmbed('You must supply a valid argument!', null, message.member));
 
@@ -39,7 +39,7 @@ export async function run(gideon, message, args) {
             
             await Util.delay(200);
             await message.channel.bulkDelete(2);
-            message.reply('your timezone has been registered!');
+            message.reply('Your timezone has been registered!');
         }
 
         catch (ex) {
