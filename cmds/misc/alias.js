@@ -23,7 +23,7 @@ export async function run(gideon, message, args) {
         message.channel.send(embed);
     }
 
-    else return message.reply(`Command "${args[0]}" does not exist!`);
+    else return message.channel.send(`Command "${args[0]}" does not exist!`);
 }
 
 export const help = {
