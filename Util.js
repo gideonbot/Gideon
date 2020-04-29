@@ -246,74 +246,78 @@ class Util {
         });
     }
 
+    static fetchJSON(url) {
+        // eslint-disable-next-line no-async-promise-executor
+        return new Promise(async (resolve, reject) => {
+            if (!url || typeof(url) != 'string') return reject('No URL');
+
+            try {
+                let res = await fetch(url);
+                resolve(await res.json());
+            }
+    
+            catch (e) { reject(e); }
+        });
+        
+    }
+
     /**
      * Get episode info 
-     * @returns {Promise<{title: string, name: string, value: string}>}
-     * @param {string} api_url 
+     * @returns {{title: string, name: string, value: string}}
+     * @param {object} body 
      */
-    static async GetNextEpisodeInfo(api_url) {
-        return new Promise((resolve, reject) => {
-            if (!api_url) return reject('Missing API URL');
-            
-            fetch(api_url).then(res => {
-                if (res.status !== 200) return reject(res.statusText);
+    static ParseEpisodeInfo(body) {
+        if (!body) return {};
 
-                res.json().then(body => {
-                    let title = body.name;
-    
-                    let result = { title: title, name: null, value: null, date: null };
-    
-                    if (!body._embedded) {
-                        result.name = '';
-                        result.value = 'No Episode data available yet';
-                    }
-    
-                    else {
-                        let season = body._embedded.nextepisode.season;
-                        let number = body._embedded.nextepisode.number;
-                        let name = body._embedded.nextepisode.name;
-                        let date = new Date(body._embedded.nextepisode.airstamp);
-                        let channel = body.network ? body.network.name : 'Unknown';
+        let result = { title: body.name, name: null, value: null };
 
-                        let time_diff_s = Math.abs(new Date() - date) / 1000;
+        if (!body._embedded) {
+            result.name = '';
+            result.value = 'No Episode data available yet';
+        }
 
-                        let airs_today = time_diff_s < 60 * 60 * 24;
-                        
-                        let res_value = `Airs in **${Util.secondsToDifferenceString(time_diff_s, {enableSeconds: false})}**`;
+        else {
+            let season = body._embedded.nextepisode.season;
+            let number = body._embedded.nextepisode.number;
+            let name = body._embedded.nextepisode.name;
+            let date = new Date(body._embedded.nextepisode.airstamp);
+            let channel = body.network ? body.network.name : 'Unknown';
 
-                        if (!airs_today) {
-                            //this is how we turn
-                            //Wed, 09 Oct 2019 10:00:00 GMT
-                            //into
-                            //9 Oct 2019 10:00
-                            let _date = date.toUTCString().replace('GMT', '');
-                            //remove "Wed, " (5)
-                            _date = _date.substr(5);
+            let time_diff_s = Math.abs(new Date() - date) / 1000;
 
-                            //remove the last :00
-                            _date = _date.split(':');
-                            _date.pop();
-                            _date = _date.join(':');
+            let airs_today = time_diff_s < 60 * 60 * 24;
+                    
+            let res_value = `Airs in **${Util.secondsToDifferenceString(time_diff_s, {enableSeconds: false})}**`;
 
-                            //thankfully, the .replace method does not work as you would expect it to
-                            //you would expect it to remove all searchValues from the string, right?
-                            //WRONG, it only removes the first searchValue (lol)
-                            if (_date.startsWith('0')) _date = _date.replace('0', '');
+            if (!airs_today) {
+                //this is how we turn
+                //Wed, 09 Oct 2019 10:00:00 GMT
+                //into
+                //9 Oct 2019 10:00
+                let _date = date.toUTCString().replace('GMT', '');
+                //remove "Wed, " (5)
+                _date = _date.substr(5);
 
-                            res_value += ` (\`${_date} UTC\`)`;
-                        }
-                        
-                        res_value += ` on ${channel}`;
+                //remove the last :00
+                _date = _date.split(':');
+                _date.pop();
+                _date = _date.join(':');
 
-                        result.name = `${season}x${number < 10 ? '0' + number : number} - ${name}`;
-                        result.value = res_value;
-                        result.date = date;
-                    }
-    
-                    return resolve(result);
-                }, failed => reject(failed));
-            }, failed => reject(failed));
-        });
+                //thankfully, the .replace method does not work as you would expect it to
+                //you would expect it to remove all searchValues from the string, right?
+                //WRONG, it only removes the first searchValue (lol)
+                if (_date.startsWith('0')) _date = _date.replace('0', '');
+
+                res_value += ` (\`${_date} UTC\`)`;
+            }
+                    
+            res_value += ` on ${channel}`;
+
+            result.name = `${season}x${number < 10 ? '0' + number : number} - ${name}`;
+            result.value = res_value;
+        }
+
+        return result;
     }
 
     /**
@@ -532,7 +536,7 @@ class Util {
         
         catch (ex) {
             console.log(ex);
-            Util.log("Exception when updating status!\n" + ex);
+            Util.log('Exception when updating status!\n' + ex);
         }
     }
 

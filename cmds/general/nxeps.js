@@ -35,30 +35,35 @@ export async function run(gideon, message, args, connection) {
 
     const embed = Util.CreateEmbed('__Upcoming Arrowverse episodes:__', null, message.member);
 
-    let dates = gideon.cache.nxeps.map(x => x.date).filter(x => x !== null);
-    let closestdate;
+    let current = new Date();
 
-    if (dates.length > 0) {
-        closestdate = await Util.ClosestDate(dates);
-        let now = new Date();
-        let nextairdate = new Date(closestdate);
-        if (nextairdate < now) gideon.cache.nxeps.clear(); //clear cache if surpassed airdate
-    } 
+    //we loop through the cache and remove tv shows that aired
+    for (let item of gideon.cache.nxeps.keys()) {
+        let value = gideon.cache.nxeps.get(item);
+
+        if (value && value._embedded && value._embedded.nextepisode && value._embedded.nextepisode.airstamp) {
+            let d = new Date(value._embedded.nextepisode.airstamp);
+            if (d < current) {
+                console.log('Removing ' + item + ' from cache (outdated)');
+                gideon.cache.nxeps.delete(item);
+            }
+        }
+    }
 
     for (let show in api_urls) {
         try {
-            let info = gideon.cache.nxeps.get(show);
-
-            if (!info) {
-                info = await Util.GetNextEpisodeInfo(api_urls[show]);
-                gideon.cache.nxeps.set(show, info);
+            let json = gideon.cache.nxeps.get(show);
+            if (!json) {
+                json = await Util.fetchJSON(api_urls[show]);
+                gideon.cache.nxeps.set(show, json);
             }
+
+            let info = Util.ParseEpisodeInfo(json);
             
             embed.addField(`${info.title} ${info.name}`, `${info.value}`);
         }
         
         catch (ex) {
-            //in this case the "ex" is most likely the object returned by GetNextEpisodeInfo, if not we just log the exception
             console.log(`Error while fetching next episode for "${show}": ${ex}`);
             Util.log(`Error while fetching next episode for "${show}": ${ex}`);
         }
