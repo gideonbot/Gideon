@@ -21,7 +21,7 @@ export async function run(gideon, message) {
         message.channel.send('Performing database restore, please wait...');
         const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('622415301144870932');
         const lastbkup = await channel.messages.fetchPinned({ limit: 1 });
-        if (!lastbkup.first()) return message.reply('no backup found!');
+        if (!lastbkup.first()) return message.reply('No backup found!');
         gideon.db.close();
         const res = await fetch(lastbkup.first().attachments.first().url);
         await streamPipeline(res.body, fs.createWriteStream(path.resolve(__dirname, '../../data/SQL.zip')));

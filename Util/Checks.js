@@ -36,17 +36,17 @@ class Checks {
                 if (content.includes(url.toLowerCase())) return resolve({match: true, content: url});
             }
 
-            // eslint-disable-next-line no-useless-escape
-            const ytrg = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
-            const cids = ['UCTbT2FgB9oMpi4jB9gNPadQ', 'UCvFS-R57UT1q2U_Jp4pi1eg', 'UC6mI3QJFH1m2V8ZHvvHimVA', 'UCDR8cvjALazMm2j9hOar8_g'];
+            const ytrg = /(.*?)(^|\/|v=)([a-z0-9_-]{11})(.*)?/im;
+            const cids = ['UCTbT2FgB9oMpi4jB9gNPadQ', 'UCvFS-R57UT1q2U_Jp4pi1eg', 'UC6mI3QJFH1m2V8ZHvvHimVA', 'UCDR8cvjALazMm2j9hOar8_g'];            
 
-            if (message.content.match(ytrg)) {
-                const id = message.content.match(ytrg);
+            const result = message.content.match(ytrg);
+
+            if (result && result[3]) {
                 const google_api_key = process.env.GOOGLE_API_KEY;
 
                 if (!google_api_key) return reject('No google API key');
 
-                const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id[1]}&key=${google_api_key}`;
+                const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${result[3]}&key=${google_api_key}`;
 
                 try {
                     const body = await fetch(api).then(res => res.json());
@@ -127,7 +127,7 @@ class Checks {
         // eslint-disable-next-line no-useless-escape
         if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
             await message.delete({ timeout: 200 });
-            return message.reply('Links are not allowed meanwhile Crossover-Mode is active!');
+            return message.reply('Links are not allowed while the Crossover-Mode is active!');
         }
 
         let trmode = gideon.getUser.get(message.author.id);
@@ -285,11 +285,11 @@ class Checks {
                 const role = message.guild.roles.cache.get('688430418466177082');
                 const member = message.member;
                 await member.roles.add(role);
-                await message.reply(`you have been given the ${role} role and gained access to <#595935317631172608>!`);
+                await message.reply(`You have been given the ${role} role and gained access to <#595935317631172608>!`);
             }
         }
         
-        else return message.reply('you have not yet read the rules. You will be kicked immediately if you keep refusing to.');
+        else return message.reply('You have not yet read the rules. You will be kicked immediately if you keep refusing to.');
     }
 
     /**

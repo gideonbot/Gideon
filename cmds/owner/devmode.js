@@ -12,14 +12,14 @@ export async function run(gideon, message, args) {
     const role = gideon.guilds.cache.get('595318490240385037').roles.cache.get('595334594149220368');
 
     if (channel.permissionsFor(role).has('VIEW_CHANNEL')) {
-        message.reply('devmode enabled! :white_check_mark:');
+        message.reply('Devmode enabled! :white_check_mark:');
         channel.permissionOverwrites.get(role.id).update({
             VIEW_CHANNEL: false
         }).catch(ex => console.log(ex));
     }
 
     else {
-        message.reply('devmode disabled! :white_check_mark:');
+        message.reply('Devmode disabled! :white_check_mark:');
         channel.permissionOverwrites.get(role.id).update({
             VIEW_CHANNEL: true
         }).catch(ex => console.log(ex));

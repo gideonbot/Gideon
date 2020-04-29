@@ -64,7 +64,7 @@ export async function run(gideon, message, args) {
         if (message.content.toLowerCase() === 'cancel' || message.content.toLowerCase() === 'stop') {
             await message.channel.bulkDelete(3); 
             collector.stop();
-            return message.reply('your news post has been cancelled! :white_check_mark:');
+            return message.reply('Your news post has been cancelled! :white_check_mark:');
         }
 
         const news = Util.CreateEmbed('Arrowverse News', {description: message.content, thumbnail: message.author.avatarURL()}).addField('News posted by:', message.author);

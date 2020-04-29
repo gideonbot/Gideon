@@ -5,8 +5,8 @@ import Discord from 'discord.js';
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
-    await message.reply('now respawning all shards... :white_check_mark:');
+export async function run(gideon, message) {
+    await message.reply('Now respawning all shards... :white_check_mark:');
     gideon.shard.respawnAll();
 }
 

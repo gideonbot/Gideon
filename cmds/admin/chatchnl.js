@@ -11,16 +11,16 @@ export async function run(gideon, message, args) {
     if (args[0].match(/(?:reset)/i)) {
         chat.chatchnl = '';
         gideon.setGuild.run(chat);
-        message.reply(`reset the AI chatchannel for \`${message.guild.name}\`:white_check_mark:`);
+        message.channel.send(`Reset the AI chat channel for \`${message.guild.name}\`:white_check_mark:`);
     }
 
     else {
         let channel = message.mentions.channels.first();
-        if (!channel) return message.reply('you must properly mention a channel!');
+        if (!channel) return message.reply('You must properly mention a channel!');
     
         chat.chatchnl = channel.id;
         gideon.setGuild.run(chat);
-        message.reply(`Set AI chat channel for \`${message.guild.name}\` to \`#${channel.name}\`! :white_check_mark:\n\nAll messages in this channel will now be interpreted as AI chat and no commands will be usable!`);
+        message.channel.send(`Set AI chat channel for \`${message.guild.name}\` to \`#${channel.name}\`! :white_check_mark:\n\nAll messages in this channel will now be interpreted as AI chat and no commands will be usable!`);
     }
 }
 

@@ -80,7 +80,7 @@ class MsgHandler {
             
             gideon.setUser.run(ub);
             Util.log(`${message.author.tag} had their access revoked due to command spam:\`\`\`\nUser: ${message.author.tag} - ${message.author.id}\nMessage: ${message.content} - ${message.id}\n\`\`\`\n${message.url}`);
-            return message.reply('your access to ' + gideon.user.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
+            return message.reply('Your access to ' + gideon.user.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
         }
 
         if (command.help.type === 'voice' && !message.voice) return;
@@ -88,14 +88,14 @@ class MsgHandler {
         if (command.help.owner) {
             if (message.author.id !== gideon.owner) {
                 gideon.emit('commandRefused', message, 'NOT_APPLICATION_OWNER');
-                return message.reply('you do not have the required permission to use this command!\nRequired permission: `Application Owner`');
+                return message.reply('You do not have the required permission to use this command!\nRequired permission: `Application Owner`');
             } 
         } 
 
         if (command.help.timevault) {
             if (message.guild.id !== '595318490240385037') {
                 gideon.emit('commandRefused', message, 'TIMEVAULT_ONLY');
-                return message.reply('this command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
+                return message.reply('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
             } 
         }
 
@@ -107,14 +107,14 @@ class MsgHandler {
                 }
                 if (missingperms && missingperms.length > 0) {
                     gideon.emit('commandRefused', message, 'Missing: ' + missingperms.join(' '));
-                    return message.reply('you do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
+                    return message.reply('You do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
                 }
             }   
 
             if (command.help.nsfw) {
                 if (!message.channel.nsfw) {
                     gideon.emit('commandRefused', message, 'NSFW_REQUIRED');
-                    return message.reply('this command requires a `NSFW` channel!');
+                    return message.reply('This command requires a `NSFW` channel!');
                 }
             }
 
@@ -148,7 +148,7 @@ class MsgHandler {
                 }
                 if (rolenames && rolenames.length > 0) {
                     gideon.emit('commandRefused', message, 'Missing: ' + rolenames.map(x => `@${x}`).join(' '));
-                    return message.reply('you do not have the required roles to use this command!\nRequired roles: ' + rolenames.map(x => `\`${x}\``).join(' '));
+                    return message.reply('You do not have the required roles to use this command!\nRequired roles: ' + rolenames.map(x => `\`${x}\``).join(' '));
                 } 
             }
         }
@@ -158,7 +158,7 @@ class MsgHandler {
             for (let perms of command.help.bot_perms) {
                 if (!message.channel.permissionsFor(message.guild.me).has(perms)) missingperms.push(perms);
             }
-            if (missingperms && missingperms.length > 0) return message.reply('sorry I can\'t do that without having the required permissions for this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
+            if (missingperms && missingperms.length > 0) return message.reply('Sorry I can\'t do that without having the required permissions for this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
         }
 
         if (command.help.args.force) {

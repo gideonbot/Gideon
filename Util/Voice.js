@@ -14,7 +14,7 @@ class Voice {
     static async LeaveVC(message) {
         if (!message.guild.me.voice.channel) return;
         let vcname = message.guild.me.voice.channel.name;
-        message.reply(`now leaving voice channel: \`${vcname}\`!`);
+        message.reply(`Now leaving voice channel: \`${vcname}\`!`);
         await message.guild.me.voice.channel.leave();
     }
 

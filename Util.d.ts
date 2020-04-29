@@ -20,6 +20,7 @@ export function getIdFromString(str: string): string;
 export function secondsToDifferenceString(seconds: number, settings: secondsToDifferenceSettings): string;
 export function log(message: string, files: string[]): boolean;
 export function LoadCommands(gideon: Discord.Client): void;
+export function fetchJSON(url: string): Promise<object>;
 export function ValID(input: string): string;
 export function IMG(image_id: string, message: Discord.Message, nsfw: boolean): Promise<void>;
 export function Split<T>(arr: T[], chunks: number): T[][];
@@ -32,7 +33,7 @@ export function GetRandomFile(dir: string): string;
 export function InitCache(gideon: Discord.Client): void;
 export function ClosestDate(dates: string[]): Promise<string>;
 export function Welcome(member: Discord.GuildMember, gideon: Discord.Client): Promise<void>;
-export function GetNextEpisodeInfo(url: string): Promise<EpisodeInfo>;
+export function ParseEpisodeInfo(obj: object): EpisodeInfo;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
 export function normalize(num: number): string;
 export function CreateEmbed(title: string, options?: EmbedOptions, member?: Discord.GuildMember): Discord.MessageEmbed;
@@ -82,7 +83,7 @@ interface Translation {
 }
 
 interface Cache {
-    nxeps: Discord.Collection;
+    nxeps: Discord.Collection<string, object>;
 }
 interface CheckUtil {
     ABM_Test(message: Discord.Message): Promise<ABMResult>;
