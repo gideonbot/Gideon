@@ -15,7 +15,7 @@ export async function run(gideon, message, args) {
     try {
         const queryString = encodeURI(args.join(' '));
         const api = `https://mdn.pleb.xyz/search?q=${queryString}`;
-        const body = await fetch(api).then(res => res.json());
+        const body = await Util.fetchJSON(api);
         const summary = body.Summary.replace(/<code><strong>(.+)<\/strong><\/code>/g, '<strong><code>$1</code></strong>');
         
         const turndown = new Turndown();

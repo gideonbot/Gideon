@@ -11,7 +11,7 @@ export async function run(gideon, message, args) {
     const api = 'https://api.github.com/repos/adrifcastr/Gideon';
 
     try {
-        const body = await fetch(api).then(res => res.json()); 
+        const body = await Util.fetchJSON(api);
         let upDate = new Date(body.updated_at);
     
         message.channel.send(Util.CreateEmbed(body.name, {

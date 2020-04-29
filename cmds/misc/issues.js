@@ -82,7 +82,7 @@ export async function run(gideon, message, args) {
     }
 
     else try {
-        const body = await fetch(api).then(res => res.json()); 
+        const body = await Util.fetchJSON(api);
         const issues = Util.CreateEmbed('Issues: ' + body.length, null, message.member);
 
         let issues_array = body.reverse();

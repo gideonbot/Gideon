@@ -40,13 +40,13 @@ export async function run(gideon, message, args, connection) {
 
     try {
         const api1 = 'http://geodb-free-service.wirefreethought.com/v1/geo/cities?hateoasMode=off';
-        const body1 = await fetch(api1).then(res => res.json()); 
+        const body1 = await Util.fetchJSON(api1);
         const total_count = body1.metadata.totalCount;
         let dmin = 0;
         let dmax = total_count - 1;
         const offset = Math.floor(Math.random() * (dmax - dmin + 1)) + dmin;
         const api2 = `http://geodb-free-service.wirefreethought.com/v1/geo/cities?limit=1&offset=0${offset}&hateoasMode=off`;
-        const body2 = await fetch(api2).then(res => res.json());
+        const body2 = await Util.fetchJSON(api2);
         const destination = `${body2.data[0].city}, ${body2.data[0].country}`;
         let tmin = 0;
         let tmax = 3000;

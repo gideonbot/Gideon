@@ -49,13 +49,13 @@ export async function run(gideon, message, args) {
     const search_api = encodeURI(`https://${wiki.url}/api/v1/SearchSuggestions/List?query=${search_term}`);
 
     try {
-        const search = await fetch(search_api).then(res => res.json());
+        const search = await Util.fetchJSON(search_api);
 
         if (search && search.items && search.items.length === 1) search_term = search.items[0].title;
 
         const api = encodeURI(`https://${wiki.url}/api/v1/Articles/Details?ids=50&titles=${search_term}&abstract=500&width=200&height=200`);
 
-        const body = await fetch(api).then(res => res.json());
+        const body = await Util.fetchJSON(api);
 
         //stargirl & krypton do some weird stuff, therefore the actual result is the 2nd element
         const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 || wikis.indexOf(wiki) == 3 ? 1 : 0];

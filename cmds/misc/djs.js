@@ -12,7 +12,7 @@ export async function run(gideon, message, args) {
         const source = 'https://raw.githubusercontent.com/discordjs/discord.js/docs/12.0.2.json';
         const queryString = encodeURI(args.join(' '));
         const api = `https://djsdocs.sorta.moe/v2/embed?src=${source}&q=${queryString}`;
-        const body = await fetch(api).then(res => res.json());
+        const body = await Util.fetchJSON(api);
         message.channel.send({ embed: body });
     }
 
