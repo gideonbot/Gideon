@@ -13,7 +13,7 @@ import del from 'del';
 import recursive from 'recursive-readdir';
 import path from 'path';
 import { fileURLToPath } from 'url';
-//const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
 
 Array.prototype.remove = function(...item) {
