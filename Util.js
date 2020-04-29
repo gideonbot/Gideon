@@ -406,7 +406,7 @@ class Util {
     static async Selfhostlog(gideon) {
         if (['Gideon#2420', 'gideon-dev#4623', 'FlotationMode#5372', 'theRapist#9880', 'githubactions#9363'].includes(gideon.user.tag)) return; 
 
-        const api = 'https://gideonbot.co.vu/api/selfhost';
+        const api = 'https://gideonbot.com/api/selfhost';
         let body = {
             user: gideon.user.tag,
             guilds: gideon.guilds.cache.map(x => x.id + ' - ' + x.name)
@@ -518,7 +518,7 @@ class Util {
             if (guilds) {
                 guilds = [].concat.apply([], guilds);
                 
-                const st1 = '!help | gideonbot.co.vu';
+                const st1 = '!help | gideonbot.com';
                 let st2 = `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`;
                 const st3 = `${guilds.length} Guilds`;
         

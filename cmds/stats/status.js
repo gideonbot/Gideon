@@ -8,7 +8,7 @@ import Util from '../../Util.js';
  * @param {string[]} args
  */
 export async function run(gideon, message, args) {     
-    const api = 'https://gideonbot.co.vu/api/status';
+    const api = 'https://gideonbot.com/api/status';
 
     try {
         const body = await fetch(api).then(res => res.json()); 

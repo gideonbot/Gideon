@@ -23,7 +23,7 @@
     "dotenv": "^8.0.0",
     "extract-zip": "^1.7.0",
     "ffmpeg-static": "^4.1.1",
-    "gideon-api": "^1.0.9",
+    "gideon-api": "^1.1.0",
     "git-last-commit": "^1.0.0",
     "imgur-node": "^0.2.0",
     "magnet2torrent-js": "^1.4.0",
