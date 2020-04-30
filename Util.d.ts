@@ -29,6 +29,7 @@ export function Selfhostlog(gideon: Discord.Client): Promise<void>;
 export function SQLBkup(gideon: Discord.Client): Promise<void>;
 export function status(gideon: Discord.Client): Promise<void>;
 export function Chat(message: Discord.Message): Promise<void>;
+export function GetCleverBotResponse(text: string, context: string[]): Promise<string>;
 export function GetRandomFile(dir: string): string;
 export function InitCache(gideon: Discord.Client): void;
 export function ClosestDate(dates: string[]): Promise<string>;

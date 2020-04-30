@@ -627,6 +627,22 @@ class Util {
     }
 
     /**
+     * @returns {Promise<string>}
+     * @param {string} text 
+     * @param {string[]} context 
+     */
+    static GetCleverBotResponse(text, context) {
+        return new Promise((resolve, reject) => {
+            //this is where we log stuff I guess?
+            cleverbot(text, context).then(response => {
+                //Or here?
+                resolve(response);
+            }, failed => reject(failed));
+        });
+        
+    }
+
+    /**
      * AI chat
      * @param {Discord.Message} message
      */
@@ -660,15 +676,18 @@ class Util {
         arr = arr.reverse();
         message.channel.startTyping().finally(() => {});
     
-        cleverbot(text, arr).then(response => {
+        try {
+            let response = await this.GetCleverBotResponse(text, arr);
             message.channel.send(response).then(sent => {
                 sent.cleverbot = true;
                 message.cleverbot = true;
             }).finally(() => message.channel.stopTyping(true));
-        }, failed => {
-            console.log(failed);
+        }
+
+        catch (e) {
+            console.log(e);
             message.channel.stopTyping(true);
-        });
+        }
     }
 }
 
