@@ -56,7 +56,10 @@ declare module "discord.js" {
         setUser: BetterSqlite3.Statement<any[]>;
         getGuild: BetterSqlite3.Statement<any[]>;
         setGuild: BetterSqlite3.Statement<any[]>;
+        getStat: BetterSqlite3.Statement<any[]>;
+        setStat: BetterSqlite3.Statement<any[]>;
         db: BetterSqlite3.Database;
+        stats: string[];
     }
 
     interface Message {
