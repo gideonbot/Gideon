@@ -27,6 +27,7 @@ export function Split<T>(arr: T[], chunks: number): T[][];
 export function Starboard(reaction: Discord.MessageReaction, user: Discord.User, gideon: Discord.Client): Promise<void>;
 export function Selfhostlog(gideon: Discord.Client): Promise<void>;
 export function SQLBkup(gideon: Discord.Client): Promise<void>;
+export function SetStat(gideon: Discord.Client, stat: string, value: number): void;
 export function status(gideon: Discord.Client): Promise<void>;
 export function Chat(message: Discord.Message): Promise<void>;
 export function GetCleverBotResponse(text: string, context: string[]): Promise<string>;

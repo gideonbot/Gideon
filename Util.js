@@ -445,6 +445,23 @@ class Util {
     }
 
     /**
+     * @param {Discord.Client} gideon 
+     * @param {string} stat 
+     * @param {number} value 
+     */
+    static SetStat(gideon, stat, value) {
+        let s = gideon.getStat.get(stat);
+        if (!s) {
+            console.log('Stat ' + stat + ' was missing when increasing it');
+            Util.log('Stat ' + stat + ' was missing when increasing it');
+            return;
+        }
+
+        s.value = value;
+        gideon.setStat.run(s);
+    }
+
+    /**
      * DB Backup
      */
     static async SQLBkup(gideon) {
