@@ -27,8 +27,11 @@ export function Split<T>(arr: T[], chunks: number): T[][];
 export function Starboard(reaction: Discord.MessageReaction, user: Discord.User, gideon: Discord.Client): Promise<void>;
 export function Selfhostlog(gideon: Discord.Client): Promise<void>;
 export function SQLBkup(gideon: Discord.Client): Promise<void>;
+export function SetStat(gideon: Discord.Client, stat: string, value: number): void;
+export function IncreaseStat(gideon: Discord.Client, stat: string, value?: number): void;
 export function status(gideon: Discord.Client): Promise<void>;
 export function Chat(message: Discord.Message): Promise<void>;
+export function GetCleverBotResponse(text: string, context: string[], gideon: Discord.Client): Promise<string>;
 export function GetRandomFile(dir: string): string;
 export function InitCache(gideon: Discord.Client): void;
 export function ClosestDate(dates: string[]): Promise<string>;
@@ -55,7 +58,10 @@ declare module "discord.js" {
         setUser: BetterSqlite3.Statement<any[]>;
         getGuild: BetterSqlite3.Statement<any[]>;
         setGuild: BetterSqlite3.Statement<any[]>;
+        getStat: BetterSqlite3.Statement<any[]>;
+        setStat: BetterSqlite3.Statement<any[]>;
         db: BetterSqlite3.Database;
+        stats: string[];
     }
 
     interface Message {

@@ -1,6 +1,5 @@
 import Discord from 'discord.js';
 import Util from '../../Util.js';
-import cleverbot from 'cleverbot-free';
 
 /**
  * @param {Discord.Client} gideon
@@ -46,7 +45,7 @@ export async function run(gideon, message, args) {
     arr = arr.reverse();
     message.channel.startTyping().finally(() => {});
 
-    cleverbot(text, arr).then(response => {
+    Util.GetCleverBotResponse(text, arr, message.guild.me.client).then(response => {
         message.channel.send(response).then(sent => {
             sent.cleverbot = true;
             message.cleverbot = true;

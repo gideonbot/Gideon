@@ -445,6 +445,36 @@ class Util {
     }
 
     /**
+     * @param {Discord.Client} gideon 
+     * @param {string} stat 
+     * @param {number} value 
+     */
+    static SetStat(gideon, stat, value) {
+        let s = gideon.getStat.get(stat);
+
+        if (!s) s = {id: stat, value: 0};
+
+        s.value = value;
+        gideon.setStat.run(s);
+    }
+
+    /**
+     * @param {Discord.Client} gideon 
+     * @param {string} stat 
+     * @param {number} value
+     */
+    static IncreaseStat(gideon, stat, value = 1) {
+        let s = gideon.getStat.get(stat);
+        if (!s) {
+            console.log('Stat ' + stat + ' was missing when increasing it');
+            Util.log('Stat ' + stat + ' was missing when increasing it');
+            return;
+        }
+
+        this.SetStat(gideon, stat, s.value + value);
+    }
+
+    /**
      * DB Backup
      */
     static async SQLBkup(gideon) {
@@ -627,6 +657,22 @@ class Util {
     }
 
     /**
+     * @returns {Promise<string>}
+     * @param {string} text 
+     * @param {string[]} context 
+     * @param {Discord.Client} gideon
+     */
+    static GetCleverBotResponse(text, context, gideon) {
+        return new Promise((resolve, reject) => {
+            cleverbot(text, context).then(response => {
+                this.IncreaseStat(gideon, 'ai_chat_messages_processed');
+                resolve(response);
+            }, failed => reject(failed));
+        });
+        
+    }
+
+    /**
      * AI chat
      * @param {Discord.Message} message
      */
@@ -660,15 +706,18 @@ class Util {
         arr = arr.reverse();
         message.channel.startTyping().finally(() => {});
     
-        cleverbot(text, arr).then(response => {
+        try {
+            let response = await this.GetCleverBotResponse(text, arr, message.guild.me.client);
             message.channel.send(response).then(sent => {
                 sent.cleverbot = true;
                 message.cleverbot = true;
             }).finally(() => message.channel.stopTyping(true));
-        }, failed => {
-            console.log(failed);
+        }
+
+        catch (e) {
+            console.log(e);
             message.channel.stopTyping(true);
-        });
+        }
     }
 }
 

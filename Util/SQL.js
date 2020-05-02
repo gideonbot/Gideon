@@ -38,6 +38,14 @@ class SQL {
             sql.pragma('journal_mode = wal');
         }
 
+        const statsdb = sql.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'stats\';').get();
+        if (!statsdb['count(*)']) {
+            sql.prepare('CREATE TABLE stats (id TEXT PRIMARY KEY, value INTEGER);').run();
+            sql.prepare('CREATE UNIQUE INDEX idx_stats_id ON stats (id);').run();
+            sql.pragma('synchronous = 1');
+            sql.pragma('journal_mode = wal');
+        }
+
         gideon.getScore = sql.prepare('SELECT * FROM scores WHERE id = ?');
         gideon.setScore = sql.prepare('INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);');
         gideon.getTop10 = sql.prepare('SELECT * FROM scores ORDER BY points DESC LIMIT 10;');
@@ -47,6 +55,9 @@ class SQL {
     
         gideon.getGuild = sql.prepare('SELECT * FROM guilds WHERE guild = ?');
         gideon.setGuild = sql.prepare('INSERT OR REPLACE INTO guilds (guild, prefix, cvmval, abmval, eastereggs, blacklist, chatchnl) VALUES (@guild, @prefix, @cvmval, @abmval, @eastereggs, @blacklist, @chatchnl);');
+
+        gideon.getStat = sql.prepare('SELECT * FROM stats WHERE id = ?');
+        gideon.setStat = sql.prepare('INSERT OR REPLACE INTO stats (id, value) VALUES (@id, @value);');
 
         gideon.db = sql;
     }

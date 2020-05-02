@@ -49,7 +49,7 @@ class Checks {
                 const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${result[3]}&key=${google_api_key}`;
 
                 try {
-                    const body = await fetch(api).then(res => res.json());
+                    const body = await Util.fetchJSON(api);
 
                     const channel_id = body && body.items && body.items[0] && body.items[0].snippet && body.items[0].snippet.channelId ? body.items[0].snippet.channelId : null;
                     if (!channel_id) return reject('Failed to get data from API');
