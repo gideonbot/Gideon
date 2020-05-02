@@ -11,7 +11,7 @@ export async function run(gideon, message, args) {
     const api = 'https://gideonbot.com/api/status';
 
     try {
-        const body = await fetch(api).then(res => res.json()); 
+        const body = await Util.fetchJSON(api); 
     
         message.channel.send(Util.CreateEmbed('Gideon API status:', {
             description: `${body.API.status}`,

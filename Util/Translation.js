@@ -1,5 +1,6 @@
 import Discord from 'discord.js';
 import fetch from 'node-fetch';
+import Util from '../Util.js';
 
 class TR {
     constructor() {
@@ -18,7 +19,7 @@ class TR {
         const api = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl='
         + sourceLang + '&tl=' + targetLang + '&dt=t&q=' + encodeURI(sourceText);
 
-        const body = await fetch(api).then(res => res.json());
+        const body = await Util.fetchJSON(api);
         let sourceflag = `:flag_${body[2]}:`;
         if (body[2] == targetLang) sourceflag = ':flag_gb:';
 

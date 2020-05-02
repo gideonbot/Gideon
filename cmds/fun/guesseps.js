@@ -84,7 +84,7 @@ export async function run(gideon, message, args) {
      * @returns {Promise<{embed: Discord.MessageEmbed, show: string, ep_and_s: string, airdate: Date, ep_name: string}>}
      */
     async function GetGame(showfilter) {
-        const body = await fetch('https://arrowverse.info/api').then(res => res.json());
+        const body = await Util.fetchJSON('https://arrowverse.info/api');
 
         const shows = body.filter(showfilter);
 

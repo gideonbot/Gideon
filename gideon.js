@@ -19,6 +19,7 @@ gideon.guessing = [];
 gideon.listening = [];
 gideon.spamcount = new Map();
 gideon.cache = new Discord.Collection();
+gideon.stats = ['commands_ran', 'ai_chat_messages_processed', 'messages_sent'];
 
 if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
 else {
@@ -38,6 +39,13 @@ gideon.once('ready', async () => {
     Util.SQL.InitDB(gideon);
     Util.Selfhostlog(gideon);
     Util.InitCache(gideon);
+
+    for (let item of gideon.stats) {
+        if (!gideon.getStat.get(item)) {
+            console.log('Initializing ' + item);
+            Util.SetStat(gideon, item, 0);
+        }
+    }
 
     console.log('Ready!');
 

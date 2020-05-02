@@ -96,7 +96,7 @@ export async function run(gideon, message, args) {
     const api = `http://api.tvmaze.com/shows/${show.id}/episodebynumber?season=${info.season}&number=${info.episode}`;
 
     try {
-        const body = await fetch(api).then(res => res.json());
+        const body = await Util.fetchJSON(api);
 
         if (body.status === 404) return message.channel.send(Util.CreateEmbed('There was no data for this episode!', null, message.member));
         

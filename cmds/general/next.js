@@ -29,7 +29,7 @@ export async function run(gideon, message, args) {
     }, message.member));
 
     try {
-        const body = await fetch(api).then(res => res.json());
+        const body = await Util.fetchJSON(api);
 
         //remove previous !next collectors for that specific user (found by searching for embeds with users name#discriminator in title)
         message.channel.messages.fetch({limit: 50}).then(messages => {
