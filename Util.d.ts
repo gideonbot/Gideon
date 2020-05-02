@@ -28,6 +28,7 @@ export function Starboard(reaction: Discord.MessageReaction, user: Discord.User,
 export function Selfhostlog(gideon: Discord.Client): Promise<void>;
 export function SQLBkup(gideon: Discord.Client): Promise<void>;
 export function SetStat(gideon: Discord.Client, stat: string, value: number): void;
+export function IncreaseStat(gideon: Discord.Client, stat: string, value?: number): void;
 export function status(gideon: Discord.Client): Promise<void>;
 export function Chat(message: Discord.Message): Promise<void>;
 export function GetCleverBotResponse(text: string, context: string[]): Promise<string>;

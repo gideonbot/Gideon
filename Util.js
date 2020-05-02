@@ -452,13 +452,29 @@ class Util {
     static SetStat(gideon, stat, value) {
         let s = gideon.getStat.get(stat);
         if (!s) {
-            console.log('Stat ' + stat + ' was missing when increasing it');
-            Util.log('Stat ' + stat + ' was missing when increasing it');
+            console.log('Stat ' + stat + ' was missing when modifying it');
+            Util.log('Stat ' + stat + ' was missing when modifying it');
             return;
         }
 
         s.value = value;
         gideon.setStat.run(s);
+    }
+
+    /**
+     * @param {Discord.Client} gideon 
+     * @param {string} stat 
+     * @param {number} value
+     */
+    static IncreaseStat(gideon, stat, value = 1) {
+        let s = gideon.getStat.get(stat);
+        if (!s) {
+            console.log('Stat ' + stat + ' was missing when increasing it');
+            Util.log('Stat ' + stat + ' was missing when increasing it');
+            return;
+        }
+
+        this.SetStat(gideon, stat, s.value + value);
     }
 
     /**
