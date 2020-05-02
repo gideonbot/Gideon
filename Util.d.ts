@@ -31,7 +31,7 @@ export function SetStat(gideon: Discord.Client, stat: string, value: number): vo
 export function IncreaseStat(gideon: Discord.Client, stat: string, value?: number): void;
 export function status(gideon: Discord.Client): Promise<void>;
 export function Chat(message: Discord.Message): Promise<void>;
-export function GetCleverBotResponse(text: string, context: string[]): Promise<string>;
+export function GetCleverBotResponse(text: string, context: string[], gideon: Discord.Client): Promise<string>;
 export function GetRandomFile(dir: string): string;
 export function InitCache(gideon: Discord.Client): void;
 export function ClosestDate(dates: string[]): Promise<string>;

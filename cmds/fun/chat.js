@@ -45,7 +45,7 @@ export async function run(gideon, message, args) {
     arr = arr.reverse();
     message.channel.startTyping().finally(() => {});
 
-    Util.GetCleverBotResponse(text, arr).then(response => {
+    Util.GetCleverBotResponse(text, arr, message.guild.me.client).then(response => {
         message.channel.send(response).then(sent => {
             sent.cleverbot = true;
             message.cleverbot = true;

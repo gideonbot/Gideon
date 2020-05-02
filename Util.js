@@ -663,12 +663,12 @@ class Util {
      * @returns {Promise<string>}
      * @param {string} text 
      * @param {string[]} context 
+     * @param {Discord.Client} gideon
      */
-    static GetCleverBotResponse(text, context) {
+    static GetCleverBotResponse(text, context, gideon) {
         return new Promise((resolve, reject) => {
-            //this is where we log stuff I guess?
             cleverbot(text, context).then(response => {
-                //Or here?
+                this.IncreaseStat(gideon, 'ai_chat_messages_processed');
                 resolve(response);
             }, failed => reject(failed));
         });
@@ -710,7 +710,7 @@ class Util {
         message.channel.startTyping().finally(() => {});
     
         try {
-            let response = await this.GetCleverBotResponse(text, arr);
+            let response = await this.GetCleverBotResponse(text, arr, message.guild.me.client);
             message.channel.send(response).then(sent => {
                 sent.cleverbot = true;
                 message.cleverbot = true;
