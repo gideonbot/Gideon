@@ -43,7 +43,7 @@ gideon.once('ready', async () => {
     for (let item of gideon.stats) {
         if (!gideon.getStat.get(item)) {
             console.log('Initializing ' + item);
-            gideon.setStat.run({id: item, value: 0});
+            Util.SetStat(gideon, item, 0);
         }
     }
 

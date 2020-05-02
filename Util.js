@@ -451,11 +451,8 @@ class Util {
      */
     static SetStat(gideon, stat, value) {
         let s = gideon.getStat.get(stat);
-        if (!s) {
-            console.log('Stat ' + stat + ' was missing when modifying it');
-            Util.log('Stat ' + stat + ' was missing when modifying it');
-            return;
-        }
+
+        if (!s) s = {id: stat, value: 0};
 
         s.value = value;
         gideon.setStat.run(s);
