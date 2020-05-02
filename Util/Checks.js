@@ -83,7 +83,7 @@ class Checks {
         this.ABM_Test(message, Util).then(async res => {
             if (res.match) {
                 await message.delete({ timeout: 200 });
-                Util.log('ABM triggered by: ' + message.author.tag + ' (' + res.content + ')');
+                Util.log('ABM triggered by: ' + message.author.tag + ' (' + res.content + ')\nABM triggered in: `' + message.channel.name + '` at `' + message.guild.name + '`');
                 const abmsg = await message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-BS-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}, message.member) });
                 await abmsg.delete({ timeout: 3500 });
             }
