@@ -26,40 +26,6 @@ export async function run(gideon, message, args) {
     
     if (!user) return message.channel.send(as);
 
-    let device = 'None';
-    let demote = '';
-
-    if (user.presence.clientStatus) {
-        let type = Object.keys(user.presence.clientStatus)[0];
-        
-        device = type == 'web' ? 'Web Browser' : type == 'desktop' ? 'Desktop' : type == 'mobile' ? 'Mobile' : 'None';
-        demote = type == 'web' || type == 'desktop' ? ':desktop:' : type == 'mobile' ? ':iphone:' : '';
-    }
-
-    const statuses = {
-        'offline': 'Offline',
-        'online': 'Online',
-        'idle': 'Idling',
-        'dnd': 'Do Not Disturb'
-    };
-
-    const status_emojis = {
-        'offline': ':black_circle:',
-        'online': ':green_circle:',
-        'idle': ':crescent_moon:',
-        'dnd': ':red_circle:'
-    };
-
-    let status = statuses[user.presence.status];
-    let semote = status_emojis[user.presence.status];
-
-    let activity = user.presence.activities.find(x => x.type == 'CUSTOM_STATUS');
-    let other_activities = user.presence.activities.filter(x => x.type != 'CUSTOM_STATUS');
-    let custom_status = {
-        text: activity ? activity.state : '',
-        emoji: !activity || !activity.emoji ? '' : gideon.guilds.cache.get(activity.emoji.id) ? activity.emoji.id : activity.emoji.identifier.includes(activity.emoji.name) ? '' : activity.emoji.name 
-    };
-
     const embed = Util.CreateEmbed(null, {
         author: {
             name: `Info requested by ${auth.tag}`,
@@ -70,7 +36,7 @@ export async function run(gideon, message, args) {
         fields: [
             {
                 name: '❯ User Info:',
-                value: `• ID: \`${user.id}\`\n• Status: \`${status}\` ${semote}\n• Custom Status: ${!custom_status.text ? custom_status.emoji ? '' : '`None`' : '`' + custom_status.text + '`'} ${custom_status.emoji}\n• Activity: \`${other_activities.length < 1 ? 'None' : other_activities[0].name}\`\n• Device: \`${device}\`${demote}\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot ? 'Yes' : 'No'}\`\n• Avatar: [Download](${user.avatarURL()})`
+                value: `• ID: \`${user.id}\`\n• Created at: \`${moment.utc(user.createdAt).format('YYYY/MM/DD hh:mm:ss')}\`\n• Bot account: \`${user.bot ? 'Yes' : 'No'}\`\n• Avatar: [Download](${user.avatarURL()})`
             },
         ]
     }, message.member);

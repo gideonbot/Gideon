@@ -4,7 +4,7 @@ PrettyError.start().withoutColors();
 import Discord from 'discord.js';
 const gideon = new Discord.Client({
     ws: {
-        intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS']
+        intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS']
     },
     disableMentions: 'everyone',
     partials: ['MESSAGE', 'REACTION'],
