@@ -266,14 +266,18 @@ class Util {
      * @returns {{title: string, name: string, value: string}}
      * @param {object} body 
      */
-    static ParseEpisodeInfo(body) {
+    static async ParseEpisodeInfo(body) {
         if (!body) return {};
 
         let result = { title: body.name, name: null, value: null };
 
         if (!body._embedded) {
+            const url = body._links.self.href + '/seasons';
+            const seasons = await Util.fetchJSON(url);
+            const nextseason = seasons.reverse()[0].number;
+
             result.name = '';
-            result.value = 'No Episode data available yet';
+            result.value = `\`Awaiting season ${nextseason} premiere!\``;
         }
 
         else {

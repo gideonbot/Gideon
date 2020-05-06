@@ -58,7 +58,7 @@ export async function run(gideon, message, args, connection) {
                 gideon.cache.nxeps.set(show, json);
             }
 
-            let info = Util.ParseEpisodeInfo(json);
+            let info = await Util.ParseEpisodeInfo(json);
             
             embed.addField(`${info.title} ${info.name}`, `${info.value}`);
         }
