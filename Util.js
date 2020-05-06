@@ -581,7 +581,6 @@ class Util {
         const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('700815626972823572');
         const welcome = `Greetings Earth-Prime-ling ${member}!\nWelcome to the Time Vault<:timevault:686676561298063361>!\nIf you want full server access make sure to read <#595935345598529546>!\n${logos}`;
         channel.send(welcome);
-        member.send(welcome).catch(ex => console.log(ex));
     }
 
     /**
