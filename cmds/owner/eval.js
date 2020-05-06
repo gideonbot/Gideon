@@ -9,7 +9,8 @@ import Util from '../../Util.js';
 export async function run(gideon, message, args) {
     try {
         const code = args.join(' ');
-        const returnedValue = eval(code);
+        // eslint-disable-next-line semi
+        const returnedValue = eval('(async () => {' + code + '})()');
 
         if (typeof returnedValue === 'undefined') {
             message.channel.send('The evaluated code returned nothing.');
