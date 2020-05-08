@@ -7,6 +7,7 @@ const gideon = new Discord.Client({
         intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
     },
     disableMentions: 'everyone',
+    fetchAllMembers: true,
     partials: ['MESSAGE', 'REACTION'],
     restRequestTimeout: 25000
 });
