@@ -13,7 +13,14 @@ class MsgHandler {
      * @param {Discord.VoiceConnection} connection 
      */
     static async Handle(gideon, message, Util, connection) {
-        if (!message || !message.author  || !message.guild || message.partial || message.type != 'DEFAULT') return;
+        if (!message || !message.author || message.partial || message.type != 'DEFAULT') return;
+        if (!message.guild) {
+            if (message.content.match(/(?:readdemrulez)/i)) {
+                return Util.Checks.RulesCheck(message, gideon);
+            }
+            else return;
+        }
+        
         if (message.author.id == gideon.user.id) Util.IncreaseStat(gideon, 'messages_sent');
         if (message.author.bot) return;
         if (!message.guild.me) await message.guild.members.fetch(gideon.user.id);
@@ -42,7 +49,6 @@ class MsgHandler {
         if (message.channel.id === currentguild.chatchnl) return Util.Chat(message, gideon);
         Util.Checks.Ads(message, gideon); //check for foreign invites
         Util.Checks.ABM(message, gideon, Util); //apply content filter
-        Util.Checks.RulesCheck(message); //check if member read the guilds rules
 
         if (message.guild.id === '595318490240385037') {
             if (!message.member.roles.cache.has('688430418466177082')) return; //NO COMMANDS FOR NON RULE READERS, FEEL MY WRATH
