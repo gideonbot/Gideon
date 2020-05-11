@@ -18,7 +18,7 @@ export async function run(gideon, message, args) {
         .addField('Musical Crossover', 'Supergirl 2x16 - Star-Crossed\nThe Flash 3x17 - Duet')  
         .addField('Crisis on Earth-X', 'Supergirl 3x08 - Crisis on Earth-X, Part 1\nArrow 6x08 - Crisis on Earth-X, Part 2\nThe Flash 4x08 - Crisis on Earth-X, Part 3\nDC\'s Legends of Tomorrow 3x08 - Crisis on Earth-X, Part 4')  
         .addField('Elseworlds', 'The Flash 5x09 - Elseworlds, Part 1\nArrow 7x09 - Elseworlds, Part 2\nSupergirl 4x09 - Elseworlds, Part 3')
-        .addField('Crisis On Infinite Earths', 'Supergirl 5x09 - Crisis on Infinite Earths: Hour One\nBatwoman 1x09 - Crisis on Infinite Earths: Hour Two\nThe Flash 6x09 - Crisis on Infinite Earths: Hour Three\nArrow 8x09 - Crisis on Infinite Earths: Hour Four\nDC\'s Legends of Tomorrow 5x09 - Crisis on Infinite Earths: Hour Five');
+        .addField('Crisis On Infinite Earths', 'Supergirl 5x09 - Crisis on Infinite Earths: Hour One\nBatwoman 1x09 - Crisis on Infinite Earths: Hour Two\nThe Flash 6x09 - Crisis on Infinite Earths: Hour Three\nArrow 8x09 - Crisis on Infinite Earths: Hour Four\nDC\'s Legends of Tomorrow 5x00 - Crisis on Infinite Earths: Hour Five');
 
     const embeds = [co1, co2];
     
