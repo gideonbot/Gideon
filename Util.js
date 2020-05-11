@@ -269,7 +269,17 @@ class Util {
     static async ParseEpisodeInfo(body) {
         if (!body) return {};
 
-        let result = { title: body.name, name: null, value: null };
+        let emote;
+        if (body.name === 'Batwoman') emote = '<:batwomansymbol:686309750765649957>';
+        if (body.name === 'Supergirl') emote = '<:supergirlsymbol:686309750383837297>';
+        if (body.name === 'The Flash') emote = '<:flashsymbol:686309755668660315>';
+        if (body.name === 'DC\'s Legends of Tomorrow') emote = '<:lotsymbol:686309757857824802>';
+        if (body.name === 'Stargirl') emote = '<:stargirl:668513166380105770>';
+        if (body.name === 'Black Lightning') emote = '<:blacklightning:607657873534746634>';
+        if (body.name === 'Green Arrow and the Canaries') emote = '<:canaries:634764613434474496>';
+        if (body.name === 'Superman & Lois') emote = '<:supermanlois:638489255169228830>';
+
+        let result = { title: emote + body.name, name: null, value: null };
 
         if (!body._embedded) {
             const url = body._links.self.href + '/seasons';
