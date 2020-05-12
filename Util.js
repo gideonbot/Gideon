@@ -587,7 +587,7 @@ class Util {
     /**
      * @param {Discord.Client} gideon 
      */
-    static async CheckEpisodes(gideon) {
+    static CheckEpisodes(gideon) {
         for (let key in gideon.show_api_urls) {
             let item = gideon.cache.nxeps.get(key);
 
@@ -600,10 +600,8 @@ class Util {
                 console.log('Air date passed, updating ' + key);
 
                 try {
-                    let json = await Util.fetchJSON(gideon.show_api_urls[key]);
-                    gideon.cache.nxeps.set(key, json);
-
-                    //this show will be handled in the next run (when the method gets called again)
+                    this.GetAndStoreEpisode(key, gideon);
+                    //this show will be handled in the next run (when the method gets called again) so no need to await
                     continue;
                 }
                 

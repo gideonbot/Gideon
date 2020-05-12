@@ -36,7 +36,7 @@ export function GetCleverBotResponse(text: string, context: string[], gideon: Di
 export function GetRandomFile(dir: string): string;
 export function InitCache(gideon: Discord.Client): Promise<void>;
 export function GetAndStoreEpisode(show: string, gideon: Discord.Client): Promise<void>;
-export function CheckEpisodes(gideon: Discord.Client): Promise<void>;
+export function CheckEpisodes(gideon: Discord.Client): void;
 export function ClosestDate(dates: string[]): Promise<string>;
 export function Welcome(member: Discord.GuildMember, gideon: Discord.Client): Promise<void>;
 export function ParseEpisodeInfo(obj: object): Promise<EpisodeInfo>;
