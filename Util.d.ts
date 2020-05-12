@@ -34,7 +34,7 @@ export function InitStatus(gideon: Discord.Client): void;
 export function Chat(message: Discord.Message): Promise<void>;
 export function GetCleverBotResponse(text: string, context: string[], gideon: Discord.Client): Promise<string>;
 export function GetRandomFile(dir: string): string;
-export function InitCache(gideon: Discord.Client): void;
+export function InitCache(gideon: Discord.Client): Promise<void>;
 export function ClosestDate(dates: string[]): Promise<string>;
 export function Welcome(member: Discord.GuildMember, gideon: Discord.Client): Promise<void>;
 export function ParseEpisodeInfo(obj: object): Promise<EpisodeInfo>;
@@ -52,6 +52,7 @@ declare module "discord.js" {
         listening: string[];
         spamcount: Map;
         cache: Cache;
+        show_api_urls: Record<string, string>;
         statuses: {name: string, fetch: (() => Promise<{type: Discord.ActivityType, value: string}>)}[];
         getScore: BetterSqlite3.Statement<any[]>;
         setScore: BetterSqlite3.Statement<any[]>;

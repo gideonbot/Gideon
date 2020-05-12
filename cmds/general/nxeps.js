@@ -22,40 +22,15 @@ export async function run(gideon, message, args, connection) {
         });
     }
 
-    const api_urls = {
-        batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
-        supergirl: 'http://api.tvmaze.com/shows/1850?embed=nextepisode',
-        flash: 'http://api.tvmaze.com/shows/13?embed=nextepisode',
-        legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
-        stargirl: 'http://api.tvmaze.com/shows/37809?embed=nextepisode', 
-        b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
-        canaries: 'http://api.tvmaze.com/shows/44496?embed=nextepisode',
-        supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode'
-    };
-
     const embed = Util.CreateEmbed('__Upcoming Arrowverse episodes:__', null, message.member);
 
-    let current = new Date();
-
-    //we loop through the cache and remove tv shows that aired
-    for (let item of gideon.cache.nxeps.keys()) {
-        let value = gideon.cache.nxeps.get(item);
-
-        if (value && value._embedded && value._embedded.nextepisode && value._embedded.nextepisode.airstamp) {
-            let d = new Date(value._embedded.nextepisode.airstamp);
-            if (d < current) {
-                console.log('Removing ' + item + ' from cache (outdated)');
-                gideon.cache.nxeps.delete(item);
-            }
-        }
-    }
-
-    for (let show in api_urls) {
+    for (let show in gideon.show_api_urls) {
         try {
             let json = gideon.cache.nxeps.get(show);
             if (!json) {
-                json = await Util.fetchJSON(api_urls[show]);
-                gideon.cache.nxeps.set(show, json);
+                console.log('No JSON for ' + show + ' when calling nxeps!');
+                Util.log('No JSON for ' + show + ' when calling nxeps!');
+                continue;
             }
 
             let info = await Util.ParseEpisodeInfo(json);

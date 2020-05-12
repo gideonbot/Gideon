@@ -13,7 +13,7 @@ import del from 'del';
 import recursive from 'recursive-readdir';
 import path from 'path';
 import { fileURLToPath } from 'url';
-//const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
 
 Array.prototype.remove = function(...item) {
@@ -581,9 +581,62 @@ class Util {
             return {type: 'WATCHING', value: `${guilds.length} Guilds`};
         }});
 
-        gideon.statuses.push({name: 'episode_countdown', fetch: async () => {
-            
-        }});
+        this.CheckEpisodes(gideon);
+    }
+
+    /**
+     * @param {Discord.Client} gideon 
+     */
+    static async CheckEpisodes(gideon) {
+        for (let key in gideon.show_api_urls) {
+            let item = gideon.cache.nxeps.get(key);
+
+            let next_ep = item && item._embedded && item._embedded.nextepisode ? item._embedded.nextepisode : null;
+            if (!next_ep || !next_ep.airstamp) continue;
+
+            let air_date = new Date(next_ep.airstamp);
+
+            if (air_date < new Date()) {
+                console.log('Air date passed, updating ' + key);
+
+                try {
+                    let json = await Util.fetchJSON(gideon.show_api_urls[key]);
+                    gideon.cache.nxeps.set(key, json);
+
+                    //this show will be handled in the next run (when the method gets called again)
+                    continue;
+                }
+                
+                catch (ex) {
+                    console.log(`Error while fetching next episode @CheckEpisodes for "${key}": ${ex}`);
+                    Util.log(`Error while fetching next episode @CheckEpisodes for "${key}": ${ex}`);
+                }
+            }
+
+            let difference = Math.abs(new Date() - air_date) / 1000;
+
+            //6 hours       //HERE - REMOVE THIS BEFORE PUSHING
+            if (difference > 21600) {
+                let status = gideon.statuses.find(x => x.name == key + '_countdown');
+                if (status) gideon.statuses.remove(status);
+                continue;
+            }
+
+            if (gideon.statuses.map(x => x.name).includes(key + '_countdown')) continue;
+
+            console.log('Adding countdown for ' + key);
+        
+            gideon.statuses.push({name: key + '_countdown', fetch: async () => {
+                let show = gideon.cache.nxeps.get(key);
+                let ep = show._embedded.nextepisode;
+
+                let difference = Math.abs(new Date() - new Date(ep.airstamp)) / 1000;
+                let minutes = Math.floor(difference / 60);
+                let str = difference > 3600 ? (difference / 3600).toFixed(1) + 'h' : minutes < 1 ? 'NOW' : minutes + ' min' + (minutes == 1 ? '' : 's');
+
+                return {type: 'WATCHING', value: `${show.shortname} ${ep.season}x${ep.number} in ${str}`};
+            }});
+        }
     }
 
     /**
@@ -679,8 +732,45 @@ class Util {
      * Init cache
      * @param {Discord.Client} gideon
      */
-    static InitCache(gideon) {
+    static async InitCache(gideon) {
         gideon.cache.nxeps = new Discord.Collection();
+
+        for (let show in gideon.show_api_urls) {
+            try { await this.GetAndStoreEpisode(show, gideon); }
+            
+            catch (ex) {
+                console.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
+                Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
+            }
+        }
+    }
+
+    /**
+     * @param {string} show 
+     * @param {Discord.Client} gideon
+     */
+    static async GetAndStoreEpisode(show, gideon) {
+        let names = {
+            batwoman: 'Batwoman',
+            supergirl: 'Supergirl',
+            flash: 'Flash',
+            legends: 'Legends',
+            stargirl: 'Stargirl', 
+            b_lightning: 'B. Lightning',
+            canaries: 'Canaries',
+            supesnlois: 'Superman & Lois' //peepee moment
+        };
+
+        try {
+            let json = await Util.fetchJSON(gideon.show_api_urls[show]);
+            json.shortname = names[show];
+            gideon.cache.nxeps.set(show, json);
+        }
+        
+        catch (ex) {
+            console.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
+            Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
+        }
     }
 
     /**

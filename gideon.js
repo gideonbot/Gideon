@@ -22,6 +22,16 @@ gideon.statuses = [];
 gideon.spamcount = new Map();
 gideon.cache = new Discord.Collection();
 gideon.stats = ['commands_ran', 'ai_chat_messages_processed', 'messages_sent'];
+gideon.show_api_urls = {
+    batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
+    supergirl: 'http://api.tvmaze.com/shows/1850?embed=nextepisode',
+    flash: 'http://api.tvmaze.com/shows/13?embed=nextepisode',
+    legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
+    stargirl: 'http://api.tvmaze.com/shows/37809?embed=nextepisode', 
+    b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
+    canaries: 'http://api.tvmaze.com/shows/44496?embed=nextepisode',
+    supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode'
+};
 
 if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
 else {
@@ -40,9 +50,8 @@ gideon.once('ready', async () => {
     Util.LoadCommands(gideon);
     Util.SQL.InitDB(gideon);
     Util.Selfhostlog(gideon);
-    Util.InitCache(gideon);
+    await Util.InitCache(gideon);
     Util.InitStatus(gideon);
-
     Util.UpdateStatus(gideon);
 
     for (let item of gideon.stats) {
@@ -55,7 +64,10 @@ gideon.once('ready', async () => {
     Util.config.prefixes.push(`<@!${gideon.user.id}>`, `<@${gideon.user.id}>`);
     
     const twodays = 1000 * 60 * 60 * 48;
-    setInterval(Util.UpdateStatus, 10e3, gideon);
+    setInterval(() => {
+        Util.UpdateStatus(gideon);
+        Util.CheckEpisodes(gideon);
+    }, 10e3);
     setInterval(Util.SQLBkup, twodays, gideon);
 
     gideon.fetchApplication().then(app => {
