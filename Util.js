@@ -284,10 +284,14 @@ class Util {
         if (!body._embedded) {
             const url = body._links.self.href + '/seasons';
             const seasons = await Util.fetchJSON(url);
-            const nextseason = seasons.reverse()[0].number;
+            seasons.reverse();
+            const nextseason = seasons[0].number;
+            let seasondate = new Date(seasons[0].premiereDate);
+            if (!seasons[0].premiereDate) seasondate = null;
+            const episodeorder = seasons[0].episodeOrder;
 
             result.name = '';
-            result.value = `\`Awaiting season ${nextseason} premiere!\``;
+            result.value = `\`Awaiting season ${nextseason}!\`\n${seasondate ? 'Season premiere: ' + '`' + seasondate.toDateString() + '`' : ''}${episodeorder ? 'Ordered Episodes: ' + '`' + episodeorder + '`' : ''}`;
         }
 
         else {
