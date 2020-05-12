@@ -275,7 +275,7 @@ class Util {
             const episodeorder = seasons[0].episodeOrder;
 
             result.name = '';
-            result.value = `\`Awaiting season ${nextseason}!\`\n${seasondate ? 'Season premiere: ' + '`' + seasondate.toDateString() + '`' : ''}${episodeorder ? 'Ordered Episodes: ' + '`' + episodeorder + '`' : ''}`;
+            result.value = `\`Awaiting season ${nextseason}!\`\n${seasondate ? 'Season Premiere: ' + '`' + seasondate.toDateString() + '`' : ''}${episodeorder ? 'Ordered Episodes: ' + '`' + episodeorder + '`' : ''}`;
         }
 
         else {
