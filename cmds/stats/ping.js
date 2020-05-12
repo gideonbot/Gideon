@@ -6,8 +6,16 @@ import Util from '../../Util.js';
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
-    message.channel.send(Util.CreateEmbed('The fastest bot alive!', {description: `WebSocket ping: ${gideon.ws.ping.toFixed(2)} ms`}, message.member));  
+export async function run(gideon, message) {
+    let start = process.hrtime.bigint();
+
+    Util.fetchJSON('https://discord.com/api/v7/gateway').then(() => {
+        let took = (process.hrtime.bigint() - start) / BigInt('1000000');
+        message.channel.send(Util.CreateEmbed('The fastest bot alive!', {description: `WebSocket ping: ${gideon.ws.ping.toFixed(2)} ms\nREST ping: ${took} ms`}, message.member));
+    }, failed => {
+        console.log(failed);
+        message.channel.send('Failed to measure ping!');
+    });
 }
 
 export const help = {

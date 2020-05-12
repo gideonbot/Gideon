@@ -1,5 +1,4 @@
 import Discord from 'discord.js';
-import Util from '../../Util.js';
 import Canvas from 'canvas';
 
 /**
@@ -32,7 +31,7 @@ export async function run(gideon, message, args) {
                 metrics = ctx.measureText(test);
             }
             if (words[i] != test) {
-                words.splice(i + 1, 0,  words[i].substr(test.length))
+                words.splice(i + 1, 0,  words[i].substr(test.length));
                 words[i] = test;
             }  
     
@@ -54,8 +53,7 @@ export async function run(gideon, message, args) {
     }
 
     const ctx = canvas.getContext('2d');
-
-    const background = await Canvas.loadImage('https://i.imgur.com/MuwWuHZ.jpg');
+    const background = await Canvas.loadImage('./data/images/meme_template_1.jpg');
 
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
@@ -84,4 +82,4 @@ export const help = {
     roles: [],
     user_perms: [],
     bot_perms: []
-}
+};
