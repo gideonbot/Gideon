@@ -17,6 +17,7 @@ gideon.vcmdexec = false;
 gideon.emptyvc = false;
 gideon.guessing = [];
 gideon.listening = [];
+gideon.statuses = [];
 gideon.spamcount = new Map();
 gideon.cache = new Discord.Collection();
 gideon.stats = ['commands_ran', 'ai_chat_messages_processed', 'messages_sent'];
@@ -39,6 +40,9 @@ gideon.once('ready', async () => {
     Util.SQL.InitDB(gideon);
     Util.Selfhostlog(gideon);
     Util.InitCache(gideon);
+    Util.InitStatus(gideon);
+
+    Util.UpdateStatus(gideon);
 
     for (let item of gideon.stats) {
         if (!gideon.getStat.get(item)) {
@@ -47,12 +51,10 @@ gideon.once('ready', async () => {
         }
     }
 
-    console.log('Ready!');
-
     Util.config.prefixes.push(`<@!${gideon.user.id}>`, `<@${gideon.user.id}>`);
     
     const twodays = 1000 * 60 * 60 * 48;
-    setInterval(Util.status, 30e3, gideon);
+    setInterval(Util.UpdateStatus, 10e3, gideon);
     setInterval(Util.SQLBkup, twodays, gideon);
 
     gideon.fetchApplication().then(app => {
@@ -67,6 +69,8 @@ gideon.once('ready', async () => {
             process.exit(0);
         }
     }, 10e3);
+
+    console.log('Ready!');
 });
 
 process.on('uncaughtException', err => {

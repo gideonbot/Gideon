@@ -29,7 +29,8 @@ export function Selfhostlog(gideon: Discord.Client): Promise<void>;
 export function SQLBkup(gideon: Discord.Client): Promise<void>;
 export function SetStat(gideon: Discord.Client, stat: string, value: number): void;
 export function IncreaseStat(gideon: Discord.Client, stat: string, value?: number): void;
-export function status(gideon: Discord.Client): Promise<void>;
+export function UpdateStatus(gideon: Discord.Client): Promise<void>;
+export function InitStatus(gideon: Discord.Client): void;
 export function Chat(message: Discord.Message): Promise<void>;
 export function GetCleverBotResponse(text: string, context: string[], gideon: Discord.Client): Promise<string>;
 export function GetRandomFile(dir: string): string;
@@ -51,6 +52,7 @@ declare module "discord.js" {
         listening: string[];
         spamcount: Map;
         cache: Cache;
+        statuses: {name: string, fetch: (() => Promise<{type: Discord.ActivityType, value: string}>)}[];
         getScore: BetterSqlite3.Statement<any[]>;
         setScore: BetterSqlite3.Statement<any[]>;
         getTop10: BetterSqlite3.Statement<any[]>;

@@ -13,7 +13,7 @@ import del from 'del';
 import recursive from 'recursive-readdir';
 import path from 'path';
 import { fileURLToPath } from 'url';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+//const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
 
 Array.prototype.remove = function(...item) {
@@ -539,29 +539,51 @@ class Util {
     }
 
     /**
-     * Status
      * @param {Discord.Client} gideon
      */
-    static async status(gideon) {
-        try {
-            let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
+    static InitStatus(gideon) {
+        if (gideon.statuses.length > 0) {
+            console.log('InitStatus called but statuses were not empty (called multiple times??)');
+            Util.log('InitStatus called but statuses were not empty (called multiple times??)');
+            return;
+        }
+
+        gideon.statuses.push({name: 's1', fetch: async () => { return {type: 'PLAYING', value: '!help | gideonbot.com'}; }});
+
+        gideon.statuses.push({name: 's2', fetch: async () => {
             let mbc = await gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? 0 : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(x => !x.user.bot).size').catch(ex => console.log(ex));
     
             if (mbc) mbc = mbc.filter(x => x);
-    
-            if (guilds) {
-                guilds = [].concat.apply([], guilds);
-                
-                const st1 = '!help | gideonbot.com';
-                let st2 = `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`;
-                const st3 = `${guilds.length} Guilds`;
-        
-                gideon.user.setActivity(st1, { type: 'PLAYING' }); 
-                await Util.delay(10000);
-                gideon.user.setActivity(st2, { type: 'WATCHING' }); 
-                await Util.delay(10000);
-                gideon.user.setActivity(st3, { type: 'WATCHING' });
-            }
+            return {type: 'WATCHING', value: `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`};
+        }});
+
+        gideon.statuses.push({name: 's3', fetch: async () => {
+            let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
+            if (guilds) guilds = [].concat.apply([], guilds);
+
+            return {type: 'WATCHING', value: `${guilds.length} Guilds`};
+        }});
+
+        gideon.statuses.push({name: 'episode_countdown', fetch: async () => {
+            
+        }});
+    }
+
+    /**
+     * Status
+     * @param {Discord.Client} gideon
+     */
+    static async UpdateStatus(gideon) {
+        if (gideon.statuses.length < 1) return;
+
+        let item = gideon.statuses[0];
+        //we move the item to the end of the array
+        gideon.statuses.shift();
+        gideon.statuses.push(item);
+
+        try {
+            let status = await item.fetch();
+            gideon.user.setActivity(status.value, { type: status.type }); 
         }
         
         catch (ex) {
