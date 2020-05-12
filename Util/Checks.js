@@ -480,9 +480,9 @@ class Checks {
      * @param {Discord.GuildMember} member
      */
     static async AccCheck(member, Util) {
-        const flagged = ['141983643005485056', '708427459174858752'];
+        const flagged = ['141983643005485056', '708427459174858752', '565366753623015475', '477208850156617728', '599704513292795925'];
         if (flagged.includes(member.id)) {
-            const string = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of this guild!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisment\n- DM spam\n\`\`\`\nWe advise to notify the guild owner.`;
+            const string = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of this guild!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisment\n- DM spam\n\`\`\`\nWe advise to notify the guild owner (${member.guild.owner}).`;
             if (!member.guild.me.lastMessage) return;
             if (member.guild.me.lastMessage.partial) await member.guild.me.lastMessage.fetch();
             member.guild.me.lastMessage.channel.send(string);
