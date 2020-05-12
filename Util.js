@@ -266,14 +266,28 @@ class Util {
      * @returns {{title: string, name: string, value: string}}
      * @param {object} body 
      */
-    static ParseEpisodeInfo(body) {
+    static async ParseEpisodeInfo(body) {
         if (!body) return {};
 
-        let result = { title: body.name, name: null, value: null };
+        let emote;
+        if (body.name === 'Batwoman') emote = '<:batwomansymbol:686309750765649957>';
+        if (body.name === 'Supergirl') emote = '<:supergirlsymbol:686309750383837297>';
+        if (body.name === 'The Flash') emote = '<:flashsymbol:686309755668660315>';
+        if (body.name === 'DC\'s Legends of Tomorrow') emote = '<:lotsymbol:686309757857824802>';
+        if (body.name === 'Stargirl') emote = '<:stargirl:668513166380105770>';
+        if (body.name === 'Black Lightning') emote = '<:blacklightning:607657873534746634>';
+        if (body.name === 'Green Arrow and the Canaries') emote = '<:canaries:634764613434474496>';
+        if (body.name === 'Superman & Lois') emote = '<:supermanlois:638489255169228830>';
+
+        let result = { title: emote + body.name, name: null, value: null };
 
         if (!body._embedded) {
+            const url = body._links.self.href + '/seasons';
+            const seasons = await Util.fetchJSON(url);
+            const nextseason = seasons.reverse()[0].number;
+
             result.name = '';
-            result.value = 'No Episode data available yet';
+            result.value = `\`Awaiting season ${nextseason} premiere!\``;
         }
 
         else {
@@ -281,7 +295,7 @@ class Util {
             let number = body._embedded.nextepisode.number;
             let name = body._embedded.nextepisode.name;
             let date = new Date(body._embedded.nextepisode.airstamp);
-            let channel = body.network ? body.network.name : 'Unknown';
+            let channel = body.network ? body.network.name : body.webChannel ? body.webChannel.name : 'Unknown';
 
             let time_diff_s = Math.abs(new Date() - date) / 1000;
 
@@ -507,7 +521,10 @@ class Util {
      * @param {Discord.Client} gideon
      */
     static async Starboard(reaction, user, gideon) {
-        if (reaction.partial) await reaction.fetch();
+        if (reaction.partial) {
+            await reaction.fetch();
+            await reaction.users.fetch();
+        }
         if (!reaction.message) return;
         if (reaction.message.deleted) return;
         if (reaction.message.partial) await reaction.message.fetch();
@@ -515,7 +532,7 @@ class Util {
         if (reaction.message.guild.id !== '595318490240385037') return;
         if (reaction.emoji.name !== '⭐') return;
         if (reaction.message.embeds[0]) return;
-        if (reaction.users.cache.size >= 1) return;
+        if (reaction.users.cache.size > 1) return;
 
         const board = gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
 
@@ -603,7 +620,6 @@ class Util {
         const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('700815626972823572');
         const welcome = `Greetings Earth-Prime-ling ${member}!\nWelcome to the Time Vault<:timevault:686676561298063361>!\nIf you want full server access make sure to read <#595935345598529546>!\n${logos}`;
         channel.send(welcome);
-        member.send(welcome).catch(ex => console.log(ex));
     }
 
     /**

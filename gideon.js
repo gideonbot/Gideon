@@ -4,9 +4,10 @@ PrettyError.start().withoutColors();
 import Discord from 'discord.js';
 const gideon = new Discord.Client({
     ws: {
-        intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS']
+        intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
     },
     disableMentions: 'everyone',
+    fetchAllMembers: true,
     partials: ['MESSAGE', 'REACTION'],
     restRequestTimeout: 25000
 });
@@ -161,6 +162,7 @@ gideon.on('messageReactionAdd', (messageReaction, user) => {
 gideon.on('guildMemberAdd', member => {
     Util.Welcome(member, gideon);
     Util.Checks.NameCheck(null, member.user, gideon);
+    Util.Checks.AccCheck(member, Util);
 });
 
 gideon.on('guildMemberUpdate', (oldMember, newMember) => {

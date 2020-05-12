@@ -37,7 +37,7 @@ export function GetRandomFile(dir: string): string;
 export function InitCache(gideon: Discord.Client): void;
 export function ClosestDate(dates: string[]): Promise<string>;
 export function Welcome(member: Discord.GuildMember, gideon: Discord.Client): Promise<void>;
-export function ParseEpisodeInfo(obj: object): EpisodeInfo;
+export function ParseEpisodeInfo(obj: object): Promise<EpisodeInfo>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
 export function normalize(num: number): string;
 export function CreateEmbed(title: string, options?: EmbedOptions, member?: Discord.GuildMember): Discord.MessageEmbed;

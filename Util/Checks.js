@@ -277,23 +277,17 @@ class Checks {
     /**
      * Rules check
      * @param {Discord.Message} message 
+     * @param {Discord.Client} gideon 
      */
-    static async RulesCheck(message) {
-        if (!message.guild) return;
-        if (message.guild.id !== '595318490240385037') return;
-        if (message.member.roles.cache.has('688430418466177082')) return;
+    static async RulesCheck(message, gideon) {
+        let member = await gideon.guilds.cache.get('595318490240385037').members.fetch(message.author.id);
 
-        if (message.channel.id === '595934999824302091') {
-            if (message.content.match(/(?:readdemrulez)/i)) {
-                await message.delete({ timeout: 200 });
-                const role = message.guild.roles.cache.get('688430418466177082');
-                const member = message.member;
-                await member.roles.add(role);
-                await message.reply(`You have been given the ${role} role and gained access to <#595935317631172608>!`);
-            }
-        }
-        
-        else return message.reply('You have not yet read the rules. You will be kicked immediately if you keep refusing to.');
+        if (!member) return;
+        if (member.roles.cache.has('688430418466177082')) return;
+
+        const role = gideon.guilds.cache.get('595318490240385037').roles.cache.get('688430418466177082');
+        await member.roles.add(role);
+        await message.reply('You have been verified and gained access to <#595935317631172608>!');
     }
 
     /**
@@ -478,6 +472,21 @@ class Checks {
                 if (clean.length > 32) clean = 'nickname';
                 await member.setNickname(clean);
             }
+        }
+    }
+
+    /**
+     * Check for flagged users 
+     * @param {Discord.GuildMember} member
+     */
+    static async AccCheck(member, Util) {
+        const flagged = ['141983643005485056', '708427459174858752'];
+        if (flagged.includes(member.id)) {
+            const string = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of this guild!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisment\n- DM spam\n\`\`\`\nWe advise to notify the guild owner.`;
+            if (!member.guild.me.lastMessage) return;
+            if (member.guild.me.lastMessage.partial) await member.guild.me.lastMessage.fetch();
+            member.guild.me.lastMessage.channel.send(string);
+            Util.log(`Sent account warning about \`${member.user.tag}\` to \`#${member.guild.me.lastMessage.channel.name}\` at \`${member.guild}\`!`);
         }
     }
 }
