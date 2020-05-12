@@ -615,7 +615,7 @@ class Util {
 
             let difference = Math.abs(new Date() - air_date) / 1000;
 
-            //6 hours       //HERE - REMOVE THIS BEFORE PUSHING
+            //6 hours
             if (difference > 21600) {
                 let status = gideon.statuses.find(x => x.name == key + '_countdown');
                 if (status) gideon.statuses.remove(status);
