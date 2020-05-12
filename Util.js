@@ -92,22 +92,6 @@ class Util {
     }
 
     /**
-     * Make roles mentionable (or not)
-     * @param {Discord.Guild} guild The guild to make roles mentionable in
-     * @param {boolean} mentionable Whether or not to make roles mentionable
-     */
-    static async TRM(guild, mentionable) {
-        if (!guild) return;
-       
-        for (let role of guild.roles.cache.array()) {
-            if (role.editable) {
-                try { await role.edit({ mentionable: mentionable }); }
-                catch (ex) { console.log(ex); }
-            }
-        } 
-    }
-
-    /**
      * @param {number} inputDelay 
      */
     static delay(inputDelay) {

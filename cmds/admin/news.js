@@ -40,8 +40,6 @@ export async function run(gideon, message, args) {
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.').then(async message => {
         for (let emoji of emoji_ids) message.react(emoji).then(() => {}, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
 
-        await Util.TRM(message.guild, true);
-
         const rfilter = (reaction, user) => emoji_ids.includes(reaction.emoji.id) && user.id === auth;
         const rcollector = message.createReactionCollector(rfilter, {time: 120000});
     
@@ -91,7 +89,6 @@ export async function run(gideon, message, args) {
             await message.channel.bulkDelete(3);
             
             message.reply(`Your news post has been sent to ${news_channel.toString()}! :white_check_mark:`);
-            await Util.TRM(message.guild, false);
             if (cvmen) {
                 cvm.cvmval = 1,
                 gideon.setGuild.run(cvm);
