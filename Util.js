@@ -556,29 +556,102 @@ class Util {
     }
 
     /**
-     * Status
      * @param {Discord.Client} gideon
      */
-    static async status(gideon) {
-        try {
-            let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
+    static InitStatus(gideon) {
+        if (gideon.statuses.length > 0) {
+            console.log('InitStatus called but statuses were not empty (called multiple times??)');
+            Util.log('InitStatus called but statuses were not empty (called multiple times??)');
+            return;
+        }
+
+        gideon.statuses.push({name: 's1', fetch: async () => { return {type: 'PLAYING', value: '!help | gideonbot.com'}; }});
+
+        gideon.statuses.push({name: 's2', fetch: async () => {
             let mbc = await gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? 0 : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(x => !x.user.bot).size').catch(ex => console.log(ex));
     
             if (mbc) mbc = mbc.filter(x => x);
-    
-            if (guilds) {
-                guilds = [].concat.apply([], guilds);
+            return {type: 'WATCHING', value: `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`};
+        }});
+
+        gideon.statuses.push({name: 's3', fetch: async () => {
+            let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
+            if (guilds) guilds = [].concat.apply([], guilds);
+
+            return {type: 'WATCHING', value: `${guilds.length} Guilds`};
+        }});
+
+        this.CheckEpisodes(gideon);
+    }
+
+    /**
+     * @param {Discord.Client} gideon 
+     */
+    static CheckEpisodes(gideon) {
+        for (let key in gideon.show_api_urls) {
+            let item = gideon.cache.nxeps.get(key);
+
+            let next_ep = item && item._embedded && item._embedded.nextepisode ? item._embedded.nextepisode : null;
+            if (!next_ep || !next_ep.airstamp) continue;
+
+            let air_date = new Date(next_ep.airstamp);
+
+            if (air_date < new Date()) {
+                console.log('Air date passed, updating ' + key);
+
+                try {
+                    this.GetAndStoreEpisode(key, gideon);
+                    //this show will be handled in the next run (when the method gets called again) so no need to await
+                    continue;
+                }
                 
-                const st1 = '!help | gideonbot.com';
-                let st2 = `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`;
-                const st3 = `${guilds.length} Guilds`;
-        
-                gideon.user.setActivity(st1, { type: 'PLAYING' }); 
-                await Util.delay(10000);
-                gideon.user.setActivity(st2, { type: 'WATCHING' }); 
-                await Util.delay(10000);
-                gideon.user.setActivity(st3, { type: 'WATCHING' });
+                catch (ex) {
+                    console.log(`Error while fetching next episode @CheckEpisodes for "${key}": ${ex}`);
+                    Util.log(`Error while fetching next episode @CheckEpisodes for "${key}": ${ex}`);
+                }
             }
+
+            let difference = Math.abs(new Date() - air_date) / 1000;
+
+            //6 hours
+            if (difference > 21600) {
+                let status = gideon.statuses.find(x => x.name == key + '_countdown');
+                if (status) gideon.statuses.remove(status);
+                continue;
+            }
+
+            if (gideon.statuses.map(x => x.name).includes(key + '_countdown')) continue;
+
+            console.log('Adding countdown for ' + key);
+        
+            gideon.statuses.push({name: key + '_countdown', fetch: async () => {
+                let show = gideon.cache.nxeps.get(key);
+                let ep = show._embedded.nextepisode;
+
+                let difference = Math.abs(new Date() - new Date(ep.airstamp)) / 1000;
+                let minutes = Math.floor(difference / 60);
+                let str = difference > 3600 ? (difference / 3600).toFixed(1) + 'h' : minutes < 1 ? 'NOW' : minutes + ' min' + (minutes == 1 ? '' : 's');
+
+                return {type: 'WATCHING', value: `${show.shortname} ${ep.season}x${ep.number} in ${str}`};
+            }});
+        }
+    }
+
+    /**
+     * Status
+     * @param {Discord.Client} gideon
+     */
+    static async UpdateStatus(gideon) {
+        if (gideon.statuses.length < 1) return;
+
+        let item = gideon.statuses[0];
+        //we move the item to the end of the array
+        gideon.statuses.shift();
+        gideon.statuses.push(item);
+
+        try {
+            let status = await item.fetch();
+            gideon.user.setActivity(status.value, { type: status.type }); 
         }
         
         catch (ex) {
@@ -657,8 +730,45 @@ class Util {
      * Init cache
      * @param {Discord.Client} gideon
      */
-    static InitCache(gideon) {
+    static async InitCache(gideon) {
         gideon.cache.nxeps = new Discord.Collection();
+
+        for (let show in gideon.show_api_urls) {
+            try { await this.GetAndStoreEpisode(show, gideon); }
+            
+            catch (ex) {
+                console.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
+                Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
+            }
+        }
+    }
+
+    /**
+     * @param {string} show 
+     * @param {Discord.Client} gideon
+     */
+    static async GetAndStoreEpisode(show, gideon) {
+        let names = {
+            batwoman: 'Batwoman',
+            supergirl: 'Supergirl',
+            flash: 'Flash',
+            legends: 'Legends',
+            stargirl: 'Stargirl', 
+            b_lightning: 'B. Lightning',
+            canaries: 'Canaries',
+            supesnlois: 'Superman & Lois' //peepee moment
+        };
+
+        try {
+            let json = await Util.fetchJSON(gideon.show_api_urls[show]);
+            json.shortname = names[show];
+            gideon.cache.nxeps.set(show, json);
+        }
+        
+        catch (ex) {
+            console.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
+            Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
+        }
     }
 
     /**
