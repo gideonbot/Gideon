@@ -487,7 +487,7 @@ class Checks {
             const string = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of this guild!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisment\n- DM spam\n- Rude behaviour\n- Breaking rules\n\`\`\`\nWe advise to notify the guild owner (${member.guild.owner}).`;
             if (!allowedchannels.first()) return;
             allowedchannels.first().send(string);
-            Util.log(`Sent account warning about \`${member.user.tag}\` to \`#${member.guild.me.lastMessage.channel.name}\` at \`${member.guild}\`!`);
+            Util.log(`Sent account warning about \`${member.user.tag}\` to \`#${allowedchannels.first().name}\` at \`${member.guild}\`!`);
         }
     }
 }
