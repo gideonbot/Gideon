@@ -8,9 +8,8 @@ export async function run(message) {
     try {
         const embed = Util.CreateEmbed('Guilds:', null, message.member);
 
-        let shard = await process.gideon.shard.broadcastEval('this.shard.ids').then(results => {return results;}).catch(console.error);
-        let guilds = await process.gideon.shard.broadcastEval('this.guilds.cache.size').then(results => {return results;}).catch(console.error);
-        console.log(shard);
+        let shard = process.gideon.shard ? await process.gideon.shard.broadcastEval('this.shard.ids').then(results => {return results;}).catch(console.error) : [0];
+        let guilds = process.gideon.shard ? await process.gideon.shard.broadcastEval('this.guilds.cache.size').then(results => {return results;}).catch(console.error) : [process.gideon.guilds.cache.size];
 
         let g = [`\`${guilds[0]}\` guilds on shard: \`${shard[0]}\``];
 
@@ -18,7 +17,7 @@ export async function run(message) {
         message.channel.send(embed);
     }
     catch (ex) {
-        Util.log('Caught an exception while running torrent.js: ' + ex.stack);
+        Util.log('Caught an exception while running guilds.js: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     }
 }
