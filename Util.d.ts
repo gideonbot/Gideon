@@ -169,7 +169,7 @@ interface Command {
         user_perms: string[];
         bot_perms: string[];
     },
-    run: (gideon: Discord.Client, message: Discord.Message, args: string[], connection?: Discord.VoiceConnection) => void;
+    run: (message: Discord.Message, args: string[], connection?: Discord.VoiceConnection) => void;
 }
 
 interface EpisodeInfo {
