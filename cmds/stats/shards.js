@@ -5,7 +5,7 @@ import Util from '../../Util.js';
  * @param {Discord.Message} message
  */
 export async function run(message) {
-    let shards = process.gideon.shard.count;
+    let shards = process.gideon.shard ? process.gideon.shard.count : 1;
 
     message.channel.send(Util.CreateEmbed('Shard Count:', {description: `Gideon is currently running on \`${shards}\` ${shards > 1 ? 'shards' : 'shard'}`}, message.member));
 }
