@@ -112,7 +112,7 @@ gideon.once('ready', async () => {
     gideon.fetchApplication().then(app => {
         //When the bot is owned by a team owner id is stored under ownerID, otherwise id
         gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
-    }, failed => console.log('Failed to fetch application: ' + failed)).catch(ex => console.log(ex));
+    }, failed => Util.log('Failed to fetch application: ' + failed)).catch(ex => Util.log(ex));
 
     setTimeout(() => {
         if (process.env.CI) {
@@ -128,7 +128,6 @@ gideon.once('ready', async () => {
 });
 
 process.on('uncaughtException', err => {
-    console.log(err);
     Util.log('Uncaught Exception: ' + `\`\`\`\n${err.stack}\n\`\`\``);
 
     if (process.env.CI) {
@@ -147,7 +146,7 @@ process.on('unhandledRejection', err => {
     ];
 
     if (ignore.includes(err.code)) return;
-    console.log(err);
+
     Util.log('Unhandled Rejection: ' + `\`\`\`\n${err.stack + '\n\nJSON: ' + JSON.stringify(err, null, 2)}\n\`\`\``);
 
     if (process.env.CI) {
@@ -157,7 +156,6 @@ process.on('unhandledRejection', err => {
 });
 
 gideon.on('error', err => {
-    console.log(err);
     Util.log('Bot error: ' + `\`\`\`\n${err.stack}\n\`\`\``);
 });
 

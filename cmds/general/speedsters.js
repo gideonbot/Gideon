@@ -48,7 +48,6 @@ export async function run(gideon, message, args) {
     }
     
     catch (err) {
-        console.log('An error occurred while trying to fetch speedsters: ' + err);
         Util.log('An error occurred while trying to fetch speedsters: ' + err);
         message.channel.send(Util.CreateEmbed('Failed to fetch speedster data, please try again later!', null, message.member));
     }

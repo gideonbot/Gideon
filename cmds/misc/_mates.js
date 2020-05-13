@@ -199,7 +199,6 @@ export async function run(gideon, message, args) {
     } 
     
     catch (ex) {
-        console.log('Caught an exception while playing podcast: ' + ex.stack);
         Util.log('Caught an exception while playing podcast: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while fetching podcast data!', null, message.member));
     }

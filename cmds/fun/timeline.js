@@ -14,7 +14,6 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log('An error occurred while trying to fetch a timeline change: ' + ex.stack);
         Util.log('An error occurred while trying to fetch a timeline change: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('Failed to fetch a timeline change!', null, message.member));
     }

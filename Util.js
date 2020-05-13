@@ -172,12 +172,14 @@ class Util {
      * @param {string[]} files 
      */
     static log(message, files) {
+        if (!message) return false;
+        console.log(message);
+
         let url = process.env.LOG_WEBHOOK_URL;
-        if (!url || !message) return false;
+        if (!url) return false;
 
         url = url.replace('https://discordapp.com/api/webhooks/', '');
         let split = url.split('/');
-
         if (split.length < 2) return false;
 
         let client = new Discord.WebhookClient(split[0], split[1]);
@@ -207,7 +209,6 @@ class Util {
 
         imgclient.album.get(imgid, (err, res) => {
             if (err) {
-                console.log(err);
                 Util.log(err);
                 return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!', null, message.member));
             }
@@ -468,7 +469,6 @@ class Util {
     static IncreaseStat(gideon, stat, value = 1) {
         let s = gideon.getStat.get(stat);
         if (!s) {
-            console.log('Stat ' + stat + ' was missing when increasing it');
             Util.log('Stat ' + stat + ' was missing when increasing it');
             return;
         }
@@ -497,7 +497,6 @@ class Util {
         }
         
         catch (ex) {
-            console.log('Caught an exception while backing up!: ' + ex.stack);
             Util.log('Caught an exception while backing up!: ' + ex.stack);
         }      
     }
@@ -548,7 +547,6 @@ class Util {
      */
     static InitStatus(gideon) {
         if (gideon.statuses.length > 0) {
-            console.log('InitStatus called but statuses were not empty (called multiple times??)');
             Util.log('InitStatus called but statuses were not empty (called multiple times??)');
             return;
         }
@@ -589,12 +587,15 @@ class Util {
 
                 try {
                     this.GetAndStoreEpisode(key, gideon);
+
+                    let status = gideon.statuses.find(x => x.name == key + '_countdown');
+                    if (status) gideon.statuses.remove(status);
+
                     //this show will be handled in the next run (when the method gets called again) so no need to await
                     continue;
                 }
                 
                 catch (ex) {
-                    console.log(`Error while fetching next episode @CheckEpisodes for "${key}": ${ex}`);
                     Util.log(`Error while fetching next episode @CheckEpisodes for "${key}": ${ex}`);
                 }
             }
@@ -643,7 +644,6 @@ class Util {
         }
         
         catch (ex) {
-            console.log(ex);
             Util.log('Exception when updating status!\n' + ex);
         }
     }
@@ -662,6 +662,58 @@ class Util {
     }
 
     /**
+     * Load cmds
+     * @param {Discord.Client} gideon
+     */
+    static LoadCommands(gideon) {
+        let start = process.hrtime.bigint();
+    
+        recursive('./cmds', async (err, files) => {
+            if (err) {
+                Util.log('Error while reading commands:\n' + err);
+                return;
+            }
+    
+            let jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
+            if (jsfiles.length < 1) {
+                console.log('No commands to load!');
+                return;
+            }
+
+            console.log(`Found ${jsfiles.length} commands`);
+
+            for (let file_path of jsfiles) {
+                let cmd_start = process.hrtime.bigint();
+
+                let props = await import(`./${file_path}`);
+                
+                if (Array.isArray(props.help.name)) {
+                    for (let item of props.help.name) gideon.commands.set(item, props);
+                }
+                else gideon.commands.set(props.help.name, props);
+        
+                let cmd_end = process.hrtime.bigint();
+                let took = (cmd_end - cmd_start) / BigInt('1000000');
+        
+                console.log(`${Util.normalize(jsfiles.indexOf(file_path) + 1)} - ${file_path} loaded in ${took}ms`);
+            }
+    
+            let end = process.hrtime.bigint();
+            let took = (end - start) / BigInt('1000000');
+            console.log(`All commands loaded in ${took}ms`);
+        });
+    }
+
+    /**
+     * Parse Snowflakes
+     * @param {string} input
+     */
+    static ValID(input) {
+        if (!input.match(/\d{17,19}/)) return null;
+        else return input.match(/\d{17,19}/)[0];
+    }
+
+    /**
      * Init cache
      * @param {Discord.Client} gideon
      */
@@ -672,7 +724,6 @@ class Util {
             try { await this.GetAndStoreEpisode(show, gideon); }
             
             catch (ex) {
-                console.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
                 Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
             }
         }
@@ -701,7 +752,6 @@ class Util {
         }
         
         catch (ex) {
-            console.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
             Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
         }
     }

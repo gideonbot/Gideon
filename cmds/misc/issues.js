@@ -20,7 +20,6 @@ export async function run(gideon, message, args) {
     if (command.endsWith('issue') || command.endsWith('bug')) {
         if (!token) {
             Util.log('Missing env variable for issues command!');
-            console.log('Missing env variable for issues command!');
             return message.channel.send(Util.CreateEmbed('This command is currently not avilable', null, message.member));
         }
 
@@ -75,7 +74,6 @@ export async function run(gideon, message, args) {
         }
 
         catch (ex) {
-            console.log('Caught an exception while running issues.js: ' + ex.stack);
             Util.log('Caught an exception while running issues.js: ' + ex.stack);
             return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
         }
@@ -92,7 +90,6 @@ export async function run(gideon, message, args) {
             }
             
             catch (ex) {
-                console.log(`Error while fetching issues: ${ex.error ? ex.error : ex}`);
                 Util.log(`Error while fetching issues: ${ex.error ? ex.error : ex}`);
             }
         }
@@ -101,7 +98,6 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log('Caught an exception while fetching issues: ' + ex.stack);
         Util.log('Caught an exception while fetching issues: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }

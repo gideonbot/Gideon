@@ -20,7 +20,6 @@ export async function run(gideon, message, args) {
         message.channel.send(embed);
     }
     catch (ex) {
-        console.log(ex);
         Util.log('Caught an exception while running torrent.js: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
     }

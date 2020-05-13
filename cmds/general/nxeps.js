@@ -28,7 +28,6 @@ export async function run(gideon, message, args, connection) {
         try {
             let json = gideon.cache.nxeps.get(show);
             if (!json) {
-                console.log('No JSON for ' + show + ' when calling nxeps!');
                 Util.log('No JSON for ' + show + ' when calling nxeps!');
                 continue;
             }
@@ -39,7 +38,6 @@ export async function run(gideon, message, args, connection) {
         }
         
         catch (ex) {
-            console.log(`Error while fetching next episode for "${show}": ${ex}`);
             Util.log(`Error while fetching next episode for "${show}": ${ex}`);
         }
     }

@@ -7,10 +7,9 @@ import Util from '../../Util.js';
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(gideon, message) {
     if (!process.env.IMG_CL) {
         Util.log('Missing env variable for meme command!');
-        console.log('Missing env variable for meme command!');
         return message.channel.send('This command is currently not available');
     }
 
@@ -18,7 +17,6 @@ export async function run(gideon, message, args) {
 
     imgclient.album.get('NVHwdNg', (err, res) => {
         if (err) {
-            console.log(err);
             Util.log(err);
             return message.channel.send('An error occurred, please try again later!');
         }

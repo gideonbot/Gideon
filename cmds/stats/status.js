@@ -20,7 +20,6 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log('Caught an exception while fetching API data: ' + ex.stack);
         Util.log('Caught an exception while fetching API data: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while fetching github data!', null, message.member));
     }
