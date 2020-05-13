@@ -10,7 +10,7 @@ export async function run(gideon, message, args) {
     try {
         const code = args.join(' ');
         // eslint-disable-next-line semi
-        const returnedValue = eval('(async () => {' + code + '})()');
+        const returnedValue = await eval('(async () => { return ' + code + '})()').catch(e => message.channel.send(Util.CreateEmbed('An error occured while processing your request:', {description: '```\n' + Util.truncate(e.stack, 400, true) + '```'}, message.member)));
 
         if (typeof returnedValue === 'undefined') {
             message.channel.send('The evaluated code returned nothing.');

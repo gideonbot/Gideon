@@ -92,22 +92,6 @@ class Util {
     }
 
     /**
-     * Make roles mentionable (or not)
-     * @param {Discord.Guild} guild The guild to make roles mentionable in
-     * @param {boolean} mentionable Whether or not to make roles mentionable
-     */
-    static async TRM(guild, mentionable) {
-        if (!guild) return;
-       
-        for (let role of guild.roles.cache.array()) {
-            if (role.editable) {
-                try { await role.edit({ mentionable: mentionable }); }
-                catch (ex) { console.log(ex); }
-            }
-        } 
-    }
-
-    /**
      * @param {number} inputDelay 
      */
     static delay(inputDelay) {
@@ -284,10 +268,14 @@ class Util {
         if (!body._embedded) {
             const url = body._links.self.href + '/seasons';
             const seasons = await Util.fetchJSON(url);
-            const nextseason = seasons.reverse()[0].number;
+            seasons.reverse();
+            const nextseason = seasons[0].number;
+            let seasondate = new Date(seasons[0].premiereDate);
+            if (!seasons[0].premiereDate) seasondate = null;
+            const episodeorder = seasons[0].episodeOrder;
 
             result.name = '';
-            result.value = `\`Awaiting season ${nextseason} premiere!\``;
+            result.value = `\`Awaiting season ${nextseason}!\`\n${seasondate ? 'Season Premiere: ' + '`' + seasondate.toDateString() + '`' : ''}${episodeorder ? 'Ordered Episodes: ' + '`' + episodeorder + '`' : ''}`;
         }
 
         else {

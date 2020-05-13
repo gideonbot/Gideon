@@ -13,7 +13,6 @@ export const TR: Translation;
 export const Voice: VoiceUtil;
 export const Checks: CheckUtil;
 export function parseSeriesEpisodeString(str: string): SeasonAndEpisodeInfo;
-export function TRM(guild: Discord.Guild, mentionable: boolean): Promise<void>;
 export function delay(num: number): Promise<void>;
 export function GetUserTag(str: string | Discord.GuildMember | Discord.User): string;
 export function getIdFromString(str: string): string;

@@ -6,7 +6,7 @@ const gideon = new Discord.Client({
     ws: {
         intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
     },
-    disableMentions: 'everyone',
+    allowedMentions: { parse: ['users', 'roles'] },
     fetchAllMembers: true,
     partials: ['MESSAGE', 'REACTION'],
     restRequestTimeout: 25000
@@ -66,8 +66,10 @@ gideon.once('ready', async () => {
     const twodays = 1000 * 60 * 60 * 48;
     setInterval(() => {
         Util.UpdateStatus(gideon);
-        Util.CheckEpisodes(gideon);
+        //Util.CheckEpisodes(gideon);
     }, 10e3);
+    setInterval(() => Util.CheckEpisodes(gideon), 120e3);
+
     setInterval(Util.SQLBkup, twodays, gideon);
 
     gideon.fetchApplication().then(app => {
