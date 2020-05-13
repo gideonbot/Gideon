@@ -2,11 +2,10 @@ import Discord from 'discord.js';
 import Canvas from 'canvas';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const text = args.join(' ');
     if (!text.includes(',')) return message.reply('you need to seperate two phrases with one comma!');
     const split = text.split(',');
@@ -66,7 +65,8 @@ export async function run(gideon, message, args) {
     wrapText(ctx, split[1].trim(), 300, 315, 260, 35);
 
     const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'sgmeme.jpg');
-    message.channel.send(attachment);
+    if (!process.env.CI) message.channel.send(attachment);
+    else message.channel.send('Ci :peeepee:');
 }
 
 export const help = {

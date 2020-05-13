@@ -2,22 +2,20 @@ import Discord from 'discord.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  * @param {Discord.VoiceConnection} connection
  */
-export async function run(gideon, message, args, connection) {
+export async function run(message, args, connection) {
     const orders = connection.play(path.resolve(__dirname, '../../data/audio/captain/Awaiting orders, Captain.m4a'));
     orders.pause();
     orders.resume();
 
     orders.on('finish', () => {
         orders.destroy();
-        gideon.vcmdexec = false;
+        process.gideon.vcmdexec = false;
     }); 
 }
 

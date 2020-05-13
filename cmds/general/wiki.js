@@ -1,13 +1,11 @@
 import Discord from 'discord.js';
-import fetch from 'node-fetch';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     let wikis = [
         {
             url: 'arrow.fandom.com',
@@ -65,7 +63,7 @@ export async function run(gideon, message, args) {
         const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
 
         let st = '';
-        let cvm = gideon.getGuild.get(message.guild.id);
+        let cvm = process.gideon.getGuild.get(message.guild.id);
         if (cvm) {
             if (cvm.cvmval === 1) st = '||';
         }

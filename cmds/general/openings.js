@@ -2,11 +2,10 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const ia = Util.CreateEmbed('You must supply a valid show!', {description: 'Available shows:\n**flash**\n**legends**\n**lucifer**'}, message.member);
 
     if (!args[0]) return message.channel.send(ia);   

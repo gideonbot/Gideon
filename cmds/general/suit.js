@@ -2,11 +2,10 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {     
+export async function run(message, args) {     
     const st = Util.CreateEmbed('You must choose a valid character!', {
         description: 'Currently available:\n**frost**\n**supergirl**\n**arrow**\n**flash**\n**batwoman**\n**black siren**\n**spartan**\n**kingdom come superman**'
     }, message.member);

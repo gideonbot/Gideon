@@ -2,16 +2,14 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message) {
+export async function run(message) {
     let start = process.hrtime.bigint();
 
     Util.fetchJSON('https://discord.com/api/v7/gateway').then(() => {
         let took = (process.hrtime.bigint() - start) / BigInt('1000000');
-        message.channel.send(Util.CreateEmbed('The fastest bot alive!', {description: `WebSocket ping: ${gideon.ws.ping.toFixed(2)} ms\nREST ping: ${took} ms`}, message.member));
+        message.channel.send(Util.CreateEmbed('The fastest bot alive!', {description: `WebSocket ping: ${process.gideon.ws.ping.toFixed(2)} ms\nREST ping: ${took} ms`}, message.member));
     }, failed => {
         console.log(failed);
         message.channel.send('Failed to measure ping!');

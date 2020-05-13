@@ -3,11 +3,9 @@ import Pagination from 'discord-paginationembed';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     const co1 = Util.CreateEmbed('__All Arrowverse crossover episodes in their respective watching order:__', null, message.member)
         .addField('Flash vs. Arrow', 'The Flash 1x08 - Flash vs. Arrow\nArrow 3x08 - The Brave and the Bold')  
         .addField('Heroes Join Forces', 'The Flash 2x08 - Legends of Today\nArrow 4x08 - Legends of Yesterday')  

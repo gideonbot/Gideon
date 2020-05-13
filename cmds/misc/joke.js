@@ -2,11 +2,9 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     const url = 'https://sv443.net/jokeapi/v2/joke/Any?type=single';
     const body = await Util.fetchJSON(url);
 
