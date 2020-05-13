@@ -36,7 +36,7 @@ export async function run(message) {
     }
     catch (ex) {
         Util.log('Caught an exception while running restore.js: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     }      
 }
 
@@ -47,7 +47,7 @@ export const help = {
     help_desc: 'Restores the latest database backup',
     owner: false,
     voice: false,
-    timevault: false,
+    timevault: true,
     nsfw: false,
     args: {},
     roles: ['621399916283035658'],

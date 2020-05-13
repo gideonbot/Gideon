@@ -116,6 +116,7 @@ export async function run(message, args) {
         const collector = message.channel.createMessageCollector(f, {time: 30 * 1000});
 
         let sent = await message.channel.send(game.embed);
+
         for (let emoji of emotes) {
             await sent.react(emoji).then(() => {}, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
         }
@@ -252,7 +253,7 @@ export async function run(message, args) {
 
     catch (ex) {
         Util.log('Caught an exception while running guesseps.js: ' + ex.stack);
-        message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     }
 }
 

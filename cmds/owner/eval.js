@@ -9,7 +9,7 @@ export async function run(message, args) {
     try {
         const code = args.join(' ');
         // eslint-disable-next-line semi
-        const returnedValue = await eval('(async () => { return ' + code + '})()').catch(e => message.channel.send(Util.CreateEmbed('An error occured while processing your request:', {description: '```\n' + Util.truncate(e.stack, 400, true) + '```'}, message.member)));
+        const returnedValue = await eval('(async () => { return ' + code + '})()').catch(e => message.channel.send(Util.CreateEmbed('An error occurred while processing your request:', {description: '```\n' + Util.truncate(e.stack, 400, true) + '```'}, message.member)));
 
         if (typeof returnedValue === 'undefined') {
             message.channel.send('The evaluated code returned nothing.');
@@ -28,7 +28,7 @@ export async function run(message, args) {
             code: true
         });
     } catch (e) {
-        return message.channel.send(Util.CreateEmbed('An error occured while processing your request:', {description: '```\n' + Util.truncate(e.stack, 400, true) + '```'}, message.member));
+        return message.channel.send(Util.CreateEmbed('An error occurred while processing your request:', {description: '```\n' + Util.truncate(e.stack, 400, true) + '```'}, message.member));
     }
 }
 

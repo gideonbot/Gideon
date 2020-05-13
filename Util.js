@@ -646,45 +646,57 @@ class Util {
         channel.send(welcome);
     }
 
+    static GenerateSnowflake() {
+        let rv = "";
+        let possible = "1234567890";
+    
+        for (let i = 0; i < 19; i++) rv += possible.charAt(Math.floor(Math.random() * possible.length));
+        return rv;
+    }
+
     /**
      * Load cmds
      */
     static LoadCommands() {
-        let start = process.hrtime.bigint();
+        return new Promise((resolve, reject) => {
+            let start = process.hrtime.bigint();
     
-        recursive('./cmds', async (err, files) => {
-            if (err) {
-                Util.log('Error while reading commands:\n' + err);
-                return;
-            }
-    
-            let jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
-            if (jsfiles.length < 1) {
-                console.log('No commands to load!');
-                return;
-            }
-
-            console.log(`Found ${jsfiles.length} commands`);
-
-            for (let file_path of jsfiles) {
-                let cmd_start = process.hrtime.bigint();
-
-                let props = await import(`./${file_path}`);
-                
-                if (Array.isArray(props.help.name)) {
-                    for (let item of props.help.name) process.gideon.commands.set(item, props);
+            recursive('./cmds', async (err, files) => {
+                if (err) {
+                    Util.log('Error while reading commands:\n' + err);
+                    return reject(err);
                 }
-                else process.gideon.commands.set(props.help.name, props);
         
-                let cmd_end = process.hrtime.bigint();
-                let took = (cmd_end - cmd_start) / BigInt('1000000');
-        
-                console.log(`${Util.normalize(jsfiles.indexOf(file_path) + 1)} - ${file_path} loaded in ${took}ms`);
-            }
+                let jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
+                if (jsfiles.length < 1) {
+                    console.log('No commands to load!');
+                    return reject('No commmands');
+                }
     
-            let end = process.hrtime.bigint();
-            let took = (end - start) / BigInt('1000000');
-            console.log(`All commands loaded in ${took}ms`);
+                console.log(`Found ${jsfiles.length} commands`);
+    
+                for (let file_path of jsfiles) {
+                    let cmd_start = process.hrtime.bigint();
+    
+                    let props = await import(`./${file_path}`);
+                    
+                    if (Array.isArray(props.help.name)) {
+                        for (let item of props.help.name) process.gideon.commands.set(item, props);
+                    }
+                    else process.gideon.commands.set(props.help.name, props);
+            
+                    let cmd_end = process.hrtime.bigint();
+                    let took = (cmd_end - cmd_start) / BigInt('1000000');
+            
+                    console.log(`${Util.normalize(jsfiles.indexOf(file_path) + 1)} - ${file_path} loaded in ${took}ms`);
+                }
+        
+                let end = process.hrtime.bigint();
+                let took = (end - start) / BigInt('1000000');
+                console.log(`All commands loaded in ${took}ms`);
+
+                resolve();
+            });
         });
     }
 
@@ -801,7 +813,7 @@ class Util {
         try {
             let response = await this.GetCleverBotResponse(text, arr);
             message.channel.send(response).then(sent => {
-                sent.cleverbot = true;
+                if (sent) sent.cleverbot = true;
                 message.cleverbot = true;
             }).finally(() => message.channel.stopTyping(true));
         }

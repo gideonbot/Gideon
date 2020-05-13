@@ -16,7 +16,8 @@ export async function run(message, args) {
                 cvmval: 0,
                 abmval: 1,
                 eastereggs: 0,
-                blacklist: 0
+                blacklist: 0,
+                chatchnl: ''
             };
         }
 
@@ -35,7 +36,7 @@ export async function run(message, args) {
 
     catch (ex) {
         Util.log('Caught an exception while running gb.js: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     }
 }
 

@@ -9,6 +9,9 @@ export async function run(message) {
 
     try {
         const body = await Util.fetchJSON(api);
+
+        if (!body || !body.owner || !body.owner.html_url || !body.updated_at) return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
+        
         let upDate = new Date(body.updated_at);
     
         message.channel.send(Util.CreateEmbed(body.name, {

@@ -19,7 +19,7 @@ export async function run(message) {
     }
     catch (ex) {
         Util.log('Caught an exception while running torrent.js: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     }
 }
 

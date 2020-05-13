@@ -17,15 +17,15 @@ export async function run(message, args, connection) {
 
         confirm.on('finish', () => {
             confirm.destroy();
-            gideon.vcmdexec = false;
+            process.gideon.vcmdexec = false;
         });
     }
 
     const embed = Util.CreateEmbed('__Upcoming Arrowverse episodes:__', null, message.member);
 
-    for (let show in gideon.show_api_urls) {
+    for (let show in process.gideon.show_api_urls) {
         try {
-            let json = gideon.cache.nxeps.get(show);
+            let json = process.gideon.cache.nxeps.get(show);
             if (!json) {
                 Util.log('No JSON for ' + show + ' when calling nxeps!');
                 continue;

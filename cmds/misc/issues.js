@@ -73,12 +73,15 @@ export async function run(message) {
 
         catch (ex) {
             Util.log('Caught an exception while running issues.js: ' + ex.stack);
-            return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+            return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
         }
     }
 
     else try {
         const body = await Util.fetchJSON(api);
+
+        if (!body || !Array.isArray(body)) return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
+
         const issues = Util.CreateEmbed('Issues: ' + body.length, null, message.member);
 
         let issues_array = body.reverse();
@@ -97,7 +100,7 @@ export async function run(message) {
     
     catch (ex) {
         Util.log('Caught an exception while fetching issues: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     }
 }
 

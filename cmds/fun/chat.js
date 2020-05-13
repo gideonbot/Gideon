@@ -46,7 +46,7 @@ export async function run(message, args) {
 
     Util.GetCleverBotResponse(text, arr).then(response => {
         message.channel.send(response).then(sent => {
-            sent.cleverbot = true;
+            if (sent) sent.cleverbot = true;
             message.cleverbot = true;
         }).finally(() => message.channel.stopTyping(true));
     }, failed => {

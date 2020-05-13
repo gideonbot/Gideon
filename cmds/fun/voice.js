@@ -79,7 +79,7 @@ export async function run(message, args) {
     
     catch (ex) {
         Util.log('Caught an exception while running voice.js: ' + ex.stack);
-        message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     } 
 }
 

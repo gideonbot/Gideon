@@ -76,11 +76,12 @@ class MsgHandler {
 
         const spamcount = process.gideon.spamcount.get(message.author.id);
    
-        if (spamcount && spamcount.usages + 1 > 10) {
+        if (spamcount && spamcount.usages + 1 > 10 && !process.env.CI) {
             let ub = process.gideon.getUser.get(message.author.id);
 
             if (!ub) ub = {
-                user: message.author.id,
+                id: message.author.id,
+                trmodeval: 0,
                 blacklist: 1,
             };
             else ub.blacklist = 1;

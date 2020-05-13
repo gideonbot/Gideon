@@ -7,8 +7,7 @@ import si from 'systeminformation';
  */
 export async function run(message) {     
     try {
-        let sent = await message.channel.send(Util.CreateEmbed('Gathering host info, please wait...', null, message.member));
-
+        message.channel.startTyping();
         const cpu = await si.cpu().catch(console.error);
         const curspeed = await si.cpuCurrentspeed().catch(console.error);
         //const curtemp = await si.cpuTemperature().catch(console.error);
@@ -38,11 +37,13 @@ export async function run(message) {
             ]
         }, message.member);
     
-        await sent.edit(embed);
-        
-    } catch (ex) {
+        await message.channel.send(embed);
+        message.channel.stopTyping(true);
+    }
+
+    catch (ex) {
         Util.log('Caught an exception while running host.js: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     }
 }
 
