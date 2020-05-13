@@ -2,11 +2,10 @@ import Discord from 'discord.js';
 import Canvas from 'canvas';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const text = args.join(' ');
     if (!text.includes(',')) return message.reply('you need to seperate two phrases with one comma!');
     const split = text.split(',');

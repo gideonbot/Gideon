@@ -5,11 +5,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args, connection) {
+export async function run(message, args, connection) {
     let agm;
     if (args) {
         agm = args.join('').toLowerCase();
@@ -25,7 +24,7 @@ export async function run(gideon, message, args, connection) {
 
         confirm.on('finish', () => {
             confirm.destroy();
-            gideon.vcmdexec = false;
+            process.gideon.vcmdexec = false;
         });
     }
 

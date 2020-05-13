@@ -2,16 +2,14 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     try {
         const embed = Util.CreateEmbed('Guilds:', null, message.member);
 
-        let shard = await gideon.shard.broadcastEval('this.shard.ids').then(results => {return results;}).catch(console.error);
-        let guilds = await gideon.shard.broadcastEval('this.guilds.cache.size').then(results => {return results;}).catch(console.error);
+        let shard = await process.gideon.shard.broadcastEval('this.shard.ids').then(results => {return results;}).catch(console.error);
+        let guilds = await process.gideon.shard.broadcastEval('this.guilds.cache.size').then(results => {return results;}).catch(console.error);
         console.log(shard);
 
         let g = [`\`${guilds[0]}\` guilds on shard: \`${shard[0]}\``];

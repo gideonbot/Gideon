@@ -2,15 +2,14 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
     if (!args[0].match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)) return message.channel.send(as);  
 
-    const emoji = gideon.emojis.cache.get(args[0].match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)[3]);
+    const emoji = process.gideon.emojis.cache.get(args[0].match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)[3]);
 
     const embed = Util.CreateEmbed(`Info about \`${emoji.name}\` (ID: \`${emoji.id}\`)`, {
         thumbnail: emoji.url,

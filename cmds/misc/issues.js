@@ -3,11 +3,9 @@ import fetch from 'node-fetch';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     const api = 'https://api.github.com/repos/adrifcastr/Gideon/issues';
     const token = process.env.GITHUB_OAUTH_TOKEN;
 

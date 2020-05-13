@@ -2,11 +2,10 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {     
+export async function run(message, args) {     
     const text = args.join(' ');
 
     let arr = [];
@@ -45,7 +44,7 @@ export async function run(gideon, message, args) {
     arr = arr.reverse();
     message.channel.startTyping().finally(() => {});
 
-    Util.GetCleverBotResponse(text, arr, message.guild.me.client).then(response => {
+    Util.GetCleverBotResponse(text, arr).then(response => {
         message.channel.send(response).then(sent => {
             sent.cleverbot = true;
             message.cleverbot = true;

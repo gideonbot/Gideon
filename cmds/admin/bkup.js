@@ -2,14 +2,12 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     try {
         message.channel.send('Performing database backup, please wait...');
-        await Util.SQLBkup(gideon);
+        await Util.SQLBkup();
         message.channel.send('Database backup complete! Please check <#622415301144870932>! :white_check_mark:');
     }
     

@@ -3,11 +3,9 @@ import Util from '../../Util.js';
 import moment from 'moment';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {     
+export async function run(message) {     
     const guild = message.guild;
     let premiumtier;
     if (guild.premiumTier === 0) premiumtier = 'None';

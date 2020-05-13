@@ -2,11 +2,9 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {     
+export async function run(message) {     
     const guild = message.guild;
     const emojis = guild.emojis.cache.map(emojis => emojis.toString()).join(' ');
     const escaped = Util.truncate(emojis, 1024, true);

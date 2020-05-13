@@ -6,11 +6,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args, connection) {
+export async function run(message, args, connection) {
     if (connection) {
         const confirm = connection.play(path.resolve(__dirname, '../../data/audio/captain/Right away, Captain!.m4a'));
         confirm.pause();

@@ -2,23 +2,22 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
-    let prefix = gideon.getGuild.get(message.guild.id);
+export async function run(message, args) {
+    let prefix = process.gideon.getGuild.get(message.guild.id);
 
     try {
         if (args[0].match(/(?:default)/i)) {
             prefix.prefix = '!';
-            gideon.setGuild.run(prefix);
+            process.gideon.setGuild.run(prefix);
             message.channel.send(`Restored the default prefix (\`${prefix.prefix}\`) for \`${message.guild.name}\` :white_check_mark:`);
         }
 
         else {
             prefix.prefix = args[0];
-            gideon.setGuild.run(prefix);
+            process.gideon.setGuild.run(prefix);
             message.channel.send(`Set custom prefix for \`${message.guild.name}\` to \`${prefix.prefix}\` :white_check_mark:`);
         }
     }

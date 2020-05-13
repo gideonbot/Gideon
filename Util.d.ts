@@ -77,6 +77,12 @@ declare global {
     export interface Array<T> {
         remove(item: T|T[]): boolean;
     }
+
+    declare namespace NodeJS {
+        export interface Process {
+            gideon: Discord.Client;
+        }
+    }
 }
 
 interface Handler {

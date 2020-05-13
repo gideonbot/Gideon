@@ -13,7 +13,7 @@ import del from 'del';
 import recursive from 'recursive-readdir';
 import path from 'path';
 import { fileURLToPath } from 'url';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+//const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
 
 Array.prototype.remove = function(...item) {
@@ -408,15 +408,14 @@ class Util {
 
     /**
      * Logs bot
-     * @param {Discord.Client} gideon 
      */
-    static async Selfhostlog(gideon) {
-        if (['Gideon#2420', 'gideon-dev#4623', 'FlotationMode#5372', 'theRapist#9880', 'githubactions#9363'].includes(gideon.user.tag)) return; 
+    static async Selfhostlog() {
+        if (['Gideon#2420', 'gideon-dev#4623', 'FlotationMode#5372', 'theRapist#9880', 'githubactions#9363'].includes(process.gideon.user.tag)) return; 
 
         const api = 'https://gideonbot.com/api/selfhost';
         let body = {
-            user: gideon.user.tag,
-            guilds: gideon.guilds.cache.map(x => x.id + ' - ' + x.name)
+            user: process.gideon.user.tag,
+            guilds: process.gideon.guilds.cache.map(x => x.id + ' - ' + x.name)
         };
 
         const options = { method: 'POST', body: JSON.stringify(body, null, 2), headers: { 'Content-Type': 'application/json' } };
@@ -448,44 +447,42 @@ class Util {
     }
 
     /**
-     * @param {Discord.Client} gideon 
      * @param {string} stat 
      * @param {number} value 
      */
-    static SetStat(gideon, stat, value) {
-        let s = gideon.getStat.get(stat);
+    static SetStat(stat, value) {
+        let s = process.gideon.getStat.get(stat);
 
         if (!s) s = {id: stat, value: 0};
 
         s.value = value;
-        gideon.setStat.run(s);
+        process.gideon.setStat.run(s);
     }
 
     /**
-     * @param {Discord.Client} gideon 
      * @param {string} stat 
      * @param {number} value
      */
-    static IncreaseStat(gideon, stat, value = 1) {
-        let s = gideon.getStat.get(stat);
+    static IncreaseStat(stat, value = 1) {
+        let s = process.gideon.getStat.get(stat);
         if (!s) {
             Util.log('Stat ' + stat + ' was missing when increasing it');
             return;
         }
 
-        this.SetStat(gideon, stat, s.value + value);
+        this.SetStat(stat, s.value + value);
     }
 
     /**
      * DB Backup
      */
-    static async SQLBkup(gideon) {
+    static async SQLBkup() {
         const db = './data/SQL';
         const arc = './data/SQL.zip';
         const date = new Date();
 
         try {
-            const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('622415301144870932');
+            const channel = process.gideon.guilds.cache.get('595318490240385037').channels.cache.get('622415301144870932');
             await zip.folder(path.resolve(__dirname, db), path.resolve(__dirname, arc));
             channel.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
             await del(arc);
@@ -505,9 +502,8 @@ class Util {
      * Starboard
      * @param {Discord.MessageReaction} reaction 
      * @param {Discord.User} user
-     * @param {Discord.Client} gideon
      */
-    static async Starboard(reaction, user, gideon) {
+    static async Starboard(reaction, user) {
         if (reaction.partial) {
             await reaction.fetch();
             await reaction.users.fetch();
@@ -521,7 +517,7 @@ class Util {
         if (reaction.message.embeds[0]) return;
         if (reaction.users.cache.size > 1) return;
 
-        const board = gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
+        const board = process.gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
 
         const starmsg = Util.CreateEmbed(null, {
             author: {
@@ -542,40 +538,34 @@ class Util {
         await board.send(starmsg);    
     }
 
-    /**
-     * @param {Discord.Client} gideon
-     */
-    static InitStatus(gideon) {
-        if (gideon.statuses.length > 0) {
+    static InitStatus() {
+        if (process.gideon.statuses.length > 0) {
             Util.log('InitStatus called but statuses were not empty (called multiple times??)');
             return;
         }
 
-        gideon.statuses.push({name: 's1', fetch: async () => { return {type: 'PLAYING', value: '!help | gideonbot.com'}; }});
+        process.gideon.statuses.push({name: 's1', fetch: async () => { return {type: 'PLAYING', value: '!help | gideonbot.com'}; }});
 
-        gideon.statuses.push({name: 's2', fetch: async () => {
-            let mbc = await gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? 0 : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(x => !x.user.bot).size').catch(ex => console.log(ex));
+        process.gideon.statuses.push({name: 's2', fetch: async () => {
+            let mbc = await process.gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? 0 : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(x => !x.user.bot).size').catch(ex => console.log(ex));
     
             if (mbc) mbc = mbc.filter(x => x);
             return {type: 'WATCHING', value: `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`};
         }});
 
-        gideon.statuses.push({name: 's3', fetch: async () => {
-            let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
+        process.gideon.statuses.push({name: 's3', fetch: async () => {
+            let guilds = await process.gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
             if (guilds) guilds = [].concat.apply([], guilds);
 
             return {type: 'WATCHING', value: `${guilds.length} Guilds`};
         }});
 
-        this.CheckEpisodes(gideon);
+        this.CheckEpisodes();
     }
 
-    /**
-     * @param {Discord.Client} gideon 
-     */
-    static CheckEpisodes(gideon) {
-        for (let key in gideon.show_api_urls) {
-            let item = gideon.cache.nxeps.get(key);
+    static CheckEpisodes() {
+        for (let key in process.gideon.show_api_urls) {
+            let item = process.gideon.cache.nxeps.get(key);
 
             let next_ep = item && item._embedded && item._embedded.nextepisode ? item._embedded.nextepisode : null;
             if (!next_ep || !next_ep.airstamp) continue;
@@ -586,10 +576,10 @@ class Util {
                 console.log('Air date passed, updating ' + key);
 
                 try {
-                    this.GetAndStoreEpisode(key, gideon);
+                    this.GetAndStoreEpisode(key);
 
-                    let status = gideon.statuses.find(x => x.name == key + '_countdown');
-                    if (status) gideon.statuses.remove(status);
+                    let status = process.gideon.statuses.find(x => x.name == key + '_countdown');
+                    if (status) process.gideon.statuses.remove(status);
 
                     //this show will be handled in the next run (when the method gets called again) so no need to await
                     continue;
@@ -604,17 +594,17 @@ class Util {
 
             //6 hours
             if (difference > 21600) {
-                let status = gideon.statuses.find(x => x.name == key + '_countdown');
-                if (status) gideon.statuses.remove(status);
+                let status = process.gideon.statuses.find(x => x.name == key + '_countdown');
+                if (status) process.gideon.statuses.remove(status);
                 continue;
             }
 
-            if (gideon.statuses.map(x => x.name).includes(key + '_countdown')) continue;
+            if (process.gideon.statuses.map(x => x.name).includes(key + '_countdown')) continue;
 
             console.log('Adding countdown for ' + key);
         
-            gideon.statuses.push({name: key + '_countdown', fetch: async () => {
-                let show = gideon.cache.nxeps.get(key);
+            process.gideon.statuses.push({name: key + '_countdown', fetch: async () => {
+                let show = process.gideon.cache.nxeps.get(key);
                 let ep = show._embedded.nextepisode;
 
                 let difference = Math.abs(new Date() - new Date(ep.airstamp)) / 1000;
@@ -626,21 +616,17 @@ class Util {
         }
     }
 
-    /**
-     * Status
-     * @param {Discord.Client} gideon
-     */
-    static async UpdateStatus(gideon) {
-        if (gideon.statuses.length < 1) return;
+    static async UpdateStatus() {
+        if (process.gideon.statuses.length < 1) return;
 
-        let item = gideon.statuses[0];
+        let item = process.gideon.statuses[0];
         //we move the item to the end of the array
-        gideon.statuses.shift();
-        gideon.statuses.push(item);
+        process.gideon.statuses.shift();
+        process.gideon.statuses.push(item);
 
         try {
             let status = await item.fetch();
-            gideon.user.setActivity(status.value, { type: status.type }); 
+            process.gideon.user.setActivity(status.value, { type: status.type }); 
         }
         
         catch (ex) {
@@ -651,21 +637,19 @@ class Util {
     /**
      * Welcome stuff
      * @param {Discord.GuildMember} member
-     * @param {Discord.Client} gideon
      */
-    static async Welcome(member, gideon) {
+    static async Welcome(member) {
         if (member.guild.id !== '595318490240385037') return;
         const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
-        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('700815626972823572');
+        const channel = process.gideon.guilds.cache.get('595318490240385037').channels.cache.get('700815626972823572');
         const welcome = `Greetings Earth-Prime-ling ${member}!\nWelcome to the Time Vault<:timevault:686676561298063361>!\nIf you want full server access make sure to read <#595935345598529546>!\n${logos}`;
         channel.send(welcome);
     }
 
     /**
      * Load cmds
-     * @param {Discord.Client} gideon
      */
-    static LoadCommands(gideon) {
+    static LoadCommands() {
         let start = process.hrtime.bigint();
     
         recursive('./cmds', async (err, files) => {
@@ -688,9 +672,9 @@ class Util {
                 let props = await import(`./${file_path}`);
                 
                 if (Array.isArray(props.help.name)) {
-                    for (let item of props.help.name) gideon.commands.set(item, props);
+                    for (let item of props.help.name) process.gideon.commands.set(item, props);
                 }
-                else gideon.commands.set(props.help.name, props);
+                else process.gideon.commands.set(props.help.name, props);
         
                 let cmd_end = process.hrtime.bigint();
                 let took = (cmd_end - cmd_start) / BigInt('1000000');
@@ -715,13 +699,12 @@ class Util {
 
     /**
      * Init cache
-     * @param {Discord.Client} gideon
      */
-    static async InitCache(gideon) {
-        gideon.cache.nxeps = new Discord.Collection();
+    static async InitCache() {
+        process.gideon.cache.nxeps = new Discord.Collection();
 
-        for (let show in gideon.show_api_urls) {
-            try { await this.GetAndStoreEpisode(show, gideon); }
+        for (let show in process.gideon.show_api_urls) {
+            try { await this.GetAndStoreEpisode(show); }
             
             catch (ex) {
                 Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
@@ -731,9 +714,8 @@ class Util {
 
     /**
      * @param {string} show 
-     * @param {Discord.Client} gideon
      */
-    static async GetAndStoreEpisode(show, gideon) {
+    static async GetAndStoreEpisode(show) {
         let names = {
             batwoman: 'Batwoman',
             supergirl: 'Supergirl',
@@ -746,9 +728,9 @@ class Util {
         };
 
         try {
-            let json = await Util.fetchJSON(gideon.show_api_urls[show]);
+            let json = await Util.fetchJSON(process.gideon.show_api_urls[show]);
             json.shortname = names[show];
-            gideon.cache.nxeps.set(show, json);
+            process.gideon.cache.nxeps.set(show, json);
         }
         
         catch (ex) {
@@ -771,12 +753,11 @@ class Util {
      * @returns {Promise<string>}
      * @param {string} text 
      * @param {string[]} context 
-     * @param {Discord.Client} gideon
      */
-    static GetCleverBotResponse(text, context, gideon) {
+    static GetCleverBotResponse(text, context) {
         return new Promise((resolve, reject) => {
             cleverbot(text, context).then(response => {
-                this.IncreaseStat(gideon, 'ai_chat_messages_processed');
+                this.IncreaseStat('ai_chat_messages_processed');
                 resolve(response);
             }, failed => reject(failed));
         });
@@ -818,7 +799,7 @@ class Util {
         message.channel.startTyping().finally(() => {});
     
         try {
-            let response = await this.GetCleverBotResponse(text, arr, message.guild.me.client);
+            let response = await this.GetCleverBotResponse(text, arr);
             message.channel.send(response).then(sent => {
                 sent.cleverbot = true;
                 message.cleverbot = true;

@@ -2,11 +2,9 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message) {
+export async function run(message) {
     const emoji_ids = ['598886586284900354', '607658682246758445', '598886597244485654', '598886605641613353', '598886588545499186', '598886601476800513', '607657873534746634', '634764613434474496', '638489255169228830', '668513166380105770'];
 
     const auth = message.author.id;
@@ -29,12 +27,12 @@ export async function run(gideon, message) {
     let roles_to_ping = [];
 
     let cvmen = false; 
-    let cvm = gideon.getGuild.get(message.guild.id);
+    let cvm = process.gideon.getGuild.get(message.guild.id);
 
     if (cvm.cvmval === 1) {
         cvmen = true;
         cvm.cvmval = 0,
-        gideon.setGuild.run(cvm);
+        process.gideon.setGuild.run(cvm);
     } 
 
     message.channel.send('Please react to mark the role(s) you want to ping.\nThen please post the news below.\nYou can optionally provide an image and a URL.\nSend \'cancel\' or \'stop\' to cancel.\nYou\'ve got 120 seconds.').then(async message => {
@@ -68,7 +66,7 @@ export async function run(gideon, message) {
         const news = Util.CreateEmbed('Arrowverse News', {description: message.content, thumbnail: message.author.avatarURL()}).addField('News posted by:', message.author);
         if (message.attachments.size > 0) news.setImage(message.attachments.first().proxyURL);
 
-        const tmvt = gideon.guilds.cache.get('595318490240385037');
+        const tmvt = process.gideon.guilds.cache.get('595318490240385037');
         if (!tmvt) {
             Util.log('Couldn\'t get TV server when running news!');
             return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
@@ -89,7 +87,7 @@ export async function run(gideon, message) {
             message.reply(`Your news post has been sent to ${news_channel.toString()}! :white_check_mark:`);
             if (cvmen) {
                 cvm.cvmval = 1,
-                gideon.setGuild.run(cvm);
+                process.gideon.setGuild.run(cvm);
             }
             collector.stop();
         });

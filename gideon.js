@@ -14,6 +14,8 @@ const gideon = new Discord.Client({
     restRequestTimeout: 25000
 });
 
+process.gideon = gideon;
+
 gideon.commands = new Discord.Collection();
 gideon.vcmdexec = false;
 gideon.emptyvc = false;
@@ -48,30 +50,27 @@ setTimeout(() => {
 }, 60e3);
 
 gideon.once('ready', async () => {
-    Util.LoadCommands(gideon);
-    Util.SQL.InitDB(gideon);
-    Util.Selfhostlog(gideon);
-    await Util.InitCache(gideon);
-    Util.InitStatus(gideon);
-    Util.UpdateStatus(gideon);
+    Util.LoadCommands();
+    Util.SQL.InitDB();
+    Util.Selfhostlog();
+    await Util.InitCache();
+    Util.InitStatus();
+    Util.UpdateStatus();
 
     for (let item of gideon.stats) {
         if (!gideon.getStat.get(item)) {
             console.log('Initializing ' + item);
-            Util.SetStat(gideon, item, 0);
+            Util.SetStat(item, 0);
         }
     }
 
     Util.config.prefixes.push(`<@!${gideon.user.id}>`, `<@${gideon.user.id}>`);
     
     const twodays = 1000 * 60 * 60 * 48;
-    setInterval(() => {
-        Util.UpdateStatus(gideon);
-        //Util.CheckEpisodes(gideon);
-    }, 10e3);
-    setInterval(() => Util.CheckEpisodes(gideon), 120e3);
+    setInterval(Util.UpdateStatus, 10e3);
+    setInterval(Util.CheckEpisodes, 30e3);
 
-    setInterval(Util.SQLBkup, twodays, gideon);
+    setInterval(Util.SQLBkup, twodays);
 
     gideon.fetchApplication().then(app => {
         //When the bot is owned by a team owner id is stored under ownerID, otherwise id
@@ -122,7 +121,7 @@ gideon.on('error', err => {
 });
 
 gideon.on('message', message => {
-    Util.MsgHandler.Handle(gideon, message, Util);
+    Util.MsgHandler.Handle(message, Util);
 });
 
 gideon.on('guildCreate', guild => {
@@ -143,8 +142,8 @@ gideon.on('guildCreate', guild => {
         gideon.setGuild.run(currentguild);
     }
 
-    Util.Checks.LBG(guild, gideon, Util); //check if guild is blacklisted, if yes, leave
-    Util.Checks.BotCheck(guild, gideon, Util); //check if guild collects bots, if yes, leave
+    Util.Checks.LBG(guild, Util); //check if guild is blacklisted, if yes, leave
+    Util.Checks.BotCheck(guild, Util); //check if guild collects bots, if yes, leave
 });
 
 gideon.on('guildDelete', guild => {
@@ -169,26 +168,26 @@ gideon.on('guildUnavailable', guild => {
 });
 
 gideon.on('messageReactionAdd', (messageReaction, user) => {
-    Util.Starboard(messageReaction, user, gideon);
+    Util.Starboard(messageReaction, user);
 });
 
 gideon.on('guildMemberAdd', member => {
-    Util.Welcome(member, gideon);
-    Util.Checks.NameCheck(null, member.user, gideon);
+    Util.Welcome(member);
+    Util.Checks.NameCheck(null, member.user);
     Util.Checks.AccCheck(member, Util);
 });
 
 gideon.on('guildMemberUpdate', (oldMember, newMember) => {
-    if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null, gideon);
+    if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null);
 });
 
 gideon.on('userUpdate', (oldUser, newUser) => {
-    if (newUser.username !== oldUser.username) Util.Checks.NameCheck(null, newUser, gideon);
+    if (newUser.username !== oldUser.username) Util.Checks.NameCheck(null, newUser);
 });
 
 gideon.on('messageUpdate', async (oldMessage, newMessage) => {
     if (newMessage.partial) await newMessage.fetch();
-    if (newMessage.editedAt) Util.MsgHandler.Handle(gideon, newMessage, Util);
+    if (newMessage.editedAt) Util.MsgHandler.Handle(newMessage, Util);
 });
 
 gideon.on('commandRefused', (message, reason) => {
@@ -201,5 +200,5 @@ gideon.on('inviteCreate', Invite => {
 });
 
 gideon.on('voiceStateUpdate', (oldState, newState) => {
-    Util.Checks.VCCheck(oldState, newState, gideon);
+    Util.Checks.VCCheck(oldState, newState);
 });

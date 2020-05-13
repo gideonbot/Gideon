@@ -6,30 +6,29 @@ class MsgHandler {
     }
 
     /**
-     * 
-     * @param {Discord.Client} gideon 
+     *  
      * @param {Discord.Message} message 
      * @param {*} Util 
      * @param {Discord.VoiceConnection} connection 
      */
-    static async Handle(gideon, message, Util, connection) {
+    static async Handle(message, Util, connection) {
         if (!message || !message.author || message.partial || message.type != 'DEFAULT') return;
         if (!message.guild) {
             if (message.content.match(/(?:readdemrulez)/i)) {
-                return Util.Checks.RulesCheck(message, gideon);
+                return Util.Checks.RulesCheck(message);
             }
             else return;
         }
         
-        if (message.author.id == gideon.user.id) Util.IncreaseStat(gideon, 'messages_sent');
+        if (message.author.id == process.gideon.user.id) Util.IncreaseStat('messages_sent');
         if (message.author.bot) return;
-        if (!message.guild.me) await message.guild.members.fetch(gideon.user.id);
+        if (!message.guild.me) await message.guild.members.fetch(process.gideon.user.id);
         if (message.channel.type !== 'text') return;
         if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
 
         const lowercaseContent = message.content.toLowerCase();
 
-        let currentguild = gideon.getGuild.get(message.guild.id);
+        let currentguild = process.gideon.getGuild.get(message.guild.id);
         if (!currentguild) {
             currentguild = {
                 guild: message.guild.id,
@@ -41,23 +40,23 @@ class MsgHandler {
                 chatchnl: ''
             };
 
-            gideon.setGuild.run(currentguild);
+            process.gideon.setGuild.run(currentguild);
         }
 
-        if (Util.Checks.IBU(message, gideon)) return; //check if user is blacklisted, if yes, return
-        Util.Checks.LBG(message.guild, gideon, Util); //check if guild is blacklisted, if yes, leave
-        if (message.channel.id === currentguild.chatchnl) return Util.Chat(message, gideon);
-        Util.Checks.Ads(message, gideon); //check for foreign invites
-        Util.Checks.ABM(message, gideon, Util); //apply content filter
+        if (Util.Checks.IBU(message)) return; //check if user is blacklisted, if yes, return
+        Util.Checks.LBG(message.guild, Util); //check if guild is blacklisted, if yes, leave
+        if (message.channel.id === currentguild.chatchnl) return Util.Chat(message);
+        Util.Checks.Ads(message); //check for foreign invites
+        Util.Checks.ABM(message, Util); //apply content filter
 
         if (message.guild.id === '595318490240385037') {
             if (!message.member.roles.cache.has('688430418466177082')) return; //NO COMMANDS FOR NON RULE READERS, FEEL MY WRATH
         }
 
-        Util.Checks.NameCheck(message.member, null, gideon); //check nicknames & usernames
-        Util.Checks.CVM(message, gideon, Util); //apply crossover mode if enabled
-        Util.Checks.CSD(message, gideon, Util); //eastereggs
-        Util.TR.TRMode(message, gideon, Util); //apply trmode if enabled
+        Util.Checks.NameCheck(message.member, null); //check nicknames & usernames
+        Util.Checks.CVM(message, Util); //apply crossover mode if enabled
+        Util.Checks.CSD(message, Util); //eastereggs
+        Util.TR.TRMode(message, Util); //apply trmode if enabled
  
         const usedCustom = lowercaseContent.startsWith(currentguild.prefix.toLowerCase());
         let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
@@ -70,15 +69,15 @@ class MsgHandler {
         let cmd = args.shift();
         if (!cmd) return;
 
-        const command = gideon.commands.get(cmd.toLowerCase());
-        if (!command) return gideon.vcmdexec = false;
+        const command = process.gideon.commands.get(cmd.toLowerCase());
+        if (!command) return process.gideon.vcmdexec = false;
         
-        Util.Checks.Spamcounter(message.author.id, gideon);
+        Util.Checks.Spamcounter(message.author.id);
 
-        const spamcount = gideon.spamcount.get(message.author.id);
+        const spamcount = process.gideon.spamcount.get(message.author.id);
    
         if (spamcount && spamcount.usages + 1 > 10) {
-            let ub = gideon.getUser.get(message.author.id);
+            let ub = process.gideon.getUser.get(message.author.id);
 
             if (!ub) ub = {
                 user: message.author.id,
@@ -86,42 +85,42 @@ class MsgHandler {
             };
             else ub.blacklist = 1;
             
-            gideon.setUser.run(ub);
+            process.gideon.setUser.run(ub);
             Util.log(`${message.author.tag} had their access revoked due to command spam:\`\`\`\nUser: ${message.author.tag} - ${message.author.id}\nMessage: ${message.content} - ${message.id}\n\`\`\`\n${message.url}`);
-            return message.reply('Your access to ' + gideon.user.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
+            return message.reply('Your access to ' + process.gideon.user.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
         }
 
         if (command.help.type === 'voice' && !message.voice) return;
 
         if (command.help.owner) {
-            if (message.author.id !== gideon.owner) {
-                gideon.emit('commandRefused', message, 'NOT_APPLICATION_OWNER');
+            if (message.author.id !== process.gideon.owner) {
+                process.gideon.emit('commandRefused', message, 'NOT_APPLICATION_OWNER');
                 return message.reply('You do not have the required permission to use this command!\nRequired permission: `Application Owner`');
             } 
         } 
 
         if (command.help.timevault) {
             if (message.guild.id !== '595318490240385037') {
-                gideon.emit('commandRefused', message, 'TIMEVAULT_ONLY');
+                process.gideon.emit('commandRefused', message, 'TIMEVAULT_ONLY');
                 return message.reply('This command only works at the Time Vault!\nhttps://discord.gg/h9SEQaU');
             } 
         }
 
-        if (message.author.id !== gideon.owner) {
+        if (message.author.id !== process.gideon.owner) {
             if (command.help.user_perms && command.help.user_perms.length > 0) {
                 let missingperms = [];
                 for (let perms of command.help.user_perms) {
                     if (!message.member.hasPermission(perms)) missingperms.push(perms);
                 }
                 if (missingperms && missingperms.length > 0) {
-                    gideon.emit('commandRefused', message, 'Missing: ' + missingperms.join(' '));
+                    process.gideon.emit('commandRefused', message, 'Missing: ' + missingperms.join(' '));
                     return message.reply('You do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
                 }
             }   
 
             if (command.help.nsfw) {
                 if (!message.channel.nsfw) {
-                    gideon.emit('commandRefused', message, 'NSFW_REQUIRED');
+                    process.gideon.emit('commandRefused', message, 'NSFW_REQUIRED');
                     return message.reply('This command requires a `NSFW` channel!');
                 }
             }
@@ -137,7 +136,7 @@ class MsgHandler {
                 if (missingroles && missingroles.length > 0) {
                     for (let role of missingroles) {
                     
-                        const rolename = await gideon.shard.broadcastEval(`
+                        const rolename = await process.gideon.shard.broadcastEval(`
                             (async () => {
                                 let rolename;
                                 const guilds = this.guilds.cache;
@@ -155,7 +154,7 @@ class MsgHandler {
                     }
                 }
                 if (rolenames && rolenames.length > 0) {
-                    gideon.emit('commandRefused', message, 'Missing: ' + rolenames.map(x => `@${x}`).join(' '));
+                    process.gideon.emit('commandRefused', message, 'Missing: ' + rolenames.map(x => `@${x}`).join(' '));
                     return message.reply('You do not have the required roles to use this command!\nRequired roles: ' + rolenames.map(x => `\`${x}\``).join(' '));
                 } 
             }
@@ -194,8 +193,9 @@ class MsgHandler {
             }
         }
 
-        Util.IncreaseStat(gideon, 'commands_ran');
-        command.run(gideon, message, args, connection);
+        Util.IncreaseStat('commands_ran');
+        //HERE
+        command.run(message, args, connection);
     }
 }
 

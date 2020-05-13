@@ -2,14 +2,12 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     message.channel.send(Util.CreateEmbed('Gideon - Selfhosting Documentation', {
         description: 'Click the link below to read the GitHub documentation on how to selfhost me!',
-        thumbnail: gideon.user.avatarURL(),
+        thumbnail: process.gideon.user.avatarURL(),
         fields: [
             {
                 name: 'GitHub Wiki:',

@@ -1,14 +1,12 @@
 import Discord from 'discord.js';
 import Util from '../../Util.js';
-import fetch from 'node-fetch';
 import Turndown from 'turndown';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
     if (!args[0]) return message.channel.send(as);
 

@@ -2,12 +2,10 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
-    let shards = gideon.shard.count;
+export async function run(message) {
+    let shards = process.gideon.shard.count;
 
     message.channel.send(Util.CreateEmbed('Shard Count:', {description: `Gideon is currently running on \`${shards}\` ${shards > 1 ? 'shards' : 'shard'}`}, message.member));
 }

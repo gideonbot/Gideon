@@ -2,13 +2,12 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
-    let cmd = gideon.commands.get(args[0].toLocaleLowerCase());
-    const customprefix = gideon.getGuild.get(message.guild.id);
+export async function run(message, args) {
+    let cmd = process.gideon.commands.get(args[0].toLocaleLowerCase());
+    const customprefix = process.gideon.getGuild.get(message.guild.id);
 
     if (cmd) {
         const embed = Util.CreateEmbed(`Available aliases for: "${args[0]}"`, null, message.member);

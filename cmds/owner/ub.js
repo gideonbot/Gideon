@@ -2,14 +2,13 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const id = Util.ValID(args.join(' '));
     try {
-        let ub = gideon.getUser.get(id);
+        let ub = process.gideon.getUser.get(id);
         if (!ub) {
             ub = {
                 id: id,
@@ -20,13 +19,13 @@ export async function run(gideon, message, args) {
 
         if (ub.blacklist === 0) {
             ub.blacklist = 1;
-            gideon.setUser.run(ub);
+            process.gideon.setUser.run(ub);
             message.channel.send(`User \`${id}\` has been blacklisted!`);
         }
 
         else {
             ub.blacklist = 0;
-            gideon.setUser.run(ub);
+            process.gideon.setUser.run(ub);
             message.channel.send(`User \`${id}\` has been un-blacklisted!`); 
         }
     }

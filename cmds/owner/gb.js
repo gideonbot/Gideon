@@ -2,14 +2,13 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const id = Util.ValID(args.join(' '));
     try {
-        let gb = gideon.getGuild.get(id);
+        let gb = process.gideon.getGuild.get(id);
         if (!gb) {
             gb = {
                 guild: id,
@@ -23,13 +22,13 @@ export async function run(gideon, message, args) {
 
         if (gb.blacklist === 0) {
             gb.blacklist = 1;
-            gideon.setGuild.run(gb);
+            process.gideon.setGuild.run(gb);
             message.channel.send(`Guild \`${id}\` has been blacklisted!`);
         }
 
         else if (gb.blacklist === 1) {
             gb.blacklist = 0;
-            gideon.setGuild.run(gb);
+            process.gideon.setGuild.run(gb);
             message.channel.send(`Guild \`${id}\` has been un-blacklisted!`); 
         }
     }

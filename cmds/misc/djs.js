@@ -1,13 +1,11 @@
 import Discord from 'discord.js';
 import Util from '../../Util.js';
-import fetch from 'node-fetch';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     try {
         const source = 'https://raw.githubusercontent.com/discordjs/discord.js/docs/12.0.2.json';
         const queryString = encodeURI(args.join(' '));

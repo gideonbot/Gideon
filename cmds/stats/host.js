@@ -3,11 +3,9 @@ import Util from '../../Util.js';
 import si from 'systeminformation';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {     
+export async function run(message) {     
     try {
         let sent = await message.channel.send(Util.CreateEmbed('Gathering host info, please wait...', null, message.member));
 
