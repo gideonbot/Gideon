@@ -8,7 +8,7 @@ export async function run(message) {
     const cmds = process.gideon.getStat.get('commands_ran').value;
     const msgs = process.gideon.getStat.get('messages_sent').value;
     const aimsgs =  process.gideon.getStat.get('ai_chat_messages_processed').value;
-    let guilds = await process.gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
+    let guilds = process.gideon.shard ? await process.gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex)) : [process.gideon.guilds.cache];
 
     if (guilds) {
         guilds = [].concat.apply([], guilds);

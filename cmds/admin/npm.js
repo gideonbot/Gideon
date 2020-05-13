@@ -6,7 +6,7 @@ import exec from 'child_process';
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(message, args) {   
+export async function run(message, args) {
     if (args[0].match(/(?:install)/i)) {
         message.reply('running `npm install` please check <#622415301144870932> for console output!');
         const install = exec.exec('npm install');

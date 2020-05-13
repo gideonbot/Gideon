@@ -153,7 +153,9 @@ class MsgHandler {
                         rolenames.push(...arr);
                     }
                 }
-                if (rolenames && rolenames.length > 0) {
+
+                if (missingroles.length > 0) {
+                    if (rolenames.length < 1) rolenames = missingroles;
                     process.gideon.emit('commandRefused', message, 'Missing: ' + rolenames.map(x => `@${x}`).join(' '));
                     return message.reply('You do not have the required roles to use this command!\nRequired roles: ' + rolenames.map(x => `\`${x}\``).join(' '));
                 } 
