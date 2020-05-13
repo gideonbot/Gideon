@@ -56,7 +56,6 @@ export async function run(gideon, message, args, connection) {
     }
     
     catch (ex) {
-        console.log('Caught an exception while plotting a course: ' + ex.stack);
         Util.log('Caught an exception while plotting a course: ' + ex.stack);
         
         return message.channel.send(Util.CreateEmbed('An error occurred while trying to plot a course!', null, message.member));

@@ -52,7 +52,6 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log('Exception occurred while starting up the particle accelerator ' + ex.stack);
         Util.log('Exception occurred while starting up the particle accelerator ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while trying to start the particle accelerator!', null, message.member));
     } 

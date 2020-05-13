@@ -70,14 +70,12 @@ export async function run(gideon, message, args) {
 
         const tmvt = gideon.guilds.cache.get('595318490240385037');
         if (!tmvt) {
-            console.log('Couldn\'t get TV server when running news!');
             Util.log('Couldn\'t get TV server when running news!');
             return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
         }
 
         const news_channel = tmvt.channels.cache.get('595944027208024085');
         if (!news_channel) {
-            console.log('Couldn\'t get news channel when running news!');
             Util.log('Couldn\'t get news channel when running news!');
             return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
         }

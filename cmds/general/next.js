@@ -136,7 +136,6 @@ export async function run(gideon, message, args) {
     }
 
     catch (ex) {
-        console.log('Failed to fetch next episode: ' + ex.stack);
         Util.log('Failed to fetch next episode: ' + ex.stack);
         message.channel.send(Util.CreateEmbed('Failed to fetch episode list, please try again later!', null, message.member));
     }

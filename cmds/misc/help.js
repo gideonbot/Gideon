@@ -46,7 +46,6 @@ export async function run(gideon, message, args) {
             let cmd = gideon.commands.get(filename);
 
             if (!cmd.help || !cmd.help.help_text || !cmd.help.help_desc) {
-                console.log(filename + ' is missing help properties!');
                 Util.log(filename + ' is missing help properties, please fix');
             }
 
@@ -80,7 +79,6 @@ export async function run(gideon, message, args) {
     for (let filename of gideon.commands.keys()) {
         let cmd = gideon.commands.get(filename);
         if (!cmd.help || !cmd.help.help_text || !cmd.help.help_desc) {
-            console.log(filename + ' is missing help properties!');
             Util.log(filename + ' is missing help properties, please fix');
         }
 

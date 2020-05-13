@@ -125,7 +125,6 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log('Exception occurred while fetching the episodes ' + ex.stack);
         Util.log('Exception occurred while fetching the episodes ' + ex.stack);
         message.channel.send(Util.CreateEmbed('An error occurred while trying to fetch the episodes!', null, message.member));
     }

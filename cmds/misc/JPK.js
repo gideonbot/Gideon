@@ -9,7 +9,6 @@ import Util from '../../Util.js';
 export async function run(gideon, message, args) {
     if (!process.env.IMG_CL) {
         Util.log('Missing env variable for JPK command!');
-        console.log('Missing env variable for JPK command!');
         return message.channel.send(Util.CreateEmbed('This command is currently not available', null, message.member));
     }
     

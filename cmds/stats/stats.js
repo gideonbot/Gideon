@@ -6,7 +6,7 @@ import Util from '../../Util.js';
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(gideon, message) {
     const cmds = gideon.getStat.get('commands_ran').value;
     const msgs = gideon.getStat.get('messages_sent').value;
     const aimsgs =  gideon.getStat.get('ai_chat_messages_processed').value;

@@ -78,7 +78,6 @@ export async function run(gideon, message, args) {
     }
 
     catch (ex) {
-        console.log('Error occurred while fetching data from wiki: ' + ex.stack);
         Util.log('Error occurred while fetching data from wiki: ' + ex.stack);
         message.channel.send(Util.CreateEmbed('Failed to fetch info from wiki!', null, message.member));
     } 
