@@ -2,7 +2,7 @@ import SQLite from 'better-sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Discord from 'discord.js';
-//const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const sql = new SQLite(path.join(__dirname, '../data/SQL/gideon.sqlite'));
 
 class SQL {

@@ -7,7 +7,7 @@ const streamPipeline = util.promisify(stream.pipeline);
 import unzipper from 'unzipper';
 import path from 'path';
 import { fileURLToPath } from 'url';
-//const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import fetch from 'node-fetch';
 import del from 'del';
 
