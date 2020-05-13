@@ -79,7 +79,7 @@ gideon.once('ready', async () => {
     setTimeout(async () => {
         if (process.env.CI) {
             //HERE - replace link
-            gideon.options.http.api = 'https://enjs0oy5w18w8.x.pipedream.net';
+            gideon.options.http.api = 'https://enf215hrvvm46.x.pipedream.net';
 
             let tests = await import('./tests.js');
 
@@ -168,7 +168,14 @@ gideon.once('ready', async () => {
             }
 
             //We need to wait for all requests to go through I guess 
-            await Util.delay(70e3);
+            await Util.delay(10e3);
+
+            // eslint-disable-next-line no-constant-condition
+            while (1 == 1) {
+                console.log('Checking if all requests are over...');
+                if (!gideon.rest.handlers.array().map(x => x._inactive).some(x => !x)) break;
+                await Util.delay(2e3);
+            }
 
             console.log('Run successful, exiting with code 0');
             gideon.destroy();
