@@ -136,7 +136,7 @@ class MsgHandler {
     
                 if (missingroles && missingroles.length > 0) {
                     for (let role of missingroles) {
-                        const rolenames = process.gideon.shard ? await process.gideon.shard.broadcastEval(`
+                        const arr = process.gideon.shard ? await process.gideon.shard.broadcastEval(`
                             (async () => {
                                 let rolename;
                                 const guilds = this.guilds.cache;
@@ -150,7 +150,7 @@ class MsgHandler {
                                 if (rolename) return rolename;
                             })();
                         `) : process.gideon.guilds.cache.map(x => x.roles.cache).filter(x => x.get(role)).map(x => x.array().map(x => x.name)).flat();
-                        rolenames.push(...rolenames);
+                        rolenames.push(...arr);
                     }
                 }
                 if (rolenames && rolenames.length > 0) {
