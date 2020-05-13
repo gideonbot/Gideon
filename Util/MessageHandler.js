@@ -149,7 +149,7 @@ class MsgHandler {
                                 
                                 if (rolename) return rolename;
                             })();
-                        `) : process.gideon.guilds.cache.map(x => x.roles.cache).filter(x => x.get(role)).find(x => x.get(role)).map(x => x.name);
+                        `) : process.gideon.guilds.cache.map(x => x.roles.cache).filter(x => x.get(role)).name;
                         rolenames.push(...rolenames);
                     }
                 }
