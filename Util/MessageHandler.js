@@ -136,22 +136,21 @@ class MsgHandler {
     
                 if (missingroles && missingroles.length > 0) {
                     for (let role of missingroles) {
-                    
-                        const rolename = await process.gideon.shard.broadcastEval(`
+                        const rolenames = process.gideon.shard ? await process.gideon.shard.broadcastEval(`
                             (async () => {
                                 let rolename;
                                 const guilds = this.guilds.cache;
                                 
                                 guilds.forEach(guild => {
                                     if (guild.roles.cache.get('${role}')) {
-                                    rolename = guild.roles.cache.get('${role}').name;
+                                        rolename = guild.roles.cache.get('${role}').name;
                                     }
                                 });
                                 
                                 if (rolename) return rolename;
                             })();
-                        `);
-                        rolenames.push(rolename.toString());
+                        `) : process.gideon.guilds.cache.map(x => x.roles.cache).filter(x => x.get(role)).find(x => x.get(role)).map(x => x.name);
+                        rolenames.push(...rolenames);
                     }
                 }
                 if (rolenames && rolenames.length > 0) {
