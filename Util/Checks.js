@@ -1,5 +1,4 @@
 import Discord from 'discord.js';
-import fetch from 'node-fetch';
 import anyAscii from 'any-ascii';
 import Filter from 'bad-words';
 

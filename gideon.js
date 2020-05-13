@@ -2,6 +2,8 @@ import 'dotenv/config.js';
 import PrettyError from 'pretty-error';
 PrettyError.start().withoutColors();
 import Discord from 'discord.js';
+import Util from './Util.js';
+
 const gideon = new Discord.Client({
     ws: {
         intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
@@ -11,7 +13,6 @@ const gideon = new Discord.Client({
     partials: ['MESSAGE', 'REACTION'],
     restRequestTimeout: 25000
 });
-import Util from './Util.js';
 
 gideon.commands = new Discord.Collection();
 gideon.vcmdexec = false;
