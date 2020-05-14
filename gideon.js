@@ -7,7 +7,6 @@ const gideon = new Discord.Client({
         intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
     },
     allowedMentions: { parse: ['users', 'roles'] },
-    fetchAllMembers: true,
     partials: ['MESSAGE', 'REACTION'],
     restRequestTimeout: 25000
 });
@@ -51,6 +50,7 @@ gideon.once('ready', async () => {
     Util.SQL.InitDB(gideon);
     Util.Selfhostlog(gideon);
     await Util.InitCache(gideon);
+    await gideon.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on startup
     Util.InitStatus(gideon);
     Util.UpdateStatus(gideon);
 
