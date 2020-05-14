@@ -25,12 +25,12 @@ gideon.stats = ['commands_ran', 'ai_chat_messages_processed', 'messages_sent'];
 gideon.show_api_urls = {
     batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
     supergirl: 'http://api.tvmaze.com/shows/1850?embed=nextepisode',
-    flash: 'http://api.tvmaze.com/shows/13?embed=nextepisode',
-    legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
     stargirl: 'http://api.tvmaze.com/shows/37809?embed=nextepisode', 
-    b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
+    legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
+    flash: 'http://api.tvmaze.com/shows/13?embed=nextepisode',
     canaries: 'http://api.tvmaze.com/shows/44496?embed=nextepisode',
-    supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode'
+    supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode',
+    b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
 };
 
 if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
