@@ -66,8 +66,10 @@ gideon.once('ready', async () => {
     const twodays = 1000 * 60 * 60 * 48;
     setInterval(() => {
         Util.UpdateStatus(gideon);
-        Util.CheckEpisodes(gideon);
+        //Util.CheckEpisodes(gideon);
     }, 10e3);
+    setInterval(() => Util.CheckEpisodes(gideon), 120e3);
+
     setInterval(Util.SQLBkup, twodays, gideon);
 
     gideon.fetchApplication().then(app => {
