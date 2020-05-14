@@ -8,12 +8,16 @@
 [![PayPal](https://img.shields.io/badge/Paypal-Donate!-%2300457C.svg?logo=paypal&style=flat)](https://paypal.me/adrifcastr)
 
 # Gideon  
+### THIS BRANCH IS VERY WIP. DO. NOT. USE. IT.
 ### The Open Source Arrowverse Discord Bot
 
 Infos & features:
 [Homepage](https://gideonbot.com)
 
-Too see Gideon in action, you can join the Time Vault: [Join](https://invite.gg/tmvt) 
+Gideon is a fully featured Arrowverse/DC Discord Bot providing many features and interactive games.\
+Gideon runs on the `Node.js` runtime using the `discord.js` library and the `discord-akairo` framework.
+
+Too see Gideon in action, you can join the Time Vault: [Join Server](https://invite.gg/tmvt) 
 
 ![Discord Banner](https://discordapp.com/api/guilds/595318490240385037/widget.png?style=banner2)
 
