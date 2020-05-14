@@ -17,6 +17,10 @@ class GideonClient extends Akairo.AkairoClient {
             partials: ['MESSAGE', 'REACTION'],
             restRequestTimeout: 25000
         });
+        this.commandHandler = new Akairo.CommandHandler(this, {
+            // Options for the command handler goes here.
+            directory: './cmds/'
+        });
     }
 }
 
@@ -58,6 +62,7 @@ setTimeout(() => {
 
 gideon.once('ready', async () => {
     Util.LoadCommands(gideon);
+    //gideon.commandHandler.loadAll(); off until akairo fixes ES6 support
     Util.SQL.InitDB(gideon);
     Util.Selfhostlog(gideon);
     await Util.InitCache(gideon);
