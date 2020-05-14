@@ -49,7 +49,7 @@ gideon.once('ready', async () => {
     Util.LoadCommands(gideon);
     Util.SQL.InitDB(gideon);
     Util.Selfhostlog(gideon);
-    await Util.InitCache(gideon);
+    if (!process.env.CI) await Util.InitCache(gideon);
     await gideon.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on startup
     Util.InitStatus(gideon);
     Util.UpdateStatus(gideon);
