@@ -2,14 +2,25 @@ import 'dotenv/config.js';
 import PrettyError from 'pretty-error';
 PrettyError.start().withoutColors();
 import Discord from 'discord.js';
-const gideon = new Discord.Client({
-    ws: {
-        intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
-    },
-    allowedMentions: { parse: ['users', 'roles'] },
-    partials: ['MESSAGE', 'REACTION'],
-    restRequestTimeout: 25000
-});
+import Akairo from 'discord-akairo';
+
+class GideonClient extends Akairo.AkairoClient {
+    constructor() {
+        super({
+            // Options for Akairo go here.
+        }, {
+            // Options for discord.js goes here.
+            ws: {
+                intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
+            },
+            allowedMentions: { parse: ['users', 'roles'] },
+            partials: ['MESSAGE', 'REACTION'],
+            restRequestTimeout: 25000
+        });
+    }
+}
+
+const gideon = new GideonClient();
 import Util from './Util.js';
 
 gideon.commands = new Discord.Collection();
