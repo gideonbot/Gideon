@@ -19,7 +19,7 @@ class GideonClient extends Akairo.AkairoClient {
         });
         this.commandHandler = new Akairo.CommandHandler(this, {
             // Options for the command handler goes here.
-            directory: './cmds/'
+            directory: './commands/'
         });
     }
 }
@@ -61,8 +61,8 @@ setTimeout(() => {
 }, 60e3);
 
 gideon.once('ready', async () => {
-    Util.LoadCommands(gideon);
-    //gideon.commandHandler.loadAll(); off until akairo fixes ES6 support
+    //Util.LoadCommands(gideon);
+    gideon.commandHandler.loadAll(); 
     Util.SQL.InitDB(gideon);
     Util.Selfhostlog(gideon);
     await Util.InitCache(gideon);
