@@ -20,7 +20,9 @@ class GideonClient extends Akairo.AkairoClient {
         });
         this.commandHandler = new Akairo.CommandHandler(this, {
             // Options for the command handler goes here.
-            directory: './commands/'
+            directory: './commands/',
+            handleEdits: true,
+            ignorePermissions: ['224617799434108928', '351871113346809860']
         });
     }
 }
