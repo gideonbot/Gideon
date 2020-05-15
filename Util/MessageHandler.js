@@ -107,10 +107,12 @@ class MsgHandler {
         if (message.author.id !== process.gideon.owner) {
             if (command.help.user_perms && command.help.user_perms.length > 0) {
                 let missingperms = [];
-                for (let perms of command.help.user_perms) {
-                    if (!message.member.hasPermission(perms)) missingperms.push(perms);
+
+                for (let perm of command.help.user_perms) {
+                    if (!message.member.hasPermission(perm)) missingperms.push(perm);
                 }
-                if (missingperms && missingperms.length > 0) {
+
+                if (missingperms.length > 0) {
                     process.gideon.emit('commandRefused', message, 'Missing: ' + missingperms.join(' '));
                     return message.reply('You do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
                 }
@@ -131,14 +133,13 @@ class MsgHandler {
                     if (!message.member.roles.cache.has(role)) missingroles.push(role);
                 }
     
-                if (missingroles && missingroles.length > 0) {
+                if (missingroles.length > 0) {
                     for (let role of missingroles) {
                         const arr = process.gideon.shard ? await process.gideon.shard.broadcastEval(`
                             (async () => {
-                                let rolename;
-                                const guilds = this.guilds.cache;
+                                let rolename = '';
                                 
-                                guilds.forEach(guild => {
+                                this.guilds.cache.forEach(guild => {
                                     if (guild.roles.cache.get('${role}')) {
                                         rolename = guild.roles.cache.get('${role}').name;
                                     }
