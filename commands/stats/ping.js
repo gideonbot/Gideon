@@ -12,7 +12,7 @@ const Command = Akairo.Command;
 class Ping extends Command {
     constructor() {
         super('ping', {
-            aliases: ['latency'],
+            aliases: ['ping', 'latency'],
             category: 'stats'
         });
     }

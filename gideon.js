@@ -152,25 +152,6 @@ gideon.commandHandler.on('load', command => {
     console.log(`${command.id} loaded!`);
 });
 
-gideon.commandHandler.on('commandStarted', (message, command) => {
-    console.log(message.content);
-    console.log(command.id);
-});
-
-gideon.commandHandler.on('commandFinished', (message, command) => {
-    console.log(message.content);
-    console.log(command.id);
-});
-
-gideon.commandHandler.on('commandDisabled', (message, command) => {
-    console.log(message.content);
-    console.log(command.id);
-});
-
-gideon.commandHandler.on('load', command => {
-    console.log(`${command.id} loaded!`);
-});
-
 gideon.commandHandler.on('error', error => {
     console.log(error);
 });
