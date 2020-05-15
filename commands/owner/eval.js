@@ -16,11 +16,12 @@ class Eval extends Command {
             category: 'owner',
             channel: 'guild',
             ownerOnly: true,
-            args: [ { id: 'code' } ],
+            args: [ { id: 'code', match: 'content', prompt: true } ],
         });
     }
 
     async exec(message, args) {
+        //return console.log(args);
         try {
             const code = args.code;
             // eslint-disable-next-line semi

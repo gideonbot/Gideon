@@ -24,7 +24,15 @@ class GideonClient extends Akairo.AkairoClient {
             prefix: ['!', 'Gideon', 'Gideon,'],
             commandUtil: true,
             handleEdits: true,
-            ignorePermissions: ['224617799434108928', '351871113346809860']
+            ignorePermissions: ['224617799434108928', '351871113346809860'],
+            argumentDefaults: {
+                prompt: {
+                    retry: message => {
+                        const embed = Util.CreateEmbed('You must supply valid input!', null, message.member);
+                        return embed;
+                    }
+                }
+            }
         });
     }
 }
