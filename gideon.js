@@ -50,7 +50,6 @@ gideon.once('ready', async () => {
     Util.SQL.InitDB(gideon);
     Util.Selfhostlog(gideon);
     await Util.InitCache(gideon);
-    if (!process.env.CI) await gideon.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on startup
     Util.InitStatus(gideon);
     Util.UpdateStatus(gideon);
 
@@ -84,6 +83,8 @@ gideon.once('ready', async () => {
             process.exit(0);
         }
     }, 10e3);
+
+    if (!process.env.CI) if (gideon.guilds.cache.get('595318490240385037')) await gideon.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on startup
 
     console.log('Ready!');
 });
