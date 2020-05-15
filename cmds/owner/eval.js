@@ -24,9 +24,7 @@ export async function run(message, args) {
 
         if (printValue == '{}') return;
 
-        message.channel.send(Util.truncate(printValue, 1900, true), {
-            code: true
-        });
+        message.channel.send(Util.truncate(printValue, 1900, true), {code: true});
     } catch (e) {
         return message.channel.send(Util.CreateEmbed('An error occurred while processing your request:', {description: '```\n' + Util.truncate(e.stack, 400, true) + '```'}, message.member));
     }
