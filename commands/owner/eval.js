@@ -21,7 +21,6 @@ class Eval extends Command {
     }
 
     async exec(message, args) {
-        //return console.log(args);
         try {
             const code = args.code;
             // eslint-disable-next-line semi
