@@ -58,7 +58,7 @@ class MsgHandler {
         Util.Checks.CVM(message, gideon, Util); //apply crossover mode if enabled
         Util.Checks.CSD(message, gideon, Util); //eastereggs
         Util.TR.TRMode(message, gideon, Util); //apply trmode if enabled
- 
+    /* 
         const usedCustom = lowercaseContent.startsWith(currentguild.prefix.toLowerCase());
         let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
         if (usedCustom) usedPrefix = currentguild.prefix;
@@ -193,9 +193,8 @@ class MsgHandler {
                 if (!message.mentions.users.first()) return message.channel.send(nomention);
             }
         }
-
-        Util.IncreaseStat(gideon, 'commands_ran');
         command.run(gideon, message, args, connection);
+        */
     }
 }
 

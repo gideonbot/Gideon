@@ -145,7 +145,7 @@ gideon.on('error', err => {
 });
 
 gideon.on('message', message => {
-    //Util.MsgHandler.Handle(gideon, message, Util);
+    Util.MsgHandler.Handle(gideon, message, Util);
 });
 
 gideon.commandHandler.on('load', command => {
@@ -156,9 +156,10 @@ gideon.commandHandler.on('error', error => {
     console.log(error);
 });
 
-gideon.commandHandler.on('messageInvalid', message => {
-    console.log(message.content);
+gideon.commandHandler.on('commandStarted', () => {
+    Util.IncreaseStat(gideon, 'commands_ran');
 });
+
 
 
 gideon.on('guildCreate', guild => {
