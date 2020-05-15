@@ -7,12 +7,9 @@ import Util from '../../Util.js';
 export async function run(message) {
     try {
         const embed = Util.CreateEmbed('Guilds:', null, message.member);
-
-        let cache = process.gideon.guilds.cache;
+        const cache = process.gideon.guilds.cache;
         
-        let g = `\`${cache.size}\` guilds on shard: \`${cache.first().shardID}\``;
-
-        embed.setDescription(g);
+        embed.setDescription(`\`${cache.size}\` guilds on shard: \`${cache.first().shardID}\``);
         message.channel.send(embed);
     }
     catch (ex) {
