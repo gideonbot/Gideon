@@ -21,7 +21,27 @@ class GideonClient extends Akairo.AkairoClient {
         this.commandHandler = new Akairo.CommandHandler(this, {
             // Options for the command handler goes here.
             directory: './commands/',
-            prefix: ['!', 'Gideon', 'Gideon,'],
+            prefix: message => {
+                // Get prefix here...
+                let currentguild = gideon.getGuild.get(message.guild.id);
+                if (!currentguild) {
+                    currentguild = {
+                        guild: message.guild.id,
+                        prefix: '!',
+                        cvmval: 0,
+                        abmval: 0,
+                        eastereggs: 0,
+                        blacklist: 0,
+                        chatchnl: ''
+                    };
+        
+                    gideon.setGuild.run(currentguild);
+                }
+
+                const prefix = [currentguild.prefix, 'Gideon', 'Gideon,'];
+                return prefix;
+            },
+            aliasReplacement: /-/g,
             commandUtil: true,
             handleEdits: true,
             ignorePermissions: ['224617799434108928', '351871113346809860'],
