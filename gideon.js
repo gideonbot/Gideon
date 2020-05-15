@@ -148,6 +148,38 @@ gideon.on('message', message => {
     //Util.MsgHandler.Handle(gideon, message, Util);
 });
 
+gideon.commandHandler.on('load', command => {
+    console.log(`${command.id} loaded!`);
+});
+
+gideon.commandHandler.on('commandStarted', (message, command) => {
+    console.log(message.content);
+    console.log(command.id);
+});
+
+gideon.commandHandler.on('commandFinished', (message, command) => {
+    console.log(message.content);
+    console.log(command.id);
+});
+
+gideon.commandHandler.on('commandDisabled', (message, command) => {
+    console.log(message.content);
+    console.log(command.id);
+});
+
+gideon.commandHandler.on('load', command => {
+    console.log(`${command.id} loaded!`);
+});
+
+gideon.commandHandler.on('error', error => {
+    console.log(error);
+});
+
+gideon.commandHandler.on('messageInvalid', message => {
+    console.log(message.content);
+});
+
+
 gideon.on('guildCreate', guild => {
     Util.log('Joined a new guild:\n' + guild.id + ' - `' + guild.name + '`');
 

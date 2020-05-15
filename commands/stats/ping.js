@@ -9,7 +9,7 @@ const Command = Akairo.Command;
  * @param {string[]} args
  */
 
-class PingCommand extends Command {
+class Ping extends Command {
     constructor() {
         super('ping', {
             aliases: ['latency'],
@@ -22,7 +22,7 @@ class PingCommand extends Command {
 
         Util.fetchJSON('https://discord.com/api/v7/gateway').then(() => {
             let took = (process.hrtime.bigint() - start) / BigInt('1000000');
-            message.channel.send(Util.CreateEmbed('The fastest bot alive!', {description: `WebSocket ping: ${PingCommand.client.ws.ping.toFixed(2)} ms\nREST ping: ${took} ms`}, message.member));
+            message.channel.send(Util.CreateEmbed('The fastest bot alive!', {description: `WebSocket ping: ${this.client.ws.ping.toFixed(2)} ms\nREST ping: ${took} ms`}, message.member));
         }, failed => {
             console.log(failed);
             message.channel.send('Failed to measure ping!');
@@ -30,4 +30,4 @@ class PingCommand extends Command {
     }
 }
 
-export default PingCommand;
+export default Ping;
