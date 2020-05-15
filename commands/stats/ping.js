@@ -17,7 +17,7 @@ class Ping extends Command {
         });
     }
 
-    exec(message) {
+    async exec(message) {
         let start = process.hrtime.bigint();
 
         Util.fetchJSON('https://discord.com/api/v7/gateway').then(() => {
