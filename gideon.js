@@ -73,116 +73,115 @@ gideon.once('ready', async () => {
     const twodays = 1000 * 60 * 60 * 48;
     setInterval(Util.UpdateStatus, 10e3);
     setInterval(Util.CheckEpisodes, 30e3);
-
     setInterval(Util.SQLBkup, twodays);
 
-    setTimeout(async () => {
-        if (process.env.CI) {
-            gideon.options.http.api = 'https://gideonbot.com/api/dump';
-
-            let tests = await import('./tests.js');
-
-            const channel_id = Util.GenerateSnowflake();
-            const guild_id = Util.GenerateSnowflake();
-
-            const user = {
-                id: gideon.owner,
-                username: 'Test',
-                discriminator: '0001',
-                avatar: null,
-                bot: false,
-                system: false,
-                flags: 64
-            };
-
-            const guild = new Discord.Guild(gideon, {
-                name: 'Test',
-                region: 'US',
-                member_count: 2,
-                large: false,
-                features: [],
-                embed_enabled: true,
-                premium_tier: 0,
-                verification_level: 1,
-                explicit_content_filter: 1,
-                mfa_level: 0,
-                joined_at: new Date().toISOString(),
-                default_message_notifications: 0,
-                system_channel_flags: 0,
-                id: guild_id,
-                unavailable: false,
-                roles: [{
-                    id: guild_id,
-                    name: '@everyone',
-                    color: 3447003,
-                    hoist: true,
-                    position: 1,
-                    permissions: 66321471,
-                    managed: false,
-                    mentionable: false
-                }],
-                members: [
-                    {
-                        user: gideon.user.toJSON(),
-                        nick: null,
-                        roles: [],
-                        joined_at: new Date().toISOString(),
-                        deaf: false,
-                        mute: false
-                    },
-                    {
-                        user: user,
-                        nick: null,
-                        roles: [],
-                        joined_at: new Date().toISOString(),
-                        deaf: false,
-                        mute: false
-                    }
-                ],
-                owner_id: user.id
-            });
-
-            const channel = new Discord.TextChannel(guild, {
-                nsfw: false,
-                name: 'test-channel',
-                type: 0,
-                id: channel_id
-            });
-
-            for (let item of tests.commands) {
-                const data = {
-                    id: Util.GenerateSnowflake(),
-                    channel_id: channel_id,
-                    type: 0,
-                    content: item,
-                    author: user,
-                    pinned: false,
-                    tts: false,
-                    timestamp: new Date().toISOString(),
-                    flags: 0,
-                };
-                
-                let msg = new Discord.Message(process.gideon, data, channel);
-                gideon.emit('message', msg);
-            }
-
-            //We need to wait for all requests to go through I guess 
-            await Util.delay(10e3);
-
-            // eslint-disable-next-line no-constant-condition
-            while (1 == 1) {
-                console.log('Checking if all requests are over...');
-                if (!gideon.rest.handlers.array().map(x => x._inactive).some(x => !x)) break;
-                await Util.delay(2e3);
-            }
-
-            console.log('Run successful, exiting with code 0');
-            gideon.destroy();
-            process.exit(0);
-        }
-    }, 3e3);
-
     console.log('Ready!');
+
+    if (!process.env.CI) return;
+
+    console.log('Starting CI test'); //it may be a good idea to move the test somewhere else
+
+    gideon.options.http.api = 'https://gideonbot.com/api/dump';
+
+    let tests = await import('./tests.js');
+
+    const channel_id = Util.GenerateSnowflake();
+    const guild_id = Util.GenerateSnowflake();
+
+    const user = {
+        id: gideon.owner,
+        username: 'Test',
+        discriminator: '0001',
+        avatar: null,
+        bot: false,
+        system: false,
+        flags: 64
+    };
+
+    const guild = new Discord.Guild(gideon, {
+        name: 'Test',
+        region: 'US',
+        member_count: 2,
+        large: false,
+        features: [],
+        embed_enabled: true,
+        premium_tier: 0,
+        verification_level: 1,
+        explicit_content_filter: 1,
+        mfa_level: 0,
+        joined_at: new Date().toISOString(),
+        default_message_notifications: 0,
+        system_channel_flags: 0,
+        id: guild_id,
+        unavailable: false,
+        roles: [{
+            id: guild_id,
+            name: '@everyone',
+            color: 3447003,
+            hoist: true,
+            position: 1,
+            permissions: 66321471,
+            managed: false,
+            mentionable: false
+        }],
+        members: [
+            {
+                user: gideon.user.toJSON(),
+                nick: null,
+                roles: [],
+                joined_at: new Date().toISOString(),
+                deaf: false,
+                mute: false
+            },
+            {
+                user: user,
+                nick: null,
+                roles: [],
+                joined_at: new Date().toISOString(),
+                deaf: false,
+                mute: false
+            }
+        ],
+        owner_id: user.id
+    });
+
+    const channel = new Discord.TextChannel(guild, {
+        nsfw: false,
+        name: 'test-channel',
+        type: 0,
+        id: channel_id
+    });
+
+    for (let item of tests.commands) {
+        const data = {
+            id: Util.GenerateSnowflake(),
+            channel_id: channel_id,
+            type: 0,
+            content: item,
+            author: user,
+            pinned: false,
+            tts: false,
+            timestamp: new Date().toISOString(),
+            flags: 0,
+        };
+        
+        let msg = new Discord.Message(process.gideon, data, channel);
+        gideon.emit('message', msg);
+    }
+
+    //We need to wait for all requests to go through
+    await Util.delay(10e3);
+
+    // eslint-disable-next-line no-constant-condition
+    while (1 == 1) {
+        console.log('Checking if all requests are over...');
+        if (!gideon.rest.handlers.array().map(x => x._inactive).some(x => !x)) break;
+        await Util.delay(2e3);
+    }
+
+    console.log('Run successful, exiting with code 0');
+    gideon.destroy();
+    process.exit();
 });
 
 process.on('uncaughtException', err => {
