@@ -50,7 +50,7 @@ setTimeout(() => {
 }, 120e3);
 
 gideon.once('ready', async () => {
-    const app = await gideon.fetchApplication().catch(ex => Util.log(ex));
+    const app = process.env.CI ? {owner: {id: Util.GenerateSnowflake()}} : await gideon.fetchApplication().catch(ex => Util.log(ex));
 
     if (app && app.owner) gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
 
@@ -86,7 +86,7 @@ gideon.once('ready', async () => {
             const guild_id = Util.GenerateSnowflake();
 
             const user = {
-                id: Util.GenerateSnowflake(),
+                id: gideon.owner,
                 username: 'Test',
                 discriminator: '0001',
                 avatar: null,
