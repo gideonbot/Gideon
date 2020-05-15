@@ -3,11 +3,10 @@ import Util from '../../Util.js';
 import exec from 'child_process';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {   
+export async function run(message, args) {
     if (args[0].match(/(?:install)/i)) {
         message.reply('running `npm install` please check <#622415301144870932> for console output!');
         const install = exec.exec('npm install');
@@ -16,7 +15,7 @@ export async function run(gideon, message, args) {
 
         install.stdout.on('end', async () => {
             await message.reply('`npm install` ran succesfully!\nNow respawning all shards... :white_check_mark:');
-            gideon.shard.respawnAll();
+            process.gideon.shard.respawnAll();
         });
     }
     
@@ -28,7 +27,7 @@ export async function run(gideon, message, args) {
 
         update.stdout.on('end', async () => {
             await message.reply('`npm update` ran succesfully!\nNow respawning all shards... :white_check_mark:');
-            gideon.shard.respawnAll();
+            process.gideon.shard.respawnAll();
         });
     }
 
@@ -40,7 +39,7 @@ export async function run(gideon, message, args) {
 
         update.stdout.on('end', async () => {
             await message.reply('`npm audit fix` ran succesfully!\nNow respawning all shards... :white_check_mark:');
-            gideon.shard.respawnAll();
+            process.gideon.shard.respawnAll();
         });
     }
 }

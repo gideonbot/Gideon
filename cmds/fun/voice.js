@@ -11,11 +11,10 @@ class Silence extends Readable {
 }
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     let command = message.content.toLowerCase().split(' ')[0];
 
     const voicehelp = Util.CreateEmbed('Usage of Voice™ Commands:', {
@@ -49,7 +48,7 @@ export async function run(gideon, message, args) {
         await message.channel.send(message.author.toString(), { embed: voicehelp });
 
         connection.on('speaking', async (user, speaking) => {
-            if (gideon.vcmdexec) return; //disable speechrocgnition while voice command is running
+            if (process.gideon.vcmdexec) return; //disable speechrocgnition while voice command is running
             
             if (speaking.has('SPEAKING')) {
  
@@ -72,16 +71,15 @@ export async function run(gideon, message, args) {
                     if (!intent) return;
     
                     let value = intent[0].value;
-                    await Util.Voice.VoiceResponse(value, gideon, message, connection, Util);
+                    await Util.Voice.VoiceResponse(value, message, connection, Util);
                 }
             }
         }); 
     }
     
     catch (ex) {
-        console.log('Caught an exception while running voice.js: ' + ex.stack);
         Util.log('Caught an exception while running voice.js: ' + ex.stack);
-        message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     } 
 }
 

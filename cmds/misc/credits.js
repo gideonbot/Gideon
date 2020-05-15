@@ -2,11 +2,9 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
 
     const fields = [
         {name: 'adrifcastr', value: 'Development & maintenance'},
@@ -17,7 +15,7 @@ export async function run(gideon, message, args) {
         {name: '7coil', value: 'PR [#24](https://github.com/adrifcastr/Gideon/pull/24) and [#25](https://github.com/adrifcastr/Gideon/pull/25)'}
     ];
 
-    message.channel.send(Util.CreateEmbed('Development Credits:', {fields: fields, thumbnail: gideon.user.avatarURL()}, message.member));
+    message.channel.send(Util.CreateEmbed('Development Credits:', {fields: fields, thumbnail: process.gideon.user.avatarURL()}, message.member));
 }
 
 export const help = {

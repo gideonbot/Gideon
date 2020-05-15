@@ -1,13 +1,10 @@
 import Discord from 'discord.js';
-import fetch from 'node-fetch';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {     
+export async function run(message) {     
     const api = 'https://gideonbot.com/api/status';
 
     try {
@@ -20,7 +17,6 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log('Caught an exception while fetching API data: ' + ex.stack);
         Util.log('Caught an exception while fetching API data: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while fetching github data!', null, message.member));
     }

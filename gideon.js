@@ -2,6 +2,8 @@ import 'dotenv/config.js';
 import PrettyError from 'pretty-error';
 PrettyError.start().withoutColors();
 import Discord from 'discord.js';
+import Util from './Util.js';
+
 const gideon = new Discord.Client({
     ws: {
         intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
@@ -10,7 +12,8 @@ const gideon = new Discord.Client({
     partials: ['MESSAGE', 'REACTION'],
     restRequestTimeout: 25000
 });
-import Util from './Util.js';
+
+process.gideon = gideon;
 
 gideon.commands = new Discord.Collection();
 gideon.vcmdexec = false;
@@ -43,54 +46,146 @@ setTimeout(() => {
         console.log('Exiting because CI was detected but cycle was not complete!');
         process.exit(1);
     }
-}, 60e3);
+}, 120e3);
 
 gideon.once('ready', async () => {
-    Util.LoadCommands(gideon);
-    Util.SQL.InitDB(gideon);
-    Util.Selfhostlog(gideon);
-    await Util.InitCache(gideon);
-    Util.InitStatus(gideon);
-    Util.UpdateStatus(gideon);
+    const app = process.env.CI ? {owner: {id: Util.GenerateSnowflake()}} : await gideon.fetchApplication().catch(ex => Util.log(ex));
+
+    if (app && app.owner) gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
+
+    Util.SQL.InitDB();
+    Util.Selfhostlog();
+    await Util.InitCache();
+    Util.InitStatus();
+    Util.UpdateStatus();
+    await Util.LoadCommands();
 
     for (let item of gideon.stats) {
         if (!gideon.getStat.get(item)) {
             console.log('Initializing ' + item);
-            Util.SetStat(gideon, item, 0);
+            Util.SetStat(item, 0);
         }
     }
 
     Util.config.prefixes.push(`<@!${gideon.user.id}>`, `<@${gideon.user.id}>`);
     
     const twodays = 1000 * 60 * 60 * 48;
-    setInterval(() => {
-        Util.UpdateStatus(gideon);
-        //Util.CheckEpisodes(gideon);
-    }, 10e3);
-    setInterval(() => Util.CheckEpisodes(gideon), 120e3);
-
-    setInterval(Util.SQLBkup, twodays, gideon);
-
-    gideon.fetchApplication().then(app => {
-        //When the bot is owned by a team owner id is stored under ownerID, otherwise id
-        gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
-    }, failed => console.log('Failed to fetch application: ' + failed)).catch(ex => console.log(ex));
-
-    setTimeout(() => {
-        if (process.env.CI) {
-            console.log('Exiting because CI was detected!');
-            gideon.destroy();
-            process.exit(0);
-        }
-    }, 10e3);
+    setInterval(Util.UpdateStatus, 10e3);
+    setInterval(Util.CheckEpisodes, 30e3);
+    setInterval(Util.SQLBkup, twodays);
 
     if (!process.env.CI) if (gideon.guilds.cache.get('595318490240385037')) await gideon.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on startup
 
     console.log('Ready!');
+
+    if (!process.env.CI) return;
+
+    console.log('Starting CI test'); //it may be a good idea to move the test somewhere else
+
+    gideon.options.http.api = 'https://gideonbot.com/api/dump';
+
+    let tests = await import('./tests.js');
+
+    const channel_id = Util.GenerateSnowflake();
+    const guild_id = Util.GenerateSnowflake();
+
+    const user = {
+        id: gideon.owner,
+        username: 'Test',
+        discriminator: '0001',
+        avatar: null,
+        bot: false,
+        system: false,
+        flags: 64
+    };
+
+    const guild = new Discord.Guild(gideon, {
+        name: 'Test',
+        region: 'US',
+        member_count: 2,
+        large: false,
+        features: [],
+        embed_enabled: true,
+        premium_tier: 0,
+        verification_level: 1,
+        explicit_content_filter: 1,
+        mfa_level: 0,
+        joined_at: new Date().toISOString(),
+        default_message_notifications: 0,
+        system_channel_flags: 0,
+        id: guild_id,
+        unavailable: false,
+        roles: [{
+            id: guild_id,
+            name: '@everyone',
+            color: 3447003,
+            hoist: true,
+            position: 1,
+            permissions: 66321471,
+            managed: false,
+            mentionable: false
+        }],
+        members: [
+            {
+                user: gideon.user.toJSON(),
+                nick: null,
+                roles: [],
+                joined_at: new Date().toISOString(),
+                deaf: false,
+                mute: false
+            },
+            {
+                user: user,
+                nick: null,
+                roles: [],
+                joined_at: new Date().toISOString(),
+                deaf: false,
+                mute: false
+            }
+        ],
+        owner_id: user.id
+    });
+
+    const channel = new Discord.TextChannel(guild, {
+        nsfw: false,
+        name: 'test-channel',
+        type: 0,
+        id: channel_id
+    });
+
+    for (let item of tests.commands) {
+        const data = {
+            id: Util.GenerateSnowflake(),
+            channel_id: channel_id,
+            type: 0,
+            content: item,
+            author: user,
+            pinned: false,
+            tts: false,
+            timestamp: new Date().toISOString(),
+            flags: 0,
+        };
+        
+        let msg = new Discord.Message(process.gideon, data, channel);
+        gideon.emit('message', msg);
+    }
+
+    //We need to wait for all requests to go through
+    await Util.delay(10e3);
+
+    // eslint-disable-next-line no-constant-condition
+    while (1 == 1) {
+        console.log('Checking if all requests are over...');
+        if (!gideon.rest.handlers.array().map(x => x._inactive).some(x => !x)) break;
+        await Util.delay(2e3);
+    }
+
+    console.log('Run successful, exiting with code 0');
+    gideon.destroy();
+    process.exit();
 });
 
 process.on('uncaughtException', err => {
-    console.log(err);
     Util.log('Uncaught Exception: ' + `\`\`\`\n${err.stack}\n\`\`\``);
 
     if (process.env.CI) {
@@ -109,7 +204,7 @@ process.on('unhandledRejection', err => {
     ];
 
     if (ignore.includes(err.code)) return;
-    console.log(err);
+
     Util.log('Unhandled Rejection: ' + `\`\`\`\n${err.stack + '\n\nJSON: ' + JSON.stringify(err, null, 2)}\n\`\`\``);
 
     if (process.env.CI) {
@@ -119,12 +214,11 @@ process.on('unhandledRejection', err => {
 });
 
 gideon.on('error', err => {
-    console.log(err);
     Util.log('Bot error: ' + `\`\`\`\n${err.stack}\n\`\`\``);
 });
 
 gideon.on('message', message => {
-    Util.MsgHandler.Handle(gideon, message, Util);
+    Util.MsgHandler.Handle(message, Util);
 });
 
 gideon.on('guildCreate', guild => {
@@ -145,8 +239,8 @@ gideon.on('guildCreate', guild => {
         gideon.setGuild.run(currentguild);
     }
 
-    Util.Checks.LBG(guild, gideon, Util); //check if guild is blacklisted, if yes, leave
-    Util.Checks.BotCheck(guild, gideon, Util); //check if guild collects bots, if yes, leave
+    Util.Checks.LBG(guild, Util); //check if guild is blacklisted, if yes, leave
+    Util.Checks.BotCheck(guild, Util); //check if guild collects bots, if yes, leave
 });
 
 gideon.on('guildDelete', guild => {
@@ -171,29 +265,30 @@ gideon.on('guildUnavailable', guild => {
 });
 
 gideon.on('messageReactionAdd', (messageReaction, user) => {
-    Util.Starboard(messageReaction, user, gideon);
+    Util.Starboard(messageReaction, user);
 });
 
 gideon.on('guildMemberAdd', member => {
-    Util.Welcome(member, gideon);
-    Util.Checks.NameCheck(null, member.user, gideon);
+    Util.Welcome(member);
+    Util.Checks.NameCheck(null, member.user);
     Util.Checks.AccCheck(member, Util);
 });
 
 gideon.on('guildMemberUpdate', (oldMember, newMember) => {
-    if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null, gideon);
+    if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null);
 });
 
 gideon.on('userUpdate', (oldUser, newUser) => {
-    if (newUser.username !== oldUser.username) Util.Checks.NameCheck(null, newUser, gideon);
+    if (newUser.username !== oldUser.username) Util.Checks.NameCheck(null, newUser);
 });
 
 gideon.on('messageUpdate', async (oldMessage, newMessage) => {
     if (newMessage.partial) await newMessage.fetch();
-    if (newMessage.editedAt) Util.MsgHandler.Handle(gideon, newMessage, Util);
+    if (newMessage.editedAt) Util.MsgHandler.Handle(newMessage, Util);
 });
 
 gideon.on('commandRefused', (message, reason) => {
+    if (process.env.CI) return;
     Util.log(`Command Refused:\n\n${message.author.tag} attempted to use \`${message.content}\`\nCommand failed due to: \`${reason}\`\nOrigin: \`#${message.channel.name}\` at \`${message.guild.name}\``);
 });
 
@@ -203,5 +298,5 @@ gideon.on('inviteCreate', Invite => {
 });
 
 gideon.on('voiceStateUpdate', (oldState, newState) => {
-    Util.Checks.VCCheck(oldState, newState, gideon);
+    Util.Checks.VCCheck(oldState, newState);
 });

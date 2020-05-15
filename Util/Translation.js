@@ -1,5 +1,4 @@
 import Discord from 'discord.js';
-import fetch from 'node-fetch';
 import Util from '../Util.js';
 
 class TR {
@@ -9,7 +8,7 @@ class TR {
 
     /** 
      * Translate texts
-     * @param {String} input 
+     * @param {string} input 
      */
     static async Translate(input) {
         const sourceLang = 'auto';
@@ -29,13 +28,12 @@ class TR {
     /** 
      * Automatic translation mode 
      * @param {Discord.Message} message 
-     * @param {Discord.Client} gideon
      */
-    static async TRMode(message, gideon, Util) {
+    static async TRMode(message, Util) {
         const lowercaseContent = message.content.toLowerCase();
 
         // Find the prefix that was used
-        let customprefix = gideon.getGuild.get(message.guild.id);
+        let customprefix = process.gideon.getGuild.get(message.guild.id);
 
         const usedCustom = lowercaseContent.startsWith(customprefix.prefix.toLowerCase());
         let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
@@ -48,10 +46,10 @@ class TR {
 
         if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
 
-        let cvm = gideon.getGuild.get(message.guild.id); //if CVM is enabled, return
+        let cvm = process.gideon.getGuild.get(message.guild.id); //if CVM is enabled, return
         if (cvm) if (cvm.cvmval === 1) return;
         
-        let trmode = gideon.getUser.get(message.author.id);
+        let trmode = process.gideon.getUser.get(message.author.id);
         if (!trmode || !trmode.trmodeval) return;
         if (trmode.trmodeval === 0) return;
 

@@ -4,23 +4,22 @@ import stringSimilarity from 'string-similarity';
 import moment from 'moment';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
     const auth = message.author;
     let user;
 
     if (message.mentions.users.first()) user = message.mentions.users.first();
-    else if (Util.ValID(args[0]) && !message.mentions.users.first()) user = gideon.users.cache.get(args[0]);
+    else if (Util.ValID(args[0]) && !message.mentions.users.first()) user = process.gideon.users.cache.get(args[0]);
     else if (!Util.ValID(args[0]) && !message.mentions.users.first()) {
-        const match = stringSimilarity.findBestMatch(args[0].toLowerCase(), gideon.users.cache.map(x => x.username.toLowerCase())).bestMatch;
+        const match = stringSimilarity.findBestMatch(args[0].toLowerCase(), process.gideon.users.cache.map(x => x.username.toLowerCase())).bestMatch;
 
         if (match.rating == 0) return message.channel.send(as);
 
-        user = gideon.users.cache.find(user => user.username.toLowerCase() === match.target.toLowerCase());
+        user = process.gideon.users.cache.find(user => user.username.toLowerCase() === match.target.toLowerCase());
     }
     else return message.channel.send(as);
     

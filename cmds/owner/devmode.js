@@ -1,15 +1,13 @@
 import Discord from 'discord.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
-    if (gideon.user.tag !== 'gideon-dev#4623') return;
+export async function run(message) {
+    if (process.gideon.user.tag !== 'gideon-dev#4623') return;
 
-    const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('669243069878501385');
-    const role = gideon.guilds.cache.get('595318490240385037').roles.cache.get('595334594149220368');
+    const channel = process.gideon.guilds.cache.get('595318490240385037').channels.cache.get('669243069878501385');
+    const role = process.gideon.guilds.cache.get('595318490240385037').roles.cache.get('595334594149220368');
 
     if (channel.permissionsFor(role).has('VIEW_CHANNEL')) {
         message.reply('Devmode enabled! :white_check_mark:');

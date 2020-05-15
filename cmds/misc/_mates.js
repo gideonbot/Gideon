@@ -5,11 +5,9 @@ import moment from 'moment';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {   
+export async function run(message, args) {   
     const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);
@@ -21,8 +19,8 @@ export async function run(gideon, message, args) {
 
     if (!message.member.voice.channel) return message.reply('You need to join a voice channel first!');
 
-    if (gideon.listening.includes(message.author.id)) return message.channel.send(Util.CreateEmbed('A podcast episode is already playing!', null, message.member));
-    gideon.listening.push(message.author.id);
+    if (process.gideon.listening.includes(message.author.id)) return message.channel.send(Util.CreateEmbed('A podcast episode is already playing!', null, message.member));
+    process.gideon.listening.push(message.author.id);
     
     let epnum = args[0];
     const emotes = ['⏯️','⏹️','⏮️','⏭️'];
@@ -154,7 +152,7 @@ export async function run(gideon, message, args) {
 
             if (reaction.emoji.name === emotes[1]) {
                 cast.destroy();
-                gideon.listening.remove(message.author.id);
+                process.gideon.listening.remove(message.author.id);
                 await sent.reactions.removeAll();
                 await Util.LeaveVC(message);
                 return sent.edit(stopembed);
@@ -192,14 +190,13 @@ export async function run(gideon, message, args) {
         cast.on('finish', async () => {
             cast.destroy();
             rcollector.stop();
-            gideon.listening.remove(message.author.id);
+            process.gideon.listening.remove(message.author.id);
             sent.edit(finishedembed);
             await sent.reactions.removeAll();
         }); 
     } 
     
     catch (ex) {
-        console.log('Caught an exception while playing podcast: ' + ex.stack);
         Util.log('Caught an exception while playing podcast: ' + ex.stack);
         return message.channel.send(Util.CreateEmbed('An error occurred while fetching podcast data!', null, message.member));
     }

@@ -2,13 +2,12 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const id = Util.ValID(args.join(' '))[0];
-    let guild = gideon.guilds.cache.get(id);
+    let guild = process.gideon.guilds.cache.get(id);
 
     try {
         let textchannels = guild.channels.cache.filter(c=> c.type == 'text');
@@ -19,7 +18,6 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log('Caught an exception while creating invites!: ' + ex.stack);
         Util.log('Caught an exception while creating invites!: ' + ex.stack);
         return message.channel.send(ex);
     }      

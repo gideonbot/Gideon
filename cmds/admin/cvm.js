@@ -1,23 +1,21 @@
 import Discord from 'discord.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {   
-    let cvm = gideon.getGuild.get(message.guild.id);
+export async function run(message) {   
+    let cvm = process.gideon.getGuild.get(message.guild.id);
     if (!cvm.cvmval) cvm.cvmval = 0;
     
     if (cvm.cvmval === 0) {
         cvm.cvmval = 1;
-        gideon.setGuild.run(cvm);
+        process.gideon.setGuild.run(cvm);
         message.reply('Crossover-Mode enabled! :white_check_mark:');
     }
 
     else {
         cvm.cvmval = 0;
-        gideon.setGuild.run(cvm);
+        process.gideon.setGuild.run(cvm);
         message.reply('Crossover-Mode disabled! :white_check_mark:');
     } 
 }

@@ -2,20 +2,18 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     let leaderboard = Util.CreateEmbed('Top 10 Leaderboard:', null, message.member);
 
-    let top10 = gideon.getTop10.all().filter(x => x.points > 0);
+    let top10 = process.gideon.getTop10.all().filter(x => x.points > 0);
 
     if (top10.length < 1) leaderboard.setDescription('No entries yet!');
 
     else {
         leaderboard.setDescription(top10.map((data, i) => {
-            let guild = gideon.guilds.cache.get(data.guild);
+            let guild = process.gideon.guilds.cache.get(data.guild);
             let user = guild && guild.members.cache.get(data.user) ? guild.members.cache.get(data.user).user.tag : data.user;
             return '**#' + (i + 1) + '** - ' + user + ' in `' + (guild ? guild.name : 'Unknown') + '`: **' + data.points + '** ' + (data.points != 1 ? 'point' + 's' : 'point');
         }).join('\n'));

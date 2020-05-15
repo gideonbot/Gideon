@@ -1,13 +1,11 @@
 import Discord from 'discord.js';
-import fetch from 'node-fetch';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     let agc = args[0];
     const url = 'https://arrowverse.info';
     const api = 'https://arrowverse.info/api';
@@ -34,7 +32,7 @@ export async function run(gideon, message, args) {
         //remove previous !next collectors for that specific user (found by searching for embeds with users name#discriminator in title)
         message.channel.messages.fetch({limit: 50}).then(messages => {
             //really big filter
-            let filtered = messages.filter(x => x && x.author && x.author.id === gideon.user.id && x.nextCollector && x.embeds && x.embeds.length > 0 && x.embeds[0] && x.embeds[0].title && x.embeds[0].title.endsWith(message.author.tag + ':'));
+            let filtered = messages.filter(x => x && x.author && x.author.id === process.gideon.user.id && x.nextCollector && x.embeds && x.embeds.length > 0 && x.embeds[0] && x.embeds[0].title && x.embeds[0].title.endsWith(message.author.tag + ':'));
 
             filtered.each(msg => {
                 if (msg.reactions.size > 0) msg.reactions.removeAll();
@@ -75,7 +73,7 @@ export async function run(gideon, message, args) {
         
             const embed = Util.CreateEmbed(`Next episode for ${message.author.tag}:`, {
                 thumbnail: thimg,
-                footer: {text: 'Click on the button below to view the next episode (works every 5 minutes)', icon: gideon.user.avatarURL()},
+                footer: {text: 'Click on the button below to view the next episode (works every 5 minutes)', icon: process.gideon.user.avatarURL()},
                 fields: [
                     {
                         name: nxep,
@@ -136,7 +134,6 @@ export async function run(gideon, message, args) {
     }
 
     catch (ex) {
-        console.log('Failed to fetch next episode: ' + ex.stack);
         Util.log('Failed to fetch next episode: ' + ex.stack);
         message.channel.send(Util.CreateEmbed('Failed to fetch episode list, please try again later!', null, message.member));
     }

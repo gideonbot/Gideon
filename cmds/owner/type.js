@@ -1,12 +1,10 @@
 import Discord from 'discord.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
-    if (gideon.user.typingIn(message.channel)) message.channel.stopTyping(true);
+export async function run(message) {
+    if (process.gideon.user.typingIn(message.channel)) message.channel.stopTyping(true);
     else message.channel.startTyping();
 }
 

@@ -1,12 +1,10 @@
 import Discord from 'discord.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
-    let trmode = gideon.getUser.get(message.author.id);
+export async function run(message) {
+    let trmode = process.gideon.getUser.get(message.author.id);
     if (!trmode) trmode = {
         id: message.author.id,
         trmodeval: 0,
@@ -15,13 +13,13 @@ export async function run(gideon, message, args) {
 
     if (trmode.trmodeval === 0) {
         trmode.trmodeval = 1;
-        gideon.setUser.run(trmode);
+        process.gideon.setUser.run(trmode);
         message.reply('Translation Mode enabled! :white_check_mark:');
     }
 
     else {
         trmode.trmodeval = 0;
-        gideon.setUser.run(trmode);
+        process.gideon.setUser.run(trmode);
         message.reply('Translation Mode disabled! :white_check_mark:');
     }
 }

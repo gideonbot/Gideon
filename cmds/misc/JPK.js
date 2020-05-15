@@ -2,18 +2,16 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     if (!process.env.IMG_CL) {
         Util.log('Missing env variable for JPK command!');
-        console.log('Missing env variable for JPK command!');
         return message.channel.send(Util.CreateEmbed('This command is currently not available', null, message.member));
     }
     
-    const customprefix = gideon.getGuild.get(message.guild.id);
+    const customprefix = process.gideon.getGuild.get(message.guild.id);
     const jpkArray = ['FqCwt1J', '8bFXk0z', '2yz4RWt', 'kxpGHYM', 'f8mENXa', 'Xy2SoEw', 'UcPxCV5', 'JhTWxoJ', 'eLugrZD'];
     const jpkas = Util.CreateEmbed('You can choose an album!', {description: 'Currently available:'}, message.member)
         .addField(`${customprefix.prefix}JPK`, 'All Albums (except NSFW)')

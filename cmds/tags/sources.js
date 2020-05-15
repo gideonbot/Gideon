@@ -1,11 +1,8 @@
 import Discord from 'discord.js';
-import Util from '../../Util.js';
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     const tag = '**"Official sources" refers to any social media in association with the Arrowverse franchise or The CW Televison Network.**';
     message.channel.send(tag);
 }

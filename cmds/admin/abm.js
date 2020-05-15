@@ -1,23 +1,21 @@
 import Discord from 'discord.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {   
-    let abm = gideon.getGuild.get(message.guild.id);
+export async function run(message) {   
+    let abm = process.gideon.getGuild.get(message.guild.id);
     if (!abm.abmval) abm.abmval = 0;
     
     if (abm.abmval === 0) {
         abm.abmval = 1;
-        gideon.setGuild.run(abm);
+        process.gideon.setGuild.run(abm);
         message.reply('ABM enabled! :white_check_mark:');
     }
 
     else {
         abm.abmval = 0;
-        gideon.setGuild.run(abm);
+        process.gideon.setGuild.run(abm);
         message.reply('ABM disabled! :white_check_mark:');
     } 
 }

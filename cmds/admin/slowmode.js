@@ -2,11 +2,10 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
     
     try {
@@ -24,9 +23,8 @@ export async function run(gideon, message, args) {
     }
     
     catch (ex) {
-        console.log('Caught an exception while running slowmode.js: ' + ex.stack);
         Util.log('Caught an exception while running slowmode.js: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     }      
 }
 

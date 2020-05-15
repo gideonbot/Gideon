@@ -2,14 +2,13 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const id = Util.ValID(args.join(' '));
     try {
-        let gb = gideon.getGuild.get(id);
+        let gb = process.gideon.getGuild.get(id);
         if (!gb) {
             gb = {
                 guild: id,
@@ -17,27 +16,27 @@ export async function run(gideon, message, args) {
                 cvmval: 0,
                 abmval: 1,
                 eastereggs: 0,
-                blacklist: 0
+                blacklist: 0,
+                chatchnl: ''
             };
         }
 
         if (gb.blacklist === 0) {
             gb.blacklist = 1;
-            gideon.setGuild.run(gb);
+            process.gideon.setGuild.run(gb);
             message.channel.send(`Guild \`${id}\` has been blacklisted!`);
         }
 
         else if (gb.blacklist === 1) {
             gb.blacklist = 0;
-            gideon.setGuild.run(gb);
+            process.gideon.setGuild.run(gb);
             message.channel.send(`Guild \`${id}\` has been un-blacklisted!`); 
         }
     }
 
     catch (ex) {
-        console.log('Caught an exception while running gb.js: ' + ex.stack);
         Util.log('Caught an exception while running gb.js: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     }
 }
 

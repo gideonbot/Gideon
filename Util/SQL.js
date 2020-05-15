@@ -10,10 +10,7 @@ class SQL {
         throw new Error('This class cannot be instantiated!');
     }
 
-    /**
-     * @param {Discord.Client} gideon 
-     */
-    static InitDB(gideon) {
+    static InitDB() {
         const scoresdb = sql.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'scores\';').get();
         if (!scoresdb['count(*)']) {
             sql.prepare('CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, points INTEGER);').run();
@@ -46,20 +43,20 @@ class SQL {
             sql.pragma('journal_mode = wal');
         }
 
-        gideon.getScore = sql.prepare('SELECT * FROM scores WHERE id = ?');
-        gideon.setScore = sql.prepare('INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);');
-        gideon.getTop10 = sql.prepare('SELECT * FROM scores ORDER BY points DESC LIMIT 10;');
+        process.gideon.getScore = sql.prepare('SELECT * FROM scores WHERE id = ?');
+        process.gideon.setScore = sql.prepare('INSERT OR REPLACE INTO scores (id, user, guild, points) VALUES (@id, @user, @guild, @points);');
+        process.gideon.getTop10 = sql.prepare('SELECT * FROM scores ORDER BY points DESC LIMIT 10;');
     
-        gideon.getUser = sql.prepare('SELECT * FROM users WHERE id = ?');
-        gideon.setUser = sql.prepare('INSERT OR REPLACE INTO users (id, trmodeval, blacklist) VALUES (@id, @trmodeval, @blacklist);');
+        process.gideon.getUser = sql.prepare('SELECT * FROM users WHERE id = ?');
+        process.gideon.setUser = sql.prepare('INSERT OR REPLACE INTO users (id, trmodeval, blacklist) VALUES (@id, @trmodeval, @blacklist);');
     
-        gideon.getGuild = sql.prepare('SELECT * FROM guilds WHERE guild = ?');
-        gideon.setGuild = sql.prepare('INSERT OR REPLACE INTO guilds (guild, prefix, cvmval, abmval, eastereggs, blacklist, chatchnl) VALUES (@guild, @prefix, @cvmval, @abmval, @eastereggs, @blacklist, @chatchnl);');
+        process.gideon.getGuild = sql.prepare('SELECT * FROM guilds WHERE guild = ?');
+        process.gideon.setGuild = sql.prepare('INSERT OR REPLACE INTO guilds (guild, prefix, cvmval, abmval, eastereggs, blacklist, chatchnl) VALUES (@guild, @prefix, @cvmval, @abmval, @eastereggs, @blacklist, @chatchnl);');
 
-        gideon.getStat = sql.prepare('SELECT * FROM stats WHERE id = ?');
-        gideon.setStat = sql.prepare('INSERT OR REPLACE INTO stats (id, value) VALUES (@id, @value);');
+        process.gideon.getStat = sql.prepare('SELECT * FROM stats WHERE id = ?');
+        process.gideon.setStat = sql.prepare('INSERT OR REPLACE INTO stats (id, value) VALUES (@id, @value);');
 
-        gideon.db = sql;
+        process.gideon.db = sql;
     }
 }
 
