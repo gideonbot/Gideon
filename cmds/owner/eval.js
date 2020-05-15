@@ -24,7 +24,7 @@ export async function run(message, args) {
 
         if (printValue == '{}') return;
 
-        message.channel.send(printValue, {
+        message.channel.send(Util.truncate(printValue, 1900, true), {
             code: true
         });
     } catch (e) {

@@ -9,7 +9,6 @@ const gideon = new Discord.Client({
         intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
     },
     allowedMentions: { parse: ['users', 'roles'] },
-    fetchAllMembers: true,
     partials: ['MESSAGE', 'REACTION'],
     restRequestTimeout: 25000
 });
@@ -28,12 +27,12 @@ gideon.stats = ['commands_ran', 'ai_chat_messages_processed', 'messages_sent'];
 gideon.show_api_urls = {
     batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
     supergirl: 'http://api.tvmaze.com/shows/1850?embed=nextepisode',
-    flash: 'http://api.tvmaze.com/shows/13?embed=nextepisode',
-    legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
     stargirl: 'http://api.tvmaze.com/shows/37809?embed=nextepisode', 
-    b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
+    legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
+    flash: 'http://api.tvmaze.com/shows/13?embed=nextepisode',
     canaries: 'http://api.tvmaze.com/shows/44496?embed=nextepisode',
-    supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode'
+    supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode',
+    b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
 };
 
 if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
@@ -74,6 +73,8 @@ gideon.once('ready', async () => {
     setInterval(Util.UpdateStatus, 10e3);
     setInterval(Util.CheckEpisodes, 30e3);
     setInterval(Util.SQLBkup, twodays);
+
+    if (!process.env.CI) if (gideon.guilds.cache.get('595318490240385037')) await gideon.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on startup
 
     console.log('Ready!');
 
