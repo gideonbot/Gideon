@@ -288,6 +288,7 @@ gideon.on('messageUpdate', async (oldMessage, newMessage) => {
 });
 
 gideon.on('commandRefused', (message, reason) => {
+    if (process.env.CI) return;
     Util.log(`Command Refused:\n\n${message.author.tag} attempted to use \`${message.content}\`\nCommand failed due to: \`${reason}\`\nOrigin: \`#${message.channel.name}\` at \`${message.guild.name}\``);
 });
 
