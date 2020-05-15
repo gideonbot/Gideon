@@ -18,9 +18,8 @@ export function GetUserTag(str: string | Discord.GuildMember | Discord.User): st
 export function getIdFromString(str: string): string;
 export function secondsToDifferenceString(seconds: number, settings: secondsToDifferenceSettings): string;
 export function log(message: string, files: string[]): boolean;
-export function LoadCommands(gideon: Discord.Client): void;
+export function GetPrefix(message: Discord.Message, gideon: Discord.Client): string[];
 export function fetchJSON(url: string): Promise<object>;
-export function ValID(input: string): string;
 export function IMG(image_id: string, message: Discord.Message, nsfw: boolean): Promise<void>;
 export function Split<T>(arr: T[], chunks: number): T[][];
 export function Starboard(reaction: Discord.MessageReaction, user: Discord.User, gideon: Discord.Client): Promise<void>;

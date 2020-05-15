@@ -662,59 +662,6 @@ class Util {
     }
 
     /**
-     * Load cmds
-     * @param {Discord.Client} gideon
-     */
-    static LoadCommands(gideon) {
-        let start = process.hrtime.bigint();
-    
-        recursive('./cmds', async (err, files) => {
-            if (err) {
-                Util.log('Error while reading commands:\n' + err);
-                console.log(err);
-                return;
-            }
-    
-            let jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
-            if (jsfiles.length < 1) {
-                console.log('No commands to load!');
-                return;
-            }
-
-            console.log(`Found ${jsfiles.length} commands`);
-
-            for (let file_path of jsfiles) {
-                let cmd_start = process.hrtime.bigint();
-
-                let props = await import(`./${file_path}`);
-                
-                if (Array.isArray(props.help.name)) {
-                    for (let item of props.help.name) gideon.commands.set(item, props);
-                }
-                else gideon.commands.set(props.help.name, props);
-        
-                let cmd_end = process.hrtime.bigint();
-                let took = (cmd_end - cmd_start) / BigInt('1000000');
-        
-                console.log(`${Util.normalize(jsfiles.indexOf(file_path) + 1)} - ${file_path} loaded in ${took}ms`);
-            }
-    
-            let end = process.hrtime.bigint();
-            let took = (end - start) / BigInt('1000000');
-            console.log(`All commands loaded in ${took}ms`);
-        });
-    }
-
-    /**
-     * Parse Snowflakes
-     * @param {string} input
-     */
-    static ValID(input) {
-        if (!input.match(/\d{17,19}/)) return null;
-        else return input.match(/\d{17,19}/)[0];
-    }
-
-    /**
      * Init cache
      * @param {Discord.Client} gideon
      */

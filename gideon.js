@@ -18,6 +18,7 @@ class GideonClient extends Akairo.AkairoClient {
             partials: ['MESSAGE', 'REACTION'],
             restRequestTimeout: 25000
         });
+        
         this.commandHandler = new Akairo.CommandHandler(this, {
             // Options for the command handler goes here.
             directory: './commands/',
