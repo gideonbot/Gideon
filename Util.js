@@ -647,8 +647,8 @@ class Util {
     }
 
     static GenerateSnowflake() {
-        let rv = "";
-        let possible = "1234567890";
+        let rv = '';
+        let possible = '1234567890';
     
         for (let i = 0; i < 19; i++) rv += possible.charAt(Math.floor(Math.random() * possible.length));
         return rv;
