@@ -14,6 +14,7 @@ class Eval extends Command {
         super('eval', {
             aliases: ['eval', 'exec'],
             category: 'owner',
+            channel: 'guild',
             ownerOnly: true,
             args: [ { id: 'code' } ],
         });

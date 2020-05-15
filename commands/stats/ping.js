@@ -13,7 +13,8 @@ class Ping extends Command {
     constructor() {
         super('ping', {
             aliases: ['ping', 'latency'],
-            category: 'stats'
+            category: 'stats',
+            channel: 'guild'
         });
     }
 

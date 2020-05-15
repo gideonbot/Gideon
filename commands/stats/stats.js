@@ -13,7 +13,8 @@ class Stats extends Command {
     constructor() {
         super('stats', {
             aliases: ['stats', 'statistics'],
-            category: 'stats'
+            category: 'stats',
+            channel: 'guild'
         });
     }
 
