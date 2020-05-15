@@ -244,8 +244,17 @@ class Checks {
      * @param {Discord.Guild} guild 
      */
     static async LBG(guild, gideon, Util) {
+        let ub = gideon.getUser.get(guild.ownerID);
         const id = guild.id;
-        const gbl = gideon.getGuild.get(id);
+        let gbl = gideon.getGuild.get(id);
+        
+        if (ub) {
+            if (ub.blacklist === 1) {
+                gbl.blacklist = 1;
+                gideon.setGuild.run(gbl);
+            }
+        }
+
         if (!gbl) return;
         if (gbl.blacklist === 0) return;
 
@@ -482,12 +491,19 @@ class Checks {
     static async AccCheck(member, Util) {
         const flagged = ['141983643005485056', '708427459174858752', '565366753623015475', '477208850156617728', '599704513292795925', '444212008167014410', '333038169790349312'];
         if (flagged.includes(member.id)) {
-            const textchannels = member.guild.channels.cache.filter(c=> c.type == 'text');
-            const allowedchannels = textchannels.filter(c=> c.permissionsFor(member.guild.me).has('SEND_MESSAGES'));
+            const guildowner = await member.guild.members.fetch(member.guild.ownerID);
+            const dmstring = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of your guild \`(${member.guild.name})\`!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisment\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n\`\`\`\nWe advise to ban this user.`;
             const string = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of this guild!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisment\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n\`\`\`\nWe advise to notify the guild owner (<@${member.guild.ownerID}>).`;
-            if (!allowedchannels.first()) return;
-            allowedchannels.first().send(string);
-            Util.log(`Sent account warning about \`${member.user.tag}\` to \`#${allowedchannels.first().name}\` at \`${member.guild.name}\`!`);
+            
+            await guildowner.send(dmstring)
+                .then(Util.log(`Sent account warning about \`${member.user.tag}\` in \`${member.guild.name}\` to \`${guildowner.user.tag}\`!`))
+                .catch(async () => {
+                    const textchannels = member.guild.channels.cache.filter(c=> c.type == 'text');
+                    const allowedchannels = textchannels.filter(c=> c.permissionsFor(member.guild.me).has('SEND_MESSAGES'));
+                    if (!allowedchannels.first()) return;
+                    allowedchannels.first().send(string);
+                    Util.log(`Sent account warning about \`${member.user.tag}\` to \`#${allowedchannels.first().name}\` at \`${member.guild.name}\`!`);
+                });
         }
     }
 }
