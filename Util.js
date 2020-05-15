@@ -833,6 +833,31 @@ class Util {
             message.channel.stopTyping(true);
         }
     }
+
+    /**
+     * Get prefixes
+     * @param {Discord.Message} message
+     * @param {Discord.Client} gideon
+     */
+    static GetPrefix(message, gideon) {
+        let currentguild = gideon.getGuild.get(message.guild.id);
+        if (!currentguild) {
+            currentguild = {
+                guild: message.guild.id,
+                prefix: '!',
+                cvmval: 0,
+                abmval: 0,
+                eastereggs: 0,
+                blacklist: 0,
+                chatchnl: ''
+            };
+
+            gideon.setGuild.run(currentguild);
+        }
+
+        const prefix = [currentguild.prefix, 'Gideon', 'Gideon,'];
+        return prefix;
+    }
 }
 
 export default Util;
