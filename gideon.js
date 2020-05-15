@@ -8,6 +8,7 @@ class GideonClient extends Akairo.AkairoClient {
     constructor() {
         super({
             // Options for Akairo go here.
+            ownerID: ['224617799434108928', '351871113346809860']
         }, {
             // Options for discord.js goes here.
             ws: {
