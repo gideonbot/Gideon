@@ -21,6 +21,8 @@ class GideonClient extends Akairo.AkairoClient {
         this.commandHandler = new Akairo.CommandHandler(this, {
             // Options for the command handler goes here.
             directory: './commands/',
+            prefix: ['!', 'Gideon', 'Gideon,'],
+            commandUtil: true,
             handleEdits: true,
             ignorePermissions: ['224617799434108928', '351871113346809860']
         });
@@ -143,7 +145,7 @@ gideon.on('error', err => {
 });
 
 gideon.on('message', message => {
-    Util.MsgHandler.Handle(gideon, message, Util);
+    //Util.MsgHandler.Handle(gideon, message, Util);
 });
 
 gideon.on('guildCreate', guild => {
