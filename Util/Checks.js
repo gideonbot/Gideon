@@ -244,8 +244,17 @@ class Checks {
      * @param {Discord.Guild} guild 
      */
     static async LBG(guild, gideon, Util) {
+        let ub = gideon.getUser.get(guild.ownerID);
         const id = guild.id;
-        const gbl = gideon.getGuild.get(id);
+        let gbl = gideon.getGuild.get(id);
+        
+        if (ub) {
+            if (ub.blacklist === 1) {
+                gbl.blacklist = 1;
+                gideon.setGuild.run(gbl);
+            }
+        }
+
         if (!gbl) return;
         if (gbl.blacklist === 0) return;
 
