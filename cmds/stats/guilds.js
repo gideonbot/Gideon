@@ -7,13 +7,9 @@ import Util from '../../Util.js';
 export async function run(message) {
     try {
         const embed = Util.CreateEmbed('Guilds:', null, message.member);
-
-        let shard = process.gideon.shard ? await process.gideon.shard.broadcastEval('this.shard.ids').then(results => {return results;}).catch(console.error) : [0];
-        let guilds = process.gideon.shard ? await process.gideon.shard.broadcastEval('this.guilds.cache.size').then(results => {return results;}).catch(console.error) : [process.gideon.guilds.cache.size];
-
-        let g = [`\`${guilds[0]}\` guilds on shard: \`${shard[0]}\``];
-
-        embed.setDescription(g.join('\n'));
+        const cache = process.gideon.guilds.cache;
+        
+        embed.setDescription(`\`${cache.size}\` guilds on shard: \`${cache.first().shardID}\``);
         message.channel.send(embed);
     }
     catch (ex) {
