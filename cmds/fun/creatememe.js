@@ -65,8 +65,7 @@ export async function run(message, args) {
     wrapText(ctx, split[1].trim(), 300, 315, 260, 35);
 
     const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'sgmeme.jpg');
-    if (!process.env.CI) message.channel.send(attachment);
-    else message.channel.send('Ci :peeepee:');
+    message.channel.send(attachment);
 }
 
 export const help = {
