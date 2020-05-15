@@ -196,7 +196,6 @@ class MsgHandler {
         }
 
         Util.IncreaseStat('commands_ran');
-        //HERE
         command.run(message, args, connection);
     }
 }

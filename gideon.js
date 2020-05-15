@@ -78,8 +78,7 @@ gideon.once('ready', async () => {
 
     setTimeout(async () => {
         if (process.env.CI) {
-            //HERE - replace link
-            gideon.options.http.api = 'https://enf215hrvvm46.x.pipedream.net';
+            gideon.options.http.api = 'https://gideonbot.com/api/dump';
 
             let tests = await import('./tests.js');
 
