@@ -6,7 +6,6 @@ class MsgHandler {
     }
 
     /**
-     *  
      * @param {Discord.Message} message 
      * @param {*} Util 
      * @param {Discord.VoiceConnection} connection 
