@@ -2,7 +2,7 @@ import Akairo from 'discord-akairo';
 import Util from '../Util.js';
 const Listener = Akairo.Listener;
 
-class Ready extends Listener {
+class ClientReady extends Listener {
     constructor() {
         super('ready', {
             emitter: 'client',
@@ -54,4 +54,4 @@ class Ready extends Listener {
     }
 }
 
-export default Ready;
+export default ClientReady;

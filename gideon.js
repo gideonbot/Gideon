@@ -48,8 +48,7 @@ class GideonClient extends Akairo.AkairoClient {
         this.listenerHandler.setEmitters({
             commandHandler: this.commandHandler,
             inhibitorHandler: this.inhibitorHandler,
-            listenerHandler: this.listenerHandler,
-            process: process
+            listenerHandler: this.listenerHandler
         });
 
         this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
@@ -124,108 +123,3 @@ process.on('unhandledRejection', err => {
     }
 });
 
-gideon.on('error', err => {
-    Util.log('Bot error: ' + `\`\`\`\n${err.stack}\n\`\`\``);
-});
-
-gideon.on('message', message => {
-    Util.MsgHandler.Handle(gideon, message, Util);
-});
-
-gideon.commandHandler.on('load', command => {
-    console.log(`${command.id} loaded!`);
-});
-
-gideon.commandHandler.on('error', error => {
-    console.log(error);
-});
-
-gideon.commandHandler.on('commandStarted', () => {
-    Util.IncreaseStat(gideon, 'commands_ran');
-});
-
-gideon.commandHandler.on('missingPermissions', (message, command, type, missing) => {
-    const logstring = `Command refused:\nType: \`${type}\`\nCommand: \`${command.id}\`\nMissing: \`${missing}\`\nChannel: \`#${message.channel.name}\` at \`${message.guild.name}\``;
-    Util.log(logstring);
-    if (type === 'client') message.reply(`I do not have the required permissions to execute this command!\nMissing: \`${missing}\``);
-    if (type === 'user') message.reply(`You do not have the required permissions or role(s) to use this command!\n Missing:\`${missing}\``);
-});
-
-gideon.on('guildCreate', guild => {
-    Util.log('Joined a new guild:\n' + guild.id + ' - `' + guild.name + '`');
-
-    let currentguild = gideon.getGuild.get(guild.id);
-    if (!currentguild) {
-        currentguild = {
-            guild: guild.id,
-            prefix: '!',
-            cvmval: 0,
-            abmval: 0,
-            eastereggs: 0,
-            blacklist: 0,
-            chatchnl: ''
-        };
-        
-        gideon.setGuild.run(currentguild);
-    }
-
-    Util.Checks.LBG(guild, gideon, Util); //check if guild is blacklisted, if yes, leave
-    Util.Checks.BotCheck(guild, gideon, Util); //check if guild collects bots, if yes, leave
-});
-
-gideon.on('guildDelete', guild => {
-    Util.log('Left guild:\n' + guild.id + ' - `' + guild.name + '`');
-});
-
-gideon.on('shardReady', (id, unavailableGuilds) => {
-    if (!unavailableGuilds) Util.log(`Shard \`${id}\` is connected!`);
-    else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to a server outage:\n${Array.from(unavailableGuilds).join('\n')}`);
-});
-
-gideon.on('shardError', (error, shardID) => {
-    Util.log(`Shard \`${shardID}\` has encountered a connection error:\n\n\`\`\`\n${error}\n\`\`\``);
-});
-
-gideon.on('shardDisconnect', (event, id) => {
-    Util.log(`Shard \`${id}\` has lost its WebSocket connection:\n\n\`\`\`\nCode: ${event.code}\nReason: ${event.reason}\n\`\`\``);
-});
-
-gideon.on('guildUnavailable', guild => {
-    Util.log('The following guild turned unavailable due to a server outage:\n' + guild.id + ' - `' + guild.name + '`');
-});
-
-gideon.on('messageReactionAdd', (messageReaction, user) => {
-    Util.Starboard(messageReaction, user, gideon);
-});
-
-gideon.on('guildMemberAdd', member => {
-    Util.Welcome(member, gideon);
-    Util.Checks.NameCheck(null, member.user, gideon);
-    Util.Checks.AccCheck(member, Util);
-});
-
-gideon.on('guildMemberUpdate', (oldMember, newMember) => {
-    if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null, gideon);
-});
-
-gideon.on('userUpdate', (oldUser, newUser) => {
-    if (newUser.username !== oldUser.username) Util.Checks.NameCheck(null, newUser, gideon);
-});
-
-gideon.on('messageUpdate', async (oldMessage, newMessage) => {
-    if (newMessage.partial) await newMessage.fetch();
-    if (newMessage.editedAt) Util.MsgHandler.Handle(gideon, newMessage, Util);
-});
-
-gideon.on('commandRefused', (message, reason) => {
-    Util.log(`Command Refused:\n\n${message.author.tag} attempted to use \`${message.content}\`\nCommand failed due to: \`${reason}\`\nOrigin: \`#${message.channel.name}\` at \`${message.guild.name}\``);
-});
-
-gideon.on('inviteCreate', Invite => {
-    if (Invite.guild.id !== '595318490240385037') return;
-    Util.log(`Invite for \`${Invite.guild.name ? Invite.guild.name : 'Not available'}\` has been created:\n\nChannel: \`${Invite.channel.name}\`\n${Invite.url}`);
-});
-
-gideon.on('voiceStateUpdate', (oldState, newState) => {
-    Util.Checks.VCCheck(oldState, newState, gideon);
-});
