@@ -15,7 +15,8 @@ class Purge extends Command {
             channel: 'guild',
             args: [ { id: 'msgamt', type: 'number', prompt: true } ],
             clientPermissions: ['MANAGE_MESSAGES'],
-            userPermissions: ['MANAGE_MESSAGES']
+            userPermissions: ['MANAGE_MESSAGES'],
+            description: 'Purges Messages'
         });
     }
 

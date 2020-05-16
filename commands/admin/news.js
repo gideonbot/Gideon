@@ -20,7 +20,8 @@ class News extends Command {
                 }
         
                 return null;
-            }
+            },
+            description: 'Sends news'
         });
     }
 

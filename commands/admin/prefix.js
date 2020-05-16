@@ -15,7 +15,8 @@ class Prefix extends Command {
             category: 'admin',
             channel: 'guild',
             args: [ { id: 'text', match: 'content', prompt: true } ],
-            userPermissions: ['MANAGE_GUILD']
+            userPermissions: ['MANAGE_GUILD'],
+            description: 'Sets a custom prefix'
         });
     }
 

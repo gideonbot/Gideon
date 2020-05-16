@@ -20,7 +20,8 @@ class SQLBackup extends Command {
                 }
         
                 return null;
-            }
+            },
+            description: 'Performs an SQL database backup'
         });
     }
 

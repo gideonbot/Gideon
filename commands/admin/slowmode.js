@@ -17,7 +17,8 @@ class Slowmode extends Command {
             args: [ { id: 'amount', type: 'number', prompt: true },
                 { id: 'channel', type: 'textChannel', prompt: false} ],
             clientPermissions: ['MANAGE_CHANNELS'],
-            userPermissions: ['MANAGE_CHANNELS']
+            userPermissions: ['MANAGE_CHANNELS'],
+            description: 'Toggles slowmode'
         });
     }
 

@@ -14,7 +14,8 @@ class ChatChnl extends Command {
             category: 'admin',
             channel: 'guild',
             clientPermissions: ['MANAGE_MESSAGES'],
-            userPermissions: ['MANAGE_MESSAGES']
+            userPermissions: ['MANAGE_MESSAGES'],
+            description: 'Sets a chatchannel for the AI'
         });
     }
 

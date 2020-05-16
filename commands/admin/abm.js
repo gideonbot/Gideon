@@ -14,7 +14,8 @@ class ABM extends Command {
             category: 'admin',
             channel: 'guild',
             clientPermissions: ['MANAGE_MESSAGES'],
-            userPermissions: ['MANAGE_MESSAGES']
+            userPermissions: ['MANAGE_MESSAGES'],
+            description: 'Toggles Anti-BS-Mode'
         });
     }
 
