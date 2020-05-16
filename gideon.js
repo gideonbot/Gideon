@@ -48,7 +48,8 @@ class GideonClient extends Akairo.AkairoClient {
         this.listenerHandler.setEmitters({
             commandHandler: this.commandHandler,
             inhibitorHandler: this.inhibitorHandler,
-            listenerHandler: this.listenerHandler
+            listenerHandler: this.listenerHandler,
+            process: process
         });
 
         this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
@@ -94,48 +95,6 @@ setTimeout(() => {
         process.exit(1);
     }
 }, 60e3);
-
-gideon.once('ready', async () => {
-    gideon.commandHandler.loadAll(); 
-    Util.SQL.InitDB(gideon);
-    Util.Selfhostlog(gideon);
-    await Util.InitCache(gideon);
-    Util.InitStatus(gideon);
-    Util.UpdateStatus(gideon);
-
-    for (let item of gideon.stats) {
-        if (!gideon.getStat.get(item)) {
-            console.log('Initializing ' + item);
-            Util.SetStat(gideon, item, 0);
-        }
-    }
-    
-    const twodays = 1000 * 60 * 60 * 48;
-    setInterval(() => {
-        Util.UpdateStatus(gideon);
-        //Util.CheckEpisodes(gideon);
-    }, 10e3);
-    setInterval(() => Util.CheckEpisodes(gideon), 120e3);
-
-    setInterval(Util.SQLBkup, twodays, gideon);
-
-    gideon.fetchApplication().then(app => {
-        //When the bot is owned by a team owner id is stored under ownerID, otherwise id
-        gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
-    }, failed => Util.log('Failed to fetch application: ' + failed)).catch(ex => Util.log(ex));
-
-    setTimeout(() => {
-        if (process.env.CI) {
-            console.log('Exiting because CI was detected!');
-            gideon.destroy();
-            process.exit(0);
-        }
-    }, 10e3);
-
-    if (!process.env.CI) if (gideon.guilds.cache.get('595318490240385037')) await gideon.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on startup
-
-    console.log('Ready!');
-});
 
 process.on('uncaughtException', err => {
     Util.log('Uncaught Exception: ' + `\`\`\`\n${err.stack}\n\`\`\``);
