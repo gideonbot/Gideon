@@ -83,7 +83,6 @@ setTimeout(() => {
 }, 60e3);
 
 gideon.once('ready', async () => {
-    //Util.LoadCommands(gideon);
     gideon.commandHandler.loadAll(); 
     Util.SQL.InitDB(gideon);
     Util.Selfhostlog(gideon);
@@ -97,8 +96,6 @@ gideon.once('ready', async () => {
             Util.SetStat(gideon, item, 0);
         }
     }
-
-    Util.config.prefixes.push(`<@!${gideon.user.id}>`, `<@${gideon.user.id}>`);
     
     const twodays = 1000 * 60 * 60 * 48;
     setInterval(() => {
@@ -174,8 +171,6 @@ gideon.commandHandler.on('error', error => {
 gideon.commandHandler.on('commandStarted', () => {
     Util.IncreaseStat(gideon, 'commands_ran');
 });
-
-
 
 gideon.on('guildCreate', guild => {
     Util.log('Joined a new guild:\n' + guild.id + ' - `' + guild.name + '`');
