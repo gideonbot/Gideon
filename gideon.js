@@ -41,8 +41,15 @@ class GideonClient extends Akairo.AkairoClient {
             directory: './inhibitors/'
         });
 
+        this.listenerHandler = new Akairo.ListenerHandler(this, {
+            directory: './listeners/'
+        });
+
         this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
         this.inhibitorHandler.loadAll();
+
+        this.commandHandler.useListenerHandler(this.listenerHandler);
+        this.listenerHandler.loadAll();
     }
 }
 
