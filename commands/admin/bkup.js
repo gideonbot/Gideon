@@ -13,7 +13,14 @@ class SQLBackup extends Command {
         super('bkup', {
             aliases: ['bkup', 'backup'],
             category: 'admin',
-            channel: 'guild'
+            channel: 'guild',
+            userPermissions(message) {
+                if (!message.member.roles.cache.has('621399916283035658')) {
+                    return '@Gideon Dev Team';
+                }
+        
+                return null;
+            }
         });
     }
 

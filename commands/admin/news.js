@@ -13,7 +13,14 @@ class News extends Command {
         super('news', {
             aliases: ['news', 'updates'],
             category: 'admin',
-            channel: 'guild'
+            channel: 'guild',
+            userPermissions(message) {
+                if (!message.member.roles.cache.has('602311948809273344')) {
+                    return '@News Team';
+                }
+        
+                return null;
+            }
         });
     }
 
