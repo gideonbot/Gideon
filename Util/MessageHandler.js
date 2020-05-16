@@ -1,5 +1,3 @@
-import Discord from 'discord.js';
-
 class MsgHandler {
     constructor() {
         throw new Error('This class cannot be instantiated!');
@@ -12,7 +10,7 @@ class MsgHandler {
      * @param {*} Util 
      * @param {Discord.VoiceConnection} connection 
      */
-    static async Handle(gideon, message, Util, connection) {
+    static async Handle(gideon, message, Util) {
         if (!message || !message.author || message.partial || message.type != 'DEFAULT') return;
         if (!message.guild) {
             if (message.content.match(/(?:readdemrulez)/i)) {
@@ -47,10 +45,6 @@ class MsgHandler {
         if (message.channel.id === currentguild.chatchnl) return Util.Chat(message, gideon);
         Util.Checks.Ads(message, gideon); //check for foreign invites
         Util.Checks.ABM(message, gideon, Util); //apply content filter
-
-        if (message.guild.id === '595318490240385037') {
-            if (!message.member.roles.cache.has('688430418466177082')) return; //NO COMMANDS FOR NON RULE READERS, FEEL MY WRATH
-        }
 
         Util.Checks.NameCheck(message.member, null, gideon); //check nicknames & usernames
         Util.Checks.CVM(message, gideon, Util); //apply crossover mode if enabled
