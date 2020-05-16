@@ -29,6 +29,10 @@ class GideonClient extends Akairo.AkairoClient {
             ignorePermissions: ['224617799434108928', '351871113346809860'],
             argumentDefaults: {
                 prompt: {
+                    start: message => {
+                        const embed = Util.CreateEmbed('You must supply valid input!', null, message.member);
+                        return embed;
+                    },
                     retry: message => {
                         const embed = Util.CreateEmbed('You must supply valid input!', null, message.member);
                         return embed;
