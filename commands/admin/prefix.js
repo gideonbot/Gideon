@@ -16,7 +16,7 @@ class Prefix extends Command {
             category: 'admin',
             channel: 'guild',
             args: [ { id: 'text', match: 'content', prompt: true } ],
-            userPermissions: ['MANAGE_MESSAGES']
+            userPermissions: ['MANAGE_GUILD']
         });
     }
 

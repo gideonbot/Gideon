@@ -16,7 +16,7 @@ class Eval extends Command {
             category: 'owner',
             channel: 'guild',
             ownerOnly: true,
-            args: [ { id: 'code', match: 'content', prompt: true } ],
+            args: [ { id: 'code', match: 'content', prompt: true } ]
         });
     }
 

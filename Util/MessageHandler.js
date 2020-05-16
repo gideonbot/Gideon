@@ -48,7 +48,7 @@ class MsgHandler {
         Util.Checks.NameCheck(message.member, null, gideon); //check nicknames & usernames
         Util.Checks.CVM(message, gideon, Util); //apply crossover mode if enabled
         Util.Checks.CSD(message, gideon, Util); //eastereggs
-        Util.TR.TRMode(message, gideon, Util); //apply trmode if enabled
+        //Util.TR.TRMode(message, gideon, Util); //apply trmode if enabled //will fix later
     }
 }
 
