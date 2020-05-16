@@ -1,5 +1,3 @@
-import Discord from 'discord.js';
-import Util from '../../Util.js';
 import Akairo from 'discord-akairo';
 const Command = Akairo.Command;
 
@@ -17,6 +15,7 @@ class KillShard extends Command {
             channel: 'guild',
             ownerOnly: true,
             args: [ { id: 'shardid', type: /(?<!\S)\d(?!\S)/, prompt: true } ],
+            description: 'Kills the specified shard'
         });
     }
 

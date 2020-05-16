@@ -1,4 +1,3 @@
-import Discord from 'discord.js';
 import Akairo from 'discord-akairo';
 const Command = Akairo.Command;
 
@@ -14,7 +13,8 @@ class Respawn extends Command {
             aliases: ['rs', 'respawn'],
             category: 'owner',
             channel: 'guild',
-            ownerOnly: true
+            ownerOnly: true,
+            description: 'Respawns all shards'
         });
     }
 

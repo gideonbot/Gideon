@@ -20,7 +20,7 @@
     "canvas-text-wrapper": "^0.10.2",
     "cleverbot-free": "^1.0.3",
     "del": "^5.1.0",
-    "discord-akairo": "github:gideonbot/discord-akairo#akairo-es6",
+    "discord-akairo": "github:gideonbot/discord-akairo",
     "discord-paginationembed": "^2.0.0-beta.4",
     "discord.js": "github:gideonbot/discord.js",
     "dotenv": "^8.2.0",

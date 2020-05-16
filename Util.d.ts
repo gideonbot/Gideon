@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord from 'discord.js';
 import MsgHandler from './Util/MessageHandler'
 import Checks from './Util/Checks'
 import SQL from './Util/SQL'

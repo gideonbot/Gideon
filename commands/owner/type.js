@@ -1,4 +1,3 @@
-import Discord from 'discord.js';
 import Akairo from 'discord-akairo';
 const Command = Akairo.Command;
 
@@ -14,7 +13,8 @@ class Type extends Command {
             aliases: ['type', 'typing'],
             category: 'owner',
             channel: 'guild',
-            ownerOnly: true
+            ownerOnly: true,
+            description: 'Toggles typing'
         });
     }
 

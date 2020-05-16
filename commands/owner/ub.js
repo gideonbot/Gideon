@@ -1,4 +1,3 @@
-import Discord from 'discord.js';
 import Util from '../../Util.js';
 import Akairo from 'discord-akairo';
 const Command = Akairo.Command;
@@ -17,6 +16,7 @@ class UserBlacklist extends Command {
             channel: 'guild',
             ownerOnly: true,
             args: [ { id: 'snowflake', type: /\d{17,19}/, prompt: true } ],
+            description: 'Blacklists a user'
         });
     }
 
