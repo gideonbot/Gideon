@@ -14,7 +14,8 @@ class Devmode extends Command {
             category: 'owner',
             channel: 'guild',
             ownerOnly: true,
-            description: 'Enables devmode'
+            description: 'Enables devmode',
+            usage: 'devmode'
         });
     }
 

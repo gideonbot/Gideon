@@ -16,7 +16,8 @@ class Purge extends Command {
             args: [ { id: 'msgamt', type: 'number', prompt: true } ],
             clientPermissions: ['MANAGE_MESSAGES'],
             userPermissions: ['MANAGE_MESSAGES'],
-            description: 'Purges Messages'
+            description: 'Purges Messages',
+            usage: 'purge <amount>'
         });
     }
 

@@ -18,7 +18,8 @@ class Slowmode extends Command {
                 { id: 'channel', type: 'textChannel', prompt: false} ],
             clientPermissions: ['MANAGE_CHANNELS'],
             userPermissions: ['MANAGE_CHANNELS'],
-            description: 'Toggles slowmode'
+            description: 'Toggles slowmode',
+            usage: 'sm <seconds> [channel]'
         });
     }
 

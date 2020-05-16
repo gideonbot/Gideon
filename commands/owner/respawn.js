@@ -14,7 +14,8 @@ class Respawn extends Command {
             category: 'owner',
             channel: 'guild',
             ownerOnly: true,
-            description: 'Respawns all shards'
+            description: 'Respawns all shards',
+            usage: 'rs'
         });
     }
 

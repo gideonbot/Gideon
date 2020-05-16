@@ -16,7 +16,8 @@ class GuildBlacklist extends Command {
             channel: 'guild',
             ownerOnly: true,
             args: [ { id: 'snowflake', type: /\d{17,19}/, prompt: true } ],
-            description: 'Blacklists a guild'
+            description: 'Blacklists a guild',
+            usage: 'gb <guildid>'
         });
     }
 

@@ -21,7 +21,8 @@ class News extends Command {
         
                 return null;
             },
-            description: 'Sends news'
+            description: 'Sends news',
+            usage: 'news <text> [img]'
         });
     }
 

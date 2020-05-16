@@ -14,7 +14,8 @@ class Type extends Command {
             category: 'owner',
             channel: 'guild',
             ownerOnly: true,
-            description: 'Toggles typing'
+            description: 'Toggles typing',
+            usage: 'type'
         });
     }
 

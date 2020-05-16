@@ -15,7 +15,8 @@ class KillShard extends Command {
             channel: 'guild',
             ownerOnly: true,
             args: [ { id: 'shardid', type: /(?<!\S)\d(?!\S)/, prompt: true } ],
-            description: 'Kills the specified shard'
+            description: 'Kills the specified shard',
+            usage: 'ks <shardid>'
         });
     }
 

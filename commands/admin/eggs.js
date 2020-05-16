@@ -15,7 +15,8 @@ class Eggs extends Command {
             channel: 'guild',
             clientPermissions: ['MANAGE_MESSAGES'],
             userPermissions: ['MANAGE_MESSAGES'],
-            description: 'Toggles Easter-eggs'
+            description: 'Toggles Easter-eggs',
+            usage: 'eggs'
         });
     }
 

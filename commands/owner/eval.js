@@ -16,7 +16,8 @@ class Eval extends Command {
             channel: 'guild',
             ownerOnly: true,
             args: [ { id: 'code', match: 'content', prompt: true } ],
-            description: 'Evaluates provided code'
+            description: 'Evaluates provided code',
+            usage: 'eval <code>'
         });
     }
 

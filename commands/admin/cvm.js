@@ -15,7 +15,8 @@ class CVM extends Command {
             channel: 'guild',
             clientPermissions: ['MANAGE_MESSAGES'],
             userPermissions: ['MANAGE_MESSAGES'],
-            description: 'Toggles Crossover-Mode'
+            description: 'Toggles Crossover-Mode',
+            usage: 'cvm'
         });
     }
 
