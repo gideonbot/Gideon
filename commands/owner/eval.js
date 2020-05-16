@@ -1,4 +1,3 @@
-import Discord from 'discord.js';
 import Util from '../../Util.js';
 import Akairo from 'discord-akairo';
 const Command = Akairo.Command;
