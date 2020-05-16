@@ -8,7 +8,7 @@ class Blacklist extends Inhibitor {
         });
     }
 
-    exec(message) {
+    async exec(message) {
         const ubl = this.client.getUser.get(message.author.id);
         if (!ubl || !ubl.blacklist) return null;
         return ubl.blacklist === 1;
