@@ -100,7 +100,6 @@ interface CheckUtil {
     CVM(message: Discord.Message, gideon: Discord.Client): Promise<Discord.Message>;
     CSD(message: Discord.Message): Promise<void>;
     LBG(guild: Discord.Guild, gideon: Discord.Client): Promise<void>;
-    IBU(message: Discord.Message, gideon: Discord.Client): boolean;
     RulesCheck(message: Discord.Message): Promise<void>;
     VCCheck(oldState: Discord.VoiceState, newState: Discord.VoiceState, gideon: Discord.Client): Promise<void>;
 }

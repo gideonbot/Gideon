@@ -1,5 +1,4 @@
 import Discord from 'discord.js';
-import fetch from 'node-fetch';
 import anyAscii from 'any-ascii';
 import Filter from 'bad-words';
 
@@ -270,17 +269,6 @@ class Checks {
             await guild.leave();
             Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
         }
-    }
-
-    /**
-     * Ignore commands from blacklisted users
-     * @param {Discord.Message} message 
-     * @returns {boolean}
-     */
-    static IBU(message, gideon) {
-        const ubl = gideon.getUser.get(message.author.id);
-        if (!ubl || !ubl.blacklist) return;
-        return ubl.blacklist === 1;
     }
 
     /**

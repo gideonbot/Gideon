@@ -40,7 +40,6 @@ class MsgHandler {
             gideon.setGuild.run(currentguild);
         }
 
-        if (Util.Checks.IBU(message, gideon)) return; //check if user is blacklisted, if yes, return
         Util.Checks.LBG(message.guild, gideon, Util); //check if guild is blacklisted, if yes, leave
         if (message.channel.id === currentguild.chatchnl) return Util.Chat(message, gideon);
         Util.Checks.Ads(message, gideon); //check for foreign invites
