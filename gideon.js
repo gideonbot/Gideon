@@ -71,7 +71,7 @@ gideon.once('ready', async () => {
     
     const twodays = 1000 * 60 * 60 * 48;
     setInterval(Util.UpdateStatus, 10e3);
-    setInterval(Util.CheckEpisodes, 30e3);
+    setInterval(() => Util.CheckEpisodes(), 30e3);
     setInterval(Util.SQLBkup, twodays);
 
     if (!process.env.CI) if (gideon.guilds.cache.get('595318490240385037')) await gideon.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on startup

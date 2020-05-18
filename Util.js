@@ -525,7 +525,7 @@ class Util {
                 icon: reaction.message.author.displayAvatarURL()
             },
             description: reaction.message.content,
-            fields: [ 
+            fields: [
                 {
                     name: 'Message Info:',
                     value: 'Sent in: ' + reaction.message.channel.toString() + ' | Starred by: ' + user.tag + ` | [Jump](${reaction.message.url})`
