@@ -528,7 +528,7 @@ class Util {
                 icon: reaction.message.author.displayAvatarURL()
             },
             description: reaction.message.content,
-            fields: [ 
+            fields: [
                 {
                     name: 'Message Info:',
                     value: 'Sent in: ' + reaction.message.channel.toString() + ' | Starred by: ' + user.tag + ` | [Jump](${reaction.message.url})`
@@ -585,7 +585,7 @@ class Util {
                 console.log('Air date passed, updating ' + key);
 
                 try {
-                    this.GetAndStoreEpisode(key, gideon);
+                    this.GetAndStoreEpisode(key);
 
                     let status = gideon.statuses.find(x => x.name == key + '_countdown');
                     if (status) gideon.statuses.remove(status);

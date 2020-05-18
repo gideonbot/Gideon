@@ -9,14 +9,11 @@ import Util from '../../Util.js';
 export async function run(gideon, message, args) {
     try {
         const embed = Util.CreateEmbed('Guilds:', null, message.member);
+        const cache = process.gideon.guilds.cache;
 
-        let shard = await gideon.shard.broadcastEval('this.shard.ids').then(results => {return results;}).catch(console.error);
-        let guilds = await gideon.shard.broadcastEval('this.guilds.cache.size').then(results => {return results;}).catch(console.error);
-        console.log(shard);
-
-        let g = [`\`${guilds[0]}\` guilds on shard: \`${shard[0]}\``];
-
-        embed.setDescription(g.join('\n'));
+        if (cache.size < 1 || !cache.first()) return message.channel.send(Util.CreateEmbed('No guilds found (if you are seeing this something has gone really wrong)', null, message.member));
+        
+        embed.setDescription(`\`${cache.size}\` guilds on shard: \`${cache.first().shardID}\``);
         message.channel.send(embed);
     }
     catch (ex) {
