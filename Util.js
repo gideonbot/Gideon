@@ -576,7 +576,7 @@ class Util {
                 console.log('Air date passed, updating ' + key);
 
                 try {
-                    this.GetAndStoreEpisode(key);
+                    Util.GetAndStoreEpisode(key);
 
                     let status = process.gideon.statuses.find(x => x.name == key + '_countdown');
                     if (status) process.gideon.statuses.remove(status);
