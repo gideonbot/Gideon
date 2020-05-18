@@ -8,6 +8,8 @@ export async function run(message) {
     try {
         const embed = Util.CreateEmbed('Guilds:', null, message.member);
         const cache = process.gideon.guilds.cache;
+
+        if (cache.size < 1 || !cache.first()) return message.channel.send(Util.CreateEmbed('No guilds found (if you are seeing this something has gone really wrong)', null, message.member));
         
         embed.setDescription(`\`${cache.size}\` guilds on shard: \`${cache.first().shardID}\``);
         message.channel.send(embed);
