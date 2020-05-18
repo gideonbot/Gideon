@@ -10,7 +10,7 @@ class GideonClient extends Akairo.AkairoClient {
             // Options for Akairo go here.
             ownerID: ['224617799434108928', '351871113346809860']
         }, {
-            // Options for discord.js goes here.
+            // Options for discord.js go here.
             ws: {
                 intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
             },
