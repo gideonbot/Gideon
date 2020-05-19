@@ -22,21 +22,22 @@ export function GetPrefix(message: Discord.Message, gideon: Discord.Client): str
 export function fetchJSON(url: string): Promise<object>;
 export function IMG(image_id: string, message: Discord.Message, nsfw: boolean): Promise<void>;
 export function Split<T>(arr: T[], chunks: number): T[][];
-export function Starboard(reaction: Discord.MessageReaction, user: Discord.User, gideon: Discord.Client): Promise<void>;
-export function Selfhostlog(gideon: Discord.Client): Promise<void>;
-export function SQLBkup(gideon: Discord.Client): Promise<void>;
-export function SetStat(gideon: Discord.Client, stat: string, value: number): void;
-export function IncreaseStat(gideon: Discord.Client, stat: string, value?: number): void;
-export function UpdateStatus(gideon: Discord.Client): Promise<void>;
-export function InitStatus(gideon: Discord.Client): void;
+export function Starboard(reaction: Discord.MessageReaction, user: Discord.User): Promise<void>;
+export function Selfhostlog(): Promise<void>;
+export function SQLBkup(): Promise<void>;
+export function SetStat(stat: string, value: number): void;
+export function IncreaseStat(stat: string, value?: number): void;
+export function UpdateStatus(): Promise<void>;
+export function InitStatus(): void;
+export function GenerateSnowflake(): string;
 export function Chat(message: Discord.Message): Promise<void>;
-export function GetCleverBotResponse(text: string, context: string[], gideon: Discord.Client): Promise<string>;
+export function GetCleverBotResponse(text: string, context: string[]): Promise<string>;
 export function GetRandomFile(dir: string): string;
-export function InitCache(gideon: Discord.Client): Promise<void>;
-export function GetAndStoreEpisode(show: string, gideon: Discord.Client): Promise<void>;
-export function CheckEpisodes(gideon: Discord.Client): void;
+export function InitCache(): Promise<void>;
+export function GetAndStoreEpisode(show: string): Promise<void>;
+export function CheckEpisodes(): void;
 export function ClosestDate(dates: string[]): Promise<string>;
-export function Welcome(member: Discord.GuildMember, gideon: Discord.Client): Promise<void>;
+export function Welcome(member: Discord.GuildMember): Promise<void>;
 export function ParseEpisodeInfo(obj: object): Promise<EpisodeInfo>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
 export function normalize(num: number): string;
@@ -53,6 +54,7 @@ declare module "discord.js" {
         spamcount: Map;
         cache: Cache;
         show_api_urls: Record<string, string>;
+        dc_show_urls: Record<string, string>;
         statuses: {name: string, fetch: (() => Promise<{type: Discord.ActivityType, value: string}>)}[];
         getScore: BetterSqlite3.Statement<any[]>;
         setScore: BetterSqlite3.Statement<any[]>;
@@ -76,38 +78,47 @@ declare global {
     export interface Array<T> {
         remove(item: T|T[]): boolean;
     }
+
+    declare namespace NodeJS {
+        export interface Process {
+            gideon: Discord.Client;
+        }
+    }
 }
 
 interface Handler {
-    Handle(gideon: Discord.Client, message: Discord.Message, Util: Util, connection: Discord.VoiceConnection): Promise<void>;
+    Handle(message: Discord.Message, Util: Util, connection: Discord.VoiceConnection): Promise<void>;
 }
 
 interface Database {
-    InitDB(gideon: Discord.Client): void;
+    InitDB(): void;
 }
 
 interface Translation {
     Translate(input: string): Promise<Array>;
-    TRMode(message: Discord.Message, gideon: Discord.Client): Promise<void>;
+    TRMode(message: Discord.Message, Util: any): Promise<void>;
 }
 
 interface Cache {
     nxeps: Discord.Collection<string, object>;
+    dceps: Discord.Collection<string, object>;
 }
+
 interface CheckUtil {
     ABM_Test(message: Discord.Message): Promise<ABMResult>;
-    ABM(message: Discord.Message, gideon: Discord.Client): void;
-    CVM(message: Discord.Message, gideon: Discord.Client): Promise<Discord.Message>;
-    CSD(message: Discord.Message): Promise<void>;
-    LBG(guild: Discord.Guild, gideon: Discord.Client): Promise<void>;
+    ABM(message: Discord.Message, Util: any): void;
+    CVM(message: Discord.Message, Util: any): Promise<Discord.Message>;
+    CSD(message: Discord.Message, Util: any): Promise<void>;
+    LBG(guild: Discord.Guild, Util: any): Promise<void>;
+    IBU(message: Discord.Message, Util: any): boolean;
     RulesCheck(message: Discord.Message): Promise<void>;
-    VCCheck(oldState: Discord.VoiceState, newState: Discord.VoiceState, gideon: Discord.Client): Promise<void>;
+    VCCheck(oldState: Discord.VoiceState, newState: Discord.VoiceState): Promise<void>;
 }
 
 interface VoiceUtil {
     LeaveVC(message: Discord.Message): Promise<void>;
     SpeechRecognition(speech: ReadableStream): Promise<VoiceInfoResponse>;
-    VoiceResponse(value: string, gideon: Discord.Client, message: Discord.Message, connection: Discord.VoiceConnection, Util: Util): Promise<void>;
+    VoiceResponse(value: string, message: Discord.Message, connection: Discord.VoiceConnection, Util: Util): Promise<void>;
 }
 
 interface EmbedOptions {
@@ -161,7 +172,7 @@ interface Command {
         user_perms: string[];
         bot_perms: string[];
     },
-    run: (gideon: Discord.Client, message: Discord.Message, args: string[], connection?: Discord.VoiceConnection) => void;
+    run: (message: Discord.Message, args: string[], connection?: Discord.VoiceConnection) => void;
 }
 
 interface EpisodeInfo {

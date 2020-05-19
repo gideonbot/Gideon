@@ -3,11 +3,9 @@ import fetch from 'node-fetch';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     const api = 'https://api.github.com/repos/adrifcastr/Gideon/issues';
     const token = process.env.GITHUB_OAUTH_TOKEN;
 
@@ -75,12 +73,15 @@ export async function run(gideon, message, args) {
 
         catch (ex) {
             Util.log('Caught an exception while running issues.js: ' + ex.stack);
-            return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+            return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
         }
     }
 
     else try {
         const body = await Util.fetchJSON(api);
+
+        if (!body || !Array.isArray(body)) return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
+
         const issues = Util.CreateEmbed('Issues: ' + body.length, null, message.member);
 
         let issues_array = body.reverse();
@@ -99,7 +100,7 @@ export async function run(gideon, message, args) {
     
     catch (ex) {
         Util.log('Caught an exception while fetching issues: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     }
 }
 

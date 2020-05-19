@@ -3,11 +3,10 @@ import gideonapi from 'gideon-api';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     if (!args[0]) return message.channel.send(Util.CreateEmbed('You must supply a speedsters name or alter ego and their home universe!', null, message.member));
 
     let ssd = args.join(' ');

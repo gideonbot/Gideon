@@ -1,17 +1,17 @@
 import Discord from 'discord.js';
-import fetch from 'node-fetch';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     const api = 'https://api.github.com/repos/adrifcastr/Gideon';
 
     try {
         const body = await Util.fetchJSON(api);
+
+        if (!body || !body.owner || !body.owner.html_url || !body.updated_at) return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
+        
         let upDate = new Date(body.updated_at);
     
         message.channel.send(Util.CreateEmbed(body.name, {

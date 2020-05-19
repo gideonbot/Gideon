@@ -3,14 +3,13 @@ import Util from '../../Util.js';
 import stringSimilarity from 'string-similarity';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
-    const prefix = gideon.getGuild.get(message.guild.id).prefix;
-    const match = stringSimilarity.findBestMatch(args[0].toLowerCase(), gideon.commands.map(x => Array.isArray(x.help.name) ? x.help.name[0].toLowerCase() : x.help.name.toLowerCase())).bestMatch;
-    const cmd = gideon.commands.get(match.target);
+export async function run(message, args) {
+    const prefix = process.gideon.getGuild.get(message.guild.id).prefix;
+    const match = stringSimilarity.findBestMatch(args[0].toLowerCase(), process.gideon.commands.map(x => Array.isArray(x.help.name) ? x.help.name[0].toLowerCase() : x.help.name.toLowerCase())).bestMatch;
+    const cmd = process.gideon.commands.get(match.target);
 
     if (cmd) {
         const embed = Util.CreateEmbed(`Results for: "${args[0]}"`, null, message.member);

@@ -69,11 +69,11 @@ class Checks {
     /**
      * @param {Discord.Message} message 
      */
-    static ABM(message, gideon, Util) {
+    static ABM(message, Util) {
         if (!message.guild) return;
         if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return;
 
-        let abm = gideon.getGuild.get(message.guild.id);
+        let abm = process.gideon.getGuild.get(message.guild.id);
         if (!abm) return;
         if (abm.abmval === 0) return;
         
@@ -90,12 +90,11 @@ class Checks {
     }
 
     /**
-     * @param {Discord.Message} message 
-     * @param {Discord.Client} gideon 
+     * @param {Discord.Message} message  
      */
-    static async CVM(message, gideon, Util) {
+    static async CVM(message, Util) {
         if (!message.guild) return;
-        let cvm = gideon.getGuild.get(message.guild.id);
+        let cvm = process.gideon.getGuild.get(message.guild.id);
         if (!cvm) return;
         if (cvm.cvmval === 0) return;
 
@@ -108,7 +107,7 @@ class Checks {
         const lowercaseContent = message.content.toLowerCase();
 
         // Find the prefix that was used
-        let customprefix = gideon.getGuild.get(message.guild.id);
+        let customprefix = process.gideon.getGuild.get(message.guild.id);
  
         const usedCustom = lowercaseContent.startsWith(customprefix.prefix.toLowerCase());
         let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
@@ -129,7 +128,7 @@ class Checks {
             return message.reply('Links are not allowed while the Crossover-Mode is active!');
         }
 
-        let trmode = gideon.getUser.get(message.author.id);
+        let trmode = process.gideon.getUser.get(message.author.id);
         if (trmode) if (trmode.trmodeval === 1) {
             let tr = await Util.TR.Translate(plainText);
             plainText = `(${tr[1]}) ${tr[0]}`;
@@ -160,12 +159,12 @@ class Checks {
      * Easter eggs
      * @param {Discord.Message} message 
      */
-    static async CSD(message, gideon, Util) {
+    static async CSD(message, Util) {
         if (!message.guild) return;
         if (message.editedAt) return;
         if (message.content.match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)) return;
 
-        let eggs = gideon.getGuild.get(message.guild.id);
+        let eggs = process.gideon.getGuild.get(message.guild.id);
         if (!eggs) return;
         if (eggs.eastereggs === 0) return;
 
@@ -242,15 +241,15 @@ class Checks {
      * Leaves a blacklisted guild
      * @param {Discord.Guild} guild 
      */
-    static async LBG(guild, gideon, Util) {
-        let ub = gideon.getUser.get(guild.ownerID);
+    static async LBG(guild, Util) {
         const id = guild.id;
-        let gbl = gideon.getGuild.get(id);
+        let ub = process.gideon.getUser.get(guild.ownerID);
+        let gbl = process.gideon.getGuild.get(id);
         
         if (ub) {
-            if (ub.blacklist === 1) {
+            if (ub.blacklist === 1 && gbl) {
                 gbl.blacklist = 1;
-                gideon.setGuild.run(gbl);
+                process.gideon.setGuild.run(gbl);
             }
         }
 
@@ -274,38 +273,36 @@ class Checks {
     /**
      * Rules check
      * @param {Discord.Message} message 
-     * @param {Discord.Client} gideon 
      */
-    static async RulesCheck(message, gideon) {
-        let member = await gideon.guilds.cache.get('595318490240385037').members.fetch(message.author.id);
+    static async RulesCheck(message) {
+        let member = await process.gideon.guilds.cache.get('595318490240385037').members.fetch(message.author.id);
 
         if (!member) return;
         if (member.roles.cache.has('688430418466177082')) return;
 
-        const role = gideon.guilds.cache.get('595318490240385037').roles.cache.get('688430418466177082');
+        const role = process.gideon.guilds.cache.get('595318490240385037').roles.cache.get('688430418466177082');
         await member.roles.add(role);
-        await message.reply('You have been verified and gained access to <#595935317631172608>!');
+        message.reply('You have been verified and gained access to <#595935317631172608>!');
     }
 
     /**
      * VC check
      * @param {Discord.VoiceState} oldState 
-     * @param {Discord.VoiceState} newState 
-     * @param {Discord.Client} gideon 
+     * @param {Discord.VoiceState} newState  
      */
-    static async VCCheck(oldState, newState, gideon) {
+    static async VCCheck(oldState, newState) {
         let newChannel = newState.channel;
         let oldChannel = oldState.channel;
     
         if (oldChannel && !newChannel) {
             //User leaves a voice channel
             const members = oldChannel.members.map(x => x.id);
-            if (!members.includes(gideon.user.id)) return;
+            if (!members.includes(process.gideon.user.id)) return;
     
             const bot_count = oldChannel.members.filter(x => x.user.bot).size;
     
             if (oldChannel.members.size - bot_count === 0) {
-                gideon.emptyvc = true;
+                process.gideon.emptyvc = true;
                 return oldChannel.leave();
             }
         }
@@ -314,25 +311,24 @@ class Checks {
     /**
      * Spam check 
      * @param {string} id 
-     * @param {Discord.Client} gideon 
      */
-    static Spamcounter(id, gideon) {
-        if (id === gideon.owner) return null;
+    static Spamcounter(id) {
+        if (id === process.gideon.owner) return null;
 
-        let spamcount = gideon.spamcount.get(id);
+        let spamcount = process.gideon.spamcount.get(id);
         if (!spamcount) {
             spamcount = {
                 start: Date.now(),
                 usages: 1,
-                timeout: gideon.setTimeout(() => {
-                    gideon.spamcount.delete(id);
+                timeout: process.gideon.setTimeout(() => {
+                    process.gideon.spamcount.delete(id);
                 }, 10 * 1000)
             };
-            gideon.spamcount.set(id, spamcount);
+            process.gideon.spamcount.set(id, spamcount);
         }
         else {
             spamcount.usages++;
-            gideon.spamcount.set(id, spamcount);
+            process.gideon.spamcount.set(id, spamcount);
         }
         return spamcount;
     }
@@ -340,21 +336,20 @@ class Checks {
     /**
      * Invite check 
      * @param {Discord.Message} message 
-     * @param {Discord.Client} gideon 
      */
-    static async Ads(message, gideon) {
+    static async Ads(message) {
         if (!message.guild) return;
         if (message.guild.id !== '595318490240385037') return;
         if (message.member.roles.cache.has('596402255066955783')) return;
         else if (message.member.roles.cache.has('596402530989375539')) return;
 
         const invregex = /(http:\/\/|https:\/\/)?(discord.gg\/|discordapp.com\/invite\/)([a-zA-Z0-9]){7}/g;
-        const channel = gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
-        const admin = gideon.guilds.cache.get('595318490240385037').roles.cache.get('596402255066955783');
+        const channel = process.gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
+        const admin = process.gideon.guilds.cache.get('595318490240385037').roles.cache.get('596402255066955783');
 
         if (message.content.match(invregex)) {
             const invcode = message.content.match(invregex)[0];
-            const invite = await gideon.fetchInvite(invcode).catch(ex => console.log(ex));
+            const invite = await process.gideon.fetchInvite(invcode).catch(ex => console.log(ex));
             
             if (!invite.guild) {
                 await admin.setMentionable(true).catch(ex => console.log(ex));
@@ -374,9 +369,8 @@ class Checks {
     /**
      * Bot collection guild check 
      * @param {Discord.Guild} guild 
-     * @param {Discord.Client} gideon 
      */
-    static async BotCheck(guild, gideon, Util) {
+    static async BotCheck(guild, Util) {
         if (['595318490240385037', '264445053596991498', '110373943822540800'].includes(guild.id)) return; 
         if (!guild.members || !guild.members.cache) await guild.members.fetch();
         const bots = guild.members.cache.filter(x => x.user.bot).size;
@@ -392,7 +386,7 @@ class Checks {
                 chatchnl: ''
             };
 
-            gideon.setGuild.run(gb);
+            process.gideon.setGuild.run(gb);
             Util.log(`Guild \`${guild.name}\` has been blacklisted due to it being a bot collecting guild with \`${bots}\` bots!`);
 
             const textchannels = guild.channels.cache.filter(c=> c.type == 'text');
@@ -410,10 +404,9 @@ class Checks {
      * Check nickname & username 
      * @param {Discord.GuildMember} newMember 
      * @param {Discord.User} newUser 
-     * @param {Discord.Client} gideon
      */
-    static async NameCheck(newMember, newUser, gideon) {
-        if (!gideon.guilds.cache.get('595318490240385037')) return;
+    static async NameCheck(newMember, newUser) {
+        if (!process.gideon.guilds.cache.get('595318490240385037')) return;
         
         if (newMember) {
             const member = newMember;
@@ -451,7 +444,7 @@ class Checks {
         }
 
         if (newUser) {
-            const member = gideon.guilds.cache.get('595318490240385037').members.cache.get(newUser.id);
+            const member = process.gideon.guilds.cache.get('595318490240385037').members.cache.get(newUser.id);
             if (!member) return;
 
             // eslint-disable-next-line no-control-regex

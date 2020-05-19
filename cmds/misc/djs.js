@@ -1,13 +1,11 @@
 import Discord from 'discord.js';
 import Util from '../../Util.js';
-import fetch from 'node-fetch';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     try {
         const source = 'https://raw.githubusercontent.com/discordjs/discord.js/docs/12.0.2.json';
         const queryString = encodeURI(args.join(' '));
@@ -18,7 +16,7 @@ export async function run(gideon, message, args) {
 
     catch (ex) {
         Util.log('Caught an exception while running djs.js: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     }
 }
 

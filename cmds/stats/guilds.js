@@ -2,11 +2,9 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     try {
         const embed = Util.CreateEmbed('Guilds:', null, message.member);
         const cache = process.gideon.guilds.cache;

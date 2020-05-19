@@ -65,9 +65,8 @@ class Voice {
      * @param {string} intent 
      * @param {Discord.VoiceConnection} connection 
      * @param {Discord.Message} message
-     * @param {Discord.Client} gideon
      */
-    static async VoiceResponse(intent, gideon, message, connection, Util) {
+    static async VoiceResponse(intent, message, connection, Util) {
         const data = {
             channel: message.channel,
             id: message.id,
@@ -77,9 +76,9 @@ class Voice {
             partial: message.partial
         };
         
-        let voicemsg = new Discord.Message(gideon, data, message.channel);
+        let voicemsg = new Discord.Message(process.gideon, data, message.channel);
         voicemsg.voice = true;
-        Util.MsgHandler.Handle(gideon, voicemsg, Util, connection);
+        Util.MsgHandler.Handle(voicemsg, Util, connection);
     }
 }
 

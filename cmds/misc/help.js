@@ -3,16 +3,15 @@ import Pagination from 'discord-paginationembed';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
-    const customprefix = gideon.getGuild.get(message.guild.id);
+    const customprefix = process.gideon.getGuild.get(message.guild.id);
     const _prefixes = Util.config.prefixes.filter((x, i) => i < Util.config.prefixes.length - 1); //we remove the last prefix (.pop modifies the original array - BAD!)
-    const prefixes = `\`${customprefix.prefix}\` | ` + _prefixes.map(x => (Util.getIdFromString(x) == gideon.user.id ? '' : '`') + x + (Util.getIdFromString(x) == gideon.user.id ? '' : '`')).join(' | ');
-    const cmdamount = Array.from(new Set(gideon.commands.map(x=>JSON.stringify(x)))).map(x=>JSON.parse(x));
+    const prefixes = `\`${customprefix.prefix}\` | ` + _prefixes.map(x => (Util.getIdFromString(x) == process.gideon.user.id ? '' : '`') + x + (Util.getIdFromString(x) == process.gideon.user.id ? '' : '`')).join(' | ');
+    const cmdamount = Array.from(new Set(process.gideon.commands.map(x=>JSON.stringify(x)))).map(x=>JSON.parse(x));
 
     if (!args[0]) {
         const help = Util.CreateEmbed('__Use ' + customprefix.prefix + 'help <module> to get a list of commands__', null, message.member)
@@ -42,8 +41,8 @@ export async function run(gideon, message, args) {
     if (args[0].match(/(?:tags)/i)) {
         let cmds = {};
         let tags = [];
-        for (let filename of gideon.commands.keys()) {
-            let cmd = gideon.commands.get(filename);
+        for (let filename of process.gideon.commands.keys()) {
+            let cmd = process.gideon.commands.get(filename);
 
             if (!cmd.help || !cmd.help.help_text || !cmd.help.help_desc) {
                 Util.log(filename + ' is missing help properties, please fix');
@@ -76,8 +75,8 @@ export async function run(gideon, message, args) {
     let commands = {};
     let marks = {};
 
-    for (let filename of gideon.commands.keys()) {
-        let cmd = gideon.commands.get(filename);
+    for (let filename of process.gideon.commands.keys()) {
+        let cmd = process.gideon.commands.get(filename);
         if (!cmd.help || !cmd.help.help_text || !cmd.help.help_desc) {
             Util.log(filename + ' is missing help properties, please fix');
         }
@@ -110,7 +109,7 @@ export async function run(gideon, message, args) {
                 if (commands[item].roles && commands[item].roles.length > 0) {
                     for (let role of commands[item].roles) {
                     
-                        const rolename = await gideon.shard.broadcastEval(`
+                        const rolename = await process.gideon.shard.broadcastEval(`
                             (async () => {
                                 let rolename;
                                 const guilds = this.guilds.cache;
@@ -160,7 +159,7 @@ export async function run(gideon, message, args) {
             if (commands[item].roles && commands[item].roles.length > 0) {
                 for (let role of commands[item].roles) {
                 
-                    const rolename = await gideon.shard.broadcastEval(`
+                    const rolename = await process.gideon.shard.broadcastEval(`
                         (async () => {
                             let rolename;
                             const guilds = this.guilds.cache;
