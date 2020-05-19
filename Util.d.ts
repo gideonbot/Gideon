@@ -123,7 +123,6 @@ interface EmbedOptions {
 }
 
 interface Config {
-    prefixes: string[];
     footer: string;
     avatar: string;
 }

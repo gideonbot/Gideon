@@ -3,12 +3,6 @@ import Util from '../../Util.js';
 import Akairo from 'discord-akairo';
 const Command = Akairo.Command;
 
-/**
- * @param {Discord.Client} gideon
- * @param {Discord.Message} message
- * @param {string[]} args
- */
-
 class Stats extends Command {
     constructor() {
         super('stats', {
@@ -18,6 +12,9 @@ class Stats extends Command {
         });
     }
 
+    /**
+     * @param {Discord.Message} message 
+     */
     async exec(message) {
         const cmds = this.client.getStat.get('commands_ran').value;
         const msgs = this.client.getStat.get('messages_sent').value;
