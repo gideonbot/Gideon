@@ -34,6 +34,14 @@ gideon.show_api_urls = {
     supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode',
     b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
 };
+gideon.dc_show_urls = {
+    doompatrol: 'http://api.tvmaze.com/shows/36745?embed=nextepisode', 
+    pennyworth: 'http://api.tvmaze.com/shows/36774?embed=nextepisode',
+    lucifer: 'http://api.tvmaze.com/shows/1859?embed=nextepisode',
+    titans: 'http://api.tvmaze.com/shows/27557?embed=nextepisode',
+    theboys: 'http://api.tvmaze.com/shows/15299?embed=nextepisode',
+    y: 'http://api.tvmaze.com/shows/42668?embed=nextepisode'
+};
 
 if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
 else {

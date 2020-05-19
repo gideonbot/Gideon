@@ -254,7 +254,7 @@ class Util {
     static async ParseEpisodeInfo(body) {
         if (!body) return {};
 
-        let emote;
+        let emote = '';
         if (body.name === 'Batwoman') emote = '<:batwomansymbol:686309750765649957>';
         if (body.name === 'Supergirl') emote = '<:supergirlsymbol:686309750383837297>';
         if (body.name === 'The Flash') emote = '<:flashsymbol:686309755668660315>';
@@ -276,7 +276,7 @@ class Util {
             const episodeorder = seasons[0].episodeOrder;
 
             result.name = '';
-            result.value = `\`Awaiting season ${nextseason}!\`\n${seasondate ? 'Season Premiere: ' + '`' + seasondate.toDateString() + '`' : ''}${episodeorder ? 'Ordered Episodes: ' + '`' + episodeorder + '`' : ''}`;
+            result.value = `\`Awaiting season ${nextseason}!\`\n${seasondate ? 'Season Premiere: ' + '`' + seasondate.toDateString() + '`\n' : ''}${episodeorder ? 'Ordered Episodes: ' + '`' + episodeorder + '`' : ''}`;
         }
 
         else {
@@ -614,6 +614,27 @@ class Util {
                 return {type: 'WATCHING', value: `${show.shortname} ${ep.season}x${ep.number} in ${str}`};
             }});
         }
+
+        for (let key in process.gideon.dc_show_urls) {
+            let item = process.gideon.cache.dceps.get(key);
+
+            let next_ep = item && item._embedded && item._embedded.nextepisode ? item._embedded.nextepisode : null;
+            if (!next_ep || !next_ep.airstamp) continue;
+
+            let air_date = new Date(next_ep.airstamp);
+
+            if (air_date < new Date()) {
+                console.log('Air date passed, updating ' + key);
+
+                try {
+                    this.GetAndStoreEpisode(key);
+                }
+                
+                catch (ex) {
+                    Util.log(`Error while fetching next episode @CheckEpisodes for "${key}": ${ex}`);
+                }
+            }
+        }
     }
 
     static async UpdateStatus() {
@@ -722,6 +743,16 @@ class Util {
                 Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
             }
         }
+
+        process.gideon.cache.dceps = new Discord.Collection();
+
+        for (let show in process.gideon.dc_show_urls) {
+            try { await this.GetAndStoreEpisode(show); }
+            
+            catch (ex) {
+                Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
+            }
+        }
     }
 
     /**
@@ -738,15 +769,36 @@ class Util {
             canaries: 'Canaries',
             supesnlois: 'Superman & Lois' //peepee moment
         };
+        let dcnames = {
+            doompatrol: 'Doom Patrol', 
+            lucifer: 'Lucifer',
+            titans: 'Titans',
+            theboys: 'The Boys',
+            pennyworth: 'Pennyworth',
+            y: 'Y'
+        };
 
-        try {
-            let json = await Util.fetchJSON(process.gideon.show_api_urls[show]);
-            json.shortname = names[show];
-            process.gideon.cache.nxeps.set(show, json);
+        if (names.hasOwnProperty(show)) {
+            try {
+                let json = await Util.fetchJSON(process.gideon.show_api_urls[show]);
+                json.shortname = names[show];
+                process.gideon.cache.nxeps.set(show, json);
+            }
+            
+            catch (ex) {
+                Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
+            }
         }
-        
-        catch (ex) {
-            Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
+        else if (dcnames.hasOwnProperty(show)) {
+            try {
+                let json = await Util.fetchJSON(process.gideon.dc_show_urls[show]);
+                json.shortname = dcnames[show];
+                process.gideon.cache.dceps.set(show, json);
+            }
+            
+            catch (ex) {
+                Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
+            }
         }
     }
 

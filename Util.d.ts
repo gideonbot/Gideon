@@ -55,6 +55,7 @@ declare module "discord.js" {
         spamcount: Map;
         cache: Cache;
         show_api_urls: Record<string, string>;
+        dc_show_urls: Record<string, string>;
         statuses: {name: string, fetch: (() => Promise<{type: Discord.ActivityType, value: string}>)}[];
         getScore: BetterSqlite3.Statement<any[]>;
         setScore: BetterSqlite3.Statement<any[]>;
@@ -101,7 +102,9 @@ interface Translation {
 
 interface Cache {
     nxeps: Discord.Collection<string, object>;
+    dceps: Discord.Collection<string, object>;
 }
+
 interface CheckUtil {
     ABM_Test(message: Discord.Message): Promise<ABMResult>;
     ABM(message: Discord.Message, Util: any): void;
