@@ -825,10 +825,9 @@ class Util {
     /**
      * Get prefixes
      * @param {Discord.Message} message
-     * @param {Discord.Client} gideon
      */
-    static GetPrefix(message, gideon) {
-        let currentguild = gideon.getGuild.get(message.guild.id);
+    static GetPrefix(message) {
+        let currentguild = process.gideon.getGuild.get(message.guild.id);
         if (!currentguild) {
             currentguild = {
                 guild: message.guild.id,
@@ -840,10 +839,10 @@ class Util {
                 chatchnl: ''
             };
 
-            gideon.setGuild.run(currentguild);
+            process.gideon.setGuild.run(currentguild);
         }
 
-        const prefix = [currentguild.prefix, 'Gideon', 'Gideon,'];
+        const prefix = [currentguild.prefix, 'Gideon', 'Gideon,', `<@${message.guild.me.user.id}>`];
         return prefix;
     }
 }

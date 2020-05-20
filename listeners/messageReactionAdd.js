@@ -11,7 +11,7 @@ class messageReactionAdd extends Listener {
     }
 
     async exec(messageReaction, user) {
-        Util.Starboard(messageReaction, user, this.client);
+        Util.Starboard(messageReaction, user);
     }
 }
 

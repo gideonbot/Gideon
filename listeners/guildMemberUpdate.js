@@ -11,7 +11,7 @@ class guildMemberUpdate extends Listener {
     }
 
     async exec(oldMember, newMember) {
-        if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null, this.client);
+        if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null);
     }
 }
 

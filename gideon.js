@@ -1,8 +1,9 @@
+import Akairo from 'discord-akairo';
+import Discord from 'discord.js';
 import 'dotenv/config.js';
 import PrettyError from 'pretty-error';
 PrettyError.start().withoutColors();
-import Discord from 'discord.js';
-import Akairo from 'discord-akairo';
+import Util from './Util.js';
 
 class GideonClient extends Akairo.AkairoClient {
     constructor() {
@@ -22,7 +23,7 @@ class GideonClient extends Akairo.AkairoClient {
         this.commandHandler = new Akairo.CommandHandler(this, {
             // Options for the command handler goes here.
             directory: './commands/',
-            prefix: message => Util.GetPrefix(message, gideon),
+            prefix: message => Util.GetPrefix(message),
             aliasReplacement: /-/g,
             commandUtil: true,
             handleEdits: true,
@@ -64,9 +65,9 @@ class GideonClient extends Akairo.AkairoClient {
 }
 
 const gideon = new GideonClient();
-import Util from './Util.js';
 
-gideon.commands = new Discord.Collection();
+process.gideon = gideon;
+
 gideon.vcmdexec = false;
 gideon.emptyvc = false;
 gideon.guessing = [];

@@ -28,8 +28,8 @@ class guildCreate extends Listener {
             this.client.setGuild.run(currentguild);
         }
 
-        Util.Checks.LBG(guild, this.client, Util); //check if guild is blacklisted, if yes, leave
-        Util.Checks.BotCheck(guild, this.client, Util); //check if guild collects bots, if yes, leave
+        Util.Checks.LBG(guild, Util); //check if guild is blacklisted, if yes, leave
+        Util.Checks.BotCheck(guild, Util); //check if guild collects bots, if yes, leave
     }
 }
 

@@ -11,7 +11,7 @@ class commandStart extends Listener {
     }
 
     async exec() {
-        Util.IncreaseStat(this.client, 'commands_ran');
+        Util.IncreaseStat('commands_ran');
     }
 }
 

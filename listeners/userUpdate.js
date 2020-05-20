@@ -11,7 +11,7 @@ class userUpdate extends Listener {
     }
 
     async exec(oldUser, newUser) {
-        if (newUser.username !== oldUser.username) Util.Checks.NameCheck(null, newUser, this.client);
+        if (newUser.username !== oldUser.username) Util.Checks.NameCheck(null, newUser);
     }
 }
 

@@ -11,7 +11,7 @@ class Ready extends Listener {
     }
 
     async exec(message) {
-        Util.MsgHandler.Handle(this.client, message, Util);
+        Util.MsgHandler.Handle(message, Util);
     }
 }
 

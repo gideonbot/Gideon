@@ -11,7 +11,7 @@ class voiceStateUpdate extends Listener {
     }
 
     async exec(oldState, newState) {
-        Util.Checks.VCCheck(oldState, newState, this.client);
+        Util.Checks.VCCheck(oldState, newState);
     }
 }
 

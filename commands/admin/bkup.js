@@ -29,7 +29,7 @@ class SQLBackup extends Command {
     async exec(message) {
         try {
             message.channel.send('Performing database backup, please wait...');
-            await Util.SQLBkup(this.client);
+            await Util.SQLBkup();
             message.channel.send('Database backup complete! Please check <#622415301144870932>! :white_check_mark:');
         }
         

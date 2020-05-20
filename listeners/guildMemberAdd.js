@@ -11,8 +11,8 @@ class guildMemberAdd extends Listener {
     }
 
     async exec(member) {
-        Util.Welcome(member, this.client);
-        Util.Checks.NameCheck(null, member.user, this.client);
+        Util.Welcome(member);
+        Util.Checks.NameCheck(null, member.user);
         Util.Checks.AccCheck(member, Util);
     }
 }

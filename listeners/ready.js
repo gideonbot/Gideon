@@ -13,27 +13,27 @@ class ClientReady extends Listener {
 
     async exec() {
         this.client.commandHandler.loadAll(); 
-        Util.SQL.InitDB(this.client);
-        Util.Selfhostlog(this.client);
-        await Util.InitCache(this.client);
-        Util.InitStatus(this.client);
-        Util.UpdateStatus(this.client);
+        Util.SQL.InitDB();
+        Util.Selfhostlog();
+        await Util.InitCache();
+        Util.InitStatus();
+        Util.UpdateStatus();
 
         for (let item of this.client.stats) {
             if (!this.client.getStat.get(item)) {
                 console.log('Initializing ' + item);
-                Util.SetStat(this.client, item, 0);
+                Util.SetStat(item, 0);
             }
         }
         
         const twodays = 1000 * 60 * 60 * 48;
         setInterval(() => {
-            Util.UpdateStatus(this.client);
-            //Util.CheckEpisodes(gideon);
+            Util.UpdateStatus();
+            Util.CheckEpisodes();
         }, 10e3);
-        setInterval(() => Util.CheckEpisodes(this.client), 120e3);
+        setInterval(() => Util.CheckEpisodes(), 120e3);
 
-        setInterval(Util.SQLBkup, twodays, this.client);
+        setInterval(Util.SQLBkup, twodays);
 
         this.client.fetchApplication().then(app => {
             //When the bot is owned by a team owner id is stored under ownerID, otherwise id
@@ -48,7 +48,7 @@ class ClientReady extends Listener {
             }
         }, 10e3);
 
-        if (!process.env.CI) if (this.client.guilds.cache.get('595318490240385037')) await this.client.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on startup
+        if (!process.env.CI && this.client.guilds.cache.get('595318490240385037')) await this.client.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on startup
 
         console.log('Ready!');
     }

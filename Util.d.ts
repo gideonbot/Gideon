@@ -1,3 +1,4 @@
+import Akairo from 'discord-akairo';
 import Discord from 'discord.js';
 import MsgHandler from './Util/MessageHandler'
 import Checks from './Util/Checks'
@@ -18,7 +19,7 @@ export function GetUserTag(str: string | Discord.GuildMember | Discord.User): st
 export function getIdFromString(str: string): string;
 export function secondsToDifferenceString(seconds: number, settings: secondsToDifferenceSettings): string;
 export function log(message: string, files: string[]): boolean;
-export function GetPrefix(message: Discord.Message, gideon: Discord.Client): string[];
+export function GetPrefix(message: Discord.Message): string[];
 export function fetchJSON(url: string): Promise<object>;
 export function IMG(image_id: string, message: Discord.Message, nsfw: boolean): Promise<void>;
 export function Split<T>(arr: T[], chunks: number): T[][];
@@ -45,7 +46,6 @@ export function CreateEmbed(title: string, options?: EmbedOptions, member?: Disc
 
 declare module "discord.js" {
     interface Client {
-        commands: Discord.Collection<string, Command>;
         vcmdexec: boolean;
         emptyvc: boolean;
         owner: string;
@@ -154,24 +154,6 @@ interface secondsToDifferenceSettings {
 
 interface SpamCount {
     count: Number
-}
-
-interface Command {
-    help: {
-        name: string | string[];
-        type: string;
-        help_text: string;
-        help_desc: string;
-        owner: boolean;
-        voice: boolean;
-        timevault: boolean;
-        nsfw: boolean;
-        args: {force: boolean, amount?: Number, type?: string};
-        roles: string[];
-        user_perms: string[];
-        bot_perms: string[];
-    },
-    run: (message: Discord.Message, args: string[], connection?: Discord.VoiceConnection) => void;
 }
 
 interface EpisodeInfo {
