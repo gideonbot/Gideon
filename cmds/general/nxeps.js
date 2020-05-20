@@ -6,11 +6,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args, connection) {
+export async function run(message, args, connection) {
     if (connection) {
         const confirm = connection.play(path.resolve(__dirname, '../../data/audio/captain/Right away, Captain!.m4a'));
         confirm.pause();
@@ -18,15 +17,15 @@ export async function run(gideon, message, args, connection) {
 
         confirm.on('finish', () => {
             confirm.destroy();
-            gideon.vcmdexec = false;
+            process.gideon.vcmdexec = false;
         });
     }
 
     const embed = Util.CreateEmbed('__Upcoming Arrowverse episodes:__', null, message.member);
 
-    for (let show in gideon.show_api_urls) {
+    for (let show in process.gideon.show_api_urls) {
         try {
-            let json = gideon.cache.nxeps.get(show);
+            let json = process.gideon.cache.nxeps.get(show);
             if (!json) {
                 Util.log('No JSON for ' + show + ' when calling nxeps!');
                 continue;

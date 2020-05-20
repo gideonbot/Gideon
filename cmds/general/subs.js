@@ -3,11 +3,10 @@ import OpenSubtitles from 'opensubtitles-api';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
         Util.log('Missing env variables for subs command!');
         return message.channel.send(Util.CreateEmbed('This command is currently not available', null, message.member));

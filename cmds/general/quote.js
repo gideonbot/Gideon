@@ -3,11 +3,9 @@ import Util from '../../Util.js';
 import gideonapi from 'gideon-api';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     try {
         const quote = await gideonapi.quote();
         message.channel.send(Util.CreateEmbed(null, {description: '**' + quote.text + '**', thumbnail: quote.img}, message.member));

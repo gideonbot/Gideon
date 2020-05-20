@@ -1,16 +1,13 @@
-import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message) {
-    const cmds = gideon.getStat.get('commands_ran').value;
-    const msgs = gideon.getStat.get('messages_sent').value;
-    const aimsgs =  gideon.getStat.get('ai_chat_messages_processed').value;
-    let guilds = await gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex));
+export async function run(message) {
+    const cmds = process.gideon.getStat.get('commands_ran').value;
+    const msgs = process.gideon.getStat.get('messages_sent').value;
+    const aimsgs =  process.gideon.getStat.get('ai_chat_messages_processed').value;
+    let guilds = process.gideon.shard ? await process.gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex)) : [process.gideon.guilds.cache];
 
     if (guilds) {
         guilds = [].concat.apply([], guilds);

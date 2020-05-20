@@ -2,11 +2,10 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const auth = message.author;
     let atc = args[0];
 
@@ -18,7 +17,7 @@ export async function run(gideon, message, args) {
 
     const user = message.mentions.users.first();
     if (!user) return message.channel.send(Util.CreateEmbed('You must use a proper mention if you want to attack someone!', null, message.member));
-    if (user.id === auth.id || user.id === gideon.user.id) return message.channel.send(Util.CreateEmbed('My protocols forbid any kind of self-harm!', null, message.member));
+    if (user.id === auth.id || user.id === process.gideon.user.id) return message.channel.send(Util.CreateEmbed('My protocols forbid any kind of self-harm!', null, message.member));
 
     const attacks = [
         {

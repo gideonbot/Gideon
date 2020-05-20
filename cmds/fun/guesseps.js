@@ -1,14 +1,12 @@
 import Discord from 'discord.js';
 import Util from '../../Util.js';
-import fetch from 'node-fetch';
 import stringSimilarity from 'string-similarity';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     const url = 'https://arrowverse.info';
     const emotes = ['▶️', '669309980209446912'];
     let s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
@@ -17,9 +15,9 @@ export async function run(gideon, message, args) {
     let points = 0;
     let timerstart = new Date();
 
-    if (gideon.guessing.includes(message.author.id)) return message.channel.send(Util.CreateEmbed('A guessing game is already running!', null, message.member));
+    if (process.gideon.guessing.includes(message.author.id)) return message.channel.send(Util.CreateEmbed('A guessing game is already running!', null, message.member));
     
-    gideon.guessing.push(message.author.id);
+    process.gideon.guessing.push(message.author.id);
 
     let agc = args[0];
     let filters = [
@@ -35,7 +33,7 @@ export async function run(gideon, message, args) {
 
     let command = message.content.toLowerCase().split(' ')[0];
 
-    let score = gideon.getScore.get(message.author.id);
+    let score = process.gideon.getScore.get(message.author.id);
     if (!score) {
         score = {
             id: message.author.id,
@@ -43,7 +41,7 @@ export async function run(gideon, message, args) {
             guild: message.guild.id,
             points: 0
         };
-        gideon.setScore.run(score);
+        process.gideon.setScore.run(score);
     }
 
     if (command.endsWith('score') || command.endsWith('points')) {
@@ -118,6 +116,7 @@ export async function run(gideon, message, args) {
         const collector = message.channel.createMessageCollector(f, {time: 30 * 1000});
 
         let sent = await message.channel.send(game.embed);
+
         for (let emoji of emotes) {
             await sent.react(emoji).then(() => {}, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
         }
@@ -161,7 +160,7 @@ export async function run(gideon, message, args) {
                     ]
                 }, message.member);
 
-                gideon.guessing.remove(message.author.id);
+                process.gideon.guessing.remove(message.author.id);
                 return sent.edit(stopembed);
             }
         }); 
@@ -179,7 +178,7 @@ export async function run(gideon, message, args) {
                 let airdate_bonus = CalculateAirDatePoints(game.airdate);
                 points += airdate_bonus;
                 IncreasePoints(points);
-                gideon.setScore.run(score);
+                process.gideon.setScore.run(score);
                 tries--;
 
                 const correctembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
@@ -196,7 +195,7 @@ export async function run(gideon, message, args) {
                     ]
                 }, message.member);
 
-                gideon.guessing.remove(message.author.id);
+                process.gideon.guessing.remove(message.author.id);
                 await sent.edit(correctembed);
                 return sent.reactions.removeAll();
             }
@@ -221,7 +220,7 @@ export async function run(gideon, message, args) {
 
             if (tries == 0) {
                 collector.stop();
-                gideon.guessing.remove(message.author.id);
+                process.gideon.guessing.remove(message.author.id);
                 await sent.reactions.removeAll();
                 return sent.edit(incorrectembed);
             }
@@ -245,7 +244,7 @@ export async function run(gideon, message, args) {
                     ]
                 }, message.member);
 
-                gideon.guessing.remove(message.author.id);
+                process.gideon.guessing.remove(message.author.id);
                 await sent.reactions.removeAll();
                 return sent.edit(timeouttembed);
             }
@@ -254,7 +253,7 @@ export async function run(gideon, message, args) {
 
     catch (ex) {
         Util.log('Caught an exception while running guesseps.js: ' + ex.stack);
-        message.channel.send(Util.CreateEmbed('An error occured while executing this command!', null, message.member));
+        message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
     }
 }
 

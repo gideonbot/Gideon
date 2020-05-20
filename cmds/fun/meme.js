@@ -3,11 +3,13 @@ import Imgur from 'imgur-node';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
+<<<<<<< HEAD
 export async function run(gideon, message) {
+=======
+export async function run(message) {
+>>>>>>> 93460a0537d3807b8e869568bde3dba1efbd9f92
     if (!process.env.IMG_CL) {
         Util.log('Missing env variable for meme command!');
         return message.channel.send('This command is currently not available');

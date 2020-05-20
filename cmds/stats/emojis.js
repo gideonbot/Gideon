@@ -2,15 +2,14 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {     
-    const guild = message.guild;
-    const emojis = guild.emojis.cache.map(emojis => emojis.toString()).join(' ');
+export async function run(message) {
+    if (message.guild.emojis.cache.size < 1) return message.channel.send(Util.CreateEmbed('This guild has no emojis!'));
+
+    const emojis = message.guild.emojis.cache.map(emojis => emojis.toString()).join(' ');
     const escaped = Util.truncate(emojis, 1024, true);
-    const rawurls = guild.emojis.cache.map(x => x.toString() + ' - ' + `[URL](${x.url} '${x.url}')` + '').join(' ');
+    const rawurls = message.guild.emojis.cache.map(x => x.toString() + ' - ' + `[URL](${x.url} '${x.url}')` + '').join(' ');
     const urls = Util.truncate(rawurls, 1024, true);
 
     const embed = Util.CreateEmbed(null, {

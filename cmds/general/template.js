@@ -1,12 +1,9 @@
 import Discord from 'discord.js';
-import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
- * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message) {
     message.channel.send('https://discord.new/EDWFjQqYu8Zs');
 }
 

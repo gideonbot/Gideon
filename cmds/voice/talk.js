@@ -5,12 +5,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  * @param {Discord.VoiceConnection} connection
  */
-export async function run(gideon, message, args, connection) {
+export async function run(message, args, connection) {
     const dir = path.resolve(__dirname, '../../data/audio/phrases');
 
     let file = Util.GetRandomFile(dir);
@@ -24,7 +23,7 @@ export async function run(gideon, message, args, connection) {
 
     phrase.on('finish', () => {
         phrase.destroy();
-        gideon.vcmdexec = false;
+        process.gideon.vcmdexec = false;
     });
 }
 

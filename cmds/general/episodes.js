@@ -1,14 +1,12 @@
 import Discord from 'discord.js';
-import fetch from 'node-fetch';
 import Util from '../../Util.js';
 import moment from 'moment';
 
 /**
- * @param {Discord.Client} gideon
  * @param {Discord.Message} message
  * @param {string[]} args
  */
-export async function run(gideon, message, args) {
+export async function run(message, args) {
     let agc = args[0];
     let info = Util.parseSeriesEpisodeString(args[1]);
 
