@@ -102,8 +102,8 @@ export async function run(message, args) {
     //else if (agc.match(/(?:canaries)/i)) show = shows[7];
     else if (agc.match(/(?:krypton)/i)) show = shows[8];
     else if (agc.match(/(?:lucifer)/i)) show = shows[9];
-    //else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
-    //else if (agc.match(/(?:stargirl)/i)) show = shows[11];
+    else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
+    else if (agc.match(/(?:stargirl)/i)) show = shows[11];
     else if (agc.match(/(?:doompatrol)/i)) show = shows[12];
     else return message.channel.send(ia);
     
