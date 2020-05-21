@@ -78,6 +78,10 @@ export async function run(message, args) {
         {
             id: 'tt8722888',
             title: 'Stargirl'
+        },
+        {
+            id: 'tt8416494',
+            title: 'Doom Patrol'
         }
     ];
 
@@ -85,7 +89,7 @@ export async function run(message, args) {
     let agc = args[1];
 
     const ia = Util.CreateEmbed(`"${agc}" is not a valid argument!`, {
-        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**'
+        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**\n**doompatrol**'
     }, message.member);
 
     if (agc.match(/(?:flash)/i)) show = shows[0];
@@ -100,6 +104,7 @@ export async function run(message, args) {
     else if (agc.match(/(?:lucifer)/i)) show = shows[9];
     //else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
     //else if (agc.match(/(?:stargirl)/i)) show = shows[11];
+    else if (agc.match(/(?:doompatrol)/i)) show = shows[12];
     else return message.channel.send(ia);
     
     if (!show) return message.channel.send(ia);

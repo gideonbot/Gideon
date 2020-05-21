@@ -70,11 +70,16 @@ export async function run(message, args) {
             id: '37809',
             title: 'Stargirl',
             channel: 'DC Universe/The CW'
+        },
+        {
+            id: '36745',
+            title: 'Doom Patrol',
+            channel: 'DC Universe'
         }
     ];
 
     let show = shows[-1];
-
+    console.log(args.join(' '));
     if (agc.match(/(?:flash)/i)) show = shows[0];
     else if (agc.match(/(?:arrow)/i)) show = shows[1];
     else if (agc.match(/(?:supergirl)/i)) show = shows[2];
@@ -87,8 +92,9 @@ export async function run(message, args) {
     else if (agc.match(/(?:lucifer)/i)) show = shows[9];
     else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
     else if (agc.match(/(?:stargirl)/i)) show = shows[11];
+    else if (agc.match(/(?:doompatrol)/i)) show = shows[12];
     else return message.channel.send(Util.CreateEmbed('You must supply a valid show!', {
-        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**'
+        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**\n**doompatrol**'
     }, message.member));
 
     const api = `http://api.tvmaze.com/shows/${show.id}/episodebynumber?season=${info.season}&number=${info.episode}`;
