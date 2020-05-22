@@ -19,8 +19,8 @@ class Help extends Command {
     async exec(message, args) {
         console.log(args); //not working
         const fsurl = 'https://discordapp.com/channels/595318490240385037/595935089070833708';
-        const customprefix = process.gideon.getGuild.get(message.guild.id);
-        const prefixes = `\`${customprefix.prefix}\` | ` + Util.GetPrefix(message).map(x => (Util.getIdFromString(x) == process.gideon.user.id ? '' : '`') + x + (Util.getIdFromString(x) == process.gideon.user.id ? '' : '`')).join(' | ');
+        const customprefix = this.client.getGuild.get(message.guild.id);
+        const prefixes = `\`${customprefix.prefix}\` | ` + Util.GetPrefix(message).filter(x => x != customprefix.prefix).map(x => `\`${x}\``).join(' | ') + ` <@${this.client.user.id}>`;
         let commands = this.handler.modules.array();
 
         const help = Util.CreateEmbed('__Use ' + customprefix.prefix + 'help <module> to get a list of commands__', null, message.member)

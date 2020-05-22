@@ -842,7 +842,7 @@ class Util {
             process.gideon.setGuild.run(currentguild);
         }
 
-        const prefix = [currentguild.prefix, 'Gideon', 'Gideon,', `<@${message.guild.me.user.id}>`, `<@!${message.guild.me.user.id}>`];
+        const prefix = [currentguild.prefix, 'Gideon', 'Gideon,'];
         return prefix;
     }
 }
