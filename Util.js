@@ -544,7 +544,7 @@ class Util {
             return;
         }
 
-        process.gideon.statuses.push({name: 's1', fetch: async () => { return {type: 'PLAYING', value: '!help | gideonbot.com'}; }});
+        process.gideon.statuses.push({name: 's1', fetch: async () => { return {type: 'PLAYING', value: '@Gideon help | gideonbot.com'}; }});
 
         process.gideon.statuses.push({name: 's2', fetch: async () => {
             let mbc = process.gideon.shard ? await process.gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? 0 : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(x => !x.user.bot).size').catch(ex => console.log(ex)) : !process.gideon.guilds.cache.get('595318490240385037') ? [0] : [process.gideon.guilds.cache.get('595318490240385037').members.cache.filter(x => !x.user.bot).size];
