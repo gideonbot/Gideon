@@ -13,7 +13,7 @@ import del from 'del';
 import recursive from 'recursive-readdir';
 import path from 'path';
 import { fileURLToPath } from 'url';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+//const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
 
 Array.prototype.remove = function(...item) {
@@ -629,7 +629,7 @@ class Util {
                 try {
                     this.GetAndStoreEpisode(key);
                 }
-                
+
                 catch (ex) {
                     Util.log(`Error while fetching next episode @CheckEpisodes for "${key}": ${ex}`);
                 }
@@ -735,6 +735,8 @@ class Util {
      */
     static async InitCache() {
         process.gideon.cache.nxeps = new Discord.Collection();
+        process.gideon.cache.dceps = new Discord.Collection();
+        process.gideon.cache.jokes = new Discord.Collection();
 
         for (let show in process.gideon.show_api_urls) {
             try { await this.GetAndStoreEpisode(show); }
@@ -744,11 +746,9 @@ class Util {
             }
         }
 
-        process.gideon.cache.dceps = new Discord.Collection();
-
         for (let show in process.gideon.dc_show_urls) {
             try { await this.GetAndStoreEpisode(show); }
-            
+
             catch (ex) {
                 Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
             }
@@ -769,6 +769,7 @@ class Util {
             canaries: 'Canaries',
             supesnlois: 'Superman & Lois' //peepee moment
         };
+
         let dcnames = {
             doompatrol: 'Doom Patrol', 
             lucifer: 'Lucifer',
@@ -778,7 +779,7 @@ class Util {
             y: 'Y'
         };
 
-        if (names.hasOwnProperty(show)) {
+        if (show in names) {
             try {
                 let json = await Util.fetchJSON(process.gideon.show_api_urls[show]);
                 json.shortname = names[show];
@@ -789,7 +790,7 @@ class Util {
                 Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
             }
         }
-        else if (dcnames.hasOwnProperty(show)) {
+        else if (show in dcnames) {
             try {
                 let json = await Util.fetchJSON(process.gideon.dc_show_urls[show]);
                 json.shortname = dcnames[show];
