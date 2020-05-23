@@ -45,6 +45,10 @@ export function normalize(num: number): string;
 export function CreateEmbed(title: string, options?: EmbedOptions, member?: Discord.GuildMember): Discord.MessageEmbed;
 
 declare module "discord.js" {
+    interface Guild {
+        last_jokes: {category: string, id: number}[];
+    }
+
     interface Client {
         commands: Discord.Collection<string, Command>;
         vcmdexec: boolean;
@@ -103,6 +107,7 @@ interface Translation {
 interface Cache {
     nxeps: Discord.Collection<string, object>;
     dceps: Discord.Collection<string, object>;
+    jokes: Discord.Collection<string, Discord.Collection<number, string>>;
 }
 
 interface CheckUtil {
