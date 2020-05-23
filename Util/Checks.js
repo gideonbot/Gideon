@@ -242,9 +242,9 @@ class Checks {
      * @param {Discord.Guild} guild 
      */
     static async LBG(guild, Util) {
-        const id = guild.id;
         let ub = process.gideon.getUser.get(guild.ownerID);
-        let gbl = process.gideon.getGuild.get(id);
+        let gbl = process.gideon.getGuild.get(guild.id);
+        let owner = await guild.members.fetch(guild.ownerID).catch(ex => console.log(ex));
         
         if (ub) {
             if (ub.blacklist === 1 && gbl) {
@@ -260,13 +260,13 @@ class Checks {
         const channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
         if (!channels.size) {
             await guild.leave();
-            Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
+            Util.log(`Leaving guild \`${guild.name} - ${guild.id} (Owner: ${owner.user.tag})\` due to it being blacklisted!`);
         }
 
         else {
-            await channels.first().send('This guild is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
+            await channels.first().send('This guild or this guild\'s owner is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
             await guild.leave();
-            Util.log(`Leaving guild \`${id}\` due to it being blacklisted!`);
+            Util.log(`Leaving guild \`${guild.name} - ${guild.id} (Owner: ${owner.user.tag})\` due to it being blacklisted!`);
         }
     }
 
