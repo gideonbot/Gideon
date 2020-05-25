@@ -288,9 +288,11 @@ class Util {
 
             let time_diff_s = Math.abs(new Date() - date) / 1000;
 
+            let already_aired = new Date() > date;
+
             let airs_today = time_diff_s < 60 * 60 * 24;
                     
-            let res_value = `Airs in **${Util.secondsToDifferenceString(time_diff_s, {enableSeconds: false})}**`;
+            let res_value = `Air${already_aired ? 'ed' : 's in'} **${Util.secondsToDifferenceString(time_diff_s, {enableSeconds: false})}** ${already_aired ? ' ago' : ''}`;
 
             if (!airs_today) {
                 //this is how we turn
