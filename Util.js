@@ -778,7 +778,8 @@ class Util {
             titans: 'Titans',
             theboys: 'The Boys',
             pennyworth: 'Pennyworth',
-            y: 'Y'
+            y: 'Y',
+            jld: 'Justice League Dark'
         };
 
         if (show in names) {
