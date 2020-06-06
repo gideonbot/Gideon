@@ -82,8 +82,6 @@ gideon.once('ready', async () => {
     setInterval(() => Util.CheckEpisodes(), 30e3);
     setInterval(Util.SQLBkup, twodays);
 
-    if (!process.env.CI) if (gideon.guilds.cache.get('595318490240385037')) await gideon.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on startup
-
     console.log('Ready!');
 
     if (!process.env.CI) return;
@@ -263,7 +261,8 @@ gideon.on('guildDelete', guild => {
     Util.log('Left guild:\n' + guild.id + ' - `' + guild.name + '`');
 });
 
-gideon.on('shardReady', (id, unavailableGuilds) => {
+gideon.on('shardReady', async (id, unavailableGuilds) => {
+    if (!process.env.CI) if (gideon.guilds.cache.get('595318490240385037')) await gideon.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on shardready
     if (!unavailableGuilds) Util.log(`Shard \`${id}\` is connected!`);
     else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to a server outage:\n${Array.from(unavailableGuilds).join('\n')}`);
 });
