@@ -228,8 +228,9 @@ gideon.on('message', message => {
     Util.MsgHandler.Handle(message, Util);
 });
 
-gideon.on('guildCreate', guild => {
-    Util.log('Joined a new guild:\n' + guild.id + ' - `' + guild.name + '`');
+gideon.on('guildCreate', async guild => {
+    await guild.members.fetch();
+    Util.log(Util.CreateEmbed('Joined a new guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner.user.tag}\` (${guild.owner.id})`, thumbnail: guild.iconURL()}));
 
     let currentguild = gideon.getGuild.get(guild.id);
     if (!currentguild) {
@@ -259,7 +260,7 @@ gideon.on('guildCreate', guild => {
 });
 
 gideon.on('guildDelete', guild => {
-    Util.log('Left guild:\n' + guild.id + ' - `' + guild.name + '`');
+    Util.log(Util.CreateEmbed('Left guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner.user.tag}\` (${guild.owner.id})`, thumbnail: guild.iconURL()}));
 });
 
 gideon.on('shardReady', async (id, unavailableGuilds) => {
