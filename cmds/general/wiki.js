@@ -27,6 +27,10 @@ export async function run(message, args) {
             url: 'lucifer.fandom.com',
             title: 'Lucifer'
         },
+        {
+            url: 'doompatrol.fandom.com',
+            title: 'Doom Patrol'
+        },
     ];
     
     let wiki = wikis[-1];
@@ -38,6 +42,7 @@ export async function run(message, args) {
     else if (command.endsWith('dc')) wiki = wikis[2];
     else if (command.endsWith('kr')) wiki = wikis[3];
     else if (command.endsWith('lu')) wiki = wikis[4];
+    else if (command.endsWith('dp')) wiki = wikis[5];
     else return message.channel.send('Supply a valid Wiki!');
 
     let search_term = args.join(' ');
@@ -55,8 +60,8 @@ export async function run(message, args) {
 
         const body = await Util.fetchJSON(api);
 
-        //stargirl & krypton do some weird stuff, therefore the actual result is the 2nd element
-        const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 || wikis.indexOf(wiki) == 3 ? 1 : 0];
+        //stargirl, doom patrol & krypton do some weird stuff, therefore the actual result is the 2nd element
+        const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 || wikis.indexOf(wiki) == 3 ? 1 : 0 || wikis.indexOf(wiki) == 5 ? 1 : 0];
 
         if (Object.keys(body.items).length < 1) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!`, null, message.member));
         
@@ -82,10 +87,10 @@ export async function run(message, args) {
 }
 
 export const help = {
-    name: ['wiki', 'wikistg', 'wikidc', 'wikikr', 'wikilu'],
+    name: ['wiki', 'wikistg', 'wikidc', 'wikikr', 'wikilu', 'wikidp'],
     type: 'general',
     help_text: 'wiki[stg|kr|lu|dc] <term>',
-    help_desc: 'Searches the specified wiki for the given term | stg - Stargirl | kr - Krypton | lu - Lucifer | dc - DC |',
+    help_desc: 'Searches the specified wiki for the given term | stg - Stargirl | kr - Krypton | lu - Lucifer | dc - DC | dp - Doom Patrol',
     owner: false,
     voice: false,
     timevault: false,
