@@ -134,13 +134,10 @@ class Checks {
             plainText = `(${tr[1]}) ${tr[0]}`;
         }
 
-        await message.channel.send(Util.CreateEmbed(null, {
-            description: `${plainText ? '||' + plainText + '||' : ''}`,
-            author: {
-                name: `${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}:`,
-                icon: message.author.avatarURL()
-            }
-        }));
+        const embed = new Discord.MessageEmbed()
+            .setDescription(`${plainText ? '||' + plainText + '||' : ''}`)
+            .setAuthor(`${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}:`, message.author.avatarURL());
+        await message.channel.send(embed);
 
         //we don't send the file in the same message because it shows it above the embed (bad)
         if (message.attachments.filter(x => x.size / 1024 <= 1000).size > 0) {
