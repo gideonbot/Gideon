@@ -284,7 +284,7 @@ class Util {
             let number = body._embedded.nextepisode.number;
             let name = body._embedded.nextepisode.name;
             let date = new Date(body._embedded.nextepisode.airstamp);
-            let channel = body.network ? body.network.name : body.webChannel ? body.webChannel.name : 'Unknown';
+            let channel = body.webChannel ? body.webChannel.name : body.network ? body.network.name : 'Unknown';
 
             let time_diff_s = Math.abs(new Date() - date) / 1000;
 
