@@ -275,7 +275,7 @@ class Util {
             if (!seasons[0].premiereDate) seasondate = null;
             const episodeorder = seasons[0].episodeOrder;
 
-            result.name = `(${body.name === 'Lucifer' ? body.webChannel ? body.webChannel.name : 'Unknown' : body.network ? body.network.name : body.webChannel ? body.webChannel.name : 'Unknown'})`;
+            result.name = `(${body.webChannel ? body.webChannel.name : body.network ? body.network.name : 'Unknown'})`;
             result.value = `\`Awaiting season ${nextseason}!\`\n${seasondate ? 'Season Premiere: ' + '`' + seasondate.toDateString() + '`\n' : ''}${episodeorder ? 'Ordered Episodes: ' + '`' + episodeorder + '`' : ''}`;
         }
 
