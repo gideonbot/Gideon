@@ -45,6 +45,12 @@ export async function run(message, args) {
 
     let command = message.content.toLowerCase().split(' ')[0];
 
+    if (args[0] === 'help') {
+        const wikihelp = Util.CreateEmbed(null, {description: '**The following Wikis are available:**\n\nwiki <term> | Arrowverse Wiki\nwiki**dc** <term> | DC Wiki\nwiki**stg** <term> | Stargirl Wiki\nwiki**kr** <term> | Krypton Wiki\nwiki**lu** <term> | Lucifer Wiki\nwiki**t** <term> | Titans Wiki\nwiki**dp** <term> | Doom Patrol Wiki\nwiki**sv** <term> | Smallville Wiki\n'}, message.member);
+        await message.channel.send(wikihelp);
+        return;
+    }
+
     if (command.endsWith('wiki')) wiki = wikis[0];
     else if (command.endsWith('stg')) wiki = wikis[1];
     else if (command.endsWith('dc')) wiki = wikis[2];
@@ -101,8 +107,8 @@ export async function run(message, args) {
 export const help = {
     name: ['wiki', 'wikistg', 'wikidc', 'wikikr', 'wikilu', 'wikidp', 'wikit', 'wikisv'],
     type: 'general',
-    help_text: 'wiki[stg|kr|lu|dc] <term>',
-    help_desc: 'Searches the specified wiki for the given term | stg - Stargirl | kr - Krypton | lu - Lucifer | dc - DC | dp - Doom Patrol',
+    help_text: 'wiki [help] <term>',
+    help_desc: 'Searches the specified wiki for the given term | !wiki help for a list of wikis',
     owner: false,
     voice: false,
     timevault: false,
