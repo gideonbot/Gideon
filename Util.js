@@ -764,10 +764,10 @@ class Util {
         let names = {
             batwoman: 'Batwoman',
             supergirl: 'Supergirl',
-            flash: 'Flash',
-            legends: 'Legends',
+            flash: 'The Flash',
+            legends: 'DC\'s Legends of Tomorrow',
             stargirl: 'Stargirl', 
-            b_lightning: 'B. Lightning',
+            b_lightning: 'Black Lightning',
             canaries: 'Canaries',
             supesnlois: 'Superman & Lois' //peepee moment
         };
@@ -779,7 +779,8 @@ class Util {
             theboys: 'The Boys',
             pennyworth: 'Pennyworth',
             y: 'Y',
-            jld: 'Justice League Dark'
+            jld: 'Justice League Dark',
+            sandman: 'The Sandman'
         };
 
         if (show in names) {
