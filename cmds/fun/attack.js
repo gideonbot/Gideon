@@ -108,7 +108,7 @@ export async function run(message, args) {
             text: `You air-blasted ${user}!`,
             desc: 'SWOOSH!',
             emote: ':wind_blowing_face:',
-            attackgif: 'https://em.wattpad.com/b99e51cd7d37d9de1a39773222ac6d524c67f954/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f7279496d6167652f42595659734566326156494261413d3d2d3537333037353833312e313532643762656265346162663133643736303438323134313538342e676966'
+            attackgif: 'https://i.imgur.com/S4glYfT.gif'
         },
         {
             text: `you force-choked ${user}!`,
