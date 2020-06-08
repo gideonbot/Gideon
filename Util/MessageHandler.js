@@ -117,14 +117,14 @@ class MsgHandler {
                     return message.reply('You do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
                 }
             }   
-
+/*
             if (command.help.nsfw) {
                 if (!message.channel.nsfw) {
                     process.gideon.emit('commandRefused', message, 'NSFW_REQUIRED');
                     return message.reply('This command requires a `NSFW` channel!');
                 }
             }
-
+*/
             if (command.help.roles && command.help.roles.length > 0) {
                 let missingroles = [];
                 let rolenames = [];
