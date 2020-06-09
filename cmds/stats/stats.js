@@ -5,8 +5,8 @@ import Util from '../../Util.js';
  * @param {Discord.Message} message
  */
 export async function run(message) {
-    const cmds = process.gideon.getStat.get('commands_ran').value;
-    const msgs = process.gideon.getStat.get('messages_sent').value;
+    const cmds = process.gideon.getStat.get('commands_ran').value + 1;
+    const msgs = process.gideon.getStat.get('messages_sent').value + 1;
     const aimsgs =  process.gideon.getStat.get('ai_chat_messages_processed').value;
     let guilds = process.gideon.shard ? await process.gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex)) : [process.gideon.guilds.cache];
 
@@ -17,7 +17,7 @@ export async function run(message) {
     const users = guilds.reduce((r, d) => r + d.memberCount, 0);
 
     message.channel.send(Util.CreateEmbed('Gideon\'s stats:', 
-        {description: `Total guilds: \`${guilds.length}\`\nTotal users: \`${users}\`\nUsed commands: \`${cmds + 1}\`\nMessages sent: \`${msgs + 1}\`\nAI chat messages: \`${aimsgs}\``
+        {description: `Total guilds: \`${guilds.length}\`\nTotal users: \`${users.toLocaleString('de-DE')}\`\nUsed commands: \`${cmds.toLocaleString('de-DE')}\`\nMessages sent: \`${msgs.toLocaleString('de-DE')}\`\nAI chat messages: \`${aimsgs.toLocaleString('de-DE')}\``
         }, message.member)
     );  
 }
