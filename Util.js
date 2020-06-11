@@ -780,7 +780,9 @@ class Util {
             pennyworth: 'Pennyworth',
             y: 'Y',
             jld: 'Justice League Dark',
-            sandman: 'The Sandman'
+            sandman: 'The Sandman',
+            strangeadventures: 'Strange Adventures',
+            greenlantern: 'Green Lantern'
         };
 
         if (show in names) {
