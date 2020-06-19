@@ -8,8 +8,7 @@ import Util from '../../Util.js';
 export async function run(message, args) {
     try {
         const code = args.join(' ');
-        // eslint-disable-next-line semi
-        const returnedValue = eval('(async () => {' + code + '})()');
+        const returnedValue = eval(code);
 
         if (typeof returnedValue === 'undefined') {
             message.channel.send('The evaluated code returned nothing.');
