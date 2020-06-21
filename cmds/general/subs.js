@@ -82,6 +82,14 @@ export async function run(message, args) {
         {
             id: 'tt8416494',
             title: 'Doom Patrol'
+        },
+        {
+            id: 'tt1043813',
+            title: 'Titans'
+        },
+        {
+            id: 'tt0279600',
+            title: 'Smallville'
         }
     ];
 
@@ -89,7 +97,7 @@ export async function run(message, args) {
     let agc = args[1];
 
     const ia = Util.CreateEmbed(`"${agc}" is not a valid argument!`, {
-        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**batwoman**\n**blacklightning**\n**canaries**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**\n**doompatrol**'
+        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**\n**doompatrol**\n**titans**\n**smallville**'
     }, message.member);
 
     if (agc.match(/(?:flash)/i)) show = shows[0];
@@ -99,12 +107,14 @@ export async function run(message, args) {
     else if (agc.match(/(?:constantine)/i)) show = shows[4];
     else if (agc.match(/(?:batwoman)/i)) show = shows[5];
     else if (agc.match(/(?:blacklightning)/i)) show = shows[6];
-    //else if (agc.match(/(?:canaries)/i)) show = shows[7];
+    else if (agc.match(/(?:canaries)/i)) show = shows[7];
     else if (agc.match(/(?:krypton)/i)) show = shows[8];
     else if (agc.match(/(?:lucifer)/i)) show = shows[9];
     else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
     else if (agc.match(/(?:stargirl)/i)) show = shows[11];
     else if (agc.match(/(?:doompatrol)/i)) show = shows[12];
+    else if (agc.match(/(?:titans)/i)) show = shows[13];
+    else if (agc.match(/(?:smallville)/i)) show = shows[14];
     else return message.channel.send(ia);
     
     if (!show) return message.channel.send(ia);

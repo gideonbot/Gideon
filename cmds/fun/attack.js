@@ -10,7 +10,7 @@ export async function run(message, args) {
     let atc = args[0];
 
     const at = Util.CreateEmbed('You must supply an attack and a victim!', {
-        description: 'Available attacks:\n**iceblast**\n**lthrow**\n**reverseflash**\n**vibeblast**\n**shootarrow**\n**heatvision**\n**stretchpunch**\n**canarycry**\n**batarang**\n**sendtohell**\n**thunderclap**\n**elblast**\n**fireblast**'
+        description: 'Available attacks:\n**iceblast**\n**lthrow**\n**reverseflash**\n**vibeblast**\n**shootarrow**\n**heatvision**\n**stretchpunch**\n**canarycry**\n**batarang**\n**sendtohell**\n**thunderclap**\n**elblast**\n**fireblast**\n**shoot**\n**airblast**\n**forcechoke**\n**devilface**\n**seduce**\n**metalwords**\n**staffblast**\n**rocketpunch**'
     });
 
     if (!atc) return message.channel.send(at);
@@ -102,7 +102,49 @@ export async function run(message, args) {
             text: `Chloe shot ${user} for you!`,
             desc: 'LONG LIVE DECKERSTAR!',
             emote: ':smiling_imp:',
-            attackgif: 'https://media.giphy.com/media/RJW3H91jSJTWNV9u6Y/giphy.gif'
+            attackgif: 'https://i.imgur.com/Nwm443D.gif'
+        },
+        {
+            text: `You air-blasted ${user}!`,
+            desc: 'SWOOSH!',
+            emote: ':wind_blowing_face:',
+            attackgif: 'https://i.imgur.com/S4glYfT.gif'
+        },
+        {
+            text: `you force-choked ${user}!`,
+            desc: 'HNNGGGH!',
+            emote: ':fist::skin-tone-1:',
+            attackgif: 'https://i.makeagif.com/media/12-11-2015/FgzOIU.gif'
+        },
+        {
+            text: `you showed ${user} your devil-face!`,
+            desc: 'Holy shit.',
+            emote: ':smiling_imp:',
+            attackgif: 'https://66.media.tumblr.com/e1b7e0bf1888f523ffd62485d78a9825/tumblr_p23smzWoJt1u95cmio1_500.gif'
+        },
+        {
+            text: `you put ${user} under your love spell!`,
+            desc: 'Cool beans!',
+            emote: ':heart:',
+            attackgif: 'https://i.imgur.com/J68Ougc.gif'
+        },
+        {
+            text: `you threw metal words at ${user}!`,
+            desc: 'You\'re so FUCKED.',
+            emote: ':crossed_swords:',
+            attackgif: 'https://66.media.tumblr.com/e3d1a98173d787296259696e9fde8d19/tumblr_pnciemA2b01uezmbko3_500.gif'
+        },
+        {
+            text: `you blasted ${user} with the Cosmic Staff!`,
+            desc: 'I didn\'t, IT did!',
+            emote: ':star:',
+            attackgif: 'https://66.media.tumblr.com/9830cb974e42d024ce1890a3947a16bf/3a843c4c812f8703-f6/s540x810/71fdbfc786435b9db329244a4db1e2d2cc912ad6.gif'
+        },
+        {
+            text: `you fired your rocket-punch at ${user}!`,
+            desc: 'WROOM!',
+            emote: ':rocket:',
+            attackgif: 'https://i.imgur.com/dYFWEMX.gif'
         },
     ];
 
@@ -121,7 +163,14 @@ export async function run(message, args) {
     else if (atc.match(/(?:thunderclap)/i)) attack = attacks[10];
     else if (atc.match(/(?:elblast)/i)) attack = attacks[11];
     else if (atc.match(/(?:fireblast)/i)) attack = attacks[12];
-    else if (atc.match(/(?:shoot)/i) && message.member.roles.cache.has('635744558499627009')) attack = attacks[13];
+    else if (atc.match(/(?:shoot)/i)) attack = attacks[13];
+    else if (atc.match(/(?:airblast)/i)) attack = attacks[14];
+    else if (atc.match(/(?:forcechoke)/i)) attack = attacks[15];
+    else if (atc.match(/(?:devilface)/i)) attack = attacks[16];
+    else if (atc.match(/(?:seduce)/i)) attack = attacks[17];
+    else if (atc.match(/(?:metalwords)/i)) attack = attacks[18];
+    else if (atc.match(/(?:staffblast)/i)) attack = attacks[19];
+    else if (atc.match(/(?:rocketpunch)/i)) attack = attacks[20];
 
     else return message.channel.send(at);
     if (!attack) return message.channel.send(at);

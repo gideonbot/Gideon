@@ -39,15 +39,23 @@ export async function run(message, args) {
     else if (args[0].match(/(?:tsc)/i)) rjpka = 'UcPxCV5';
     else if (args[0].match(/(?:ilbal)/i)) rjpka = 'f8mENXa';
     else if (args[0].match(/(?:fs5gr)/i)) rjpka = 'eLugrZD';
-    else if (args[0].match(/(?:nsfw)/i)) return Util.IMG('AwPimhP', message, true);
-    else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`, null, message.member)); 
+    else if (args[0].match(/(?:nsfw)/i)) {
+        if (message.author.id !== process.gideon.owner) {
+            if (!message.channel.nsfw) {
+                process.gideon.emit('commandRefused', message, 'NSFW_REQUIRED');
+                return message.channel.send(Util.CreateEmbed('This command requires a NSFW channel!', { image: 'https://i.imgur.com/JvmFASl.gif' }, message.member));
+            }
+        }
+        return Util.IMG('AwPimhP', message, true);
+    }
+    else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument! (jpk help)`, null, message.member)); 
 
     Util.IMG(rjpka, message);
 }
 
 export const help = {
     name: 'jpk',
-    type: 'fun',
+    type: 'misc',
     help_text: 'jpk [help]/[album]',
     help_desc: 'Displays a random JPK gif',
     owner: false,

@@ -275,7 +275,7 @@ class Util {
             if (!seasons[0].premiereDate) seasondate = null;
             const episodeorder = seasons[0].episodeOrder;
 
-            result.name = '';
+            result.name = `(${body.webChannel ? body.webChannel.name : body.network ? body.network.name : 'Unknown'})`;
             result.value = `\`Awaiting season ${nextseason}!\`\n${seasondate ? 'Season Premiere: ' + '`' + seasondate.toDateString() + '`\n' : ''}${episodeorder ? 'Ordered Episodes: ' + '`' + episodeorder + '`' : ''}`;
         }
 
@@ -284,7 +284,7 @@ class Util {
             let number = body._embedded.nextepisode.number;
             let name = body._embedded.nextepisode.name;
             let date = new Date(body._embedded.nextepisode.airstamp);
-            let channel = body.network ? body.network.name : body.webChannel ? body.webChannel.name : 'Unknown';
+            let channel = body.webChannel ? body.webChannel.name : body.network ? body.network.name : 'Unknown';
 
             let time_diff_s = Math.abs(new Date() - date) / 1000;
 
@@ -764,10 +764,10 @@ class Util {
         let names = {
             batwoman: 'Batwoman',
             supergirl: 'Supergirl',
-            flash: 'Flash',
-            legends: 'Legends',
+            flash: 'The Flash',
+            legends: 'DC\'s Legends of Tomorrow',
             stargirl: 'Stargirl', 
-            b_lightning: 'B. Lightning',
+            b_lightning: 'Black Lightning',
             canaries: 'Canaries',
             supesnlois: 'Superman & Lois' //peepee moment
         };
@@ -778,7 +778,11 @@ class Util {
             titans: 'Titans',
             theboys: 'The Boys',
             pennyworth: 'Pennyworth',
-            y: 'Y'
+            y: 'Y',
+            jld: 'Justice League Dark',
+            sandman: 'The Sandman',
+            strangeadventures: 'Strange Adventures',
+            greenlantern: 'Green Lantern'
         };
 
         if (show in names) {

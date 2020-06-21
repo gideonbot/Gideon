@@ -56,7 +56,10 @@ class TR {
         else {
             let tr = await this.Translate(args.join(' '));
             await message.delete({ timeout: 200 });
-            message.channel.send(Util.CreateEmbed(null, {description: `(${tr[1]}) ${tr[0]}`, author: {name: `${message.author.tag} said:`, icon: message.author.avatarURL()}}));
+            const embed = new Discord.MessageEmbed()
+                .setDescription(`(${tr[1]}) ${tr[0]}`)
+                .setAuthor(`${message.author.tag} said:`, message.author.avatarURL());
+            message.channel.send(embed);
         }
     }
 }

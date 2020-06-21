@@ -40,7 +40,11 @@ gideon.dc_show_urls = {
     lucifer: 'http://api.tvmaze.com/shows/1859?embed=nextepisode',
     titans: 'http://api.tvmaze.com/shows/27557?embed=nextepisode',
     theboys: 'http://api.tvmaze.com/shows/15299?embed=nextepisode',
-    y: 'http://api.tvmaze.com/shows/42668?embed=nextepisode'
+    y: 'http://api.tvmaze.com/shows/42668?embed=nextepisode',
+    jld: 'http://api.tvmaze.com/shows/47261?embed=nextepisode',
+    sandman: 'http://api.tvmaze.com/shows/42827?embed=nextepisode',
+    strangeadventures: 'http://api.tvmaze.com/shows/44777?embed=nextepisode',
+    greenlantern: 'http://api.tvmaze.com/shows/44776?embed=nextepisode'
 };
 
 if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
@@ -81,8 +85,6 @@ gideon.once('ready', async () => {
     setInterval(Util.UpdateStatus, 10e3);
     setInterval(() => Util.CheckEpisodes(), 30e3);
     setInterval(Util.SQLBkup, twodays);
-
-    if (!process.env.CI) if (gideon.guilds.cache.get('595318490240385037')) await gideon.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on startup
 
     console.log('Ready!');
 
@@ -229,8 +231,9 @@ gideon.on('message', message => {
     Util.MsgHandler.Handle(message, Util);
 });
 
-gideon.on('guildCreate', guild => {
-    Util.log('Joined a new guild:\n' + guild.id + ' - `' + guild.name + '`');
+gideon.on('guildCreate', async guild => {
+    await guild.members.fetch();
+    Util.log(Util.CreateEmbed('Joined a new guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner.user.tag}\` (${guild.owner.id})`, thumbnail: guild.iconURL()}));
 
     let currentguild = gideon.getGuild.get(guild.id);
     if (!currentguild) {
@@ -260,10 +263,11 @@ gideon.on('guildCreate', guild => {
 });
 
 gideon.on('guildDelete', guild => {
-    Util.log('Left guild:\n' + guild.id + ' - `' + guild.name + '`');
+    Util.log(Util.CreateEmbed('Left guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner.user.tag}\` (${guild.owner.id})`, thumbnail: guild.iconURL()}));
 });
 
-gideon.on('shardReady', (id, unavailableGuilds) => {
+gideon.on('shardReady', async (id, unavailableGuilds) => {
+    if (!process.env.CI) if (gideon.guilds.cache.get('595318490240385037')) await gideon.guilds.cache.get('595318490240385037').members.fetch(); //fetch timevault members on shardready
     if (!unavailableGuilds) Util.log(`Shard \`${id}\` is connected!`);
     else Util.log(`Shard \`${id}\` is connected!\n\nThe following guilds are unavailable due to a server outage:\n${Array.from(unavailableGuilds).join('\n')}`);
 });

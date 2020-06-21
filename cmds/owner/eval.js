@@ -8,8 +8,7 @@ import Util from '../../Util.js';
 export async function run(message, args) {
     try {
         const code = args.join(' ');
-        // eslint-disable-next-line semi
-        const returnedValue = await eval('(async () => { return ' + code + '})()').catch(e => message.channel.send(Util.CreateEmbed('An error occurred while processing your request:', {description: '```\n' + Util.truncate(e.stack, 400, true) + '```'}, message.member)));
+        const returnedValue = eval(code);
 
         if (typeof returnedValue === 'undefined') {
             message.channel.send('The evaluated code returned nothing.');

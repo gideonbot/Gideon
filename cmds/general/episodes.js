@@ -7,6 +7,8 @@ import moment from 'moment';
  * @param {string[]} args
  */
 export async function run(message, args) {
+    if (process.gideon.guessing.includes(message.author.id)) return message.reply('no cheating while your guessing game is active!');
+
     let agc = args[0];
     let info = Util.parseSeriesEpisodeString(args[1]);
 
@@ -75,6 +77,16 @@ export async function run(message, args) {
             id: '36745',
             title: 'Doom Patrol',
             channel: 'DC Universe'
+        },
+        {
+            id: '27557',
+            title: 'Titans',
+            channel: 'DC Universe'
+        },
+        {
+            id: '435',
+            title: 'Smallville',
+            channel: 'The CW'
         }
     ];
 
@@ -93,8 +105,10 @@ export async function run(message, args) {
     else if (agc.match(/(?:supesnlois)/i)) show = shows[10];
     else if (agc.match(/(?:stargirl)/i)) show = shows[11];
     else if (agc.match(/(?:doompatrol)/i)) show = shows[12];
+    else if (agc.match(/(?:titans)/i)) show = shows[13];
+    else if (agc.match(/(?:smallville)/i)) show = shows[14];
     else return message.channel.send(Util.CreateEmbed('You must supply a valid show!', {
-        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**\n**doompatrol**'
+        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**\n**doompatrol**\n**titans**\n**smallville**'
     }, message.member));
 
     const api = `http://api.tvmaze.com/shows/${show.id}/episodebynumber?season=${info.season}&number=${info.episode}`;

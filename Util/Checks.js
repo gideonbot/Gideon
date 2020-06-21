@@ -134,13 +134,10 @@ class Checks {
             plainText = `(${tr[1]}) ${tr[0]}`;
         }
 
-        await message.channel.send(Util.CreateEmbed(null, {
-            description: `${plainText ? '||' + plainText + '||' : ''}`,
-            author: {
-                name: `${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}:`,
-                icon: message.author.avatarURL()
-            }
-        }));
+        const embed = new Discord.MessageEmbed()
+            .setDescription(`${plainText ? '||' + plainText + '||' : ''}`)
+            .setAuthor(`${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}:`, message.author.avatarURL());
+        await message.channel.send(embed);
 
         //we don't send the file in the same message because it shows it above the embed (bad)
         if (message.attachments.filter(x => x.size / 1024 <= 1000).size > 0) {
@@ -481,11 +478,11 @@ class Checks {
      * @param {Discord.GuildMember} member
      */
     static async AccCheck(member, Util) {
-        const flagged = ['141983643005485056', '708427459174858752', '565366753623015475', '477208850156617728', '599704513292795925', '444212008167014410', '333038169790349312'];
+        const flagged = ['141983643005485056', '708427459174858752', '565366753623015475', '477208850156617728', '599704513292795925', '444212008167014410', '333038169790349312', '714509213035921538', '268081216555581451', '715542369465925715', '414712593941397504', '545089908377780245'];
         if (flagged.includes(member.id)) {
             const guildowner = await member.guild.members.fetch(member.guild.ownerID);
-            const dmstring = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of your guild \`(${member.guild.name})\`!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisment\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n\`\`\`\nWe advise to ban this user.`;
-            const string = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of this guild!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisment\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n\`\`\`\nWe advise to notify the guild owner (<@${member.guild.ownerID}>).`;
+            const dmstring = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of your guild \`(${member.guild.name})\`!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisement\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n- Spamming NSFW media\n\`\`\`\nWe advise to ban this user.`;
+            const string = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of this guild!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisement\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n- Spamming NSFW media\n\`\`\`\nWe advise to notify the guild owner (<@${member.guild.ownerID}>).`;
             
             await guildowner.send(dmstring)
                 .then(Util.log(`Sent account warning about \`${member.user.tag}\` in \`${member.guild.name}\` to \`${guildowner.user.tag}\`!`))
