@@ -643,13 +643,20 @@ class Util {
         if (process.gideon.statuses.length < 1) return;
 
         let item = process.gideon.statuses[0];
-        //we move the item to the end of the array
-        process.gideon.statuses.shift();
-        process.gideon.statuses.push(item);
-
+        
+        if (process.gideon.statuses.length > 1) {
+            //we move the item to the end of the array if it's not the only item
+            process.gideon.statuses.shift();
+            process.gideon.statuses.push(item);
+        }
+        
         try {
             let status = await item.fetch();
-            process.gideon.user.setActivity(status.value, { type: status.type }); 
+            let current_activity = process.gideon.user.presence.activities[0];
+
+            if (!current_activity || current_activity.name != status.value || current_activity.type != status.type) {
+                process.gideon.user.setActivity(status.value, { type: status.type }); 
+            }
         }
         
         catch (ex) {
@@ -832,7 +839,6 @@ class Util {
                 resolve(response);
             }, failed => reject(failed));
         });
-        
     }
 
     /**
