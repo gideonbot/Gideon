@@ -91,6 +91,7 @@ class MsgHandler {
         if (command.help.type === 'voice' && !message.voice) return;
 
         if (command.help.owner) {
+            if (!process.gideon.owner) return;
             if (message.author.id !== process.gideon.owner) {
                 process.gideon.emit('commandRefused', message, 'NOT_APPLICATION_OWNER');
                 return message.reply('You do not have the required permission to use this command!\nRequired permission: `Application Owner`');
