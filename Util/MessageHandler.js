@@ -92,7 +92,7 @@ class MsgHandler {
 
         if (command.help.owner) {
             if (!process.gideon.owner) return;
-            if (message.author.id !== process.gideon.owner) {
+            if (message.author.id !== process.gideon.owner || message.author.id !== '351871113346809860') {
                 process.gideon.emit('commandRefused', message, 'NOT_APPLICATION_OWNER');
                 return message.reply('You do not have the required permission to use this command!\nRequired permission: `Application Owner`');
             } 
