@@ -25,6 +25,7 @@ class MsgHandler {
 
         const lowercaseContent = message.content.toLowerCase();
 
+        if (!process.gideon.getGuild) return;
         let currentguild = process.gideon.getGuild.get(message.guild.id);
         if (!currentguild) {
             currentguild = {
