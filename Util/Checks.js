@@ -51,7 +51,7 @@ class Checks {
                     const body = await Util.fetchJSON(api);
 
                     const channel_id = body && body.items && body.items[0] && body.items[0].snippet && body.items[0].snippet.channelId ? body.items[0].snippet.channelId : null;
-                    if (!channel_id) return reject('Failed to get data from API');
+                    if (!channel_id) return reject();
 
                     if (cids.includes(channel_id)) return resolve({match: true, content: '`' + message.content + '`'});
                 }
@@ -86,7 +86,9 @@ class Checks {
                 const abmsg = await message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-BS-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}, message.member) });
                 await abmsg.delete({ timeout: 3500 });
             }
-        }, failed => console.log(failed));
+        }, failed => {
+            if (failed) console.log(failed);
+        });
     }
 
     /**
