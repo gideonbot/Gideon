@@ -36,8 +36,8 @@ gideon.show_api_urls = {
 };
 gideon.dc_show_urls = {
     doompatrol: 'http://api.tvmaze.com/shows/36745?embed=nextepisode', 
-    pennyworth: 'http://api.tvmaze.com/shows/36774?embed=nextepisode',
     lucifer: 'http://api.tvmaze.com/shows/1859?embed=nextepisode',
+    pennyworth: 'http://api.tvmaze.com/shows/36774?embed=nextepisode',
     titans: 'http://api.tvmaze.com/shows/27557?embed=nextepisode',
     theboys: 'http://api.tvmaze.com/shows/15299?embed=nextepisode',
     y: 'http://api.tvmaze.com/shows/42668?embed=nextepisode',
