@@ -91,7 +91,7 @@ export async function run(message, args) {
     ];
 
     let show = shows[-1];
-    console.log(args.join(' '));
+    
     if (agc.match(/(?:flash)/i)) show = shows[0];
     else if (agc.match(/(?:arrow)/i)) show = shows[1];
     else if (agc.match(/(?:supergirl)/i)) show = shows[2];

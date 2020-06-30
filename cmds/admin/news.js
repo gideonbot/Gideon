@@ -55,7 +55,9 @@ export async function run(message) {
                 return;
             }
         }
-        catch (ex) {console.log(ex);}
+        catch (ex) {
+            if (ex) console.log(ex);
+        }
 
         if (message.content.toLowerCase() === 'cancel' || message.content.toLowerCase() === 'stop') {
             await message.channel.bulkDelete(3); 
