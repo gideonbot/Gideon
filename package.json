@@ -34,6 +34,7 @@
     "node-fetch": "^2.6.0",
     "opensubtitles-api": "^5.1.2",
     "pretty-error": "^2.1.1",
+    "random-array-ensure": "^1.0.6",
     "rarbg": "^1.2.7",
     "recursive-readdir": "^2.2.2",
     "request": "^2.88.2",

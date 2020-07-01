@@ -1,3 +1,4 @@
+import RandomEnsure from 'random-array-ensure';
 /**
  * @param {Discord.Message} message
  */
@@ -22,7 +23,10 @@ export async function run(message) {
         'https://cdn.discordapp.com/attachments/727230121358000188/727549971293012038/Tell_Me_How_Long_Music_Video.webm'
     ];
 
-    message.channel.send(clips[Math.floor(Math.random() * clips.length)]);
+    const random = RandomEnsure.RandomEnsure;
+    let kbell = new random(clips);
+
+    message.channel.send(kbell.next());
 }
 
 export const help = {
