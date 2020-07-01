@@ -20,10 +20,17 @@ export async function run(message) {
         'https://cdn.discordapp.com/attachments/727230121358000188/727539028332773479/Its_Annas_movie.mp4',
         'https://cdn.discordapp.com/attachments/727230121358000188/727543784484896788/Love_Ballad_To_Your_Therapist.mp4',
         'https://cdn.discordapp.com/attachments/727230121358000188/727548985153159230/Some_Things_Never_Change.mp4',
-        'https://cdn.discordapp.com/attachments/727230121358000188/727549971293012038/Tell_Me_How_Long_Music_Video.webm'
+        'https://cdn.discordapp.com/attachments/727230121358000188/727549971293012038/Tell_Me_How_Long_Music_Video.webm',
+        'https://cdn.discordapp.com/attachments/727230121358000188/727963241669722203/I_get_it.mp4',
+        'https://cdn.discordapp.com/attachments/727230121358000188/727963243183734805/Im_out.mp4',
+        'https://cdn.discordapp.com/attachments/727230121358000188/727974408366325860/Our_3_year_old_is_nuts_man.mp4',
+        'https://cdn.discordapp.com/attachments/727230121358000188/727963244580306944/Why_is_earth.mp4',
+        'https://cdn.discordapp.com/attachments/727230121358000188/727968383286378506/Dax_and_Kristen_do_Africa.webm',
+        'https://cdn.discordapp.com/attachments/727230121358000188/727969301113471097/Oopsies.webm',
+        'https://cdn.discordapp.com/attachments/727230121358000188/727970535228702822/Taste_Buds.mp4'
     ];
 
-    const random = RandomEnsure.RandomEnsure;
+    const random = RandomEnsure.RandomEnsure; //module import destructuring seems broken, this is a lil workaround
     let kbell = new random(clips);
 
     message.channel.send(kbell.next());
