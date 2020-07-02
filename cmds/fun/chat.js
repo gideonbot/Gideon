@@ -1,6 +1,3 @@
-import Discord from 'discord.js';
-import Util from '../../Util.js';
-
 /**
  * @param {Discord.Message} message
  * @param {string[]} args

@@ -1,4 +1,3 @@
-import Discord from 'discord.js';
 import Util from '../../Util.js';
 import { Readable } from 'stream';
 const SILENCE_FRAME = Buffer.from([0xF8, 0xFF, 0xFE]);

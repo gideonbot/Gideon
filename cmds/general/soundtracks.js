@@ -1,4 +1,3 @@
-import Discord from 'discord.js';
 import gideonapi from 'gideon-api';
 import Util from '../../Util.js';
 

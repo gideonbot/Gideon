@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import Discord from 'discord.js';
 import path from 'path';
 import { fileURLToPath } from 'url';

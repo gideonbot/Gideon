@@ -1,4 +1,3 @@
-import Discord from 'discord.js';
 import Util from '../../Util.js';
 import moment from 'moment';
 
