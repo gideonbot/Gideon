@@ -27,7 +27,14 @@ export async function run(message) {
         'https://cdn.discordapp.com/attachments/727230121358000188/727963244580306944/Why_is_earth.mp4',
         'https://cdn.discordapp.com/attachments/727230121358000188/727968383286378506/Dax_and_Kristen_do_Africa.webm',
         'https://cdn.discordapp.com/attachments/727230121358000188/727969301113471097/Oopsies.webm',
-        'https://cdn.discordapp.com/attachments/727230121358000188/727970535228702822/Taste_Buds.mp4'
+        'https://cdn.discordapp.com/attachments/727230121358000188/727970535228702822/Taste_Buds.mp4',
+        'https://cdn.discordapp.com/attachments/727230121358000188/728924459481956382/History_of_Disney_Songs.webm',
+        'https://cdn.discordapp.com/attachments/727230121358000188/728925192407220224/Love_Is_An_Open_Door.mp4',
+        'https://cdn.discordapp.com/attachments/727230121358000188/728926227750191184/Mary_Poppins_Quits.webm',
+        'https://cdn.discordapp.com/attachments/727230121358000188/728926598283132928/Memes.mp4',
+        'https://cdn.discordapp.com/attachments/727230121358000188/728927976238088202/Ultimate_Back-to-School_Anthem.webm',
+        'https://cdn.discordapp.com/attachments/727230121358000188/728930016993476628/Holding_on_tight_to_you.mp4',
+        'https://cdn.discordapp.com/attachments/727230121358000188/728931081067298846/The_Next_Right_Thing.mp4'
     ];
 
     const random = RandomEnsure.RandomEnsure; //module import destructuring seems broken, this is a lil workaround
