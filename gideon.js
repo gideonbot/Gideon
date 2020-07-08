@@ -66,7 +66,6 @@ gideon.once('ready', async () => {
     if (app && app.owner) gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
 
     Util.SQL.InitDB();
-    Util.Selfhostlog();
     await Util.InitCache();
     Util.InitStatus();
     Util.UpdateStatus();
