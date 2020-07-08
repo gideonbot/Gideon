@@ -173,7 +173,8 @@ class Util {
      */
     static log(message, files) {
         if (!message) return false;
-        console.log(message);
+
+        if (!(message instanceof Discord.MessageEmbed)) console.log(message);
 
         let url = process.env.LOG_WEBHOOK_URL;
         if (!url) return false;
@@ -406,22 +407,6 @@ class Util {
         }
 
         return array_of_arrays;
-    }
-
-    /**
-     * Logs bot
-     */
-    static async Selfhostlog() {
-        if (['Gideon#2420', 'gideon-dev#4623', 'FlotationMode#5372', 'theRapist#9880', 'githubactions#9363'].includes(process.gideon.user.tag)) return; 
-
-        const api = 'https://gideonbot.com/api/selfhost';
-        let body = {
-            user: process.gideon.user.tag,
-            guilds: process.gideon.guilds.cache.map(x => x.id + ' - ' + x.name)
-        };
-
-        const options = { method: 'POST', body: JSON.stringify(body, null, 2), headers: { 'Content-Type': 'application/json' } };
-        fetch(api, options);
     }
 
     static GetRandomFile(dir) {
