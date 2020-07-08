@@ -1,4 +1,3 @@
-import Discord from 'discord.js';
 import Pagination from 'discord-paginationembed';
 import Util from '../../Util.js';
 

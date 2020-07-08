@@ -1,4 +1,3 @@
-import Discord from 'discord.js';
 import OpenSubtitles from 'opensubtitles-api';
 import Util from '../../Util.js';
 

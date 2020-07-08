@@ -1,4 +1,3 @@
-import Discord from 'discord.js';
 /**
  * @param {Discord.Message} message
  */

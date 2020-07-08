@@ -1,4 +1,3 @@
-import Discord from 'discord.js';
 import Imgur from 'imgur-node';
 import Util from '../../Util.js';
 
