@@ -117,6 +117,7 @@ interface CheckUtil {
     CSD(message: Discord.Message, Util: any): Promise<void>;
     LBG(guild: Discord.Guild, Util: any): Promise<void>;
     IBU(message: Discord.Message, Util: any): boolean;
+    BadMention(message: Discord.Message): boolean;
     RulesCheck(message: Discord.Message): Promise<void>;
     VCCheck(oldState: Discord.VoiceState, newState: Discord.VoiceState): Promise<void>;
 }
