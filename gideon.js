@@ -66,7 +66,6 @@ gideon.once('ready', async () => {
     if (app && app.owner) gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
 
     Util.SQL.InitDB();
-    Util.Selfhostlog();
     await Util.InitCache();
     Util.InitStatus();
     Util.UpdateStatus();
@@ -263,8 +262,7 @@ gideon.on('guildCreate', async guild => {
 });
 
 gideon.on('guildDelete', guild => {
-    if (!guild) return;
-    Util.log(Util.CreateEmbed('Left guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => x && x.user && !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x && x.user && x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner ? guild.owner.user.tag : 'Unknown'}\` (${guild.owner.id})`, thumbnail: guild.iconURL()}));
+    Util.log(Util.CreateEmbed('Left guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => x && x.user && !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x && x.user && x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner ? `${guild.owner.user.tag} (${guild.owner.id})` : 'Unknown'}\``, thumbnail: guild.iconURL()}));
 });
 
 gideon.on('shardReady', async (id, unavailableGuilds) => {

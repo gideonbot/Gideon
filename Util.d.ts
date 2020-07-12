@@ -24,7 +24,6 @@ export function ValID(input: string): string;
 export function IMG(image_id: string, message: Discord.Message, nsfw: boolean): Promise<void>;
 export function Split<T>(arr: T[], chunks: number): T[][];
 export function Starboard(reaction: Discord.MessageReaction, user: Discord.User): Promise<void>;
-export function Selfhostlog(): Promise<void>;
 export function SQLBkup(): Promise<void>;
 export function SetStat(stat: string, value: number): void;
 export function IncreaseStat(stat: string, value?: number): void;
