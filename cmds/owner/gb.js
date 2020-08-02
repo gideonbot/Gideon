@@ -24,6 +24,14 @@ export async function run(message, args) {
             gb.blacklist = 1;
             process.gideon.setGuild.run(gb);
             message.channel.send(`Guild \`${id}\` has been blacklisted!`);
+            
+            let guild = process.gideon.guilds.cache.get(id);
+            if (guild) {
+                const textchannels = guild.channels.cache.filter(c => c.type == 'text');
+                const channels = textchannels.filter(c => c.permissionsFor(guild.me).has('SEND_MESSAGES'));
+                if (channels.size > 0) await channels.first().send('This guild or this guild\'s owner is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
+                guild.leave();
+            }
         }
 
         else if (gb.blacklist === 1) {
