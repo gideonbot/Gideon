@@ -55,8 +55,7 @@ class Voice {
         const options = { method: 'POST', body: rawaudio, headers: headers };
 
         let result = await fetch(api, options).then(res => res.json());
-
-        console.log(result);
+        
         return result;
     }
 
