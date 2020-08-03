@@ -65,7 +65,6 @@ export const commands = [
     '!leaderboard',
     '!meme',
     '!timeline',
-    '!voice',
     '!wells',
     '!content',
     '!selfbots',

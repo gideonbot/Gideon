@@ -14,6 +14,11 @@ class Silence extends Readable {
  * @param {string[]} args
  */
 export async function run(message, args) {
+    if (!process.env.WITAI_TOKEN) {
+        Util.log('WITAI_TOKEN is missing in .env!');
+        return message.reply('This command is not available currently!');
+    }
+    
     let command = message.content.toLowerCase().split(' ')[0];
 
     const voicehelp = Util.CreateEmbed('Usage of Voice™ Commands:', {
@@ -25,15 +30,11 @@ export async function run(message, args) {
         return;
     }
 
-    if (args[0] === 'help') {
-        await message.channel.send(voicehelp);
-        return;
-    }
+    if (args[0] === 'help') return message.channel.send(voicehelp);
 
     if (args[0] === 'tutorial') {
         const url = 'https://drive.google.com/file/d/1nShWSKfnMoksKgcWao-kdLeeZjJ9K2-e/view';
-        await message.channel.send(url);
-        return;
+        return message.channel.send(url);
     }
 
     if (!message.member.voice.channel) return message.reply('You need to join a voice channel first!');
