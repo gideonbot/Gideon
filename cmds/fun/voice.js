@@ -64,14 +64,12 @@ export async function run(message, args) {
                 const SpeechRec = await Util.Voice.SpeechRecognition(audio);
 
                 if (SpeechRec) {
-                    let entities = SpeechRec.entities;
-                    if (!entities) return;
-    
-                    let intent = Object.values(entities)[0];
+                    if (!SpeechRec || !SpeechRec.intents) return;
+
+                    let intent = SpeechRec.intents[0];
                     if (!intent) return;
-    
-                    let value = intent[0].value;
-                    await Util.Voice.VoiceResponse(value, message, connection, Util);
+
+                    await Util.Voice.VoiceResponse(intent.name, message, connection, Util);
                 }
             }
         }); 

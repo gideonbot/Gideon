@@ -70,8 +70,8 @@ class Voice {
         const data = {
             channel: message.channel,
             id: message.id,
-            type: message.type,
-            content: '!' + intent,
+            type: 0,
+            content: `<@${process.gideon.user.id}> ${intent}`,
             author: message.author,
             partial: message.partial
         };
