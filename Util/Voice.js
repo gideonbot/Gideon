@@ -64,14 +64,15 @@ class Voice {
      * @param {string} intent 
      * @param {Discord.VoiceConnection} connection 
      * @param {Discord.Message} message
+     * @param {Discord.User} user
      */
-    static async VoiceResponse(intent, message, connection, Util) {
+    static async VoiceResponse(intent, message, connection, Util, user) {
         const data = {
             channel: message.channel,
             id: message.id,
             type: 0,
             content: `<@${process.gideon.user.id}> ${intent}`,
-            author: message.author,
+            author: user,
             partial: message.partial
         };
         

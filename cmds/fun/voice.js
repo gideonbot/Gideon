@@ -49,20 +49,19 @@ export async function run(message, args) {
 
         connection.on('speaking', async (user, speaking) => {
             if (process.gideon.vcmdexec) return; //disable speechrocgnition while voice command is running
+            if (user.bot) return; //don't listen to bots
             
             if (speaking.has('SPEAKING')) {
-                console.log(`Listening to ${user.username}`);
+                console.log(`Listening to ${user.tag}`);
 
                 const audio = connection.receiver.createStream(user, { mode: 'pcm' });
 
-                audio.on('end', () => {
-                    console.log(`Stopped listening to ${user.username}`);
-                });
+                audio.on('end', () => console.log(`Stopped listening to ${user.tag}`));
 
                 const SpeechRec = await Util.Voice.SpeechRecognition(audio);
 
                 if (SpeechRec && SpeechRec.intents && SpeechRec.intents[0]) {
-                    await Util.Voice.VoiceResponse(SpeechRec.intents[0].name, message, connection, Util);
+                    await Util.Voice.VoiceResponse(SpeechRec.intents[0].name, message, connection, Util, user);
                 }
             }
         }); 

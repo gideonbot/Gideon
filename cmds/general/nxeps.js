@@ -25,15 +25,13 @@ export async function run(message, args, connection) {
 
     for (let show in process.gideon.show_api_urls) {
         try {
-            let json = process.gideon.cache.nxeps.get(show);
-            if (!json) {
-                Util.log('No JSON for ' + show + ' when calling nxeps!');
+            let ep_info = process.gideon.cache.nxeps.get(show);
+            if (!ep_info) {
+                Util.log('No ep_info for ' + show + ' when calling nxeps!');
                 continue;
             }
-
-            let info = await Util.ParseEpisodeInfo(json);
             
-            embed.addField(`${info.title} ${info.name}`, `${info.value}`);
+            embed.addField(`${ep_info.series_name} ${ep_info.embed.name}`, `${ep_info.embed.value()}`);
         }
         
         catch (ex) {
