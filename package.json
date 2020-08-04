@@ -24,7 +24,7 @@
     "discord.js": "github:gideonbot/discord.js",
     "dotenv": "^8.0.0",
     "extract-zip": "^1.7.0",
-    "ffmpeg-static": "^4.2.1",
+    "ffmpeg-static": "^4.2.6",
     "gideon-api": "^1.1.0",
     "git-last-commit": "^1.0.0",
     "imgur-node": "^0.2.0",
