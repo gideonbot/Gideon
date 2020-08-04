@@ -24,15 +24,13 @@ export async function run(message, args, connection) {
 
     for (let show in process.gideon.dc_show_urls) {
         try {
-            let json = process.gideon.cache.dceps.get(show);
-            if (!json) {
-                Util.log('No JSON for ' + show + ' when calling dceps!');
+            let ep_info = process.gideon.cache.dceps.get(show);
+            if (!ep_info) {
+                Util.log('No ep_info for ' + show + ' when calling dceps!');
                 continue;
             }
-
-            let info = await Util.ParseEpisodeInfo(json);
             
-            embed.addField(`${info.title} ${info.name}`, `${info.value}`);
+            embed.addField(`${ep_info.series_name} ${ep_info.embed.name}`, `${ep_info.embed.value()}`);
         }
         
         catch (ex) {

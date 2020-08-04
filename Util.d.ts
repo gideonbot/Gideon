@@ -38,7 +38,6 @@ export function GetAndStoreEpisode(show: string): Promise<void>;
 export function CheckEpisodes(): void;
 export function ClosestDate(dates: string[]): Promise<string>;
 export function Welcome(member: Discord.GuildMember): Promise<void>;
-export function ParseEpisodeInfo(obj: object): Promise<EpisodeInfo>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
 export function normalize(num: number): string;
 export function CreateEmbed(title: string, options?: EmbedOptions, member?: Discord.GuildMember): Discord.MessageEmbed;
@@ -104,8 +103,8 @@ interface Translation {
 }
 
 interface Cache {
-    nxeps: Discord.Collection<string, object>;
-    dceps: Discord.Collection<string, object>;
+    nxeps: Discord.Collection<string, EpisodeInfo>;
+    dceps: Discord.Collection<string, EpisodeInfo>;
     jokes: Discord.Collection<string, Discord.Collection<number, string>>;
 }
 
@@ -124,7 +123,7 @@ interface CheckUtil {
 interface VoiceUtil {
     LeaveVC(message: Discord.Message): Promise<void>;
     SpeechRecognition(speech: ReadableStream): Promise<VoiceInfoResponse>;
-    VoiceResponse(value: string, message: Discord.Message, connection: Discord.VoiceConnection, Util: Util): Promise<void>;
+    VoiceResponse(value: string, message: Discord.Message, connection: Discord.VoiceConnection, Util: Util, user: Discord.User): Promise<void>;
 }
 
 interface EmbedOptions {
@@ -183,8 +182,21 @@ interface Command {
 
 interface EpisodeInfo {
     title: string;
-    name: string;
-    value: string;
+    
+    series_shortname: string;
+    series_name: string;
+    channel: string;
+
+    embed: {
+        name: string;
+        value(): string;
+    }
+
+    airstamp: Date;
+    
+    season: string;
+    number: string;
+    air_string(): string;
 }
 
 interface VoiceInfoResponse {

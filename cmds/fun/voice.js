@@ -55,14 +55,12 @@ export async function run(message, args) {
 
                 const audio = connection.receiver.createStream(user, { mode: 'pcm' });
 
-                audio.on('end', () => {
-                    console.log(`Stopped listening to ${user.username}`);
-                });
+                audio.on('end', () => console.log(`Stopped listening to ${user.username}`));
 
                 const SpeechRec = await Util.Voice.SpeechRecognition(audio);
 
                 if (SpeechRec && SpeechRec.intents && SpeechRec.intents[0]) {
-                    await Util.Voice.VoiceResponse(SpeechRec.intents[0].name, message, connection, Util);
+                    await Util.Voice.VoiceResponse(SpeechRec.intents[0].name, message, connection, Util, user);
                 }
             }
         }); 
