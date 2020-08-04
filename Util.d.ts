@@ -39,6 +39,7 @@ export function CheckEpisodes(): void;
 export function ClosestDate(dates: string[]): Promise<string>;
 export function Welcome(member: Discord.GuildMember): Promise<void>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
+export function AddInfo(show: string, json: any): Promise<void>;
 export function normalize(num: number): string;
 export function CreateEmbed(title: string, options?: EmbedOptions, member?: Discord.GuildMember): Discord.MessageEmbed;
 
@@ -193,6 +194,7 @@ interface EpisodeInfo {
     }
 
     airstamp: Date;
+    expires_at: Date;
     
     season: string;
     number: string;

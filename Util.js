@@ -475,10 +475,10 @@ class Util {
         for (let key in process.gideon.show_api_urls) {
             let item = process.gideon.cache.nxeps.get(key);
 
-            if (!item || !item.airstamp) continue;
+            if (!item || !item.airstamp || !item.expires_at) continue;
 
-            if (item.airstamp < new Date()) {
-                console.log('Air date passed, updating ' + key);
+            if (item.airstamp < new Date() || item.expires_at < new Date()) {
+                console.log('Air/expiration date passed, updating ' + key);
 
                 try {
                     this.GetAndStoreEpisode(key);
@@ -524,14 +524,10 @@ class Util {
 
             if (!item || !item.airstamp) continue;
 
-            let air_date = item.airstamp;
+            if (item.airstamp < new Date() || item.expires_at < new Date()) {
+                console.log('Air/expiration date passed, updating ' + key);
 
-            if (air_date < new Date()) {
-                console.log('Air date passed, updating ' + key);
-
-                try {
-                    this.GetAndStoreEpisode(key);
-                }
+                try { this.GetAndStoreEpisode(key); }
 
                 catch (ex) {
                     Util.log(`Error while fetching next episode @CheckEpisodes for "${key}": ${ex}`);
@@ -693,16 +689,15 @@ class Util {
             greenlantern: 'Green Lantern'
         };
 
+        /**
+         * @type {{title: string, series_shortname: string, series_name: string, channel: string, embed: {name: string, value: string;}, airstamp: Date, expires_at: Date, season: string,number: string, air_string(): string}}
+         */
+        let obj = { embed: {}, expires_at: new Date(Date.now() + 864e5) }; //1 day
+
         if (show in names) {
             try {
                 let json = await Util.fetchJSON(process.gideon.show_api_urls[show]);
-
                 if (!json) return;
-
-                /**
-                 * @type {{title: string, series_shortname: string, series_name: string, channel: string, embed: {name: string, value: string;}, airstamp: Date,season: string,number: string, air_string(): string}}
-                 */
-                let obj = {embed:{}};
 
                 let emote = '';
                 if (json.name === 'Batwoman') emote = '<:batwomansymbol:686309750765649957>';
@@ -717,63 +712,9 @@ class Util {
                 obj.series_shortname = names[show];
                 obj.series_name = emote + json.name;
 
-                if (!json._embedded) {
-                    const url = json._links.self.href + '/seasons';
-                    const seasons = await Util.fetchJSON(url);
-                    seasons.reverse();
-                    const nextseason = seasons[0].number;
-                    let seasondate = new Date(seasons[0].premiereDate);
-                    if (!seasons[0].premiereDate) seasondate = null;
-                    const episodeorder = seasons[0].episodeOrder;
-
-                    obj.embed.name = `(${json.webChannel ? json.webChannel.name : json.network ? json.network.name : 'Unknown'})`;
-                    obj.embed.value = () => {
-                        return `\`Awaiting season ${nextseason}!\`\n${seasondate ? 'Season Premiere: ' + '`' + seasondate.toDateString() + '`\n' : ''}${episodeorder ? 'Ordered Episodes: ' + '`' + episodeorder + '`' : ''}`;
-                    };
-                }
-
-                else {
-                    obj.title = json._embedded.nextepisode.name;
-                    obj.season = json._embedded.nextepisode.season;
-                    obj.number = json._embedded.nextepisode.number;
-                    obj.airstamp = new Date(json._embedded.nextepisode.airstamp);
-                    obj.channel = json.webChannel ? json.webChannel.name : json.network ? json.network.name : 'Unknown';
-                    obj.embed.name = `${obj.season}x${Util.normalize(obj.number)} - ${obj.title}`;
-
-                    obj.embed.value = () => {
-                        let time_diff_s = Math.abs(new Date() - obj.airstamp) / 1000;
-                        let already_aired = new Date() > obj.airstamp;
-                        let airs_today = time_diff_s < 60 * 60 * 24;
-                        let res_value = `Air${already_aired ? 'ed' : 's in'} **${Util.secondsToDifferenceString(time_diff_s, {enableSeconds: false})}** ${already_aired ? ' ago' : ''}`;
-    
-                        if (!airs_today) {
-                            //this is how we turn
-                            //Wed, 09 Oct 2019 10:00:00 GMT
-                            //into
-                            //9 Oct 2019 10:00
-                            let _date = obj.airstamp.toUTCString().replace('GMT', '');
-                            //remove "Wed, " (5)
-                            _date = _date.substr(5);
-    
-                            //remove the last :00
-                            _date = _date.split(':');
-                            _date.pop();
-                            _date = _date.join(':');
-    
-                            //thankfully, the .replace method does not work as you would expect it to
-                            //you would expect it to remove all searchValues from the string, right?
-                            //WRONG, it only removes the first searchValue (lol)
-                            if (_date.startsWith('0')) _date = _date.replace('0', '');
-    
-                            res_value += ` (\`${_date} UTC\`)`;
-                        }
-                        
-                        res_value += ` on ${obj.channel}`;
-                        return res_value;
-                    };
-                }
-
                 process.gideon.cache.nxeps.set(show, obj);
+
+                Util.AddInfo(show, json);
             }
             
             catch (ex) {
@@ -783,79 +724,84 @@ class Util {
         else if (show in dcnames) {
             try {
                 let json = await Util.fetchJSON(process.gideon.dc_show_urls[show]);
-
                 if (!json) return;
 
-                /**
-                 * @type {{title: string, series_shortname: string, series_name: string, channel: string, embed: {name: string, value: string;}, airstamp: Date,season: string,number: string, air_string(): string}}
-                 */
-                let obj = {embed:{}};
-
+                obj.series_shortname = dcnames[show];
                 obj.series_name = json.name;
 
-                if (!json._embedded) {
-                    const url = json._links.self.href + '/seasons';
-                    const seasons = await Util.fetchJSON(url);
-                    seasons.reverse();
-                    const nextseason = seasons[0].number;
-                    let seasondate = new Date(seasons[0].premiereDate);
-                    if (!seasons[0].premiereDate) seasondate = null;
-                    const episodeorder = seasons[0].episodeOrder;
-
-                    obj.embed.name = `(${json.webChannel ? json.webChannel.name : json.network ? json.network.name : 'Unknown'})`;
-
-                    obj.embed.value = () => {
-                        return `\`Awaiting season ${nextseason}!\`\n${seasondate ? 'Season Premiere: ' + '`' + seasondate.toDateString() + '`\n' : ''}${episodeorder ? 'Ordered Episodes: ' + '`' + episodeorder + '`' : ''}`;
-                    };
-                }
-
-                else {
-                    obj.title = json._embedded.nextepisode.name;
-                    obj.season = json._embedded.nextepisode.season;
-                    obj.number = json._embedded.nextepisode.number;
-                    obj.airstamp = new Date(json._embedded.nextepisode.airstamp);
-                    obj.channel = json.webChannel ? json.webChannel.name : json.network ? json.network.name : 'Unknown';
-                    obj.embed.name = `${obj.season}x${Util.normalize(obj.number)} - ${obj.title}`;
-
-                    obj.embed.value = () => {
-                        let time_diff_s = Math.abs(new Date() - obj.airstamp) / 1000;
-                        let already_aired = new Date() > obj.airstamp;
-                        let airs_today = time_diff_s < 60 * 60 * 24;
-                        let res_value = `Air${already_aired ? 'ed' : 's in'} **${Util.secondsToDifferenceString(time_diff_s, {enableSeconds: false})}** ${already_aired ? ' ago' : ''}`;
-    
-                        if (!airs_today) {
-                            //this is how we turn
-                            //Wed, 09 Oct 2019 10:00:00 GMT
-                            //into
-                            //9 Oct 2019 10:00
-                            let _date = obj.airstamp.toUTCString().replace('GMT', '');
-                            //remove "Wed, " (5)
-                            _date = _date.substr(5);
-    
-                            //remove the last :00
-                            _date = _date.split(':');
-                            _date.pop();
-                            _date = _date.join(':');
-    
-                            //thankfully, the .replace method does not work as you would expect it to
-                            //you would expect it to remove all searchValues from the string, right?
-                            //WRONG, it only removes the first searchValue (lol)
-                            if (_date.startsWith('0')) _date = _date.replace('0', '');
-    
-                            res_value += ` (\`${_date} UTC\`)`;
-                        }
-                        
-                        res_value += ` on ${obj.channel}`;
-                        return res_value;
-                    };
-                }
-                
                 process.gideon.cache.dceps.set(show, obj);
+
+                Util.AddInfo(show, json);
             }
             
             catch (ex) {
                 Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
             }
+        }
+    }
+
+    /**
+     * @param {string} show 
+     * @param {any} json 
+     */
+    static async AddInfo(show, json) {
+        let obj = process.gideon.cache.dceps.get(show) ? process.gideon.cache.dceps.get(show) : process.gideon.cache.nxeps.get(show);
+
+        if (!json._embedded) {
+            const url = json._links.self.href + '/seasons';
+            const seasons = await Util.fetchJSON(url);
+            seasons.reverse();
+            const nextseason = seasons[0].number;
+            let seasondate = new Date(seasons[0].premiereDate);
+            if (!seasons[0].premiereDate) seasondate = null;
+            const episodeorder = seasons[0].episodeOrder;
+
+            obj.embed.name = `(${json.webChannel ? json.webChannel.name : json.network ? json.network.name : 'Unknown'})`;
+
+            obj.embed.value = () => {
+                return `\`Awaiting season ${nextseason}!\`\n${seasondate ? 'Season Premiere: ' + '`' + seasondate.toDateString() + '`\n' : ''}${episodeorder ? 'Ordered Episodes: ' + '`' + episodeorder + '`' : ''}`;
+            };
+        }
+
+        else {
+            obj.title = json._embedded.nextepisode.name;
+            obj.season = json._embedded.nextepisode.season;
+            obj.number = json._embedded.nextepisode.number;
+            obj.airstamp = new Date(json._embedded.nextepisode.airstamp);
+            obj.channel = json.webChannel ? json.webChannel.name : json.network ? json.network.name : 'Unknown';
+            obj.embed.name = `${obj.season}x${Util.normalize(obj.number)} - ${obj.title}`;
+
+            obj.embed.value = () => {
+                let time_diff_s = Math.abs(new Date() - obj.airstamp) / 1000;
+                let already_aired = new Date() > obj.airstamp;
+                let airs_today = time_diff_s < 60 * 60 * 24;
+                let res_value = `Air${already_aired ? 'ed' : 's in'} **${Util.secondsToDifferenceString(time_diff_s, {enableSeconds: false})}** ${already_aired ? ' ago' : ''}`;
+
+                if (!airs_today) {
+                    //this is how we turn
+                    //Wed, 09 Oct 2019 10:00:00 GMT
+                    //into
+                    //9 Oct 2019 10:00
+                    let _date = obj.airstamp.toUTCString().replace('GMT', '');
+                    //remove "Wed, " (5)
+                    _date = _date.substr(5);
+
+                    //remove the last :00
+                    _date = _date.split(':');
+                    _date.pop();
+                    _date = _date.join(':');
+
+                    //thankfully, the .replace method does not work as you would expect it to
+                    //you would expect it to remove all searchValues from the string, right?
+                    //WRONG, it only removes the first searchValue (lol)
+                    if (_date.startsWith('0')) _date = _date.replace('0', '');
+
+                    res_value += ` (\`${_date} UTC\`)`;
+                }
+                
+                res_value += ` on ${obj.channel}`;
+                return res_value;
+            };
         }
     }
 
