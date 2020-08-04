@@ -522,7 +522,7 @@ class Util {
         for (let key in process.gideon.dc_show_urls) {
             let item = process.gideon.cache.dceps.get(key);
 
-            if (!item || !item.airstamp) continue;
+            if (!item || !item.airstamp || !item.expires_at) continue;
 
             if (item.airstamp < new Date() || item.expires_at < new Date()) {
                 console.log('Air/expiration date passed, updating ' + key);
