@@ -38,7 +38,7 @@ export const commands = [
     '!issues',
     '!joke',
     '!jpk',
-    '!mdn array',
+    //'!mdn array',
     '!invite',
     '!mentions',
     '!search gues',
