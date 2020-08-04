@@ -198,7 +198,6 @@ interface EpisodeInfo {
     
     season: string;
     number: string;
-    air_string(): string;
 }
 
 interface VoiceInfoResponse {

@@ -690,7 +690,7 @@ class Util {
         };
 
         /**
-         * @type {{title: string, series_shortname: string, series_name: string, channel: string, embed: {name: string, value: string;}, airstamp: Date, expires_at: Date, season: string,number: string, air_string(): string}}
+         * @type {{title: string, series_shortname: string, series_name: string, channel: string, embed: {name: string, value: string;}, airstamp: Date, expires_at: Date, season: string,number: string}}
          */
         let obj = { embed: {}, expires_at: new Date(Date.now() + 864e5) }; //1 day
 
