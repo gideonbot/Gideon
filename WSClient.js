@@ -1,0 +1,72 @@
+import WebSocket from 'ws';
+import EventEmitter from 'events';
+
+class WSClient extends EventEmitter {
+    /**
+     * @param {string} url 
+     * @param {string} token 
+     */
+    constructor(url, token) {
+        super();
+
+        if (!url || !token) throw new Error('Invalid args');
+
+        this.url = url;
+        this.token = token;
+
+        this.connect();
+
+        setInterval(() => {
+            if (!this.connected) this.connect();
+        }, 3e3);
+    }
+
+    connect() {
+        this.client = new WebSocket(this.url);
+
+        this.client.on('open', () => {
+            this._send({op: 0, token: this.token});
+        });
+
+        this.client.on('message', d => {
+            let json = JSON.parse(d);
+
+            if (!json || json.op == undefined) return;
+
+            switch (json.op) {
+                case 0: {
+                    this.emit('READY');
+                    return;
+                }
+
+                case 1: {
+                    if (!json.d) return;
+
+                    this.emit('DATA', json.d);
+                    return;
+                }
+
+                case 2: {
+                    this._send({op: 2});
+                    return;
+                }
+
+                default: return;
+            }
+        });
+    }
+
+    _send(packet) {
+        if (this.connected) this.client.send(JSON.stringify(packet));
+    }
+
+    send(data) {
+        this._send({op: 1, d: data});
+    }
+
+    get connected() {
+        return this.client && this.client.readyState == this.client.OPEN;
+    }
+}
+
+export default WSClient;

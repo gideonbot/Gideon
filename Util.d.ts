@@ -5,6 +5,7 @@ import SQL from './Util/SQL'
 import TR from './Util/Translation'
 import Voice from './Util/Voice'
 import BetterSqlite3 from "better-sqlite3";
+import WSClient from './WSClient';
 
 export const config: Config;
 export const MsgHandler: Handler;
@@ -49,6 +50,7 @@ declare module "discord.js" {
     }
 
     interface Client {
+        WSClient: WSClient;
         commands: Discord.Collection<string, Command>;
         vcmdexec: boolean;
         emptyvc: boolean;

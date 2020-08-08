@@ -70,6 +70,7 @@ gideon.once('ready', async () => {
     Util.InitStatus();
     Util.UpdateStatus();
     await Util.LoadCommands();
+    Util.InitWS();
 
     for (let item of gideon.stats) {
         if (!gideon.getStat.get(item)) {
