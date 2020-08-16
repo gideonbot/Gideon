@@ -41,7 +41,6 @@ class WSClient extends EventEmitter {
 
                 case 1: {
                     if (!json.d) return;
-
                     this.emit('DATA', json.d);
                     return;
                 }
@@ -54,6 +53,8 @@ class WSClient extends EventEmitter {
                 default: return;
             }
         });
+
+        this.client.on('error', e => console.log('WebSocket error: ' + e.message));
     }
 
     _send(packet) {
