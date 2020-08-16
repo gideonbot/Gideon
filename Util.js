@@ -248,10 +248,10 @@ class Util {
                 
                 let data = {
                     type: 'STATS',
-                    guild_count: guilds.size,
-                    user_count: guilds.reduce((a, b) => a + b.memberCount, 0),
-                    command_count: process.gideon.getStat.get('messages_sent').value,
-                    ai_count: process.gideon.getStat.get('ai_chat_messages_processed').value
+                    guilds: guilds.size,
+                    users: guilds.reduce((a, b) => a + b.memberCount, 0),
+                    commands: process.gideon.getStat.get('messages_sent').value,
+                    ai_messages: process.gideon.getStat.get('ai_chat_messages_processed').value
                 };
 
                 return process.gideon.WSClient.send(data);
