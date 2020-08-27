@@ -14,8 +14,6 @@ class Silence extends Readable {
  * @param {string[]} args
  */
 export async function run(message, args) {
-    return message.reply('Discord.js Voice Receive is currently broken.\nhttps://github.com/discordjs/discord.js/issues/4688');
-
     if (!process.env.WITAI_TOKEN) {
         Util.log('WITAI_TOKEN is missing in .env!');
         return message.reply('This command is not available currently!');
