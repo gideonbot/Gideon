@@ -11,7 +11,7 @@ class MsgHandler {
     static async Handle(message, Util, connection) {
         if (!message || !message.author || message.partial || message.type != 'DEFAULT') return;
         if (!message.guild) {
-            if (message.content.match(/(?:readdemrulez)/i)) Util.Checks.RulesCheck(message);
+            if (message.content.match(/^\breaddemrulez\b$/)) Util.Checks.RulesCheck(message);
             return;
         }
         
