@@ -1,6 +1,7 @@
 import Discord from 'discord.js';
 import anyAscii from 'any-ascii';
 import Filter from 'bad-words';
+import Util from '../Util.js';
 
 class Checks {
     constructor() {
