@@ -1,7 +1,6 @@
 import Discord from 'discord.js';
 import anyAscii from 'any-ascii';
 import Filter from 'bad-words';
-import Util from '../Util.js';
 
 class Checks {
     constructor() {
@@ -285,7 +284,7 @@ class Checks {
      * Rules check
      * @param {Discord.Message} message 
      */
-    static async RulesCheck(message) {
+    static async RulesCheck(message, Util) {
         let member = await process.gideon.guilds.cache.get('595318490240385037').members.fetch(message.author.id);
 
         if (!member) return;
