@@ -293,6 +293,7 @@ class Checks {
         const role = process.gideon.guilds.cache.get('595318490240385037').roles.cache.get('688430418466177082');
         await member.roles.add(role);
         message.reply('You have been verified and gained access to <#595935317631172608>!');
+        Util.log(`User \`${member.user.tag}\` has gained access to the guild!`);
     }
 
     /**

@@ -39,7 +39,6 @@ export async function run(message, args) {
             .addField('*Lightning Color(s) (Electrokinesis)*', `${speedsters[spnum].lightningColorsElectrokinesis}`)
             .addField('*Universe*', `${speedsters[spnum].universe}`)
             .addField('*Actor/Actress*', `${speedsters[spnum].actoractress}`)
-            .addField('*First Appearance*', `${speedsters[spnum].firstAppearance}`)
             .addField('*First Appearance as Speedster*', `${speedsters[spnum].firstAppearanceAsSpeedster}`);
     
         message.channel.send(speedster);
