@@ -8,7 +8,8 @@ export async function run(message) {
 
     Util.fetchJSON('https://discord.com/api/v7/gateway').then(() => {
         let took = (process.hrtime.bigint() - start) / BigInt('1000000');
-        message.channel.send(Util.CreateEmbed('The fastest bot alive!', {description: `WebSocket ping: ${process.gideon.ws.ping.toFixed(2)} ms\nREST ping: ${took} ms\ngideonbot.com ping: ${process.gideon.WSClient.ping} ms`}, message.member));
+        let ping = process.gideon.WSClient ? process.gideon.WSClient.ping : -1;
+        message.channel.send(Util.CreateEmbed('The fastest bot alive!', {description: `WebSocket ping: ${process.gideon.ws.ping.toFixed(2)} ms\nREST ping: ${took} ms\ngideonbot.com ping: ${ping} ms`}, message.member));
     }, failed => {
         console.log(failed);
         message.channel.send('Failed to measure ping!');
