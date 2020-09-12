@@ -3,6 +3,7 @@ import EventEmitter from 'events';
 class WSClient extends EventEmitter {
     constructor(url: string, token: string);
     public get connected(): boolean;
+    public get ping(): number;
     public _send(packet: Packet): void;
     public send(data: Data): void;
 

@@ -46,7 +46,13 @@ class WSClient extends EventEmitter {
                 }
 
                 case 2: {
+                    this.lastPing = new Date();
                     this._send({op: 2});
+                    return;
+                }
+
+                case 3: {
+                    this.lastPong = new Date();
                     return;
                 }
 
@@ -67,6 +73,10 @@ class WSClient extends EventEmitter {
 
     get connected() {
         return this.client && this.client.readyState == this.client.OPEN;
+    }
+
+    get ping() {
+        return Math.abs(this.lastPing - this.lastPong);
     }
 }
 
