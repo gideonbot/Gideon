@@ -250,7 +250,7 @@ class Util {
                     type: 'STATS',
                     guilds: guilds.size,
                     users: guilds.reduce((a, b) => a + b.memberCount, 0),
-                    commands: process.gideon.getStat.get('messages_sent').value,
+                    commands: process.gideon.getStat.get('commands_ran').value,
                     ai_messages: process.gideon.getStat.get('ai_chat_messages_processed').value
                 };
 
