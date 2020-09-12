@@ -15,6 +15,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
+import WSClient from './WSClient.js';
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -229,6 +230,32 @@ class Util {
             }
 
             message.channel.send(Util.CreateEmbed(imgid == 'ngJQmxL' ? 'Germ approves!:white_check_mark:' : '', {image: rimg}, message.member));
+        });
+    }
+
+    static InitWS() {
+        if (!process.env.WS_PORT || !process.env.WS_TOKEN) {
+            Util.log('Could not init WS: missing port/token');
+            return;
+        }
+
+        process.gideon.WSClient = new WSClient(`ws://localhost:${process.env.WS_PORT}/ws`, process.env.WS_TOKEN);
+
+        process.gideon.WSClient.on('READY', () => console.log('WS Ready'));
+        process.gideon.WSClient.on('DATA', d => {
+            if (d.type == 'REQUEST_STATS') {
+                let guilds = process.gideon.guilds.cache;
+                
+                let data = {
+                    type: 'STATS',
+                    guilds: guilds.size,
+                    users: guilds.reduce((a, b) => a + b.memberCount, 0),
+                    commands: process.gideon.getStat.get('commands_ran').value,
+                    ai_messages: process.gideon.getStat.get('ai_chat_messages_processed').value
+                };
+
+                return process.gideon.WSClient.send(data);
+            }
         });
     }
 
