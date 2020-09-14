@@ -252,7 +252,7 @@ gideon.on('guildCreate', async guild => {
 
     let ub = process.gideon.getUser.get(guild.ownerID);
     if (ub) {
-        if (ub.blacklist === 1 && currentguild) {
+        if (ub.blacklist === 1) {
             currentguild.blacklist = 1;
             process.gideon.setGuild.run(currentguild);
         }

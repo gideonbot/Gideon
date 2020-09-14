@@ -304,7 +304,7 @@ class Util {
         if (options.description && typeof(options.description) == 'string') embed.setDescription(options.description + `\n${logos}`);
         if (options.color) embed.setColor(options.color);
         if (options.image && typeof(options.image) == 'string') embed.setImage(options.image);
-        if (options.url && typeof(options.url)) embed.setURL(options.url);
+        if (options.url && typeof(options.url) == 'string') embed.setURL(options.url);
         if (options.timestamp && (typeof(options.timestamp) == 'number' || options.timestamp instanceof Date)) embed.setTimestamp(options.timestamp);
         if (options.thumbnail && typeof(options.thumbnail) == 'string') embed.setThumbnail(options.thumbnail);
         if (options.footer && options.footer.text && !Object.values(options.footer).some(x => typeof(x) != 'string')) embed.setFooter(options.footer.text, options.footer.icon);

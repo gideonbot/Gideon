@@ -147,7 +147,7 @@ export async function run(message, args) {
         },
     ];
 
-    let attack = attacks[-1];
+    let attack;
 
     if (atc.match(/(?:iceblast)/i)) attack = attacks[0];
     else if (atc.match(/(?:lthrow)/i)) attack = attacks[1];
