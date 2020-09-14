@@ -40,7 +40,7 @@ export async function run(message, args) {
         },
     ];
     
-    let wiki = wikis[-1];
+    let wiki;
 
     let command = message.content.toLowerCase().split(' ')[0];
 

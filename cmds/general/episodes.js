@@ -89,7 +89,7 @@ export async function run(message, args) {
         }
     ];
 
-    let show = shows[-1];
+    let show;
     
     if (agc.match(/(?:flash)/i)) show = shows[0];
     else if (agc.match(/(?:arrow)/i)) show = shows[1];

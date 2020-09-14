@@ -8,11 +8,11 @@ import BetterSqlite3 from "better-sqlite3";
 import WSClient from './WSClient';
 
 export const config: Config;
-export const MsgHandler: Handler;
-export const SQL: Database;
-export const TR: Translation;
-export const Voice: VoiceUtil;
-export const Checks: CheckUtil;
+export let MsgHandler: Handler;
+export let SQL: Database;
+export let TR: Translation;
+export let Voice: VoiceUtil;
+export let Checks: CheckUtil;
 export function parseSeriesEpisodeString(str: string): SeasonAndEpisodeInfo;
 export function delay(num: number): Promise<void>;
 export function GetUserTag(str: string | Discord.GuildMember | Discord.User): string;

@@ -166,7 +166,7 @@ class MsgHandler {
             for (let perms of command.help.bot_perms) {
                 if (!message.channel.permissionsFor(message.guild.me).has(perms)) missingperms.push(perms);
             }
-            if (missingperms && missingperms.length > 0) return message.reply('Sorry I can\'t do that without having the required permissions for this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
+            if (missingperms.length > 0) return message.reply('Sorry I can\'t do that without having the required permissions for this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
         }
 
         if (command.help.args.force) {
