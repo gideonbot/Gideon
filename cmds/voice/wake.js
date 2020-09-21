@@ -14,7 +14,7 @@ export async function run(message, args, connection) {
 
     orders.on('finish', () => {
         orders.destroy();
-        process.gideon.vcmdexec = false;
+        connection.channel.cmdrunning = false;
     }); 
 }
 

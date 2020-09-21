@@ -66,7 +66,10 @@ class MsgHandler {
         if (!cmd) return;
 
         const command = process.gideon.commands.get(cmd.toLowerCase());
-        if (!command) return process.gideon.vcmdexec = false;
+        if (!command) {
+            if (connection) connection.channel.cmdrunning = false;
+            return;
+        }
         
         if (Util.Checks.BadMention(message)) return message.reply('you cannot perform any actions on a blacklisted user!');
         Util.Checks.Spamcounter(message.author.id);

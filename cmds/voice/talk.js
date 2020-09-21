@@ -22,7 +22,7 @@ export async function run(message, args, connection) {
 
     phrase.on('finish', () => {
         phrase.destroy();
-        process.gideon.vcmdexec = false;
+        connection.channel.cmdrunning = false;
     });
 }
 

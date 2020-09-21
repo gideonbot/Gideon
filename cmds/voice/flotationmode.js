@@ -15,7 +15,7 @@ export async function run(message, args, connection) {
 
     orders.on('finish', () => {
         orders.destroy();
-        process.gideon.vcmdexec = false;
+        connection.channel.cmdrunning = false;
     }); 
 
     const ftgif = 'https://i.imgur.com/xd1ja5e.gif';
