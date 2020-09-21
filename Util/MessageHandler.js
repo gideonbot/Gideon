@@ -197,6 +197,10 @@ class MsgHandler {
             }
         }
 
+        if (command.help.type === 'voice' && message.voice && connection) {
+            connection.channel.cmdrunning = true;
+        }
+
         Util.IncreaseStat('commands_ran');
         command.run(message, args, connection);
     }
