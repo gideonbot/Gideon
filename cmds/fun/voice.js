@@ -1,9 +1,10 @@
 import Util from '../../Util.js';
 import { Readable } from 'stream';
+const SILENCE_FRAME = Buffer.from([0xF8, 0xFF, 0xFE]);
 
 class Silence extends Readable {
     _read() {
-        this.push(Buffer.from([0xF8, 0xFF, 0xFE]));
+        this.push(SILENCE_FRAME);
         this.destroy();
     }
 }
