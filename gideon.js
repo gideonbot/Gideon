@@ -16,8 +16,6 @@ const gideon = new Discord.Client({
 process.gideon = gideon;
 
 gideon.commands = new Discord.Collection();
-gideon.vcmdexec = false;
-gideon.emptyvc = false;
 gideon.guessing = [];
 gideon.listening = [];
 gideon.statuses = [];

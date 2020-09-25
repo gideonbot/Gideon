@@ -52,8 +52,6 @@ declare module "discord.js" {
     interface Client {
         WSClient: WSClient;
         commands: Discord.Collection<string, Command>;
-        vcmdexec: boolean;
-        emptyvc: boolean;
         owner: string;
         guessing: string[];
         listening: string[];
@@ -76,7 +74,7 @@ declare module "discord.js" {
     }
 
     interface Message {
-        voice: boolean
+        voice: boolean;
     }
 }
 

@@ -1,5 +1,7 @@
 import Util from '../../Util.js';
 import { Readable } from 'stream';
+import path from 'path';
+import { fileURLToPath } from 'url';
 const SILENCE_FRAME = Buffer.from([0xF8, 0xFF, 0xFE]);
 
 class Silence extends Readable {
@@ -18,37 +20,37 @@ export async function run(message, args) {
         Util.log('WITAI_TOKEN is missing in .env!');
         return message.reply('This command is not available currently!');
     }
-    
-    let command = message.content.toLowerCase().split(' ')[0];
 
     const voicehelp = Util.CreateEmbed('Usage of Voice™ Commands:', {
         description: 'Use `!voice tutorial` for a video tutorial.\n\nUse Gideon Voice™ commands by speaking into your microphone\n\nNo further response means the input was not recognized or no Voice™ enabled command was used'}, message.member)
         .setAuthor('Note: Not all commands are Voice™ compatible!', message.author.avatarURL());
 
-    if (command.endsWith('leave')) {
-        await Util.Voice.LeaveVC(message);
-        return;
+    if (args.length > 0) {
+        if (args[0].toLowerCase() === 'leave') return Util.Voice.LeaveVC(message);
+        if (args[0].toLowerCase() === 'help') return message.channel.send(voicehelp);
+        if (args[0].toLowerCase() === 'tutorial') return message.channel.send('https://drive.google.com/file/d/1nShWSKfnMoksKgcWao-kdLeeZjJ9K2-e/view');
     }
 
-    if (args[0] === 'help') return message.channel.send(voicehelp);
+    if (message.guild.voice && message.guild.voice.channel) return message.channel.send('I am already in a voice channel in this server!');
 
-    if (args[0] === 'tutorial') {
-        const url = 'https://drive.google.com/file/d/1nShWSKfnMoksKgcWao-kdLeeZjJ9K2-e/view';
-        return message.channel.send(url);
-    }
+    let vc = message.member.voice.channel;
 
-    if (!message.member.voice.channel) return message.reply('You need to join a voice channel first!');
+    if (!vc) return message.reply('You need to join a voice channel first!');
+    if (!vc.permissionsFor(message.guild.me).has('CONNECT')) return message.reply('I don\'t have the permission to join your voice channel!');
     
     try {
-        let vcname = message.member.voice.channel.name;
-        message.reply(`Now joining voice channel: \`${vcname}\`!`);
-        const connection = await message.member.voice.channel.join();
+        message.reply(`Now joining voice channel: \`${vc.name}\`!`);
+        const connection = await vc.join();
         connection.play(new Silence(), { type: 'opus' }); //enable voice receive by sending silence buffer
 
-        await message.channel.send(message.author.toString(), { embed: voicehelp });
+        setTimeout(() => {
+            connection.play(path.resolve(fileURLToPath(import.meta.url), '../../../data/audio/extra/thisfiledoesntexist.mp3')); //fix djs bug by sending stuff that doesn't exist
+        }, 2000);
 
+        await message.channel.send(message.author.toString(), { embed: voicehelp });
+        
         connection.on('speaking', async (user, speaking) => {
-            if (process.gideon.vcmdexec) return; //disable speechrocgnition while voice command is running
+            if (connection.speaking.has('SPEAKING')) return; //disable speechrecognition while the bot is talking
             if (user.bot) return; //don't listen to bots
             
             if (speaking.has('SPEAKING')) {
@@ -58,7 +60,11 @@ export async function run(message, args) {
 
                 audio.on('end', () => console.log(`Stopped listening to ${user.tag}`));
 
-                const SpeechRec = await Util.Voice.SpeechRecognition(audio);
+                const SpeechRec = await Util.Voice.SpeechRecognition(audio).catch(ex => {
+                    Util.log(ex);
+                    message.reply('An error occurred, leaving the voice channel!');
+                    Util.Voice.LeaveVC(message);
+                });
 
                 if (SpeechRec && SpeechRec.intents && SpeechRec.intents[0]) {
                     await Util.Voice.VoiceResponse(SpeechRec.intents[0].name, message, connection, Util, user);

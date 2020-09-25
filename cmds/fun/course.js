@@ -6,15 +6,12 @@ import Util from '../../Util.js';
 /**
  * @param {Discord.Message} message
  * @param {string[]} args
+ * @param {Discord.VoiceConnection} connection
  */
 export async function run(message, args, connection) {
-    let agm;
-    if (args) {
-        agm = args.join('').toLowerCase();
-        if (agm.match(/(?:course)/i)) {
-            message.channel.send('Yes Captain Lance!');
-        } 
-    }     
+    if (args && args.join('').toLowerCase().match(/(?:course)/i)) {
+        message.channel.send('Yes Captain Lance!');
+    }
 
     if (connection) {
         const confirm = connection.play(path.resolve(__dirname, '../../data/audio/captain/Right away, Captain!.m4a'));
@@ -28,10 +25,7 @@ export async function run(message, args, connection) {
             timejump.pause();
             timejump.resume();
 
-            timejump.on('finish', () => {
-                timejump.destroy();
-                process.gideon.vcmdexec = false;
-            });
+            timejump.on('finish', () => timejump.destroy());
         });
     }
 

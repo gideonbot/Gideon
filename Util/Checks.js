@@ -312,10 +312,7 @@ class Checks {
     
             const bot_count = oldChannel.members.filter(x => x.user.bot).size;
     
-            if (oldChannel.members.size - bot_count === 0) {
-                process.gideon.emptyvc = true;
-                return oldChannel.leave();
-            }
+            if (oldChannel.members.size - bot_count === 0) oldChannel.leave();
         }
     }
 
