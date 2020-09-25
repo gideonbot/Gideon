@@ -13,10 +13,7 @@ export async function run(message, args, connection) {
         confirm.pause();
         confirm.resume();
 
-        confirm.on('finish', () => {
-            confirm.destroy();
-            connection.channel.cmdrunning = false;
-        });
+        confirm.on('finish', () => confirm.destroy());
     }
 
     const embed = Util.CreateEmbed('__Upcoming DC episodes:__', null, message.member);

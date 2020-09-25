@@ -25,10 +25,7 @@ export async function run(message, args, connection) {
             timejump.pause();
             timejump.resume();
 
-            timejump.on('finish', () => {
-                timejump.destroy();
-                connection.channel.cmdrunning = false;
-            });
+            timejump.on('finish', () => timejump.destroy());
         });
     }
 

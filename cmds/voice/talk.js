@@ -20,10 +20,7 @@ export async function run(message, args, connection) {
     phrase.pause();
     phrase.resume();
 
-    phrase.on('finish', () => {
-        phrase.destroy();
-        connection.channel.cmdrunning = false;
-    });
+    phrase.on('finish', () => phrase.destroy());
 }
 
 export const help = {

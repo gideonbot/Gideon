@@ -66,10 +66,7 @@ class MsgHandler {
         if (!cmd) return;
 
         const command = process.gideon.commands.get(cmd.toLowerCase());
-        if (!command) {
-            if (connection) connection.channel.cmdrunning = false;
-            return;
-        }
+        if (!command) return;
         
         if (Util.Checks.BadMention(message)) return message.reply('you cannot perform any actions on a blacklisted user!');
         Util.Checks.Spamcounter(message.author.id);
@@ -195,10 +192,6 @@ class MsgHandler {
             if (command.help.args.type && command.help.args.type === 'mention') {
                 if (!message.mentions.users.first()) return message.channel.send(nomention);
             }
-        }
-
-        if (command.help.type === 'voice' && message.voice && connection) {
-            connection.channel.cmdrunning = true;
         }
 
         Util.IncreaseStat('commands_ran');

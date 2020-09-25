@@ -21,10 +21,7 @@ export async function run(message, args, connection) {
         confirm.pause();
         confirm.resume();
 
-        confirm.on('finish', () => {
-            confirm.destroy();
-            connection.channel.cmdrunning = false;
-        });
+        confirm.on('finish', () => confirm.destroy());
     }
 
     message.channel.send(Util.CreateEmbed('The Central City Citizen\nFLASH MISSING VANISHES IN CRISIS', {

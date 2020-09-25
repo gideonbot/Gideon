@@ -12,10 +12,7 @@ export async function run(message, args, connection) {
     orders.pause();
     orders.resume();
 
-    orders.on('finish', () => {
-        orders.destroy();
-        connection.channel.cmdrunning = false;
-    }); 
+    orders.on('finish', () => orders.destroy()); 
 }
 
 export const help = {

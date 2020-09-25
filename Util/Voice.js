@@ -53,10 +53,8 @@ class Voice {
         const content_type = 'audio/raw;encoding=signed-integer;bits=16;rate=48000;endian=little';
         const headers = { 'Content-Type': content_type, Authorization: 'Bearer ' + process.env.WITAI_TOKEN, Accept: 'application/vnd.wit.' + '20170217' };
         const options = { method: 'POST', body: rawaudio, headers: headers };
-
-        let result = await fetch(api, options).then(res => res.json());
         
-        return result;
+        return await fetch(api, options).then(res => res.json());
     }
 
     /**

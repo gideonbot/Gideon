@@ -76,10 +76,6 @@ declare module "discord.js" {
     interface Message {
         voice: boolean;
     }
-
-    interface VoiceChannel {
-        cmdrunning: boolean;
-    }
 }
 
 declare global {

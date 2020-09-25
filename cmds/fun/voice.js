@@ -1,5 +1,7 @@
 import Util from '../../Util.js';
 import { Readable } from 'stream';
+import path from 'path';
+import { fileURLToPath } from 'url';
 const SILENCE_FRAME = Buffer.from([0xF8, 0xFF, 0xFE]);
 
 class Silence extends Readable {
@@ -29,6 +31,8 @@ export async function run(message, args) {
         if (args[0].toLowerCase() === 'tutorial') return message.channel.send('https://drive.google.com/file/d/1nShWSKfnMoksKgcWao-kdLeeZjJ9K2-e/view');
     }
 
+    if (message.guild.voice && message.guild.voice.channel) return message.channel.send('I am already in a voice channel in this server!');
+
     let vc = message.member.voice.channel;
 
     if (!vc) return message.reply('You need to join a voice channel first!');
@@ -39,10 +43,14 @@ export async function run(message, args) {
         const connection = await vc.join();
         connection.play(new Silence(), { type: 'opus' }); //enable voice receive by sending silence buffer
 
-        await message.channel.send(message.author.toString(), { embed: voicehelp });
+        setTimeout(() => {
+            connection.play(path.resolve(fileURLToPath(import.meta.url), '../../../data/audio/extra/thisfiledoesntexist.mp3')); //fix djs bug by sending stuff that doesn't exist
+        }, 2000);
 
+        await message.channel.send(message.author.toString(), { embed: voicehelp });
+        
         connection.on('speaking', async (user, speaking) => {
-            if (vc.cmdrunning) return; //disable speechrecognition while voice command is running
+            if (connection.speaking.has('SPEAKING')) return; //disable speechrecognition while the bot is talking
             if (user.bot) return; //don't listen to bots
             
             if (speaking.has('SPEAKING')) {
