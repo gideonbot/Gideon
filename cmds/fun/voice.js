@@ -63,6 +63,7 @@ export async function run(message, args) {
                 const SpeechRec = await Util.Voice.SpeechRecognition(audio).catch(ex => {
                     Util.log(ex);
                     message.reply('An error occurred, leaving the voice channel!');
+                    Util.Voice.LeaveVC(message);
                 });
 
                 if (SpeechRec && SpeechRec.intents && SpeechRec.intents[0]) {
