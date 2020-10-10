@@ -89,14 +89,18 @@ export async function run(message, args) {
         {
             id: 'tt0279600',
             title: 'Smallville'
-        }
+        },
+        {
+            id: 'tt1190634',
+            title: 'The Boys'
+        },
     ];
 
     let show = shows[-1];
     let agc = args[1];
 
     const ia = Util.CreateEmbed(`"${agc}" is not a valid argument!`, {
-        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**\n**doompatrol**\n**titans**\n**smallville**'
+        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**\n**doompatrol**\n**titans**\n**smallville**\n**theboys**'
     }, message.member);
 
     if (agc.match(/(?:flash)/i)) show = shows[0];
@@ -114,6 +118,7 @@ export async function run(message, args) {
     else if (agc.match(/(?:doompatrol)/i)) show = shows[12];
     else if (agc.match(/(?:titans)/i)) show = shows[13];
     else if (agc.match(/(?:smallville)/i)) show = shows[14];
+    else if (agc.match(/(?:theboys)/i)) show = shows[15];
     else return message.channel.send(ia);
     
     if (!show) return message.channel.send(ia);
