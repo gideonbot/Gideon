@@ -80,8 +80,8 @@ export async function run(message, args) {
              wikis.indexOf(wiki) == 3 ? 1 : 0 || wikis.indexOf(wiki) == 5 ? 1 : 0 || 
              wikis.indexOf(wiki) == 6 ? 1 : 0];
 
-        if (!article) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!`, null, message.member));
-        if (Object.keys(body.items).length < 1) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!`, null, message.member));
+        if (!article) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki (use \`wiki help\`)`, null, message.member));
+        if (Object.keys(body.items).length < 1) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki (use \`wiki help\`)`, null, message.member));
         
         const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
 
