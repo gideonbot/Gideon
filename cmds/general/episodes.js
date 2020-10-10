@@ -86,6 +86,11 @@ export async function run(message, args) {
             id: '435',
             title: 'Smallville',
             channel: 'The CW'
+        },
+        {
+            id: '15299',
+            title: 'The Boys',
+            channel: 'Amazon Prime Video'
         }
     ];
 
@@ -106,8 +111,9 @@ export async function run(message, args) {
     else if (agc.match(/(?:doompatrol)/i)) show = shows[12];
     else if (agc.match(/(?:titans)/i)) show = shows[13];
     else if (agc.match(/(?:smallville)/i)) show = shows[14];
+    else if (agc.match(/(?:theboys)/i)) show = shows[15];
     else return message.channel.send(Util.CreateEmbed('You must supply a valid show!', {
-        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**\n**doompatrol**\n**titans**\n**smallville**'
+        description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**\n**doompatrol**\n**titans**\n**smallville**\n**theboys**'
     }, message.member));
 
     const api = `http://api.tvmaze.com/shows/${show.id}/episodebynumber?season=${info.season}&number=${info.episode}`;
