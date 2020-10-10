@@ -38,6 +38,10 @@ export async function run(message, args) {
             url: 'smallville.fandom.com',
             title: 'Doom Patrol'
         },
+        {
+            url: 'the-boys.fandom.com',
+            title: 'The Boys'
+        },
     ];
     
     let wiki;
@@ -45,7 +49,7 @@ export async function run(message, args) {
     let command = message.content.toLowerCase().split(' ')[0];
 
     if (args[0] === 'help') {
-        const wikihelp = Util.CreateEmbed(null, {description: '**The following Wikis are available:**\n\nwiki <term> | Arrowverse Wiki\nwiki**dc** <term> | DC Wiki\nwiki**stg** <term> | Stargirl Wiki\nwiki**kr** <term> | Krypton Wiki\nwiki**lu** <term> | Lucifer Wiki\nwiki**t** <term> | Titans Wiki\nwiki**dp** <term> | Doom Patrol Wiki\nwiki**sv** <term> | Smallville Wiki\n'}, message.member);
+        const wikihelp = Util.CreateEmbed(null, {description: '**The following Wikis are available:**\n\nwiki <term> | Arrowverse Wiki\nwiki**dc** <term> | DC Wiki\nwiki**stg** <term> | Stargirl Wiki\nwiki**kr** <term> | Krypton Wiki\nwiki**lu** <term> | Lucifer Wiki\nwiki**t** <term> | Titans Wiki\nwiki**dp** <term> | Doom Patrol Wiki\nwiki**sv** <term> | Smallville Wiki\nwiki**tb** <term> | The Boys Wiki'}, message.member);
         await message.channel.send(wikihelp);
         return;
     }
@@ -58,7 +62,8 @@ export async function run(message, args) {
     else if (command.endsWith('dp')) wiki = wikis[5];
     else if (command.endsWith('t')) wiki = wikis[6];
     else if (command.endsWith('sv')) wiki = wikis[7];
-    else return message.channel.send('Supply a valid Wiki!');
+    else if (command.endsWith('tb')) wiki = wikis[8];
+    else return message.channel.send('Supply a valid Wiki!\n\n**The following Wikis are available:**\n\nwiki <term> | Arrowverse Wiki\nwiki**dc** <term> | DC Wiki\nwiki**stg** <term> | Stargirl Wiki\nwiki**kr** <term> | Krypton Wiki\nwiki**lu** <term> | Lucifer Wiki\nwiki**t** <term> | Titans Wiki\nwiki**dp** <term> | Doom Patrol Wiki\nwiki**sv** <term> | Smallville Wiki\nwiki**tb** <term> | The Boys Wiki');
 
     let search_term = args.join(' ');
 
@@ -74,15 +79,16 @@ export async function run(message, args) {
         const api = encodeURI(`https://${wiki.url}/api/v1/Articles/Details?ids=50&titles=${search_term}&abstract=500&width=200&height=200`);
 
         const body = await Util.fetchJSON(api);
+        console.log(body);
 
         //new wikis do some weird stuff, therefore the actual result is the 2nd element
         const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 ||
              wikis.indexOf(wiki) == 3 ? 1 : 0 || wikis.indexOf(wiki) == 5 ? 1 : 0 || 
-             wikis.indexOf(wiki) == 6 ? 1 : 0];
+             wikis.indexOf(wiki) == 6 ? 1 : 0 || 
+             wikis.indexOf(wiki) == 8 ? 1 : 0];
 
         if (!article) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki (use \`wiki help\`)`, null, message.member));
         if (Object.keys(body.items).length < 1) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki (use \`wiki help\`)`, null, message.member));
-        
         const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
 
         let st = '';
@@ -105,10 +111,10 @@ export async function run(message, args) {
 }
 
 export const help = {
-    name: ['wiki', 'wikistg', 'wikidc', 'wikikr', 'wikilu', 'wikidp', 'wikit', 'wikisv'],
+    name: ['wiki', 'wikistg', 'wikidc', 'wikikr', 'wikilu', 'wikidp', 'wikit', 'wikisv', 'wikitb'],
     type: 'general',
     help_text: 'wiki [help] <term>',
-    help_desc: 'Searches the specified wiki for the given term | !wiki help for a list of wikis',
+    help_desc: 'Searches the specified wiki for the given term | wiki help for a list of wikis',
     owner: false,
     voice: false,
     timevault: false,
