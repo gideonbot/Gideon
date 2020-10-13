@@ -8,7 +8,7 @@
 [![PayPal](https://img.shields.io/badge/Paypal-Donate!-%2300457C.svg?logo=paypal&style=flat)](https://paypal.me/adrifcastr)
 
 # Gideon  
-### The Open Source Arrowverse Discord Bot
+### The Open Source DC Discord Bot
 
 Infos & features:
 [Homepage](https://gideonbot.com)
