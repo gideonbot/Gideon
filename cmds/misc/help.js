@@ -15,8 +15,8 @@ export async function run(message, args) {
     if (!args[0]) {
         const help = Util.CreateEmbed('__Use ' + customprefix.prefix + 'help <module> to get a list of commands__', null, message.member)
             .setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nUse `' + customprefix.prefix + 'alias <command>` for command aliases\nUse `' + customprefix.prefix + 'search <command>` to search a command\nGideon\'s prefixes are: ' + prefixes)
-            .addField('general (`'+ cmdamount.filter(x => x.help.type === 'general').length + ' available`)', 'General helpful Arrowverse commands')  
-            .addField('fun (`'+ cmdamount.filter(x => x.help.type === 'fun').length + ' available`)', 'Fun and interactive Arrowverse commands') 
+            .addField('general (`'+ cmdamount.filter(x => x.help.type === 'general').length + ' available`)', 'General helpful commands')  
+            .addField('fun (`'+ cmdamount.filter(x => x.help.type === 'fun').length + ' available`)', 'Fun and interactive commands') 
             .addField('admin (`'+ cmdamount.filter(x => x.help.type === 'admin').length + ' available`)', 'Administrative commands')  
             .addField('misc (`'+ cmdamount.filter(x => x.help.type === 'misc').length + ' available`)', 'Miscellaneous commands')    
             .addField('voice (`'+ cmdamount.filter(x => x.help.type === 'voice').length + ' available`)', 'Gideon Voice™ only commands')    
