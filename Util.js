@@ -64,6 +64,21 @@ class Util {
         let episodeString = '';
         let hit_limiter = false;
 
+        //parse film industry standard episode definitions e.g. 205
+        if (str.length === 3) {
+            let s = str.slice(0, 1);
+            let e = str.slice(-2);
+
+            const season = Number(s);
+            const episode = Number(e);
+
+            if (isNaN(season) || isNaN(episode)) return null;
+            else return {
+                season: season,
+                episode: episode
+            };
+        }
+        //note: turns out passing any amount of numbers passes this method and sends an api request which returns 404, gotta think of some smart filter thingx
         for (let letter of str) {
             if (letter === 's') continue;
 
