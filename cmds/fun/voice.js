@@ -24,9 +24,11 @@ export async function run(message, args) {
     const voicehelp = Util.CreateEmbed('Usage of Voice™ Commands:', {
         description: 'Use `!voice tutorial` for a video tutorial.\n\nUse Gideon Voice™ commands by speaking into your microphone\n\nNo further response means the input was not recognized or no Voice™ enabled command was used'}, message.member)
         .setAuthor('Note: Not all commands are Voice™ compatible!', message.author.avatarURL());
+    
+    const command = message.content.toLowerCase().split(' ')[0];
+    if (command.endsWith('leave')) return Util.Voice.LeaveVC(message);
 
     if (args.length > 0) {
-        if (args[0].toLowerCase() === 'leave') return Util.Voice.LeaveVC(message);
         if (args[0].toLowerCase() === 'help') return message.channel.send(voicehelp);
         if (args[0].toLowerCase() === 'tutorial') return message.channel.send('https://drive.google.com/file/d/1nShWSKfnMoksKgcWao-kdLeeZjJ9K2-e/view');
     }
