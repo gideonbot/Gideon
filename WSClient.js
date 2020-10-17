@@ -13,11 +13,12 @@ class WSClient extends EventEmitter {
 
         this.url = url;
         this.token = token;
+        this.shutdown = false;
 
         this.connect();
 
         setInterval(() => {
-            if (!this.connected) this.connect();
+            if (!this.connected && !this.shutdown) this.connect();
         }, 3e3);
     }
 
@@ -69,6 +70,12 @@ class WSClient extends EventEmitter {
 
     send(data) {
         this._send({op: 1, d: data});
+    }
+
+    disconnect() {
+        this.shutdown = true;
+        if (this.client) this.client.close();
+        this.client = null;
     }
 
     get connected() {

@@ -96,6 +96,7 @@ interface Handler {
 
 interface Database {
     InitDB(): void;
+    Close(): void;
 }
 
 interface Translation {

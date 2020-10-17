@@ -190,7 +190,7 @@ class Util {
     static log(message, files) {
         if (!message) return false;
 
-        if (!(message instanceof Discord.MessageEmbed)) console.log(message);
+        if (!(message instanceof Discord.MessageEmbed)) console.log(message.replace(/`/g, '').trim());
 
         let url = process.env.LOG_WEBHOOK_URL;
         if (!url) return false;

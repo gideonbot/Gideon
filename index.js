@@ -25,8 +25,12 @@ function LogCount() {
  * @param {string | Discord.MessageEmbed} message 
  */
 function Log(message) {
+    if (!message) return false;
+    
+    console.log(message.replace(/`/g, '').trim());
+
     let url = process.env.LOG_WEBHOOK_URL;
-    if (!url || !message) return false;
+    if (!url) return false;
 
     url = url.replace('https://discordapp.com/api/webhooks/', '');
     let split = url.split('/');
@@ -50,4 +54,18 @@ git.getLastCommit((err, commit) => {
     }
 
     Log(`Gideon starting, commit \`#${commit.shortHash}\` by \`${commit.committer.name}\`:\n\`${commit.subject}\``);
+});
+
+process.once('SIGUSR2', () => {
+    Log('ShardingManager shutting down');
+
+    for (let shard of manager.shards.values()) {
+        if (shard.process) {
+            shard.process.removeListener('exit', shard._exitListener);
+        }
+
+        shard._handleExit(false);
+    }
+
+    Log('ShardingManager shutdown complete, now waiting for shards to exit...');
 });

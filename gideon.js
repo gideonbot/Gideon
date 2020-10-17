@@ -221,6 +221,18 @@ process.on('unhandledRejection', err => {
     }
 });
 
+process.once('SIGUSR2', () => {
+    let shard_index = process.gideon && process.gideon.shard && process.gideon.shard.ids ? process.gideon.shard.ids[0] : '0';
+    Util.log('Shard ' + shard_index + ' shutting down...');
+
+    process.gideon.destroy();
+    if (process.gideon.WSClient) process.gideon.WSClient.disconnect();
+    Util.SQL.Close();
+
+    Util.log('Shard ' + shard_index + ' finished, exiting process...');
+    process.kill(process.pid, 'SIGUSR2');
+});
+
 gideon.on('error', err => {
     Util.log('Bot error: ' + `\`\`\`\n${err.stack}\n\`\`\``);
 });
@@ -275,7 +287,7 @@ gideon.on('shardError', (error, shardID) => {
 });
 
 gideon.on('shardDisconnect', (event, id) => {
-    Util.log(`Shard \`${id}\` has lost its WebSocket connection:\n\n\`\`\`\nCode: ${event.code}\nReason: ${event.reason}\n\`\`\``);
+    Util.log(`Shard \`${id}\` disconnected:\n\n\`\`\`\nCode: ${event.code}\nReason: ${event.reason}\n\`\`\``);
 });
 
 gideon.on('guildUnavailable', guild => {
