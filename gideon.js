@@ -222,7 +222,7 @@ process.on('unhandledRejection', err => {
 });
 
 process.once('SIGUSR2', () => {
-    let shard_index = process.gideon && process.gideon.shard && process.gideon.shard.ids ? process.gideon.shard.ids[0] : 'Unknown';
+    let shard_index = process.gideon && process.gideon.shard && process.gideon.shard.ids ? process.gideon.shard.ids[0] : '0';
     Util.log('Shard ' + shard_index + ' shutting down...');
 
     process.gideon.destroy();
