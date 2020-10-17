@@ -230,7 +230,7 @@ process.once('SIGUSR2', () => {
     Util.SQL.Close();
 
     Util.log('Shard ' + shard_index + ' finished, exiting process...');
-    process.exit();
+    process.kill(process.pid, 'SIGUSR2');
 });
 
 gideon.on('error', err => {
