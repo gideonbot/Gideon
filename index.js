@@ -27,7 +27,7 @@ function LogCount() {
 function Log(message) {
     if (!message) return false;
     
-    console.log(message);
+    console.log(message.replace(/`/g, '').trim());
 
     let url = process.env.LOG_WEBHOOK_URL;
     if (!url) return false;
@@ -63,7 +63,9 @@ process.once('SIGUSR2', () => {
         if (shard.process) {
             shard.process.removeListener('exit', shard._exitListener);
         }
-      
+
         shard._handleExit(false);
     }
+
+    Log('ShardingManager shutdown complete, now waiting for shards to exit...');
 });

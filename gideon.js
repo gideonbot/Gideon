@@ -287,7 +287,7 @@ gideon.on('shardError', (error, shardID) => {
 });
 
 gideon.on('shardDisconnect', (event, id) => {
-    Util.log(`Shard \`${id}\` has lost its WebSocket connection:\n\n\`\`\`\nCode: ${event.code}\nReason: ${event.reason}\n\`\`\``);
+    Util.log(`Shard \`${id}\` disconnected:\n\n\`\`\`\nCode: ${event.code}\nReason: ${event.reason}\n\`\`\``);
 });
 
 gideon.on('guildUnavailable', guild => {
