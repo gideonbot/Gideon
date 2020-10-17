@@ -25,8 +25,12 @@ function LogCount() {
  * @param {string | Discord.MessageEmbed} message 
  */
 function Log(message) {
+    if (!message) return false;
+    
+    console.log(message);
+
     let url = process.env.LOG_WEBHOOK_URL;
-    if (!url || !message) return false;
+    if (!url) return false;
 
     url = url.replace('https://discordapp.com/api/webhooks/', '');
     let split = url.split('/');
