@@ -16,12 +16,9 @@ const gideon = new Discord.Client({
 process.gideon = gideon;
 
 gideon.commands = new Discord.Collection();
-gideon.guessing = [];
-gideon.listening = [];
 gideon.statuses = [];
 gideon.spamcount = new Map();
-gideon.cache = new Discord.Collection();
-gideon.stats = ['commands_ran', 'ai_chat_messages_processed', 'messages_sent'];
+gideon.cache = {};
 gideon.show_api_urls = {
     stargirl: 'http://api.tvmaze.com/shows/37809?embed=nextepisode', 
     legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
@@ -70,7 +67,7 @@ gideon.once('ready', async () => {
     await Util.LoadCommands();
     Util.InitWS();
 
-    for (let item of gideon.stats) {
+    for (let item of ['commands_ran', 'ai_chat_messages_processed', 'messages_sent']) {
         if (!gideon.getStat.get(item)) {
             console.log('Initializing ' + item);
             Util.SetStat(item, 0);

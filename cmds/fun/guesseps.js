@@ -14,9 +14,9 @@ export async function run(message, args) {
     let points = 0;
     let timerstart = new Date();
 
-    if (process.gideon.guessing.includes(message.author.id)) return message.channel.send(Util.CreateEmbed('A guessing game is already running!', null, message.member));
+    if (message.author.guessing) return message.channel.send(Util.CreateEmbed('A guessing game is already running!', null, message.member));
     
-    process.gideon.guessing.push(message.author.id);
+    message.author.guessing = true;
 
     let agc = args[0];
     let filters = [
@@ -159,7 +159,7 @@ export async function run(message, args) {
                     ]
                 }, message.member);
 
-                process.gideon.guessing.remove(message.author.id);
+                message.author.guessing = false;
                 return sent.edit(stopembed);
             }
         }); 
@@ -194,7 +194,7 @@ export async function run(message, args) {
                     ]
                 }, message.member);
 
-                process.gideon.guessing.remove(message.author.id);
+                message.author.guessing = false;
                 await sent.edit(correctembed);
                 return sent.reactions.removeAll();
             }
@@ -219,7 +219,7 @@ export async function run(message, args) {
 
             if (tries == 0) {
                 collector.stop();
-                process.gideon.guessing.remove(message.author.id);
+                message.author.guessing = false;
                 await sent.reactions.removeAll();
                 return sent.edit(incorrectembed);
             }
@@ -243,7 +243,7 @@ export async function run(message, args) {
                     ]
                 }, message.member);
 
-                process.gideon.guessing.remove(message.author.id);
+                message.author.guessing = false;
                 await sent.reactions.removeAll();
                 return sent.edit(timeouttembed);
             }
