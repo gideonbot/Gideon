@@ -226,7 +226,7 @@ process.once('SIGUSR2', () => {
     Util.log('Shard ' + shard_index + ' shutting down...');
 
     process.gideon.destroy();
-    process.gideon.WSClient.disconnect();
+    if (process.gideon.WSClient) process.gideon.WSClient.disconnect();
     Util.SQL.Close();
 
     Util.log('Shard ' + shard_index + ' finished, exiting process...');

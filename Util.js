@@ -251,7 +251,6 @@ class Util {
     static InitWS() {
         if (!process.env.WS_PORT || !process.env.WS_TOKEN) {
             Util.log('Could not init WS: missing port/token');
-            process.gideon.WSClient = {};
             return;
         }
 
