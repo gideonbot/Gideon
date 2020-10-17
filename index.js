@@ -51,3 +51,15 @@ git.getLastCommit((err, commit) => {
 
     Log(`Gideon starting, commit \`#${commit.shortHash}\` by \`${commit.committer.name}\`:\n\`${commit.subject}\``);
 });
+
+process.once('SIGUSR2', () => {
+    Log('ShardingManager shutting down');
+
+    for (let shard of manager.shards.values()) {
+        if (shard.process) {
+            shard.process.removeListener('exit', shard._exitListener);
+        }
+      
+        shard._handleExit(false);
+    }
+});

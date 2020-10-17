@@ -221,6 +221,18 @@ process.on('unhandledRejection', err => {
     }
 });
 
+process.once('SIGUSR2', () => {
+    let shard_index = process.gideon && process.gideon.shard && process.gideon.shard.ids ? process.gideon.shard.ids[0] : 'Unknown';
+    Util.log('Shard ' + shard_index + ' shutting down...');
+
+    process.gideon.destroy();
+    process.gideon.WSClient.disconnect();
+    Util.SQL.Close();
+
+    Util.log('Shard ' + shard_index + ' finished, exiting process...');
+    process.exit();
+});
+
 gideon.on('error', err => {
     Util.log('Bot error: ' + `\`\`\`\n${err.stack}\n\`\`\``);
 });
