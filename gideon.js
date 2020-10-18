@@ -223,7 +223,7 @@ process.once('SIGUSR2', async () => {
     Util.log('Shard ' + shard_index + ' shutting down...');
 
     for (let guild of process.gideon.guilds.cache.values()) {
-        if (guild.voice.connection) {
+        if (guild.voice && guild.voice.connection) {
             guild.voice.connection.disconnect();
         }
     }
