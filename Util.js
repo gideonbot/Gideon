@@ -65,7 +65,7 @@ class Util {
         let hit_limiter = false;
 
         //parse film industry standard episode definitions e.g. 205
-        if (str.length === 3) {
+        if (str.length === 3 && !str.toLowerCase().includes('x') && !isNaN(str)) {
             let s = str.slice(0, 1);
             let e = str.slice(-2);
 

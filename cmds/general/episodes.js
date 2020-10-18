@@ -6,7 +6,7 @@ import moment from 'moment';
  * @param {string[]} args
  */
 export async function run(message, args) {
-    if (process.gideon.guessing.includes(message.author.id)) return message.reply('no cheating while your guessing game is active!');
+    if (message.author.guessing) return message.reply('no cheating while your guessing game is active!');
 
     let agc = args[0];
     let info = Util.parseSeriesEpisodeString(args[1]);
