@@ -92,6 +92,6 @@ export const help = {
     nsfw: false,
     args: {},
     roles: [],
-    user_perms: [],
-    bot_perms: []
+    user_perms: ['CONNECT', 'SPEAK'],
+    bot_perms: ['CONNECT', 'SPEAK']
 };
