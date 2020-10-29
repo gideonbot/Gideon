@@ -65,7 +65,7 @@ class Util {
         let hit_limiter = false;
 
         //parse film industry standard episode definitions e.g. 205
-        if (str.length === 3) {
+        if (str.length === 3 && !str.toLowerCase().includes('x') && !isNaN(str)) {
             let s = str.slice(0, 1);
             let e = str.slice(-2);
 
@@ -190,7 +190,7 @@ class Util {
     static log(message, files) {
         if (!message) return false;
 
-        if (!(message instanceof Discord.MessageEmbed)) console.log(message);
+        if (!(message instanceof Discord.MessageEmbed)) console.log(message.replace(/`/g, '').trim());
 
         let url = process.env.LOG_WEBHOOK_URL;
         if (!url) return false;

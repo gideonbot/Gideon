@@ -6,6 +6,7 @@ class WSClient extends EventEmitter {
     public get ping(): number;
     public _send(packet: Packet): void;
     public send(data: Data): void;
+    public disconnect(): void;
 
     public on<K extends keyof WSEvents>(event: K, listener: (...args: WSEvents[K]) => void): this;
     public on<S extends string | symbol>(

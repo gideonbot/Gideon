@@ -57,6 +57,10 @@ class SQL {
 
         process.gideon.db = sql;
     }
+
+    static Close() {
+        sql.close();
+    }
 }
 
 export default SQL;

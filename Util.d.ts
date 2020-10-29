@@ -53,7 +53,6 @@ declare module "discord.js" {
         WSClient: WSClient;
         commands: Discord.Collection<string, Command>;
         owner: string;
-        guessing: string[];
         listening: string[];
         spamcount: Map;
         cache: Cache;
@@ -96,6 +95,7 @@ interface Handler {
 
 interface Database {
     InitDB(): void;
+    Close(): void;
 }
 
 interface Translation {

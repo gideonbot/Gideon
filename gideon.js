@@ -17,12 +17,9 @@ const gideon = new Discord.Client({
 process.gideon = gideon;
 
 gideon.commands = new Discord.Collection();
-gideon.guessing = [];
-gideon.listening = [];
 gideon.statuses = [];
 gideon.spamcount = new Map();
-gideon.cache = new Discord.Collection();
-gideon.stats = ['commands_ran', 'ai_chat_messages_processed', 'messages_sent'];
+gideon.cache = {};
 gideon.show_api_urls = {
     stargirl: 'http://api.tvmaze.com/shows/37809?embed=nextepisode', 
     legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
@@ -71,7 +68,7 @@ gideon.once('ready', async () => {
     await Util.LoadCommands();
     Util.InitWS();
 
-    for (let item of gideon.stats) {
+    for (let item of ['commands_ran', 'ai_chat_messages_processed', 'messages_sent']) {
         if (!gideon.getStat.get(item)) {
             console.log('Initializing ' + item);
             Util.SetStat(item, 0);
@@ -222,6 +219,28 @@ process.on('unhandledRejection', err => {
     }
 });
 
+process.once('SIGUSR2', async () => {
+    let shard_index = process.gideon && process.gideon.shard && process.gideon.shard.ids ? process.gideon.shard.ids[0] : '0';
+    Util.log('Shard ' + shard_index + ' shutting down...');
+
+    for (let guild of process.gideon.guilds.cache.values()) {
+        if (guild.voice && guild.voice.connection) {
+            guild.voice.connection.disconnect();
+        }
+    }
+
+    await Util.delay(2000); //wait 2 secs for all vcs
+
+    process.gideon.destroy();
+    if (process.gideon.WSClient) process.gideon.WSClient.disconnect();
+    Util.SQL.Close();
+
+    await Util.delay(200); //wait for db & gateway
+
+    Util.log('Shard ' + shard_index + ' finished, exiting process...');
+    process.kill(process.pid, 'SIGUSR2');
+});
+
 gideon.on('error', err => {
     Util.log('Bot error: ' + `\`\`\`\n${err.stack}\n\`\`\``);
 });
@@ -276,7 +295,7 @@ gideon.on('shardError', (error, shardID) => {
 });
 
 gideon.on('shardDisconnect', (event, id) => {
-    Util.log(`Shard \`${id}\` has lost its WebSocket connection:\n\n\`\`\`\nCode: ${event.code}\nReason: ${event.reason}\n\`\`\``);
+    Util.log(`Shard \`${id}\` disconnected:\n\n\`\`\`\nCode: ${event.code}\nReason: ${event.reason}\n\`\`\``);
 });
 
 gideon.on('guildUnavailable', guild => {
