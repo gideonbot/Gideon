@@ -10,6 +10,7 @@ const gideon = new Discord.Client({
     },
     allowedMentions: { parse: ['users', 'roles'] },
     partials: ['MESSAGE', 'REACTION'],
+    fetchAllMembers: true,
     restRequestTimeout: 25000
 });
 
