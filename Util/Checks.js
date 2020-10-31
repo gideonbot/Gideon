@@ -359,10 +359,8 @@ class Checks {
             const invcode = message.content.match(invregex)[0];
             const invite = await process.gideon.fetchInvite(invcode).catch(ex => console.log(ex));
             
-            if (!invite.guild) {
-                await admin.setMentionable(true).catch(ex => console.log(ex));
-                await channel.send(`Couldn't resolve the guild this invite belongs to!\n${admin} please review and kick \`${message.author.tag}\` if it's a non Time Vault invite.`);
-                await admin.setMentionable(false).catch(ex => console.log(ex));
+            if (!invite || !invite.guild) {
+                await channel.send(`Couldn't resolve the guild this invite belongs to!\n${admin} please review and kick \`${message.author.tag}\` if it's a non Time Vault invite.`, {allowedMentions: {parse: []}});
             }
 
             else if (invite.guild.id !== '595318490240385037') {
