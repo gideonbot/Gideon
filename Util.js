@@ -195,7 +195,7 @@ class Util {
         let url = process.env.LOG_WEBHOOK_URL;
         if (!url) return false;
 
-        url = url.replace('https://discordapp.com/api/webhooks/', '');
+        url = url.replace('https://discordapp.com/api/webhooks/', '').replace('https://discord.com/api/webhooks/', '');
         let split = url.split('/');
         if (split.length < 2) return false;
 
