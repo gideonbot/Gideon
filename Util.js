@@ -2,7 +2,6 @@ import Discord from 'discord.js';
 import fetch from 'node-fetch';
 import fs from 'fs';
 import config from './data/config/config.js';
-import consts from './data/constants/constants.js';
 import SQL from './Util/SQL.js';
 import Voice from './Util/Voice.js';
 import Checks from './Util/Checks.js';
@@ -51,7 +50,6 @@ class Util {
     static get Checks() { return Checks; }
     static get TR() { return TR; }
     static get MsgHandler() { return MsgHandler; }
-    static get consts() { return consts; }
 
     /**
      * @summary A low-level method for parsing episode stuff
