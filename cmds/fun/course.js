@@ -43,13 +43,13 @@ export async function run(message, args, connection) {
         let tmax = 3000;
         let year = Math.floor(Math.random() * (tmax - tmin + 1)) + tmin;
 
-        message.channel.send(Util.CreateEmbed(`Course set to ${destination} ${year}`, {image: 'https://i.imgur.com/I3UQhVu.gif'}, message.member));
+        message.channel.send(Util.Embed(`Course set to ${destination} ${year}`, {image: 'https://i.imgur.com/I3UQhVu.gif'}, message.member));
     }
     
     catch (ex) {
         Util.log('Caught an exception while plotting a course: ' + ex.stack);
         
-        return message.channel.send(Util.CreateEmbed('An error occurred while trying to plot a course!', null, message.member));
+        return message.channel.send(Util.Embed('An error occurred while trying to plot a course!', null, message.member));
     }
 }
 

@@ -7,12 +7,12 @@ import gideonapi from 'gideon-api';
 export async function run(message) {
     try {
         const timeline = await gideonapi.timeline();
-        message.channel.send(Util.CreateEmbed('Timeline change detected!', {description: timeline, image: 'https://i.imgur.com/qWN3luc.gif'}, message.member));
+        message.channel.send(Util.Embed('Timeline change detected!', {description: timeline, image: 'https://i.imgur.com/qWN3luc.gif'}, message.member));
     }
     
     catch (ex) {
         Util.log('An error occurred while trying to fetch a timeline change: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('Failed to fetch a timeline change!', null, message.member));
+        return message.channel.send(Util.Embed('Failed to fetch a timeline change!', null, message.member));
     }
 }
 

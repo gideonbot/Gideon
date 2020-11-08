@@ -5,7 +5,7 @@ import Util from '../../Util.js';
  * @param {string[]} args
  */
 export async function run(message, args) {
-    const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
+    const as = Util.Embed('You must supply valid input!', null, message.member);
     
     if (!args[0]) return message.channel.send(as);
     if (args[1]) return message.channel.send(as);

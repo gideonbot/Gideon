@@ -83,7 +83,7 @@ class Checks {
             if (res.match) {
                 await message.delete({ timeout: 200 });
                 Util.log('ABM triggered by: ' + message.author.tag + ' (' + res.content + ')\nABM triggered in: `' + message.channel.name + '` at `' + message.guild.name + '`');
-                const abmsg = await message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-BS-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}, message.member) });
+                const abmsg = await message.channel.send(Util.GetUserTag(message.author), { embed: Util.Embed(`${siren}Anti-BS-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}, message.member) });
                 await abmsg.delete({ timeout: 3500 });
             }
         }, failed => {
@@ -184,9 +184,9 @@ class Checks {
         const lwimg2 = 'https://pmctvline2.files.wordpress.com/2020/04/logan-williams-dies-the-flash.jpg';
         const lwgif = 'https://i.imgur.com/LHdTBnw.gif';
         const lwstring = '**Grant Gustin:**\n_"Just hearing the devastating news that Logan Williams has passed away suddenly. This picture was early in the filming of The Flash pilot episode back in 2014. I was so impressed by not only Logan’s talent but his professionalism on set. My thoughts and prayers will be with him and his family during what is I’m sure an unimaginably difficult time for them. Please keep Logan and his family in your thoughts and prayers during what has been a strange and trying time for us all. Sending love to everyone."_';
-        const lw = Util.CreateEmbed('<a:flash360:686326039525326946>R.I.P. Logan Williams<a:flash360:686326039525326946>', 
+        const lw = Util.Embed('<a:flash360:686326039525326946>R.I.P. Logan Williams<a:flash360:686326039525326946>', 
             {description: lwstring, thumbnail: lwimg2, image: lwgif, author: {name: '04/09/2003 - 04/02/2020', icon: lwimg}});
-        const whoa = Util.CreateEmbed(null, { image: 'https://images-ext-2.discordapp.net/external/T_LsRBWhC8qcPUFrFa-mn1Gpgq9GIKI-m6tfRj7-yWQ/https/i.imgur.com/AyfOFy9.gif' }, message.member);
+        const whoa = Util.Embed(null, { image: 'https://images-ext-2.discordapp.net/external/T_LsRBWhC8qcPUFrFa-mn1Gpgq9GIKI-m6tfRj7-yWQ/https/i.imgur.com/AyfOFy9.gif' }, message.member);
         const omelette = 'https://cdn.discordapp.com/attachments/669243069878501385/696770901185921106/You_have_failed_this_omelette.mp4'; 
         const punching = 'https://cdn.discordapp.com/attachments/669243069878501385/696774257279107293/why_the_punching.mp4';
         const donttouchme = 'https://cdn.discordapp.com/attachments/669243069878501385/696774255131492443/If_you_touch_me_with_that_thing.mp4';
@@ -208,8 +208,8 @@ class Checks {
         else if (message.content.match(/(?:caskett)/i)) Util.IMG('eemyeVL', message);
         else if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
         else if (message.content.match(/(?:germ)/i)) Util.IMG('ngJQmxL', message);
-        else if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.CreateEmbed(null, {image: ctm}));
-        else if (message.content.match(/(?:callback)/i)) message.channel.send(Util.CreateEmbed(null, {image: img}));
+        else if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.Embed(null, {image: ctm}));
+        else if (message.content.match(/(?:callback)/i)) message.channel.send(Util.Embed(null, {image: img}));
         else if (message.content.match(/(?:castle)/i)) message.channel.send(vid2);
         else if (message.content.match(/(?:magic)/i)) message.channel.send(yombo);
         else if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) message.channel.send(train);

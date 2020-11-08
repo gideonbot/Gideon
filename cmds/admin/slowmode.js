@@ -5,7 +5,7 @@ import Util from '../../Util.js';
  * @param {string[]} args
  */
 export async function run(message, args) {
-    const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
+    const as = Util.Embed('You must supply valid input!', null, message.member);
     
     try {
         if (isNaN(args[0])) {
@@ -23,7 +23,7 @@ export async function run(message, args) {
     
     catch (ex) {
         Util.log('Caught an exception while running slowmode.js: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
+        return message.channel.send(Util.Embed('An error occurred while executing this command!', null, message.member));
     }      
 }
 

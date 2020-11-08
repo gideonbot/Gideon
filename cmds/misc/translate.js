@@ -7,7 +7,7 @@ import Util from '../../Util.js';
 export async function run(message, args) {
     let tr = await Util.TR.Translate(args.join(' '));
 
-    message.channel.send(Util.CreateEmbed(null, {
+    message.channel.send(Util.Embed(null, {
         author: {
             name: `Translation for ${message.author.tag}:`,
             icon: message.author.avatarURL()

@@ -6,7 +6,7 @@ import Util from '../../Util.js';
  * @param {string[]} args
  */
 export async function run(message, args) {
-    if (!args[0]) return message.channel.send(Util.CreateEmbed('You must supply a speedsters name or alter ego and their home universe!', null, message.member));
+    if (!args[0]) return message.channel.send(Util.Embed('You must supply a speedsters name or alter ego and their home universe!', null, message.member));
 
     let ssd = args.join(' ');
     let spnum;
@@ -30,12 +30,12 @@ export async function run(message, args) {
     else if (ssd.match(/(?:iris)/i) && ssd.match(/(?:e1)/i)) spnum = 16;
     else if (ssd.match(/(?:XS)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:nora)/i) && ssd.match(/(?:e1)/i)) spnum = 17;
     else if (ssd.match(/(?:flash)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:grodd)/i) && ssd.match(/(?:e1)/i)) spnum = 18;
-    else return message.channel.send(Util.CreateEmbed(`"${ssd}" is not a valid argument!`, {description: 'Check the command\'s syntax and retry!'}, message.member));
+    else return message.channel.send(Util.Embed(`"${ssd}" is not a valid argument!`, {description: 'Check the command\'s syntax and retry!'}, message.member));
 
     try {
         const speedsters = await gideonapi.speedsters();
 
-        const speedster = Util.CreateEmbed(speedsters[spnum].speedster, {thumbnail: speedsters[spnum].image}, message.member)
+        const speedster = Util.Embed(speedsters[spnum].speedster, {thumbnail: speedsters[spnum].image}, message.member)
             .addField('*Lightning Color(s) (Electrokinesis)*', `${speedsters[spnum].lightningColorsElectrokinesis}`)
             .addField('*Universe*', `${speedsters[spnum].universe}`)
             .addField('*Actor/Actress*', `${speedsters[spnum].actoractress}`)
@@ -46,7 +46,7 @@ export async function run(message, args) {
     
     catch (err) {
         Util.log('An error occurred while trying to fetch speedsters: ' + err);
-        message.channel.send(Util.CreateEmbed('Failed to fetch speedster data, please try again later!', null, message.member));
+        message.channel.send(Util.Embed('Failed to fetch speedster data, please try again later!', null, message.member));
     }
 }
 export const help = {

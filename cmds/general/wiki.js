@@ -49,7 +49,7 @@ export async function run(message, args) {
     let command = message.content.toLowerCase().split(' ')[0];
 
     if (args[0] === 'help') {
-        const wikihelp = Util.CreateEmbed(null, {description: '**The following Wikis are available:**\n\nwiki <term> | Arrowverse Wiki\nwiki**dc** <term> | DC Wiki\nwiki**stg** <term> | Stargirl Wiki\nwiki**kr** <term> | Krypton Wiki\nwiki**lu** <term> | Lucifer Wiki\nwiki**t** <term> | Titans Wiki\nwiki**dp** <term> | Doom Patrol Wiki\nwiki**sv** <term> | Smallville Wiki\nwiki**tb** <term> | The Boys Wiki'}, message.member);
+        const wikihelp = Util.Embed(null, {description: '**The following Wikis are available:**\n\nwiki <term> | Arrowverse Wiki\nwiki**dc** <term> | DC Wiki\nwiki**stg** <term> | Stargirl Wiki\nwiki**kr** <term> | Krypton Wiki\nwiki**lu** <term> | Lucifer Wiki\nwiki**t** <term> | Titans Wiki\nwiki**dp** <term> | Doom Patrol Wiki\nwiki**sv** <term> | Smallville Wiki\nwiki**tb** <term> | The Boys Wiki'}, message.member);
         await message.channel.send(wikihelp);
         return;
     }
@@ -87,8 +87,8 @@ export async function run(message, args) {
              wikis.indexOf(wiki) == 6 ? 1 : 0 || 
              wikis.indexOf(wiki) == 8 ? 1 : 0];
 
-        if (!article) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki (use \`wiki help\`)`, null, message.member));
-        if (Object.keys(body.items).length < 1) return message.channel.send(Util.CreateEmbed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki (use \`wiki help\`)`, null, message.member));
+        if (!article) return message.channel.send(Util.Embed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki (use \`wiki help\`)`, null, message.member));
+        if (Object.keys(body.items).length < 1) return message.channel.send(Util.Embed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki (use \`wiki help\`)`, null, message.member));
         const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
 
         let st = '';
@@ -98,7 +98,7 @@ export async function run(message, args) {
         }
         
     
-        message.channel.send(Util.CreateEmbed(article.title, {
+        message.channel.send(Util.Embed(article.title, {
             description: `${st}${article.abstract}${st}\n\n**[Click here to read the full article](https://${wiki.url}${url} 'https://${wiki.url}${url}')**`,
             thumbnail: article.thumbnail
         }, message.member)); 
@@ -106,7 +106,7 @@ export async function run(message, args) {
 
     catch (ex) {
         Util.log('Error occurred while fetching data from wiki: ' + ex.stack);
-        message.channel.send(Util.CreateEmbed('Failed to fetch info from wiki!', null, message.member));
+        message.channel.send(Util.Embed('Failed to fetch info from wiki!', null, message.member));
     } 
 }
 

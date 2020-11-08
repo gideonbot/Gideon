@@ -5,7 +5,7 @@ import Util from '../../Util.js';
  * @param {Discord.Message} message
  */
 export async function run(message) {
-    message.channel.send(Util.CreateEmbed('Discord Permission Flags:', {
+    message.channel.send(Util.Embed('Discord Permission Flags:', {
         description: Object.keys(Discord.Permissions.FLAGS).map(perms => `\`${perms}\``).join(' ')
     }, message.member));       
 }

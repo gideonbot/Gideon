@@ -15,7 +15,7 @@ export async function run(message) {
     
     const users = guilds.reduce((r, d) => r + d.memberCount, 0);
 
-    message.channel.send(Util.CreateEmbed('Gideon\'s stats:', 
+    message.channel.send(Util.Embed('Gideon\'s stats:', 
         {description: `Total guilds: \`${guilds.length}\`\nTotal users: \`${users.toLocaleString('de-DE')}\`\nUsed commands: \`${cmds.toLocaleString('de-DE')}\`\nMessages sent: \`${msgs.toLocaleString('de-DE')}\`\nAI chat messages: \`${aimsgs.toLocaleString('de-DE')}\``
         }, message.member)
     );  

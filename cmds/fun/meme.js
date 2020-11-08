@@ -23,7 +23,7 @@ export async function run(message) {
         let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
         let ravm = res.images[ranum].link;
 
-        message.channel.send(Util.CreateEmbed(null, {image: ravm}, message.member));
+        message.channel.send(Util.Embed(null, {image: ravm}, message.member));
     });   
 }
 

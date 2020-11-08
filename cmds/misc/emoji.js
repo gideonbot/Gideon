@@ -6,16 +6,16 @@ import Util from '../../Util.js';
  * @param {string[]} args
  */
 export async function run(message, args) {
-    const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
+    const as = Util.Embed('You must supply valid input!', null, message.member);
     if (!args[0].match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)) return message.channel.send(as);  
 
     const emoji = Discord.Util.parseEmoji(args[0]);
 
-    if (!emoji) return message.channel.send(Util.CreateEmbed('I cannot access that emoji'));
+    if (!emoji) return message.channel.send(Util.Embed('I cannot access that emoji'));
 
     let url = `https://cdn.discordapp.com/emojis/${emoji.id}.${emoji.animated ? 'gif' : 'png'}`;
 
-    const embed = Util.CreateEmbed(`Info about \`${emoji.name}\` (ID: \`${emoji.id}\`)`, {
+    const embed = Util.Embed(`Info about \`${emoji.name}\` (ID: \`${emoji.id}\`)`, {
         thumbnail: url,
         fields: [
             {

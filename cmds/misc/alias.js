@@ -9,7 +9,7 @@ export async function run(message, args) {
     const customprefix = process.gideon.getGuild.get(message.guild.id);
 
     if (cmd) {
-        const embed = Util.CreateEmbed(`Available aliases for: "${args[0]}"`, null, message.member);
+        const embed = Util.Embed(`Available aliases for: "${args[0]}"`, null, message.member);
         
         if (Array.isArray(cmd.help.name) && cmd.help.name.length > 1) {
             embed.setDescription(cmd.help.name.map(alias => `\`${customprefix.prefix + alias}\``).join(' '));

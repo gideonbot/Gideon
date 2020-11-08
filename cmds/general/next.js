@@ -21,7 +21,7 @@ export async function run(message, args) {
     //else if (agc.match(/(?:canaries)/i)) showtitle = "Green Arrow and the Canaries";
     //else if (agc.match(/(?:supesnlois)/i)) showtitle = "Superman & Lois";
     //else if (agc.match(/(?:stargirl)/i)) showtitle = "Stargirl";
-    else return message.channel.send(Util.CreateEmbed('You must supply a valid show!', {
+    else return message.channel.send(Util.Embed('You must supply a valid show!', {
         description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**canaries**\n**supesnlois**\n**stargirl**'
     }, message.member));
 
@@ -70,7 +70,7 @@ export async function run(message, args) {
             //else if (next.series.match(/(?:supesnlois)/i)) thimg = '';
             //else if (next.series.match(/(?:stargirl)/i)) thimg = '';
         
-            const embed = Util.CreateEmbed(`Next episode for ${message.author.tag}:`, {
+            const embed = Util.Embed(`Next episode for ${message.author.tag}:`, {
                 thumbnail: thimg,
                 footer: {text: 'Click on the button below to view the next episode (works every 5 minutes)', icon: process.gideon.user.avatarURL()},
                 fields: [
@@ -134,7 +134,7 @@ export async function run(message, args) {
 
     catch (ex) {
         Util.log('Failed to fetch next episode: ' + ex.stack);
-        message.channel.send(Util.CreateEmbed('Failed to fetch episode list, please try again later!', null, message.member));
+        message.channel.send(Util.Embed('Failed to fetch episode list, please try again later!', null, message.member));
     }
 }
 

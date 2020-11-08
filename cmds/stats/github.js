@@ -9,11 +9,11 @@ export async function run(message) {
     try {
         const body = await Util.fetchJSON(api);
 
-        if (!body || !body.owner || !body.owner.html_url || !body.updated_at) return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!'));
+        if (!body || !body.owner || !body.owner.html_url || !body.updated_at) return message.channel.send(Util.Embed('An error occurred, please try again later!'));
         
         let upDate = new Date(body.updated_at);
     
-        message.channel.send(Util.CreateEmbed(body.name, {
+        message.channel.send(Util.Embed(body.name, {
             description: body.description + `\n\nOwner: [adrifcastr](${body.owner.html_url} '${body.owner.html_url}')\nRepo: [Gideon](${body.html_url} '${body.html_url}')\nDiscord: [Time Vault](${body.homepage} '${body.homepage}')\nLanguage: \`${body.language}\`\nLast Update: \`${upDate.toUTCString()}\`\nOpen Issues: \`${body.open_issues_count}\`\nStargazers: \`${body.stargazers_count}\`\nWatchers: \`${body.watchers_count}\`\nForks: \`${body.forks_count}\`\nGit Clone: \`${body.clone_url}\``,
             thumbnail: body.owner.avatar_url
         }, message.member));
@@ -21,7 +21,7 @@ export async function run(message) {
     
     catch (ex) {
         Util.log('Caught an exception while fetching github data: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occurred while fetching github data!', null, message.member));
+        return message.channel.send(Util.Embed('An error occurred while fetching github data!', null, message.member));
     }
 }
 

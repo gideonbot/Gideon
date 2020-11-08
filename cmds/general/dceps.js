@@ -16,7 +16,7 @@ export async function run(message, args, connection) {
         confirm.on('finish', () => confirm.destroy());
     }
 
-    const embed = Util.CreateEmbed('__Upcoming DC episodes:__', null, message.member);
+    const embed = Util.Embed('__Upcoming DC episodes:__', null, message.member);
 
     for (let show in process.gideon.dc_show_urls) {
         try {

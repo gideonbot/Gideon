@@ -12,7 +12,7 @@ export async function run(message) {
     if (guild.premiumTier === 2) premiumtier = 'Tier 2';
     if (guild.premiumTier === 3) premiumtier = 'Tier 3';
 
-    const embed = Util.CreateEmbed(guild.name + ` \`(${guild.id})\``, {
+    const embed = Util.Embed(guild.name + ` \`(${guild.id})\``, {
         author: {
             name: `Info requested by ${message.author.tag}`,
             icon: message.author.displayAvatarURL()

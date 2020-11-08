@@ -6,7 +6,7 @@ export async function run(message) {
     const member = message.member;
     const perms = member.permissions.toArray().map(perms => `\`${perms}\``).join(' ');
 
-    const embed = Util.CreateEmbed(null, {
+    const embed = Util.Embed(null, {
         author: {
             name: `${message.author.tag}'s permissions on ${message.guild.name}:`,
             icon: message.author.displayAvatarURL()

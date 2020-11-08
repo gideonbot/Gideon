@@ -170,10 +170,10 @@ class MsgHandler {
         }
 
         if (command.help.args.force) {
-            const noinput = Util.CreateEmbed('You must supply valid input!', null, message.member);
-            const noid = Util.CreateEmbed('You must supply a valid ID!', null, message.member);
-            const noepisode = Util.CreateEmbed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}, message.member);
-            const nomention = Util.CreateEmbed('You must supply a valid mention!', null, message.member);
+            const noinput = Util.Embed('You must supply valid input!', null, message.member);
+            const noid = Util.Embed('You must supply a valid ID!', null, message.member);
+            const noepisode = Util.Embed('You must supply a valid episode and season!', {description: 'Acceptable formats: S00E00 and 00x00'}, message.member);
+            const nomention = Util.Embed('You must supply a valid mention!', null, message.member);
 
             if (!args.length) return message.channel.send(noinput);
 

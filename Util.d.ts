@@ -42,7 +42,7 @@ export function Welcome(member: Discord.GuildMember): Promise<void>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
 export function AddInfo(show: string, json: any): Promise<void>;
 export function normalize(num: number): string;
-export function CreateEmbed(title: string, options?: EmbedOptions, member?: Discord.GuildMember): Discord.MessageEmbed;
+export function Embed(title: string, options?: EmbedOptions, member?: Discord.GuildMember): Discord.MessageEmbed;
 
 declare module "discord.js" {
     interface Guild {

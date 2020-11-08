@@ -112,7 +112,7 @@ export async function run(message, args) {
     else if (agc.match(/(?:titans)/i)) show = shows[13];
     else if (agc.match(/(?:smallville)/i)) show = shows[14];
     else if (agc.match(/(?:theboys)/i)) show = shows[15];
-    else return message.channel.send(Util.CreateEmbed('You must supply a valid show!', {
+    else return message.channel.send(Util.Embed('You must supply a valid show!', {
         description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**\n**krypton**\n**lucifer**\n**supesnlois**\n**stargirl**\n**doompatrol**\n**titans**\n**smallville**\n**theboys**'
     }, message.member));
 
@@ -121,7 +121,7 @@ export async function run(message, args) {
     try {
         const body = await Util.fetchJSON(api);
 
-        if (body.status === 404) return message.channel.send(Util.CreateEmbed('There was no data for this episode!', null, message.member));
+        if (body.status === 404) return message.channel.send(Util.Embed('There was no data for this episode!', null, message.member));
         
         let sp = '';
         let today = new Date();
@@ -141,7 +141,7 @@ export async function run(message, args) {
         let am_pm = (H < 12 || H === 24) ? ' AM' : ' PM';
         timeString = h + ':' + timeString.split(':')[1] + am_pm;
     
-        message.channel.send(Util.CreateEmbed(`${show.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
+        message.channel.send(Util.Embed(`${show.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
             description: sp + desc + sp + `\n\nAirdate: \`${moment(airdate).isValid() ? airdate.toDateString() : 'No Airdate Available'}\`\nAirtime: \`${body.airtime === '' ? 'No Airtime Available' : timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Full recap & trailer](${body.url} '${body.url}')**`,
             image: img
         }, message.member));
@@ -149,7 +149,7 @@ export async function run(message, args) {
     
     catch (ex) {
         Util.log('Exception occurred while fetching the episodes ' + ex.stack);
-        message.channel.send(Util.CreateEmbed('An error occurred while trying to fetch the episodes!', null, message.member));
+        message.channel.send(Util.Embed('An error occurred while trying to fetch the episodes!', null, message.member));
     }
 }
 export const help = {

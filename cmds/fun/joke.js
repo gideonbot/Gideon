@@ -64,7 +64,7 @@ export async function run(message, args) {
 
     if (message.guild.last_jokes.length > 20) message.guild.last_jokes.shift();
 
-    message.channel.send(Util.CreateEmbed('Category: ' + body.category, {description: body.joke}, message.member));       
+    message.channel.send(Util.Embed('Category: ' + body.category, {description: body.joke}, message.member));       
 }
 
 export const help = {

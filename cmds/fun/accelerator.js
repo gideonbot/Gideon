@@ -5,7 +5,7 @@ import Util from '../../Util.js';
  */
 export async function run(message) {
     try {
-        const acembed = Util.CreateEmbed('Blowing up S.T.A.R. Labs. Particle Accelerator...', {image: 'https://i.imgur.com/opCbZTn.gif'}, message.member);
+        const acembed = Util.Embed('Blowing up S.T.A.R. Labs. Particle Accelerator...', {image: 'https://i.imgur.com/opCbZTn.gif'}, message.member);
         let sent = await message.channel.send(acembed);
 
         await Util.delay(10000);
@@ -40,7 +40,7 @@ export async function run(message) {
         
         let result = abilities[Math.floor(Math.random() * abilities.length)];
     
-        const pwrembed = Util.CreateEmbed(result.title, {
+        const pwrembed = Util.Embed(result.title, {
             description: result.desc,
             image: result.gif
         }, message.member);
@@ -50,7 +50,7 @@ export async function run(message) {
     
     catch (ex) {
         Util.log('Exception occurred while starting up the particle accelerator ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occurred while trying to start the particle accelerator!', null, message.member));
+        return message.channel.send(Util.Embed('An error occurred while trying to start the particle accelerator!', null, message.member));
     } 
 }
 

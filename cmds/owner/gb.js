@@ -43,7 +43,7 @@ export async function run(message, args) {
 
     catch (ex) {
         Util.log('Caught an exception while running gb.js: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
+        return message.channel.send(Util.Embed('An error occurred while executing this command!', null, message.member));
     }
 }
 

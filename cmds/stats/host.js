@@ -15,7 +15,7 @@ export async function run(message) {
         const load = await si.currentLoad().catch(console.error);
         //const net = await si.networkInterfaces().catch(console.error);
 
-        const embed = Util.CreateEmbed('Hosting server stats:', {
+        const embed = Util.Embed('Hosting server stats:', {
             fields: [
                 {
                     name: '❯ CPU:',
@@ -42,7 +42,7 @@ export async function run(message) {
 
     catch (ex) {
         Util.log('Caught an exception while running host.js: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
+        return message.channel.send(Util.Embed('An error occurred while executing this command!', null, message.member));
     }
 }
 

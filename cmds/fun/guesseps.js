@@ -14,7 +14,7 @@ export async function run(message, args) {
     let points = 0;
     let timerstart = new Date();
 
-    if (message.author.guessing) return message.channel.send(Util.CreateEmbed('A guessing game is already running!', null, message.member));
+    if (message.author.guessing) return message.channel.send(Util.Embed('A guessing game is already running!', null, message.member));
     
     message.author.guessing = true;
 
@@ -55,7 +55,7 @@ export async function run(message, args) {
     else if (agc.match(/(?:blacklightning)/i)) chosenfilter = filters[5];
     else if (agc.match(/(?:batwoman)/i)) chosenfilter = filters[6];
     else if (agc.match(/(?:constantine)/i)) chosenfilter = filters[7];
-    else return message.channel.send(Util.CreateEmbed('You must supply a valid show!', {
+    else return message.channel.send(Util.Embed('You must supply a valid show!', {
         description: 'Available shows:\n**flash**\n**arrow**\n**supergirl**\n**legends**\n**constantine**\n**blacklightning**\n**batwoman**'
     }, message.member));
 
@@ -91,7 +91,7 @@ export async function run(message, args) {
         const epname = randomep.episode_name;
         const epairdate = new Date(randomep.air_date);
 
-        const gameembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
+        const gameembed = Util.Embed(`Guessing game for ${message.author.tag}:`, {
             description: `Please guess the following Arrowverse episode's name:\n\`${show} ${epnum}\`\n\n(Press :arrow_forward: to skip this episode or <:stop:669309980209446912> to end this round)`,
             author: {
                 name: `You've got ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + 's' : s[1]} left!`,
@@ -145,7 +145,7 @@ export async function run(message, args) {
                 collector.stop();
                 await sent.reactions.removeAll();
 
-                const stopembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
+                const stopembed = Util.Embed(`Guessing game for ${message.author.tag}:`, {
                     description: 'Your game round has been cancelled! :white_check_mark:',
                     author: {
                         name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() > 1 ? s[1] + 's' : s[1]} left!`,
@@ -180,7 +180,7 @@ export async function run(message, args) {
                 process.gideon.setScore.run(score);
                 tries--;
 
-                const correctembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
+                const correctembed = Util.Embed(`Guessing game for ${message.author.tag}:`, {
                     description: `That is correct! :white_check_mark:\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\`\n\n**You have gained \`${points}\` ${points > 1 ? s[2] + 's' : s[2]}!**\n(Airdate point bonus: \`+${airdate_bonus}\`)`,
                     author: {
                         name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + 's' : s[1]} left!`,
@@ -203,7 +203,7 @@ export async function run(message, args) {
             let question = `\`${game.show} ${game.ep_and_s}\``;
             let solution = `\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``;
 
-            const incorrectembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
+            const incorrectembed = Util.Embed(`Guessing game for ${message.author.tag}:`, {
                 description: `That is incorrect! :x:\n${tries == 0 ? solution : question}`,
                 author: {
                     name: `You've ${tries == 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + 's' : s[1]} left!`,
@@ -229,7 +229,7 @@ export async function run(message, args) {
     
         collector.on('end', async (collected, reason) => {
             if (reason === 'time') {
-                const timeouttembed = Util.CreateEmbed(`Guessing game for ${message.author.tag}:`, {
+                const timeouttembed = Util.Embed(`Guessing game for ${message.author.tag}:`, {
                     description: `You ran out of time!\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``,
                     author: {
                         name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} left!`,
@@ -252,7 +252,7 @@ export async function run(message, args) {
 
     catch (ex) {
         Util.log('Caught an exception while running guesseps.js: ' + ex.stack);
-        message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
+        message.channel.send(Util.Embed('An error occurred while executing this command!', null, message.member));
     }
 }
 

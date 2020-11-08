@@ -7,7 +7,7 @@ import moment from 'moment';
  * @param {string[]} args
  */
 export async function run(message, args) {
-    const as = Util.CreateEmbed('You must supply valid input!', null, message.member);
+    const as = Util.Embed('You must supply valid input!', null, message.member);
     const auth = message.author;
     let user;
 
@@ -24,7 +24,7 @@ export async function run(message, args) {
     
     if (!user) return message.channel.send(as);
 
-    const embed = Util.CreateEmbed(null, {
+    const embed = Util.Embed(null, {
         author: {
             name: `Info requested by ${auth.tag}`,
             icon: auth.displayAvatarURL()

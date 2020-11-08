@@ -11,7 +11,7 @@ export async function run(message, args) {
     const cmd = process.gideon.commands.get(match.target);
 
     if (cmd) {
-        const embed = Util.CreateEmbed(`Results for: "${args[0]}"`, null, message.member);
+        const embed = Util.Embed(`Results for: "${args[0]}"`, null, message.member);
         
         if (Array.isArray(cmd.help.name) && cmd.help.name.length > 1) {
             embed.setDescription(`\`${prefix + cmd.help.name[0]}\``);

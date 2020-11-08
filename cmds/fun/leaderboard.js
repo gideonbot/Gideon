@@ -4,7 +4,7 @@ import Util from '../../Util.js';
  * @param {Discord.Message} message
  */
 export async function run(message) {
-    let leaderboard = Util.CreateEmbed('Top 10 Leaderboard:', null, message.member);
+    let leaderboard = Util.Embed('Top 10 Leaderboard:', null, message.member);
 
     let top10 = process.gideon.getTop10.all().filter(x => x.points > 0);
 

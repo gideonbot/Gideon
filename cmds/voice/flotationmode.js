@@ -16,7 +16,7 @@ export async function run(message, args, connection) {
     orders.on('finish', () => orders.destroy()); 
 
     const ftgif = 'https://i.imgur.com/xd1ja5e.gif';
-    const embed = Util.CreateEmbed('Flotationmode activated!', { image: ftgif }, message.member);
+    const embed = Util.Embed('Flotationmode activated!', { image: ftgif }, message.member);
     message.channel.send(embed);
 }
 

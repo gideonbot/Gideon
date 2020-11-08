@@ -7,7 +7,7 @@ export async function run(message) {
     const auth = message.author;
     const user = message.mentions.users.first();
     
-    message.channel.send(Util.CreateEmbed(null, {
+    message.channel.send(Util.Embed(null, {
         description: `**${auth} you have cuddled ${user}!**\n\nA Beebo-tastic cuddle always brightens the mood!`,
         image: 'https://i.imgur.com/IOpmt2j.gif'
     }, message.member));

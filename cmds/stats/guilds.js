@@ -5,17 +5,17 @@ import Util from '../../Util.js';
  */
 export async function run(message) {
     try {
-        const embed = Util.CreateEmbed('Guilds:', null, message.member);
+        const embed = Util.Embed('Guilds:', null, message.member);
         const cache = process.gideon.guilds.cache;
 
-        if (cache.size < 1 || !cache.first()) return message.channel.send(Util.CreateEmbed('No guilds found (if you are seeing this something has gone really wrong)', null, message.member));
+        if (cache.size < 1 || !cache.first()) return message.channel.send(Util.Embed('No guilds found (if you are seeing this something has gone really wrong)', null, message.member));
         
         embed.setDescription(`\`${cache.size}\` guilds on shard: \`${cache.first().shardID}\``);
         message.channel.send(embed);
     }
     catch (ex) {
         Util.log('Caught an exception while running guilds.js: ' + ex.stack);
-        return message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
+        return message.channel.send(Util.Embed('An error occurred while executing this command!', null, message.member));
     }
 }
 

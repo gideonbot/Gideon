@@ -13,7 +13,7 @@ export async function run(message, args) {
     const cmdamount = Array.from(new Set(process.gideon.commands.map(x=>JSON.stringify(x)))).map(x=>JSON.parse(x));
 
     if (!args[0]) {
-        const help = Util.CreateEmbed('__Use ' + customprefix.prefix + 'help <module> to get a list of commands__', null, message.member)
+        const help = Util.Embed('__Use ' + customprefix.prefix + 'help <module> to get a list of commands__', null, message.member)
             .setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nUse `' + customprefix.prefix + 'alias <command>` for command aliases\nUse `' + customprefix.prefix + 'search <command>` to search a command\nGideon\'s prefixes are: ' + prefixes)
             .addField('general (`'+ cmdamount.filter(x => x.help.type === 'general').length + ' available`)', 'General helpful commands')  
             .addField('fun (`'+ cmdamount.filter(x => x.help.type === 'fun').length + ' available`)', 'Fun and interactive commands') 
@@ -30,7 +30,7 @@ export async function run(message, args) {
     }
     
     if (args[0].match(/(?:syntax)/i)) {
-        const help = Util.CreateEmbed('__Command Syntax:__', null, message.member)
+        const help = Util.Embed('__Command Syntax:__', null, message.member)
             .setDescription('Gideon\'s prefixes are: ' + prefixes + '\nArguments wrapped in `<>` are variables. _do not actually add brackets_\nArguments seperated by `/` mean `this or(/) this`.\nArguments wrapped in `[]` are optional arguments.\nCommands marked with :warning: are potentially dangerous.\nCommands marked with <:18:693135780796694668> are potentially NSFW.\nCommands marked with <:timevault:686676561298063361> are Time Vault only.\nCommands marked with <:gideon:686678560798146577> are application owner only.\nCommands marked with <:voicerecognition:693521621184413777> are Gideon Voice™ compatible.\nCommands marked with <:perms:686681300156940349> require certain permissions.\nCommands marked with `@role` require the mentioned role.')  
             .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
@@ -54,7 +54,7 @@ export async function run(message, args) {
         for (let item in cmds) tags.push(item);
         const tagnames = tags.map(x => `\`${x}\``).join(' ');
 
-        const help = Util.CreateEmbed('__Available tags:__ <:timevault:686676561298063361>', null, message.member)
+        const help = Util.Embed('__Available tags:__ <:timevault:686676561298063361>', null, message.member)
             .setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nUse `' + customprefix.prefix + 'alias <command>` for command aliases\nUse `' + customprefix.prefix + 'search <command>` to search a command\nGideon\'s prefixes are: ' + prefixes + '\n\n' + tagnames)  
             .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
@@ -69,7 +69,7 @@ export async function run(message, args) {
     else if (args[0].match(/(?:voice)/i)) type = 'voice';
     else if (args[0].match(/(?:stats)/i)) type = 'stats';
     else if (args[0].match(/(?:owner)/i)) type = 'owner';
-    else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument!`, null, message.member));
+    else return message.channel.send(Util.Embed(`${args[0]} is not a valid argument!`, null, message.member));
 
     let commands = {};
     let marks = {};
@@ -94,7 +94,7 @@ export async function run(message, args) {
         let pages = [];
         
         for (let i = 0; i < arrs.length; i++) {
-            const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__', null, message.member);
+            const embed = Util.Embed('__List of available "' + type + '" commands below:__', null, message.member);
             embed.setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nUse `' + customprefix.prefix + 'alias <command>` for command aliases\nUse `' + customprefix.prefix + 'search <command>` to search a command\nGideon\'s prefixes are: ' + prefixes);
 
             for (let item of arrs[i]) {
@@ -144,7 +144,7 @@ export async function run(message, args) {
     }
 
     else {
-        const embed = Util.CreateEmbed('__List of available "' + type + '" commands below:__', null, message.member);
+        const embed = Util.Embed('__List of available "' + type + '" commands below:__', null, message.member);
         embed.setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nUse `' + customprefix.prefix + 'alias <command>` for command aliases\nUse `' + customprefix.prefix + 'search <command>` to search a command\nGideon\'s prefixes are: ' + prefixes);
         for (let item in commands) {
 

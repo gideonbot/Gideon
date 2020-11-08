@@ -4,7 +4,7 @@ import Util from '../../Util.js';
  * @param {Discord.Message} message
  */
 export async function run(message) {
-    message.channel.send(Util.CreateEmbed('Donations', {
+    message.channel.send(Util.Embed('Donations', {
         description: 'Donations are gladly accepted. \nPlease send them to one of the options below. \nDonating supports the development, maintenance and hosting of this project. \nThank you!',
         thumbnail: 'https://i.imgur.com/f3fvsRe.png',
         fields: [

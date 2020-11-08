@@ -7,12 +7,12 @@ import Util from '../../Util.js';
 export async function run(message, args) {
     if (!process.env.IMG_CL) {
         Util.log('Missing env variable for JPK command!');
-        return message.channel.send(Util.CreateEmbed('This command is currently not available', null, message.member));
+        return message.channel.send(Util.Embed('This command is currently not available', null, message.member));
     }
     
     const customprefix = process.gideon.getGuild.get(message.guild.id);
     const jpkArray = ['FqCwt1J', '8bFXk0z', '2yz4RWt', 'kxpGHYM', 'f8mENXa', 'Xy2SoEw', 'UcPxCV5', 'JhTWxoJ', 'eLugrZD'];
-    const jpkas = Util.CreateEmbed('You can choose an album!', {description: 'Currently available:'}, message.member)
+    const jpkas = Util.Embed('You can choose an album!', {description: 'Currently available:'}, message.member)
         .addField(`${customprefix.prefix}JPK`, 'All Albums (except NSFW)')
         .addField(`${customprefix.prefix}JPK GN`, 'General')
         .addField(`${customprefix.prefix}JPK TF`, 'The Flash')
@@ -42,12 +42,12 @@ export async function run(message, args) {
         if (message.author.id !== process.gideon.owner) {
             if (!message.channel.nsfw) {
                 process.gideon.emit('commandRefused', message, 'NSFW_REQUIRED');
-                return message.channel.send(Util.CreateEmbed('This command requires a NSFW channel!', { image: 'https://i.imgur.com/JvmFASl.gif' }, message.member));
+                return message.channel.send(Util.Embed('This command requires a NSFW channel!', { image: 'https://i.imgur.com/JvmFASl.gif' }, message.member));
             }
         }
         return Util.IMG('AwPimhP', message, true);
     }
-    else return message.channel.send(Util.CreateEmbed(`${args[0]} is not a valid argument! (jpk help)`, null, message.member)); 
+    else return message.channel.send(Util.Embed(`${args[0]} is not a valid argument! (jpk help)`, null, message.member)); 
 
     Util.IMG(rjpka, message);
 }

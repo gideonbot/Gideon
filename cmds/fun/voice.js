@@ -21,7 +21,7 @@ export async function run(message, args) {
         return message.reply('This command is not available currently!');
     }
 
-    const voicehelp = Util.CreateEmbed('Usage of Voice™ Commands:', {
+    const voicehelp = Util.Embed('Usage of Voice™ Commands:', {
         description: 'Use `!voice tutorial` for a video tutorial.\n\nUse Gideon Voice™ commands by speaking into your microphone\n\nNo further response means the input was not recognized or no Voice™ enabled command was used'}, message.member)
         .setAuthor('Note: Not all commands are Voice™ compatible!', message.author.avatarURL());
     
@@ -77,7 +77,7 @@ export async function run(message, args) {
     
     catch (ex) {
         Util.log('Caught an exception while running voice.js: ' + ex.stack);
-        message.channel.send(Util.CreateEmbed('An error occurred while executing this command!', null, message.member));
+        message.channel.send(Util.Embed('An error occurred while executing this command!', null, message.member));
     } 
 }
 

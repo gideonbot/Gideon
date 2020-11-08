@@ -227,7 +227,7 @@ class Util {
         imgclient.album.get(imgid, (err, res) => {
             if (err) {
                 Util.log(err);
-                return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!', null, message.member));
+                return message.channel.send(Util.Embed('An error occurred, please try again later!', null, message.member));
             }
     
             let min = 0;
@@ -244,7 +244,7 @@ class Util {
                 return message.channel.send(img);
             }
 
-            message.channel.send(Util.CreateEmbed(imgid == 'ngJQmxL' ? 'Germ approves!:white_check_mark:' : '', {image: rimg}, message.member));
+            message.channel.send(Util.Embed(imgid == 'ngJQmxL' ? 'Germ approves!:white_check_mark:' : '', {image: rimg}, message.member));
         });
     }
 
@@ -305,7 +305,7 @@ class Util {
        }} options
      * @param {Discord.GuildMember} member
      */
-    static CreateEmbed(title, options, member) {
+    static Embed(title, options, member) {
         if (!options) options = {};
         
         const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
@@ -469,7 +469,7 @@ class Util {
 
         const board = process.gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
 
-        const starmsg = Util.CreateEmbed(null, {
+        const starmsg = Util.Embed(null, {
             author: {
                 name: reaction.message.author.tag,
                 icon: reaction.message.author.displayAvatarURL()
