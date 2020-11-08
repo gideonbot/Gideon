@@ -8,13 +8,13 @@ export async function run(message) {
     if (eggs.eastereggs === 0) {
         eggs.eastereggs = 1;
         process.gideon.setGuild.run(eggs);
-        message.reply('Easter eggs enabled! :white_check_mark:');
+        return message.reply('Easter eggs enabled! :white_check_mark:');
     }
 
     else {
         eggs.eastereggs = 0;
         process.gideon.setGuild.run(eggs);
-        message.reply('Easter eggs disabled! :white_check_mark:');
+        return message.reply('Easter eggs disabled! :white_check_mark:');
     } 
 }
 

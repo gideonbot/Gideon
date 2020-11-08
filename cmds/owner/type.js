@@ -7,7 +7,7 @@ export async function run(message) {
 }
 
 export const help = {
-    name: ['type', 'typing'],
+    name: 'type',
     type: 'owner',
     help_text: 'type',
     help_desc: 'Toggles typing',

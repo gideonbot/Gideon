@@ -5,27 +5,23 @@ import Util from '../../Util.js';
  * @param {string[]} args
  */
 export async function run(message, args) {
-    try {
-        const code = args.join(' ');
-        const returnedValue = eval(code);
+    const code = args.join(' ');
+    const returnedValue = eval(code);
 
-        if (typeof returnedValue === 'undefined') {
-            message.channel.send('The evaluated code returned nothing.');
-            return;
-        }
-
-        let printValue = '';
-
-        if (typeof returnedValue === 'string') printValue = returnedValue;
-        else if (typeof returnedValue === 'object') printValue = JSON.stringify(returnedValue, null, 2);
-        else printValue = new String(returnedValue);
-
-        if (printValue == '{}') return;
-
-        message.channel.send(Util.truncate(printValue, 1900, true), {code: true});
-    } catch (e) {
-        return message.channel.send(Util.Embed('An error occurred while processing your request:', {description: '```\n' + Util.truncate(e.stack, 400, true) + '```'}, message.member));
+    if (typeof returnedValue === 'undefined') {
+        message.channel.send('The evaluated code returned nothing.');
+        return;
     }
+
+    let printValue = '';
+
+    if (typeof returnedValue === 'string') printValue = returnedValue;
+    else if (typeof returnedValue === 'object') printValue = JSON.stringify(returnedValue, null, 2);
+    else printValue = new String(returnedValue);
+
+    if (printValue == '{}') return;
+
+    return message.channel.send(Util.truncate(printValue, 1900, true), {code: true});
 }
 
 export const help = {

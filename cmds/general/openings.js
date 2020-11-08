@@ -19,9 +19,9 @@ export async function run(message, args) {
 }
 
 export const help = {
-    name: ['opening', 'intro'],
+    name: 'op',
     type: 'general',
-    help_text: 'opening',
+    help_text: 'op',
     help_desc: 'Sends the specified opening',
     owner: false,
     voice: false,

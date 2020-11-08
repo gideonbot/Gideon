@@ -8,7 +8,7 @@ export async function run(message) {
 }
 
 export const help = {
-    name: ['chat', 'ai', 'speak'],
+    name: 'chat',
     type: 'fun',
     help_text: 'chat',
     help_desc: 'Chat with an AI',

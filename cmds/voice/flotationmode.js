@@ -17,7 +17,7 @@ export async function run(message, args, connection) {
 
     const ftgif = 'https://i.imgur.com/xd1ja5e.gif';
     const embed = Util.Embed('Flotationmode activated!', { image: ftgif }, message.member);
-    message.channel.send(embed);
+    return message.channel.send(embed);
 }
 
 export const help = {

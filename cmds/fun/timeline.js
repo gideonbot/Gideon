@@ -5,15 +5,8 @@ import gideonapi from 'gideon-api';
  * @param {Discord.Message} message
  */
 export async function run(message) {
-    try {
-        const timeline = await gideonapi.timeline();
-        message.channel.send(Util.Embed('Timeline change detected!', {description: timeline, image: 'https://i.imgur.com/qWN3luc.gif'}, message.member));
-    }
-    
-    catch (ex) {
-        Util.log('An error occurred while trying to fetch a timeline change: ' + ex.stack);
-        return message.channel.send(Util.Embed('Failed to fetch a timeline change!', null, message.member));
-    }
+    const timeline = await gideonapi.timeline();
+    return message.channel.send(Util.Embed('Timeline change detected!', {description: timeline, image: 'https://i.imgur.com/qWN3luc.gif'}, message.member));
 }
 
 export const help = {

@@ -19,7 +19,7 @@ export async function run(message, args) {
 }
 
 export const help = {
-    name: ['ks', 'kill'],
+    name: 'ks',
     type: 'owner',
     help_text: 'ks <shardid>',
     help_desc: 'Kills the specified shard',

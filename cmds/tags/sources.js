@@ -3,11 +3,11 @@
  */
 export async function run(message) {
     const tag = '**"Official sources" refers to any social media in association with the Arrowverse franchise or The CW Televison Network.**';
-    message.channel.send(tag);
+    return message.channel.send(tag);
 }
 
 export const help = {
-    name: ['sources', 'official sources'],
+    name: 'sources',
     type: 'tags',
     help_text: 'sources',
     help_desc: 'Sources Tag',

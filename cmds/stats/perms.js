@@ -14,11 +14,11 @@ export async function run(message) {
         description: perms,
     }, message.member);
 
-    message.channel.send(embed);
+    return message.channel.send(embed);
 }
 
 export const help = {
-    name: ['perms', 'permissions'],
+    name: 'perms',
     type: 'stats',
     help_text: 'perms',
     help_desc: 'Displays a members perms',

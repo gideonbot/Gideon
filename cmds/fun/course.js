@@ -43,7 +43,7 @@ export async function run(message, args, connection) {
         let tmax = 3000;
         let year = Math.floor(Math.random() * (tmax - tmin + 1)) + tmin;
 
-        message.channel.send(Util.Embed(`Course set to ${destination} ${year}`, {image: 'https://i.imgur.com/I3UQhVu.gif'}, message.member));
+        return message.channel.send(Util.Embed(`Course set to ${destination} ${year}`, {image: 'https://i.imgur.com/I3UQhVu.gif'}, message.member));
     }
     
     catch (ex) {

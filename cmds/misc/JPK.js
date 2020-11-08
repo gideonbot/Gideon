@@ -49,7 +49,7 @@ export async function run(message, args) {
     }
     else return message.channel.send(Util.Embed(`${args[0]} is not a valid argument! (jpk help)`, null, message.member)); 
 
-    Util.IMG(rjpka, message);
+    return Util.IMG(rjpka, message);
 }
 
 export const help = {

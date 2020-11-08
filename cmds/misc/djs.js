@@ -6,11 +6,11 @@ import Util from '../../Util.js';
  */
 export async function run(message, args) {
     try {
-        const source = 'https://raw.githubusercontent.com/discordjs/discord.js/docs/12.0.2.json';
+        const source = 'https://raw.githubusercontent.com/discordjs/discord.js/docs/12.4.1.json';
         const queryString = encodeURI(args.join(' '));
         const api = `https://djsdocs.sorta.moe/v2/embed?src=${source}&q=${queryString}`;
         const body = await Util.fetchJSON(api);
-        message.channel.send({ embed: body });
+        return message.channel.send({ embed: body });
     }
 
     catch (ex) {
@@ -20,7 +20,7 @@ export async function run(message, args) {
 }
 
 export const help = {
-    name: ['djs', 'discordjs', 'lib'],
+    name: 'djs',
     type: 'misc',
     help_text: 'djs <query>',
     help_desc: 'Searches discord.js docs',

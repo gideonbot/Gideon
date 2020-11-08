@@ -29,9 +29,9 @@ export async function run(message) {
 }
 
 export const help = {
-    name: ['crossovers', 'xovers'],
+    name: 'xovers',
     type: 'general',
-    help_text: 'crossovers',
+    help_text: 'xovers',
     help_desc: 'Displays a list of all Arrowverse crossover episodes in their respective watching order',
     owner: false,
     voice: false,

@@ -36,11 +36,11 @@ export async function run(message, args, connection) {
 
     if (embed.fields.length < 1) return message.channel.send('Failed to fetch episode list, please try again later...');
     
-    message.channel.send(embed);
+    return message.channel.send(embed);
 }
 
 export const help = {
-    name: ['nxeps', 'nexteps', 'nextepisodes'],
+    name: 'nxeps',
     type: 'general',
     help_text: 'nxeps',
     help_desc: 'Displays a countdown to the next airing Arrowverse episodes',

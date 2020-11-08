@@ -5,16 +5,8 @@ import gideonapi from 'gideon-api';
  * @param {Discord.Message} message
  */
 export async function run(message) {
-    try {
-        const quote = await gideonapi.quote();
-        message.channel.send(Util.Embed(null, {description: '**' + quote.text + '**', thumbnail: quote.img}, message.member));
-    }
-
-    catch (ex) {
-        Util.log('An error occurred while trying to fetch a quote: ' + ex.stack);
-
-        return message.channel.send(Util.Embed('Failed to fetch a quote, please try again later!', null, message.member));
-    }
+    const quote = await gideonapi.quote();
+    return message.channel.send(Util.Embed(null, {description: '**' + quote.text + '**', thumbnail: quote.img}, message.member));
 }
 
 export const help = {

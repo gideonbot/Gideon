@@ -139,9 +139,9 @@ export async function run(message, args) {
 }
 
 export const help = {
-    name: ['next', 'nx'],
+    name: 'nx',
     type: 'general',
-    help_text: 'next <show> <NxNN/SNNENN> ~ N -> number',
+    help_text: 'nx <show> <NxNN/SNNENN> ~ N -> number',
     help_desc: 'Fetches next episode in watching order',
     owner: false,
     voice: false,

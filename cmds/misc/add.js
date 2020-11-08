@@ -6,7 +6,7 @@ import Util from '../../Util.js';
 export async function run(message) {
     const url = 'https://discordapp.com/api/oauth2/authorize?client_id=' + process.gideon.user.id + '&permissions=37088321&scope=bot';
 
-    message.channel.send(Util.Embed('Gideon - Oauth2 Invite', {
+    return message.channel.send(Util.Embed('Gideon - Oauth2 Invite', {
         description: 'Click the link below to add me to your server!',
         thumbnail: process.gideon.user.avatarURL(),
         fields: [
@@ -19,7 +19,7 @@ export async function run(message) {
 }
 
 export const help = {
-    name: ['add', 'oauth'],
+    name: 'add',
     type: 'misc',
     help_text: 'add',
     help_desc: 'Displays Gideon\'s oauth2 invite link',

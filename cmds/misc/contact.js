@@ -4,7 +4,7 @@ import Util from '../../Util.js';
  * @param {Discord.Message} message 
  */
 export async function run(message) {
-    message.channel.send(Util.Embed('Contact:', {
+    return message.channel.send(Util.Embed('Contact:', {
         description: 'Server: [Time Vault](https://discord.gg/h9SEQaU \'https://discord.gg/h9SEQaU\')\nEmail: admin@gideonbot.com'
     }, message.member));  
 }

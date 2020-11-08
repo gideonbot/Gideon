@@ -30,8 +30,6 @@ export async function run(message, args) {
         (x => x.series == 'Constantine')
     ];
 
-    let command = message.content.toLowerCase().split(' ')[0];
-
     let score = process.gideon.getScore.get(message.author.id);
     if (!score) {
         score = {
@@ -41,10 +39,6 @@ export async function run(message, args) {
             points: 0
         };
         process.gideon.setScore.run(score);
-    }
-
-    if (command.endsWith('score') || command.endsWith('points')) {
-        return message.reply(`You currently have \`${score.points}\` point(s)!`);
     }
 
     if (!agc) chosenfilter = filters[0];
@@ -257,7 +251,7 @@ export async function run(message, args) {
 }
 
 export const help = {
-    name: ['guess', 'guesseps', 'points', 'score'],
+    name: 'guess',
     type: 'fun',
     help_text: 'guess [show]',
     help_desc: 'Arrowverse episode guessing game',

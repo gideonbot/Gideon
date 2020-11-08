@@ -4,20 +4,13 @@ import Util from '../../Util.js';
  * @param {Discord.Message} message
  */
 export async function run(message) {
-    try {
-        message.channel.send('Performing database backup, please wait...');
-        await Util.SQLBkup();
-        message.channel.send('Database backup complete! Please check <#622415301144870932>! :white_check_mark:');
-    }
-    
-    catch (ex) {
-        Util.log('Caught an exception while running bkup.js: ' + ex.stack);
-        return message.channel.send(Util.Embed('An error occurred while executing this command!', null, message.member));
-    }      
+    message.channel.send('Performing database backup, please wait...');
+    await Util.SQLBkup();
+    return message.channel.send('Database backup complete! Please check <#622415301144870932>! :white_check_mark:');
 }
 
 export const help = {
-    name: ['backup', 'bkup'],
+    name: 'bkup',
     type: 'admin',
     help_text: 'backup',
     help_desc: 'Performs a database backup',

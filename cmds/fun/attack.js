@@ -174,14 +174,14 @@ export async function run(message, args) {
     else return message.channel.send(at);
     if (!attack) return message.channel.send(at);
 
-    message.channel.send(Util.Embed(null, {
+    return message.channel.send(Util.Embed(null, {
         description: `**${attack.emote}${auth} ${attack.text}${attack.emote}**\n\n${attack.desc}`,
         image: attack.attackgif
     }, message.member));
 }
 
 export const help = {
-    name: ['at', 'attack'],
+    name: 'at',
     type: 'fun',
     help_text: 'at <attack> <user>',
     help_desc: 'Attacks the selected user with the selected attack',

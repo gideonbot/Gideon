@@ -7,7 +7,7 @@ export async function run(message) {
 }
 
 export const help = {
-    name: ['rs', 'respawn'],
+    name: 'rs',
     type: 'owner',
     help_text: 'rs',
     help_desc: 'Respawns all shards',

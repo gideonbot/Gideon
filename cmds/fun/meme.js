@@ -23,7 +23,7 @@ export async function run(message) {
         let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
         let ravm = res.images[ranum].link;
 
-        message.channel.send(Util.Embed(null, {image: ravm}, message.member));
+        return message.channel.send(Util.Embed(null, {image: ravm}, message.member));
     });   
 }
 
@@ -31,7 +31,7 @@ export const help = {
     name: 'meme',
     type: 'fun',
     help_text: 'meme',
-    help_desc: 'Displays a random Arrowverse meme',
+    help_desc: 'Fetches a random Arrowverse meme',
     owner: false,
     voice: false,
     timevault: false,

@@ -8,13 +8,13 @@ export async function run(message) {
     if (abm.abmval === 0) {
         abm.abmval = 1;
         process.gideon.setGuild.run(abm);
-        message.reply('ABM enabled! :white_check_mark:');
+        return message.reply('ABM enabled! :white_check_mark:');
     }
 
     else {
         abm.abmval = 0;
         process.gideon.setGuild.run(abm);
-        message.reply('ABM disabled! :white_check_mark:');
+        return message.reply('ABM disabled! :white_check_mark:');
     } 
 }
 

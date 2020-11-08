@@ -145,7 +145,7 @@ export async function run(message, args) {
 }
 
 export const help = {
-    name: ['subs', 'subtitles'],
+    name: 'subs',
     type: 'general',
     help_text: 'subs <lang> <show> <NxNN/SNNENN> ~ N -> number',
     help_desc: 'Searches opensubtitles.org for the specified episode',

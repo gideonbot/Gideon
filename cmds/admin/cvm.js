@@ -8,13 +8,13 @@ export async function run(message) {
     if (cvm.cvmval === 0) {
         cvm.cvmval = 1;
         process.gideon.setGuild.run(cvm);
-        message.reply('Crossover-Mode enabled! :white_check_mark:');
+        return message.reply('Crossover-Mode enabled! :white_check_mark:');
     }
 
     else {
         cvm.cvmval = 0;
         process.gideon.setGuild.run(cvm);
-        message.reply('Crossover-Mode disabled! :white_check_mark:');
+        return message.reply('Crossover-Mode disabled! :white_check_mark:');
     } 
 }
 

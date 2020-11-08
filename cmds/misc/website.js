@@ -2,11 +2,11 @@
  * @param {Discord.Message} message
  */
 export async function run(message) {      
-    message.channel.send('https://gideonbot.com');
+    return message.channel.send('https://gideonbot.com');
 }
 
 export const help = {
-    name: ['website', 'web', 'url', 'homepage'],
+    name: 'web',
     type: 'misc',
     help_text: 'website',
     help_desc: 'Displays a link to Gideon\'s homepage',

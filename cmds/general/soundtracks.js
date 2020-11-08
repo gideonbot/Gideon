@@ -16,13 +16,13 @@ export async function run(message) {
         // eslint-disable-next-line quotes
         .addField('The Boys', `[Season 2](https://open.spotify.com/album/0sjtRdvzeB50b8UCaMbYzY 'https://open.spotify.com/album/0sjtRdvzeB50b8UCaMbYzY')`, true);
     //peepee
-    message.channel.send(stracks);  
+    return message.channel.send(stracks);  
 }
 
 export const help = {
-    name: ['soundtracks', 'tracks', 'music'],
+    name: 'tracks',
     type: 'general',
-    help_text: 'soundtracks',
+    help_text: 'tracks',
     help_desc: 'Displays all soundtracks',
     owner: false,
     voice: false,

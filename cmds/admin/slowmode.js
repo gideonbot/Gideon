@@ -7,30 +7,23 @@ import Util from '../../Util.js';
 export async function run(message, args) {
     const as = Util.Embed('You must supply valid input!', null, message.member);
     
-    try {
-        if (isNaN(args[0])) {
-            if (isNaN(args[1])) return message.channel.send(as);
-            if (!message.mentions.channels.first()) return message.channel.send(as);
-            await message.mentions.channels.first().setRateLimitPerUser(args[1]);
-            await message.reply(`Set slowmode for ${message.mentions.channels.first()} to \`${args[1]}\` ${args[1] == 1 ? 'second' : 'seconds'}!`);
-        }
-    
-        else {
-            await message.channel.setRateLimitPerUser(args[0]);
-            await message.reply(`Set slowmode for ${message.channel} to \`${args[0]}\` ${args[0] == 1 ? 'second' : 'seconds'}!`);
-        }
+    if (isNaN(args[0])) {
+        if (isNaN(args[1])) return message.channel.send(as);
+        if (!message.mentions.channels.first()) return message.channel.send(as);
+        await message.mentions.channels.first().setRateLimitPerUser(args[1]);
+        return message.reply(`Set slowmode for ${message.mentions.channels.first()} to \`${args[1]}\` ${args[1] == 1 ? 'second' : 'seconds'}!`);
     }
-    
-    catch (ex) {
-        Util.log('Caught an exception while running slowmode.js: ' + ex.stack);
-        return message.channel.send(Util.Embed('An error occurred while executing this command!', null, message.member));
-    }      
+
+    else {
+        await message.channel.setRateLimitPerUser(args[0]);
+        return message.reply(`Set slowmode for ${message.channel} to \`${args[0]}\` ${args[0] == 1 ? 'second' : 'seconds'}!`);
+    }     
 }
 
 export const help = {
-    name: ['slowmode', 'slowmo', 'slow', 'sm'],
+    name: 'sm',
     type: 'admin',
-    help_text: 'slowmode [channel] <seconds>',
+    help_text: 'sm [channel] <seconds>',
     help_desc: 'Enables slowmode',
     owner: false,
     voice: false,

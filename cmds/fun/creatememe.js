@@ -65,11 +65,11 @@ export async function run(message, args) {
     wrapText(ctx, split[1].trim(), 300, 315, 260, 35);
 
     const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'sgmeme.jpg');
-    message.channel.send(attachment);
+    return message.channel.send(attachment);
 }
 
 export const help = {
-    name: ['cm', 'creatememe'],
+    name: 'cm',
     type: 'fun',
     help_text: 'cm <phrase1, phrase2>',
     help_desc: 'Creates a custom meme',

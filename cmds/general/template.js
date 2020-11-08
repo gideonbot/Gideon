@@ -1,9 +1,8 @@
-
 /**
  * @param {Discord.Message} message
  */
 export async function run(message) {
-    message.channel.send('https://discord.new/EDWFjQqYu8Zs');
+    return message.channel.send('https://discord.new/EDWFjQqYu8Zs');
 }
 
 export const help = {

@@ -29,11 +29,11 @@ export async function run(message, args) {
         ]
     }, message.member);
 
-    message.channel.send(embed);
+    return message.channel.send(embed);
 }
 
 export const help = {
-    name: ['emoji', 'emote'],
+    name: 'emoji',
     type: 'misc',
     help_text: 'emoji <emoji>',
     help_desc: 'Displays a GuildEmoji\'s info',

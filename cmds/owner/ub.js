@@ -19,13 +19,13 @@ export async function run(message, args) {
         if (ub.blacklist === 0) {
             ub.blacklist = 1;
             process.gideon.setUser.run(ub);
-            message.channel.send(`User \`${id}\` has been blacklisted!`);
+            return message.channel.send(`User \`${id}\` has been blacklisted!`);
         }
 
         else {
             ub.blacklist = 0;
             process.gideon.setUser.run(ub);
-            message.channel.send(`User \`${id}\` has been un-blacklisted!`); 
+            return message.channel.send(`User \`${id}\` has been un-blacklisted!`); 
         }
     }
 
@@ -36,7 +36,7 @@ export async function run(message, args) {
 }
 
 export const help = {
-    name: ['ub', 'Useracklist', 'ubrm'],
+    name: 'ub',
     type: 'owner',
     help_text: 'ub <userid>',
     help_desc: 'Blacklists a user',

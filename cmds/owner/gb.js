@@ -48,7 +48,7 @@ export async function run(message, args) {
 }
 
 export const help = {
-    name: ['gb', 'gblacklist', 'gbrm'],
+    name: 'gb',
     type: 'owner',
     help_text: 'gb <guildid>',
     help_desc: 'Blacklists a guild',

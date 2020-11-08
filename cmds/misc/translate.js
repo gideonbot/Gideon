@@ -7,7 +7,7 @@ import Util from '../../Util.js';
 export async function run(message, args) {
     let tr = await Util.TR.Translate(args.join(' '));
 
-    message.channel.send(Util.Embed(null, {
+    return message.channel.send(Util.Embed(null, {
         author: {
             name: `Translation for ${message.author.tag}:`,
             icon: message.author.avatarURL()
@@ -26,7 +26,7 @@ export async function run(message, args) {
 }
 
 export const help = {
-    name: ['tr', 'translate'],
+    name: 'tr',
     type: 'misc',
     help_text: 'tr <text>',
     help_desc: 'Translates text',

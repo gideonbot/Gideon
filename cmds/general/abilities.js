@@ -179,7 +179,7 @@ export async function run(message, args) {
 }   
 
 export const help = {
-    name: ['abilities', 'powers'],
+    name: 'abilities',
     type: 'general',
     help_text: 'abilities <term>',
     help_desc: 'Shows abilities of a following: <speedster | viber | kryptonian>',

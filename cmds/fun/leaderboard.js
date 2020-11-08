@@ -22,9 +22,9 @@ export async function run(message) {
 }
 
 export const help = {
-    name: ['leaderboard', 'lb', 'highscores'],
+    name: 'lb',
     type: 'fun',
-    help_text: 'leaderboard',
+    help_text: 'lb',
     help_desc: 'View the highscore leaderboard',
     owner: false,
     voice: false,

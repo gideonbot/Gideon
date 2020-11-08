@@ -32,25 +32,18 @@ export async function run(message, args) {
     else if (ssd.match(/(?:flash)/i) && ssd.match(/(?:e1)/i) || ssd.match(/(?:grodd)/i) && ssd.match(/(?:e1)/i)) spnum = 18;
     else return message.channel.send(Util.Embed(`"${ssd}" is not a valid argument!`, {description: 'Check the command\'s syntax and retry!'}, message.member));
 
-    try {
-        const speedsters = await gideonapi.speedsters();
+    const speedsters = await gideonapi.speedsters();
 
-        const speedster = Util.Embed(speedsters[spnum].speedster, {thumbnail: speedsters[spnum].image}, message.member)
-            .addField('*Lightning Color(s) (Electrokinesis)*', `${speedsters[spnum].lightningColorsElectrokinesis}`)
-            .addField('*Universe*', `${speedsters[spnum].universe}`)
-            .addField('*Actor/Actress*', `${speedsters[spnum].actoractress}`)
-            .addField('*First Appearance as Speedster*', `${speedsters[spnum].firstAppearanceAsSpeedster}`);
-    
-        message.channel.send(speedster);
-    }
-    
-    catch (err) {
-        Util.log('An error occurred while trying to fetch speedsters: ' + err);
-        message.channel.send(Util.Embed('Failed to fetch speedster data, please try again later!', null, message.member));
-    }
+    const speedster = Util.Embed(speedsters[spnum].speedster, {thumbnail: speedsters[spnum].image}, message.member)
+        .addField('*Lightning Color(s) (Electrokinesis)*', `${speedsters[spnum].lightningColorsElectrokinesis}`)
+        .addField('*Universe*', `${speedsters[spnum].universe}`)
+        .addField('*Actor/Actress*', `${speedsters[spnum].actoractress}`)
+        .addField('*First Appearance as Speedster*', `${speedsters[spnum].firstAppearanceAsSpeedster}`);
+
+    return message.channel.send(speedster);
 }
 export const help = {
-    name: ['sp', 'speedster', 'speedsters'],
+    name: 'sp',
     type: 'general',
     help_text: 'sp <name/alter ego> eN (earth number)',
     help_desc: 'Fetches Speedster info',

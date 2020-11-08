@@ -55,7 +55,7 @@ export async function run(message) {
 }
 
 export const help = {
-    name: ['accelerator', 'boom'],
+    name: 'boom',
     type: 'fun',
     help_text: 'boom',
     help_desc: 'Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability',

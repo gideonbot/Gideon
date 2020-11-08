@@ -188,7 +188,7 @@ export async function run(message, args) {
 export const help = {
     name: 'help',
     type: 'misc',
-    help_text: 'help [syntax]',
+    help_text: 'help [syntax]/[module]',
     help_desc: 'Provides you help with commands',
     owner: false,
     voice: false,

@@ -12,13 +12,13 @@ export async function run(message) {
     if (trmode.trmodeval === 0) {
         trmode.trmodeval = 1;
         process.gideon.setUser.run(trmode);
-        message.reply('Translation Mode enabled! :white_check_mark:');
+        return message.reply('Translation Mode enabled! :white_check_mark:');
     }
 
     else {
         trmode.trmodeval = 0;
         process.gideon.setUser.run(trmode);
-        message.reply('Translation Mode disabled! :white_check_mark:');
+        return message.reply('Translation Mode disabled! :white_check_mark:');
     }
 }
 

@@ -47,7 +47,7 @@ export async function run(message) {
 }
 
 export const help = {
-    name: ['host', 'server'],
+    name: 'host',
     type: 'stats',
     help_text: 'host',
     help_desc: 'Hosting server stats',

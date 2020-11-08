@@ -24,9 +24,6 @@ export async function run(message, args) {
     const voicehelp = Util.Embed('Usage of Voice™ Commands:', {
         description: 'Use `!voice tutorial` for a video tutorial.\n\nUse Gideon Voice™ commands by speaking into your microphone\n\nNo further response means the input was not recognized or no Voice™ enabled command was used'}, message.member)
         .setAuthor('Note: Not all commands are Voice™ compatible!', message.author.avatarURL());
-    
-    const command = message.content.toLowerCase().split(' ')[0];
-    if (command.endsWith('leave')) return Util.Voice.LeaveVC(message);
 
     if (args.length > 0) {
         if (args[0].toLowerCase() === 'help') return message.channel.send(voicehelp);
@@ -82,7 +79,7 @@ export async function run(message, args) {
 }
 
 export const help = {
-    name: ['voice', 'join', 'leave'],
+    name: 'voice',
     type: 'fun',
     help_text: 'voice',
     help_desc: 'Use Gideon Voice™',

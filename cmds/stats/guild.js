@@ -31,11 +31,11 @@ export async function run(message) {
         ]
     }, message.member);
 
-    message.channel.send(embed);
+    return message.channel.send(embed);
 }
 
 export const help = {
-    name: ['guild', 'server'],
+    name: 'guild',
     type: 'stats',
     help_text: 'guild',
     help_desc: 'Get current guild info',

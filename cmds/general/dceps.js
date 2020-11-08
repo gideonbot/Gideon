@@ -40,7 +40,7 @@ export async function run(message, args, connection) {
 }
 
 export const help = {
-    name: ['dceps', 'nextdceps', 'nextdcepisodes'],
+    name: 'dceps',
     type: 'general',
     help_text: 'dceps',
     help_desc: 'Displays a countdown to the next airing DC episodes',
