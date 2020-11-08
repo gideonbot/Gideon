@@ -47,12 +47,12 @@ export async function run(message, args) {
     let wiki;
 
     if (args[0] === 'help') {
-        const wikihelp = Util.Embed(null, {description: '**The following Wikis are available:**\n\nwiki <term> | Arrowverse Wiki\nwiki**dc** <term> | DC Wiki\nwiki**stg** <term> | Stargirl Wiki\nwiki**kr** <term> | Krypton Wiki\nwiki**lu** <term> | Lucifer Wiki\nwiki**t** <term> | Titans Wiki\nwiki**dp** <term> | Doom Patrol Wiki\nwiki**sv** <term> | Smallville Wiki\nwiki**tb** <term> | The Boys Wiki'}, message.member);
+        const wikihelp = Util.Embed(null, {description: '**The following Wikis are available:**\n\nwiki <term> | Arrowverse Wiki\nwiki **dc** <term> | DC Wiki\nwiki **stg** <term> | Stargirl Wiki\nwiki **kr** <term> | Krypton Wiki\nwiki **lu** <term> | Lucifer Wiki\nwiki **t** <term> | Titans Wiki\nwiki **dp** <term> | Doom Patrol Wiki\nwiki **sv** <term> | Smallville Wiki\nwiki **tb** <term> | The Boys Wiki'}, message.member);
         await message.channel.send(wikihelp);
         return;
     }
 
-    if (args.join(' ').length > 3) wiki = wikis[0];
+    if (args[0].length > 3) wiki = wikis[0];
     else if (args[0] === 'stg') wiki = wikis[1];
     else if (args[0] === 'dc') wiki = wikis[2];
     else if (args[0] === 'kr') wiki = wikis[3];
@@ -65,7 +65,7 @@ export async function run(message, args) {
 
     let search_term;
     if (wiki.title === 'Arrowverse') search_term = args.join(' ');
-    else search_term = args.shift().join(' ');
+    else search_term = args.slice(1).join(' ');
 
     if (!search_term) return message.channel.send('You must supply a search term!');
 
