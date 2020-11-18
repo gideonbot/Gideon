@@ -7,7 +7,7 @@ import Canvas from 'canvas';
  */
 export async function run(message, args) {
     const text = args.join(' ');
-    if (!text.includes(',')) return message.reply('you need to seperate two phrases with one comma!');
+    if (!text.includes(',')) return message.reply('You need to seperate two phrases with one comma!');
     const split = text.split(',');
 
     const canvas = Canvas.createCanvas(560, 560);
