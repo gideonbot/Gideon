@@ -906,7 +906,7 @@ class Util {
     
         try {
             let response = await this.GetCleverBotResponse(text, arr);
-            message.channel.send(response).then(sent => {
+            message.reply(response).then(sent => {
                 if (sent) sent.cleverbot = true;
                 message.cleverbot = true;
             }).finally(() => message.channel.stopTyping(true));
