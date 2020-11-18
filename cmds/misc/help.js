@@ -14,7 +14,7 @@ export async function run(message, args) {
 
     if (!args[0]) {
         const help = Util.Embed('__Use ' + customprefix.prefix + 'help <module> to get a list of commands__', null, message.member)
-            .setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nUse `' + customprefix.prefix + 'alias <command>` for command aliases\nUse `' + customprefix.prefix + 'search <command>` to search a command\nGideon\'s prefixes are: ' + prefixes)
+            .setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes)
             .addField('general (`'+ cmdamount.filter(x => x.help.type === 'general').length + ' available`)', 'General helpful commands')  
             .addField('fun (`'+ cmdamount.filter(x => x.help.type === 'fun').length + ' available`)', 'Fun and interactive commands') 
             .addField('admin (`'+ cmdamount.filter(x => x.help.type === 'admin').length + ' available`)', 'Administrative commands')  
@@ -55,7 +55,7 @@ export async function run(message, args) {
         const tagnames = tags.map(x => `\`${x}\``).join(' ');
 
         const help = Util.Embed('__Available tags:__ <:timevault:686676561298063361>', null, message.member)
-            .setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nUse `' + customprefix.prefix + 'alias <command>` for command aliases\nUse `' + customprefix.prefix + 'search <command>` to search a command\nGideon\'s prefixes are: ' + prefixes + '\n\n' + tagnames)  
+            .setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes + '\n\n' + tagnames)  
             .addField('Feature Suggestions:', `**[Click here to suggest a feature](${fsurl} 'Time Vault - #feature-suggestions')**`);
 
         return message.channel.send(help);
@@ -95,7 +95,7 @@ export async function run(message, args) {
         
         for (let i = 0; i < arrs.length; i++) {
             const embed = Util.Embed('__List of available "' + type + '" commands below:__', null, message.member);
-            embed.setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nUse `' + customprefix.prefix + 'alias <command>` for command aliases\nUse `' + customprefix.prefix + 'search <command>` to search a command\nGideon\'s prefixes are: ' + prefixes);
+            embed.setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes);
 
             for (let item of arrs[i]) {
                 let mo = { emotes: [], roles: [] };
@@ -145,7 +145,7 @@ export async function run(message, args) {
 
     else {
         const embed = Util.Embed('__List of available "' + type + '" commands below:__', null, message.member);
-        embed.setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nUse `' + customprefix.prefix + 'alias <command>` for command aliases\nUse `' + customprefix.prefix + 'search <command>` to search a command\nGideon\'s prefixes are: ' + prefixes);
+        embed.setDescription('Use `' + customprefix.prefix + 'help syntax` for command syntax explanations\nGideon\'s prefixes are: ' + prefixes);
         for (let item in commands) {
 
             let mo = { emotes: [], roles: [] };
