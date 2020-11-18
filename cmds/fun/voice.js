@@ -18,7 +18,7 @@ class Silence extends Readable {
 export async function run(message, args) {
     if (!process.env.WITAI_TOKEN) {
         Util.log('WITAI_TOKEN is missing in .env!');
-        return message.reply('This command is not available currently!');
+        return message.reply('This command is currently not available!');
     }
 
     const voicehelp = Util.Embed('Usage of Voice™ Commands:', {
