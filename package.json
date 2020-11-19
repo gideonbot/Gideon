@@ -21,7 +21,7 @@
     "cleverbot-free": "^1.0.4",
     "del": "^6.0.0",
     "discord-paginationembed": "^2.1.0",
-    "discord.js": "github:gideonbot/discord.js",
+    "discord.js": "github:discordjs/discord.js#pull/4874/head",
     "dotenv": "^8.0.0",
     "ffmpeg-static": "^4.2.7",
     "gideon-api": "^1.1.0",
