@@ -1,4 +1,6 @@
 import Util from '../../Util.js';
+// eslint-disable-next-line no-unused-vars
+import Discord from 'discord.js';
 
 /**
  * @param {Discord.Message} message
