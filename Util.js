@@ -907,7 +907,7 @@ class Util {
         try {
             let response = await this.GetCleverBotResponse(text, arr);
 
-            const messages = await message.channel.messages.fetch({ limit: 2 });
+            const messages = await message.channel.messages.fetch({ limit: 3 });
             const lastmsg = messages.filter(x => !x.author.bot).find(x => x.author.id !== message.author.id);
 
             if (lastmsg) {
