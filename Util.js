@@ -906,10 +906,22 @@ class Util {
     
         try {
             let response = await this.GetCleverBotResponse(text, arr);
-            message.reply(response).then(sent => {
-                if (sent) sent.cleverbot = true;
-                message.cleverbot = true;
-            }).finally(() => message.channel.stopTyping(true));
+
+            const messages = await message.channel.messages.fetch({ limit: 2 });
+            const lastmsg = messages.filter(x => !x.author.bot).find(x => x.author.id !== message.author.id);
+
+            if (lastmsg) {
+                message.reply(response).then(sent => {
+                    if (sent) sent.cleverbot = true;
+                    message.cleverbot = true;
+                }).finally(() => message.channel.stopTyping(true));
+            }
+            else {
+                message.channel.send(response).then(sent => {
+                    if (sent) sent.cleverbot = true;
+                    message.cleverbot = true;
+                }).finally(() => message.channel.stopTyping(true));
+            }
         }
 
         catch (e) {
