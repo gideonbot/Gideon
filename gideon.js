@@ -250,7 +250,7 @@ gideon.on('message', message => {
 
 gideon.on('guildCreate', async guild => {
     await guild.members.fetch();
-    Util.log(Util.Embed('Joined a new guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner.user.tag}\` (${guild.owner.id})`, thumbnail: guild.iconURL()}));
+    Util.log(Util.Embed('Joined a new guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner?.user.tag ?? 'Unknown'}\` (${guild.ownerID})`, thumbnail: guild.iconURL()}));
 
     let currentguild = gideon.getGuild.get(guild.id);
     if (!currentguild) {
@@ -280,7 +280,7 @@ gideon.on('guildCreate', async guild => {
 });
 
 gideon.on('guildDelete', guild => {
-    Util.log(Util.Embed('Left guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => x && x.user && !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x && x.user && x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner ? `${guild.owner.user.tag} (${guild.owner.id})` : 'Unknown'}\``, thumbnail: guild.iconURL()}));
+    Util.log(Util.Embed('Left guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => x && x.user && !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x && x.user && x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner?.user.tag ?? 'Unknown'}\` (${guild.ownerID})`, thumbnail: guild.iconURL()}));
 });
 
 gideon.on('shardReady', async (id, unavailableGuilds) => {
