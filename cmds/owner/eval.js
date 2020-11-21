@@ -1,5 +1,7 @@
 import Util from '../../Util.js';
 // eslint-disable-next-line no-unused-vars
+import moment from 'moment';
+// eslint-disable-next-line no-unused-vars
 import Discord from 'discord.js';
 
 /**

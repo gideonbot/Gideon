@@ -907,10 +907,18 @@ class Util {
         try {
             let response = await this.GetCleverBotResponse(text, arr);
 
-            const messages = await message.channel.messages.fetch({ limit: 3 });
-            const lastmsg = messages.filter(x => !x.author.bot).find(x => x.author.id !== message.author.id);
+            let lastmsg;
+            const cachedmsgs = message.channel.messages.cache.last(3); //obtain last 3 cached messages
 
-            if (lastmsg) {
+            if (cachedmsgs.length < 3) { //check if there is 3 messages cached, if not fetch 3
+                const messages = await message.channel.messages.fetch({ limit: 3 });
+                lastmsg = messages.filter(x => !x.author.bot).find(x => x.author.id !== message.author.id);
+            }
+            else { //if messages are cached use those
+                lastmsg = cachedmsgs.filter(x => !x.author.bot).find(x => x.author.id !== message.author.id);
+            }
+            
+            if (lastmsg) { //reply if previous message author deviates from original message author
                 message.reply(response).then(sent => {
                     if (sent) sent.cleverbot = true;
                     message.cleverbot = true;
