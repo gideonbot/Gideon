@@ -220,7 +220,7 @@ process.on('unhandledRejection', err => {
 
 process.once('SIGUSR2', async () => {
     let shard_index = process.gideon && process.gideon.shard && process.gideon.shard.ids ? process.gideon.shard.ids[0] : '0';
-    Util.log('Shard ' + shard_index + ' shutting down...');
+    Util.log('Shard `' + shard_index + '` shutting down...');
 
     for (let guild of process.gideon.guilds.cache.values()) {
         if (guild.voice && guild.voice.connection) {
