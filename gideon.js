@@ -311,6 +311,25 @@ gideon.on('guildMemberAdd', member => {
     Util.Checks.AccCheck(member, Util);
 });
 
+gideon.on('guildBanAdd', (guild, user) => {
+    if (guild.id !== '595318490240385037') return;
+    const id = user.id;
+    let ub = process.gideon.getUser.get(id);
+
+    if (!ub) {
+        ub = {
+            id: id,
+            trmodeval: 0,
+            blacklist: 0
+        };
+    }
+
+    if (ub.blacklist === 0) {
+        ub.blacklist = 1;
+        process.gideon.setUser.run(ub);
+        Util.log(`User \`${id}\` has been blacklisted due to a guild ban!`);
+    }
+});
 gideon.on('guildMemberUpdate', (oldMember, newMember) => {
     if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null);
 });
