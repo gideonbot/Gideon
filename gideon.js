@@ -244,6 +244,10 @@ gideon.on('error', err => {
     Util.log('Bot error: ' + `\`\`\`\n${err.stack}\n\`\`\``);
 });
 
+gideon.on('rateLimit', rateLimitInfo => {
+    Util.log('Hit a ratelimit: ' + `\`\`\`\nTimeout: ${rateLimitInfo.timeout} ms\nLimit: ${rateLimitInfo.limit}\nMethod: ${rateLimitInfo.method}\nPath: ${rateLimitInfo.path}\nRoute: ${rateLimitInfo.route}\n\`\`\``);
+});
+
 gideon.on('message', message => {
     Util.MsgHandler.Handle(message, Util);
 });
