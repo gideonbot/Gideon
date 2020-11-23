@@ -41,7 +41,7 @@ class MsgHandler {
 
         if (Util.Checks.IBU(message)) return; //check if user is blacklisted, if yes, return
         Util.Checks.LBG(message.guild, Util); //check if guild is blacklisted, if yes, leave
-        if (message.channel.id === currentguild.chatchnl && !message.editedAt) return Util.Chat(message);
+        if (message.channel.id === currentguild.chatchnl && !message.editedAt && !message.content.startsWith('^')) return Util.Chat(message);
         Util.Checks.Ads(message); //check for foreign invites
         Util.Checks.ABM(message, Util); //apply content filter
 

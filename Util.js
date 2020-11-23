@@ -885,7 +885,7 @@ class Util {
     
             else {
                 //we ignore messages that were created 2+ mins ago
-                if (Math.abs(m.createdAt - last) < 1000 * 60 * 2) {
+                if (Math.abs(m.createdAt - last) < 1000 * 60 * 2 && !m.content.startsWith('^')) {
                     let content = m.content;
     
                     if (m.cleverbot) {
