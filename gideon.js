@@ -348,11 +348,6 @@ gideon.on('commandRefused', (message, reason) => {
     Util.log(`Command Refused:\n\n${message.author.tag} attempted to use \`${message.content}\`\nCommand failed due to: \`${reason}\`\nOrigin: \`#${message.channel.name}\` at \`${message.guild.name}\``);
 });
 
-gideon.on('inviteCreate', Invite => {
-    if (Invite.guild.id !== '595318490240385037') return;
-    Util.log(`Invite for \`${Invite.guild.name ? Invite.guild.name : 'Not available'}\` has been created:\n\nChannel: \`${Invite.channel.name}\`\n${Invite.url}`);
-});
-
 gideon.on('voiceStateUpdate', (oldState, newState) => {
     Util.Checks.VCCheck(oldState, newState);
 });
