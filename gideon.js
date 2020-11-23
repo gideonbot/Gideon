@@ -8,7 +8,7 @@ const gideon = new Discord.Client({
     ws: {
         intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
     },
-    allowedMentions: { parse: ['users', 'roles'] },
+    allowedMentions: { parse: ['users', 'roles'], replied_user: true },
     partials: ['MESSAGE', 'REACTION'],
     restRequestTimeout: 25000
 });
