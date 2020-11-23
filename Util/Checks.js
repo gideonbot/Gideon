@@ -360,7 +360,7 @@ class Checks {
                     .setImage('https://media.discordapp.net/attachments/715564004621418577/769212118464725002/Homelander_2.gif');
 
                 const ban = await message.guild.members.ban(message.member, { days: 7, reason: 'automated anti-ads ban' }).catch(() => {
-                    message.reply(`Auto-ban failed!\n${admin} please and ban \`${message.author.tag} (${message.author.id})\`.\nPlease make sure that my role is higher then theirs and that they're not the guild owner.`);
+                    message.reply(`Auto-ban failed!\n${admin} please ban \`${message.author.tag} (${message.author.id})\`.\nPlease make sure that my role is higher then theirs and that they're not the guild owner.`);
                 });
                 if (ban) return message.channel.send(embed); 
             }
