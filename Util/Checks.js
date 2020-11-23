@@ -336,31 +336,33 @@ class Checks {
      * Invite check 
      * @param {Discord.Message} message 
      */
-    static async Ads(message) {
+    static async Ads(message, Util) {
         if (!message.guild) return;
         if (message.guild.id !== '595318490240385037') return;
-        if (message.member.roles.cache.has('596402255066955783')) return;
-        else if (message.member.roles.cache.has('596402530989375539')) return;
+        if (!message.member) await message.member.fetch();
+        if (message.member.hasPermission('MANAGE_MESSAGES')) return;
 
-        const invregex = /(http:\/\/|https:\/\/)?(discord.gg\/|discordapp.com\/invite\/)([a-zA-Z0-9]){7}/g;
-        const channel = process.gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
+        // eslint-disable-next-line no-useless-escape
+        const invregex = /discord(?:\.com|app\.com|\.gg)\/(?:invite\/)?([a-zA-Z0-9\-]{2,32})/g;
         const admin = process.gideon.guilds.cache.get('595318490240385037').roles.cache.get('596402255066955783');
 
         if (message.content.match(invregex)) {
             const invcode = message.content.match(invregex)[0];
             const invite = await process.gideon.fetchInvite(invcode).catch(ex => console.log(ex));
-            
-            if (!invite.guild) {
-                await admin.setMentionable(true).catch(ex => console.log(ex));
-                await channel.send(`Couldn't resolve the guild this invite belongs to!\n${admin} please review and kick \`${message.author.tag}\` if it's a non Time Vault invite.`);
-                await admin.setMentionable(false).catch(ex => console.log(ex));
+    
+            if (!invite || !invite.guild) {
+                message.reply(`Couldn't resolve the guild this invite belongs to!\n${admin} please review and ban \`${message.author.tag} (${message.author.id})\` if it's a non Time Vault invite.`);
             }
 
             else if (invite.guild.id !== '595318490240385037') {
-                await message.delete({ timeout: 200 });
-                await message.member.send('You have been kicked for sending a foreign guild invite!').catch(ex => console.log(ex));
-                await channel.send(`${message.author.tag} has been kicked for sending a foreign guild invite!`);
-                await message.member.kick();
+                const embed = Util.Embed(message.member)
+                    .setDescription(`\`${message.member.user.tag}\` has been banned by ${process.gideon.user.tag} because of \`automated anti-ads ban\`.`)
+                    .setImage('https://media.discordapp.net/attachments/715564004621418577/769212118464725002/Homelander_2.gif');
+
+                const ban = await message.guild.members.ban(message.member, { days: 7, reason: 'automated anti-ads ban' }).catch(() => {
+                    message.reply(`Auto-ban failed!\n${admin} please and ban \`${message.author.tag} (${message.author.id})\`.\nPlease make sure that my role is higher then theirs and that they're not the guild owner.`);
+                });
+                if (ban) return message.channel.send(embed); 
             }
         }
     }
