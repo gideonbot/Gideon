@@ -47,21 +47,23 @@ export async function run(message, args) {
     let wiki;
 
     if (args[0] === 'help') {
-        const wikihelp = Util.Embed(null, {description: '**The following Wikis are available:**\n\nwiki <term> | Arrowverse Wiki\nwiki **dc** <term> | DC Wiki\nwiki **stg** <term> | Stargirl Wiki\nwiki **kr** <term> | Krypton Wiki\nwiki **lu** <term> | Lucifer Wiki\nwiki **t** <term> | Titans Wiki\nwiki **dp** <term> | Doom Patrol Wiki\nwiki **sv** <term> | Smallville Wiki\nwiki **tb** <term> | The Boys Wiki'}, message.member);
+        const wikihelp = Util.Embed(null, {description: '**The following Wikis are available:**\n\nwiki <term> | Arrowverse Wiki\nwiki **-dc** <term> | DC Wiki\nwiki **-stg** <term> | Stargirl Wiki\nwiki **-kr** <term> | Krypton Wiki\nwiki **-lu** <term> | Lucifer Wiki\nwiki **-t** <term> | Titans Wiki\nwiki **-dp** <term> | Doom Patrol Wiki\nwiki **-sv** <term> | Smallville Wiki\nwiki **-tb** <term> | The Boys Wiki'}, message.member);
         await message.channel.send(wikihelp);
         return;
     }
 
-    if (args[0].length > 3) wiki = wikis[0];
-    else if (args[0] === 'stg') wiki = wikis[1];
-    else if (args[0] === 'dc') wiki = wikis[2];
-    else if (args[0] === 'kr') wiki = wikis[3];
-    else if (args[0] === 'lu') wiki = wikis[4];
-    else if (args[0] === 'dp') wiki = wikis[5];
-    else if (args[0] === 't') wiki = wikis[6];
-    else if (args[0] === 'sv') wiki = wikis[7];
-    else if (args[0] === 'tb') wiki = wikis[8];
-    else return message.channel.send('Supply a valid Wiki!\n\n**The following Wikis are available:**\n\nwiki <term> | Arrowverse Wiki\nwiki **dc** <term> | DC Wiki\nwiki **stg** <term> | Stargirl Wiki\nwiki **kr** <term> | Krypton Wiki\nwiki **lu** <term> | Lucifer Wiki\nwiki **t** <term> | Titans Wiki\nwiki **dp** <term> | Doom Patrol Wiki\nwiki **sv** <term> | Smallville Wiki\nwiki **tb** <term> | The Boys Wiki');
+    const invalwiki = Util.Embed(null, {description: 'Supply a valid Wiki!\n\n**The following Wikis are available:**\n\nwiki <term> | Arrowverse Wiki\nwiki **-dc** <term> | DC Wiki\nwiki **-stg** <term> | Stargirl Wiki\nwiki **-kr** <term> | Krypton Wiki\nwiki **-lu** <term> | Lucifer Wiki\nwiki **-t** <term> | Titans Wiki\nwiki **-dp** <term> | Doom Patrol Wiki\nwiki **-sv** <term> | Smallville Wiki\nwiki **-tb** <term> | The Boys Wiki'}, message.member);
+ 
+    if (!args[0].startsWith('-')) wiki = wikis[0];
+    else if (args[0] === '-stg') wiki = wikis[1];
+    else if (args[0] === '-dc') wiki = wikis[2];
+    else if (args[0] === '-kr') wiki = wikis[3];
+    else if (args[0] === '-lu') wiki = wikis[4];
+    else if (args[0] === '-dp') wiki = wikis[5];
+    else if (args[0] === '-t') wiki = wikis[6];
+    else if (args[0] === '-sv') wiki = wikis[7];
+    else if (args[0] === '-tb') wiki = wikis[8];
+    else return message.channel.send(invalwiki);
 
     let search_term;
     if (wiki.title === 'Arrowverse') search_term = args.join(' ');
