@@ -13,7 +13,7 @@ class TR {
     static async Translate(input) {
         const sourceLang = 'auto';
         const targetLang = 'en';
-        const sourceText = input;
+        const sourceText = Util.truncate(input, 2000, true);
 
         const api = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl='
         + sourceLang + '&tl=' + targetLang + '&dt=t&q=' + encodeURI(sourceText);
@@ -55,6 +55,7 @@ class TR {
 
         else {
             let tr = await this.Translate(args.join(' '));
+            if (tr[1] === ':flag_gb:') return;
             await message.delete({ timeout: 200 });
             const embed = new Discord.MessageEmbed()
                 .setDescription(`(${tr[1]}) ${tr[0]}`)
