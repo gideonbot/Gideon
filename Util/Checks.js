@@ -511,7 +511,7 @@ class Checks {
      */
     static GPD(oldmessage, newmessage, Util) {
         let gd = process.gideon.getGuild.get(oldmessage.guild.id);
-        if (oldmessage.author.bot) return;
+        if (oldmessage.author?.bot) return;
         if (!gd) return;
         if (gd.gpd === 0) return;
 
