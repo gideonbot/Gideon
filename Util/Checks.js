@@ -384,7 +384,8 @@ class Checks {
                 abmval: 0,
                 eastereggs: 0,
                 blacklist: 1,
-                chatchnl: ''
+                chatchnl: '',
+                gpd: 0
             };
 
             process.gideon.setGuild.run(gb);
@@ -501,6 +502,52 @@ class Checks {
             else return null;
         }
         else return null;
+    }
+
+    /**
+     * Ghost ping detector
+     * @param {Discord.Message} oldmessage
+     * @param {Discord.Message} newmessage
+     */
+    static GPD(oldmessage, newmessage, Util) {
+        let gd = process.gideon.getGuild.get(oldmessage.guild.id);
+        if (oldmessage.author.bot) return;
+        if (!gd) return;
+        if (gd.gpd === 0) return;
+
+        if (!newmessage) {
+            const usermention = oldmessage.mentions.users.first();
+            const rolemention = oldmessage.mentions.roles.first();
+
+            if (usermention || rolemention) {
+                if (usermention.bot) return;
+
+                const embed = Util.Embed()
+                    .setTitle('Ghost Ping detected:')
+                    .setDescription(`\`${oldmessage.author.tag}\` has ghost-pinged ${usermention ? '' : rolemention ? 'the role ' : ''}${usermention ?? rolemention}:\n\nMessage content:\n\`\`\`${oldmessage.cleanContent}\n\`\`\`${oldmessage.cleanContent.includes('@') ? '' : '\nThe ping was delivered via inline reply.'}`);
+
+                oldmessage.channel.send(embed);
+            }
+        }
+        else {
+            const oldusermention = oldmessage.mentions.users.first();
+            const oldrolemention = oldmessage.mentions.roles.first();
+
+            const newusermention = newmessage.mentions.users.first();
+            const newrolemention = newmessage.mentions.roles.first();
+
+            if (oldusermention || oldrolemention) {
+                if (!newusermention || !newrolemention) {
+                    if (newusermention.bot) return;
+
+                    const embed = Util.Embed()
+                        .setTitle('Ghost Ping detected:')
+                        .setDescription(`\`${newmessage.author.tag}\` has ghost-pinged ${oldusermention ? '' : oldrolemention ? 'the role ' : ''}${oldusermention ?? oldrolemention}:\n\nOld message:\n\`\`\`${oldmessage.cleanContent}\n\`\`\`\nNew message:\n\`\`\`${newmessage.cleanContent}\n\`\`\`${oldmessage.cleanContent.includes('@') ? '' : '\nThe ping was delivered via inline reply.'}`);
+
+                    newmessage.channel.send(embed);
+                }
+            }
+        }
     }
 }
 export default Checks;

@@ -119,6 +119,7 @@ interface CheckUtil {
     BadMention(message: Discord.Message): boolean;
     RulesCheck(message: Discord.Message): Promise<void>;
     VCCheck(oldState: Discord.VoiceState, newState: Discord.VoiceState): Promise<void>;
+    GPD(oldmessage: Discord.Message, newmessage?: Discord.Message, Util: any): void;
 }
 
 interface VoiceUtil {

@@ -33,7 +33,8 @@ class MsgHandler {
                 abmval: 0,
                 eastereggs: 0,
                 blacklist: 0,
-                chatchnl: ''
+                chatchnl: '',
+                gpd: 0
             };
 
             process.gideon.setGuild.run(currentguild);

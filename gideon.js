@@ -252,6 +252,14 @@ gideon.on('message', message => {
     Util.MsgHandler.Handle(message, Util);
 });
 
+gideon.on('messageUpdate', (oldMessage, newMessage) => {
+    Util.Checks.GPD(oldMessage, newMessage, Util);
+});
+
+gideon.on('messageDelete', message => {
+    Util.Checks.GPD(message, null, Util);
+});
+
 gideon.on('guildCreate', async guild => {
     await guild.members.fetch();
     Util.log(Util.Embed('Joined a new guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner?.user.tag ?? 'Unknown'}\` (${guild.ownerID})`, thumbnail: guild.iconURL()}));
