@@ -20,7 +20,9 @@ class TR {
 
         const body = await Util.fetchJSON(api);
         let sourceflag = `:flag_${body[2]}:`;
-        if (body[2] == targetLang) sourceflag = ':flag_gb:';
+        if (body[2] === targetLang) sourceflag = ':flag_gb:';
+        else if (body[2] === 'ja') sourceflag = ':flag_jp:';
+        else if (body[2] === 'zh-CN') sourceflag = ':flag_cn:';
 
         return [body[0][0][0], sourceflag];
     }
