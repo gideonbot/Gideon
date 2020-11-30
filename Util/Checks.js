@@ -520,7 +520,8 @@ class Checks {
             const rolemention = oldmessage.mentions.roles.first();
 
             if (usermention || rolemention) {
-                if (usermention.bot) return;
+                if (usermention?.bot) return;
+                if (usermention?.id === oldmessage.author.id) return;
 
                 const embed = Util.Embed()
                     .setTitle('Ghost Ping detected:')
@@ -538,7 +539,8 @@ class Checks {
 
             if (oldusermention || oldrolemention) {
                 if (!newusermention || !newrolemention) {
-                    if (newusermention.bot) return;
+                    if (newusermention?.bot) return;
+                    if (oldusermention?.id === oldmessage.author.id) return;
 
                     const embed = Util.Embed()
                         .setTitle('Ghost Ping detected:')
