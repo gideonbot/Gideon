@@ -14,6 +14,7 @@ class MsgHandler {
             if (message.content.match(/^\breaddemrulez\b$/)) Util.Checks.RulesCheck(message, Util);
             return;
         }
+        if (message.guild.id === '110373943822540800') return; //attempt to prevent ratelimits due to dbots guild
         
         if (message.author.id == process.gideon.user.id) Util.IncreaseStat('messages_sent');
         if (message.author.bot) return;
