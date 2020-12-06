@@ -7,7 +7,6 @@ export async function run(message, args) {
     const searchtearm = encodeURIComponent(args.join(''));
     const embed = await Util.fetchJSON('https://mdn.gideonbot.com/embed?q=' + searchtearm).catch(ex => Util.log(ex));
     if (embed.code === 404) return message.reply('There was no result for `' + args.join('') + '`.');
-    console.log(embed);
     message.channel.send({ embed: embed });
 }
 
