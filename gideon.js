@@ -273,7 +273,8 @@ gideon.on('guildCreate', async guild => {
             abmval: 0,
             eastereggs: 0,
             blacklist: 0,
-            chatchnl: ''
+            chatchnl: '',
+            gpd: 0
         };
         
         gideon.setGuild.run(currentguild);
