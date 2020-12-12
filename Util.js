@@ -914,14 +914,14 @@ class Util {
             const lastmsg = messages.filter(x => !x.author.bot).find(x => x.author.id !== message.author.id);
 
             if (lastmsg) {
-                await Util.delay(5000);
+                await Util.delay(8000);
                 message.reply(response).then(sent => {
                     if (sent) sent.cleverbot = true;
                     message.cleverbot = true;
                 }).finally(() => message.channel.stopTyping(true));
             }
             else {
-                await Util.delay(5000);
+                await Util.delay(8000);
                 message.channel.send(response).then(sent => {
                     if (sent) sent.cleverbot = true;
                     message.cleverbot = true;

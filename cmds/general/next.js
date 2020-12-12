@@ -29,6 +29,7 @@ export async function run(message, args) {
         const body = await Util.fetchJSON(api);
 
         //remove previous !next collectors for that specific user (found by searching for embeds with users name#discriminator in title)
+        await Util.delay(5000);
         message.channel.messages.fetch({limit: 50}).then(messages => {
             //really big filter
             let filtered = messages.filter(x => x && x.author && x.author.id === process.gideon.user.id && x.nextCollector && x.embeds && x.embeds.length > 0 && x.embeds[0] && x.embeds[0].title && x.embeds[0].title.endsWith(message.author.tag + ':'));

@@ -111,7 +111,7 @@ export async function run(message, args) {
         let sent = await message.channel.send(game.embed);
 
         for (let emoji of emotes) {
-            await sent.react(emoji).then(async () => { await Util.delay(1000); }, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
+            await sent.react(emoji).then(async () => { await Util.delay(2000); }, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
         }
 
         const rfilter = (reaction, user) => (emotes.includes(reaction.emoji.name) || emotes.includes(reaction.emoji.id)) && user.id === message.author.id;
