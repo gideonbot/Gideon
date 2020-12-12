@@ -510,7 +510,7 @@ class Checks {
      * @param {Discord.Message} newmessage
      */
     static GPD(oldmessage, newmessage, Util) {
-        let gd = process.gideon.getGuild.get(oldmessage.guild.id);
+        let gd = process.gideon.getGuild?.get(oldmessage.guild.id);
         if (oldmessage.author?.bot) return;
         if (!gd) return;
         if (gd.gpd === 0) return;
