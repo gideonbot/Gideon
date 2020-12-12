@@ -85,6 +85,8 @@ class Interactions {
             }
         }
 
+        Util.IncreaseStat('commands_ran');
+        
         try {
             await command.run(interaction, args);
         }
