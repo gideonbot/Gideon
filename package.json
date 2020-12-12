@@ -21,7 +21,7 @@
     "cleverbot-free": "^1.0.4",
     "del": "^6.0.0",
     "discord-paginationembed": "^2.1.0",
-    "discord.js": "github:monbrey/discord.js#inline-replies",
+    "discord.js": "github:gideonbot/discord.js",
     "dotenv": "^8.0.0",
     "ffmpeg-static": "^4.2.7",
     "gideon-api": "^1.1.0",
@@ -46,6 +46,7 @@
     "zip-promise": "^1.1.1"
   },
   "devDependencies": {
+    "discord-api-types": "github:discordjs/discord-api-types#feat/slashy-bois",
     "eslint": "^7.11.0"
   }
 }

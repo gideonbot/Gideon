@@ -7,6 +7,7 @@ import Voice from './Util/Voice.js';
 import Checks from './Util/Checks.js';
 import TR from './Util/Translation.js';
 import MsgHandler from './Util/MessageHandler.js';
+import Interactions from './Util/Interactions.js';
 import Imgur from 'imgur-node';
 import zip from 'zip-promise';
 import del from 'del';
@@ -49,6 +50,7 @@ class Util {
     static get Voice() { return Voice; }
     static get Checks() { return Checks; }
     static get TR() { return TR; }
+    static get Interactions() { return Interactions; }
     static get MsgHandler() { return MsgHandler; }
 
     /**
@@ -651,6 +653,7 @@ class Util {
                     let props = await import(`./${file_path}`);
                     
                     process.gideon.commands.set(props.help.name, props);
+                    if (props.help.id) process.gideon.commands.set(props.help.id, props);
             
                     let cmd_end = process.hrtime.bigint();
                     let took = (cmd_end - cmd_start) / BigInt('1000000');

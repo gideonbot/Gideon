@@ -248,6 +248,10 @@ gideon.on('rateLimit', rateLimitInfo => {
     Util.log('Hit a ratelimit: ' + `\`\`\`\nTimeout: ${rateLimitInfo.timeout} ms\nLimit: ${rateLimitInfo.limit}\nMethod: ${rateLimitInfo.method}\nPath: ${rateLimitInfo.path}\nRoute: ${rateLimitInfo.route}\n\`\`\``);
 });
 
+gideon.on('interactionCreate', interaction => {
+    Util.Interactions.Handle(interaction, Util);
+});
+
 gideon.on('message', message => {
     Util.MsgHandler.Handle(message, Util);
 });
@@ -356,9 +360,9 @@ gideon.on('messageUpdate', async (oldMessage, newMessage) => {
     if (newMessage.editedAt) Util.MsgHandler.Handle(newMessage, Util);
 });
 
-gideon.on('commandRefused', (message, reason) => {
+gideon.on('commandRefused', (interaction, reason) => {
     if (process.env.CI) return;
-    Util.log(`Command Refused:\n\n${message.author.tag} attempted to use \`${message.content}\`\nCommand failed due to: \`${reason}\`\nOrigin: \`#${message.channel.name}\` at \`${message.guild.name}\``);
+    Util.log(`Command Refused:\n\n${interaction.member.user?.tag} attempted to use \`${interaction?.commandName}\`\nCommand failed due to: \`${reason}\`\nOrigin: \`#${interaction?.channel?.name}\` at \`${interaction?.guild?.name}\``);
 });
 
 gideon.on('voiceStateUpdate', (oldState, newState) => {
