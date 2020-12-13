@@ -14,7 +14,7 @@ export async function run(interaction, args) {
     else if (args[0].value === 'show_ar') showtitle = 'Arrow';
     else if (args[0].value === 'show_sg') showtitle = 'Supergirl';
     else if (args[0].value === 'show_lot') showtitle = 'DC\'s Legends of Tomorrow';
-    else if (args[0].value === 'show_cn') showtitle = 'Constantine';
+    else if (args[0].value === 'show_co') showtitle = 'Constantine';
     else if (args[0].value === 'show_bw') showtitle = 'Batwoman';
 
     const body = await Util.fetchJSON(api);
