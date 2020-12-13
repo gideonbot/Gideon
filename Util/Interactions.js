@@ -92,7 +92,7 @@ class Interactions {
         }
         catch (e) {
             if (command.id === '786979784860893196') return interaction.reply(Util.Embed().setTitle('An error occurred while processing your request:').setDescription('```\n' + e + '```'));
-            Util.log(`An error occurred while running ${command.help.name}:\n\n\`\`\`\n${e.stack}\n\`\`\``);
+            Util.log(`An error occurred while running ${interaction.commandName}:\n\n\`\`\`\n${e.stack}\n\`\`\``);
             return interaction.reply(Util.Embed().setTitle('An error occurred while processing your request:').setDescription('```\n' + e + '```'));
         } 
     }
