@@ -91,7 +91,7 @@ class Interactions {
             await command.run(interaction, args);
         }
         catch (e) {
-            if (command.id === 'eval_id') return interaction.reply(Util.Embed().setTitle('An error occurred while processing your request:').setDescription('```\n' + e + '```'));
+            if (command.id === '786979784860893196') return interaction.reply(Util.Embed().setTitle('An error occurred while processing your request:').setDescription('```\n' + e + '```'));
             Util.log(`An error occurred while running ${command.help.name}:\n\n\`\`\`\n${e.stack}\n\`\`\``);
             return interaction.reply(Util.Embed().setTitle('An error occurred while processing your request:').setDescription('```\n' + e + '```'));
         } 

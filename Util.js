@@ -715,7 +715,6 @@ class Util {
             legends: 'DC\'s Legends of Tomorrow',
             stargirl: 'Stargirl', 
             b_lightning: 'Black Lightning',
-            canaries: 'Canaries',
             supesnlois: 'Superman & Lois' //peepee moment
         };
 
@@ -749,7 +748,6 @@ class Util {
                 if (json.name === 'DC\'s Legends of Tomorrow') emote = '<:lotsymbol:686309757857824802>';
                 if (json.name === 'Stargirl') emote = '<:stargirl:668513166380105770>';
                 if (json.name === 'Black Lightning') emote = '<:blacklightning:607657873534746634>';
-                if (json.name === 'Green Arrow and the Canaries') emote = '<:canaries:634764613434474496>';
                 if (json.name === 'Superman & Lois') emote = '<:supermanlois:638489255169228830>';
 
                 obj.series_shortname = names[show];
