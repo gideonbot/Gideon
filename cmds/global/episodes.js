@@ -113,7 +113,7 @@ export async function run(interaction, args) {
     else if (args[0].options[0].value === 'show_sv') show = shows[14];
     else if (args[0].options[0].value === 'show_tb') show = shows[15];
 
-    const api = `http://api.tvmaze.com/shows/${show.id}/episodebynumber?season=${info.season}&number=${info.episode}`;
+    const api = `http://api.tvmaze.com/shows/${show?.id}/episodebynumber?season=${info.season}&number=${info.episode}`;
 
     const body = await Util.fetchJSON(api);
 
