@@ -24,7 +24,6 @@ export const help = {
     id: '787027564052217866',
     owner: false,
     nsfw: false,
-    args: {},
     roles: [],
     user_perms: [],
     bot_perms: []
