@@ -8,6 +8,9 @@ class Interactions {
      * @param {Discord.Interaction} interaction 
      */
     static async Handle(interaction, Util) {
+        if (Util.Checks.IBU(interaction)) return; //check if user is blacklisted, if yes, return
+        Util.Checks.LBG(interaction.guild, Util); //check if guild is blacklisted, if yes, leave
+
         const args = interaction.options;
     
         const command = process.gideon.commands.get(interaction.commandID);
