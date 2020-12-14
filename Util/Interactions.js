@@ -16,6 +16,25 @@ class Interactions {
         const command = process.gideon.commands.get(interaction.commandID);
         if (!command) return;
 
+        Util.Checks.Spamcounter(interaction.member.id);
+
+        const spamcount = process.gideon.spamcount.get(interaction.member.id);
+   
+        if (spamcount && spamcount.usages + 1 > 10 && !process.env.CI) {
+            let ub = process.gideon.getUser.get(interaction.member.id);
+
+            if (!ub) ub = {
+                id: interaction.member.id,
+                trmodeval: 0,
+                blacklist: 1,
+            };
+            else ub.blacklist = 1;
+            
+            process.gideon.setUser.run(ub);
+            Util.log(`${interaction.member.user.tag} had their access revoked due to command spam:\`\`\`\nUser: ${interaction.member.user.tag} - ${interaction.member.id}\nCommand: ${interaction.commandname} - ${interaction.commandID}\n\`\`\``);
+            return interaction.reply('Your access to ' + process.gideon.user.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
+        }
+
         if (command.help.owner) {
             if (!process.gideon.owner) return;
             if (![process.gideon.owner, '351871113346809860'].includes(interaction.member.user.id)) {
