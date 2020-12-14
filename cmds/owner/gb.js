@@ -16,7 +16,8 @@ export async function run(message, args) {
                 abmval: 1,
                 eastereggs: 0,
                 blacklist: 0,
-                chatchnl: ''
+                chatchnl: '',
+                gpd: 0
             };
         }
 
