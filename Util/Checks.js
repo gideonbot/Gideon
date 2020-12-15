@@ -267,7 +267,7 @@ class Checks {
      */
     static IBU(message) {
         let ubl;
-        if (message.commandID) process.gideon.getUser.get(message.member.id); //interaction
+        if (message.commandID) process.gideon.getUser.get(message.member?.id); //interaction
         else ubl = process.gideon.getUser.get(message.author.id);
         if (!ubl || !ubl.blacklist) return;
         return ubl.blacklist === 1;
