@@ -14,6 +14,7 @@ const gideon = new Discord.Client({
 });
 
 process.gideon = gideon;
+process.dbcmd = '787650463909543946'; //botcave debug slashcommand id
 
 gideon.commands = new Discord.Collection();
 gideon.statuses = [];
