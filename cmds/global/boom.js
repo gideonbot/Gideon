@@ -6,9 +6,8 @@ import Util from '../../Util.js';
 */
 export async function run(interaction) {
     try {
-        return interaction.reply('currently unavailable as slash command');
         const acembed = Util.Embed('Blowing up S.T.A.R. Labs. Particle Accelerator...', {image: 'https://i.imgur.com/opCbZTn.gif'}, interaction.member);
-        interaction.reply(acembed);
+        let sent = await interaction.channel.send(acembed);
 
         await Util.delay(10000);
 
@@ -47,7 +46,7 @@ export async function run(interaction) {
             image: result.gif
         }, interaction.member);
 
-        await interaction.edit(pwrembed); //edit method not yet in interactions PR
+        await sent.edit(pwrembed); //interaction edit method not yet in interactions PR
     }
     
     catch (ex) {
