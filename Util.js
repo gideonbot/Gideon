@@ -397,7 +397,7 @@ class Util {
             let guilds = process.gideon.shard ? await process.gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex)) : [process.gideon.guilds.cache.size];
             if (guilds) guilds = [].concat.apply([], guilds);
 
-            return {type: 'WATCHING', value: `${guilds.length} Guilds`};
+            return {type: 'WATCHING', value: `${guilds.length} Guilds | gideonbot.com`};
         }});
 
         this.CheckEpisodes();
