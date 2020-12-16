@@ -9,7 +9,7 @@ export async function run(interaction) {
 
 export let help = {
     id: '786982537960489000',
-    owner: true,
+    owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
