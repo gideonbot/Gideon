@@ -1,15 +1,12 @@
 import Discord from 'discord.js';
 import Canvas from 'canvas';
+import Util from '../../Util.js';
 
 /**
- * @param {Discord.Message} message
- * @param {string[]} args
+ * @param {Discord.Intercation} interaction
+ * @param {object[]} args
  */
-export async function run(message, args) {
-    const text = args.join(' ');
-    if (!text.includes(',')) return message.reply('You need to seperate two phrases with one comma!');
-    const split = text.split(',');
-
+export async function run(interaction, args) {
     const canvas = Canvas.createCanvas(560, 560);
 
     function wrapText (ctx, text, x, y, maxWidth, lineHeight) {
@@ -59,26 +56,20 @@ export async function run(message, args) {
 
     ctx.font = '30px sans-serif';
     ctx.fillStyle = '#000000';
-    wrapText(ctx, split[0].trim(), 300, 40, 260, 35);
+    wrapText(ctx, args[0].value.trim(), 300, 40, 260, 35);
 
     ctx.font = '30px sans-serif';
     ctx.fillStyle = '#000000';
-    wrapText(ctx, split[1].trim(), 300, 315, 260, 35);
+    wrapText(ctx, args[1].value.trim(), 300, 315, 260, 35);
 
     const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'sgmeme.jpg');
-    return message.channel.send(attachment);
+    return interaction.channel.send(Util.Embed().attachFiles(attachment).setImage('attachment://sgmeme.jpg')); //interactions don't support attachments yet
 }
 
 export let help = {
-    name: 'cm',
-    type: 'fun',
-    help_text: 'cm <phrase1, phrase2>',
-    help_desc: 'Creates a custom meme',
+    id: '788768568581816321',
     owner: false,
-    voice: false,
-    timevault: false,
     nsfw: false,
-    args: {force: true},
     roles: [],
     user_perms: [],
     bot_perms: []

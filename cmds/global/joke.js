@@ -2,10 +2,10 @@ import Discord from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Message} message
- * @param {string[]} args
+ * @param {Discord.Intercation} interaction
+ * @param {object[]} args
  */
-export async function run(message, args) {
+export async function run(interaction, args) {
     let type = 'Any';
 
     let types = {
@@ -14,8 +14,8 @@ export async function run(message, args) {
         Dark: ['dark'],
     };
 
-    if (args.length > 0) {
-        let p_type = args[0].toLowerCase();
+    if (args) {
+        let p_type = args[0].value;
         for (let key in types) {
             if (types[key].includes(p_type)) type = key;
         }
@@ -33,9 +33,9 @@ export async function run(message, args) {
 
     if (!category.has(body.id)) category.set(body.id, body.joke);
 
-    if (!message.guild.last_jokes) message.guild.last_jokes = [];
+    if (!interaction.guild.last_jokes) interaction.guild.last_jokes = [];
 
-    let last_jokes = message.guild.last_jokes;
+    let last_jokes = interaction.guild.last_jokes;
 
     if (last_jokes.length > 0) {
         //if last 20 jokes include the current joke
@@ -60,23 +60,17 @@ export async function run(message, args) {
         }
     }
 
-    message.guild.last_jokes.push({category: body.category, id: body.id});
+    interaction.guild.last_jokes.push({category: body.category, id: body.id});
 
-    if (message.guild.last_jokes.length > 20) message.guild.last_jokes.shift();
+    if (interaction.guild.last_jokes.length > 20) interaction.guild.last_jokes.shift();
 
-    return message.channel.send(Util.Embed('Category: ' + body.category, {description: body.joke}, message.member));       
+    return interaction.reply(Util.Embed('Category: ' + body.category, {description: body.joke}, interaction.member));       
 }
 
-export const help = {
-    name: 'joke',
-    type: 'misc',
-    help_text: 'joke',
-    help_desc: 'Displays a random joke',
+export let help = {
+    id: '788771398448578562',
     owner: false,
-    voice: false,
-    timevault: false,
     nsfw: false,
-    args: {},
     roles: [],
     user_perms: [],
     bot_perms: []

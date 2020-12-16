@@ -16,6 +16,25 @@ class Interactions {
         const command = process.gideon.commands.get(interaction.commandID);
         if (!command) return;
 
+        let guildsettings = process.gideon.getGuild.get(interaction.guild.id);
+
+        if (!guildsettings) {
+            guildsettings = {
+                guild: interaction.guild.id,
+                prefix: '!',
+                cvmval: 0,
+                abmval: 0,
+                eastereggs: 0,
+                blacklist: 0,
+                chatchnl: '',
+                gpd: 0
+            };
+
+            process.gideon.setGuild.run(guildsettings);
+        }
+
+        if (interaction.channel.id === guildsettings.chatchnl) return;
+
         Util.Checks.Spamcounter(interaction.member.id);
 
         const spamcount = process.gideon.spamcount.get(interaction.member.id);

@@ -142,7 +142,7 @@ export async function run(interaction, args) {
         image: img
     }, interaction.member));
 }
-export let help = {
+export const help = {
     id: '787001899643305985',
     owner: false,
     nsfw: false,
