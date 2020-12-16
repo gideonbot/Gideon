@@ -59,7 +59,7 @@ class MsgHandler {
         const usedCustom = lowercaseContent.startsWith(currentguild.prefix.toLowerCase());
         let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
         if (usedCustom) usedPrefix = currentguild.prefix;
-        //if (usedPrefix) return message.reply('This usage is deprecated.\nPlease use the slash commands that are built-in to the Discord client.\nType `/` in chat to get started.\nhttps://i.imgur.com/sBnNfkg.gif');
+        //if (usedPrefix) return message.reply('This usage is deprecated.\nPlease use the slash commands that are built-in to the Discord client.\nType `/` in chat to get started.\nPlease update your Discord client if you do not see the slash comands UI.\nAdditionally for slash commands to work please authorize the `applications.commands` scope via this oauth url:\n<https://discord.com/oauth2/authorize?client_id=595328879397437463&scope=applications.commands>\nhttps://i.imgur.com/sBnNfkg.gif');
         if (!usedPrefix) return;
 
         const inputString = message.content.slice(usedPrefix.length).trim();
