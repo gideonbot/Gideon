@@ -1,4 +1,3 @@
-import Imgur from 'imgur-node';
 import Util from '../../Util.js';
 
 /**
@@ -10,21 +9,7 @@ export async function run(interaction) {
         return interaction.reply('This command is currently not available');
     }
 
-    const imgclient = new Imgur.Client(process.env.IMG_CL);
-
-    imgclient.album.get('NVHwdNg', (err, res) => {
-        if (err) {
-            Util.log(err);
-            return interaction.reply('An error occurred, please try again later!');
-        }
-
-        let min = 0;
-        let max = res.images.length - 1;
-        let ranum = Math.floor(Math.random() * (max - min + 1)) + min;
-        let ravm = res.images[ranum].link;
-
-        return interaction.reply(Util.Embed(null, {image: ravm}, interaction.member));
-    });   
+    return interaction.reply(Util.IMG('NVHwdNg'), interaction);
 }
 
 export let help = {

@@ -170,7 +170,6 @@ class Checks {
         const vid = 'https://cdn.discordapp.com/attachments/525341082435715085/638782331791867930/Crime_Solving_Devil.mp4';
         const tls = 'https://twitter.com/LaurenGerman/status/996886094305050627\nhttps://twitter.com/tomellis17/status/996889307506864128';
         const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';
-        const img = 'https://media.discordapp.net/attachments/669243069878501385/687048353296678943/es7-promise-async-await-es6-promise-es5-callback-hell-async-27790051.png';
         const vid2 = 'https://cdn.discordapp.com/attachments/679864620864765983/686589432501239899/Hi_Im_Richard_Castle.mp4';
         const train = 'https://cdn.discordapp.com/attachments/679864620864765983/688677813934620725/Gary_the_unspeakable_train-abomination.mp4';
         const yombo = 'https://cdn.discordapp.com/attachments/679864620864765983/692020740215537755/YomboBomboMomboJombo.mp4';
@@ -203,7 +202,6 @@ class Checks {
         else if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
         else if (message.content.match(/(?:germ)/i)) Util.IMG('ngJQmxL', message);
         else if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.Embed(null, {image: ctm}));
-        else if (message.content.match(/(?:callback)/i)) message.channel.send(Util.Embed(null, {image: img}));
         else if (message.content.match(/(?:castle)/i)) message.channel.send(vid2);
         else if (message.content.match(/(?:magic)/i)) message.channel.send(yombo);
         else if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) message.channel.send(train);

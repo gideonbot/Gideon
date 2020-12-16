@@ -1,6 +1,5 @@
 import Discord from 'discord.js';
 import fetch from 'node-fetch';
-import fs from 'fs';
 import config from './data/config/config.js';
 import SQL from './Util/SQL.js';
 import Checks from './Util/Checks.js';
@@ -50,62 +49,6 @@ class Util {
     static get MsgHandler() { return MsgHandler; }
 
     /**
-     * @summary A low-level method for parsing episode stuff
-     * @param {string} input
-     * @returns {{season: number, episode: number}} The object containing the series and episode details
-     */
-    static parseSeriesEpisodeString(input) {
-        if (!input) return null;
-
-        let str = input.toLowerCase();
-        let seriesString = '';
-        let episodeString = '';
-        let hit_limiter = false;
-
-        //parse film industry standard episode definitions e.g. 205
-        if (str.length === 3 && !str.toLowerCase().includes('x') && !isNaN(str)) {
-            let s = str.slice(0, 1);
-            let e = str.slice(-2);
-
-            const season = Number(s);
-            const episode = Number(e);
-
-            if (isNaN(season) || isNaN(episode)) return null;
-            else return {
-                season: season,
-                episode: episode
-            };
-        }
-        //note: turns out passing any amount of numbers passes this method and sends an api request which returns 404, gotta think of some smart filter thingx
-        for (let letter of str) {
-            if (letter === 's') continue;
-
-            if (letter === 'e' || letter === 'x') {
-                hit_limiter = true;
-                continue;
-            }
-
-            if (!(/^\d+$/.test(letter))) continue;
-
-            if (!hit_limiter) {
-                seriesString += letter;
-            } else {
-                episodeString += letter;
-            }
-        }
-
-        const seriesNumber = Number(seriesString);
-        const episodeNumber = Number(episodeString);
-
-        if (isNaN(seriesNumber) || isNaN(episodeNumber)) return null;
-
-        return {
-            season: seriesNumber,
-            episode: episodeNumber
-        };
-    }
-
-    /**
      * @param {number} inputDelay 
      */
     static delay(inputDelay) {
@@ -113,33 +56,6 @@ class Util {
         if (typeof inputDelay !== 'number') return Promise.resolve();
         // Otherwise, resolve after the number of milliseconds.
         return new Promise(resolve => setTimeout(resolve, inputDelay));
-    }
-
-    /**
-     * @returns {string}
-     * @param {string | Discord.GuildMember | Discord.User} input 
-     */
-    static GetUserTag(input) {
-        if (!input) return null;
-
-        let id = '';
-        if (typeof(input) == 'string') id = input;
-        else if (input instanceof Discord.GuildMember) id = input.user.id;
-        else if (input instanceof Discord.User) id = input.id;
-        if (!id) return input;
-
-        return isNaN(id) ? input : '<@' + id + '>';
-    }
-
-    /**
-     * @param {string} input 
-     */
-    static getIdFromString(input) {
-        if (!input) return null;
-
-        for (let item of ['<@!', '<@', '<#', '>']) input = input.replace(item, '');
-
-        return input;
     }
 
     /**
@@ -213,11 +129,11 @@ class Util {
     /**
      * Get image from imgur album
      * @param {string} imgid 
-     * @param {Discord.Message} message
+     * @param {Discord.Interaction} interaction
      * @param {boolean} nsfw
      */
-    static async IMG(imgid, message, nsfw) {
-        if (!message.guild) return;
+    static async IMG(imgid, interaction, nsfw) {
+        if (!interaction.guild) return;
         if (!process.env.IMG_CL) return;
 
         const imgclient = new Imgur.Client(process.env.IMG_CL);
@@ -225,7 +141,7 @@ class Util {
         imgclient.album.get(imgid, (err, res) => {
             if (err) {
                 Util.log(err);
-                return message.channel.send(Util.Embed('An error occurred, please try again later!', null, message.member));
+                return interaction.reply(Util.Embed('An error occurred, please try again later!', null, interaction?.member));
             }
     
             let min = 0;
@@ -239,10 +155,10 @@ class Util {
                     name: 'SPOILER_NSFW.gif' 
                 }]};
 
-                return message.channel.send(img);
+                return interaction.channel.send(img); //no attachments for interactions yet
             }
 
-            message.channel.send(Util.Embed(imgid == 'ngJQmxL' ? 'Germ approves!:white_check_mark:' : '', {image: rimg}, message.member));
+            interaction.reply(Util.Embed({image: rimg}, interaction?.member));
         });
     }
 
@@ -368,30 +284,6 @@ class Util {
         }
 
         return array_of_arrays;
-    }
-
-    static GetRandomFile(dir) {
-        if (!fs.existsSync(dir)) return null;
-
-        let files = fs.readdirSync(dir);
-
-        if (files.length < 1) return null;
-
-        let attempts = 0;
-        let max_attempts = files.length;
-
-        do {
-            let file = files[Math.floor(Math.random() * files.length)];
-            let info = fs.statSync(path.join(dir, file));
-
-            if (info.isFile()) return file;
-            else files.remove(file);
-            attempts++;
-        }
-        //this prevents it from freezing the process if there are no viable files
-        while (attempts < max_attempts);
-
-        return null;
     }
 
     /**
@@ -648,15 +540,11 @@ class Util {
     
                     let props = await import(`./${file_path}`);
                     
-                    process.gideon.commands.set(props.help.name, props);
-
-                    if (props.help.id) {
-                        if (props.help.debug) { //overwrite command id when debugging
-                            if (process.gideon.owner === '224617799434108928') props.help.id = '787650463909543946';
-                            else if (process.gideon.owner === '351871113346809860') props.help.id = '788743837094772736';
-                        }
-                        process.gideon.commands.set(props.help.id, props);
+                    if (props.help.debug) { //overwrite command id when debugging
+                        if (process.gideon.owner === '224617799434108928') props.help.id = '787650463909543946';
+                        else if (process.gideon.owner === '351871113346809860') props.help.id = '788743837094772736';
                     }
+                    process.gideon.commands.set(props.help.id, props);
             
                     let cmd_end = process.hrtime.bigint();
                     let took = (cmd_end - cmd_start) / BigInt('1000000');
