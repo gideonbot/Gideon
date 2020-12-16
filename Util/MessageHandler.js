@@ -54,7 +54,6 @@ class MsgHandler {
         Util.Checks.NameCheck(message.member, null); //check nicknames & usernames
         Util.Checks.CVM(message, Util); //apply crossover mode if enabled
         Util.Checks.CSD(message, Util); //eastereggs
-        Util.TR.TRMode(message, Util); //apply trmode if enabled
  
         const usedCustom = lowercaseContent.startsWith(currentguild.prefix.toLowerCase());
         if (usedCustom) return message.reply('This usage is deprecated.\nPlease use the slash commands that are built-in to the Discord client.\nType `/` in chat to get started.\nPlease update your Discord client if you do not see the slash comands UI.\nAdditionally for slash commands to work please authorize the `applications.commands` scope via this oauth url:\n<https://discord.com/oauth2/authorize?client_id=595328879397437463&permissions=37088321&scope=bot&scope=applications.commands>\nIt may take up to an hour for the slash commands to show up.\nIf you require assistance, please join the Time Vault\nhttps://discord.gg/h9SEQaU\nhttps://i.imgur.com/sBnNfkg.gif');
