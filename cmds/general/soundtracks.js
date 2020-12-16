@@ -19,7 +19,7 @@ export async function run(message) {
     return message.channel.send(stracks);  
 }
 
-export const help = {
+export let help = {
     name: 'tracks',
     type: 'general',
     help_text: 'tracks',

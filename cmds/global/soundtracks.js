@@ -19,7 +19,7 @@ export async function run(interaction) {
     return interaction.reply(stracks);  
 }
 
-export const help = {
+export let help = {
     id: '787026557159211008',
     owner: false,
     nsfw: false,

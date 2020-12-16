@@ -6,7 +6,7 @@ export async function run(interaction) {
     return interaction.reply(`[Invite me](<${url}>)`);       
 }
 
-export const help = {
+export let help = {
     id: '787028131315449906',
     owner: false,
     nsfw: false,

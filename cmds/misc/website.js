@@ -5,7 +5,7 @@ export async function run(message) {
     return message.channel.send('https://gideonbot.com');
 }
 
-export const help = {
+export let help = {
     name: 'web',
     type: 'misc',
     help_text: 'website',

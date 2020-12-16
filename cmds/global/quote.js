@@ -9,7 +9,7 @@ export async function run(interaction) {
     return interaction.reply(Util.Embed(null, {description: '**' + quote.text + '**', thumbnail: quote.img}, interaction.member));
 }
 
-export const help = {
+export let help = {
     id: '787027091098173451',
     owner: false,
     nsfw: false,

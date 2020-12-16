@@ -54,7 +54,7 @@ export async function run(message) {
     } 
 }
 
-export const help = {
+export let help = {
     name: 'boom',
     type: 'fun',
     help_text: 'boom',

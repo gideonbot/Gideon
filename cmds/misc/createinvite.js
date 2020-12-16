@@ -22,7 +22,7 @@ export async function run(message, args) {
     }      
 }
 
-export const help = {
+export let help = {
     name: ['civ', 'create'],
     type: 'misc',
     help_text: 'civ <guildid>',

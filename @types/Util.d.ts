@@ -167,6 +167,7 @@ interface SpamCount {
 interface Command {
     help: {
         id: string;
+        debug: boolean;
         name: string | string[];
         type: string;
         help_text: string;

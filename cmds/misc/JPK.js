@@ -52,7 +52,7 @@ export async function run(message, args) {
     return Util.IMG(rjpka, message);
 }
 
-export const help = {
+export let help = {
     name: 'jpk',
     type: 'misc',
     help_text: 'jpk [help]/[album]',

@@ -67,7 +67,7 @@ export async function run(message, args) {
     return message.channel.send(Util.Embed('Category: ' + body.category, {description: body.joke}, message.member));       
 }
 
-export const help = {
+export let help = {
     name: 'joke',
     type: 'misc',
     help_text: 'joke',

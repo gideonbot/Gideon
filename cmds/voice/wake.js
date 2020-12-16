@@ -15,7 +15,7 @@ export async function run(message, args, connection) {
     orders.on('finish', () => orders.destroy()); 
 }
 
-export const help = {
+export let help = {
     name: 'wakeword',
     type: 'voice',
     help_text: 'Hello Gideon',

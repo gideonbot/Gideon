@@ -43,7 +43,7 @@ export async function run(message, args) {
     }
 }
 
-export const help = {
+export let help = {
     name: 'npm',
     type: 'admin',
     help_text: 'npm install/update',

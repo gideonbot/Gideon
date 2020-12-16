@@ -22,7 +22,7 @@ export async function run(message) {
     }
 }
 
-export const help = {
+export let help = {
     name: 'trmode',
     type: 'misc',
     help_text: 'trmode',

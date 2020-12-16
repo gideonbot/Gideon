@@ -26,7 +26,7 @@ export async function run(message, args) {
     return message.channel.send(Util.truncate(printValue, 1900, true), {code: true});
 }
 
-export const help = {
+export let help = {
     name: 'eval',
     type: 'owner',
     help_text: 'eval <code> :warning:',

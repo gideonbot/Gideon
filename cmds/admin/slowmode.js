@@ -20,7 +20,7 @@ export async function run(message, args) {
     }     
 }
 
-export const help = {
+export let help = {
     name: 'sm',
     type: 'admin',
     help_text: 'sm [channel] <seconds>',

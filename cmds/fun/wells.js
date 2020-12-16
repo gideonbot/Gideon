@@ -72,7 +72,7 @@ export async function run(message) {
     return message.channel.send(`You have reached out to Earth-${result.en}`, {embed: Util.Embed(result.title, {description: result.desc, image: result.gif}, message.member)});  
 }
 
-export const help = {
+export let help = {
     name: 'wells',
     type: 'fun',
     help_text: 'wells',

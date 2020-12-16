@@ -35,7 +35,7 @@ export async function run(message, args) {
     }
 }
 
-export const help = {
+export let help = {
     name: 'ub',
     type: 'owner',
     help_text: 'ub <userid>',

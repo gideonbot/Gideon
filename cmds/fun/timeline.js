@@ -9,7 +9,7 @@ export async function run(message) {
     return message.channel.send(Util.Embed('Timeline change detected!', {description: timeline, image: 'https://i.imgur.com/qWN3luc.gif'}, message.member));
 }
 
-export const help = {
+export let help = {
     name: 'timeline',
     type: 'fun',
     help_text: 'timeline',

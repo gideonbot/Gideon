@@ -53,7 +53,7 @@ export async function run(message, args) {
     return message.channel.send(embed);
 }
 
-export const help = {
+export let help = {
     name: 'user',
     type: 'stats',
     help_text: 'user <user>',

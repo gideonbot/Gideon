@@ -25,7 +25,7 @@ export async function run(message, args) {
     }, message.member));
 }
 
-export const help = {
+export let help = {
     name: 'tr',
     type: 'misc',
     help_text: 'tr <text>',

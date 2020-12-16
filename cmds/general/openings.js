@@ -18,7 +18,7 @@ export async function run(message, args) {
     else return message.channel.send(ia);
 }
 
-export const help = {
+export let help = {
     name: 'op',
     type: 'general',
     help_text: 'op',

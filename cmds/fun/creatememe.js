@@ -68,7 +68,7 @@ export async function run(message, args) {
     return message.channel.send(attachment);
 }
 
-export const help = {
+export let help = {
     name: 'cm',
     type: 'fun',
     help_text: 'cm <phrase1, phrase2>',

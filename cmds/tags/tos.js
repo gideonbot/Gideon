@@ -7,7 +7,7 @@ export async function run(message) {
     await msg.suppressEmbeds();
 }
 
-export const help = {
+export let help = {
     name: 'tos',
     type: 'tags',
     help_text: 'tos',

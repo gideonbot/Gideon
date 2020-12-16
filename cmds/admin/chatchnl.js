@@ -21,7 +21,7 @@ export async function run(message, args) {
     }
 }
 
-export const help = {
+export let help = {
     name: 'chatchnl',
     type: 'admin',
     help_text: 'chatchnl [reset] <channel>',

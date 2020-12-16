@@ -72,7 +72,7 @@ export async function run(interaction) {
     return interaction.reply(`You have reached out to Earth-${result.en}`, {embed: Util.Embed(result.title, {description: result.desc, image: result.gif}, interaction.member)});  
 }
 
-export const help = {
+export let help = {
     id: '787026013146185738',
     owner: false,
     nsfw: false,

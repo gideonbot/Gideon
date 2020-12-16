@@ -7,7 +7,7 @@ export async function run(message) {
     message.reply('This command is deprecated. Please ask somone with the appropriate permissions to use the `chatchnl` command to set an AI chat channel!\n' + url);
 }
 
-export const help = {
+export let help = {
     name: 'chat',
     type: 'fun',
     help_text: 'chat',

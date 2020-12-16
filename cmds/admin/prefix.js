@@ -20,7 +20,7 @@ export async function run(message, args) {
     }  
 }
 
-export const help = {
+export let help = {
     name: 'prefix',
     type: 'admin',
     help_text: 'prefix [default] <prefix>',

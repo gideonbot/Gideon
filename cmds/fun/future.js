@@ -30,7 +30,7 @@ export async function run(message, args, connection) {
     }, message.member));
 }
 
-export const help = {
+export let help = {
     name: ['show', 'future'],
     type: 'fun',
     help_text: 'Gideon, show me the future!',

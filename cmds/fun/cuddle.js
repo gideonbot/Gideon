@@ -13,7 +13,7 @@ export async function run(message) {
     }, message.member));
 }
 
-export const help = {
+export let help = {
     name: 'cuddle',
     type: 'fun',
     help_text: 'cuddle <user>',

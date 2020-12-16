@@ -28,7 +28,7 @@ export async function run(message) {
         .build();
 }
 
-export const help = {
+export let help = {
     name: 'xovers',
     type: 'general',
     help_text: 'xovers',

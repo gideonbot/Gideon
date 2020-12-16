@@ -653,7 +653,14 @@ class Util {
                     let props = await import(`./${file_path}`);
                     
                     process.gideon.commands.set(props.help.name, props);
-                    if (props.help.id) process.gideon.commands.set(props.help.id, props);
+
+                    if (props.help.id) {
+                        if (props.help.debug) { //overwrite command id when debugging
+                            if (process.gideon.owner === '224617799434108928') props.help.id = '787650463909543946';
+                            else if (process.gideon.owner === '351871113346809860') props.help.id = '788743837094772736';
+                        }
+                        process.gideon.commands.set(props.help.id, props);
+                    }
             
                     let cmd_end = process.hrtime.bigint();
                     let took = (cmd_end - cmd_start) / BigInt('1000000');

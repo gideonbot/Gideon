@@ -14,7 +14,7 @@ export async function run(message, args) {
     return await message.channel.bulkDelete(msgamt, true);
 }
 
-export const help = {
+export let help = {
     name: 'purge',
     type: 'admin',
     help_text: 'purge [amount]',

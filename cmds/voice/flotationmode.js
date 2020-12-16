@@ -20,7 +20,7 @@ export async function run(message, args, connection) {
     return message.channel.send(embed);
 }
 
-export const help = {
+export let help = {
     name: 'ftmode',
     type: 'voice',
     help_text: 'Enable flotationmode',

@@ -7,7 +7,7 @@ export async function run(message) {
     return message.channel.send(Util.Embed('Enter Flashtime!', {description: Util.secondsToDifferenceString(process.gideon.uptime / 1000, { enableSeconds: true })}, message.member));
 }
 
-export const help = {
+export let help = {
     name: 'uptime',
     type: 'stats',
     help_text: 'uptime',

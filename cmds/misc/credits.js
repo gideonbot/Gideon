@@ -17,7 +17,7 @@ export async function run(message) {
     return message.channel.send(Util.Embed('Development Credits:', {fields: fields, thumbnail: process.gideon.user.avatarURL()}, message.member));
 }
 
-export const help = {
+export let help = {
     name: 'credits',
     type: 'misc',
     help_text: 'credits',

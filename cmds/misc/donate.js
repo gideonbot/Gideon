@@ -20,7 +20,7 @@ export async function run(message) {
     }, message.member));
 }
 
-export const help = {
+export let help = {
     name: 'donate',
     type: 'misc',
     help_text: 'donate',

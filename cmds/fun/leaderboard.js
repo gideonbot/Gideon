@@ -21,7 +21,7 @@ export async function run(message) {
     return message.channel.send(leaderboard);
 }
 
-export const help = {
+export let help = {
     name: 'lb',
     type: 'fun',
     help_text: 'lb',

@@ -39,7 +39,7 @@ export async function run(message, args, connection) {
     return message.channel.send(embed);
 }
 
-export const help = {
+export let help = {
     name: 'nxeps',
     type: 'general',
     help_text: 'nxeps',

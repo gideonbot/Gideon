@@ -42,7 +42,7 @@ export async function run(message, args) {
 
     return message.channel.send(speedster);
 }
-export const help = {
+export let help = {
     name: 'sp',
     type: 'general',
     help_text: 'sp <name/alter ego> eN (earth number)',

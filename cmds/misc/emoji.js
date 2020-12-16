@@ -32,7 +32,7 @@ export async function run(message, args) {
     return message.channel.send(embed);
 }
 
-export const help = {
+export let help = {
     name: 'emoji',
     type: 'misc',
     help_text: 'emoji <emoji>',

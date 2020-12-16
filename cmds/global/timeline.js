@@ -9,7 +9,7 @@ export async function run(interaction) {
     return interaction.reply(Util.Embed('Timeline change detected!', {description: timeline, image: 'https://i.imgur.com/qWN3luc.gif'}, interaction.member));
 }
 
-export const help = {
+export let help = {
     id: '787024666202996776',
     owner: false,
     nsfw: false,

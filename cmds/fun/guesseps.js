@@ -250,7 +250,7 @@ export async function run(message, args) {
     }
 }
 
-export const help = {
+export let help = {
     name: 'guess',
     type: 'fun',
     help_text: 'guess [show]',

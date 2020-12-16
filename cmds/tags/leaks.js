@@ -6,7 +6,7 @@ export async function run(message) {
     return message.channel.send(tag);
 }
 
-export const help = {
+export let help = {
     name: 'leaks',
     type: 'tags',
     help_text: 'leaks',

@@ -48,7 +48,7 @@ export async function run(message, args) {
     }
 }
 
-export const help = {
+export let help = {
     name: 'gb',
     type: 'owner',
     help_text: 'gb <guildid>',

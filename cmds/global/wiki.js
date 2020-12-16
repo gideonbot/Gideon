@@ -91,7 +91,7 @@ export async function run(interaction, args) {
     }, interaction.member)); 
 }
 
-export const help = {
+export let help = {
     id: '786988079621210163',
     owner: false,
     nsfw: false,

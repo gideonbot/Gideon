@@ -6,7 +6,7 @@ export async function run(message) {
     process.gideon.shard.respawnAll();
 }
 
-export const help = {
+export let help = {
     name: 'rs',
     type: 'owner',
     help_text: 'rs',

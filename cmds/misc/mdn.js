@@ -10,7 +10,7 @@ export async function run(message, args) {
     message.channel.send({ embed: embed });
 }
 
-export const help = {
+export let help = {
     name: 'mdn',
     type: 'misc',
     help_text: 'mdn <search term>',

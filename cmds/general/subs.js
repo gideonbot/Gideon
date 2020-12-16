@@ -144,7 +144,7 @@ export async function run(message, args) {
     });
 }
 
-export const help = {
+export let help = {
     name: 'subs',
     type: 'general',
     help_text: 'subs <lang> <show> <NxNN/SNNENN> ~ N -> number',

@@ -34,7 +34,7 @@ export async function run(message) {
     return message.channel.send(embed);
 }
 
-export const help = {
+export let help = {
     name: 'guild',
     type: 'stats',
     help_text: 'guild',

@@ -5,7 +5,7 @@ export async function run(message) {
     return message.channel.send('https://discord.new/EDWFjQqYu8Zs');
 }
 
-export const help = {
+export let help = {
     name: 'template',
     type: 'general',
     help_text: 'template',

@@ -178,7 +178,7 @@ export async function run(message, args) {
     else return message.channel.send(ia);
 }   
 
-export const help = {
+export let help = {
     name: 'abilities',
     type: 'general',
     help_text: 'abilities <term>',

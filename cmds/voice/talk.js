@@ -23,7 +23,7 @@ export async function run(message, args, connection) {
     phrase.on('finish', () => phrase.destroy());
 }
 
-export const help = {
+export let help = {
     name: 'talk',
     type: 'voice',
     help_text: 'Talk to me',

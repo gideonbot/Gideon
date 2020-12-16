@@ -104,7 +104,7 @@ export async function run(message, args) {
     }, message.member)); 
 }
 
-export const help = {
+export let help = {
     name: 'wiki',
     type: 'general',
     help_text: 'wiki [help]/[wiki] <term>',

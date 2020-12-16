@@ -181,7 +181,7 @@ export async function run(message, args) {
     }
 }   
 
-export const help = {
+export let help = {
     name: 'help',
     type: 'misc',
     help_text: 'help [syntax]/[module]',

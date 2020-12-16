@@ -9,7 +9,7 @@ export async function run(message) {
     return message.channel.send('Database backup complete! Please check <#622415301144870932>! :white_check_mark:');
 }
 
-export const help = {
+export let help = {
     name: 'bkup',
     type: 'admin',
     help_text: 'backup',

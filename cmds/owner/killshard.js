@@ -18,7 +18,7 @@ export async function run(message, args) {
     process.gideon.shard.broadcastEval(`if (this.shard.ids[0] === ${shardid}) process.exit();`);
 }
 
-export const help = {
+export let help = {
     name: 'ks',
     type: 'owner',
     help_text: 'ks <shardid>',

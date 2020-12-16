@@ -17,7 +17,7 @@ export async function run(interaction) {
     return interaction.reply(Util.Embed('Development Credits:', {fields: fields, thumbnail: process.gideon.user.avatarURL()}, interaction.member));
 }
 
-export const help = {
+export let help = {
     id: '787023206779322468',
     owner: false,
     nsfw: false,

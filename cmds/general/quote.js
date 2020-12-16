@@ -9,7 +9,7 @@ export async function run(message) {
     return message.channel.send(Util.Embed(null, {description: '**' + quote.text + '**', thumbnail: quote.img}, message.member));
 }
 
-export const help = {
+export let help = {
     name: 'quote',
     type: 'fun',
     help_text: 'quote',

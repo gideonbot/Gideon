@@ -17,7 +17,7 @@ export async function run(message) {
     return message.channel.send(embed);
 }
 
-export const help = {
+export let help = {
     name: 'perms',
     type: 'stats',
     help_text: 'perms',

@@ -145,7 +145,7 @@ export async function run(message, args) {
         image: img
     }, message.member));
 }
-export const help = {
+export let help = {
     name: 'ep',
     type: 'general',
     help_text: 'ep <show> <NxNN|SNENN> ~ N -> number',

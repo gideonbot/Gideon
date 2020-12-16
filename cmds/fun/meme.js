@@ -27,7 +27,7 @@ export async function run(message) {
     });   
 }
 
-export const help = {
+export let help = {
     name: 'meme',
     type: 'fun',
     help_text: 'meme',

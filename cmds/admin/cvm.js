@@ -18,7 +18,7 @@ export async function run(message) {
     } 
 }
 
-export const help = {
+export let help = {
     name: 'cvm',
     type: 'admin',
     help_text: 'cvm',
