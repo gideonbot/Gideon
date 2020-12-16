@@ -3,9 +3,7 @@ import fetch from 'node-fetch';
 import fs from 'fs';
 import config from './data/config/config.js';
 import SQL from './Util/SQL.js';
-import Voice from './Util/Voice.js';
 import Checks from './Util/Checks.js';
-import TR from './Util/Translation.js';
 import MsgHandler from './Util/MessageHandler.js';
 import Interactions from './Util/Interactions.js';
 import Imgur from 'imgur-node';
@@ -47,9 +45,7 @@ class Util {
 
     static get config() { return config; }
     static get SQL() { return SQL; }
-    static get Voice() { return Voice; }
     static get Checks() { return Checks; }
-    static get TR() { return TR; }
     static get Interactions() { return Interactions; }
     static get MsgHandler() { return MsgHandler; }
 
