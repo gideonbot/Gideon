@@ -288,26 +288,6 @@ class Checks {
     }
 
     /**
-     * VC check
-     * @param {Discord.VoiceState} oldState 
-     * @param {Discord.VoiceState} newState  
-     */
-    static async VCCheck(oldState, newState) {
-        let newChannel = newState.channel;
-        let oldChannel = oldState.channel;
-    
-        if (oldChannel && !newChannel) {
-            //User leaves a voice channel
-            const members = oldChannel.members.map(x => x.id);
-            if (!members.includes(process.gideon.user.id)) return;
-    
-            const bot_count = oldChannel.members.filter(x => x.user.bot).size;
-    
-            if (oldChannel.members.size - bot_count === 0) oldChannel.leave();
-        }
-    }
-
-    /**
      * Spam check 
      * @param {string} id 
      */

@@ -2,18 +2,13 @@ import Discord from "discord.js";
 import MsgHandler from './Util/MessageHandler'
 import Checks from './Util/Checks'
 import SQL from './Util/SQL'
-import TR from './Util/Translation'
-import Voice from './Util/Voice'
 import BetterSqlite3 from "better-sqlite3";
 import WSClient from './WSClient';
 
 export const config: Config;
 export let MsgHandler: Handler;
 export let SQL: Database;
-export let TR: Translation;
-export let Voice: VoiceUtil;
 export let Checks: CheckUtil;
-export function parseSeriesEpisodeString(str: string): SeasonAndEpisodeInfo;
 export function delay(num: number): Promise<void>;
 export function GetUserTag(str: string | Discord.GuildMember | Discord.User): string;
 export function getIdFromString(str: string): string;
@@ -33,7 +28,6 @@ export function InitStatus(): void;
 export function GenerateSnowflake(): string;
 export function Chat(message: Discord.Message): Promise<void>;
 export function GetCleverBotResponse(text: string, context: string[]): Promise<string>;
-export function GetRandomFile(dir: string): string;
 export function InitCache(): Promise<void>;
 export function GetAndStoreEpisode(show: string): Promise<void>;
 export function CheckEpisodes(): void;
@@ -98,11 +92,6 @@ interface Database {
     Close(): void;
 }
 
-interface Translation {
-    Translate(input: string): Promise<Array>;
-    TRMode(message: Discord.Message, Util: any): Promise<void>;
-}
-
 interface Cache {
     nxeps: Discord.Collection<string, EpisodeInfo>;
     dceps: Discord.Collection<string, EpisodeInfo>;
@@ -118,14 +107,7 @@ interface CheckUtil {
     IBU(message: Discord.Message, Util: any): boolean;
     BadMention(message: Discord.Message): boolean;
     RulesCheck(message: Discord.Message): Promise<void>;
-    VCCheck(oldState: Discord.VoiceState, newState: Discord.VoiceState): Promise<void>;
     GPD(oldmessage: Discord.Message, newmessage?: Discord.Message, Util: any): void;
-}
-
-interface VoiceUtil {
-    LeaveVC(message: Discord.Message): Promise<void>;
-    SpeechRecognition(speech: ReadableStream): Promise<VoiceInfoResponse>;
-    VoiceResponse(value: string, message: Discord.Message, connection: Discord.VoiceConnection, Util: Util, user: Discord.User): Promise<void>;
 }
 
 interface EmbedOptions {
@@ -146,11 +128,6 @@ interface Config {
     avatar: string;
 }
 
-interface SeasonAndEpisodeInfo {
-    season: number;
-    episode: number;
-}
-
 interface ABMResult {
     match: boolean;
     content?: string;
@@ -168,20 +145,13 @@ interface Command {
     help: {
         id: string;
         debug: boolean;
-        name: string | string[];
-        type: string;
-        help_text: string;
-        help_desc: string;
         owner: boolean;
-        voice: boolean;
-        timevault: boolean;
         nsfw: boolean;
-        args: {force: boolean, amount?: Number, type?: string};
         roles: string[];
         user_perms: string[];
         bot_perms: string[];
     },
-    run: (message: Discord.Message, args: string[], connection?: Discord.VoiceConnection) => void;
+    run: (interaction: Discord.Interaction, args: object[]) => void;
 }
 
 interface EpisodeInfo {

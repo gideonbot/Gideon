@@ -111,7 +111,7 @@ export async function run(interaction, args) {
         imdbid: show.id,           
 
     }).then(subtitles => {
-        const embed = Util.Embed(`Subtitles for: ${show.title} S${args[0].options[2].value}E${args[0].options[3].value}`, {description: 'Here are the 5 best results from opensubtitles.org:'}, interaction.member);
+        const embed = Util.Embed(`Subtitles for: ${show.title} ${args[0].options[2].value}x${Util.normalize(args[0].options[3].value)}`, {description: 'Here are the 5 best results from opensubtitles.org:'}, interaction.member);
 
         for (let sub of Object.values(subtitles)[0]) {
             embed.addField(sub.filename, `**[Download SRT](${sub.url} '${sub.url}')** Lang: \`${sub.lang}\` Score: \`${sub.score}\``);

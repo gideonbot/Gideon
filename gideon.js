@@ -72,8 +72,6 @@ gideon.once('ready', async () => {
             Util.SetStat(item, 0);
         }
     }
-
-    Util.config.prefixes.push(`<@!${gideon.user.id}>`, `<@${gideon.user.id}>`);
     
     const twodays = 1000 * 60 * 60 * 48;
     setInterval(Util.UpdateStatus, 10e3);
