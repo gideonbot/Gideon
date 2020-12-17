@@ -51,7 +51,7 @@ export async function run(interaction) {
     
     catch (ex) {
         Util.log('Exception occurred while starting up the particle accelerator ' + ex.stack);
-        return interaction.reply(Util.Embed('An error occurred while trying to start the particle accelerator!', null, interaction.member));
+        return interaction.reply('An error occurred while trying to start the particle accelerator!', { ephemeral: true, hideSource: true });
     } 
 }
 

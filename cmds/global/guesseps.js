@@ -240,7 +240,7 @@ export async function run(interaction, args) {
 
     catch (ex) {
         Util.log('Caught an exception while running guesseps.js: ' + ex.stack);
-        interaction.reply(Util.Embed('An error occurred while executing this command!', null, interaction.member));
+        return interaction.reply('An error occurred while processing your request:```\n' + ex + '```', { ephemeral: true, hideSource: true });
     }
 }
 

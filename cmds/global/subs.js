@@ -120,7 +120,7 @@ export async function run(interaction, args) {
         interaction.reply(embed);
     }).catch(async err => {
         Util.log('An error occurred while trying to fetch subtitles: ' + err);
-        return interaction.reply(Util.Embed('There were no results for this episode on opensubtitles.org!', {description: 'Try another episode or another language code!'}, interaction.member));
+        return interaction.reply('There were no results for this episode on opensubtitles.org!\nTry another episode or another language !', { ephemeral: true, hideSource: true });
     });
 }
 
