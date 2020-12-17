@@ -253,10 +253,6 @@ gideon.on('message', message => {
     Util.MsgHandler.Handle(message, Util);
 });
 
-gideon.on('messageUpdate', (oldMessage, newMessage) => {
-    Util.Checks.GPD(oldMessage, newMessage, Util);
-});
-
 gideon.on('messageDelete', message => {
     Util.Checks.GPD(message, null, Util);
 });
