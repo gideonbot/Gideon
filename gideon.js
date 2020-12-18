@@ -254,7 +254,7 @@ gideon.on('message', message => {
 });
 
 gideon.on('messageDelete', message => {
-    Util.Checks.GPD(message, null, Util);
+    Util.Checks.GPD(message, Util);
 });
 
 gideon.on('guildCreate', async guild => {
