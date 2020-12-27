@@ -16,11 +16,11 @@ class Interactions {
         const command = process.gideon.commands.get(interaction.commandID);
         if (!command) return;
 
-        let guildsettings = process.gideon.getGuild.get(interaction.guild?.id);
+        let guildsettings = process.gideon.getGuild.get(interaction.member.guild.id);
 
         if (!guildsettings) {
             guildsettings = {
-                guild: interaction.guild.id,
+                guild: interaction.member.guild.id,
                 prefix: '!',
                 cvmval: 0,
                 abmval: 0,
