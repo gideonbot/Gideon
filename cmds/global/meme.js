@@ -15,7 +15,6 @@ export async function run(interaction) {
 export let help = {
     id: '787023377541365760',
     owner: false,
-    debug: true,
     nsfw: false,
     roles: [],
     user_perms: [],
