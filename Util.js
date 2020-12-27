@@ -157,8 +157,8 @@ class Util {
 
                 return interaction.channel.send(img); //no attachments for interactions yet
             }
-
-            interaction.reply(Util.Embed({image: rimg}, interaction?.member));
+            
+            return interaction.reply(Util.Embed().setImage(rimg));
         });
     }
 

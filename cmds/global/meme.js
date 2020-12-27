@@ -9,12 +9,13 @@ export async function run(interaction) {
         return interaction.reply('This command is currently not available');
     }
 
-    return interaction.reply(Util.IMG('NVHwdNg'), interaction);
+    return Util.IMG('NVHwdNg', interaction);
 }
 
 export let help = {
     id: '787023377541365760',
     owner: false,
+    debug: true,
     nsfw: false,
     roles: [],
     user_perms: [],
