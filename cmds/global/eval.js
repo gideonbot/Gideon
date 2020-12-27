@@ -30,6 +30,7 @@ export async function run(interaction, args) {
 
 export let help = {
     id: '786979784860893196',
+    debug: true,
     owner: true,
     nsfw: false,
     roles: [],

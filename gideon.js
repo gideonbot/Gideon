@@ -340,8 +340,9 @@ gideon.on('guildBanAdd', (guild, user) => {
         Util.log(`User \`${id}\` has been blacklisted due to a guild ban!`);
     }
 });
-gideon.on('guildMemberUpdate', (oldMember, newMember) => {
+gideon.on('guildMemberUpdate', async (oldMember, newMember) => {
     if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null);
+    if (oldMember.isPending && !newMember.isPending && !newMember.roles.cache.has('688430418466177082')) await newMember.roles.add('688430418466177082');
 });
 
 gideon.on('userUpdate', (oldUser, newUser) => {
