@@ -16,7 +16,7 @@ class Interactions {
         const command = process.gideon.commands.get(interaction.commandID);
         if (!command) return;
 
-        let guildsettings = process.gideon.getGuild.get(interaction.guild.id);
+        let guildsettings = process.gideon.getGuild.get(interaction.guild?.id);
 
         if (!guildsettings) {
             guildsettings = {
