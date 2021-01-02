@@ -329,7 +329,7 @@ class Checks {
         if (message.content.match(invregex)) {
             const invcode = message.content.match(invregex)[0];
             const invite = await process.gideon.fetchInvite(invcode).catch(ex => console.log(ex));
-    
+          
             if (!invite || !invite.guild) {
                 message.reply(`Couldn't resolve the guild this invite belongs to!\n${admin} please review and ban \`${message.author.tag} (${message.author.id})\` if it's a non Time Vault invite.`);
             }
