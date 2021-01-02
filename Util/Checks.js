@@ -83,7 +83,7 @@ class Checks {
             if (res.match) {
                 await message.delete({ timeout: 200 });
                 Util.log('ABM triggered by: ' + message.author.tag + ' (' + res.content + ')\nABM triggered in: `' + message.channel.name + '` at `' + message.guild.name + '`');
-                const abmsg = await message.channel.send(Util.GetUserTag(message.author), { embed: Util.CreateEmbed(`${siren}Anti-BS-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}, message.member) });
+                const abmsg = await message.channel.send(Util.GetUserTag(message.author), { embed: Util.Embed(`${siren}Anti-BS-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}, message.member) });
                 await abmsg.delete({ timeout: 3500 });
             }
         }, failed => {
@@ -170,23 +170,18 @@ class Checks {
         const vid = 'https://cdn.discordapp.com/attachments/525341082435715085/638782331791867930/Crime_Solving_Devil.mp4';
         const tls = 'https://twitter.com/LaurenGerman/status/996886094305050627\nhttps://twitter.com/tomellis17/status/996889307506864128';
         const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';
-        const img = 'https://media.discordapp.net/attachments/669243069878501385/687048353296678943/es7-promise-async-await-es6-promise-es5-callback-hell-async-27790051.png';
         const vid2 = 'https://cdn.discordapp.com/attachments/679864620864765983/686589432501239899/Hi_Im_Richard_Castle.mp4';
         const train = 'https://cdn.discordapp.com/attachments/679864620864765983/688677813934620725/Gary_the_unspeakable_train-abomination.mp4';
         const yombo = 'https://cdn.discordapp.com/attachments/679864620864765983/692020740215537755/YomboBomboMomboJombo.mp4';
         const nuts = 'https://cdn.discordapp.com/attachments/679864620864765983/694607537902715010/CANDEEZ_NUTS.mp4';
-        const katic1 = 'https://cdn.discordapp.com/attachments/679864620864765983/694628302719156285/katic1.mp4';
-        const katic2 = 'https://cdn.discordapp.com/attachments/679864620864765983/694628421321490574/katic2.mp4';
-        const katicarray = [katic1, katic2];
         const titanic = 'https://cdn.discordapp.com/attachments/679864620864765983/694628170527408289/Murder_on_the_Titanic.mp4';
         const occupied = 'https://cdn.discordapp.com/attachments/679864620864765983/694629142322216970/otherwise_occupied.mp4';
         const lwimg = 'https://images.glaciermedia.ca/polopoly_fs/1.24112192.1585937959!/fileImage/httpImage/image.jpg_gen/derivatives/landscape_804/logan-williams-a-coquitlam-actor-who-played-young-flash-in-the-tv-series-died-suddenly.jpg';
         const lwimg2 = 'https://pmctvline2.files.wordpress.com/2020/04/logan-williams-dies-the-flash.jpg';
         const lwgif = 'https://i.imgur.com/LHdTBnw.gif';
         const lwstring = '**Grant Gustin:**\n_"Just hearing the devastating news that Logan Williams has passed away suddenly. This picture was early in the filming of The Flash pilot episode back in 2014. I was so impressed by not only Logan’s talent but his professionalism on set. My thoughts and prayers will be with him and his family during what is I’m sure an unimaginably difficult time for them. Please keep Logan and his family in your thoughts and prayers during what has been a strange and trying time for us all. Sending love to everyone."_';
-        const lw = Util.CreateEmbed('<a:flash360:686326039525326946>R.I.P. Logan Williams<a:flash360:686326039525326946>', 
+        const lw = Util.Embed('<a:flash360:686326039525326946>R.I.P. Logan Williams<a:flash360:686326039525326946>', 
             {description: lwstring, thumbnail: lwimg2, image: lwgif, author: {name: '04/09/2003 - 04/02/2020', icon: lwimg}});
-        const whoa = Util.CreateEmbed(null, { image: 'https://images-ext-2.discordapp.net/external/T_LsRBWhC8qcPUFrFa-mn1Gpgq9GIKI-m6tfRj7-yWQ/https/i.imgur.com/AyfOFy9.gif' }, message.member);
         const omelette = 'https://cdn.discordapp.com/attachments/669243069878501385/696770901185921106/You_have_failed_this_omelette.mp4'; 
         const punching = 'https://cdn.discordapp.com/attachments/669243069878501385/696774257279107293/why_the_punching.mp4';
         const donttouchme = 'https://cdn.discordapp.com/attachments/669243069878501385/696774255131492443/If_you_touch_me_with_that_thing.mp4';
@@ -195,7 +190,6 @@ class Checks {
         const skirt = 'https://cdn.discordapp.com/attachments/669243069878501385/696774255559442452/skirt.mp4';
         const eternalahole = 'https://cdn.discordapp.com/attachments/669243069878501385/696774249897132052/eternal_asshole.mp4';
         const surpressedanger = 'https://cdn.discordapp.com/attachments/669243069878501385/696828835525820507/were_gonna_need_the_icequeen.mp4';
-        const superman = 'https://cdn.discordapp.com/attachments/669243069878501385/696784552764375100/Its_a_bird...its_a_plane_its_Superman.mp4';
         const marshmallows = 'https://cdn.discordapp.com/attachments/669243069878501385/696787036304048229/the_marshmallows_are_talking.mp4';
         const unclear = 'https://cdn.discordapp.com/attachments/595934699285905409/602631699083558933/unclear.mp4';
         const kneel = 'https://cdn.discordapp.com/attachments/679864620864765983/697074511312322580/Kneel_before_Zod.mp4';
@@ -205,20 +199,16 @@ class Checks {
 
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
         else if (message.content.match(/(?:deckerstar)/i)) Util.IMG('rJpbLQx', message);
-        else if (message.content.match(/(?:caskett)/i)) Util.IMG('eemyeVL', message);
         else if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
         else if (message.content.match(/(?:germ)/i)) Util.IMG('ngJQmxL', message);
-        else if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.CreateEmbed(null, {image: ctm}));
-        else if (message.content.match(/(?:callback)/i)) message.channel.send(Util.CreateEmbed(null, {image: img}));
+        else if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.Embed(null, {image: ctm}));
         else if (message.content.match(/(?:castle)/i)) message.channel.send(vid2);
         else if (message.content.match(/(?:magic)/i)) message.channel.send(yombo);
         else if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) message.channel.send(train);
         else if (message.content.match(/(?:nuts)/i)) message.channel.send(nuts);
         else if (message.content.match(/(?:titanic)/i)) message.channel.send(titanic);
         else if (message.content.match(/(?:occupied)/i)) message.channel.send(occupied);
-        else if (message.content.match(/(?:katic)/i)) message.channel.send(katicarray[Math.floor(Math.random() * katicarray.length)]);
         else if (message.content.match(/(?:rip)/i) && message.content.match(/(?:logan)/i)) message.channel.send(lw);
-        else if (message.content.match(/(?:wow)/i) || message.content.match(/(?:whoa)/i)) message.channel.send(whoa);
         else if (message.content.match(/(?:omelette)/i)) message.channel.send(omelette);
         else if (message.content.match(/(?:punching)/i)) message.channel.send(punching);
         else if (message.content.match(/(?:touch)/i)) message.channel.send(donttouchme);
@@ -227,7 +217,6 @@ class Checks {
         else if (message.content.match(/(?:skirt)/i)) message.channel.send(skirt);
         else if (message.content.match(/(?:asshole)/i)) message.channel.send(eternalahole);
         else if (message.content.match(/(?:lexi)/i) || message.content.match(/(?:icequeen)/i)) message.channel.send(surpressedanger);
-        else if (message.content.match(/(?:superman)/i)) message.channel.send(superman);
         else if (message.content.match(/(?:marshmallows)/i)) message.channel.send(marshmallows);
         else if (message.content.match(/(?:unclear)/i) || message.content.match(/(?:kidnapped)/i)) message.channel.send(unclear);
         else if (message.content.match(/(?:kneel)/i)) message.channel.send(kneel);
@@ -275,7 +264,9 @@ class Checks {
      * @returns {boolean}
      */
     static IBU(message) {
-        const ubl = process.gideon.getUser.get(message.author.id);
+        let ubl;
+        if (message.commandID) process.gideon.getUser.get(message.member?.id); //interaction
+        else ubl = process.gideon.getUser.get(message.author.id);
         if (!ubl || !ubl.blacklist) return;
         return ubl.blacklist === 1;
     }
@@ -294,26 +285,6 @@ class Checks {
         await member.roles.add(role);
         message.reply('You have been verified and gained access to <#595935317631172608>!');
         Util.log(`User \`${member.user.tag}\` has gained access to the guild!`);
-    }
-
-    /**
-     * VC check
-     * @param {Discord.VoiceState} oldState 
-     * @param {Discord.VoiceState} newState  
-     */
-    static async VCCheck(oldState, newState) {
-        let newChannel = newState.channel;
-        let oldChannel = oldState.channel;
-    
-        if (oldChannel && !newChannel) {
-            //User leaves a voice channel
-            const members = oldChannel.members.map(x => x.id);
-            if (!members.includes(process.gideon.user.id)) return;
-    
-            const bot_count = oldChannel.members.filter(x => x.user.bot).size;
-    
-            if (oldChannel.members.size - bot_count === 0) oldChannel.leave();
-        }
     }
 
     /**
@@ -345,29 +316,33 @@ class Checks {
      * Invite check 
      * @param {Discord.Message} message 
      */
-    static async Ads(message) {
+    static async Ads(message, Util) {
         if (!message.guild) return;
         if (message.guild.id !== '595318490240385037') return;
-        if (message.member.roles.cache.has('596402255066955783')) return;
-        else if (message.member.roles.cache.has('596402530989375539')) return;
+        if (!message.member) await message.member.fetch();
+        if (message.member.hasPermission('MANAGE_MESSAGES')) return;
 
-        const invregex = /(http:\/\/|https:\/\/)?(discord.gg\/|discordapp.com\/invite\/)([a-zA-Z0-9]){7}/g;
-        const channel = process.gideon.guilds.cache.get('595318490240385037').channels.cache.get('595318490240385043');
+        // eslint-disable-next-line no-useless-escape
+        const invregex = /discord(?:\.com|app\.com|\.gg)\/(?:invite\/)?([a-zA-Z0-9\-]{2,32})/g;
         const admin = process.gideon.guilds.cache.get('595318490240385037').roles.cache.get('596402255066955783');
 
         if (message.content.match(invregex)) {
             const invcode = message.content.match(invregex)[0];
             const invite = await process.gideon.fetchInvite(invcode).catch(ex => console.log(ex));
-            
+          
             if (!invite || !invite.guild) {
-                await channel.send(`Couldn't resolve the guild this invite belongs to!\n${admin} please review and kick \`${message.author.tag}\` if it's a non Time Vault invite.`, {allowedMentions: {parse: []}});
+                message.reply(`Couldn't resolve the guild this invite belongs to!\n${admin} please review and ban \`${message.author.tag} (${message.author.id})\` if it's a non Time Vault invite.`);
             }
 
             else if (invite.guild.id !== '595318490240385037') {
-                await message.delete({ timeout: 200 });
-                await message.member.send('You have been kicked for sending a foreign guild invite!').catch(ex => console.log(ex));
-                await channel.send(`${message.author.tag} has been kicked for sending a foreign guild invite!`);
-                await message.member.kick();
+                const embed = Util.Embed(message.member)
+                    .setDescription(`\`${message.member.user.tag}\` has been banned by ${process.gideon.user.tag} because of \`automated anti-ads ban\`.`)
+                    .setImage('https://media.discordapp.net/attachments/715564004621418577/769212118464725002/Homelander_2.gif');
+
+                const ban = await message.guild.members.ban(message.member, { days: 7, reason: 'automated anti-ads ban' }).catch(() => {
+                    message.reply(`Auto-ban failed!\n${admin} please ban \`${message.author.tag} (${message.author.id})\`.\nPlease make sure that my role is higher then theirs and that they're not the guild owner.`);
+                });
+                if (ban) return message.channel.send(embed); 
             }
         }
     }
@@ -389,7 +364,8 @@ class Checks {
                 abmval: 0,
                 eastereggs: 0,
                 blacklist: 1,
-                chatchnl: ''
+                chatchnl: '',
+                gpd: 0
             };
 
             process.gideon.setGuild.run(gb);
@@ -398,7 +374,7 @@ class Checks {
             const textchannels = guild.channels.cache.filter(c=> c.type == 'text');
             const channels = textchannels.filter(c => c.permissionsFor(guild.me).has('SEND_MESSAGES'));
             
-            if (channels.size) await channels.first().send(`This guild is banned for being a bot collecting guild (\`${bots}\` bots!)\nIf you believe this is an error please contact \`adrifcastr#4530\`.\nNow leaving this guild!\nhttps://discord.gg/h9SEQaU`).catch(ex => console.log(ex));
+            if (channels.size) await channels.first().send(`This guild is banned for being a bot collecting guild (\`${bots}\` bots!)\nIf you believe this is an error please contact \`adrifcastr#0001\`.\nNow leaving this guild!\nhttps://discord.gg/h9SEQaU`).catch(ex => console.log(ex));
 
             await guild.leave();
 
@@ -476,8 +452,9 @@ class Checks {
      * @param {Discord.GuildMember} member
      */
     static async AccCheck(member, Util) {
-        const flagged = ['141983643005485056', '708427459174858752', '565366753623015475', '477208850156617728', '599704513292795925', '444212008167014410', '333038169790349312', '714509213035921538', '268081216555581451', '715542369465925715', '414712593941397504', '545089908377780245', '714509213035921538', '670834803989544992'];
-        if (flagged.includes(member.id)) {
+        const flagged = process.gideon.getUser.get(member.id);
+
+        if (flagged && flagged.blacklist === 1) {
             const guildowner = await member.guild.members.fetch(member.guild.ownerID);
             const dmstring = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of your guild \`(${member.guild.name})\`!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisement\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n- Spamming NSFW media\n\`\`\`\nWe advise to ban this user.`;
             const string = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of this guild!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisement\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n- Spamming NSFW media\n\`\`\`\nWe advise to notify the guild owner (<@${member.guild.ownerID}>).`;
@@ -506,6 +483,32 @@ class Checks {
             else return null;
         }
         else return null;
+    }
+
+    /**
+     * Ghost ping detector
+     * @param {Discord.Message} message
+     */
+    static GPD(message, Util) {
+        let gd = process.gideon.getGuild?.get(message.guild.id);
+        if (message.author?.bot) return;
+        if (!gd) return;
+        if (gd.gpd === 0) return;
+
+        const usermention = message.mentions.users.first();
+        const rolemention = message.mentions.roles.first();
+
+        if (usermention || rolemention) {
+            if (usermention?.bot) return;
+            if (usermention?.id === message.author.id) return;
+
+            const embed = Util.Embed()
+                .setTitle('Ghost Ping detected:')
+                .setDescription(`\`${message.author.tag}\` has ghost-pinged ${usermention ? '' : rolemention ? 'the role ' : ''}${usermention ?? rolemention}:\n\nMessage content:\n\`\`\`${message.cleanContent}\n\`\`\`${message.cleanContent.includes('@') ? '' : '\nThe ping was delivered via inline reply.'}`);
+
+            message.channel.send(embed);
+        }
+        
     }
 }
 export default Checks;

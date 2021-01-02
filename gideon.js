@@ -8,7 +8,7 @@ const gideon = new Discord.Client({
     ws: {
         intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES']
     },
-    allowedMentions: { parse: ['users', 'roles'] },
+    allowedMentions: { parse: ['users', 'roles'], replied_user: true },
     partials: ['MESSAGE', 'REACTION'],
     restRequestTimeout: 25000
 });
@@ -20,14 +20,13 @@ gideon.statuses = [];
 gideon.spamcount = new Map();
 gideon.cache = {};
 gideon.show_api_urls = {
+    batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
+    b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
+    flash: 'http://api.tvmaze.com/shows/13?embed=nextepisode',
+    supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode',
     stargirl: 'http://api.tvmaze.com/shows/37809?embed=nextepisode', 
     legends: 'http://api.tvmaze.com/shows/1851?embed=nextepisode',
-    flash: 'http://api.tvmaze.com/shows/13?embed=nextepisode',
-    batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
     supergirl: 'http://api.tvmaze.com/shows/1850?embed=nextepisode',
-    canaries: 'http://api.tvmaze.com/shows/44496?embed=nextepisode',
-    supesnlois: 'http://api.tvmaze.com/shows/44751?embed=nextepisode',
-    b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
 };
 gideon.dc_show_urls = {
     doompatrol: 'http://api.tvmaze.com/shows/36745?embed=nextepisode', 
@@ -73,8 +72,6 @@ gideon.once('ready', async () => {
             Util.SetStat(item, 0);
         }
     }
-
-    Util.config.prefixes.push(`<@!${gideon.user.id}>`, `<@${gideon.user.id}>`);
     
     const twodays = 1000 * 60 * 60 * 48;
     setInterval(Util.UpdateStatus, 10e3);
@@ -220,7 +217,7 @@ process.on('unhandledRejection', err => {
 
 process.once('SIGUSR2', async () => {
     let shard_index = process.gideon && process.gideon.shard && process.gideon.shard.ids ? process.gideon.shard.ids[0] : '0';
-    Util.log('Shard ' + shard_index + ' shutting down...');
+    Util.log('Shard `' + shard_index + '` shutting down...');
 
     for (let guild of process.gideon.guilds.cache.values()) {
         if (guild.voice && guild.voice.connection) {
@@ -244,13 +241,25 @@ gideon.on('error', err => {
     Util.log('Bot error: ' + `\`\`\`\n${err.stack}\n\`\`\``);
 });
 
+gideon.on('rateLimit', rateLimitInfo => {
+    Util.log('Hit a ratelimit: ' + `\`\`\`\nTimeout: ${rateLimitInfo.timeout} ms\nLimit: ${rateLimitInfo.limit}\nMethod: ${rateLimitInfo.method}\nPath: ${rateLimitInfo.path}\nRoute: ${rateLimitInfo.route}\n\`\`\``);
+});
+
+gideon.on('interactionCreate', interaction => {
+    Util.Interactions.Handle(interaction, Util);
+});
+
 gideon.on('message', message => {
     Util.MsgHandler.Handle(message, Util);
 });
 
+gideon.on('messageDelete', message => {
+    Util.Checks.GPD(message, Util);
+});
+
 gideon.on('guildCreate', async guild => {
     await guild.members.fetch();
-    Util.log(Util.CreateEmbed('Joined a new guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner.user.tag}\` (${guild.owner.id})`, thumbnail: guild.iconURL()}));
+    Util.log(Util.Embed('Joined a new guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner?.user.tag ?? 'Unknown'}\` (${guild.ownerID})`, thumbnail: guild.iconURL()}));
 
     let currentguild = gideon.getGuild.get(guild.id);
     if (!currentguild) {
@@ -261,7 +270,8 @@ gideon.on('guildCreate', async guild => {
             abmval: 0,
             eastereggs: 0,
             blacklist: 0,
-            chatchnl: ''
+            chatchnl: '',
+            gpd: 0
         };
         
         gideon.setGuild.run(currentguild);
@@ -280,7 +290,7 @@ gideon.on('guildCreate', async guild => {
 });
 
 gideon.on('guildDelete', guild => {
-    Util.log(Util.CreateEmbed('Left guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => x && x.user && !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x && x.user && x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner ? `${guild.owner.user.tag} (${guild.owner.id})` : 'Unknown'}\``, thumbnail: guild.iconURL()}));
+    Util.log(Util.Embed('Left guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => x && x.user && !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x && x.user && x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.owner?.user.tag ?? 'Unknown'}\` (${guild.ownerID})`, thumbnail: guild.iconURL()}));
 });
 
 gideon.on('shardReady', async (id, unavailableGuilds) => {
@@ -311,8 +321,28 @@ gideon.on('guildMemberAdd', member => {
     Util.Checks.AccCheck(member, Util);
 });
 
-gideon.on('guildMemberUpdate', (oldMember, newMember) => {
+gideon.on('guildBanAdd', (guild, user) => {
+    if (guild.id !== '595318490240385037') return;
+    const id = user.id;
+    let ub = process.gideon.getUser.get(id);
+
+    if (!ub) {
+        ub = {
+            id: id,
+            trmodeval: 0,
+            blacklist: 0
+        };
+    }
+
+    if (ub.blacklist === 0) {
+        ub.blacklist = 1;
+        process.gideon.setUser.run(ub);
+        Util.log(`User \`${id}\` has been blacklisted due to a guild ban!`);
+    }
+});
+gideon.on('guildMemberUpdate', async (oldMember, newMember) => {
     if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null);
+    if (oldMember.isPending && !newMember.isPending && !newMember.roles.cache.has('688430418466177082')) await newMember.roles.add('688430418466177082');
 });
 
 gideon.on('userUpdate', (oldUser, newUser) => {
@@ -324,16 +354,7 @@ gideon.on('messageUpdate', async (oldMessage, newMessage) => {
     if (newMessage.editedAt) Util.MsgHandler.Handle(newMessage, Util);
 });
 
-gideon.on('commandRefused', (message, reason) => {
+gideon.on('commandRefused', (interaction, reason) => {
     if (process.env.CI) return;
-    Util.log(`Command Refused:\n\n${message.author.tag} attempted to use \`${message.content}\`\nCommand failed due to: \`${reason}\`\nOrigin: \`#${message.channel.name}\` at \`${message.guild.name}\``);
-});
-
-gideon.on('inviteCreate', Invite => {
-    if (Invite.guild.id !== '595318490240385037') return;
-    Util.log(`Invite for \`${Invite.guild.name ? Invite.guild.name : 'Not available'}\` has been created:\n\nChannel: \`${Invite.channel.name}\`\n${Invite.url}`);
-});
-
-gideon.on('voiceStateUpdate', (oldState, newState) => {
-    Util.Checks.VCCheck(oldState, newState);
+    Util.log(`Command Refused:\n\n${interaction.member.user?.tag} attempted to use \`${interaction?.commandName}\`\nCommand failed due to: \`${reason}\`\nOrigin: \`#${interaction?.channel?.name}\` at \`${interaction?.guild?.name}\``);
 });

@@ -1,12 +1,10 @@
 import Discord from 'discord.js';
 import fetch from 'node-fetch';
-import fs from 'fs';
 import config from './data/config/config.js';
 import SQL from './Util/SQL.js';
-import Voice from './Util/Voice.js';
 import Checks from './Util/Checks.js';
-import TR from './Util/Translation.js';
 import MsgHandler from './Util/MessageHandler.js';
+import Interactions from './Util/Interactions.js';
 import Imgur from 'imgur-node';
 import zip from 'zip-promise';
 import del from 'del';
@@ -46,66 +44,9 @@ class Util {
 
     static get config() { return config; }
     static get SQL() { return SQL; }
-    static get Voice() { return Voice; }
     static get Checks() { return Checks; }
-    static get TR() { return TR; }
+    static get Interactions() { return Interactions; }
     static get MsgHandler() { return MsgHandler; }
-
-    /**
-     * @summary A low-level method for parsing episode stuff
-     * @param {string} input
-     * @returns {{season: number, episode: number}} The object containing the series and episode details
-     */
-    static parseSeriesEpisodeString(input) {
-        if (!input) return null;
-
-        let str = input.toLowerCase();
-        let seriesString = '';
-        let episodeString = '';
-        let hit_limiter = false;
-
-        //parse film industry standard episode definitions e.g. 205
-        if (str.length === 3 && !str.toLowerCase().includes('x') && !isNaN(str)) {
-            let s = str.slice(0, 1);
-            let e = str.slice(-2);
-
-            const season = Number(s);
-            const episode = Number(e);
-
-            if (isNaN(season) || isNaN(episode)) return null;
-            else return {
-                season: season,
-                episode: episode
-            };
-        }
-        //note: turns out passing any amount of numbers passes this method and sends an api request which returns 404, gotta think of some smart filter thingx
-        for (let letter of str) {
-            if (letter === 's') continue;
-
-            if (letter === 'e' || letter === 'x') {
-                hit_limiter = true;
-                continue;
-            }
-
-            if (!(/^\d+$/.test(letter))) continue;
-
-            if (!hit_limiter) {
-                seriesString += letter;
-            } else {
-                episodeString += letter;
-            }
-        }
-
-        const seriesNumber = Number(seriesString);
-        const episodeNumber = Number(episodeString);
-
-        if (isNaN(seriesNumber) || isNaN(episodeNumber)) return null;
-
-        return {
-            season: seriesNumber,
-            episode: episodeNumber
-        };
-    }
 
     /**
      * @param {number} inputDelay 
@@ -115,33 +56,6 @@ class Util {
         if (typeof inputDelay !== 'number') return Promise.resolve();
         // Otherwise, resolve after the number of milliseconds.
         return new Promise(resolve => setTimeout(resolve, inputDelay));
-    }
-
-    /**
-     * @returns {string}
-     * @param {string | Discord.GuildMember | Discord.User} input 
-     */
-    static GetUserTag(input) {
-        if (!input) return null;
-
-        let id = '';
-        if (typeof(input) == 'string') id = input;
-        else if (input instanceof Discord.GuildMember) id = input.user.id;
-        else if (input instanceof Discord.User) id = input.id;
-        if (!id) return input;
-
-        return isNaN(id) ? input : '<@' + id + '>';
-    }
-
-    /**
-     * @param {string} input 
-     */
-    static getIdFromString(input) {
-        if (!input) return null;
-
-        for (let item of ['<@!', '<@', '<#', '>']) input = input.replace(item, '');
-
-        return input;
     }
 
     /**
@@ -195,7 +109,7 @@ class Util {
         let url = process.env.LOG_WEBHOOK_URL;
         if (!url) return false;
 
-        url = url.replace('https://discordapp.com/api/webhooks/', '');
+        url = url.replace('https://discordapp.com/api/webhooks/', '').replace('https://discord.com/api/webhooks/', '');
         let split = url.split('/');
         if (split.length < 2) return false;
 
@@ -215,11 +129,11 @@ class Util {
     /**
      * Get image from imgur album
      * @param {string} imgid 
-     * @param {Discord.Message} message
+     * @param {Discord.Interaction} interaction
      * @param {boolean} nsfw
      */
-    static async IMG(imgid, message, nsfw) {
-        if (!message.guild) return;
+    static async IMG(imgid, interaction, nsfw) {
+        if (!interaction.guild) return;
         if (!process.env.IMG_CL) return;
 
         const imgclient = new Imgur.Client(process.env.IMG_CL);
@@ -227,7 +141,7 @@ class Util {
         imgclient.album.get(imgid, (err, res) => {
             if (err) {
                 Util.log(err);
-                return message.channel.send(Util.CreateEmbed('An error occurred, please try again later!', null, message.member));
+                return interaction.reply('An error occurred, please try again later!', { ephemeral: true, hideSource: true });
             }
     
             let min = 0;
@@ -241,10 +155,10 @@ class Util {
                     name: 'SPOILER_NSFW.gif' 
                 }]};
 
-                return message.channel.send(img);
+                return interaction.channel.send(img); //no attachments for interactions yet
             }
-
-            message.channel.send(Util.CreateEmbed(imgid == 'ngJQmxL' ? 'Germ approves!:white_check_mark:' : '', {image: rimg}, message.member));
+            
+            return interaction.reply(Util.Embed().setImage(rimg));
         });
     }
 
@@ -305,7 +219,7 @@ class Util {
        }} options
      * @param {Discord.GuildMember} member
      */
-    static CreateEmbed(title, options, member) {
+    static Embed(title, options, member) {
         if (!options) options = {};
         
         const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
@@ -370,30 +284,6 @@ class Util {
         }
 
         return array_of_arrays;
-    }
-
-    static GetRandomFile(dir) {
-        if (!fs.existsSync(dir)) return null;
-
-        let files = fs.readdirSync(dir);
-
-        if (files.length < 1) return null;
-
-        let attempts = 0;
-        let max_attempts = files.length;
-
-        do {
-            let file = files[Math.floor(Math.random() * files.length)];
-            let info = fs.statSync(path.join(dir, file));
-
-            if (info.isFile()) return file;
-            else files.remove(file);
-            attempts++;
-        }
-        //this prevents it from freezing the process if there are no viable files
-        while (attempts < max_attempts);
-
-        return null;
     }
 
     /**
@@ -469,7 +359,7 @@ class Util {
 
         const board = process.gideon.guilds.cache.get('595318490240385037').channels.cache.get('691639957835743292');
 
-        const starmsg = Util.CreateEmbed(null, {
+        const starmsg = Util.Embed(null, {
             author: {
                 name: reaction.message.author.tag,
                 icon: reaction.message.author.displayAvatarURL()
@@ -494,7 +384,7 @@ class Util {
             return;
         }
 
-        process.gideon.statuses.push({name: 's1', fetch: async () => { return {type: 'PLAYING', value: '@Gideon help | gideonbot.com'}; }});
+        process.gideon.statuses.push({name: 's1', fetch: async () => { return {type: 'WATCHING', value: 'DC Shows | gideonbot.com'}; }});
 
         process.gideon.statuses.push({name: 's2', fetch: async () => {
             let mbc = process.gideon.shard ? await process.gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? 0 : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(x => !x.user.bot).size').catch(ex => console.log(ex)) : !process.gideon.guilds.cache.get('595318490240385037') ? [0] : [process.gideon.guilds.cache.get('595318490240385037').members.cache.filter(x => !x.user.bot).size];
@@ -507,7 +397,7 @@ class Util {
             let guilds = process.gideon.shard ? await process.gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex)) : [process.gideon.guilds.cache.size];
             if (guilds) guilds = [].concat.apply([], guilds);
 
-            return {type: 'WATCHING', value: `${guilds.length} Guilds`};
+            return {type: 'WATCHING', value: `${guilds.length} Guilds | gideonbot.com`};
         }});
 
         this.CheckEpisodes();
@@ -611,7 +501,7 @@ class Util {
         if (member.guild.id !== '595318490240385037') return;
         const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
         const channel = process.gideon.guilds.cache.get('595318490240385037').channels.cache.get('700815626972823572');
-        const welcome = `Greetings Earth-Prime-ling ${member}!\nWelcome to the Time Vault<:timevault:686676561298063361>!\nIf you want full server access make sure to read <#595935345598529546>!\n${logos}`;
+        const welcome = `Greetings Earth-Prime-ling ${member}!\nWelcome to the Time Vault<:timevault:686676561298063361>!\nIf you want full server access make sure to read <#595935317631172608>!\n${logos}`;
         channel.send(welcome);
     }
 
@@ -649,10 +539,11 @@ class Util {
     
                     let props = await import(`./${file_path}`);
                     
-                    if (Array.isArray(props.help.name)) {
-                        for (let item of props.help.name) process.gideon.commands.set(item, props);
+                    if (props.help.debug) { //overwrite command id when debugging
+                        if (process.gideon.owner === '224617799434108928') props.help.id = '787650463909543946';
+                        else if (process.gideon.owner === '351871113346809860') props.help.id = '788743837094772736';
                     }
-                    else process.gideon.commands.set(props.help.name, props);
+                    process.gideon.commands.set(props.help.id, props);
             
                     let cmd_end = process.hrtime.bigint();
                     let took = (cmd_end - cmd_start) / BigInt('1000000');
@@ -714,7 +605,6 @@ class Util {
             legends: 'DC\'s Legends of Tomorrow',
             stargirl: 'Stargirl', 
             b_lightning: 'Black Lightning',
-            canaries: 'Canaries',
             supesnlois: 'Superman & Lois' //peepee moment
         };
 
@@ -748,7 +638,6 @@ class Util {
                 if (json.name === 'DC\'s Legends of Tomorrow') emote = '<:lotsymbol:686309757857824802>';
                 if (json.name === 'Stargirl') emote = '<:stargirl:668513166380105770>';
                 if (json.name === 'Black Lightning') emote = '<:blacklightning:607657873534746634>';
-                if (json.name === 'Green Arrow and the Canaries') emote = '<:canaries:634764613434474496>';
                 if (json.name === 'Superman & Lois') emote = '<:supermanlois:638489255169228830>';
 
                 obj.series_shortname = names[show];
@@ -887,7 +776,7 @@ class Util {
     
             else {
                 //we ignore messages that were created 2+ mins ago
-                if (Math.abs(m.createdAt - last) < 1000 * 60 * 2) {
+                if (Math.abs(m.createdAt - last) < 1000 * 60 * 2 && !m.content.startsWith('^')) {
                     let content = m.content;
     
                     if (m.cleverbot) {
@@ -908,10 +797,24 @@ class Util {
     
         try {
             let response = await this.GetCleverBotResponse(text, arr);
-            message.channel.send(response).then(sent => {
-                if (sent) sent.cleverbot = true;
-                message.cleverbot = true;
-            }).finally(() => message.channel.stopTyping(true));
+
+            const messages = await message.channel.messages.fetch({ limit: 3 });
+            const lastmsg = messages.filter(x => !x.author.bot).find(x => x.author.id !== message.author.id);
+
+            if (lastmsg) {
+                await Util.delay(8000);
+                message.reply(response).then(sent => {
+                    if (sent) sent.cleverbot = true;
+                    message.cleverbot = true;
+                }).finally(() => message.channel.stopTyping(true));
+            }
+            else {
+                await Util.delay(8000);
+                message.channel.send(response).then(sent => {
+                    if (sent) sent.cleverbot = true;
+                    message.cleverbot = true;
+                }).finally(() => message.channel.stopTyping(true));
+            }
         }
 
         catch (e) {

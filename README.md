@@ -33,8 +33,8 @@ Gideon is currently being owned and maintained by __adrifcastr.__
 Gideon is being developed by __adrifcastr__ and __MBR#0001.__
 In no particular order, I credit the following for their invaluable contributions:
 
-* __MBR#0001__ for development, testing & support.
-* __Klaus#5857__ for website development & server hosting.
+* __MBR#0001__ for development, support & hosting.
+* __Klaus#5857__ for website development.
 * __Stevenson Johnson__ for drawing the artwork.
 * __AceFire6__ for [arrowverse.info](https://arrowverse.info) and its [API](https://arrowverse.info/api).
 * __7coil__ for [#24](https://github.com/adrifcastr/Gideon/pull/24) and [#25](https://github.com/adrifcastr/Gideon/pull/25).
