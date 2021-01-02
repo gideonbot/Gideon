@@ -2,7 +2,7 @@
 * @param {Discord.Interaction} interaction
 */
 export async function run(interaction) {
-    const url = 'https://discord.com/api/oauth2/authorize?client_id=' + process.gideon.user.id + '&permissions=37088321&scope=bot&scope=applications.commands';
+    const url = 'https://gideonbot.com/invite' + process.gideon.user.id + '&permissions=37088321&scope=bot&scope=applications.commands';
     return interaction.reply(`[Invite me](<${url}>)`);       
 }
 
