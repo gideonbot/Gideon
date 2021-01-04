@@ -17,6 +17,7 @@ gideon.commands = new Discord.Collection();
 gideon.statuses = [];
 gideon.spamcount = new Map();
 gideon.cache = {};
+
 gideon.show_api_urls = {
     batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
     b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
@@ -342,11 +343,6 @@ gideon.on('guildMemberUpdate', async (oldMember, newMember) => {
     if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null);
     if (newMember.user.username !== oldMember.user.username) Util.Checks.NameCheck(null, newMember.user);
     if (oldMember.pending && !newMember.pending && !newMember.roles.cache.has('688430418466177082')) await newMember.roles.add('688430418466177082');
-});
-
-gideon.on('messageUpdate', async (oldMessage, newMessage) => {
-    if (newMessage.partial) await newMessage.fetch();
-    if (newMessage.editedAt) Util.MsgHandler.Handle(newMessage, Util);
 });
 
 gideon.on('commandRefused', (interaction, reason) => {
