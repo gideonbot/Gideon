@@ -340,11 +340,8 @@ gideon.on('guildBanAdd', (guild, user) => {
 });
 gideon.on('guildMemberUpdate', async (oldMember, newMember) => {
     if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null);
-    if (oldMember.isPending && !newMember.isPending && !newMember.roles.cache.has('688430418466177082')) await newMember.roles.add('688430418466177082');
-});
-
-gideon.on('userUpdate', (oldUser, newUser) => {
-    if (newUser.username !== oldUser.username) Util.Checks.NameCheck(null, newUser);
+    if (newMember.user.username !== oldMember.user.username) Util.Checks.NameCheck(null, newMember.user);
+    if (oldMember.pending && !newMember.pending && !newMember.roles.cache.has('688430418466177082')) await newMember.roles.add('688430418466177082');
 });
 
 gideon.on('messageUpdate', async (oldMessage, newMessage) => {
