@@ -5,8 +5,8 @@ import Discord from 'discord.js';
 import Util from './Util.js';
 
 const gideon = new Discord.Client({
-    intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES'],
-    allowedMentions: { parse: ['users', 'roles'], replied_user: true },
+    intents: 1543,
+    allowedMentions: { parse: ['users', 'roles'], repliedUser: true },
     partials: ['MESSAGE', 'REACTION'],
     restRequestTimeout: 25000
 });
@@ -17,6 +17,7 @@ gideon.commands = new Discord.Collection();
 gideon.statuses = [];
 gideon.spamcount = new Map();
 gideon.cache = {};
+
 gideon.show_api_urls = {
     batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
     b_lightning: 'http://api.tvmaze.com/shows/20683?embed=nextepisode',
@@ -340,16 +341,8 @@ gideon.on('guildBanAdd', (guild, user) => {
 });
 gideon.on('guildMemberUpdate', async (oldMember, newMember) => {
     if (newMember.nickname !== oldMember.nickname) Util.Checks.NameCheck(newMember, null);
-    if (oldMember.isPending && !newMember.isPending && !newMember.roles.cache.has('688430418466177082')) await newMember.roles.add('688430418466177082');
-});
-
-gideon.on('userUpdate', (oldUser, newUser) => {
-    if (newUser.username !== oldUser.username) Util.Checks.NameCheck(null, newUser);
-});
-
-gideon.on('messageUpdate', async (oldMessage, newMessage) => {
-    if (newMessage.partial) await newMessage.fetch();
-    if (newMessage.editedAt) Util.MsgHandler.Handle(newMessage, Util);
+    if (newMember.user.username !== oldMember.user.username) Util.Checks.NameCheck(null, newMember.user);
+    if (oldMember.pending && !newMember.pending && !newMember.roles.cache.has('688430418466177082')) await newMember.roles.add('688430418466177082');
 });
 
 gideon.on('commandRefused', (interaction, reason) => {
