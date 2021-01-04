@@ -33,7 +33,7 @@ class Interactions {
             process.gideon.setGuild.run(guildsettings);
         }
 
-        if (interaction.channel.id === guildsettings.chatchnl) return;
+        if (interaction.channel?.id === guildsettings.chatchnl) return;
 
         Util.Checks.Spamcounter(interaction.member.id);
 
