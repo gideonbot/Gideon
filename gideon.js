@@ -5,8 +5,8 @@ import Discord from 'discord.js';
 import Util from './Util.js';
 
 const gideon = new Discord.Client({
-    intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'DIRECT_MESSAGES'],
-    allowedMentions: { parse: ['users', 'roles'], replied_user: true },
+    intents: 1543,
+    allowedMentions: { parse: ['users', 'roles'], repliedUser: true },
     partials: ['MESSAGE', 'REACTION'],
     restRequestTimeout: 25000
 });
