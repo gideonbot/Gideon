@@ -8,6 +8,7 @@ class Interactions {
      * @param {Discord.Interaction} interaction 
      */
     static async Handle(interaction, Util) {
+        if (!interaction.member) await interaction.member.fetch();
         if (Util.Checks.IBU(interaction)) return; //check if user is blacklisted, if yes, return
         Util.Checks.LBG(interaction.member.guild, Util); //check if guild is blacklisted, if yes, leave
 
