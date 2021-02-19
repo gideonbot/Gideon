@@ -5,7 +5,6 @@ export const commands = [
     '!cvm',
     '!eggs',
     '!news',
-    '!prefix !',
     '!restore',
     '!slowmode 1',
     '!devmode',

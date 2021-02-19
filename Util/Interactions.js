@@ -22,7 +22,6 @@ class Interactions {
         if (!guildsettings) {
             guildsettings = {
                 guild: interaction.member.guild.id,
-                prefix: '!',
                 cvmval: 0,
                 abmval: 0,
                 eastereggs: 0,

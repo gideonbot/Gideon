@@ -264,7 +264,6 @@ gideon.on('guildCreate', async guild => {
     if (!currentguild) {
         currentguild = {
             guild: guild.id,
-            prefix: '!',
             cvmval: 0,
             abmval: 0,
             eastereggs: 0,
