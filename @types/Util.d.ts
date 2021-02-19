@@ -46,6 +46,7 @@ declare module "discord.js" {
     interface Client {
         WSClient: WSClient;
         commands: Discord.Collection<string, Command>;
+        events: Discord.Collection<string, Event>;
         owner: string;
         listening: string[];
         spamcount: Map;
@@ -151,6 +152,13 @@ interface Command {
         bot_perms: string[];
     },
     run: (interaction: Discord.Interaction, args: object[]) => void;
+}
+
+interface Event {
+    name: string;
+    once?: boolean;
+    process?: boolean
+    run: (client: Discord.Client, args: string[]) => void;
 }
 
 interface EpisodeInfo {
