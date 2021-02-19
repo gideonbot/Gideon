@@ -35,7 +35,6 @@ export async function run(interaction, args) {
         if (!gb) {
             gb = {
                 guild: id,
-                prefix: '!',
                 cvmval: 0,
                 abmval: 1,
                 eastereggs: 0,

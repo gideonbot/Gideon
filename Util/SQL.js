@@ -28,7 +28,7 @@ class SQL {
 
         const guilddb = sql.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'guilds\';').get();
         if (!guilddb['count(*)']) {
-            sql.prepare('CREATE TABLE guilds (guild TEXT PRIMARY KEY, prefix TEXT, cvmval BIT, abmval BIT, eastereggs BIT, blacklist BIT, chatchnl TEXT, gpd BIT);').run();
+            sql.prepare('CREATE TABLE guilds (guild TEXT PRIMARY KEY, cvmval BIT, abmval BIT, eastereggs BIT, blacklist BIT, chatchnl TEXT, gpd BIT);').run();
             sql.prepare('CREATE UNIQUE INDEX idx_guilds_id ON guilds (guild);').run();
             sql.pragma('synchronous = 1');
             sql.pragma('journal_mode = wal');
@@ -50,7 +50,7 @@ class SQL {
         process.gideon.setUser = sql.prepare('INSERT OR REPLACE INTO users (id, trmodeval, blacklist) VALUES (@id, @trmodeval, @blacklist);');
     
         process.gideon.getGuild = sql.prepare('SELECT * FROM guilds WHERE guild = ?');
-        process.gideon.setGuild = sql.prepare('INSERT OR REPLACE INTO guilds (guild, prefix, cvmval, abmval, eastereggs, blacklist, chatchnl, gpd) VALUES (@guild, @prefix, @cvmval, @abmval, @eastereggs, @blacklist, @chatchnl, @gpd);');
+        process.gideon.setGuild = sql.prepare('INSERT OR REPLACE INTO guilds (guild, cvmval, abmval, eastereggs, blacklist, chatchnl, gpd) VALUES (@guild, @cvmval, @abmval, @eastereggs, @blacklist, @chatchnl, @gpd);');
 
         process.gideon.getStat = sql.prepare('SELECT * FROM stats WHERE id = ?');
         process.gideon.setStat = sql.prepare('INSERT OR REPLACE INTO stats (id, value) VALUES (@id, @value);');

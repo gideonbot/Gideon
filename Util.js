@@ -561,6 +561,44 @@ class Util {
     }
 
     /**
+     * Load events
+     */
+    static LoadEvents() {
+        let start = process.hrtime.bigint();
+    
+        recursive('./events', async (err, files) => {
+            if (err) {
+                Util.log('Error while reading events:\n' + err);
+            }
+        
+            let jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
+            if (jsfiles.length < 1) {
+                console.log('No events to load!');
+            }
+    
+            console.log(`Found ${jsfiles.length} events`);
+    
+            for (let file_path of jsfiles) {
+                let cmd_start = process.hrtime.bigint();
+    
+                let props = await import(`./${file_path}`);
+                    
+                process.gideon.events.set(props.default.name, props.default);
+            
+                let cmd_end = process.hrtime.bigint();
+                let took = (cmd_end - cmd_start) / BigInt('1000000');
+            
+                console.log(`${Util.normalize(jsfiles.indexOf(file_path) + 1)} - ${file_path} loaded in ${took}ms`);
+            }
+        
+            let end = process.hrtime.bigint();
+            let took = (end - start) / BigInt('1000000');
+            console.log(`All events loaded in ${took}ms`);
+
+        });
+    }
+
+    /**
      * Parse Snowflakes
      * @param {string} input
      */

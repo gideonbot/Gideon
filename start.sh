@@ -1,1 +1,1 @@
-nodemon .
+npm i --prefer-offline --no-audit && nodemon .
