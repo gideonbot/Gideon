@@ -106,22 +106,6 @@ class Checks {
 
         if (ids.includes(message.channel.id)) return; //exclude certain channels
 
-        const lowercaseContent = message.content.toLowerCase();
-
-        // Find the prefix that was used
-        let customprefix = process.gideon.getGuild.get(message.guild.id);
- 
-        const usedCustom = lowercaseContent.startsWith(customprefix.prefix.toLowerCase());
-        let usedPrefix = Util.config.prefixes.find(prefix => lowercaseContent.startsWith(prefix.toLowerCase()));
-        if (usedCustom) usedPrefix = customprefix.prefix;
-        
-        let args = '';
-
-        if (!usedPrefix) args = message.content.split(' ').map(x => x.trim()).filter(x => x);
-        else args = message.content.slice(usedPrefix.length).trim().split(' ');
-
-        if (lowercaseContent.startsWith(usedPrefix) && !args[5]) return; //exclude bot cmds from filter
-
         let plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
 
         // eslint-disable-next-line no-useless-escape
@@ -359,7 +343,6 @@ class Checks {
         if (bots > 25) {
             const gb = {
                 guild: guild.id,
-                prefix: '!',
                 cvmval: 0,
                 abmval: 0,
                 eastereggs: 0,

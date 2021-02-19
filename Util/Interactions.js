@@ -8,6 +8,7 @@ class Interactions {
      * @param {Discord.Interaction} interaction 
      */
     static async Handle(interaction, Util) {
+        if (!interaction.member) await interaction.member.fetch();
         if (Util.Checks.IBU(interaction)) return; //check if user is blacklisted, if yes, return
         Util.Checks.LBG(interaction.member.guild, Util); //check if guild is blacklisted, if yes, leave
 
@@ -21,7 +22,6 @@ class Interactions {
         if (!guildsettings) {
             guildsettings = {
                 guild: interaction.member.guild.id,
-                prefix: '!',
                 cvmval: 0,
                 abmval: 0,
                 eastereggs: 0,
@@ -33,7 +33,7 @@ class Interactions {
             process.gideon.setGuild.run(guildsettings);
         }
 
-        if (interaction.channel.id === guildsettings.chatchnl) return;
+        if (interaction.channel?.id === guildsettings.chatchnl) return;
 
         Util.Checks.Spamcounter(interaction.member.id);
 
@@ -133,6 +133,7 @@ class Interactions {
         }
         catch (e) {
             if (command.help.id === '786979784860893196') return interaction.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true, hideSource: true });
+            else if (command.help.id === '787027091098173451') return interaction.reply('An error occurred while processing your request:```\n' + e + '```\nIf you see this error, this means that the Fandom Wiki API is still fucked and you should complain the shit out of their [support request form](<https://fandom.zendesk.com/hc/en-us/requests/new>) and their [twitter](<https://twitter.com/getfandom>) and tell them to fix their really really awful API endpoints.\nSorry lads, can\'t do more then tell you what\'s up.', { ephemeral: true, hideSource: true });
             Util.log(`An error occurred while running ${interaction.commandName}:\n\n\`\`\`\n${e.stack}\n\`\`\``);
             return interaction.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true, hideSource: true });
         } 
