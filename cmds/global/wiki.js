@@ -63,7 +63,7 @@ export async function run(interaction, args) {
 
     const search = await Util.fetchJSON(search_api);
 
-    if (search && search.items && search.items.length === 1) search_term = search.items[0].title;
+    if (search?.items?.length === 1) search_term = search.items[0].title;
 
     const api = encodeURI(`https://${wiki.url}/api/v1/Articles/Details?ids=50&titles=${search_term}&abstract=500&width=200&height=200`);
 

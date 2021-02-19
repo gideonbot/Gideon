@@ -6,7 +6,7 @@ export default {
     async run(gideon) {
         const app = process.env.CI ? {owner: {id: Util.GenerateSnowflake()}} : await gideon.fetchApplication().catch(ex => Util.log(ex));
 
-        if (app && app.owner) gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
+        if (app?.owner) gideon.owner = app.owner.ownerID ? app.owner.ownerID : app.owner.id;
     
         Util.SQL.InitDB();
         await Util.InitCache();
@@ -28,5 +28,7 @@ export default {
         setInterval(Util.SQLBkup, twodays);
     
         console.log('Ready!');
+
+        if (process.env.CI) Util.CITest();
     }
 };

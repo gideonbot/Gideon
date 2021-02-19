@@ -13,7 +13,7 @@ export async function run(interaction) {
     else {
         leaderboard.setDescription(top10.map((data, i) => {
             let guild = process.gideon.guilds.cache.get(data.guild);
-            let user = guild && guild.members.cache.get(data.user) ? guild.members.cache.get(data.user).user.tag : data.user;
+            let user = guild?.members?.cache?.get?.(data.user) ?? data.user;
             return '**#' + (i + 1) + '** - ' + user + ' in `' + (guild ? guild.name : 'Unknown') + '`: **' + data.points + '** ' + (data.points != 1 ? 'point' + 's' : 'point');
         }).join('\n'));
     }

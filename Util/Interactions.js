@@ -39,7 +39,7 @@ class Interactions {
 
         const spamcount = process.gideon.spamcount.get(interaction.member.id);
    
-        if (spamcount && spamcount.usages + 1 > 10 && !process.env.CI) {
+        if (spamcount?.usages + 1 > 10 && !process.env.CI) {
             let ub = process.gideon.getUser.get(interaction.member.id);
 
             if (!ub) ub = {
@@ -63,7 +63,7 @@ class Interactions {
         } 
 
         if (![process.gideon.owner, '351871113346809860'].includes(interaction.member.user.id)) {
-            if (command.help.user_perms && command.help.user_perms.length > 0) {
+            if (command.help?.user_perms?.length > 0) {
                 let missingperms = [];
 
                 for (let perm of command.help.user_perms) {
@@ -76,7 +76,7 @@ class Interactions {
                 }
             }   
 
-            if (command.help.bot_perms && command.help.bot_perms.length > 0) {
+            if (command.help?.bot_perms?.length > 0) {
                 let missingperms = [];
                 for (let perms of command.help.bot_perms) {
                     if (!interaction.channel.permissionsFor(interaction.guild.me).has(perms)) missingperms.push(perms);
@@ -91,7 +91,7 @@ class Interactions {
                 }
             }
             
-            if (command.help.roles && command.help.roles.length > 0) {
+            if (command.help?.roles?.length > 0) {
                 let missingroles = [];
                 let rolenames = [];
     
