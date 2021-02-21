@@ -43,7 +43,6 @@ gideon.dc_show_urls = {
 
 Util.LoadEvents().then(() => {
     for (const event of gideon.events.values()) {
-        console.log('subscribing ' + event.name);
         if (event.process) {
             if (event.once) process.once(event.name, (...args) => event.run(...args));
             else process.on(event.name, (...args) => event.run(...args));
@@ -53,16 +52,15 @@ Util.LoadEvents().then(() => {
             else gideon.on(event.name, (...args) => event.run(...args, gideon));
         }
     }
-});
 
-if (process.env.CLIENT_TOKEN) {
-    gideon.login(process.env.CLIENT_TOKEN);
-    console.log('logged in?');
-}
-else {
-    console.log('No client token!');
-    process.exit(1);
-}
+    if (process.env.CLIENT_TOKEN) {
+        gideon.login(process.env.CLIENT_TOKEN);
+    }
+    else {
+        console.log('No client token!');
+        process.exit(1);
+    }
+});
 
 setTimeout(() => {
     if (process.env.CI) {
