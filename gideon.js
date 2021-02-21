@@ -41,20 +41,26 @@ gideon.dc_show_urls = {
     greenlantern: 'http://api.tvmaze.com/shows/44776?embed=nextepisode'
 };
 
-Util.LoadEvents();
+Util.LoadEvents().then(() => {
+    for (const event of gideon.events.values()) {
+        if (event.process) {
+            if (event.once) process.once(event.name, (...args) => event.run(...args));
+            else process.on(event.name, (...args) => event.run(...args));
+        }
+        else {
+            if (event.once) gideon.once(event.name, (...args) => event.run(...args, gideon));
+            else gideon.on(event.name, (...args) => event.run(...args, gideon));
+        }
+    }
 
-for (const event of gideon.events) {
-    if (event.process) process.on(event.name, (...args) => event.run(...args));
-    if (event.process && event.once) process.once(event.name, (...args) => event.run(...args));
-    if (event.once && !event.process) gideon.once(event.name, (...args) => event.run(...args, gideon));
-    else gideon.on(event.name, (...args) => event.run(...args, gideon));
-}
-
-if (process.env.CLIENT_TOKEN) gideon.login(process.env.CLIENT_TOKEN);
-else {
-    console.log('No client token!');
-    process.exit(1);
-}
+    if (process.env.CLIENT_TOKEN) {
+        gideon.login(process.env.CLIENT_TOKEN);
+    }
+    else {
+        console.log('No client token!');
+        process.exit(1);
+    }
+});
 
 setTimeout(() => {
     if (process.env.CI) {

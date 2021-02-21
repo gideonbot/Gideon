@@ -27,13 +27,13 @@
     "moment": "^2.29.1",
     "node-fetch": "^2.6.1",
     "opensubtitles-api": "^5.1.2",
-    "pretty-error": "^2.1.2",
+    "pretty-error": "^3.0.3",
     "recursive-readdir": "^2.2.2",
-    "string-similarity": "^4.0.3",
-    "ws": "^7.4.2",
+    "string-similarity": "^4.0.4",
+    "ws": "^7.4.3",
     "zip-promise": "^1.1.1"
   },
   "devDependencies": {
-    "eslint": "^7.17.0"
+    "eslint": "^7.20.0"
   }
 }

@@ -40,7 +40,7 @@ class Checks {
 
             const result = message.content.match(ytrg);
 
-            if (result && result[3]) {
+            if (result?.[3]) {
                 const google_api_key = process.env.GOOGLE_API_KEY;
 
                 if (!google_api_key) return reject('No google API key');
@@ -50,7 +50,7 @@ class Checks {
                 try {
                     const body = await Util.fetchJSON(api);
 
-                    const channel_id = body && body.items && body.items[0] && body.items[0].snippet && body.items[0].snippet.channelId ? body.items[0].snippet.channelId : null;
+                    const channel_id = body?.items?.[0]?.snippet?.channelId ?? null;
                     if (!channel_id) return reject();
 
                     if (cids.includes(channel_id)) return resolve({match: true, content: '`' + message.content + '`'});
@@ -381,7 +381,7 @@ class Checks {
             const noascii = /[^\x00-\x7F]+/gi;
             const filter = new Filter();
 
-            if (member.nickname && member.nickname.match(noascii)) {
+            if (member.nickname?.match?.(noascii)) {
                 let ascii = anyAscii(member.nickname);
                 if (ascii.length > 32) ascii = 'nickname';
                 await member.setNickname(ascii);
@@ -394,7 +394,7 @@ class Checks {
             }
 
             if (!member.nickname) {
-                if (member.user.username && member.user.username.match(noascii)) {
+                if (member.user?.username?.match(noascii)) {
                     let ascii = anyAscii(member.user.username);
                     if (ascii.length > 32) ascii = 'nickname';
                     await member.setNickname(ascii);
@@ -416,7 +416,7 @@ class Checks {
             const noascii = /[^\x00-\x7F]+/gi;
             const filter = new Filter();
 
-            if (newUser.username && newUser.username.match(noascii)) {
+            if (newUser.username?.match?.(noascii)) {
                 let ascii = anyAscii(newUser.username);
                 if (ascii.length > 32) ascii = 'nickname';
                 await member.setNickname(ascii);
@@ -437,7 +437,7 @@ class Checks {
     static async AccCheck(member, Util) {
         const flagged = process.gideon.getUser.get(member.id);
 
-        if (flagged && flagged.blacklist === 1) {
+        if (flagged?.blacklist === 1) {
             const guildowner = await member.guild.members.fetch(member.guild.ownerID);
             const dmstring = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of your guild \`(${member.guild.name})\`!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisement\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n- Spamming NSFW media\n\`\`\`\nWe advise to ban this user.`;
             const string = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of this guild!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisement\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n- Spamming NSFW media\n\`\`\`\nWe advise to notify the guild owner (<@${member.guild.ownerID}>).`;
@@ -462,7 +462,7 @@ class Checks {
         const mention = message.mentions.users.first();
         if (mention) {
             const badmention = process.gideon.getUser.get(mention.id);
-            if (badmention && badmention.blacklist === 1) return true;
+            if (badmention?.blacklist === 1) return true;
             else return null;
         }
         else return null;

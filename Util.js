@@ -65,7 +65,7 @@ class Util {
      * @returns {string} The beautifully formatted string
      */
     static secondsToDifferenceString(seconds_input, { enableSeconds = true }) {
-        if (!seconds_input || typeof (seconds_input) !== 'number') return 'Unknown';
+        if (!seconds_input || typeof seconds_input !== 'number') return 'Unknown';
 
         let seconds = Math.floor(seconds_input % 60);
         seconds_input = seconds_input / 60;
@@ -115,7 +115,7 @@ class Util {
 
         let client = new Discord.WebhookClient(split[0], split[1]);
 
-        if (typeof(message) == 'string') {
+        if (typeof message == 'string') {
             for (let msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
                 client.send(msg, { avatarURL: Util.config.avatar, username: 'Gideon-Logs', files: files });
             }
@@ -191,7 +191,7 @@ class Util {
     static fetchJSON(url) {
         // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
-            if (!url || typeof(url) != 'string') return reject('No URL');
+            if (!url || typeof url != 'string') return reject('No URL');
 
             try {
                 let res = await fetch(url);
@@ -225,28 +225,137 @@ class Util {
         const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
 
         const embed = new Discord.MessageEmbed();
-        if (member && member.guild.id === '595318490240385037' && member.premiumSince) embed.setColor('#CB45CC');
+        if (member?.guild?.id === '595318490240385037' && member.premiumSince) {
+            embed.addField(`<:boost:678746359549132812>\`${member.user.tag}\` you're awesome!<:boost:678746359549132812>`, `<:boost:678746359549132812>Nitro boosting Time Vault<:timevault:686676561298063361> since \`${member.premiumSince.toDateString()}\`<:boost:678746359549132812>`);
+            embed.setColor('#CB45CC');
+        }
         else embed.setColor('#2791D3');
         embed.setFooter(Util.config.footer, Util.config.avatar);
 
-        if (title && typeof(title) == 'string') embed.setTitle(title);
-        if (options.description && typeof(options.description) == 'string') embed.setDescription(options.description + `\n${logos}`);
+        if (title && typeof title == 'string') embed.setTitle(title);
+        if (options.description && typeof options.description == 'string') embed.setDescription(options.description + `\n${logos}`);
         if (options.color) embed.setColor(options.color);
-        if (options.image && typeof(options.image) == 'string') embed.setImage(options.image);
-        if (options.url && typeof(options.url) == 'string') embed.setURL(options.url);
-        if (options.timestamp && (typeof(options.timestamp) == 'number' || options.timestamp instanceof Date)) embed.setTimestamp(options.timestamp);
-        if (options.thumbnail && typeof(options.thumbnail) == 'string') embed.setThumbnail(options.thumbnail);
-        if (options.footer && options.footer.text && !Object.values(options.footer).some(x => typeof(x) != 'string')) embed.setFooter(options.footer.text, options.footer.icon);
-        if (options.author && options.author.name && !Object.values(options.author).some(x => typeof(x) != 'string')) embed.setAuthor(options.author.name, options.author.icon, options.author.url);
+        if (options.image && typeof options.image == 'string') embed.setImage(options.image);
+        if (options.url && typeof options.url == 'string') embed.setURL(options.url);
+        if (options.timestamp && (typeof options.timestamp == 'number' || options.timestamp instanceof Date)) embed.setTimestamp(options.timestamp);
+        if (options.thumbnail && typeof options.thumbnail == 'string') embed.setThumbnail(options.thumbnail);
+        if (options.footer?.text && !Object.values(options.footer).some(x => typeof x != 'string')) embed.setFooter(options.footer.text, options.footer.icon);
+        if (options.author?.name && !Object.values(options.author).some(x => typeof x != 'string')) embed.setAuthor(options.author.name, options.author.icon, options.author.url);
         if (options.fields && Array.isArray(options.fields)) {
             if (!options.fields.some(x => !x.name || !x.value)) {
                 embed.fields = options.fields.map(x => ({name: x.name, value: x.value, inline: x.inline}));
             }
         }
 
-        if (member && member.guild.id === '595318490240385037' && member.premiumSince) embed.addField(`<:boost:678746359549132812>\`${member.user.tag}\` you're awesome!<:boost:678746359549132812>`, `<:boost:678746359549132812>Nitro boosting Time Vault<:timevault:686676561298063361> since \`${member.premiumSince.toDateString()}\`<:boost:678746359549132812>`);
-
         return embed;
+    }
+
+    static async CITest() {
+        console.log('Starting CI test');
+
+        process.gideon.options.http.api = 'https://gideonbot.com/api/dump';
+
+        let tests = await import('./tests.js');
+
+        const channel_id = Util.GenerateSnowflake();
+        const guild_id = Util.GenerateSnowflake();
+
+        const user = {
+            id: process.gideon.owner,
+            username: 'Test',
+            discriminator: '0001',
+            avatar: null,
+            bot: false,
+            system: false,
+            flags: 64
+        };
+
+        const guild = new Discord.Guild(process.gideon, {
+            name: 'Test',
+            region: 'US',
+            member_count: 2,
+            large: false,
+            features: [],
+            embed_enabled: true,
+            premium_tier: 0,
+            verification_level: 1,
+            explicit_content_filter: 1,
+            mfa_level: 0,
+            joined_at: new Date().toISOString(),
+            default_message_notifications: 0,
+            system_channel_flags: 0,
+            id: guild_id,
+            unavailable: false,
+            roles: [
+                {
+                    id: guild_id,
+                    name: '@everyone',
+                    color: 3447003,
+                    hoist: true,
+                    position: 1,
+                    permissions: 66321471,
+                    managed: false,
+                    mentionable: false
+                }
+            ],
+            members: [
+                {
+                    user: process.gideon.user.toJSON(),
+                    nick: null,
+                    roles: [],
+                    joined_at: new Date().toISOString(),
+                    deaf: false,
+                    mute: false
+                },
+                {
+                    user: user,
+                    nick: null,
+                    roles: [],
+                    joined_at: new Date().toISOString(),
+                    deaf: false,
+                    mute: false
+                }
+            ],
+            owner_id: user.id
+        });
+
+        const channel = new Discord.TextChannel(guild, {
+            nsfw: false,
+            name: 'test-channel',
+            type: 0,
+            id: channel_id
+        });
+
+        for (let item of tests.commands) {
+            const data = {
+                id: Util.GenerateSnowflake(),
+                channel_id: channel_id,
+                type: 0,
+                content: item,
+                author: user,
+                pinned: false,
+                tts: false,
+                timestamp: new Date().toISOString(),
+                flags: 0,
+            };
+
+            let msg = new Discord.Message(process.gideon, data, channel);
+            process.gideon.emit('message', msg);
+        }
+
+        //We need to wait for all requests to go through
+        await Util.delay(5e3);
+
+        // eslint-disable-next-line no-constant-condition
+        while (true) {
+            console.log('Checking if all requests are over...');
+            if (!process.gideon.rest.handlers.array().map(x => x._inactive).some(x => !x)) break;
+            await Util.delay(2e3);
+        }
+
+        console.log('Run successful, exiting with code 0');
+        process.gideon.destroy();
+        process.exit();
     }
 
     /**
@@ -266,7 +375,7 @@ class Util {
      * @param {number} num 
      */
     static normalize(num) {
-        if (num == undefined || typeof(num) != 'number') return '';
+        if (num == undefined || typeof num != 'number') return '';
 
         return num.toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping: false});
     }
@@ -564,37 +673,41 @@ class Util {
      * Load events
      */
     static LoadEvents() {
-        let start = process.hrtime.bigint();
+        return new Promise((resolve, reject) => {
+            let start = process.hrtime.bigint();
     
-        recursive('./events', async (err, files) => {
-            if (err) {
-                Util.log('Error while reading events:\n' + err);
-            }
-        
-            let jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
-            if (jsfiles.length < 1) {
-                console.log('No events to load!');
-            }
-    
-            console.log(`Found ${jsfiles.length} events`);
-    
-            for (let file_path of jsfiles) {
-                let cmd_start = process.hrtime.bigint();
-    
-                let props = await import(`./${file_path}`);
-                    
-                process.gideon.events.set(props.default.name, props.default);
+            recursive('./events', async (err, files) => {
+                if (err) {
+                    Util.log('Error while reading events:\n' + err);
+                    return reject(err);
+                }
             
-                let cmd_end = process.hrtime.bigint();
-                let took = (cmd_end - cmd_start) / BigInt('1000000');
-            
-                console.log(`${Util.normalize(jsfiles.indexOf(file_path) + 1)} - ${file_path} loaded in ${took}ms`);
-            }
+                let jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
+                if (jsfiles.length < 1) {
+                    console.log('No events to load!');
+                    return reject('No events!');
+                }
         
-            let end = process.hrtime.bigint();
-            let took = (end - start) / BigInt('1000000');
-            console.log(`All events loaded in ${took}ms`);
-
+                console.log(`Found ${jsfiles.length} events`);
+        
+                for (let file_path of jsfiles) {
+                    let start = process.hrtime.bigint();
+        
+                    let props = await import(`./${file_path}`);
+                        
+                    process.gideon.events.set(props.default.name, props.default);
+                
+                    let end = process.hrtime.bigint();
+                    let took = (end - start) / BigInt('1000000');
+                
+                    console.log(`${Util.normalize(jsfiles.indexOf(file_path) + 1)} - ${file_path} loaded in ${took}ms`);
+                }
+            
+                let end = process.hrtime.bigint();
+                let took = (end - start) / BigInt('1000000');
+                console.log(`All events loaded in ${took}ms`);
+                resolve();
+            });
         });
     }
 
