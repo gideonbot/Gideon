@@ -251,7 +251,7 @@ class Util {
     }
 
     static async CITest() {
-        console.log('Starting CI test'); //it may be a good idea to move the test somewhere else
+        console.log('Starting CI test');
 
         process.gideon.options.http.api = 'https://gideonbot.com/api/dump';
 
@@ -286,16 +286,18 @@ class Util {
             system_channel_flags: 0,
             id: guild_id,
             unavailable: false,
-            roles: [{
-                id: guild_id,
-                name: '@everyone',
-                color: 3447003,
-                hoist: true,
-                position: 1,
-                permissions: 66321471,
-                managed: false,
-                mentionable: false
-            }],
+            roles: [
+                {
+                    id: guild_id,
+                    name: '@everyone',
+                    color: 3447003,
+                    hoist: true,
+                    position: 1,
+                    permissions: 66321471,
+                    managed: false,
+                    mentionable: false
+                }
+            ],
             members: [
                 {
                     user: process.gideon.user.toJSON(),
@@ -342,10 +344,10 @@ class Util {
         }
 
         //We need to wait for all requests to go through
-        await Util.delay(10e3);
+        await Util.delay(5e3);
 
         // eslint-disable-next-line no-constant-condition
-        while (1 == 1) {
+        while (true) {
             console.log('Checking if all requests are over...');
             if (!process.gideon.rest.handlers.array().map(x => x._inactive).some(x => !x)) break;
             await Util.delay(2e3);
