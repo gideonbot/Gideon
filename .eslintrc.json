@@ -4,7 +4,9 @@
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "extends": ["plugin:@typescript-eslint/recommended", "eslint:recommended"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly",
