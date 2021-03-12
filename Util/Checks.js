@@ -307,10 +307,11 @@ class Checks {
         if (message.member.hasPermission('MANAGE_MESSAGES')) return;
 
         // eslint-disable-next-line no-useless-escape
-        const invregex = /discord(?:\.com|app\.com|\.gg)\/(?:invite\/)?([a-zA-Z0-9\-]{2,32})/g;
+        const invregex = /discord(?:\.com|\.gg)\/(?:invite\/)?([a-zA-Z0-9\-]{2,32})/g;
+        const urlRegex = /https:\/\/((canary|ptb).)?discord.com\/channels\/(\d{18})\/(\d{18})\/(\d{18})/g;
         const admin = process.gideon.guilds.cache.get('595318490240385037').roles.cache.get('596402255066955783');
 
-        if (message.content.match(invregex)) {
+        if (message.content.match(invregex) && !message.content.match(urlRegex)) {
             const invcode = message.content.match(invregex)[0];
             const invite = await process.gideon.fetchInvite(invcode).catch(ex => console.log(ex));
           
