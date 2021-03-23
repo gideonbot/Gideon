@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "moduleResolution": "node",
+        "module": "ES2015",
+        "removeComments": false,
+        "alwaysStrict": true,
+        "pretty": true,
+        "target": "ES2019",
+        "lib": ["ESNext"],
+        "sourceMap": true,
+        "inlineSources": true,
+        "noEmitHelpers": true,
+        "importHelpers": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "sourceRoot": "./src",
+        "outDir": "./dist",       
+        "baseUrl": "./",
+        "typeRoots": ["node_modules/@types"]
+    }
+}
