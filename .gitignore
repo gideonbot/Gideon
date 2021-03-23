@@ -1,3 +1,4 @@
 .env
 .vscode
+tsconfig.json
 node_modules/

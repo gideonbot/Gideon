@@ -36,6 +36,10 @@
     "zip-promise": "^1.1.1"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^5.4.1",
+    "@types/node-fetch": "^2.5.8",
+    "@types/recursive-readdir": "^2.2.0",
+    "@types/ws": "^7.4.0",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "eslint": "^7.20.0",

@@ -161,25 +161,6 @@ interface Event {
     run: (client: Discord.Client, args: string[]) => void;
 }
 
-interface EpisodeInfo {
-    title: string;
-    
-    series_shortname: string;
-    series_name: string;
-    channel: string;
-
-    embed: {
-        name: string;
-        value(): string;
-    }
-
-    airstamp: Date;
-    expires_at: Date;
-    
-    season: string;
-    number: string;
-}
-
 interface VoiceInfoResponse {
     msg_id: string;
     _text: string;
