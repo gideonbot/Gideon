@@ -72,10 +72,10 @@ interface Event {
     run: () => void;
 }
 
-interface Cache {
-    nxeps: Discord.Collection<string, EpisodeInfo>;
-    dceps: Discord.Collection<string, EpisodeInfo>;
-    jokes: Discord.Collection<string, Discord.Collection<number, string>>;
+interface GideonCache {
+    nxeps?: Discord.Collection<string, EpisodeInfo>;
+    dceps?: Discord.Collection<string, EpisodeInfo>;
+    jokes?: Discord.Collection<string, Discord.Collection<number, string>>;
 }
 
 declare global {
@@ -96,7 +96,7 @@ declare module 'discord.js' {
         owner: string;
         listening: string[];
         spamcount: Map<string, number>;
-        cache: Cache;
+        cache: GideonCache;
         show_api_urls: Record<string, string>;
         dc_show_urls: Record<string, string>;
         statuses: {name: string, fetch: (() => Promise<{type: Discord.ActivityType, value: string}>)}[];

@@ -1,8 +1,8 @@
-import Discord from "discord.js";
-import MsgHandler from './Util/MessageHandler'
-import Checks from './Util/Checks'
-import SQL from './Util/SQL'
-import BetterSqlite3 from "better-sqlite3";
+import Discord from 'discord.js';
+import MsgHandler from './Util/MessageHandler';
+import Checks from './Util/Checks';
+import SQL from './Util/SQL';
+import BetterSqlite3 from 'better-sqlite3';
 import WSClient from './WSClient';
 
 export const config: Config;
@@ -38,7 +38,7 @@ export function AddInfo(show: string, json: any): Promise<void>;
 export function normalize(num: number): string;
 export function Embed(title: string, options?: EmbedOptions, member?: Discord.GuildMember): Discord.MessageEmbed;
 
-declare module "discord.js" {
+declare module 'discord.js' {
     interface Guild {
         last_jokes: {category: string, id: number}[];
     }
