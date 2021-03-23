@@ -1,1 +1,1 @@
-npm i --prefer-offline --no-audit && nodemon .
+npm i --prefer-offline --no-audit && cd dist && nodemon .
