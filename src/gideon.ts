@@ -44,8 +44,7 @@ gideon.dc_show_urls = {
 
 Util.LoadEvents().then(() => {
     interface GideonEvent {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        name: any,
+        name: string,
         process?: boolean,
         once?: boolean,
         // eslint-disable-next-line no-unused-vars
@@ -56,6 +55,7 @@ Util.LoadEvents().then(() => {
     for (event of gideon.events.values()) {
         if (event.process) {
             if (event.once) {
+                // @ts-expect-error dis is valid bro
                 process.once(event.name, (...args) => event.run(...args));
             } 
             else process.on(event.name, (...args) => event.run(...args));
