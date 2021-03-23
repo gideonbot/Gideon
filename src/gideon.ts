@@ -48,7 +48,7 @@ Util.LoadEvents().then(() => {
         process?: boolean,
         once?: boolean,
         // eslint-disable-next-line no-unused-vars
-        run(...args: unknown[]): unknown
+        run(...args: unknown[]): void
     }
 
     let event: GideonEvent;
