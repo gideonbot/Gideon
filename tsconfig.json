@@ -2,7 +2,7 @@
     "compilerOptions": {
         "strict": true,
         "moduleResolution": "node",
-        "module": "ES2015",
+        "module": "ES2020",
         "removeComments": false,
         "alwaysStrict": true,
         "pretty": true,
