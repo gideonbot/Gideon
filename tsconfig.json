@@ -17,6 +17,6 @@
         "sourceRoot": "./src",
         "outDir": "./dist",       
         "baseUrl": "./",
-        "typeRoots": ["node_modules/@types"]
+        "typeRoots": ["node_modules/@types", "src/@types"]
     }
 }

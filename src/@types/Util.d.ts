@@ -50,7 +50,7 @@ declare module 'discord.js' {
         owner: string;
         listening: string[];
         spamcount: Map;
-        cache: Cache;
+        cache: GideonCache | unknown;
         show_api_urls: Record<string, string>;
         dc_show_urls: Record<string, string>;
         statuses: {name: string, fetch: (() => Promise<{type: Discord.ActivityType, value: string}>)}[];
@@ -93,7 +93,7 @@ interface Database {
     Close(): void;
 }
 
-interface Cache {
+interface GideonCache {
     nxeps: Discord.Collection<string, EpisodeInfo>;
     dceps: Discord.Collection<string, EpisodeInfo>;
     jokes: Discord.Collection<string, Discord.Collection<number, string>>;

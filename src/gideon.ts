@@ -3,6 +3,7 @@ import PrettyError from 'pretty-error';
 PrettyError.start().withoutColors();
 import Discord from 'discord.js';
 import Util from './Util.js';
+import { GideonCache } from './@types/Util.js';
 
 const gideon = new Discord.Client({
     intents: 1543,
@@ -13,12 +14,11 @@ const gideon = new Discord.Client({
 });
 
 process.gideon = gideon;
-
 gideon.commands = new Discord.Collection();
 gideon.events = new Discord.Collection();
 gideon.statuses = [];
 gideon.spamcount = new Map();
-gideon.cache = {};
+gideon.cache = ({} as GideonCache);
 
 gideon.show_api_urls = {
     batwoman: 'http://api.tvmaze.com/shows/37776?embed=nextepisode',
