@@ -1,16 +1,18 @@
+import { Guild } from 'discord.js';
 import Util from '../../Util.js';
 
 export default {
     name: 'SIGUSR2',
     process: true,
     once: true,
-    async run() {
-        let shard_index = process.gideon?.shard?.ids?.[0] ?? '0';
+    async run(): Promise<void> {
+        const shard_index = process.gideon?.shard?.ids?.[0] ?? '0';
         Util.log('Shard `' + shard_index + '` shutting down...');
 
-        for (let guild of process.gideon.guilds.cache.values()) {
-            if (guild.voice?.connection) {
-                guild.voice.connection.disconnect();
+        let guild: Guild;
+        for (guild of process.gideon.guilds.cache.values()) {
+            if (guild?.me?.voice?.connection) {
+                guild.me.voice.connection.disconnect();
             }
         }
 

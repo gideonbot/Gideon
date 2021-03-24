@@ -1,16 +1,16 @@
 import Util from '../../Util.js';
-import Discord from 'discord.js';
+import { DiscordAPIError, Constants } from 'discord.js';
 
 export default {
     name: 'unhandledRejection',
     process: true,
-    async run(err) {
-        const ignore = [
-            Discord.Constants.APIErrors.MISSING_PERMISSIONS,
-            Discord.Constants.APIErrors.UNKNOWN_MESSAGE,
-            Discord.Constants.APIErrors.MISSING_ACCESS,
-            Discord.Constants.APIErrors.CANNOT_MESSAGE_USER,
-            Discord.Constants.APIErrors.UNKNOWN_CHANNEL
+    async run(err: DiscordAPIError): Promise<void> {
+        const ignore: number[] = [
+            Constants.APIErrors.MISSING_PERMISSIONS,
+            Constants.APIErrors.UNKNOWN_MESSAGE,
+            Constants.APIErrors.MISSING_ACCESS,
+            Constants.APIErrors.CANNOT_MESSAGE_USER,
+            Constants.APIErrors.UNKNOWN_CHANNEL
         ];
     
         if (ignore.includes(err.code)) return;
