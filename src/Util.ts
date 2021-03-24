@@ -73,9 +73,16 @@ interface Event {
 }
 
 interface GideonCache {
-    nxeps?: Discord.Collection<string, EpisodeInfo>;
-    dceps?: Discord.Collection<string, EpisodeInfo>;
-    jokes?: Discord.Collection<string, Discord.Collection<number, string>>;
+    nxeps: Discord.Collection<string, EpisodeInfo>;
+    dceps: Discord.Collection<string, EpisodeInfo>;
+    jokes: Discord.Collection<string, Discord.Collection<number, string>>;
+}
+
+interface InfoInterface {
+    _embedded: { nextepisode: { name: string, season: string, number: string, airstamp: string; } }
+    _links: { self: { href: string; } }
+    webChannel: { name: string; }
+    network: { name: string; }
 }
 
 declare global {
@@ -234,7 +241,7 @@ class Util {
      * @param {Discord.Interaction} interaction
      * @param {boolean} nsfw
      */
-    static async IMG(imgid: string, interaction: Discord.Interaction, nsfw: boolean): Promise<void> {
+    static async IMG(imgid: string, interaction: Discord.Message, nsfw: boolean): Promise<void> { //use message until interaction typings are done by djs
         if (!interaction.guild) return;
         if (!process.env.IMG_CL) return;
 
@@ -262,6 +269,7 @@ class Util {
             return interaction.reply(Util.Embed().setImage(rimg));
         })).catch(x => {
             Util.log(x);
+            // @ts-expect-error do this until interaction typings are done
             return interaction.reply('An error occurred, please try again later!', { ephemeral: true, hideSource: true });
         });
     }
@@ -292,7 +300,7 @@ class Util {
         });
     }
 
-    static fetchJSON(url: string) : Promise<any> {
+    static fetchJSON(url: string) : Promise<unknown> {
         // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
             if (!url || typeof url != 'string') return reject('No URL');
@@ -885,9 +893,13 @@ class Util {
 
         const obj = <EpisodeInfo>{ embed: {}, expires_at: new Date(Date.now() + 864e5) }; //1 day
 
+        interface JSONInterface {
+            name: string;
+        }
+
         if (show in names) {
             try {
-                const json = await Util.fetchJSON(process.gideon.show_api_urls[show]);
+                const json = await Util.fetchJSON(process.gideon.show_api_urls[show]) as JSONInterface;
                 if (!json) return;
 
                 let emote = '';
@@ -905,7 +917,7 @@ class Util {
 
                 process.gideon.cache.nxeps.set(show, obj);
 
-                Util.AddInfo(show, json);
+                Util.AddInfo(show, json as unknown as InfoInterface);
             }
             
             catch (ex) {
@@ -914,7 +926,7 @@ class Util {
         }
         else if (show in dcnames) {
             try {
-                const json = await Util.fetchJSON(process.gideon.dc_show_urls[show]);
+                const json = await Util.fetchJSON(process.gideon.dc_show_urls[show]) as JSONInterface;
                 if (!json) return;
 
                 obj.series_shortname = dcnames[show];
@@ -922,7 +934,7 @@ class Util {
 
                 process.gideon.cache.dceps.set(show, obj);
 
-                Util.AddInfo(show, json);
+                Util.AddInfo(show, json as unknown as InfoInterface);
             }
             
             catch (ex) {
@@ -933,15 +945,21 @@ class Util {
 
     /**
      * @param {string} show 
-     * @param {any} json 
+     * @param {unknown} json 
      */
-    static async AddInfo(show: string, json: any): Promise<void> {
+    static async AddInfo(show: string, json: InfoInterface): Promise<void> {
         const obj = process.gideon.cache.dceps.get(show) ?? process.gideon.cache.nxeps.get(show);
         if (!obj) return;
 
+        interface SeasonInterface {
+            number: string;
+            premiereDate?: string;
+            episodeOrder?: string;
+        }
+
         if (!json._embedded) {
             const url = json._links.self.href + '/seasons';
-            const seasons = await Util.fetchJSON(url);
+            const seasons = await Util.fetchJSON(url) as Array<SeasonInterface>;
             seasons.reverse();
             const nextseason = seasons[0].number;
             const seasondate = seasons[0]?.premiereDate ? new Date(seasons[0].premiereDate) : null;
