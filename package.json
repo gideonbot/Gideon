@@ -1,7 +1,7 @@
 {
   "name": "gideon",
   "version": "1.0.0",
-  "description": "The Arrowverse Discord Bot",
+  "description": "The DC Discord Bot",
   "main": "index.js",
   "type": "module",
   "scripts": {

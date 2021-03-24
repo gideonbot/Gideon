@@ -135,7 +135,7 @@ class Util {
      * @param {Discord.Interaction} interaction
      * @param {boolean} nsfw
      */
-    static async IMG(imgid: string, interaction: Discord.Message, nsfw: boolean): Promise<void> { //use message until interaction typings are done by djs
+    static async IMG(imgid: string, interaction: Discord.Interaction, nsfw: boolean): Promise<void> {
         if (!interaction.guild) return;
         if (!process.env.IMG_CL) return;
 
@@ -157,9 +157,9 @@ class Util {
                     }]
                 };
 
-                return interaction.channel.send(img); //no attachments for interactions yet
+                return interaction?.channel?.send(img); //there might be attachments for interactions now, check that sometime
             }
-            
+            // @ts-expect-error do this until interaction typings are done
             return interaction.reply(Util.Embed().setImage(rimg));
         })).catch(x => {
             Util.log(x);
