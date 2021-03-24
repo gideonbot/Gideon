@@ -1,4 +1,3 @@
-import BetterSqlite3 from 'better-sqlite3';
 import Discord from 'discord.js';
 import fetch from 'node-fetch';
 import config from './data/config/config.js';
@@ -14,112 +13,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
 import WSClient from './WSClient.js';
-
-interface EmbedOpts {
-    description?: string;
-    image?: string;
-    fields?: EmbedField[];
-    timestamp?: Date;
-    color?: string;
-    url?: string;
-    author?: {name: string, icon: string, url?: string};
-    footer?: {text: string, icon: string};
-    thumbnail?: string;
-}
-
-interface EmbedField {
-    name: string;
-    value: string;
-    inline?: boolean;
-}
-
-interface EpisodeInfo {
-    title: string;
-    
-    series_shortname: string;
-    series_name: string;
-    channel: string;
-
-    embed: {
-        name: string;
-        value(): string;
-    }
-
-    airstamp: Date;
-    expires_at: Date;
-    
-    season: string;
-    number: string;
-}
-
-interface Command {
-    help: {
-        id: string;
-        debug: boolean;
-        owner: boolean;
-        nsfw: boolean;
-        roles: string[];
-        user_perms: string[];
-        bot_perms: string[];
-    },
-    run: () => void;
-}
-
-interface Event {
-    name: string;
-    once?: boolean;
-    process?: boolean
-    run: () => void;
-}
-
-interface GideonCache {
-    nxeps: Discord.Collection<string, EpisodeInfo>;
-    dceps: Discord.Collection<string, EpisodeInfo>;
-    jokes: Discord.Collection<string, Discord.Collection<number, string>>;
-}
-
-interface InfoInterface {
-    _embedded: { nextepisode: { name: string, season: string, number: string, airstamp: string; } }
-    _links: { self: { href: string; } }
-    webChannel: { name: string; }
-    network: { name: string; }
-}
-
-declare global {
-    export interface Process {
-        gideon: Discord.Client;
-    }
-}
-
-declare module 'discord.js' {
-    interface Message {
-        cleverbot: boolean;
-    }
-
-    interface Client {
-        WSClient: WSClient;
-        commands: Discord.Collection<string, Command>;
-        events: Discord.Collection<string, Event>;
-        owner: string;
-        listening: string[];
-        spamcount: Map<string, number>;
-        cache: GideonCache;
-        show_api_urls: Record<string, string>;
-        dc_show_urls: Record<string, string>;
-        statuses: {name: string, fetch: (() => Promise<{type: Discord.ActivityType, value: string}>)}[];
-        getScore: BetterSqlite3.Statement;
-        setScore: BetterSqlite3.Statement;
-        getTop10: BetterSqlite3.Statement;
-        getUser: BetterSqlite3.Statement;
-        setUser: BetterSqlite3.Statement;
-        getGuild: BetterSqlite3.Statement;
-        setGuild: BetterSqlite3.Statement;
-        getStat: BetterSqlite3.Statement;
-        setStat: BetterSqlite3.Statement;
-        db: BetterSqlite3.Database;
-        stats: string[];
-    }
-}
+import { EpisodeInfo, EmbedOpts, InfoInterface } from './@types/Util.js';
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -283,7 +177,7 @@ class Util {
         process.gideon.WSClient = new WSClient(`ws://localhost:${process.env.WS_PORT}/ws`, process.env.WS_TOKEN);
 
         process.gideon.WSClient.on('READY', () => console.log('WS Ready'));
-        process.gideon.WSClient.on('DATA', d => {
+        process.gideon.WSClient.on('DATA', (d: { type: string; }) => {
             if (d.type == 'REQUEST_STATS') {
                 const guilds = process.gideon.guilds.cache;
                 

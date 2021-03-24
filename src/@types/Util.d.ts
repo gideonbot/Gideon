@@ -1,9 +1,13 @@
+/* eslint-disable no-redeclare */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Discord from 'discord.js';
 import MsgHandler from './Util/MessageHandler';
 import Checks from './Util/Checks';
 import SQL from './Util/SQL';
 import BetterSqlite3 from 'better-sqlite3';
 import WSClient from './WSClient';
+import { APIApplicationCommandOptions } from 'discord-api-types/v8';
 
 export const config: Config;
 export let MsgHandler: Handler;
@@ -15,7 +19,7 @@ export function getIdFromString(str: string): string;
 export function secondsToDifferenceString(seconds: number, settings: secondsToDifferenceSettings): string;
 export function log(message: string, files: string[]): boolean;
 export function LoadCommands(): Promise<void>;
-export function fetchJSON(url: string): Promise<object>;
+export function fetchJSON(url: string): Promise<unknown>;
 export function ValID(input: string): string;
 export function IMG(image_id: string, message: Discord.Message, nsfw: boolean): Promise<void>;
 export function Split<T>(arr: T[], chunks: number): T[][];
@@ -34,7 +38,7 @@ export function CheckEpisodes(): void;
 export function ClosestDate(dates: string[]): Promise<string>;
 export function Welcome(member: Discord.GuildMember): Promise<void>;
 export function truncate(str: string, length: number, useWordBoundary: boolean): string;
-export function AddInfo(show: string, json: any): Promise<void>;
+export function AddInfo(show: string, json: unknown): Promise<void>;
 export function normalize(num: number): string;
 export function Embed(title: string, options?: EmbedOptions, member?: Discord.GuildMember): Discord.MessageEmbed;
 
@@ -50,25 +54,26 @@ declare module 'discord.js' {
         owner: string;
         listening: string[];
         spamcount: Map;
-        cache: GideonCache | unknown;
+        cache: GideonCache;
         show_api_urls: Record<string, string>;
         dc_show_urls: Record<string, string>;
         statuses: {name: string, fetch: (() => Promise<{type: Discord.ActivityType, value: string}>)}[];
-        getScore: BetterSqlite3.Statement<any[]>;
-        setScore: BetterSqlite3.Statement<any[]>;
-        getTop10: BetterSqlite3.Statement<any[]>;
-        getUser: BetterSqlite3.Statement<any[]>;
-        setUser: BetterSqlite3.Statement<any[]>;
-        getGuild: BetterSqlite3.Statement<any[]>;
-        setGuild: BetterSqlite3.Statement<any[]>;
-        getStat: BetterSqlite3.Statement<any[]>;
-        setStat: BetterSqlite3.Statement<any[]>;
+        getScore: BetterSqlite3.Statement<unknown[]>;
+        setScore: BetterSqlite3.Statement<unknown[]>;
+        getTop10: BetterSqlite3.Statement<unknown[]>;
+        getUser: BetterSqlite3.Statement<unknown[]>;
+        setUser: BetterSqlite3.Statement<unknown[]>;
+        getGuild: BetterSqlite3.Statement<unknown[]>;
+        setGuild: BetterSqlite3.Statement<unknown[]>;
+        getStat: BetterSqlite3.Statement<unknown[]>;
+        setStat: BetterSqlite3.Statement<unknown[]>;
         db: BetterSqlite3.Database;
         stats: string[];
     }
 
     interface Message {
         voice: boolean;
+        cleverbot: boolean;
     }
 }
 
@@ -85,12 +90,30 @@ declare global {
 }
 
 interface Handler {
-    Handle(message: Discord.Message, Util: Util, connection: Discord.VoiceConnection): Promise<void>;
+    Handle(message: Discord.Message, Util: unknown, connection: Discord.VoiceConnection): Promise<void>;
 }
 
 interface Database {
     InitDB(): void;
     Close(): void;
+}
+interface EpisodeInfo {
+    title: string;
+    
+    series_shortname: string;
+    series_name: string;
+    channel: string;
+
+    embed: {
+        name: string;
+        value(): string;
+    }
+
+    airstamp: Date;
+    expires_at: Date;
+    
+    season: string;
+    number: string;
 }
 
 interface GideonCache {
@@ -101,14 +124,14 @@ interface GideonCache {
 
 interface CheckUtil {
     ABM_Test(message: Discord.Message): Promise<ABMResult>;
-    ABM(message: Discord.Message, Util: any): void;
-    CVM(message: Discord.Message, Util: any): Promise<Discord.Message>;
-    CSD(message: Discord.Message, Util: any): Promise<void>;
-    LBG(guild: Discord.Guild, Util: any): Promise<void>;
-    IBU(message: Discord.Message, Util: any): boolean;
+    ABM(message: Discord.Message, Util: unknown): void;
+    CVM(message: Discord.Message, Util: unknown): Promise<Discord.Message>;
+    CSD(message: Discord.Message, Util: unknown): Promise<void>;
+    LBG(guild: Discord.Guild, Util: unknown): Promise<void>;
+    IBU(message: Discord.Message, Util: unknown): boolean;
     BadMention(message: Discord.Message): boolean;
     RulesCheck(message: Discord.Message): Promise<void>;
-    GPD(oldmessage: Discord.Message, newmessage?: Discord.Message, Util: any): void;
+    GPD(oldmessage: Discord.Message, newmessage?: Discord.Message, Util: unknown): void;
 }
 
 interface EmbedOptions {
@@ -138,7 +161,7 @@ interface secondsToDifferenceSettings {
 }
 
 interface SpamCount {
-    count: Number
+    count: number
 }
 
 interface Command {
@@ -151,7 +174,7 @@ interface Command {
         user_perms: string[];
         bot_perms: string[];
     },
-    run: (interaction: Discord.Interaction, args: object[]) => void;
+    run: (interaction: Discord.Interaction, args: APIApplicationCommandOptions) => void;
 }
 
 interface Event {
@@ -165,4 +188,29 @@ interface VoiceInfoResponse {
     msg_id: string;
     _text: string;
     entities: Record<string, {metadata: string, value: string, confidence: number}[]>
+}
+
+interface EmbedOpts {
+    description?: string;
+    image?: string;
+    fields?: EmbedField[];
+    timestamp?: Date;
+    color?: string;
+    url?: string;
+    author?: {name: string, icon: string, url?: string};
+    footer?: {text: string, icon: string};
+    thumbnail?: string;
+}
+
+interface EmbedField {
+    name: string;
+    value: string;
+    inline?: boolean;
+}
+
+interface InfoInterface {
+    _embedded: { nextepisode: { name: string, season: string, number: string, airstamp: string; } }
+    _links: { self: { href: string; } }
+    webChannel: { name: string; }
+    network: { name: string; }
 }
