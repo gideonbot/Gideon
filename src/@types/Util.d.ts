@@ -167,12 +167,13 @@ interface SpamCount {
 interface Command {
     help: {
         id: string;
-        debug: boolean;
-        owner: boolean;
-        nsfw: boolean;
+        debug?: boolean;
+        owner?: boolean;
+        nsfw?: boolean;
+        dm?: boolean;
         roles: string[];
-        user_perms: string[];
-        bot_perms: string[];
+        user_perms: Discord.PermissionResolvable[];
+        bot_perms: Discord.PermissionResolvable[];
     },
     run: (interaction: Discord.Interaction, args: APIApplicationCommandOptions) => void;
 }

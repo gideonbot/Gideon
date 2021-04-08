@@ -1,3 +1,5 @@
+import { CommandInteraction, TextChannel, GuildMember } from "discord.js";
+
 class Interactions {
     constructor() {
         throw new Error('This class cannot be instantiated!');
@@ -5,23 +7,22 @@ class Interactions {
 
     /**
      * Handle Slash Commands
-     * @param {Discord.Interaction} interaction 
+     * @param {Discord.CommandInteraction} command 
      */
-    static async Handle(interaction, Util) {
-        if (!interaction.member) await interaction.member.fetch();
-        if (Util.Checks.IBU(interaction)) return; //check if user is blacklisted, if yes, return
-        Util.Checks.LBG(interaction.member.guild, Util); //check if guild is blacklisted, if yes, leave
+    static async Handle(command: CommandInteraction, Util: any) {
+        if (Util.Checks.IBU(command)) return; //check if user is blacklisted, if yes, return
+        Util.Checks.LBG(command?.guild, Util); //check if guild is blacklisted, if yes, leave
 
-        const args = interaction.options;
+        const args = command.options;
     
-        const command = process.gideon.commands.get(interaction.commandID);
-        if (!command) return;
+        const cmd = process.gideon.commands.get(command.commandID);
+        if (!cmd) return;
 
-        let guildsettings = process.gideon.getGuild.get(interaction.member.guild.id);
+        let guildsettings = process.gideon.getGuild.get(command.guildID);
 
         if (!guildsettings) {
             guildsettings = {
-                guild: interaction.member.guild.id,
+                guild: command.guildID,
                 cvmval: 0,
                 abmval: 0,
                 eastereggs: 0,
@@ -33,109 +34,75 @@ class Interactions {
             process.gideon.setGuild.run(guildsettings);
         }
 
-        if (interaction.channel?.id === guildsettings.chatchnl) return;
+        if (command.channel?.id === guildsettings.chatchnl) return;
 
-        Util.Checks.Spamcounter(interaction.member.id);
+        Util.Checks.Spamcounter(command.user.id);
 
-        const spamcount = process.gideon.spamcount.get(interaction.member.id);
+        const spamcount = process.gideon.spamcount.get(command.user.id);
    
         if (spamcount?.usages + 1 > 10 && !process.env.CI) {
-            let ub = process.gideon.getUser.get(interaction.member.id);
+            let ub = process.gideon.getUser.get(command.user.id);
 
             if (!ub) ub = {
-                id: interaction.member.id,
+                id: command.user.id,
                 trmodeval: 0,
                 blacklist: 1,
             };
             else ub.blacklist = 1;
             
             process.gideon.setUser.run(ub);
-            Util.log(`${interaction.member.user.tag} had their access revoked due to command spam:\`\`\`\nUser: ${interaction.member.user.tag} - ${interaction.member.id}\nCommand: ${interaction.commandname} - ${interaction.commandID}\n\`\`\``);
-            return interaction.reply('Your access to ' + process.gideon.user.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
+            Util.log(`${command.user.tag} had their access revoked due to command spam:\`\`\`\nUser: ${command.user.tag} - ${command.user.id}\nCommand: ${command.commandName} - ${command.commandID}\n\`\`\``);
+            return command.reply('Your access to ' + process.gideon.user?.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
         }
 
-        if (command.help.owner) {
+        if (cmd.help.owner) {
             if (!process.gideon.owner) return;
-            if (![process.gideon.owner, '351871113346809860'].includes(interaction.member.user.id)) {
-                process.gideon.emit('commandRefused', interaction, 'NOT_APPLICATION_OWNER');
-                return interaction.reply('You do not have the required permission to use this command!\nRequired permission: `Application Owner`');
+            if (![process.gideon.owner, '351871113346809860'].includes(command.user.id)) {
+                process.gideon.emit('commandRefused', command, 'NOT_APPLICATION_OWNER');
+                return command.reply('You do not have the required permission to use this command!\nRequired permission: `Application Owner`');
             } 
         } 
 
-        if (![process.gideon.owner, '351871113346809860'].includes(interaction.member.user.id)) {
-            if (command.help?.user_perms?.length > 0) {
+        if (![process.gideon.owner, '351871113346809860'].includes(command.user.id)) {
+            if (cmd.help?.user_perms?.length > 0) {
                 let missingperms = [];
 
-                for (let perm of command.help.user_perms) {
-                    if (!interaction.member.hasPermission(perm)) missingperms.push(perm);
+                for (let perm of cmd.help.user_perms) {
+                    if (!command.member?.permissions.has(perm)) missingperms.push(perm);
                 }
 
                 if (missingperms.length > 0) {
-                    process.gideon.emit('commandRefused', interaction, 'Missing: ' + missingperms.join(' '));
-                    return interaction.reply('You do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
+                    process.gideon.emit('commandRefused', command, 'Missing: ' + missingperms.join(' '));
+                    return command.reply('You do not have the required permissions to use this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
                 }
             }   
 
-            if (command.help?.bot_perms?.length > 0) {
+            if (cmd.help?.bot_perms?.length > 0) {
                 let missingperms = [];
-                for (let perms of command.help.bot_perms) {
-                    if (!interaction.channel.permissionsFor(interaction.guild.me).has(perms)) missingperms.push(perms);
+                for (let perms of cmd.help.bot_perms) {
+                    if (!(command.channel as TextChannel).permissionsFor((command.guild?.me) as GuildMember).has(perms)) missingperms.push(perms);
                 }
-                if (missingperms.length > 0) return interaction.reply('Sorry I can\'t do that without having the required permissions for this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '));
+                if (missingperms.length > 0) return command.reply('Sorry I can\'t do that without having the required permissions for this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '), { ephemeral: true });
             }
 
-            if (command.help.nsfw) {
-                if (!interaction.channel.nsfw) {
-                    process.gideon.emit('commandRefused', interaction, 'NSFW_REQUIRED');
-                    return interaction.reply('This command requires a `NSFW` channel!');
+            if (cmd.help.nsfw) {
+                if (!(command.channel as TextChannel)?.nsfw) {
+                    process.gideon.emit('commandRefused', command, 'NSFW_REQUIRED');
+                    return command.reply('This command requires a `NSFW` channel!', { ephemeral: true });
                 }
-            }
-            
-            if (command.help?.roles?.length > 0) {
-                let missingroles = [];
-                let rolenames = [];
-    
-                for (let role of command.help.roles) {
-                    if (!interaction.member.roles.cache.has(role)) missingroles.push(role);
-                }
-    
-                if (missingroles.length > 0) {
-                    for (let role of missingroles) {
-                        const arr = process.gideon.shard ? await process.gideon.shard.broadcastEval(`
-                            (async () => {
-                                let rolename = '';
-                                
-                                this.guilds.cache.forEach(guild => {
-                                    if (guild.roles.cache.get('${role}')) {
-                                        rolename = guild.roles.cache.get('${role}').name;
-                                    }
-                                });
-                                
-                                if (rolename) return rolename;
-                            })();
-                        `) : process.gideon.guilds.cache.map(x => x.roles.cache).filter(x => x.get(role)).map(x => x.array().map(x => x.name)).flat();
-                        rolenames.push(...arr.filter(x => x));
-                    }
-                }
-
-                if (missingroles.length > 0) {
-                    if (rolenames.length < 1) rolenames = missingroles;
-                    process.gideon.emit('commandRefused', interaction, 'Missing: ' + rolenames.map(x => `@${x}`).join(' '));
-                    return interaction.reply('You do not have the required roles to use this command!\nRequired roles: ' + rolenames.map(x => `\`${x}\``).join(' '));
-                } 
             }
         }
 
         Util.IncreaseStat('commands_ran');
         
         try {
-            await command.run(interaction, args);
+            await cmd.run(command, args);
         }
         catch (e) {
-            if (command.help.id === '786979784860893196') return interaction.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true, hideSource: true });
-            else if (command.help.id === '787027091098173451') return interaction.reply('An error occurred while processing your request:```\n' + e + '```\nIf you see this error, this means that the Fandom Wiki API is still fucked and you should complain the shit out of their [support request form](<https://fandom.zendesk.com/hc/en-us/requests/new>) and their [twitter](<https://twitter.com/getfandom>) and tell them to fix their really really awful API endpoints.\nSorry lads, can\'t do more then tell you what\'s up.', { ephemeral: true, hideSource: true });
-            Util.log(`An error occurred while running ${interaction.commandName}:\n\n\`\`\`\n${e.stack}\n\`\`\``);
-            return interaction.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true, hideSource: true });
+            if (cmd.help.id === '786979784860893196') return command.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true });
+            else if (cmd.help.id === '787027091098173451') return command.reply('An error occurred while processing your request:```\n' + e + '```\nIf you see this error, this means that the Fandom Wiki API is still fucked and you should complain the shit out of their [support request form](<https://fandom.zendesk.com/hc/en-us/requests/new>) and their [twitter](<https://twitter.com/getfandom>) and tell them to fix their really really awful API endpoints.\nSorry lads, can\'t do more then tell you what\'s up.', { ephemeral: true });
+            Util.log(`An error occurred while running ${command.commandName}:\n\n\`\`\`\n${e.stack}\n\`\`\``);
+            return command.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true });
         } 
     }
 }
