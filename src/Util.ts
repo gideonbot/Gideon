@@ -157,7 +157,7 @@ class Util {
                     }]
                 };
 
-                return interaction?.channel?.send(img); //there might be attachments for interactions now, check that sometime
+                return interaction.channel?.send(img); //there might be attachments for interactions now, check that sometime
             }
             // @ts-expect-error do this until interaction typings are done
             return interaction.reply(Util.Embed().setImage(rimg));

@@ -360,7 +360,7 @@ class Checks {
      * @param {Discord.GuildMember} newMember 
      * @param {Discord.User} newUser 
      */
-    static async NameCheck(newMember: Discord.GuildMember, newUser: Discord.User) {
+    static async NameCheck(newMember: Discord.GuildMember | null, newUser: Discord.User | null) {
         if (!process.gideon.guilds.cache.get('595318490240385037')) return;
         
         if (newMember) {
