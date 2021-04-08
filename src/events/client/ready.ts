@@ -4,10 +4,12 @@ import Util from '../../Util.js';
 export default {
     name: 'ready',
     once: true,
-    async run(gideon: Client) {
-        const app = gideon.application as ClientApplication;
+    async run(gideon: Client): Promise<void> {
         if (process.env.CI) gideon.owner = Util.GenerateSnowflake();
-        else if (app.owner) gideon.owner = app.owner.id;
+        else {
+            const app = await gideon.application?.fetch().catch(x => Util.log('Failed to fetch owner: ' + x));
+            if (app && app instanceof ClientApplication && app.owner) gideon.owner = app.owner.id;
+        }
     
         Util.SQL.InitDB();
         await Util.InitCache();
@@ -16,7 +18,7 @@ export default {
         await Util.LoadCommands();
         Util.InitWS();
     
-        for (let item of ['commands_ran', 'ai_chat_messages_processed', 'messages_sent']) {
+        for (const item of ['commands_ran', 'ai_chat_messages_processed', 'messages_sent']) {
             if (!gideon.getStat.get(item)) {
                 console.log('Initializing ' + item);
                 Util.SetStat(item, 0);
