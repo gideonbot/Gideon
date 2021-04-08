@@ -1,8 +1,9 @@
 import Util from '../../Util.js';
+import { Guild, User } from 'discord.js';
 
 export default {
     name: 'guildBanAdd',
-    async run(guild, user) {
+    async run(guild: Guild, user: User): Promise<void> {
         if (guild.id !== '595318490240385037') return;
         const id = user.id;
         let ub = process.gideon.getUser.get(id);
