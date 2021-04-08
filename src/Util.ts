@@ -120,10 +120,11 @@ class Util {
 
         if (typeof message == 'string') {
             for (const msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
+                //@ts-ignore
                 client.send(msg, { avatarURL: Util.config.avatar, username: 'Gideon-Logs', files: files });
             }
         }
-
+        //@ts-ignore
         else client.send(null, { embeds: [message], avatarURL: Util.config.avatar, username: 'Gideon-Logs', files: files });
         
         return true;
@@ -157,7 +158,7 @@ class Util {
                     }]
                 };
 
-                return interaction.channel?.send(img); //there might be attachments for interactions now, check that sometime
+                return (interaction.channel as Discord.TextChannel)?.send(img); //there might be attachments for interactions now, check that sometime
             }
             // @ts-expect-error do this until interaction typings are done
             return interaction.reply(Util.Embed().setImage(rimg));
@@ -477,10 +478,10 @@ class Util {
 
         const starmsg = Util.Embed(undefined, {
             author: {
-                name: reaction.message.author.tag,
-                icon: reaction.message.author.displayAvatarURL()
+                name: reaction.message.author?.tag as string,
+                icon: reaction.message.author?.displayAvatarURL() as string
             },
-            description: reaction.message.content,
+            description: reaction.message.content as string,
             fields: [
                 {
                     name: 'Message Info:',
