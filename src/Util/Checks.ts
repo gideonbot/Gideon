@@ -1,6 +1,8 @@
 import Discord from 'discord.js';
+//@ts-ignore
 import anyAscii from 'any-ascii';
 import Filter from 'bad-words';
+import { AbmTestValue } from '../@types/Util.js';
 
 class Checks {
     constructor() {
@@ -11,7 +13,7 @@ class Checks {
      * @param {Discord.Message} message
      * @returns {Promise<{match: boolean, content: string}>}
      */
-    static ABM_Test(message, Util) {
+    static ABM_Test(message: Discord.Message, Util: any): Promise<AbmTestValue> {
         // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
             const content = message.content.replace(/ /g, '').replace(/\n/g, '').toLowerCase().trim();
@@ -69,9 +71,10 @@ class Checks {
     /**
      * @param {Discord.Message} message 
      */
-    static ABM(message, Util) {
+    static ABM(message: Discord.Message, Util: any) {
         if (!message.guild) return;
-        if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return;
+        //@ts-expect-error
+        if (!(message.channel as Discord.TextChannel).permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return;
 
         let abm = process.gideon.getGuild.get(message.guild.id);
         if (!abm) return;
@@ -81,10 +84,12 @@ class Checks {
 
         this.ABM_Test(message, Util).then(async res => {
             if (res.match) {
-                await message.delete({ timeout: 200 });
-                Util.log('ABM triggered by: ' + message.author.tag + ' (' + res.content + ')\nABM triggered in: `' + message.channel.name + '` at `' + message.guild.name + '`');
+                await Util.delay(200);
+                await message.delete();
+                Util.log('ABM triggered by: ' + message.author.tag + ' (' + res.content + ')\nABM triggered in: `' + (message.channel as Discord.TextChannel).name + '` at `' + message.guild?.name + '`');
                 const abmsg = await message.channel.send(Util.GetUserTag(message.author), { embed: Util.Embed(`${siren}Anti-BS-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}, message.member) });
-                await abmsg.delete({ timeout: 3500 });
+                await Util.delay(3500);
+                await abmsg.delete();
             }
         }, failed => {
             if (failed) console.log(failed);
@@ -94,13 +99,13 @@ class Checks {
     /**
      * @param {Discord.Message} message  
      */
-    static async CVM(message, Util) {
+    static async CVM(message: Discord.Message, Util: any) {
         if (!message.guild) return;
         let cvm = process.gideon.getGuild.get(message.guild.id);
         if (!cvm) return;
         if (cvm.cvmval === 0) return;
 
-        if (!message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return;
+        if (!(message.channel as Discord.TextChannel).permissionsFor((message.guild.me as Discord.GuildMember)).has('MANAGE_MESSAGES')) return;
 
         const ids = ['595944027208024085', '595935317631172608', '595935345598529546', '598487475568246830', '622415301144870932', '596080078815887419'];
 
@@ -110,7 +115,8 @@ class Checks {
 
         // eslint-disable-next-line no-useless-escape
         if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
-            await message.delete({ timeout: 200 });
+            await Util.delay(200)
+            await message.delete();
             return message.reply('Links are not allowed while the Crossover-Mode is active!');
         }
 
@@ -122,7 +128,7 @@ class Checks {
 
         const embed = new Discord.MessageEmbed()
             .setDescription(`${plainText ? '||' + plainText + '||' : ''}`)
-            .setAuthor(`${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}:`, message.author.avatarURL());
+            .setAuthor(`${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}:`, message.author.displayAvatarURL());
         await message.channel.send(embed);
 
         //we don't send the file in the same message because it shows it above the embed (bad)
@@ -134,15 +140,15 @@ class Checks {
                 return new Discord.MessageAttachment(x.url, 'SPOILER_' + filename);
             })});
         }
-
-        message.delete({ timeout: 200 });
+        await Util.delay(200);
+        message.delete();
     }
 
     /**
      * Easter eggs
      * @param {Discord.Message} message 
      */
-    static async CSD(message, Util) {
+    static async CSD(message: Discord.Message, Util: any) {
         if (!message.guild) return;
         if (message.editedAt) return;
         if (message.content.match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)) return;
@@ -213,10 +219,10 @@ class Checks {
      * Leaves a blacklisted guild
      * @param {Discord.Guild} guild 
      */
-    static async LBG(guild, Util) {
+    static async LBG(guild: Discord.Guild, Util: any) {
         let ub = process.gideon.getUser.get(guild.ownerID);
         let gbl = process.gideon.getGuild.get(guild.id);
-        let owner = await guild.members.fetch(guild.ownerID).catch(ex => console.log(ex));
+        let owner = await guild.members.fetch(guild.ownerID).catch(ex => console.log(ex)) as Discord.GuildMember;
         
         if (ub) {
             if (ub.blacklist === 1 && gbl) {
@@ -229,14 +235,14 @@ class Checks {
         if (gbl.blacklist === 0) return;
 
         const textchannels = guild.channels.cache.filter(c=> c.type == 'text');
-        const channels = textchannels.filter(c=> c.permissionsFor(guild.me).has('SEND_MESSAGES'));
+        const channels = textchannels.filter(c=> c.permissionsFor((guild.me as Discord.GuildMember)).has('SEND_MESSAGES')) as Discord.Collection<string, Discord.TextChannel>;
         if (!channels.size) {
             await guild.leave();
             Util.log(`Leaving guild \`${guild.name} - ${guild.id} (Owner: ${owner.user.tag})\` due to it being blacklisted!`);
         }
 
         else {
-            await channels.first().send('This guild or this guild\'s owner is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
+            await channels.first()?.send('This guild or this guild\'s owner is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
             await guild.leave();
             Util.log(`Leaving guild \`${guild.name} - ${guild.id} (Owner: ${owner.user.tag})\` due to it being blacklisted!`);
         }
@@ -244,38 +250,20 @@ class Checks {
 
     /**
      * Ignore commands from blacklisted users
-     * @param {Discord.Message} message 
+     * @param {Discord.Interaction} interaction 
      * @returns {boolean}
      */
-    static IBU(message) {
-        let ubl;
-        if (message.commandID) process.gideon.getUser.get(message.member?.id); //interaction
-        else ubl = process.gideon.getUser.get(message.author.id);
+    static IBU(interaction: Discord.Interaction) {
+        let ubl = process.gideon.getUser.get(interaction.user.id);
         if (!ubl || !ubl.blacklist) return;
         return ubl.blacklist === 1;
-    }
-
-    /**
-     * Rules check
-     * @param {Discord.Message} message 
-     */
-    static async RulesCheck(message, Util) {
-        let member = await process.gideon.guilds.cache.get('595318490240385037').members.fetch(message.author.id);
-
-        if (!member) return;
-        if (member.roles.cache.has('688430418466177082')) return;
-
-        const role = process.gideon.guilds.cache.get('595318490240385037').roles.cache.get('688430418466177082');
-        await member.roles.add(role);
-        message.reply('You have been verified and gained access to <#595935317631172608>!');
-        Util.log(`User \`${member.user.tag}\` has gained access to the guild!`);
     }
 
     /**
      * Spam check 
      * @param {string} id 
      */
-    static Spamcounter(id) {
+    static Spamcounter(id: string) {
         if (id === process.gideon.owner) return null;
 
         let spamcount = process.gideon.spamcount.get(id);
@@ -300,18 +288,18 @@ class Checks {
      * Invite check 
      * @param {Discord.Message} message 
      */
-    static async Ads(message, Util) {
+    static async Ads(message: Discord.Message, Util: any) {
         if (!message.guild) return;
         if (message.guild.id !== '595318490240385037') return;
-        if (!message.member) await message.member.fetch();
-        if (message.member.hasPermission('MANAGE_MESSAGES')) return;
+        if (message.member?.permissions.has('MANAGE_MESSAGES')) return;
 
         // eslint-disable-next-line no-useless-escape
         const invregex = /discord(?:\.com|\.gg)\/(?:invite\/)?([a-zA-Z0-9\-]{2,32})/g;
         const urlRegex = /https:\/\/((canary|ptb).)?discord.com\/channels\/(\d{18})\/(\d{18})\/(\d{18})/g;
-        const admin = process.gideon.guilds.cache.get('595318490240385037').roles.cache.get('596402255066955783');
+        const admin = process.gideon.guilds.cache.get('595318490240385037')?.roles.cache.get('596402255066955783');
 
         if (message.content.match(invregex) && !message.content.match(urlRegex)) {
+            //@ts-ignore
             const invcode = message.content.match(invregex)[0];
             const invite = await process.gideon.fetchInvite(invcode).catch(ex => console.log(ex));
           
@@ -321,10 +309,11 @@ class Checks {
 
             else if (invite.guild.id !== '595318490240385037') {
                 const embed = Util.Embed(message.member)
-                    .setDescription(`\`${message.member.user.tag}\` has been banned by ${process.gideon.user.tag} because of \`automated anti-ads ban\`.`)
+                //@ts-ignore
+                    .setDescription(`\`${message.author.tag}\` has been banned by ${process.gideon.user.tag} because of \`automated anti-ads ban\`.`)
                     .setImage('https://media.discordapp.net/attachments/715564004621418577/769212118464725002/Homelander_2.gif');
 
-                const ban = await message.guild.members.ban(message.member, { days: 7, reason: 'automated anti-ads ban' }).catch(() => {
+                const ban = await message.guild.members.ban(message.author, { days: 7, reason: 'automated anti-ads ban' }).catch(() => {
                     message.reply(`Auto-ban failed!\n${admin} please ban \`${message.author.tag} (${message.author.id})\`.\nPlease make sure that my role is higher then theirs and that they're not the guild owner.`);
                 });
                 if (ban) return message.channel.send(embed); 
@@ -336,10 +325,10 @@ class Checks {
      * Bot collection guild check 
      * @param {Discord.Guild} guild 
      */
-    static async BotCheck(guild, Util) {
+    static async BotCheck(guild: Discord.Guild, Util: any) {
         if (['595318490240385037', '264445053596991498', '110373943822540800'].includes(guild.id)) return; 
         if (!guild.members || !guild.members.cache) await guild.members.fetch();
-        const bots = guild.members.cache.filter(x => x.user.bot).size;
+        const bots = guild.members.cache.filter((x: Discord.GuildMember) => x.user.bot).size;
 
         if (bots > 25) {
             const gb = {
@@ -355,10 +344,10 @@ class Checks {
             process.gideon.setGuild.run(gb);
             Util.log(`Guild \`${guild.name}\` has been blacklisted due to it being a bot collecting guild with \`${bots}\` bots!`);
 
-            const textchannels = guild.channels.cache.filter(c=> c.type == 'text');
-            const channels = textchannels.filter(c => c.permissionsFor(guild.me).has('SEND_MESSAGES'));
+            const textchannels = guild.channels.cache.filter((c: Discord.GuildChannel) => c.type == 'text');
+            const channels = textchannels.filter(c => c.permissionsFor((guild.me as Discord.GuildMember)).has('SEND_MESSAGES'));
             
-            if (channels.size) await channels.first().send(`This guild is banned for being a bot collecting guild (\`${bots}\` bots!)\nIf you believe this is an error please contact \`adrifcastr#0001\`.\nNow leaving this guild!\nhttps://discord.gg/h9SEQaU`).catch(ex => console.log(ex));
+            if (channels.size) await (channels.first() as Discord.TextChannel)?.send(`This guild is banned for being a bot collecting guild (\`${bots}\` bots!)\nIf you believe this is an error please contact \`adrifcastr#0001\`.\nNow leaving this guild!\nhttps://discord.gg/h9SEQaU`).catch((ex: Error) => console.log(ex));
 
             await guild.leave();
 
@@ -371,7 +360,7 @@ class Checks {
      * @param {Discord.GuildMember} newMember 
      * @param {Discord.User} newUser 
      */
-    static async NameCheck(newMember, newUser) {
+    static async NameCheck(newMember: Discord.GuildMember, newUser: Discord.User) {
         if (!process.gideon.guilds.cache.get('595318490240385037')) return;
         
         if (newMember) {
@@ -410,7 +399,7 @@ class Checks {
         }
 
         if (newUser) {
-            const member = process.gideon.guilds.cache.get('595318490240385037').members.cache.get(newUser.id);
+            const member = process.gideon.guilds.cache.get('595318490240385037')?.members.cache.get(newUser.id);
             if (!member) return;
 
             // eslint-disable-next-line no-control-regex
@@ -435,7 +424,7 @@ class Checks {
      * Check for flagged users 
      * @param {Discord.GuildMember} member
      */
-    static async AccCheck(member, Util) {
+    static async AccCheck(member: Discord.GuildMember, Util: any) {
         const flagged = process.gideon.getUser.get(member.id);
 
         if (flagged?.blacklist === 1) {
@@ -447,10 +436,10 @@ class Checks {
                 .then(Util.log(`Sent account warning about \`${member.user.tag}\` in \`${member.guild.name}\` to \`${guildowner.user.tag}\`!`))
                 .catch(async () => {
                     const textchannels = member.guild.channels.cache.filter(c=> c.type == 'text');
-                    const allowedchannels = textchannels.filter(c=> c.permissionsFor(member.guild.me).has('SEND_MESSAGES'));
+                    const allowedchannels = textchannels.filter(c => c.permissionsFor((member.guild.me as Discord.GuildMember)).has('SEND_MESSAGES'));
                     if (!allowedchannels.first()) return;
-                    allowedchannels.first().send(string);
-                    Util.log(`Sent account warning about \`${member.user.tag}\` to \`#${allowedchannels.first().name}\` at \`${member.guild.name}\`!`);
+                    (allowedchannels.first() as Discord.TextChannel)?.send(string);
+                    Util.log(`Sent account warning about \`${member.user.tag}\` to \`#${allowedchannels.first()?.name}\` at \`${member.guild.name}\`!`);
                 });
         }
     }
@@ -459,7 +448,7 @@ class Checks {
      * Check for blacklisted mentions 
      * @param {Discord.Message} message
      */
-    static BadMention(message) {
+    static BadMention(message: Discord.Message) {
         const mention = message.mentions.users.first();
         if (mention) {
             const badmention = process.gideon.getUser.get(mention.id);
@@ -473,8 +462,8 @@ class Checks {
      * Ghost ping detector
      * @param {Discord.Message} message
      */
-    static GPD(message, Util) {
-        let gd = process.gideon.getGuild?.get(message.guild.id);
+    static GPD(message: Discord.Message, Util: any) {
+        let gd = process.gideon.getGuild?.get(message.guild?.id);
         if (message.author?.bot) return;
         if (!gd) return;
         if (gd.gpd === 0) return;

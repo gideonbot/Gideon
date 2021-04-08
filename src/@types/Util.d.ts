@@ -214,3 +214,8 @@ interface InfoInterface {
     webChannel: { name: string; }
     network: { name: string; }
 }
+
+interface AbmTestValue {
+    match: boolean;
+    content?: string;
+}
