@@ -1,10 +1,12 @@
+//@ts-nocheck module typings need fixing
+import { CommandInteraction } from 'discord.js';
 import gideonapi from 'gideon-api';
 import Util from '../../Util.js';
 
 /**
-* @param {Discord.Interaction} interaction
+* @param {Discord.CommandInteraction} interaction
 */
-export async function run(interaction) {
+export async function run(interaction: CommandInteraction): Promise<void> {
     const soundtracks = await gideonapi.soundtracks();
 
     const stracks = Util.Embed('DC Show Soundtracks', null, interaction.member)

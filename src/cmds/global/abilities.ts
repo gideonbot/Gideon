@@ -1,17 +1,18 @@
-import Discord from 'discord.js';
 import Pagination from 'discord-paginationembed';
 import gideonapi from 'gideon-api';
 import Util from '../../Util.js';
+import { CommandInteraction, CommandInteractionOption, MessageEmbed, TextChannel, Message } from 'discord.js';
 
 /**
- * @param {Discord.Intercation} interaction
- * @param {object[]} args
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
  */
-export async function run(interaction, args) {
-    const abilities = await gideonapi.abilities();
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<Message | void> {
+    //@ts-ignore
+    const abilities = await gideonapi.abilities() as any;
 
     if (args[0].value === 'speedster') {
-        const sp1 = new Discord.MessageEmbed()
+        const sp1 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Speedsters possess the following abilities:__')
             .addField(abilities.speedsters.title1, abilities.speedsters.ability1, true)  
@@ -19,9 +20,9 @@ export async function run(interaction, args) {
             .addField(abilities.speedsters.title3, abilities.speedsters.ability3, true)  
             .addField(abilities.speedsters.title4, abilities.speedsters.ability4, true)  
             .addField(abilities.speedsters.title5, abilities.speedsters.ability5, true) 
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
-        const sp2 = new Discord.MessageEmbed()
+        const sp2 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Speedsters possess the following abilities:__')
             .addField(abilities.speedsters.title6, abilities.speedsters.ability6, true)
@@ -29,9 +30,9 @@ export async function run(interaction, args) {
             .addField(abilities.speedsters.title8, abilities.speedsters.ability8, true)
             .addField(abilities.speedsters.title9, abilities.speedsters.ability9, true)
             .addField(abilities.speedsters.title10, abilities.speedsters.ability10, true)   
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
-        const sp3 = new Discord.MessageEmbed()
+        const sp3 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Speedsters possess the following abilities:__')
             .addField(abilities.speedsters.title11, abilities.speedsters.ability11, true)  
@@ -39,9 +40,9 @@ export async function run(interaction, args) {
             .addField(abilities.speedsters.title13, abilities.speedsters.ability13, true)  
             .addField(abilities.speedsters.title14, abilities.speedsters.ability14, true)
             .addField(abilities.speedsters.title15, abilities.speedsters.ability15, true)
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
-        const sp4 = new Discord.MessageEmbed()
+        const sp4 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Speedsters possess the following abilities:__')
             .addField(abilities.speedsters.title16, abilities.speedsters.ability16, true)
@@ -49,9 +50,9 @@ export async function run(interaction, args) {
             .addField(abilities.speedsters.title18, abilities.speedsters.ability18, true)
             .addField(abilities.speedsters.title19, abilities.speedsters.ability19, true)
             .addField(abilities.speedsters.title20, abilities.speedsters.ability20, true)
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
-        const sp5 = new Discord.MessageEmbed()
+        const sp5 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Speedsters possess the following abilities:__')
             .addField(abilities.speedsters.title21, abilities.speedsters.ability21, true)
@@ -59,26 +60,26 @@ export async function run(interaction, args) {
             .addField(abilities.speedsters.title23, abilities.speedsters.ability23, true)
             .addField(abilities.speedsters.title24, abilities.speedsters.ability24, true)
             .addField(abilities.speedsters.title25, abilities.speedsters.ability25, true)
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
-        const sp6 = new Discord.MessageEmbed()
+        const sp6 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Speedsters possess the following abilities:__')
             .addField(abilities.speedsters.title26, abilities.speedsters.ability26, true)
             .addField(abilities.speedsters.title27, abilities.speedsters.ability27, true)
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
         const spembeds = [sp1, sp2, sp3, sp4, sp5, sp6];
         
-        new Pagination.Embeds()
+        return new Pagination.Embeds()
             .setArray(spembeds)
-            .setAuthorizedUsers([interaction.member.id])
-            .setChannel(interaction.channel)
+            .setAuthorizedUsers([interaction.user.id])
+            .setChannel(interaction.channel as TextChannel)
             .setPageIndicator(true)
             .setPage(1)
             .build();
     } else if (args[0].value === 'viber') {
-        const viber = new Discord.MessageEmbed()
+        const viber = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Vibers possess the following abilities:__') 
             .addField(abilities.vibers.title1, abilities.vibers.ability1, true)  
@@ -87,11 +88,11 @@ export async function run(interaction, args) {
             .addField(abilities.vibers.title4, abilities.vibers.ability4, true)
             .addField(abilities.vibers.title5, abilities.vibers.ability5, true)
             .addField(abilities.vibers.title6, abilities.vibers.ability6, true)
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
-        interaction.channel.send(viber);
+        return (interaction.channel as TextChannel)?.send(viber);
     } else if (args[0].value === 'kryptonian') {
-        const kr1 = new Discord.MessageEmbed()
+        const kr1 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Kryptonians possess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
             .addField(abilities.kryptonians.title1, abilities.kryptonians.ability1, true)  
@@ -99,9 +100,9 @@ export async function run(interaction, args) {
             .addField(abilities.kryptonians.title3, abilities.kryptonians.ability3, true)  
             .addField(abilities.kryptonians.title4, abilities.kryptonians.ability4, true)  
             .addField(abilities.kryptonians.title5, abilities.kryptonians.ability5, true)              
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
-        const kr2 = new Discord.MessageEmbed()
+        const kr2 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Kryptonians possess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
             .addField(abilities.kryptonians.title6, abilities.kryptonians.ability6, true)
@@ -109,9 +110,9 @@ export async function run(interaction, args) {
             .addField(abilities.kryptonians.title8, abilities.kryptonians.ability8, true)
             .addField(abilities.kryptonians.title9, abilities.kryptonians.ability9, true)
             .addField(abilities.kryptonians.title10, abilities.kryptonians.ability10, true)            
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
-        const kr3 = new Discord.MessageEmbed()
+        const kr3 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Kryptonians possess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
             .addField(abilities.kryptonians.title11, abilities.kryptonians.ability11, true)  
@@ -119,9 +120,9 @@ export async function run(interaction, args) {
             .addField(abilities.kryptonians.title13, abilities.kryptonians.ability13, true)  
             .addField(abilities.kryptonians.title14, abilities.kryptonians.ability14, true)
             .addField(abilities.kryptonians.title15, abilities.kryptonians.ability15, true)         
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
-        const kr4 = new Discord.MessageEmbed()
+        const kr4 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Kryptonians possess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
             .addField(abilities.kryptonians.title16, abilities.kryptonians.ability16, true)
@@ -129,9 +130,9 @@ export async function run(interaction, args) {
             .addField(abilities.kryptonians.title18, abilities.kryptonians.ability18, true)
             .addField(abilities.kryptonians.title19, abilities.kryptonians.ability19, true)
             .addField(abilities.kryptonians.title20, abilities.kryptonians.ability20, true)           
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
-        const kr5 = new Discord.MessageEmbed()
+        const kr5 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Kryptonians possess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
             .addField(abilities.kryptonians.title21, abilities.kryptonians.ability21, true)
@@ -139,23 +140,23 @@ export async function run(interaction, args) {
             .addField(abilities.kryptonians.title23, abilities.kryptonians.ability23, true)
             .addField(abilities.kryptonians.title24, abilities.kryptonians.ability24, true)
             .addField(abilities.kryptonians.title25, abilities.kryptonians.ability25, true)                 
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
-        const kr6 = new Discord.MessageEmbed()
+        const kr6 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Kryptonians possess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
             .addField(abilities.kryptonians.title26, abilities.kryptonians.ability26, true)
             .addField(abilities.kryptonians.title27, abilities.kryptonians.ability27, true) 
             .addField(abilities.kryptonians.title28, abilities.kryptonians.ability28, true)
             .addField(abilities.kryptonians.title29, abilities.kryptonians.ability29, true)             
-            .setFooter(Util.config.footer, process.gideon.user.avatarURL());
+            .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
         
         const krembeds = [kr1, kr2, kr3, kr4, kr5, kr6];
         
-        new Pagination.Embeds()
+        return new Pagination.Embeds()
             .setArray(krembeds)
-            .setAuthorizedUsers([interaction.member.id])
-            .setChannel(interaction.channel)
+            .setAuthorizedUsers([interaction.user.id])
+            .setChannel(interaction.channel as TextChannel)
             .setPageIndicator(true)
             .setPage(1)
             .build();

@@ -133,7 +133,7 @@ class Util {
     /**
      * Get image from imgur album
      * @param {string} imgid 
-     * @param {Discord.Interaction} interaction
+     * @param {Discord.CommandInteraction} interaction
      * @param {boolean} nsfw
      */
     static async IMG(imgid: string, interaction: Discord.Interaction, nsfw: boolean): Promise<void> {

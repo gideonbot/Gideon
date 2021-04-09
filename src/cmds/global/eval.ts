@@ -3,21 +3,22 @@ import Util from '../../Util.js';
 import Discord from 'discord.js';
 // eslint-disable-next-line no-unused-vars
 import moment from 'moment';
+import { CommandInteraction, CommandInteractionOption } from 'discord.js';
 
 /**
- * @param {Discord.Intercation} interaction
- * @param {object[]} args
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
  */
-export async function run(interaction, args) {
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
     const code = args[0].value;
-    const returnedValue = eval(code);
+    const returnedValue = eval(code as string);
 
     if (typeof returnedValue === 'undefined') {
         interaction.reply('The evaluated code returned nothing.');
         return;
     }
 
-    let printValue = '';
+    let printValue;
 
     if (typeof returnedValue === 'string') printValue = returnedValue;
     else if (typeof returnedValue === 'object') printValue = JSON.stringify(returnedValue, null, 2);
@@ -25,7 +26,7 @@ export async function run(interaction, args) {
 
     if (printValue == '{}') return;
 
-    return interaction.reply(Util.truncate(printValue, 1900, true), {code: true});
+    return interaction.reply(Util.truncate(printValue as string, 1900, true), {code: true});
 }
 
 export let help = {

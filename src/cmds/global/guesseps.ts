@@ -1,22 +1,24 @@
+//@ts-nocheck will do later
 import Util from '../../Util.js';
 import stringSimilarity from 'string-similarity';
+import { CommandInteraction, CommandInteractionOption, GuildMember, TextChannel, Message, User, MessageReaction } from 'discord.js';
 
 /**
- * @param {Discord.Intercation} interaction
- * @param {object[]} args
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
  */
-export async function run(interaction, args) {
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
     const url = 'https://arrowverse.info';
     const emotes = ['▶️', '669309980209446912'];
     let s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
-    let chosenfilter;
+    let chosenfilter: string;
     let tries = 3;
     let points = 0;
     let timerstart = new Date();
 
-    if (interaction.member.user.guessing) return interaction.reply(Util.Embed('A guessing game is already running!', null, interaction.member));
+    if (interaction.user.guessing) return interaction.reply(Util.Embed('A guessing game is already running!', undefined, interaction.member as GuildMember));
     
-    interaction.member.user.guessing = true;
+    interaction.user.guessing = true;
 
     let filters = [
         (x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray' && x.series !== 'Black Lightning'),
@@ -28,12 +30,12 @@ export async function run(interaction, args) {
         (x => x.series == 'Constantine')
     ];
 
-    let score = process.gideon.getScore.get(interaction.member.id);
+    let score = process.gideon.getScore.get(interaction.user.id);
     if (!score) {
         score = {
-            id: interaction.member.id,
-            user: interaction.member.user.tag,
-            guild: interaction.guild.id,
+            id: interaction.user.id,
+            user: interaction.user.tag,
+            guild: interaction.guild?.id,
             points: 0
         };
         process.gideon.setScore.run(score);
@@ -59,7 +61,8 @@ export async function run(interaction, args) {
     /**
      * @param {Date} airdate 
      */
-    function CalculateAirDatePoints(airdate) {
+    function CalculateAirDatePoints(airdate: Date) {
+        //@ts-ignore
         const difference = Math.floor(Math.floor(new Date() - new Date(airdate)) / (1000 * 60 * 60 * 24));
         return Math.round(difference / 100);
     }
@@ -68,7 +71,7 @@ export async function run(interaction, args) {
      * @param {Function} showfilter 
      * @returns {Promise<{embed: Discord.MessageEmbed, show: string, ep_and_s: string, airdate: Date, ep_name: string}>}
      */
-    async function GetGame(showfilter) {
+    async function GetGame(showfilter: string) {
         const body = await Util.fetchJSON('https://arrowverse.info/api');
 
         const shows = body.filter(showfilter);
@@ -79,11 +82,11 @@ export async function run(interaction, args) {
         const epname = randomep.episode_name;
         const epairdate = new Date(randomep.air_date);
 
-        const gameembed = Util.Embed(`Guessing game for ${interaction.member.user.tag}:`, {
+        const gameembed = Util.Embed(`Guessing game for ${interaction.user.tag}:`, {
             description: `Please guess the following Arrowverse episode's name:\n\`${show} ${epnum}\`\n\n(Press :arrow_forward: to skip this episode or <:stop:669309980209446912> to end this round)`,
             author: {
                 name: `You've got ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + 's' : s[1]} left!`,
-                value: interaction.member.user.avatarURL()
+                value: interaction.user.displayAvatarURL()
             },
             fields: [
                 {
@@ -97,33 +100,34 @@ export async function run(interaction, args) {
     }
 
     try {
+        //@ts-ignore
         let game = await GetGame(chosenfilter);
 
-        const f = m => m.author.id === interaction.member.id;
-        const collector = interaction.channel.createMessageCollector(f, {time: 30 * 1000});
+        const f = (m: Message) => m.author.id === interaction.user.id;
+        const collector = (interaction.channel as TextChannel)?.createMessageCollector(f, {time: 30 * 1000});
 
-        let sent = await interaction.channel.send(game.embed); //interaction.edit() not supported yet
+        let sent = await interaction.editReply(game.embed);
 
         for (let emoji of emotes) {
-            await sent.react(emoji).then(async () => { await Util.delay(2000); }, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
+            await sent?.react(emoji).then(async () => { await Util.delay(2000); }, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
         }
 
-        const rfilter = (reaction, user) => (emotes.includes(reaction.emoji.name) || emotes.includes(reaction.emoji.id)) && user.id === interaction.member.id;
-        const rcollector = sent.createReactionCollector(rfilter, {time: 30 * 1000});
+        const rfilter = (reaction: MessageReaction, user: User) => (emotes.includes(reaction.emoji.name) || emotes.includes(reaction.emoji.id as string)) && user.id === interaction.user.id;
+        const rcollector = sent?.createReactionCollector(rfilter, {time: 30 * 1000});
     
-        rcollector.on('collect', async (reaction, user) => {
+        rcollector?.on('collect', async (reaction, user) => {
             if (reaction.emoji.name == emotes[0]) {
                 tries = 3;
                 points = 0;
 
                 game = await GetGame(chosenfilter);
 
-                sent.reactions.cache.find(x => x.emoji.name == emotes[0]).users.remove(user.id);
+                sent?.reactions.cache.find(x => x.emoji.name == emotes[0])?.users.remove(user.id);
 
                 collector.resetTimer();
                 rcollector.resetTimer();
                 
-                await sent.edit(game.embed);
+                await sent?.edit(game.embed);
                 
                 timerstart = new Date();
                 return;
@@ -131,13 +135,13 @@ export async function run(interaction, args) {
 
             if (reaction.emoji.id == emotes[1]) {
                 collector.stop();
-                await sent.reactions.removeAll();
+                await sent?.reactions.removeAll();
 
-                const stopembed = Util.Embed(`Guessing game for ${interaction.member.user.tag}:`, {
+                const stopembed = Util.Embed(`Guessing game for ${interaction.user.tag}:`, {
                     description: 'Your game round has been cancelled! :white_check_mark:',
                     author: {
                         name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() > 1 ? s[1] + 's' : s[1]} left!`,
-                        icon: interaction.member.user.avatarURL()
+                        icon: interaction.user.displayAvatarURL()
                     },
                     fields: [
                         {
@@ -145,10 +149,10 @@ export async function run(interaction, args) {
                             value: `**[arrowverse.info](${url} '${url}')**`   
                         }
                     ]
-                }, interaction.member);
+                }, interaction.member as GuildMember);
 
-                interaction.member.user.guessing = false;
-                return sent.edit(stopembed);
+                interaction.user.guessing = false;
+                return sent?.edit(stopembed);
             }
         }); 
 
@@ -168,11 +172,11 @@ export async function run(interaction, args) {
                 process.gideon.setScore.run(score);
                 tries--;
 
-                const correctembed = Util.Embed(`Guessing game for ${interaction.member.user.tag}:`, {
+                const correctembed = Util.Embed(`Guessing game for ${interaction.user.tag}:`, {
                     description: `That is correct! :white_check_mark:\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\`\n\n**You have gained \`${points}\` ${points > 1 ? s[2] + 's' : s[2]}!**\n(Airdate point bonus: \`+${airdate_bonus}\`)`,
                     author: {
                         name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + 's' : s[1]} left!`,
-                        icon: interaction.member.user.avatarURL()
+                        icon: interaction.user.displayAvatarURL()
                     },
                     fields: [
                         {
@@ -180,22 +184,22 @@ export async function run(interaction, args) {
                             value: `**[arrowverse.info](${url} '${url}')**`
                         }
                     ]
-                }, interaction.member);
+                }, interaction.member as GuildMember);
 
-                interaction.member.user.guessing = false;
-                await sent.edit(correctembed);
-                return sent.reactions.removeAll();
+                interaction.user.guessing = false;
+                await sent?.edit(correctembed);
+                return sent?.reactions.removeAll();
             }
 
             tries--;
             let question = `\`${game.show} ${game.ep_and_s}\``;
             let solution = `\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``;
 
-            const incorrectembed = Util.Embed(`Guessing game for ${interaction.member.user.tag}:`, {
+            const incorrectembed = Util.Embed(`Guessing game for ${interaction.user.tag}:`, {
                 description: `That is incorrect! :x:\n${tries == 0 ? solution : question}`,
                 author: {
                     name: `You've ${tries == 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + 's' : s[1]} left!`,
-                    icon: interaction.member.user.avatarURL()
+                    icon: interaction.user.displayAvatarURL()
                 },
                 fields: [
                     {
@@ -203,25 +207,25 @@ export async function run(interaction, args) {
                         value: `**[arrowverse.info](${url} '${url}')**`
                     }
                 ]
-            }, interaction.member);
+            }, interaction.member as GuildMember);
 
             if (tries == 0) {
                 collector.stop();
-                interaction.member.user.guessing = false;
-                await sent.reactions.removeAll();
-                return sent.edit(incorrectembed);
+                interaction.user.guessing = false;
+                await sent?.reactions.removeAll();
+                return sent?.edit(incorrectembed);
             }
 
-            else await sent.edit(incorrectembed);
+            else await sent?.edit(incorrectembed);
         });
     
         collector.on('end', async (collected, reason) => {
             if (reason === 'time') {
-                const timeouttembed = Util.Embed(`Guessing game for ${interaction.member.user.tag}:`, {
+                const timeouttembed = Util.Embed(`Guessing game for ${interaction.user.tag}:`, {
                     description: `You ran out of time!\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``,
                     author: {
                         name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} left!`,
-                        icon: interaction.member.user.avatarURL()
+                        icon: interaction.user.displayAvatarURL()
                     },
                     fields: [
                         {
@@ -229,11 +233,11 @@ export async function run(interaction, args) {
                             value: `**[arrowverse.info](${url} '${url}')**`
                         }
                     ]
-                }, interaction.member);
+                }, interaction.member as GuildMember);
 
-                interaction.member.user.guessing = false;
-                await sent.reactions.removeAll();
-                return sent.edit(timeouttembed);
+                interaction.user.guessing = false;
+                await sent?.reactions.removeAll();
+                return sent?.edit(timeouttembed);
             }
         });
     }

@@ -1,14 +1,18 @@
+// @ts-nocheck sry will fix later
 import Util from '../../Util.js';
 import moment from 'moment';
+import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
 
 /**
- * @param {Discord.Interaction} interaction
- * @param {object[]} args
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
  */
-export async function run(interaction, args) {
-    if (interaction.member.user.guessing) return interaction.reply('No cheating while your guessing game is active!');
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+    if (interaction.user.guessing) return interaction.reply('No cheating while your guessing game is active!');
 
+    //@ts-ignore
     let info = { season: args[0].options[1].value,
+        //@ts-ignore
         episode: args[0].options[2].value 
     };
 
@@ -117,7 +121,7 @@ export async function run(interaction, args) {
 
     const body = await Util.fetchJSON(api);
 
-    if (body.status === 404) return interaction.reply(Util.Embed('There was no data for this episode!', null, interaction.member));
+    if (body.status === 404) return interaction.reply(Util.Embed('There was no data for this episode!', undefined, interaction.member as GuildMember));
     
     let sp = '';
     let today = new Date();
@@ -140,7 +144,7 @@ export async function run(interaction, args) {
     return interaction.reply(Util.Embed(`${show.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
         description: sp + desc + sp + `\n\nAirdate: \`${moment(airdate).isValid() ? airdate.toDateString() : 'No Airdate Available'}\`\nAirtime: \`${body.airtime === '' ? 'No Airtime Available' : timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Full recap & trailer](${body.url} '${body.url}')**`,
         image: img
-    }, interaction.member));
+    }, interaction.member as GuildMember));
 }
 export const help = {
     id: '787001899643305985',

@@ -1,16 +1,17 @@
 import Util from '../../Util.js';
+import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
 
 /**
-* @param {Discord.Interaction} interaction
-* @param {object[]} args
-*/
-export async function run(interaction, args) {
-    const auth = interaction.member.user;
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
+ */
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+    const auth = interaction.user;
 
-    const user = await process.gideon.users.fetch(args[1].value);
+    const user = await process.gideon.users.fetch(args[1].value as string);
 
-    if (user.id === auth.id || user.id === process.gideon.user.id) return interaction.reply(Util.Embed().setTitle('My protocols forbid any kind of self-harm!'));
-    //else if (user.bot) return interaction.reply(Util.Embed().setTitle('Please mention a human!'));
+    if (user.id === auth.id || user.id === process.gideon.user?.id) return interaction.reply(Util.Embed().setTitle('My protocols forbid any kind of self-harm!'));
+    else if (user.bot) return interaction.reply(Util.Embed().setTitle('Please mention a human!'));
 
     const attacks = [
         {
@@ -154,10 +155,10 @@ export async function run(interaction, args) {
     else if (args[0].value === 'devil') attack = attacks[16];
     else if (args[0].value === 'staff') attack = attacks[19];
 
-    return interaction.reply(Util.Embed(null, {
-        description: `**${attack.emote}${auth} ${attack.text}${attack.emote}**\n\n${attack.desc}`,
-        image: attack.attackgif
-    }, interaction.member));
+    return interaction.reply(Util.Embed(undefined, {
+        description: `**${attack?.emote}${auth} ${attack?.text}${attack?.emote}**\n\n${attack?.desc}`,
+        image: attack?.attackgif
+    }, interaction.member as GuildMember));
 }
 
 export let help = {

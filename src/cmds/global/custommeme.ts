@@ -1,15 +1,15 @@
-import Discord from 'discord.js';
 import Canvas from 'canvas';
 import Util from '../../Util.js';
+import { CommandInteraction, CommandInteractionOption, GuildMember, MessageAttachment } from 'discord.js';
 
 /**
- * @param {Discord.Intercation} interaction
- * @param {object[]} args
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
  */
-export async function run(interaction, args) {
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
     const canvas = Canvas.createCanvas(560, 560);
 
-    function wrapText (ctx, text, x, y, maxWidth, lineHeight) {
+    function wrapText (ctx: Canvas.CanvasRenderingContext2D, text: string, x: number, y: number, maxWidth: number, lineHeight: number) {
     
         let words = text.split(' '),
             line = '',
@@ -56,14 +56,15 @@ export async function run(interaction, args) {
 
     ctx.font = '30px sans-serif';
     ctx.fillStyle = '#000000';
-    wrapText(ctx, args[0].value.trim(), 300, 40, 260, 35);
+    wrapText(ctx, (args[0].value as string).trim(), 300, 40, 260, 35);
 
     ctx.font = '30px sans-serif';
     ctx.fillStyle = '#000000';
-    wrapText(ctx, args[1].value.trim(), 300, 315, 260, 35);
+    wrapText(ctx, (args[0].value as string).trim(), 300, 315, 260, 35);
 
-    const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'sgmeme.jpg');
-    return interaction.channel.send(Util.Embed().attachFiles(attachment).setImage('attachment://sgmeme.jpg')); //interactions don't support attachments yet
+    const attachment = new MessageAttachment(canvas.toBuffer(), 'sgmeme.jpg');
+    //@ts-ignore
+    return interaction.reply(Util.Embed().attachFiles(attachment).setImage('attachment://sgmeme.jpg'));
 }
 
 export let help = {

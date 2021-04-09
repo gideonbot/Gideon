@@ -1,13 +1,15 @@
 import Util from '../../Util.js';
+import { CommandInteraction, CommandInteractionOption, TextChannel } from 'discord.js';
 
 /**
-* @param {Discord.Interaction} interaction
-* @param {object[]} args
-*/
-export async function run(interaction, args) {
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
+ */
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+    //@ts-ignore
     const setting = args[0].options[0].value;
 
-    let guildsettings = process.gideon.getGuild.get(interaction.guild.id);
+    let guildsettings = process.gideon.getGuild.get(interaction.guild?.id);
 
     if (setting === 'cvm_on') {
         guildsettings.cvmval = 1;
@@ -49,11 +51,11 @@ export async function run(interaction, args) {
         process.gideon.setGuild.run(guildsettings);
         return interaction.reply('Ghost Ping Detector disabled! :white_check_mark:');
     }
-    else if (Util.ValID(setting)) {
-        const channel = process.gideon.channels.cache.get(setting);
+    else if (Util.ValID(setting as string)) {
+        const channel = process.gideon.channels.cache.get(setting as string);
         guildsettings.chatchnl = setting;
         process.gideon.setGuild.run(guildsettings);
-        interaction.reply(`Set AI chat channel for \`${interaction.guild.name}\` to \`#${channel.name}\`! :white_check_mark:\n\nAll messages in this channel will now be interpreted as AI chat and no commands will be usable!`);
+        interaction.reply(`Set AI chat channel for \`${interaction.guild?.name}\` to \`#${(channel as TextChannel)?.name}\`! :white_check_mark:\n\nAll messages in this channel will now be interpreted as AI chat and no commands will be usable!`);
     }
 }
 

@@ -1,14 +1,15 @@
+import { CommandInteraction, GuildMember } from 'discord.js';
 import Util from '../../Util.js';
 
 /**
-* @param {Discord.Interaction} interaction
+* @param {Discord.CommandInteraction} interaction
 */
-export async function run(interaction) {    
+export async function run(interaction: CommandInteraction) {    
     interaction.reply('Booting up the Multiverse Holo Projector...');
     await Util.delay(1000);
-    interaction.reply('Calling...');
+    interaction.editReply('Calling...');
     await Util.delay(1000);
-    interaction.reply('...');
+    interaction.editReply('...');
     await Util.delay(1000);
 
     const arr = [
@@ -69,7 +70,8 @@ export async function run(interaction) {
     ];
 
     let result = arr[Math.floor(Math.random() * arr.length)];
-    return interaction.reply(`You have reached out to Earth-${result.en}`, {embed: Util.Embed(result.title, {description: result.desc, image: result.gif}, interaction.member)});  
+    //@ts-ignore
+    return interaction.editReply(`You have reached out to Earth-${result.en}`, { embed: Util.Embed(result.title, {description: result.desc, image: result.gif}, interaction.member as GuildMember) });  
 }
 
 export let help = {

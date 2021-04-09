@@ -1,10 +1,11 @@
+import { CommandInteraction, GuildMember } from 'discord.js';
 import Util from '../../Util.js';
 
 /**
-* @param {Discord.Interaction} interaction
+* @param {Discord.CommandInteraction} interaction
 */
-export async function run(interaction) {
-    let leaderboard = Util.Embed('Top 10 Leaderboard:', null, interaction.member);
+export async function run(interaction: CommandInteraction): Promise<void> {
+    let leaderboard = Util.Embed('Top 10 Leaderboard:', undefined, interaction.member as GuildMember);
 
     let top10 = process.gideon.getTop10.all().filter(x => x.points > 0);
 

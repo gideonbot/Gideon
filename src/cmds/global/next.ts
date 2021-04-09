@@ -1,14 +1,16 @@
+//@ts-nocheck will do later
 import Util from '../../Util.js';
+import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
 
 /**
- * @param {Discord.Interaction} interaction
- * @param {string[]} args
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
  */
-export async function run(interaction, args) {
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
     const url = 'https://arrowverse.info';
     const api = 'https://arrowverse.info/api';
-    let showtitle;
-    let thimg;
+    let showtitle: string;
+    let thimg: string;
     
     if (args[0].value === 'show_fl') showtitle = 'The Flash';
     else if (args[0].value === 'show_ar') showtitle = 'Arrow';
@@ -17,12 +19,12 @@ export async function run(interaction, args) {
     else if (args[0].value === 'show_co') showtitle = 'Constantine';
     else if (args[0].value === 'show_bw') showtitle = 'Batwoman';
 
-    const body = await Util.fetchJSON(api);
+    const body = await Util.fetchJSON(api) as any;
 
-    let fiep = { season: args[1].value,
+    let fiep: any = { season: args[1].value,
         episode: args[2].value 
     };
-    fiep = 'S' + Util.normalize(fiep.season) + 'E' + Util.normalize(fiep.episode);
+    fiep = 'S' + Util.normalize(fiep.season as number) + 'E' + Util.normalize(fiep.episode as number);
 
     let shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
 

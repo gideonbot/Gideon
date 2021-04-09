@@ -1,9 +1,10 @@
+import { CommandInteraction, GuildMember } from 'discord.js';
 import Util from '../../Util.js';
 
 /**
-* @param {Discord.Interaction} interaction
+* @param {Discord.CommandInteraction} interaction
 */
-export async function run(interaction) {
+export async function run(interaction: CommandInteraction): Promise<void> {
 
     const fields = [
         {name: 'adrifcastr', value: 'Development, maintenance & domain'},
@@ -14,7 +15,7 @@ export async function run(interaction) {
         {name: '7coil', value: 'PR [#24](https://github.com/adrifcastr/Gideon/pull/24) and [#25](https://github.com/adrifcastr/Gideon/pull/25)'}
     ];
 
-    return interaction.reply(Util.Embed('Development Credits:', {fields: fields, thumbnail: process.gideon.user.avatarURL()}, interaction.member));
+    return interaction.reply(Util.Embed('Development Credits:', {fields: fields, thumbnail: process.gideon.user?.avatarURL() as string}, interaction.member as GuildMember));
 }
 
 export let help = {

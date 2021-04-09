@@ -1,9 +1,10 @@
+import { CommandInteraction, GuildMember } from 'discord.js';
 import Util from '../../Util.js';
 
 /**
-* @param {Discord.Interaction} interaction
+* @param {Discord.CommandInteraction} interaction
 */
-export async function run(interaction) {
+export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(Util.Embed('Donations', {
         description: 'Donations are gladly accepted. \nPlease send them to one of the options below. \nDonating supports the development, maintenance and hosting of this project. \nThank you!',
         thumbnail: 'https://i.imgur.com/f3fvsRe.png',
@@ -17,7 +18,7 @@ export async function run(interaction) {
                 value: '[Patreon.com](https://www.patreon.com/gideonbot \'https://www.patreon.com/gideonbot\')'
             }
         ]
-    }, interaction.member));
+    }, interaction.member as GuildMember));
 }
 
 export let help = {

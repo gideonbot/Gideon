@@ -250,7 +250,7 @@ class Checks {
 
     /**
      * Ignore commands from blacklisted users
-     * @param {Discord.Interaction} interaction 
+     * @param {Discord.CommandInteraction} interaction 
      * @returns {boolean}
      */
     static IBU(interaction: Discord.Interaction) {

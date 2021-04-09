@@ -1,17 +1,18 @@
+import { CommandInteraction, GuildMember } from 'discord.js';
 import Util from '../../Util.js';
 
 /**
- * @param {Discord.Interaction} interaction
+ * @param {Discord.CommandInteraction} interaction
  * @param {object[]} args
  */
-export async function run(interaction) {
-    const embed = Util.Embed('__Upcoming Arrowverse episodes:__', null, interaction.member);
+export async function run(interaction: CommandInteraction): Promise<void> {
+    const embed = Util.Embed('__Upcoming Arrowverse episodes:__', undefined, interaction.member as GuildMember);
 
-    for (let show in process.gideon.dc_show_urls) {
+    for (let show in process.gideon.show_api_urls) {
         try {
-            let ep_info = process.gideon.cache.dceps.get(show);
+            let ep_info = process.gideon.cache.nxeps.get(show);
             if (!ep_info) {
-                Util.log('No ep_info for ' + show + ' when calling dceps!');
+                Util.log('No ep_info for ' + show + ' when calling nxeps!');
                 continue;
             }
             
@@ -29,7 +30,7 @@ export async function run(interaction) {
 }
 
 export let help = {
-    id: '786983452230680616',
+    id: '786983244549718036',
     owner: false,
     voice: true,
     nsfw: false,

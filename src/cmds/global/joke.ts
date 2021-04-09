@@ -1,11 +1,13 @@
+//@ts-nocheck will do later
 import Discord from 'discord.js';
 import Util from '../../Util.js';
+import { CommandInteraction, CommandInteractionOption } from 'discord.js';
 
 /**
- * @param {Discord.Intercation} interaction
- * @param {object[]} args
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
  */
-export async function run(interaction, args) {
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
     let type = 'Any';
 
     let types = {
@@ -22,7 +24,7 @@ export async function run(interaction, args) {
     }
 
     const url = 'https://sv443.net/jokeapi/v2/joke/' + type + '?type=single';
-    const body = await Util.fetchJSON(url);
+    const body = await Util.fetchJSON(url) as any;
 
     let category = process.gideon.cache.jokes.get(body.category);
 
@@ -31,9 +33,9 @@ export async function run(interaction, args) {
         category = process.gideon.cache.jokes.get(body.category);
     }
 
-    if (!category.has(body.id)) category.set(body.id, body.joke);
+    if (!category?.has(body.id)) category?.set(body.id, body.joke);
 
-    if (!interaction.guild.last_jokes) interaction.guild.last_jokes = [];
+    if (!interaction.guild?.last_jokes) interaction.guild.last_jokes = [];
 
     let last_jokes = interaction.guild.last_jokes;
 

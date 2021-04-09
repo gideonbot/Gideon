@@ -1,13 +1,15 @@
 import Util from '../../Util.js';
+import { CommandInteraction, CommandInteractionOption, GuildMember, TextChannel } from 'discord.js';
 
 /**
- * @param {Discord.Interaction} interaction
- * @param {object[]} args
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
  */
-export async function run(interaction, args) {
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+    //@ts-ignore
     const id = args[0].options[0].value;
-    if (!Util.ValID(id)) return interaction.reply('Please provide a valid id!');
-
+    if (!Util.ValID(id as string)) return interaction.reply('Please provide a valid id!');
+    //@ts-ignore
     if (args[0].options[0].name === 'userid') {
         let ub = process.gideon.getUser.get(id);
         if (!ub) {
@@ -49,11 +51,11 @@ export async function run(interaction, args) {
             process.gideon.setGuild.run(gb);
             interaction.reply(`Guild \`${id}\` has been blacklisted!`);
             
-            let guild = process.gideon.guilds.cache.get(id);
+            let guild = process.gideon.guilds.cache.get(id as string);
             if (guild) {
                 const textchannels = guild.channels.cache.filter(c => c.type == 'text');
-                const channels = textchannels.filter(c => c.permissionsFor(guild.me).has('SEND_MESSAGES'));
-                if (channels.size > 0) await channels.first().send('This guild or this guild\'s owner is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
+                const channels = textchannels.filter(c => c.permissionsFor(guild?.me as GuildMember).has('SEND_MESSAGES'));
+                if (channels.size > 0) await (channels.first() as TextChannel)?.send('This guild or this guild\'s owner is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
                 guild.leave();
             }
         }

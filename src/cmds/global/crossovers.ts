@@ -1,10 +1,11 @@
+import { CommandInteraction, GuildMember, Permissions } from 'discord.js';
 import Util from '../../Util.js';
 
 /**
-* @param {Discord.Interaction} interaction
+* @param {Discord.CommandInteraction} interaction
  */
-export async function run(interaction) {
-    const embed = Util.Embed('__All Arrowverse crossover episodes in their respective watching order:__', null, interaction.member)
+export async function run(interaction: CommandInteraction): Promise<void> {
+    const embed = Util.Embed('__All Arrowverse crossover episodes in their respective watching order:__', undefined, interaction.member as GuildMember)
         .addField('Flash vs. Arrow', 'The Flash 1x08 - Flash vs. Arrow\nArrow 3x08 - The Brave and the Bold')  
         .addField('Heroes Join Forces', 'The Flash 2x08 - Legends of Today\nArrow 4x08 - Legends of Yesterday')  
         .addField('Worlds Finest', 'The Flash 2x18 - Versus Zoom\nSupergirl 1x18 - Worlds Finest')  
@@ -14,7 +15,7 @@ export async function run(interaction) {
         .addField('Elseworlds', 'The Flash 5x09 - Elseworlds, Part 1\nArrow 7x09 - Elseworlds, Part 2\nSupergirl 4x09 - Elseworlds, Part 3')
         .addField('Crisis On Infinite Earths', 'Supergirl 5x09 - Crisis on Infinite Earths: Hour One\nBatwoman 1x09 - Crisis on Infinite Earths: Hour Two\nThe Flash 6x09 - Crisis on Infinite Earths: Hour Three\nArrow 8x09 - Crisis on Infinite Earths: Hour Four\nDC\'s Legends of Tomorrow 5x00 - Crisis on Infinite Earths: Hour Five');
 
-    interaction.reply(embed);
+    return interaction.reply(embed);
 }
 
 export let help = {
@@ -23,5 +24,5 @@ export let help = {
     nsfw: false,
     roles: [],
     user_perms: [],
-    bot_perms: ['MANAGE_MESSAGES', 'ADD_REACTIONS']
+    bot_perms: [Permissions.FLAGS.MANAGE_MESSAGES, Permissions.FLAGS.ADD_REACTIONS]
 };

@@ -1,14 +1,16 @@
+//@ts-nocheck typings are missing
 import OpenSubtitles from 'opensubtitles-api';
 import Util from '../../Util.js';
+import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
 
 /**
- * @param {Discord.Interaction} interaction
- * @param {object[]} args
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
  */
-export async function run(interaction, args) {
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
     if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
         Util.log('Missing env variables for subs command!');
-        return interaction.reply(Util.Embed('This command is currently not available', null, interaction.member));
+        return interaction.reply(Util.Embed('This command is currently not available', undefined, interaction.member as GuildMember));
     }
 
     const OS = new OpenSubtitles({

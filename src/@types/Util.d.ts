@@ -75,6 +75,10 @@ declare module 'discord.js' {
         voice: boolean;
         cleverbot: boolean;
     }
+
+    interface User {
+        guessing: boolean
+    }
 }
 
 declare global {

@@ -1,10 +1,12 @@
+//@ts-nocheck missing interfaces for json res
 import Util from '../../Util.js';
+import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
 
 /**
- * @param {Discord.Interaction} interaction
- * @param {object[]} args
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
  */
-export async function run(interaction, args) {
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
     let wikis = [
         {
             url: 'arrow.fandom.com',
@@ -59,13 +61,13 @@ export async function run(interaction, args) {
 
     let search_term = args[1].value;
 
-    const search_api = encodeURI(`https://${wiki.url}/api/v1/SearchSuggestions/List?query=${search_term}`);
+    const search_api = encodeURI(`https://${wiki?.url}/api/v1/SearchSuggestions/List?query=${search_term}`);
 
     const search = await Util.fetchJSON(search_api);
 
     if (search?.items?.length === 1) search_term = search.items[0].title;
 
-    const api = encodeURI(`https://${wiki.url}/api/v1/Articles/Details?ids=50&titles=${search_term}&abstract=500&width=200&height=200`);
+    const api = encodeURI(`https://${wiki?.url}/api/v1/Articles/Details?ids=50&titles=${search_term}&abstract=500&width=200&height=200`);
 
     const body = await Util.fetchJSON(api);
 
@@ -75,20 +77,20 @@ export async function run(interaction, args) {
             wikis.indexOf(wiki) == 6 ? 1 : 0 || 
             wikis.indexOf(wiki) == 8 ? 1 : 0];
 
-    if (!article) return interaction.reply(Util.Embed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki (use \`wiki help\`)`, null, interaction.member));
-    if (Object.keys(body.items).length < 1) return interaction.reply(Util.Embed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki (use \`wiki help\`)`, null, interaction.member));
+    if (!article) return interaction.reply(Util.Embed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki (use \`wiki help\`)`, undefined, interaction.member as GuildMember));
+    if (Object.keys(body.items).length < 1) return interaction.reply(Util.Embed(`There was no result for ${search_term} on the ${wiki?.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki (use \`wiki help\`)`, undefined, interaction.member as GuildMember));
     const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
 
     let st = '';
-    let cvm = process.gideon.getGuild.get(interaction.guild.id);
+    let cvm = process.gideon.getGuild.get(interaction.guild?.id);
     if (cvm) {
         if (cvm.cvmval === 1) st = '||';
     }
 
     return interaction.reply(Util.Embed(article.title, {
-        description: `${st}${article.abstract}${st}\n\n**[Click here to read the full article](https://${wiki.url}${url} 'https://${wiki.url}${url}')**`,
+        description: `${st}${article.abstract}${st}\n\n**[Click here to read the full article](https://${wiki?.url}${url} 'https://${wiki?.url}${url}')**`,
         thumbnail: article.thumbnail
-    }, interaction.member)); 
+    }, interaction.member as GuildMember)); 
 }
 
 export let help = {

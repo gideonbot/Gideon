@@ -1,9 +1,10 @@
+import { CommandInteraction, Collection, Guild, GuildMember } from 'discord.js';
 import Util from '../../Util.js';
 
 /**
-* @param {Discord.Interaction} interaction
+* @param {Discord.CommandInteraction} interaction
 */
-export async function run(interaction) {
+export async function run(interaction: CommandInteraction): Promise<void> {
     const cmds = process.gideon.getStat.get('commands_ran').value + 1;
     const msgs = process.gideon.getStat.get('messages_sent').value + 1;
     const aimsgs =  process.gideon.getStat.get('ai_chat_messages_processed').value;
@@ -13,11 +14,11 @@ export async function run(interaction) {
         guilds = [].concat.apply([], guilds);
     }
     
-    const users = guilds.reduce((r, d) => r + d.memberCount, 0);
+    const users = (guilds as unknown as Collection<string, Guild>).reduce((r, d) => r + d.memberCount, 0);
 
     return interaction.reply(Util.Embed('Gideon\'s stats:', 
-        {description: `Total guilds: \`${guilds.length}\`\nTotal users: \`${users.toLocaleString('de-DE')}\`\nUsed commands: \`${cmds.toLocaleString('de-DE')}\`\nMessages sent: \`${msgs.toLocaleString('de-DE')}\`\nAI chat messages: \`${aimsgs.toLocaleString('de-DE')}\``
-        }, interaction.member)
+        {description: `Total guilds: \`${(guilds as unknown as string[]).length}\`\nTotal users: \`${users.toLocaleString('de-DE')}\`\nUsed commands: \`${cmds.toLocaleString('de-DE')}\`\nMessages sent: \`${msgs.toLocaleString('de-DE')}\`\nAI chat messages: \`${aimsgs.toLocaleString('de-DE')}\``
+        }, interaction.member as GuildMember)
     );  
 }
 

@@ -1,13 +1,14 @@
 /* eslint-disable no-unreachable */
+import { CommandInteraction, GuildMember, Permissions } from 'discord.js';
 import Util from '../../Util.js';
 
 /**
-* @param {Discord.Interaction} interaction
+* @param {Discord.CommandInteraction} interaction
 */
-export async function run(interaction) {
+export async function run(interaction: CommandInteraction): Promise<void> {
     try {
-        const acembed = Util.Embed('Blowing up S.T.A.R. Labs. Particle Accelerator...', {image: 'https://i.imgur.com/opCbZTn.gif'}, interaction.member);
-        let sent = await interaction.channel.send(acembed);
+        const acembed = Util.Embed('Blowing up S.T.A.R. Labs. Particle Accelerator...', {image: 'https://i.imgur.com/opCbZTn.gif'}, interaction.member as GuildMember);
+        let sent = await interaction.reply(acembed);
 
         await Util.delay(10000);
 
@@ -44,14 +45,14 @@ export async function run(interaction) {
         const pwrembed = Util.Embed(result.title, {
             description: result.desc,
             image: result.gif
-        }, interaction.member);
+        }, interaction.member as GuildMember);
 
-        await sent.edit(pwrembed); //interaction edit method not yet in interactions PR
+        await interaction.editReply(pwrembed);
     }
     
     catch (ex) {
         Util.log('Exception occurred while starting up the particle accelerator ' + ex.stack);
-        return interaction.reply('An error occurred while trying to start the particle accelerator!', { ephemeral: true, hideSource: true });
+        return interaction.reply('An error occurred while trying to start the particle accelerator!', { ephemeral: true });
     } 
 }
 
@@ -61,5 +62,5 @@ export let help = {
     nsfw: false,
     roles: [],
     user_perms: [],
-    bot_perms: ['MANAGE_MESSAGES']
+    bot_perms: [Permissions.FLAGS.MANAGE_MESSAGES]
 };
