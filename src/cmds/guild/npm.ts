@@ -1,20 +1,21 @@
 import Util from '../../Util.js';
 import exec from 'child_process';
+import { CommandInteraction, CommandInteractionOption } from 'discord.js';
 
 /**
- * @param {Discord.Interaction} interaction
- * @param {object[]} args
+ * @param {Discord.CommandInteraction} interaction
+ * @param {CommandInteractionOption[]} args
  */
-export async function run(interaction, args) {
+export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
     if (args[0].value === 'i') {
         interaction.reply('running `npm install` please check <#622415301144870932> for console output!');
         const install = exec.exec('npm install');
 
-        install.stdout.on('data', data => Util.log('```\n' + data + '```'));
+        install.stdout?.on('data', data => Util.log('```\n' + data + '```'));
 
-        install.stdout.on('end', async () => {
+        install.stdout?.on('end', async () => {
             await interaction.reply('`npm install` ran succesfully!\nNow respawning all shards... :white_check_mark:');
-            process.gideon.shard.respawnAll();
+            process.gideon.shard?.respawnAll();
         });
     }
 
@@ -22,23 +23,24 @@ export async function run(interaction, args) {
         interaction.reply('running `npm update` please check <#622415301144870932> for console output!');
         const update = exec.exec('npm update');
 
-        update.stdout.on('data', data => Util.log('```\n' + data + '```'));
+        update.stdout?.on('data', data => Util.log('```\n' + data + '```'));
 
-        update.stdout.on('end', async () => {
+        update.stdout?.on('end', async () => {
             await interaction.reply('`npm update` ran succesfully!\nNow respawning all shards... :white_check_mark:');
-            process.gideon.shard.respawnAll();
+            process.gideon.shard?.respawnAll();
         });
     }
 
     if (args[0].value === 'af') {
         interaction.reply('running `npm audit fix` please check <#622415301144870932> for console output!');
+        //@ts-ignore
         const update = exec('npm audit fix');
 
-        update.stdout.on('data', data => Util.log('```\n' + data + '```'));
+        update.stdout.on('data', (data: string) => Util.log('```\n' + data + '```'));
 
         update.stdout.on('end', async () => {
             await interaction.reply('`npm audit fix` ran succesfully!\nNow respawning all shards... :white_check_mark:');
-            process.gideon.shard.respawnAll();
+            process.gideon.shard?.respawnAll();
         });
     }
 }
