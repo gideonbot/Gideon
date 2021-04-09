@@ -1,6 +1,6 @@
 import Discord from 'discord.js';
 import fetch from 'node-fetch';
-import config from './data/config/config.js';
+import config from './config/config.js';
 import SQL from './Util/SQL.js';
 import Checks from './Util/Checks.js';
 import MsgHandler from './Util/MessageHandler.js';
