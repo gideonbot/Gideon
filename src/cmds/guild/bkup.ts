@@ -1,13 +1,13 @@
-import { CommandInteraction } from 'discord.js';
+import { CommandInteraction, Message } from 'discord.js';
 import Util from '../../Util.js';
 
 /**
 * @param {Discord.CommandInteraction} interaction
 */
-export async function run(interaction: CommandInteraction): Promise<void> {
+export async function run(interaction: CommandInteraction): Promise<Message | null> {
     interaction.reply('Performing database backup, please wait...');
     await Util.SQLBkup();
-    return interaction.reply('Database backup complete! Please check <#622415301144870932>! :white_check_mark:');
+    return interaction.editReply('Database backup complete! Please check <#622415301144870932>! :white_check_mark:');
 }
 
 export let help = {
