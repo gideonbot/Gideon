@@ -14,7 +14,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
         install.stdout?.on('data', data => Util.log('```\n' + data + '```'));
 
         install.stdout?.on('end', async () => {
-            await interaction.reply('`npm install` ran succesfully!\nNow respawning all shards... :white_check_mark:');
+            await interaction.editReply('`npm install` ran succesfully!\nNow respawning all shards... :white_check_mark:');
             process.gideon.shard?.respawnAll();
         });
     }
@@ -26,7 +26,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
         update.stdout?.on('data', data => Util.log('```\n' + data + '```'));
 
         update.stdout?.on('end', async () => {
-            await interaction.reply('`npm update` ran succesfully!\nNow respawning all shards... :white_check_mark:');
+            await interaction.editReply('`npm update` ran succesfully!\nNow respawning all shards... :white_check_mark:');
             process.gideon.shard?.respawnAll();
         });
     }
@@ -39,7 +39,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
         update.stdout.on('data', (data: string) => Util.log('```\n' + data + '```'));
 
         update.stdout.on('end', async () => {
-            await interaction.reply('`npm audit fix` ran succesfully!\nNow respawning all shards... :white_check_mark:');
+            await interaction.editReply('`npm audit fix` ran succesfully!\nNow respawning all shards... :white_check_mark:');
             process.gideon.shard?.respawnAll();
         });
     }
