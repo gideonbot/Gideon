@@ -1,4 +1,5 @@
-import 'dotenv/config.js';
+import dotenv from 'dotenv';
+dotenv.config({ path: '../.env' });
 import PrettyError from 'pretty-error';
 PrettyError.start().withoutColors();
 import Discord from 'discord.js';
