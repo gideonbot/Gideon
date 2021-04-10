@@ -186,7 +186,7 @@ interface Event {
     name: string;
     once?: boolean;
     process?: boolean
-    run: (client: Discord.Client, args: string[]) => void;
+    run(...args: unknown[]): void;
 }
 
 interface VoiceInfoResponse {

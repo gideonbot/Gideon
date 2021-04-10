@@ -44,16 +44,15 @@ gideon.dc_show_urls = {
 };
 
 Util.LoadEvents().then(() => {
-    interface GideonEvent {
+    /*interface GideonEvent {
         name: string,
         process?: boolean,
         once?: boolean,
         // eslint-disable-next-line no-unused-vars
         run(...args: unknown[]): void
-    }
-
-    let event: GideonEvent;
-    for (event of gideon.events.values()) {
+    }*/
+    
+    for (const event of gideon.events.values()) {
         if (event.process) {
             if (event.once) {
                 // @ts-expect-error dis is valid bro
