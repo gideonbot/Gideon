@@ -39,7 +39,7 @@ class MsgHandler {
             process.gideon.setGuild.run(currentguild);
         }
 
-        if (Util.Checks.IBU(message)) return; //check if user is blacklisted, if yes, return
+        if (Util.Checks.IBU(message.author.id)) return; //check if user is blacklisted, if yes, return
         Util.Checks.LBG(message.guild, Util); //check if guild is blacklisted, if yes, leave
         if (message.channel.id === currentguild.chatchnl && !message.editedAt && !message.content.startsWith('^')) return Util.Chat(message);
 

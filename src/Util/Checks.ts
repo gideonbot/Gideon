@@ -33,7 +33,7 @@ class Checks {
                 'https://twitter.com/wgtc_site'
             ];
 
-            for (let url of abm) {
+            for (const url of abm) {
                 if (content.includes(url.toLowerCase())) return resolve({match: true, content: url});
             }
 
@@ -76,7 +76,7 @@ class Checks {
         //@ts-expect-error
         if (!(message.channel as Discord.TextChannel).permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return;
 
-        let abm = process.gideon.getGuild.get(message.guild.id);
+        const abm = process.gideon.getGuild.get(message.guild.id);
         if (!abm) return;
         if (abm.abmval === 0) return;
         
@@ -101,7 +101,7 @@ class Checks {
      */
     static async CVM(message: Discord.Message, Util: any) {
         if (!message.guild) return;
-        let cvm = process.gideon.getGuild.get(message.guild.id);
+        const cvm = process.gideon.getGuild.get(message.guild.id);
         if (!cvm) return;
         if (cvm.cvmval === 0) return;
 
@@ -115,14 +115,14 @@ class Checks {
 
         // eslint-disable-next-line no-useless-escape
         if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
-            await Util.delay(200)
+            await Util.delay(200);
             await message.delete();
             return message.reply('Links are not allowed while the Crossover-Mode is active!');
         }
 
-        let trmode = process.gideon.getUser.get(message.author.id);
+        const trmode = process.gideon.getUser.get(message.author.id);
         if (trmode) if (trmode.trmodeval === 1) {
-            let tr = await Util.TR.Translate(plainText);
+            const tr = await Util.TR.Translate(plainText);
             plainText = `(${tr[1]}) ${tr[0]}`;
         }
 
@@ -135,8 +135,8 @@ class Checks {
         if (message.attachments.filter(x => x.size / 1024 <= 1000).size > 0) {
             //we reupload attachments smaller than ~1000 KB
             await message.channel.send({files: message.attachments.filter(x => x.size / 1024 <= 1000).map(x => {
-                let split = x.url.split('/');
-                let filename = split[split.length - 1];
+                const split = x.url.split('/');
+                const filename = split[split.length - 1];
                 return new Discord.MessageAttachment(x.url, 'SPOILER_' + filename);
             })});
         }
@@ -153,7 +153,7 @@ class Checks {
         if (message.editedAt) return;
         if (message.content.match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)) return;
 
-        let eggs = process.gideon.getGuild.get(message.guild.id);
+        const eggs = process.gideon.getGuild.get(message.guild.id);
         if (!eggs) return;
         if (eggs.eastereggs === 0) return;
 
@@ -220,9 +220,9 @@ class Checks {
      * @param {Discord.Guild} guild 
      */
     static async LBG(guild: Discord.Guild, Util: any) {
-        let ub = process.gideon.getUser.get(guild.ownerID);
-        let gbl = process.gideon.getGuild.get(guild.id);
-        let owner = await guild.members.fetch(guild.ownerID).catch(ex => console.log(ex)) as Discord.GuildMember;
+        const ub = process.gideon.getUser.get(guild.ownerID);
+        const gbl = process.gideon.getGuild.get(guild.id);
+        const owner = await guild.members.fetch(guild.ownerID).catch(ex => console.log(ex)) as Discord.GuildMember;
         
         if (ub) {
             if (ub.blacklist === 1 && gbl) {
@@ -253,9 +253,9 @@ class Checks {
      * @param {Discord.CommandInteraction} interaction 
      * @returns {boolean}
      */
-    static IBU(interaction: Discord.Interaction) {
-        let ubl = process.gideon.getUser.get(interaction.user.id);
-        if (!ubl || !ubl.blacklist) return;
+    static IBU(id: string): boolean {
+        const ubl = process.gideon.getUser.get(id);
+        if (!ubl || !ubl.blacklist) return false;
         return ubl.blacklist === 1;
     }
 
@@ -463,7 +463,7 @@ class Checks {
      * @param {Discord.Message} message
      */
     static GPD(message: Discord.Message, Util: any) {
-        let gd = process.gideon.getGuild?.get(message.guild?.id);
+        const gd = process.gideon.getGuild?.get(message.guild?.id);
         if (message.author?.bot) return;
         if (!gd) return;
         if (gd.gpd === 0) return;
