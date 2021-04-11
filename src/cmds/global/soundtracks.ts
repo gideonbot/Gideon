@@ -1,5 +1,5 @@
 
-import { CommandInteraction } from 'discord.js';
+import { CommandInteraction, GuildMember } from 'discord.js';
 import gideonapi from 'gideon-api';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
@@ -10,7 +10,7 @@ import Util from '../../Util.js';
 export async function run(interaction: CommandInteraction): Promise<void> {
     const soundtracks = await gideonapi.soundtracks();
 
-    const stracks = Util.Embed('DC Show Soundtracks', null, interaction.member)
+    const stracks = Util.Embed('DC Show Soundtracks', undefined, interaction.member as GuildMember)
         .addField('The Flash', `[Season 1](${soundtracks.flash.season1})\n[Season 2](${soundtracks.flash.season2})\n[Season 3](${soundtracks.flash.season3})\n[Season 4](${soundtracks.flash.season4})`, true)
         .addField('Arrow', `[Season 1](${soundtracks.arrow.season1})\n[Season 2](${soundtracks.arrow.season2})\n[Season 3](${soundtracks.arrow.season3})\n[Season 4](${soundtracks.arrow.season4})\n[Season 5](${soundtracks.arrow.season5})\n[Season 6](${soundtracks.arrow.season6})`, true)
         .addField('Supergirl', `[Season 1](${soundtracks.supergirl.season1})\n[Season 2](${soundtracks.supergirl.season2})\n[Season 3](${soundtracks.supergirl.season3})`, true)

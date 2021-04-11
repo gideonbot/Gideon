@@ -23,7 +23,7 @@
     "discord-paginationembed": "^2.1.0",
     "discord.js": "github:vaporox/discord.js#feat-interactions",
     "dotenv": "^8.0.0",
-    "gideon-api": "^1.1.0",
+    "gideon-api": "^1.1.2",
     "git-last-commit": "^1.0.0",
     "imgur-node": "^0.2.0",
     "moment": "^2.29.1",
