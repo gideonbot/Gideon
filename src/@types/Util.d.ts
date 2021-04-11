@@ -270,3 +270,33 @@ interface GuessingScore {
     guild: string;
     points: number;
 }
+
+interface TVMazeResponse {
+    status: number;
+    id: number;
+    url: string;
+    name: string;
+    season: number;
+    number: number;
+    type: string;
+    airdate: string;
+    airtime: string;
+    airstamp: string;
+    runtime: number;
+    image: {
+      medium: string;
+      original: string;
+    },
+    summary: string;
+    _links: {
+      self: {
+        href: string;
+      }
+    }
+  }
+
+  interface Show {
+    id: string;
+    title: string;
+    channel: string;
+}
