@@ -1,5 +1,6 @@
 /* eslint-disable no-unreachable */
 import { CommandInteraction, GuildMember, Permissions } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
 /**
@@ -56,7 +57,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     } 
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '787023950282358843',
     owner: false,
     nsfw: false,

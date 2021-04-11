@@ -1,5 +1,6 @@
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, TextChannel } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -59,7 +60,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '788803672489459713',
     owner: false,
     nsfw: false,

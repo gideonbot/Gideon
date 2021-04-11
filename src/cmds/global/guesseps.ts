@@ -1,7 +1,7 @@
-//@ts-nocheck will do later
 import Util from '../../Util.js';
 import stringSimilarity from 'string-similarity';
 import { CommandInteraction, CommandInteractionOption, GuildMember, TextChannel, Message, User, MessageReaction } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -248,7 +248,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '788776924561801226',
     owner: false,
     nsfw: false,

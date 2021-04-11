@@ -1,7 +1,7 @@
-// @ts-nocheck sry will fix later
 import Util from '../../Util.js';
 import moment from 'moment';
 import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -146,7 +146,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
         image: img
     }, interaction.member as GuildMember));
 }
-export const help = {
+export const help: Command["help"] = {
     id: '787001899643305985',
     owner: false,
     nsfw: false,

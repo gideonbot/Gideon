@@ -1,4 +1,5 @@
 import { CommandInteraction, GuildMember, Permissions } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
 /**
@@ -18,7 +19,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(embed);
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '786983909890981908',
     owner: false,
     nsfw: false,

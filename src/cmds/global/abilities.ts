@@ -2,6 +2,7 @@ import Pagination from 'discord-paginationembed';
 import gideonapi from 'gideon-api';
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, MessageEmbed, TextChannel, Message } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -163,7 +164,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }
 }   
 
-export let help = {
+export let help: Command["help"] = {
     id: '788784460002885712',
     owner: false,
     nsfw: false,

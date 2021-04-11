@@ -1,6 +1,7 @@
-//@ts-nocheck module typings need fixing
+
 import { CommandInteraction } from 'discord.js';
 import gideonapi from 'gideon-api';
+import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
 /**
@@ -21,7 +22,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(stracks);  
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '787026557159211008',
     owner: false,
     nsfw: false,

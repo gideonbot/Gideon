@@ -1,4 +1,5 @@
 import { CommandInteraction, GuildMember } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
 /**
@@ -74,7 +75,7 @@ export async function run(interaction: CommandInteraction) {
     return interaction.editReply(`You have reached out to Earth-${result.en}`, { embed: Util.Embed(result.title, {description: result.desc, image: result.gif}, interaction.member as GuildMember) });  
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '787026013146185738',
     owner: false,
     nsfw: false,

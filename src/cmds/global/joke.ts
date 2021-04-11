@@ -1,7 +1,7 @@
-//@ts-nocheck will do later
 import Discord from 'discord.js';
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -35,9 +35,10 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
 
     if (!category?.has(body.id)) category?.set(body.id, body.joke);
 
-    if (!interaction.guild?.last_jokes) interaction.guild.last_jokes = [];
+    //@ts-ignore
+    if (!interaction.guild?.last_jokes) interaction.guild?.last_jokes = [];
 
-    let last_jokes = interaction.guild.last_jokes;
+    let last_jokes = interaction.guild?.last_jokes;
 
     if (last_jokes.length > 0) {
         //if last 20 jokes include the current joke
@@ -47,7 +48,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
             let attempts = 0;
 
             do {
-                new_id = category.randomKey();
+                new_id = category?.randomKey() as unknown as string;
                 attempts++;
 
                 if (attempts > 50) {
@@ -55,21 +56,21 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
                     break;
                 }
             }
-            while (last_jokes.map(x => x.id).includes(new_id));
+            while (last_jokes?.map(x => x.id).includes(new_id as unknown as number));
 
             body.id = new_id;
-            body.joke = category.get(new_id);
+            body.joke = category?.get(new_id as unknown as number);
         }
     }
 
-    interaction.guild.last_jokes.push({category: body.category, id: body.id});
+    interaction.guild?.last_jokes.push({category: body.category, id: body.id});
 
-    if (interaction.guild.last_jokes.length > 20) interaction.guild.last_jokes.shift();
+    if (interaction.guild.last_jokes?.length > 20) interaction.guild?.last_jokes.shift();
 
     return interaction.reply(Util.Embed('Category: ' + body.category, {description: body.joke}, interaction.member));       
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '788771398448578562',
     owner: false,
     nsfw: false,

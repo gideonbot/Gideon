@@ -1,6 +1,7 @@
 import Canvas from 'canvas';
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, GuildMember, MessageAttachment } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -67,7 +68,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     return interaction.reply(Util.Embed().attachFiles(attachment).setImage('attachment://sgmeme.jpg'));
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '788768568581816321',
     owner: false,
     nsfw: false,

@@ -1,6 +1,7 @@
-//@ts-nocheck missing interfaces for json res
+
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -93,7 +94,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }, interaction.member as GuildMember)); 
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '786988079621210163',
     owner: false,
     nsfw: false,

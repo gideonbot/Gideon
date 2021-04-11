@@ -1,4 +1,5 @@
 import { CommandInteraction } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
 /**
@@ -13,7 +14,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return Util.IMG('NVHwdNg', interaction, false);
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '787023377541365760',
     owner: false,
     nsfw: false,

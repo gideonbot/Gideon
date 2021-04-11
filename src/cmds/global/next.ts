@@ -1,6 +1,7 @@
-//@ts-nocheck will do later
+
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -71,7 +72,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     interaction.reply(embed);
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '787022238611669003',
     owner: false,
     nsfw: false,

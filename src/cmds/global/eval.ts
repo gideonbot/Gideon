@@ -4,6 +4,7 @@ import Discord from 'discord.js';
 // eslint-disable-next-line no-unused-vars
 import moment from 'moment';
 import { CommandInteraction, CommandInteractionOption } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -29,7 +30,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     return interaction.reply(Util.truncate(printValue as string, 1900, true), {code: true});
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '786979784860893196',
     owner: true,
     nsfw: false,

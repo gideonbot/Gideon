@@ -1,4 +1,5 @@
 import { CommandInteraction, Collection, Guild, GuildMember } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
 /**
@@ -22,7 +23,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     );  
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '787027780104618045',
     owner: false,
     nsfw: false,

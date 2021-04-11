@@ -1,4 +1,5 @@
 import { CommandInteraction, GuildMember } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
 /**
@@ -18,7 +19,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(Util.Embed('Development Credits:', {fields: fields, thumbnail: process.gideon.user?.avatarURL() as string}, interaction.member as GuildMember));
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '787023206779322468',
     owner: false,
     nsfw: false,

@@ -1,7 +1,8 @@
-//@ts-nocheck typings are missing
+
 import OpenSubtitles from 'opensubtitles-api';
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
+import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -126,7 +127,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     });
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '788791573802385438',
     owner: false,
     nsfw: false,

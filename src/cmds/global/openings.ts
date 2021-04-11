@@ -1,4 +1,5 @@
 import { CommandInteraction, CommandInteractionOption } from 'discord.js';
+import { Command } from 'src/@types/Util';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -14,7 +15,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     else if (args[0].value === 'lucifer') return interaction.reply(luciferopening);
 }
 
-export let help = {
+export let help: Command["help"] = {
     id: '788781562715176991',
     owner: false,
     nsfw: false,
