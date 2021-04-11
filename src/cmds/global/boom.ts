@@ -9,7 +9,7 @@ import Util from '../../Util.js';
 export async function run(interaction: CommandInteraction): Promise<void> {
     try {
         const acembed = Util.Embed('Blowing up S.T.A.R. Labs. Particle Accelerator...', {image: 'https://i.imgur.com/opCbZTn.gif'}, interaction.member as GuildMember);
-        let sent = await interaction.reply(acembed);
+        interaction.reply(acembed);
 
         await Util.delay(10000);
 
