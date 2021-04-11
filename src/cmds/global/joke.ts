@@ -8,7 +8,7 @@ import { Command } from 'src/@types/Util.js';
  * @param {CommandInteractionOption[]} args
  */
 export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
-    let type = 'Any';
+    let type: string = 'Any';
 
     let types = {
         Programming: ['prog', 'program', 'programming'],
@@ -34,13 +34,11 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }
 
     if (!category?.has(body.id)) category?.set(body.id, body.joke);
-
-    //@ts-ignore
     if (!interaction.guild?.last_jokes) interaction.guild?.last_jokes = [];
 
     let last_jokes = interaction.guild?.last_jokes;
 
-    if (last_jokes.length > 0) {
+    if (last_jokes?.length > 0) {
         //if last 20 jokes include the current joke
         if (last_jokes.some(x => x.category == body.category && x.id == body.id)) {
             console.log('Got a repeated joke: ' + body.id);
@@ -65,7 +63,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
 
     interaction.guild?.last_jokes.push({category: body.category, id: body.id});
 
-    if (interaction.guild.last_jokes?.length > 20) interaction.guild?.last_jokes.shift();
+    if (interaction.guild?.last_jokes?.length > 20) interaction.guild?.last_jokes.shift();
 
     return interaction.reply(Util.Embed('Category: ' + body.category, {description: body.joke}, interaction.member));       
 }

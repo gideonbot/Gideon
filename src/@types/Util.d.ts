@@ -258,3 +258,8 @@ interface WikiResult {
     },
     basepath: string;
 }
+
+interface SeEp  { 
+    season: number;
+    episode: number; 
+}
