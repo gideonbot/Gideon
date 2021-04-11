@@ -224,3 +224,37 @@ interface AbmTestValue {
     match: boolean;
     content?: string;
 }
+
+interface Wiki {
+    url: string;
+    title: string;
+}
+
+interface WikiQuery {
+    items: { title: string; }[]
+}
+
+interface WikiResult {
+    items: {
+        [key: string]: {
+            id: number;
+            title: string;
+            ns: number;
+            url: string;
+            revision: {
+                id: number
+                user: string;
+                user_id: number;
+                timestamp: string;
+            },
+            type: string;
+            abstract: string;
+            thumbnail: string;
+            original_dimensions: {
+                width: number;
+                height: number;
+            }
+        }
+    },
+    basepath: string;
+}

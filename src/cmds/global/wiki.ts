@@ -1,14 +1,14 @@
 
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
-import { Command } from 'src/@types/Util.js';
+import { Command, Wiki, WikiQuery, WikiResult } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
  * @param {CommandInteractionOption[]} args
  */
 export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
-    let wikis = [
+    let wikis: Wiki[] = [
         {
             url: 'arrow.fandom.com',
             title: 'Arrowverse'
@@ -47,7 +47,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
         },
     ];
     
-    let wiki;
+    let wiki = undefined as unknown as Wiki;
 
 
     if (args[0].value === 'wiki_av') wiki = wikis[0];
@@ -64,13 +64,13 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
 
     const search_api = encodeURI(`https://${wiki?.url}/api/v1/SearchSuggestions/List?query=${search_term}`);
 
-    const search = await Util.fetchJSON(search_api);
+    const search = await Util.fetchJSON(search_api) as WikiQuery;
 
     if (search?.items?.length === 1) search_term = search.items[0].title;
 
     const api = encodeURI(`https://${wiki?.url}/api/v1/Articles/Details?ids=50&titles=${search_term}&abstract=500&width=200&height=200`);
 
-    const body = await Util.fetchJSON(api);
+    const body = await Util.fetchJSON(api) as WikiResult;
 
     //new wikis do some weird stuff, therefore the actual result is the 2nd element
     const article = Object.values(body.items)[wikis.indexOf(wiki) == 1 ||
@@ -91,7 +91,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     return interaction.reply(Util.Embed(article.title, {
         description: `${st}${article.abstract}${st}\n\n**[Click here to read the full article](https://${wiki?.url}${url} 'https://${wiki?.url}${url}')**`,
         thumbnail: article.thumbnail
-    }, interaction.member as GuildMember)); 
+    }, interaction.member as GuildMember));
 }
 
 export let help: Command['help'] = {
