@@ -44,14 +44,6 @@ gideon.dc_show_urls = {
 };
 
 Util.LoadEvents().then(() => {
-    /*interface GideonEvent {
-        name: string,
-        process?: boolean,
-        once?: boolean,
-        // eslint-disable-next-line no-unused-vars
-        run(...args: unknown[]): void
-    }*/
-    
     for (const event of gideon.events.values()) {
         if (event.process) {
             if (event.once) {
