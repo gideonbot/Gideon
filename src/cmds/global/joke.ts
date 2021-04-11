@@ -1,6 +1,6 @@
 import Discord from 'discord.js';
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption } from 'discord.js';
+import { CommandInteraction, CommandInteractionOption, Guild, GuildMember } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
 /**
@@ -19,7 +19,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     if (args) {
         let p_type = args[0].value;
         for (let key in types) {
-            if (types[key].includes(p_type)) type = key;
+            if ((types as any)[key].includes(p_type)) type = key;
         }
     }
 
@@ -34,11 +34,11 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }
 
     if (!category?.has(body.id)) category?.set(body.id, body.joke);
-    if (!interaction.guild?.last_jokes) interaction.guild?.last_jokes = [];
+    if (!interaction.guild?.last_jokes) (interaction.guild as Guild).last_jokes = [];
 
-    let last_jokes = interaction.guild?.last_jokes;
+    let last_jokes = (interaction.guild as Guild)?.last_jokes;
 
-    if (last_jokes?.length > 0) {
+    if (last_jokes.length > 0) {
         //if last 20 jokes include the current joke
         if (last_jokes.some(x => x.category == body.category && x.id == body.id)) {
             console.log('Got a repeated joke: ' + body.id);
@@ -63,9 +63,9 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
 
     interaction.guild?.last_jokes.push({category: body.category, id: body.id});
 
-    if (interaction.guild?.last_jokes?.length > 20) interaction.guild?.last_jokes.shift();
+    if ((interaction.guild as Guild)?.last_jokes.length > 20) interaction.guild?.last_jokes.shift();
 
-    return interaction.reply(Util.Embed('Category: ' + body.category, {description: body.joke}, interaction.member));       
+    return interaction.reply(Util.Embed('Category: ' + body.category, {description: body.joke}, interaction.member as GuildMember));       
 }
 
 export let help: Command['help'] = {

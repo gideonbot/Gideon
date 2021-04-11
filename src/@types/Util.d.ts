@@ -44,7 +44,7 @@ export function Embed(title: string, options?: EmbedOptions, member?: Discord.Gu
 
 declare module 'discord.js' {
     interface Guild {
-        last_jokes: {category: string, id: number}[];
+        last_jokes: { category: string, id: number }[];
     }
 
     interface Client {
