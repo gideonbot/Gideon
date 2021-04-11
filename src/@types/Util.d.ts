@@ -263,3 +263,10 @@ interface SeEp  {
     season: number;
     episode: number; 
 }
+
+interface GuessingScore {
+    id: string;
+    user: string;
+    guild: string;
+    points: number;
+}

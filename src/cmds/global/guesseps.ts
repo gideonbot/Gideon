@@ -1,7 +1,8 @@
 import Util from '../../Util.js';
 import stringSimilarity from 'string-similarity';
 import { CommandInteraction, CommandInteractionOption, GuildMember, TextChannel, Message, User, MessageReaction } from 'discord.js';
-import { Command } from 'src/@types/Util.js';
+import { Command, GuessingScore } from 'src/@types/Util.js';
+import gideonapi from 'gideon-api';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -11,7 +12,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     const url = 'https://arrowverse.info';
     const emotes = ['▶️', '669309980209446912'];
     let s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
-    let chosenfilter: string;
+    let chosenfilter = undefined as unknown as (x: gideonapi.AviInfo) => boolean;
     let tries = 3;
     let points = 0;
     let timerstart = new Date();
@@ -21,21 +22,21 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     interaction.user.guessing = true;
 
     let filters = [
-        (x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray' && x.series !== 'Black Lightning'),
-        (x => x.series == 'The Flash'),
-        (x => x.series == 'Arrow'),
-        (x => x.series == 'DC\'s Legends of Tomorrow'),
-        (x => x.series == 'Supergirl'),
-        (x => x.series == 'Batwoman'),
-        (x => x.series == 'Constantine')
+        ((x: gideonapi.AviInfo) => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray' && x.series !== 'Black Lightning'),
+        ((x: gideonapi.AviInfo) => x.series == 'The Flash'),
+        ((x: gideonapi.AviInfo) => x.series == 'Arrow'),
+        ((x: gideonapi.AviInfo) => x.series == 'DC\'s Legends of Tomorrow'),
+        ((x: gideonapi.AviInfo) => x.series == 'Supergirl'),
+        ((x: gideonapi.AviInfo) => x.series == 'Batwoman'),
+        ((x: gideonapi.AviInfo) => x.series == 'Constantine')
     ];
 
-    let score = process.gideon.getScore.get(interaction.user.id);
+    let score: GuessingScore = process.gideon.getScore.get(interaction.user.id);
     if (!score) {
         score = {
             id: interaction.user.id,
             user: interaction.user.tag,
-            guild: interaction.guild?.id,
+            guild: interaction.guild?.id as string,
             points: 0
         };
         process.gideon.setScore.run(score);
@@ -54,7 +55,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
         return Math.round(30 - timerdiff);
     }
 
-    function IncreasePoints(points) {
+    function IncreasePoints(points: number) {
         score.points += points;
     }
 
@@ -71,8 +72,8 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
      * @param {Function} showfilter 
      * @returns {Promise<{embed: Discord.MessageEmbed, show: string, ep_and_s: string, airdate: Date, ep_name: string}>}
      */
-    async function GetGame(showfilter: string) {
-        const body = await Util.fetchJSON('https://arrowverse.info/api');
+    async function GetGame(showfilter: (x: gideonapi.AviInfo) => boolean) {
+        const body = await gideonapi.avi();
 
         const shows = body.filter(showfilter);
 
@@ -86,7 +87,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
             description: `Please guess the following Arrowverse episode's name:\n\`${show} ${epnum}\`\n\n(Press :arrow_forward: to skip this episode or <:stop:669309980209446912> to end this round)`,
             author: {
                 name: `You've got ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + 's' : s[1]} left!`,
-                value: interaction.user.displayAvatarURL()
+                icon: interaction.user.displayAvatarURL()
             },
             fields: [
                 {
@@ -94,13 +95,12 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
                     value: `**[arrowverse.info](${url} '${url}')**`
                 }
             ]
-        }, interaction.member);
+        }, interaction.member as GuildMember);
 
         return {embed: gameembed, show: show, ep_and_s: epnum, ep_name: epname, airdate: epairdate};
     }
 
     try {
-        //@ts-ignore
         let game = await GetGame(chosenfilter);
 
         const f = (m: Message) => m.author.id === interaction.user.id;
@@ -244,7 +244,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
 
     catch (ex) {
         Util.log('Caught an exception while running guesseps.js: ' + ex.stack);
-        return interaction.reply('An error occurred while processing your request:```\n' + ex + '```', { ephemeral: true, hideSource: true });
+        return interaction.reply('An error occurred while processing your request:```\n' + ex + '```', { ephemeral: true });
     }
 }
 
