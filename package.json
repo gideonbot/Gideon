@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "node gideon.js",
+    "test": "node dist/gideon.js",
     "build": "npx tsc -p ./",
-    "start": "node index.js"
+    "start": "node dist/gideon.js"
   },
   "author": "adrifcastr",
   "dependencies": {
