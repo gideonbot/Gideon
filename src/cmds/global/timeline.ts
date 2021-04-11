@@ -11,7 +11,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(Util.Embed('Timeline change detected!', {description: timeline as string, image: 'https://i.imgur.com/qWN3luc.gif'}, interaction.member as GuildMember));
 }
 
-export let help: Command["help"] = {
+export let help: Command['help'] = {
     id: '787024666202996776',
     owner: false,
     nsfw: false,

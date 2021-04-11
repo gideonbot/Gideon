@@ -57,7 +57,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     } 
 }
 
-export let help: Command["help"] = {
+export let help: Command['help'] = {
     id: '787023950282358843',
     owner: false,
     nsfw: false,

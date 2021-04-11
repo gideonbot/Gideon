@@ -146,7 +146,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
         image: img
     }, interaction.member as GuildMember));
 }
-export const help: Command["help"] = {
+export const help: Command['help'] = {
     id: '787001899643305985',
     owner: false,
     nsfw: false,

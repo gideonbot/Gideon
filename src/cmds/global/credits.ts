@@ -19,7 +19,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(Util.Embed('Development Credits:', {fields: fields, thumbnail: process.gideon.user?.avatarURL() as string}, interaction.member as GuildMember));
 }
 
-export let help: Command["help"] = {
+export let help: Command['help'] = {
     id: '787023206779322468',
     owner: false,
     nsfw: false,

@@ -162,7 +162,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }, interaction.member as GuildMember));
 }
 
-export let help: Command["help"] = {
+export let help: Command['help'] = {
     id: '788764104084684830',
     owner: false,
     nsfw: false,

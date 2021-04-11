@@ -72,7 +72,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     interaction.reply(embed);
 }
 
-export let help: Command["help"] = {
+export let help: Command['help'] = {
     id: '787022238611669003',
     owner: false,
     nsfw: false,

@@ -71,7 +71,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     
 }
 
-export let help: Command["help"] = {
+export let help: Command['help'] = {
     id: '788054272381288458',
     owner: true,
     nsfw: false,

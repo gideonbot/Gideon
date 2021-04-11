@@ -70,7 +70,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     return interaction.reply(Util.Embed('Category: ' + body.category, {description: body.joke}, interaction.member));       
 }
 
-export let help: Command["help"] = {
+export let help: Command['help'] = {
     id: '788771398448578562',
     owner: false,
     nsfw: false,

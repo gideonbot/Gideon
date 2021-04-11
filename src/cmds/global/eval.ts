@@ -30,7 +30,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     return interaction.reply(Util.truncate(printValue as string, 1900, true), {code: true});
 }
 
-export let help: Command["help"] = {
+export let help: Command['help'] = {
     id: '786979784860893196',
     owner: true,
     nsfw: false,

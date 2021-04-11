@@ -75,7 +75,7 @@ export async function run(interaction: CommandInteraction) {
     return interaction.editReply(`You have reached out to Earth-${result.en}`, { embed: Util.Embed(result.title, {description: result.desc, image: result.gif}, interaction.member as GuildMember) });  
 }
 
-export let help: Command["help"] = {
+export let help: Command['help'] = {
     id: '787026013146185738',
     owner: false,
     nsfw: false,

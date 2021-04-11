@@ -68,7 +68,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     return interaction.reply(Util.Embed().attachFiles(attachment).setImage('attachment://sgmeme.jpg'));
 }
 
-export let help: Command["help"] = {
+export let help: Command['help'] = {
     id: '788768568581816321',
     owner: false,
     nsfw: false,
