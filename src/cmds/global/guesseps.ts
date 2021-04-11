@@ -63,7 +63,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
      * @param {Date} airdate 
      */
     function CalculateAirDatePoints(airdate: Date) {
-        const difference = Math.floor(Math.floor(new Date() - new Date(airdate)) / (1000 * 60 * 60 * 24));
+        const difference = Math.floor(Math.floor(new Date() as any - (new Date(airdate) as any)) / (1000 * 60 * 60 * 24));
         return Math.round(difference / 100);
     }
 
