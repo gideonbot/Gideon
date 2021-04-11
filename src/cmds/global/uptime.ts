@@ -6,7 +6,7 @@ import Util from '../../Util.js';
  * @param {Discord.Intercation} interaction
  */
 export async function run(interaction: CommandInteraction): Promise<void> {
-    return interaction.reply(Util.Embed('Enter Flashtime!', {description: Util.secondsToDifferenceString(process.gideon.uptime as number / 1000, { enableSeconds: true })}, interaction.member as GuildMember));
+    return interaction.reply(Util.Embed('Enter Flashtime!', { description: Util.secondsToDifferenceString(process.gideon.uptime as number / 1000, { enableSeconds: true }) }, interaction.member as GuildMember));
 }
 
 export let help: Command['help'] = {

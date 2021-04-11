@@ -1,4 +1,3 @@
-
 import OpenSubtitles from 'opensubtitles-api';
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';

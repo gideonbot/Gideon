@@ -7,7 +7,6 @@ import { Command } from 'src/@types/Util.js';
  * @param {CommandInteractionOption[]} args
  */
 export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
-    //@ts-ignore
     const setting = args[0].options[0].value;
 
     let guildsettings = process.gideon.getGuild.get(interaction.guild?.id);

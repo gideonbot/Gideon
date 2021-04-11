@@ -64,8 +64,8 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     wrapText(ctx, (args[0].value as string).trim(), 300, 315, 260, 35);
 
     const attachment = new MessageAttachment(canvas.toBuffer(), 'sgmeme.jpg');
-    //@ts-ignore
-    return interaction.reply(Util.Embed().attachFiles(attachment).setImage('attachment://sgmeme.jpg'));
+
+    return interaction.reply(Util.Embed().attachFiles([attachment]).setImage('attachment://sgmeme.jpg'));
 }
 
 export let help: Command['help'] = {

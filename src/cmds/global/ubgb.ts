@@ -67,8 +67,6 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
             interaction.reply(`Guild \`${id}\` has been un-blacklisted!`); 
         }
     }
-   
-    
 }
 
 export let help: Command['help'] = {

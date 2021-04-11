@@ -71,8 +71,8 @@ export async function run(interaction: CommandInteraction) {
     ];
 
     let result = arr[Math.floor(Math.random() * arr.length)];
-    //@ts-ignore
-    return interaction.editReply(`You have reached out to Earth-${result.en}`, { embed: Util.Embed(result.title, {description: result.desc, image: result.gif}, interaction.member as GuildMember) });  
+
+    return interaction.editReply(`You have reached out to Earth-${result.en}`, { embeds:[Util.Embed(result.title, {description: result.desc, image: result.gif}, interaction.member as GuildMember)] });  
 }
 
 export let help: Command['help'] = {
