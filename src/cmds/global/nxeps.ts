@@ -33,7 +33,6 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 export let help: Command['help'] = {
     id: '786983244549718036',
     owner: false,
-    voice: true,
     nsfw: false,
     roles: [],
     user_perms: [],

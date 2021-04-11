@@ -33,7 +33,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
      * @param {string} show 
      * @param {*} season_and_episode 
      */
-    let GetNextEmbed = (show, season_and_episode) => {
+    let GetNextEmbed = (show: string, season_and_episode) => {
         let f = shows.find(x => x.series === show && x.episode_id === season_and_episode);
         if (!f) return `${show} ${season_and_episode} is not a valid episode!`;
 
@@ -50,7 +50,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
         else if (next.series.match(/(?:constantine)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/b/b1/Constantine_TV_show_logo.jpg';
         else if (next.series.match(/(?:batwoman)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/c/c3/Batwoman_TV_series_logo.png';
     
-        const embed = Util.Embed(`Next episode for ${interaction.member.user.tag}:`, {
+        const embed = Util.Embed(`Next episode for ${interaction.user.tag}:`, {
             thumbnail: thimg,
             fields: [
                 {
@@ -62,11 +62,12 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
                     value: `**[arrowverse.info](${url} '${url}')**`
                 }
             ]
-        }, interaction.member);
+        }, interaction.member as GuildMember);
 
         return embed;
     };
 
+    //@ts-ignore
     let embed = GetNextEmbed(showtitle, fiep);
 
     interaction.reply(embed);

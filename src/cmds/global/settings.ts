@@ -64,7 +64,6 @@ export let help: Command['help'] = {
     id: '788803672489459713',
     owner: false,
     nsfw: false,
-    args: {},
     roles: [],
     user_perms: [],
     bot_perms: []

@@ -141,7 +141,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     let am_pm = (H < 12 || H === 24) ? ' AM' : ' PM';
     timeString = h + ':' + timeString.split(':')[1] + am_pm;
 
-    return interaction.reply(Util.Embed(`${show.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
+    return interaction.reply(Util.Embed(`${show?.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
         description: sp + desc + sp + `\n\nAirdate: \`${moment(airdate).isValid() ? airdate.toDateString() : 'No Airdate Available'}\`\nAirtime: \`${body.airtime === '' ? 'No Airtime Available' : timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show.channel}\`\n\n**[Full recap & trailer](${body.url} '${body.url}')**`,
         image: img
     }, interaction.member as GuildMember));

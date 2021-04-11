@@ -53,4 +53,4 @@ export let help: Command['help'] = {
     roles: ['621399916283035658'],
     user_perms: [],
     bot_perms: []
-}; 
+};
