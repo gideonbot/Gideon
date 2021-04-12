@@ -7,8 +7,6 @@ import Checks from './Util/Checks';
 import SQL from './Util/SQL';
 import BetterSqlite3 from 'better-sqlite3';
 import WSClient from './WSClient';
-import { APIApplicationCommandOptions } from 'discord-api-types/v8';
-import { CommandInteractionOption } from 'discord.js';
 
 export const config: Config;
 export let MsgHandler: Handler;
@@ -180,7 +178,8 @@ interface Command {
         user_perms: Discord.PermissionResolvable[];
         bot_perms: Discord.PermissionResolvable[];
     },
-    async run(interaction: Discord.CommandInteraction, options: CommandInteractionOption[]): Promise<void>;
+    data: Discord.ApplicationCommandData;
+    async run(interaction: Discord.CommandInteraction, options: Discord.CommandInteractionOption[]): Promise<void>;
 }
 
 interface Event {

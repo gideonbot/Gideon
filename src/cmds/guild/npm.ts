@@ -44,7 +44,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
             process.exit();
         });
     }
-}
+};
 
 export const info: Command['info'] = {
     name: 'npm',
@@ -54,3 +54,31 @@ export const info: Command['info'] = {
     user_perms: [],
     bot_perms: []
 };
+
+export const data: Command['data'] = {
+    name: 'npm',
+    description: 'Run an NPM command',
+    defaultPermission: true,
+    options: [
+        {
+            type: 'STRING',
+            name: 'command',
+            description: 'NPM command',
+            required: true,
+            choices: [
+                {
+                    name: 'install',
+                    value: 'i'
+                },
+                {
+                    name: 'update',
+                    value: 'u'
+                },
+                {
+                    name: 'audit fix',
+                    value: 'af'
+                }
+            ]
+        }
+    ]
+}
