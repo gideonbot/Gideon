@@ -262,106 +262,108 @@ class Util {
     static async CITest(): Promise<void> {
         console.log('Starting CI test');
 
-        //@ts-expect-error undocumented properties
-        process.gideon.options.http.api = 'https://gideonbot.com/api/dump';
+        if (!process.env.CI) {
+            //@ts-expect-error undocumented properties
+            process.gideon.options.http.api = 'https://gideonbot.com/api/dump';
 
-        const tests = await import('./tests.js');
+            const tests = await import('./tests');
 
-        const channel_id = Util.GenerateSnowflake();
-        const guild_id = Util.GenerateSnowflake();
+            const channel_id = Util.GenerateSnowflake();
+            const guild_id = Util.GenerateSnowflake();
 
-        const user = {
-            id: process.gideon.owner,
-            username: 'Test',
-            discriminator: '0001',
-            avatar: null,
-            bot: false,
-            system: false,
-            flags: 64
-        };
-
-        const guild = new Discord.Guild(process.gideon, {
-            name: 'Test',
-            region: 'US',
-            member_count: 2,
-            large: false,
-            features: [],
-            embed_enabled: true,
-            premium_tier: 0,
-            verification_level: 1,
-            explicit_content_filter: 1,
-            mfa_level: 0,
-            joined_at: new Date().toISOString(),
-            default_message_notifications: 0,
-            system_channel_flags: 0,
-            id: guild_id,
-            unavailable: false,
-            roles: [
-                {
-                    id: guild_id,
-                    name: '@everyone',
-                    color: 3447003,
-                    hoist: true,
-                    position: 1,
-                    permissions: 66321471,
-                    managed: false,
-                    mentionable: false
-                }
-            ],
-            members: [
-                {
-                    user: process.gideon.user?.toJSON(),
-                    nick: null,
-                    roles: [],
-                    joined_at: new Date().toISOString(),
-                    deaf: false,
-                    mute: false
-                },
-                {
-                    user: user,
-                    nick: null,
-                    roles: [],
-                    joined_at: new Date().toISOString(),
-                    deaf: false,
-                    mute: false
-                }
-            ],
-            owner_id: user.id
-        });
-
-        const channel = new Discord.TextChannel(guild, {
-            nsfw: false,
-            name: 'test-channel',
-            type: 0,
-            id: channel_id
-        });
-
-        for (const item of tests.commands) {
-            const data = {
-                id: Util.GenerateSnowflake(),
-                channel_id: channel_id,
-                type: 0,
-                content: item,
-                author: user,
-                pinned: false,
-                tts: false,
-                timestamp: new Date().toISOString(),
-                flags: 0,
+            const user = {
+                id: process.gideon.owner,
+                username: 'Test',
+                discriminator: '0001',
+                avatar: null,
+                bot: false,
+                system: false,
+                flags: 64
             };
 
-            const msg = new Discord.Message(process.gideon, data, channel);
-            process.gideon.emit('message', msg);
-        }
+            const guild = new Discord.Guild(process.gideon, {
+                name: 'Test',
+                region: 'US',
+                member_count: 2,
+                large: false,
+                features: [],
+                embed_enabled: true,
+                premium_tier: 0,
+                verification_level: 1,
+                explicit_content_filter: 1,
+                mfa_level: 0,
+                joined_at: new Date().toISOString(),
+                default_message_notifications: 0,
+                system_channel_flags: 0,
+                id: guild_id,
+                unavailable: false,
+                roles: [
+                    {
+                        id: guild_id,
+                        name: '@everyone',
+                        color: 3447003,
+                        hoist: true,
+                        position: 1,
+                        permissions: 66321471,
+                        managed: false,
+                        mentionable: false
+                    }
+                ],
+                members: [
+                    {
+                        user: process.gideon.user?.toJSON(),
+                        nick: null,
+                        roles: [],
+                        joined_at: new Date().toISOString(),
+                        deaf: false,
+                        mute: false
+                    },
+                    {
+                        user: user,
+                        nick: null,
+                        roles: [],
+                        joined_at: new Date().toISOString(),
+                        deaf: false,
+                        mute: false
+                    }
+                ],
+                owner_id: user.id
+            });
 
-        //We need to wait for all requests to go through
-        await Util.delay(5e3);
+            const channel = new Discord.TextChannel(guild, {
+                nsfw: false,
+                name: 'test-channel',
+                type: 0,
+                id: channel_id
+            });
 
-        // eslint-disable-next-line no-constant-condition
-        while (true) {
-            console.log('Checking if all requests are over...');
-            // @ts-expect-error accessing a private property
-            if (!process.gideon.rest.handlers.array().map(x => x._inactive).some(x => !x)) break;
-            await Util.delay(2e3);
+            for (const item of tests.commands) {
+                const data = {
+                    id: Util.GenerateSnowflake(),
+                    channel_id: channel_id,
+                    type: 0,
+                    content: item,
+                    author: user,
+                    pinned: false,
+                    tts: false,
+                    timestamp: new Date().toISOString(),
+                    flags: 0,
+                };
+
+                const msg = new Discord.Message(process.gideon, data, channel);
+                process.gideon.emit('message', msg);
+            }
+
+            //We need to wait for all requests to go through
+            await Util.delay(5e3);
+
+            // eslint-disable-next-line no-constant-condition
+            while (true) {
+                console.log('Checking if all requests are over...');
+                // @ts-expect-error accessing a private property
+                if (!process.gideon.rest.handlers.array().map(x => x._inactive).some(x => !x)) break;
+                await Util.delay(2e3);
+            }
         }
 
         console.log('Run successful, exiting with code 0');
