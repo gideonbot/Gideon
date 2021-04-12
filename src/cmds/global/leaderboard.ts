@@ -21,13 +21,18 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     }
 
     return interaction.reply(leaderboard);
-}
+};
 
 export const info: Command['info'] = {
-    name: 'leaderboard',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: []
+};
+
+export const data: Command["data"] = {
+    name: 'leaderboard',
+    description: 'Top 10 leaderboard',
+    defaultPermission: true
 };

@@ -28,13 +28,18 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     if (embed.fields.length < 1) return interaction.reply('Failed to fetch episode list, please try again later...');
     
     return interaction.reply(embed);
-}
+};
 
 export const info: Command['info'] = {
-    name: 'dceps',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: []
+};
+
+export const data: Command["data"] = {
+    name: 'dceps',
+    description: 'Upcoming DC episodes',
+    defaultPermission: true
 };

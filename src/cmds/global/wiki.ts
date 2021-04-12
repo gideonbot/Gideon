@@ -92,13 +92,70 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         description: `${st}${article.abstract}${st}\n\n**[Click here to read the full article](https://${wiki?.url}${url} 'https://${wiki?.url}${url}')**`,
         thumbnail: article.thumbnail
     }, interaction.member as GuildMember));
-}
+};
 
 export const info: Command['info'] = {
-    name: 'wiki',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: []
+};
+
+export const data: Command["data"] = {
+    name: 'wiki',
+    description: 'Search the specified wiki for the given term',
+    defaultPermission: true,
+    options: [
+      {
+        type: 'STRING',
+        name: 'wiki',
+        description: 'The wiki to search on',
+        required: true,
+        choices: [
+          {
+            name: 'Arrowverse',
+            value: 'wiki_av'
+          },
+          {
+            name: 'DC Comics',
+            value: 'wiki_dc'
+          },
+          {
+            name: 'Krypton',
+            value: 'wiki_kr'
+          },
+          {
+            name: 'Lucifer',
+            value: 'wiki_lu'
+          },
+          {
+            name: 'Stargirl',
+            value: 'wiki_stg'
+          },
+          {
+            name: 'Titans',
+            value: 'wiki_t'
+          },
+          {
+            name: 'Doom Patrol',
+            value: 'wiki_dp'
+          },
+          {
+            name: 'Smallville',
+            value: 'wiki_sv'
+          },
+          {
+            name: 'The Boys',
+            value: 'wiki_tb'
+          }
+        ]
+      },
+      {
+        type: 'STRING',
+        name: 'term',
+        description: 'The search term',
+        required: true
+      }
+    ]
 };

@@ -28,13 +28,18 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     if (embed.fields.length < 1) return interaction.reply('Failed to fetch episode list, please try again later...');
     
     return interaction.reply(embed);
-}
+};
 
 export const info: Command['info'] = {
-    name: 'nxeps',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: []
+};
+
+export const data: Command["data"] = {
+    name: 'nxeps',
+    description: 'Upcoming Arrowverse episodes',
+    defaultPermission: true
 };

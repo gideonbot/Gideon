@@ -66,13 +66,39 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     if ((interaction.guild as Guild)?.last_jokes.length > 20) interaction.guild?.last_jokes.shift();
 
     return interaction.reply(Util.Embed('Category: ' + body.category, {description: body.joke}, interaction.member as GuildMember));       
-}
+};
 
 export const info: Command['info'] = {
-    name: 'joke',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: []
+};
+
+export const data: Command["data"] = {
+    name: 'joke',
+    description: 'Fetch a random joke',
+    defaultPermission: true,
+    options: [
+      {
+        type: 'STRING',
+        name: 'category',
+        description: 'The joke category',
+        choices: [
+          {
+            name: 'Programming',
+            value: 'prog'
+          },
+          {
+            name: 'Miscellaneous',
+            value: 'misc'
+          },
+          {
+            name: 'Dark',
+            value: 'dark'
+          }
+        ]
+      }
+    ]
 };

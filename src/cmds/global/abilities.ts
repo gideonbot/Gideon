@@ -162,13 +162,40 @@ export async function run(interaction: CommandInteraction, options: CommandInter
             .setPage(1)
             .build();
     }
-}   
+};   
 
 export const info: Command['info'] = {
-    name: 'abilities',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: ['MANAGE_MESSAGES', 'ADD_REACTIONS']
+};
+
+export const data: Command["data"] = {
+    name: 'abilities',
+    description: 'Shows metahuman abilities',
+    defaultPermission: true,
+    options: [
+      {
+        type: 'STRING',
+        name: 'metahuman',
+        description: 'The type of metahuman',
+        required: true,
+        choices: [
+          {
+            name: 'Speedsters',
+            value: 'speedster'
+          },
+          {
+            name: 'Vibers',
+            value: 'viber'
+          },
+          {
+            name: 'Kryptonian',
+            value: 'kryptonian'
+          }
+        ]
+      }
+    ]
 };

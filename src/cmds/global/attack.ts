@@ -160,13 +160,74 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         description: `**${attack?.emote}${auth} ${attack?.text}${attack?.emote}**\n\n${attack?.desc}`,
         image: attack?.attackgif
     }, interaction.member as GuildMember));
-}
+};
 
 export const info: Command['info'] = {
-    name: 'attack',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: []
+};
+
+export const data: Command["data"] = {
+    name: 'attack',
+    description: 'Attack a user with a methuman ability',
+    defaultPermission: true,
+    options: [
+      {
+        type: 'STRING',
+        name: 'power',
+        description: 'The power to use',
+        required: true,
+        choices: [
+          {
+            name: 'Iceblast',
+            value: 'iceblast'
+          },
+          {
+            name: 'Lightning Throw',
+            value: 'lthrow'
+          },
+          {
+            name: 'Reverse-Flash',
+            value: 'rflash'
+          },
+          {
+            name: 'Vibeblast',
+            value: 'vblast'
+          },
+          {
+            name: 'Arrow',
+            value: 'arrow'
+          },
+          {
+            name: 'Heatvision',
+            value: 'hvision'
+          },
+          {
+            name: 'Send to Hell',
+            value: 'sthell'
+          },
+          {
+            name: 'Thunderclap',
+            value: 'tclap'
+          },
+          {
+            name: 'Devil Face',
+            value: 'devil'
+          },
+          {
+            name: 'Cosmic Staff',
+            value: 'staff'
+          }
+        ]
+      },
+      {
+        type: 'USER',
+        name: 'user',
+        description: 'The user to attack',
+        required: true
+      }
+    ]
 };

@@ -55,13 +55,18 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         Util.log('Exception occurred while starting up the particle accelerator ' + ex.stack);
         return interaction.reply('An error occurred while trying to start the particle accelerator!', { ephemeral: true });
     } 
-}
+};
 
 export const info: Command['info'] = {
-    name: 'boom',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: [Permissions.FLAGS.MANAGE_MESSAGES]
+};
+
+export const data: Command["data"] = {
+    name: 'boom',
+    description: 'Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability',
+    defaultPermission: true
 };

@@ -73,13 +73,18 @@ export async function run(interaction: CommandInteraction) {
     let result = arr[Math.floor(Math.random() * arr.length)];
 
     return interaction.editReply(`You have reached out to Earth-${result.en}`, { embeds:[Util.Embed(result.title, {description: result.desc, image: result.gif}, interaction.member as GuildMember)] });  
-}
+};
 
 export const info: Command['info'] = {
-    name: 'wells',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: []
+};
+
+export const data: Command["data"] = {
+    name: 'wells',
+    description: 'Reaches out to a random Wells',
+    defaultPermission: true
 };

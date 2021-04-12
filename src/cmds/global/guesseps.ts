@@ -126,7 +126,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
                 collector.resetTimer();
                 rcollector.resetTimer();
                 
-                await sent?.edit(game.embed);
+                await interaction.editReply(game.embed);
                 
                 timerstart = new Date();
                 return;
@@ -151,7 +151,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
                 }, interaction.member as GuildMember);
 
                 interaction.user.guessing = false;
-                return sent?.edit(stopembed);
+                return interaction.editReply(stopembed);
             }
         }); 
 
@@ -186,7 +186,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
                 }, interaction.member as GuildMember);
 
                 interaction.user.guessing = false;
-                await sent?.edit(correctembed);
+                await interaction.editReply(correctembed);
                 return sent?.reactions.removeAll();
             }
 
@@ -212,10 +212,10 @@ export async function run(interaction: CommandInteraction, options: CommandInter
                 collector.stop();
                 interaction.user.guessing = false;
                 await sent?.reactions.removeAll();
-                return sent?.edit(incorrectembed);
+                return interaction.editReply(incorrectembed);
             }
 
-            else await sent?.edit(incorrectembed);
+            else await interaction.editReply(incorrectembed);
         });
     
         collector.on('end', async (collected, reason) => {
@@ -236,7 +236,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
                 interaction.user.guessing = false;
                 await sent?.reactions.removeAll();
-                return sent?.edit(timeouttembed);
+                return interaction.editReply(timeouttembed);
             }
         });
     }
@@ -245,13 +245,51 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         Util.log('Caught an exception while running guesseps.js: ' + ex.stack);
         return interaction.reply('An error occurred while processing your request:```\n' + ex + '```', { ephemeral: true });
     }
-}
+};
 
 export const info: Command['info'] = {
-    name: 'guess',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: ['MANAGE_MESSAGES']
+};
+
+export const data: Command["data"] = {
+    name: 'guess',
+    description: 'Arrowverse episode guessing game',
+    defaultPermission: true,
+    options: [
+      {
+        type: 'STRING',
+        name: 'show',
+        description: 'The show you want to guess for',
+        choices: [
+          {
+            name: 'The Flash',
+            value: 'flash'
+          },
+          {
+            name: 'Arrow',
+            value: 'arrow'
+          },
+          {
+            name: 'DC\'s Legends of Tomorrow',
+            value: 'legends'
+          },
+          {
+            name: 'Supergirl',
+            value: 'supergirl'
+          },
+          {
+            name: 'Batwoman',
+            value: 'batwoman'
+          },
+          {
+            name: 'Constantine',
+            value: 'constantine'
+          }
+        ]
+      }
+    ]
 };

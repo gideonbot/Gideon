@@ -30,4 +30,4 @@ export const data: Command["data"] = {
     name: 'ping',
     description: 'Gideon\'s ping',
     defaultPermission: true
-  }
+};

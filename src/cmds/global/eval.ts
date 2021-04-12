@@ -31,7 +31,6 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 };
 
 export const info: Command['info'] = {
-    name: 'eval',
     owner: true,
     nsfw: false,
     roles: [],

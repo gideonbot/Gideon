@@ -21,13 +21,18 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         {description: `Total guilds: \`${(guilds as unknown as string[]).length}\`\nTotal users: \`${users.toLocaleString('de-DE')}\`\nUsed commands: \`${cmds.toLocaleString('de-DE')}\`\nMessages sent: \`${msgs.toLocaleString('de-DE')}\`\nAI chat messages: \`${aimsgs.toLocaleString('de-DE')}\``
         }, interaction.member as GuildMember)
     );  
-}
+};
 
 export const info: Command['info'] = {
-    name: 'stats',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: []
+};
+
+export const data: Command["data"] = {
+    name: 'stats',
+    description: 'Displays Gideon\'s stats',
+    defaultPermission: true
 };

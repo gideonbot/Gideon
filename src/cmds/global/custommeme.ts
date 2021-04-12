@@ -66,13 +66,32 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     const attachment = new MessageAttachment(canvas.toBuffer(), 'sgmeme.jpg');
 
     return interaction.reply(Util.Embed().attachFiles([attachment]).setImage('attachment://sgmeme.jpg'));
-}
+};
 
 export const info: Command['info'] = {
-    name: 'custommeme',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: []
+};
+
+export const data: Command["data"] = {
+    name: 'custommeme',
+    description: 'Make a custom Arrowverse meme',
+    defaultPermission: true,
+    options: [
+      {
+        type: 'STRING',
+        name: 'first',
+        description: 'The first phrase',
+        required: true
+      },
+      {
+        type: 'STRING',
+        name: 'second',
+        description: 'The second phrase',
+        required: true
+      }
+    ]
 };

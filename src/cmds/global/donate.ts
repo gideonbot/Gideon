@@ -20,13 +20,18 @@ export async function run(interaction: CommandInteraction): Promise<void> {
             }
         ]
     }, interaction.member as GuildMember));
-}
+};
 
 export const info: Command['info'] = {
-    name: 'donate',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: []
+};
+
+export const data: Command["data"] = {
+    name: 'donate',
+    description: 'Displays info to support maintainance and hosting of Gideon',
+    defaultPermission: true
 };

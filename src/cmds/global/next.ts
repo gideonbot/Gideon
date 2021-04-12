@@ -68,13 +68,64 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     let embed = GetNextEmbed(showtitle, fiep as unknown as string);
     interaction.reply(embed);
-}
+};
 
 export const info: Command['info'] = {
-    name: 'next',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: ['MANAGE_MESSAGES']
+};
+
+export const data: Command["data"] = {
+    name: 'next',
+    description: 'Get next episode in watching order',
+    defaultPermission: true,
+    options: [
+      {
+        type: 'STRING',
+        name: 'show',
+        description: 'The Arrowverse show',
+        required: true,
+        choices: [
+          {
+            name: 'The Flash',
+            value: 'show_fl'
+          },
+          {
+            name: 'Arrow',
+            value: 'show_ar'
+          },
+          {
+            name: 'Supergirl',
+            value: 'show_sg'
+          },
+          {
+            name: 'DC\'s Legends of Tomorrow',
+            value: 'show_lot'
+          },
+          {
+            name: 'Batwoman',
+            value: 'show_bw'
+          },
+          {
+            name: 'Constantine',
+            value: 'show_co'
+          }
+        ]
+      },
+      {
+        type: 'INTEGER',
+        name: 'season',
+        description: 'Your current season',
+        required: true
+      },
+      {
+        type: 'INTEGER',
+        name: 'episode',
+        description: 'Your current episode',
+        required: true
+      }
+    ]
 };

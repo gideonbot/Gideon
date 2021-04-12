@@ -12,13 +12,18 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     }
 
     return Util.IMG('NVHwdNg', interaction, false);
-}
+};
 
 export const info: Command['info'] = {
-    name: 'meme',
     owner: false,
     nsfw: false,
     roles: [],
     user_perms: [],
     bot_perms: []
+};
+
+export const data: Command["data"] = {
+    name: 'meme',
+    description: 'Fetches a random Arrowverse meme',
+    defaultPermission: true
 };
