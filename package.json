@@ -33,9 +33,7 @@
     "recursive-readdir": "^2.2.2",
     "string-similarity": "^4.0.4",
     "ws": "^7.4.3",
-    "zip-promise": "^1.1.1"
-  },
-  "devDependencies": {
+    "zip-promise": "^1.1.1",
     "@types/bad-words": "^3.0.0",
     "@types/better-sqlite3": "^5.4.1",
     "@types/node-fetch": "^2.5.8",
