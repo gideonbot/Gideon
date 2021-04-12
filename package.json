@@ -5,7 +5,7 @@
   "main": "gideon.js",
   "type": "module",
   "scripts": {
-    "test": "node dist/gideon.js",
+    "test": "cd dist && node gideon.js",
     "build": "npx tsc -p ./",
     "start": "node dist/gideon.js"
   },
