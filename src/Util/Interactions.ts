@@ -9,7 +9,7 @@ class Interactions {
      * Handle Slash Commands
      * @param {Discord.CommandInteraction} command 
      */
-    static async Handle(command: CommandInteraction, Util: any) {
+    static async SlashCommands(command: CommandInteraction, Util: any) {
         if (Util.Checks.IBU(command.user.id)) return; //check if user is blacklisted, if yes, return
         Util.Checks.LBG(command?.guild, Util); //check if guild is blacklisted, if yes, leave
 
