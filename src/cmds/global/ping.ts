@@ -19,7 +19,6 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 };
 
 export const info: Command['info'] = {
-    name: 'ping',
     owner: false,
     nsfw: false,
     roles: [],

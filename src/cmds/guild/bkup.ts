@@ -12,7 +12,6 @@ export async function run(interaction: CommandInteraction): Promise<Message | nu
 };
 
 export const info: Command['info'] = {
-    name: 'bkup',
     owner: false,
     nsfw: false,
     roles: ['621399916283035658'],

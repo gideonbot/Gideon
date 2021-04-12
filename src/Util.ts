@@ -664,7 +664,7 @@ class Util {
     
                     const props: Command = await import(`./${file_path}`);
                     
-                    process.gideon.commands.set(props.info.name, props);
+                    process.gideon.commands.set(props.data.name, props);
             
                     const cmd_end = process.hrtime.bigint();
                     const took = (cmd_end - cmd_start) / BigInt('1000000');
