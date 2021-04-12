@@ -15,7 +15,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 }
 
 export let help: Command['help'] = {
-    id: '787023377541365760',
+    name: 'meme',
     owner: false,
     nsfw: false,
     roles: [],

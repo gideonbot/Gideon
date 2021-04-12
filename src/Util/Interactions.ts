@@ -15,7 +15,7 @@ class Interactions {
 
         const args = command.options;
     
-        const cmd = process.gideon.commands.get(command.commandID);
+        const cmd = process.gideon.commands.get(command.commandName);
         if (!cmd) return;
 
         let guildsettings = process.gideon.getGuild.get(command.guildID);
@@ -99,8 +99,8 @@ class Interactions {
             await cmd.run(command, args);
         }
         catch (e) {
-            if (cmd.help.id === '786979784860893196') return command.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true });
-            else if (cmd.help.id === '787027091098173451') return command.reply('An error occurred while processing your request:```\n' + e + '```\nIf you see this error, this means that the Fandom Wiki API is still fucked and you should complain the shit out of their [support request form](<https://fandom.zendesk.com/hc/en-us/requests/new>) and their [twitter](<https://twitter.com/getfandom>) and tell them to fix their really really awful API endpoints.\nSorry lads, can\'t do more then tell you what\'s up.', { ephemeral: true });
+            if (cmd.help.name === 'eval') return command.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true });
+            else if (cmd.help.name === 'wiki') return command.reply('An error occurred while processing your request:```\n' + e + '```\nIf you see this error, this means that the Fandom Wiki API is still fucked and you should complain the shit out of their [support request form](<https://fandom.zendesk.com/hc/en-us/requests/new>) and their [twitter](<https://twitter.com/getfandom>) and tell them to fix their really really awful API endpoints.\nSorry lads, can\'t do more then tell you what\'s up.', { ephemeral: true });
             Util.log(`An error occurred while running ${command.commandName}:\n\n\`\`\`\n${e.stack}\n\`\`\``);
             return command.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true });
         } 

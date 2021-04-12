@@ -23,7 +23,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 }
 
 export let help: Command['help'] = {
-    id: '787026557159211008',
+    name: 'tracks',
     owner: false,
     nsfw: false,
     roles: [],

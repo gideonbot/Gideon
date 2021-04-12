@@ -8,6 +8,7 @@ import SQL from './Util/SQL';
 import BetterSqlite3 from 'better-sqlite3';
 import WSClient from './WSClient';
 import { APIApplicationCommandOptions } from 'discord-api-types/v8';
+import { CommandInteractionOption } from 'discord.js';
 
 export const config: Config;
 export let MsgHandler: Handler;
@@ -170,23 +171,22 @@ interface SpamCount {
 
 interface Command {
     help: {
-        id: string;
+        name: string;
         debug?: boolean;
         owner?: boolean;
         nsfw?: boolean;
-        dm?: boolean;
         roles: string[];
         user_perms: Discord.PermissionResolvable[];
         bot_perms: Discord.PermissionResolvable[];
     },
-    run: (interaction: Discord.Interaction, args: APIApplicationCommandOptions) => void;
+    async run(interaction: Discord.CommandInteraction, args: CommandInteractionOption[]): Promise<void>;
 }
 
 interface Event {
     name: string;
     once?: boolean;
     process?: boolean
-    run(...args: unknown[]): void;
+    async run(...args: unknown[]): Promise<void>;
 }
 
 interface VoiceInfoResponse {

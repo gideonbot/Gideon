@@ -31,7 +31,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
 }
 
 export let help: Command['help'] = {
-    id: '786979784860893196',
+    name: 'eval',
     owner: true,
     nsfw: false,
     roles: [],

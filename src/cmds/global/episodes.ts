@@ -146,7 +146,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
 }
 
 export const help: Command['help'] = {
-    id: '787001899643305985',
+    name: 'episodes',
     owner: false,
     nsfw: false,
     roles: [],
