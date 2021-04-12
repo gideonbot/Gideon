@@ -1,6 +1,6 @@
 import Util from '../../Util.js';
 import stringSimilarity from 'string-similarity';
-import { CommandInteraction, CommandInteractionOption, GuildMember, TextChannel, Message, User, MessageReaction } from 'discord.js';
+import { CommandInteraction, CommandInteractionOption, GuildMember, TextChannel, Message, User, MessageReaction, Permissions } from 'discord.js';
 import { Command, GuessingScore } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
 
@@ -252,7 +252,7 @@ export const info: Command['info'] = {
     nsfw: false,
     roles: [],
     user_perms: [],
-    bot_perms: ['MANAGE_MESSAGES']
+    bot_perms: [Permissions.FLAGS.MANAGE_MESSAGES]
 };
 
 export const data: Command["data"] = {

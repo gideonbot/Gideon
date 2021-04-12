@@ -51,7 +51,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     }
 
     const ctx = canvas.getContext('2d');
-    const background = await Canvas.loadImage('../../data/images/meme_template_1.jpg');
+    const background = await Canvas.loadImage('../data/images/meme_template_1.jpg');
 
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
