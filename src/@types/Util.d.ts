@@ -170,7 +170,7 @@ interface SpamCount {
 }
 
 interface Command {
-    help: {
+    info: {
         name: string;
         debug?: boolean;
         owner?: boolean;

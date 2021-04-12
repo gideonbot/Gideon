@@ -11,7 +11,7 @@ export async function run(interaction: CommandInteraction): Promise<Message | nu
     return interaction.editReply('Database backup complete! Please check <#622415301144870932>! :white_check_mark:');
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'bkup',
     owner: false,
     nsfw: false,

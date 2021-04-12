@@ -9,7 +9,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(`[Invite me](<${url}>)`);       
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'add',
     owner: false,
     nsfw: false,

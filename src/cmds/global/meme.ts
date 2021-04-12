@@ -14,7 +14,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return Util.IMG('NVHwdNg', interaction, false);
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'meme',
     owner: false,
     nsfw: false,

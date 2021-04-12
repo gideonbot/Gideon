@@ -68,7 +68,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     return interaction.reply(Util.Embed().attachFiles([attachment]).setImage('attachment://sgmeme.jpg'));
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'custommeme',
     owner: false,
     nsfw: false,

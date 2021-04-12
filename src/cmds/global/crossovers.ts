@@ -19,7 +19,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(embed);
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'xovers',
     owner: false,
     nsfw: false,

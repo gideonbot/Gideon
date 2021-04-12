@@ -30,7 +30,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     return interaction.reply(Util.truncate(printValue as string, 1900, true), {code: true});
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'eval',
     owner: true,
     nsfw: false,

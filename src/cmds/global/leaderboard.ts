@@ -23,7 +23,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(leaderboard);
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'leaderboard',
     owner: false,
     nsfw: false,

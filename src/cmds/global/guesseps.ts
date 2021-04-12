@@ -247,7 +247,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     }
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'guess',
     owner: false,
     nsfw: false,

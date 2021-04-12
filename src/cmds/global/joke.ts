@@ -68,7 +68,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     return interaction.reply(Util.Embed('Category: ' + body.category, {description: body.joke}, interaction.member as GuildMember));       
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'joke',
     owner: false,
     nsfw: false,

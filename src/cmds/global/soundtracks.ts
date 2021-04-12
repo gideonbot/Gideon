@@ -22,7 +22,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(stracks);  
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'tracks',
     owner: false,
     nsfw: false,

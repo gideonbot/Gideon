@@ -46,7 +46,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     }
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'npm',
     owner: false,
     nsfw: false,

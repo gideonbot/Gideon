@@ -145,7 +145,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     }, interaction.member as GuildMember));
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'episodes',
     owner: false,
     nsfw: false,

@@ -15,7 +15,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     else if (options[0].value === 'lucifer') return interaction.reply(luciferopening);
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'openings',
     owner: false,
     nsfw: false,

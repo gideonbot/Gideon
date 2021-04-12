@@ -70,7 +70,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     interaction.reply(embed);
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'next',
     owner: false,
     nsfw: false,

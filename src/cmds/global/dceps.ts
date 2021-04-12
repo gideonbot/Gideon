@@ -30,7 +30,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     return interaction.reply(embed);
 }
 
-export const help: Command['help'] = {
+export const info: Command['info'] = {
     name: 'dceps',
     owner: false,
     nsfw: false,
