@@ -16,7 +16,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         console.log(failed);
         return interaction.reply('Failed to measure ping!', { ephemeral: true });
     });
-}
+};
 
 export const info: Command['info'] = {
     name: 'ping',
@@ -26,3 +26,9 @@ export const info: Command['info'] = {
     user_perms: [],
     bot_perms: []
 };
+
+export const data: Command["data"] = {
+    name: 'ping',
+    description: 'Gideon\'s ping',
+    defaultPermission: true
+  }

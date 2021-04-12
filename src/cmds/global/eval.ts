@@ -28,7 +28,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     if (printValue == '{}') return;
 
     return interaction.reply(Util.truncate(printValue as string, 1900, true), {code: true});
-}
+};
 
 export const info: Command['info'] = {
     name: 'eval',
@@ -37,4 +37,18 @@ export const info: Command['info'] = {
     roles: [],
     user_perms: [],
     bot_perms: []
+};
+
+export const data: Command["data"] = {
+    name: 'eval',
+    description: 'Evaluate JavaScript',
+    defaultPermission: true,
+    options: [
+      {
+        type: 'STRING',
+        name: 'code',
+        description: 'JavaScript code',
+        required: true
+      }
+    ]
 };
