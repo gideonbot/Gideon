@@ -8,7 +8,8 @@ import gideonapi from 'gideon-api';
  * @param {Discord.CommandInteraction} interaction
  * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void | Message | null> {
+    interaction.defer();
     const url = 'https://arrowverse.info';
     const emotes = ['▶️', '669309980209446912'];
     let s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
@@ -17,7 +18,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     let points = 0;
     let timerstart = new Date();
 
-    if (interaction.user.guessing) return interaction.reply(Util.Embed('A guessing game is already running!', undefined, interaction.member as GuildMember));
+    if (interaction.user.guessing) return interaction.editReply(Util.Embed('A guessing game is already running!', undefined, interaction.member as GuildMember));
     
     interaction.user.guessing = true;
 
@@ -42,7 +43,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         process.gideon.setScore.run(score);
     }
 
-    if (!options) chosenfilter = filters[0];
+    if (!options[0]) chosenfilter = filters[0];
     else if (options[0].value === 'flash') chosenfilter = filters[1];
     else if (options[0].value === 'arrow') chosenfilter = filters[2];
     else if (options[0].value === 'legends') chosenfilter = filters[3];
