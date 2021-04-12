@@ -190,7 +190,6 @@ class Checks {
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
         else if (message.content.match(/(?:deckerstar)/i)) Util.IMG('rJpbLQx', message);
         else if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
-        else if (message.content.match(/(?:germ)/i)) Util.IMG('ngJQmxL', message);
         else if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.Embed(null, {image: ctm}));
         else if (message.content.match(/(?:castle)/i)) message.channel.send(vid2);
         else if (message.content.match(/(?:magic)/i)) message.channel.send(yombo);

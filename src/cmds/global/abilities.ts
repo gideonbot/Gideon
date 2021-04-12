@@ -1,4 +1,3 @@
-import Pagination from 'discord-paginationembed';
 import gideonapi from 'gideon-api';
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, MessageEmbed, TextChannel, Message } from 'discord.js';
@@ -9,7 +8,6 @@ import { Command } from 'src/@types/Util.js';
  * @param {CommandInteractionOption[]} options
  */
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<Message | void> {
-    interaction.reply('See below:');
     const abilities = await gideonapi.abilities();
 
     if (options[0].value === 'speedster') {
@@ -71,14 +69,8 @@ export async function run(interaction: CommandInteraction, options: CommandInter
             .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
         const spembeds = [sp1, sp2, sp3, sp4, sp5, sp6];
-        
-        return new Pagination.Embeds()
-            .setArray(spembeds)
-            .setAuthorizedUsers([interaction.user.id])
-            .setChannel(interaction.channel as TextChannel)
-            .setPageIndicator(true)
-            .setPage(1)
-            .build();
+        return interaction.reply(spembeds);
+    
     } else if (options[0].value === 'viber') {
         const viber = new MessageEmbed()
             .setColor('#2791D3')
@@ -91,7 +83,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
             .addField(abilities.vibers.title6, abilities.vibers.ability6, true)
             .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
-        return (interaction.channel as TextChannel)?.send(viber);
+        return interaction.reply(viber);
     } else if (options[0].value === 'kryptonian') {
         const kr1 = new MessageEmbed()
             .setColor('#2791D3')
@@ -153,14 +145,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
             .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
         
         const krembeds = [kr1, kr2, kr3, kr4, kr5, kr6];
-        
-        return new Pagination.Embeds()
-            .setArray(krembeds)
-            .setAuthorizedUsers([interaction.user.id])
-            .setChannel(interaction.channel as TextChannel)
-            .setPageIndicator(true)
-            .setPage(1)
-            .build();
+        return interaction.reply(krembeds);
     }
 };   
 
