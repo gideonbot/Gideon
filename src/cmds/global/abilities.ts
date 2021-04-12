@@ -9,8 +9,8 @@ import { Command } from 'src/@types/Util.js';
  * @param {CommandInteractionOption[]} options
  */
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<Message | void> {
-    //@ts-ignore
-    const abilities = await gideonapi.abilities() as any;
+    interaction.reply('See below:');
+    const abilities = await gideonapi.abilities();
 
     if (options[0].value === 'speedster') {
         const sp1 = new MessageEmbed()
