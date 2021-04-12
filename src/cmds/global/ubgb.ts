@@ -4,14 +4,14 @@ import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     //@ts-ignore
-    const id = args[0].options[0].value;
+    const id = options[0].options[0].value;
     if (!Util.ValID(id as string)) return interaction.reply('Please provide a valid id!');
     //@ts-ignore
-    if (args[0].options[0].name === 'userid') {
+    if (options[0].options[0].name === 'userid') {
         let ub = process.gideon.getUser.get(id);
         if (!ub) {
             ub = {
@@ -69,7 +69,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'blacklist',
     owner: true,
     nsfw: false,

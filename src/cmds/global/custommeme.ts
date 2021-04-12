@@ -5,9 +5,9 @@ import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     const canvas = Canvas.createCanvas(560, 560);
 
     function wrapText (ctx: Canvas.CanvasRenderingContext2D, text: string, x: number, y: number, maxWidth: number, lineHeight: number) {
@@ -57,18 +57,18 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
 
     ctx.font = '30px sans-serif';
     ctx.fillStyle = '#000000';
-    wrapText(ctx, (args[0].value as string).trim(), 300, 40, 260, 35);
+    wrapText(ctx, (options[0].value as string).trim(), 300, 40, 260, 35);
 
     ctx.font = '30px sans-serif';
     ctx.fillStyle = '#000000';
-    wrapText(ctx, (args[0].value as string).trim(), 300, 315, 260, 35);
+    wrapText(ctx, (options[0].value as string).trim(), 300, 315, 260, 35);
 
     const attachment = new MessageAttachment(canvas.toBuffer(), 'sgmeme.jpg');
 
     return interaction.reply(Util.Embed().attachFiles([attachment]).setImage('attachment://sgmeme.jpg'));
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'custommeme',
     owner: false,
     nsfw: false,

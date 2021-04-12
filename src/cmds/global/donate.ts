@@ -22,7 +22,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     }, interaction.member as GuildMember));
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'donate',
     owner: false,
     nsfw: false,

@@ -4,10 +4,10 @@ import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
-    const setting = args[0].options?.[0].value;
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
+    const setting = options[0].options?.[0].value;
 
     let guildsettings = process.gideon.getGuild.get(interaction.guild?.id);
 
@@ -59,7 +59,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'settings',
     owner: false,
     nsfw: false,

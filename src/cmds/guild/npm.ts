@@ -5,10 +5,10 @@ import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
-    if (args[0].value === 'i') {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
+    if (options[0].value === 'i') {
         interaction.reply('running `npm install` please check <#622415301144870932> for console output!');
         const install = exec.exec('npm install');
 
@@ -20,7 +20,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
         });
     }
 
-    if (args[0].value === 'u') {
+    if (options[0].value === 'u') {
         interaction.reply('running `npm update` please check <#622415301144870932> for console output!');
         const update = exec.exec('npm update');
 
@@ -32,7 +32,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
         });
     }
 
-    if (args[0].value === 'af') {
+    if (options[0].value === 'af') {
         interaction.reply('running `npm audit fix` please check <#622415301144870932> for console output!');
         //@ts-ignore
         const update = exec('npm audit fix');
@@ -46,7 +46,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'npm',
     owner: false,
     nsfw: false,

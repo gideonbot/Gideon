@@ -8,10 +8,10 @@ import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
-    const code = args[0].value;
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
+    const code = options[0].value;
     const returnedValue = eval(code as string);
 
     if (typeof returnedValue === 'undefined') {
@@ -30,7 +30,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     return interaction.reply(Util.truncate(printValue as string, 1900, true), {code: true});
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'eval',
     owner: true,
     nsfw: false,

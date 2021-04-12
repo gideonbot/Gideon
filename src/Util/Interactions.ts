@@ -13,7 +13,7 @@ class Interactions {
         if (Util.Checks.IBU(command.user.id)) return; //check if user is blacklisted, if yes, return
         Util.Checks.LBG(command?.guild, Util); //check if guild is blacklisted, if yes, leave
 
-        const args = command.options;
+        const options = command.options;
     
         const cmd = process.gideon.commands.get(command.commandName);
         if (!cmd) return;
@@ -96,7 +96,7 @@ class Interactions {
         Util.IncreaseStat('commands_ran');
         
         try {
-            await cmd.run(command, args);
+            await cmd.run(command, options);
         }
         catch (e) {
             if (cmd.help.name === 'eval') return command.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true });

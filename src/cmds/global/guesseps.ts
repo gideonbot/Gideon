@@ -6,9 +6,9 @@ import gideonapi from 'gideon-api';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     const url = 'https://arrowverse.info';
     const emotes = ['▶️', '669309980209446912'];
     let s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
@@ -42,13 +42,13 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
         process.gideon.setScore.run(score);
     }
 
-    if (!args) chosenfilter = filters[0];
-    else if (args[0].value === 'flash') chosenfilter = filters[1];
-    else if (args[0].value === 'arrow') chosenfilter = filters[2];
-    else if (args[0].value === 'legends') chosenfilter = filters[3];
-    else if (args[0].value === 'supergirl') chosenfilter = filters[4];
-    else if (args[0].value === 'batwoman') chosenfilter = filters[5];
-    else if (args[0].value === 'constantine') chosenfilter = filters[6];
+    if (!options) chosenfilter = filters[0];
+    else if (options[0].value === 'flash') chosenfilter = filters[1];
+    else if (options[0].value === 'arrow') chosenfilter = filters[2];
+    else if (options[0].value === 'legends') chosenfilter = filters[3];
+    else if (options[0].value === 'supergirl') chosenfilter = filters[4];
+    else if (options[0].value === 'batwoman') chosenfilter = filters[5];
+    else if (options[0].value === 'constantine') chosenfilter = filters[6];
 
     function Countdown() {
         let timerdiff = (Date.now() - timerstart.getTime()) / 1000;
@@ -247,7 +247,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'guess',
     owner: false,
     nsfw: false,

@@ -4,12 +4,12 @@ import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     const auth = interaction.user;
 
-    const user = await process.gideon.users.fetch(args[1].value as string);
+    const user = await process.gideon.users.fetch(options[1].value as string);
 
     if (user.id === auth.id || user.id === process.gideon.user?.id) return interaction.reply(Util.Embed().setTitle('My protocols forbid any kind of self-harm!'));
     else if (user.bot) return interaction.reply(Util.Embed().setTitle('Please mention a human!'));
@@ -145,16 +145,16 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
 
     let attack;
 
-    if (args[0].value === 'iceblast') attack = attacks[0];
-    else if (args[0].value === 'lthrow') attack = attacks[1];
-    else if (args[0].value === 'rflash') attack = attacks[2];
-    else if (args[0].value === 'vblast') attack = attacks[3];
-    else if (args[0].value === 'arrow') attack = attacks[4];
-    else if (args[0].value === 'hvision') attack = attacks[5];
-    else if (args[0].value === 'sthell') attack = attacks[9];
-    else if (args[0].value === 'tclap') attack = attacks[10];
-    else if (args[0].value === 'devil') attack = attacks[16];
-    else if (args[0].value === 'staff') attack = attacks[19];
+    if (options[0].value === 'iceblast') attack = attacks[0];
+    else if (options[0].value === 'lthrow') attack = attacks[1];
+    else if (options[0].value === 'rflash') attack = attacks[2];
+    else if (options[0].value === 'vblast') attack = attacks[3];
+    else if (options[0].value === 'arrow') attack = attacks[4];
+    else if (options[0].value === 'hvision') attack = attacks[5];
+    else if (options[0].value === 'sthell') attack = attacks[9];
+    else if (options[0].value === 'tclap') attack = attacks[10];
+    else if (options[0].value === 'devil') attack = attacks[16];
+    else if (options[0].value === 'staff') attack = attacks[19];
 
     return interaction.reply(Util.Embed(undefined, {
         description: `**${attack?.emote}${auth} ${attack?.text}${attack?.emote}**\n\n${attack?.desc}`,
@@ -162,7 +162,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }, interaction.member as GuildMember));
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'attack',
     owner: false,
     nsfw: false,

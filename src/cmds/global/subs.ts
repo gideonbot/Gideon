@@ -5,9 +5,9 @@ import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
         Util.log('Missing env variables for subs command!');
         return interaction.reply(Util.Embed('This command is currently not available', undefined, interaction.member as GuildMember));
@@ -89,31 +89,31 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
 
     let show = shows[-1];
 
-    if (args[0].options?.[0].value === 'show_fl') show = shows[0];
-    else if (args[0].options?.[0].value === 'show_ar') show = shows[1];
-    else if (args[0].options?.[0].value === 'show_sg') show = shows[2];
-    else if (args[0].options?.[0].value === 'show_lot') show = shows[3];
-    else if (args[0].options?.[0].value === 'show_co') show = shows[4];
-    else if (args[0].options?.[0].value === 'show_bw') show = shows[5];
-    else if (args[0].options?.[0].value === 'show_bl') show = shows[6];
-    else if (args[0].options?.[0].value === 'show_kr') show = shows[8];
-    else if (args[0].options?.[0].value === 'show_lu') show = shows[9];
-    else if (args[0].options?.[0].value === 'show_sl') show = shows[10];
-    else if (args[0].options?.[0].value === 'show_stg') show = shows[11];
-    else if (args[0].options?.[0].value === 'show_dp') show = shows[12];
-    else if (args[0].options?.[0].value === 'show_t') show = shows[13];
-    else if (args[0].options?.[0].value === 'show_sv') show = shows[14];
-    else if (args[0].options?.[0].value === 'show_tb') show = shows[15];
+    if (options[0].options?.[0].value === 'show_fl') show = shows[0];
+    else if (options[0].options?.[0].value === 'show_ar') show = shows[1];
+    else if (options[0].options?.[0].value === 'show_sg') show = shows[2];
+    else if (options[0].options?.[0].value === 'show_lot') show = shows[3];
+    else if (options[0].options?.[0].value === 'show_co') show = shows[4];
+    else if (options[0].options?.[0].value === 'show_bw') show = shows[5];
+    else if (options[0].options?.[0].value === 'show_bl') show = shows[6];
+    else if (options[0].options?.[0].value === 'show_kr') show = shows[8];
+    else if (options[0].options?.[0].value === 'show_lu') show = shows[9];
+    else if (options[0].options?.[0].value === 'show_sl') show = shows[10];
+    else if (options[0].options?.[0].value === 'show_stg') show = shows[11];
+    else if (options[0].options?.[0].value === 'show_dp') show = shows[12];
+    else if (options[0].options?.[0].value === 'show_t') show = shows[13];
+    else if (options[0].options?.[0].value === 'show_sv') show = shows[14];
+    else if (options[0].options?.[0].value === 'show_tb') show = shows[15];
     
     OS.search({
-        sublanguageid: args[0].options?.[1].value as string,       
-        season: args[0].options?.[2].value as number,
-        episode: args[0].options?.[3].value as number,
+        sublanguageid: options[0].options?.[1].value as string,       
+        season: options[0].options?.[2].value as number,
+        episode: options[0].options?.[3].value as number,
         limit: '5',                 
         imdbid: show.id,           
 
     }).then(subtitles => {
-        const embed = Util.Embed(`Subtitles for: ${show.title} ${args[0].options?.[2].value}x${Util.normalize(args[0].options?.[3].value as number)}`, {description: 'Here are the 5 best results from opensubtitles.org:'}, interaction.member as GuildMember);
+        const embed = Util.Embed(`Subtitles for: ${show.title} ${options[0].options?.[2].value}x${Util.normalize(options[0].options?.[3].value as number)}`, {description: 'Here are the 5 best results from opensubtitles.org:'}, interaction.member as GuildMember);
 
         for (let sub of Object.values(subtitles)[0]) {
             embed.addField(sub.filename, `**[Download SRT](${sub.url} '${sub.url}')** Lang: \`${sub.lang}\` Score: \`${sub.score}\``);
@@ -126,7 +126,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     });
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'subs',
     owner: false,
     nsfw: false,

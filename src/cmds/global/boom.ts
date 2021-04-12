@@ -57,7 +57,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     } 
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'boom',
     owner: false,
     nsfw: false,

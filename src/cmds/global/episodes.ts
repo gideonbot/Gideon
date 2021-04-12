@@ -5,13 +5,13 @@ import { Command, SeEp, Show, TVMazeResponse } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     if (interaction.user.guessing) return interaction.reply('No cheating while your guessing game is active!');
 
-    let info: SeEp = { season: args[0].options?.[1].value as number,
-        episode: args[0].options?.[2].value as number
+    let info: SeEp = { season: options[0].options?.[1].value as number,
+        episode: options[0].options?.[2].value as number
     };
 
     let shows: Show[] = [
@@ -99,21 +99,21 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
 
     let show = undefined as unknown as Show;
     
-    if (args[0].options?.[0].value === 'show_fl') show = shows[0];
-    else if (args[0].options?.[0].value === 'show_ar') show = shows[1];
-    else if (args[0].options?.[0].value === 'show_sg') show = shows[2];
-    else if (args[0].options?.[0].value === 'show_lot') show = shows[3];
-    else if (args[0].options?.[0].value === 'show_co') show = shows[4];
-    else if (args[0].options?.[0].value === 'show_bw') show = shows[5];
-    else if (args[0].options?.[0].value === 'show_bl') show = shows[6];
-    else if (args[0].options?.[0].value === 'show_kr') show = shows[8];
-    else if (args[0].options?.[0].value === 'show_lu') show = shows[9];
-    else if (args[0].options?.[0].value === 'show_sl') show = shows[10];
-    else if (args[0].options?.[0].value === 'show_stg') show = shows[11];
-    else if (args[0].options?.[0].value === 'show_dp') show = shows[12];
-    else if (args[0].options?.[0].value === 'show_t') show = shows[13];
-    else if (args[0].options?.[0].value === 'show_sv') show = shows[14];
-    else if (args[0].options?.[0].value === 'show_tb') show = shows[15];
+    if (options[0].options?.[0].value === 'show_fl') show = shows[0];
+    else if (options[0].options?.[0].value === 'show_ar') show = shows[1];
+    else if (options[0].options?.[0].value === 'show_sg') show = shows[2];
+    else if (options[0].options?.[0].value === 'show_lot') show = shows[3];
+    else if (options[0].options?.[0].value === 'show_co') show = shows[4];
+    else if (options[0].options?.[0].value === 'show_bw') show = shows[5];
+    else if (options[0].options?.[0].value === 'show_bl') show = shows[6];
+    else if (options[0].options?.[0].value === 'show_kr') show = shows[8];
+    else if (options[0].options?.[0].value === 'show_lu') show = shows[9];
+    else if (options[0].options?.[0].value === 'show_sl') show = shows[10];
+    else if (options[0].options?.[0].value === 'show_stg') show = shows[11];
+    else if (options[0].options?.[0].value === 'show_dp') show = shows[12];
+    else if (options[0].options?.[0].value === 'show_t') show = shows[13];
+    else if (options[0].options?.[0].value === 'show_sv') show = shows[14];
+    else if (options[0].options?.[0].value === 'show_tb') show = shows[15];
 
     const api = `http://api.tvmaze.com/shows/${show?.id}/episodebynumber?season=${info.season}&number=${info.episode}`;
 

@@ -179,7 +179,7 @@ interface Command {
         user_perms: Discord.PermissionResolvable[];
         bot_perms: Discord.PermissionResolvable[];
     },
-    async run(interaction: Discord.CommandInteraction, args: CommandInteractionOption[]): Promise<void>;
+    async run(interaction: Discord.CommandInteraction, options: CommandInteractionOption[]): Promise<void>;
 }
 
 interface Event {

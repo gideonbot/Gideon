@@ -4,7 +4,7 @@ import Util from '../../Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {object[]} args
+ * @param {object[]} options
  */
 export async function run(interaction: CommandInteraction): Promise<void> {
     const embed = Util.Embed('__Upcoming Arrowverse episodes:__', undefined, interaction.member as GuildMember);
@@ -30,7 +30,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(embed);
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'nxeps',
     owner: false,
     nsfw: false,

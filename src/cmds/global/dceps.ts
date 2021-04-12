@@ -4,9 +4,9 @@ import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     const embed = Util.Embed('__Upcoming Arrowverse episodes:__', undefined, interaction.member as GuildMember);
 
     for (let show in process.gideon.dc_show_urls) {
@@ -30,7 +30,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     return interaction.reply(embed);
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'dceps',
     owner: false,
     nsfw: false,

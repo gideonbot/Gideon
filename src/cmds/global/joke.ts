@@ -5,9 +5,9 @@ import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     let type: string = 'Any';
 
     let types = {
@@ -16,8 +16,8 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
         Dark: ['dark'],
     };
 
-    if (args) {
-        let p_type = args[0].value;
+    if (options) {
+        let p_type = options[0].value;
         for (let key in types) {
             if ((types as any)[key].includes(p_type)) type = key;
         }
@@ -68,7 +68,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     return interaction.reply(Util.Embed('Category: ' + body.category, {description: body.joke}, interaction.member as GuildMember));       
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'joke',
     owner: false,
     nsfw: false,

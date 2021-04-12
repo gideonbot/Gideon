@@ -5,9 +5,9 @@ import { Command, Wiki, WikiQuery, WikiResult } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     let wikis: Wiki[] = [
         {
             url: 'arrow.fandom.com',
@@ -50,17 +50,17 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     let wiki = undefined as unknown as Wiki;
 
 
-    if (args[0].value === 'wiki_av') wiki = wikis[0];
-    else if (args[0].value === 'wiki_stg') wiki = wikis[1];
-    else if (args[0].value === 'wiki_dc') wiki = wikis[2];
-    else if (args[0].value === 'wiki_kr') wiki = wikis[3];
-    else if (args[0].value === 'wiki_lu') wiki = wikis[4];
-    else if (args[0].value === 'wiki_dp') wiki = wikis[5];
-    else if (args[0].value === 'wiki_t') wiki = wikis[6];
-    else if (args[0].value === 'wiki_sv') wiki = wikis[7];
-    else if (args[0].value === 'wiki_tb') wiki = wikis[8];
+    if (options[0].value === 'wiki_av') wiki = wikis[0];
+    else if (options[0].value === 'wiki_stg') wiki = wikis[1];
+    else if (options[0].value === 'wiki_dc') wiki = wikis[2];
+    else if (options[0].value === 'wiki_kr') wiki = wikis[3];
+    else if (options[0].value === 'wiki_lu') wiki = wikis[4];
+    else if (options[0].value === 'wiki_dp') wiki = wikis[5];
+    else if (options[0].value === 'wiki_t') wiki = wikis[6];
+    else if (options[0].value === 'wiki_sv') wiki = wikis[7];
+    else if (options[0].value === 'wiki_tb') wiki = wikis[8];
 
-    let search_term = args[1].value;
+    let search_term = options[1].value;
 
     const search_api = encodeURI(`https://${wiki?.url}/api/v1/SearchSuggestions/List?query=${search_term}`);
 
@@ -94,7 +94,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     }, interaction.member as GuildMember));
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'wiki',
     owner: false,
     nsfw: false,

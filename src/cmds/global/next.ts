@@ -5,24 +5,24 @@ import gideonapi from 'gideon-api';
 
 /**
  * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} args
+ * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, args: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     const url: string = 'https://arrowverse.info';
     let showtitle: string = undefined as unknown as string;
     let thimg: string;
     
-    if (args[0].value === 'show_fl') showtitle = 'The Flash';
-    else if (args[0].value === 'show_ar') showtitle = 'Arrow';
-    else if (args[0].value === 'show_sg') showtitle = 'Supergirl';
-    else if (args[0].value === 'show_lot') showtitle = 'DC\'s Legends of Tomorrow';
-    else if (args[0].value === 'show_co') showtitle = 'Constantine';
-    else if (args[0].value === 'show_bw') showtitle = 'Batwoman';
+    if (options[0].value === 'show_fl') showtitle = 'The Flash';
+    else if (options[0].value === 'show_ar') showtitle = 'Arrow';
+    else if (options[0].value === 'show_sg') showtitle = 'Supergirl';
+    else if (options[0].value === 'show_lot') showtitle = 'DC\'s Legends of Tomorrow';
+    else if (options[0].value === 'show_co') showtitle = 'Constantine';
+    else if (options[0].value === 'show_bw') showtitle = 'Batwoman';
 
     const body = await gideonapi.avi();
 
-    let fiep: SeEp = { season: args[1].value as number,
-        episode: args[2].value as number 
+    let fiep: SeEp = { season: options[1].value as number,
+        episode: options[2].value as number 
     };
     (fiep as unknown as string) = 'S' + Util.normalize(fiep.season as number) + 'E' + Util.normalize(fiep.episode as number);
 
@@ -70,7 +70,7 @@ export async function run(interaction: CommandInteraction, args: CommandInteract
     interaction.reply(embed);
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'next',
     owner: false,
     nsfw: false,

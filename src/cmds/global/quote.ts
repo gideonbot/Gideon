@@ -11,7 +11,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(Util.Embed(undefined, {description: '**' + quote.text + '**', thumbnail: quote.img}, interaction.member as GuildMember));
 }
 
-export let help: Command['help'] = {
+export const help: Command['help'] = {
     name: 'quote',
     owner: false,
     nsfw: false,
