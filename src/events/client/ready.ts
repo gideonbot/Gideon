@@ -16,6 +16,7 @@ export default {
         Util.InitStatus();
         Util.UpdateStatus();
         await Util.LoadCommands();
+        await Util.DeployCommands();
         Util.InitWS();
     
         for (const item of ['commands_ran', 'ai_chat_messages_processed', 'messages_sent']) {

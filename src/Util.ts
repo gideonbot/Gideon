@@ -14,6 +14,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
 import WSClient from './WSClient.js';
 import { EpisodeInfo, EmbedOpts, InfoInterface, Command } from './@types/Util.js';
+import { Collection } from 'discord.js';
+import { ApplicationCommandData } from 'discord.js';
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -676,6 +678,44 @@ class Util {
 
                 resolve();
             });
+        });
+    }
+
+    /**
+     * Deploy Application Commands
+     */
+    static async DeployCommands(): Promise<void> {
+        const global: Collection<string, ApplicationCommandData> = new Collection();
+        const guild: Collection<string, ApplicationCommandData> = new Collection();
+
+        recursive('./cmds', async (err, files) => {
+            if (err) {
+                Util.log('Error while reading commands:\n' + err);
+            }
+    
+            const jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
+            if (jsfiles.length < 1) {
+                console.log('No commands to load!');
+            }
+
+            for (const file_path of jsfiles) {
+                const props: Command = await import(`./${file_path}`);
+                
+                if (file_path.includes('global')) global.set(props.data.name, props.data);
+                else if (file_path.includes('guild')) guild.set(props.data.name, props.data);
+            }
+
+            const all = global.concat(guild);
+
+            if (process.gideon.user?.id === '595328879397437463') {
+                await process.gideon.application?.commands.set(global.array());
+                await process.gideon.guilds.cache.get('595318490240385037')?.commands.set(guild.array());
+            }
+
+            else if (process.gideon.user?.id === '598132992874905600') await process.gideon.guilds.cache.get('709061970078335027')?.commands.set(all.array());
+            else if (process.gideon.user?.id === '621026307937140756') await process.gideon.guilds.cache.get('604426720216612894')?.commands.set(all.array());
+
+            console.log('Application Commands deployed!');
         });
     }
 

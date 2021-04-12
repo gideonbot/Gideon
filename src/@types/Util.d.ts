@@ -20,6 +20,7 @@ export function getIdFromString(str: string): string;
 export function secondsToDifferenceString(seconds: number, settings: secondsToDifferenceSettings): string;
 export function log(message: string, files: string[]): boolean;
 export function LoadCommands(): Promise<void>;
+export function DeployCommands(): Promise<void>;
 export function fetchJSON(url: string): Promise<unknown>;
 export function ValID(input: string): string;
 export function IMG(image_id: string, message: Discord.Message, nsfw: boolean): Promise<void>;
