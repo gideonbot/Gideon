@@ -151,10 +151,21 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     else if (options[0].value === 'vblast') attack = attacks[3];
     else if (options[0].value === 'arrow') attack = attacks[4];
     else if (options[0].value === 'hvision') attack = attacks[5];
+    else if (options[0].value === 'spunch') attack = attacks[6];
+    else if (options[0].value === 'ccry') attack = attacks[7];
+    else if (options[0].value === 'brang') attack = attacks[8];
     else if (options[0].value === 'sthell') attack = attacks[9];
     else if (options[0].value === 'tclap') attack = attacks[10];
+    else if (options[0].value === 'elblast') attack = attacks[11];
+    else if (options[0].value === 'fblast') attack = attacks[12];
+    else if (options[0].value === 'shoot') attack = attacks[13];
+    else if (options[0].value === 'ablast') attack = attacks[14];
+    else if (options[0].value === 'fchoke') attack = attacks[15];
     else if (options[0].value === 'devil') attack = attacks[16];
+    else if (options[0].value === 'love') attack = attacks[17];
+    else if (options[0].value === 'mwords') attack = attacks[18];
     else if (options[0].value === 'staff') attack = attacks[19];
+    else if (options[0].value === 'rpunch') attack = attacks[20];
 
     return interaction.reply(Util.Embed(undefined, {
         description: `**${attack?.emote}${auth} ${attack?.text}${attack?.emote}**\n\n${attack?.desc}`,
@@ -206,6 +217,18 @@ export const data: Command["data"] = {
             value: 'hvision'
           },
           {
+            name: 'Stretchpunch',
+            value: 'spunch'
+          },
+          {
+            name: 'Canary-Cry',
+            value: 'ccry'
+          },
+          {
+            name: 'Batarang',
+            value: 'brang'
+          },
+          {
             name: 'Send to Hell',
             value: 'sthell'
           },
@@ -214,12 +237,44 @@ export const data: Command["data"] = {
             value: 'tclap'
           },
           {
+            name: 'Electro-Blast',
+            value: 'elblast'
+          },
+          {
+            name: 'Fire-Blast',
+            value: 'fblast'
+          },
+          {
+            name: 'Shoot',
+            value: 'shoot'
+          },
+          {
+            name: 'Air-Blast',
+            value: 'ablast'
+          },
+          {
+            name: 'Force-Choke',
+            value: 'fchoke'
+          },
+          {
             name: 'Devil Face',
             value: 'devil'
           },
           {
+            name: 'Love Spell',
+            value: 'love'
+          },
+          {
+            name: 'Metal Words',
+            value: 'mwords'
+          },
+          {
             name: 'Cosmic Staff',
             value: 'staff'
+          },
+          {
+            name: 'Rocket Punch',
+            value: 'rpunch'
           }
         ]
       },
