@@ -13,7 +13,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
 import WSClient from './WSClient.js';
-import { EpisodeInfo, EmbedOpts, InfoInterface } from './@types/Util.js';
+import { EpisodeInfo, EmbedOpts, InfoInterface, Command } from './@types/Util.js';
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -660,13 +660,9 @@ class Util {
                 for (const file_path of jsfiles) {
                     const cmd_start = process.hrtime.bigint();
     
-                    const props = await import(`./${file_path}`);
+                    const props: Command = await import(`./${file_path}`);
                     
-                    if (props.help.debug) { //overwrite command id when debugging
-                        if (process.gideon.owner === '224617799434108928') props.help.id = '787650463909543946';
-                        else if (process.gideon.owner === '351871113346809860') props.help.id = '788743837094772736';
-                    }
-                    process.gideon.commands.set(props.help.id, props);
+                    process.gideon.commands.set(props.info.name, props);
             
                     const cmd_end = process.hrtime.bigint();
                     const took = (cmd_end - cmd_start) / BigInt('1000000');

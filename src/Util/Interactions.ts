@@ -55,7 +55,7 @@ class Interactions {
             return command.reply('Your access to ' + process.gideon.user?.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
         }
 
-        if (cmd.help.owner) {
+        if (cmd.info.owner) {
             if (!process.gideon.owner) return;
             if (![process.gideon.owner, '351871113346809860'].includes(command.user.id)) {
                 process.gideon.emit('commandRefused', command, 'NOT_APPLICATION_OWNER');
@@ -64,10 +64,10 @@ class Interactions {
         } 
 
         if (![process.gideon.owner, '351871113346809860'].includes(command.user.id)) {
-            if (cmd.help?.user_perms?.length > 0) {
+            if (cmd.info?.user_perms?.length > 0) {
                 let missingperms = [];
 
-                for (let perm of cmd.help.user_perms) {
+                for (let perm of cmd.info.user_perms) {
                     if (!command.member?.permissions.has(perm)) missingperms.push(perm);
                 }
 
@@ -77,15 +77,15 @@ class Interactions {
                 }
             }   
 
-            if (cmd.help?.bot_perms?.length > 0) {
+            if (cmd.info?.bot_perms?.length > 0) {
                 let missingperms = [];
-                for (let perms of cmd.help.bot_perms) {
+                for (let perms of cmd.info.bot_perms) {
                     if (!(command.channel as TextChannel).permissionsFor((command.guild?.me) as GuildMember).has(perms)) missingperms.push(perms);
                 }
                 if (missingperms.length > 0) return command.reply('Sorry I can\'t do that without having the required permissions for this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '), { ephemeral: true });
             }
 
-            if (cmd.help.nsfw) {
+            if (cmd.info.nsfw) {
                 if (!(command.channel as TextChannel)?.nsfw) {
                     process.gideon.emit('commandRefused', command, 'NSFW_REQUIRED');
                     return command.reply('This command requires a `NSFW` channel!', { ephemeral: true });
@@ -99,8 +99,8 @@ class Interactions {
             await cmd.run(command, options);
         }
         catch (e) {
-            if (cmd.help.name === 'eval') return command.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true });
-            else if (cmd.help.name === 'wiki') return command.reply('An error occurred while processing your request:```\n' + e + '```\nIf you see this error, this means that the Fandom Wiki API is still fucked and you should complain the shit out of their [support request form](<https://fandom.zendesk.com/hc/en-us/requests/new>) and their [twitter](<https://twitter.com/getfandom>) and tell them to fix their really really awful API endpoints.\nSorry lads, can\'t do more then tell you what\'s up.', { ephemeral: true });
+            if (cmd.info.name === 'eval') return command.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true });
+            else if (cmd.info.name === 'wiki') return command.reply('An error occurred while processing your request:```\n' + e + '```\nIf you see this error, this means that the Fandom Wiki API is still fucked and you should complain the shit out of their [support request form](<https://fandom.zendesk.com/hc/en-us/requests/new>) and their [twitter](<https://twitter.com/getfandom>) and tell them to fix their really really awful API endpoints.\nSorry lads, can\'t do more then tell you what\'s up.', { ephemeral: true });
             Util.log(`An error occurred while running ${command.commandName}:\n\n\`\`\`\n${e.stack}\n\`\`\``);
             return command.reply('An error occurred while processing your request:```\n' + e + '```', { ephemeral: true });
         } 
