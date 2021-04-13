@@ -515,10 +515,7 @@ class Util {
         }});
 
         process.gideon.statuses.push({name: 's3', fetch: async () => {
-            let guilds = process.gideon.shard ? (<number[]>await process.gideon.shard.fetchClientValues('guilds.cache').catch(ex => console.log(ex))) : [process.gideon.guilds.cache.size];
-            if (guilds) guilds = guilds.flat();
-
-            return {type: 'WATCHING', value: `${guilds.length} Guilds | gideonbot.com`};
+            return {type: 'WATCHING', value: `${process.gideon.guilds.cache.size} Guilds | gideonbot.com`};
         }});
 
         this.CheckEpisodes();
