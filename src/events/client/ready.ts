@@ -1,4 +1,4 @@
-import { Client, ClientApplication } from 'discord.js';
+import { Client, ClientApplication, User, Team } from 'discord.js';
 import Util from '../../Util.js';
 
 export default {
@@ -8,7 +8,8 @@ export default {
         if (process.env.CI) gideon.owner = Util.GenerateSnowflake();
         else {
             const app = await gideon.application?.fetch().catch(x => Util.log('Failed to fetch owner: ' + x));
-            if (app && app instanceof ClientApplication && app.owner) gideon.owner = app.owner.id;
+            if (app && app instanceof ClientApplication && app.owner && app.owner instanceof User) gideon.owner = app.owner.id;
+            else if (app && app instanceof ClientApplication && app.owner && app.owner instanceof Team) gideon.owner = app.owner.ownerID as string;
         }
     
         Util.SQL.InitDB();
