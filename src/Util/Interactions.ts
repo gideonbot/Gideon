@@ -1,5 +1,4 @@
 import { CommandInteraction, TextChannel, GuildMember } from "discord.js";
-import interaction from "src/events/client/interaction";
 
 class Interactions {
     constructor() {
