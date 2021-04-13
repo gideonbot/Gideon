@@ -2,16 +2,18 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Discord from 'discord.js';
-import MsgHandler from './Util/MessageHandler';
-import Checks from './Util/Checks';
-import SQL from './Util/SQL';
+import MsgHandler from './util/MessageHandler';
+import Checks from './util/Checks';
+import SQL from './util/SQL';
+import Interactions from 'util/Interactions';
 import BetterSqlite3 from 'better-sqlite3';
 import WSClient from './WSClient';
 
 export const config: Config;
-export let MsgHandler: Handler;
-export let SQL: Database;
-export let Checks: CheckUtil;
+export const MsgHandler: Handler;
+export const Checks: CheckUtil;
+export const SQL: Database;
+export const Interactions: CheckUtil;
 export function delay(num: number): Promise<void>;
 export function GetUserTag(str: string | Discord.GuildMember | Discord.User): string;
 export function getIdFromString(str: string): string;
@@ -94,7 +96,11 @@ declare global {
 }
 
 interface Handler {
-    Handle(message: Discord.Message, Util: unknown, connection: Discord.VoiceConnection): Promise<void>;
+    Handle(message: Discord.Message, Util: unknown): Promise<void>;
+}
+
+interface InteractionsInterface {
+    SlashCommands(interaction: Discord.CommandInteraction, Util: unknown): Promise<void>;
 }
 
 interface Database {

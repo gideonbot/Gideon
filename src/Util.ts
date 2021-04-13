@@ -1,10 +1,10 @@
 import Discord from 'discord.js';
 import fetch from 'node-fetch';
 import config from './config/config.js';
-import SQL from './Util/SQL.js';
-import Checks from './Util/Checks.js';
-import MsgHandler from './Util/MessageHandler.js';
-import Interactions from './Util/Interactions.js';
+import SQL from './util/SQL.js';
+import Checks from './util/Checks.js';
+import MsgHandler from './util/MessageHandler.js';
+import Interactions from './util/Interactions.js';
 import zip from 'zip-promise';
 import del from 'del';
 import recursive from 'recursive-readdir';
@@ -16,7 +16,7 @@ import WSClient from './WSClient.js';
 import { EpisodeInfo, EmbedOpts, InfoInterface, Command } from './@types/Util.js';
 import { Collection } from 'discord.js';
 import { ApplicationCommandData } from 'discord.js';
-import  {Md5 } from 'ts-md5/dist/md5.js';
+import { Md5 } from 'ts-md5/dist/md5.js';
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
