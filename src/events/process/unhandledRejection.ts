@@ -14,7 +14,7 @@ export default {
             Constants.APIErrors.INVALID_FORM_BODY
         ];
     
-        if (ignore.includes(err.code)) return;
+        if (ignore.includes(err.code)) return console.log('Unhandled Rejection: ' + `\`\`\`\n${err.stack + '\n\nJSON: ' + JSON.stringify(err, null, 2)}\n\`\`\``);
     
         Util.log('Unhandled Rejection: ' + `\`\`\`\n${err.stack + '\n\nJSON: ' + JSON.stringify(err, null, 2)}\n\`\`\``);
     
