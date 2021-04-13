@@ -2,10 +2,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Discord from 'discord.js';
-import MsgHandler from './util/MessageHandler';
-import Checks from './util/Checks';
-import SQL from './util/SQL';
-import Interactions from 'util/Interactions';
+import MsgHandler from './handlers/MessageHandler';
+import Checks from './handlers/Checks';
+import SQL from './handlers/SQL';
+import Interactions from 'handlers/Interactions';
 import BetterSqlite3 from 'better-sqlite3';
 import WSClient from './WSClient';
 
