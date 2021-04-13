@@ -10,7 +10,11 @@ class Interactions {
      * @param {Discord.CommandInteraction} command 
      */
     static async SlashCommands(command: CommandInteraction, Util: any) {
-        if (Util.Checks.IBU(command.user.id)) return command.reply('You are banned from using this application.\nSincereley -the owner', { ephemeral: true }); //check if user is blacklisted, if yes, return
+        if (Util.Checks.IBU(command.user.id)) {
+            command.reply('You are banned from using this application.\nSincereley -the owner', { ephemeral: true }); //check if user is blacklisted, if yes, return
+            return process.gideon.emit('commandRefused', command, 'BANNED_USER');
+        }
+
         Util.Checks.LBG(command?.guild, Util); //check if guild is blacklisted, if yes, leave
 
         const options = command.options;
