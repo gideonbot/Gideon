@@ -17,8 +17,8 @@ Too see Gideon in action, you can join the Time Vault: [Join](https://invite.gg/
 
 ![Discord Banner](https://discordapp.com/api/guilds/595318490240385037/widget.png?style=banner2)
 
-<a href="https://cdn.gideonbot.com/s3AWp4i.png"><img src="https://cdn.gideonbot.com/s3AWp4i.png"/></a>
-<a href="https://cdn.gideonbot.com/tRi6ToH.png"><img src="https://cdn.gideonbot.com/tRi6ToH.png"/></a>
+<a href="https://cdn.gideonbot.com/s3AWp4i.png"><img src="https://cdn.gideonbot.com/s3AWp4i.png" width="50%" height="50%"/></a>
+<a href="https://cdn.gideonbot.com/tRi6ToH.png"><img src="https://cdn.gideonbot.com/tRi6ToH.png" width="50%" height="50%"/></a>
 
 ### Donations
 
