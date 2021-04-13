@@ -1,16 +1,18 @@
 import OpenSubtitles from 'opensubtitles-api';
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
+import { CommandInteraction, CommandInteractionOption, GuildMember, Message } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
  * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
-    if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void | Message | null> {
+  interaction.defer();  
+  
+  if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
         Util.log('Missing env variables for subs command!');
-        return interaction.reply(Util.Embed('This command is currently not available', undefined, interaction.member as GuildMember));
+        return interaction.editReply(Util.Embed('This command is currently not available', undefined, interaction.member as GuildMember));
     }
 
     const OS = new OpenSubtitles({
@@ -119,10 +121,10 @@ export async function run(interaction: CommandInteraction, options: CommandInter
             embed.addField(sub.filename, `**[Download SRT](${sub.url} '${sub.url}')** Lang: \`${sub.lang}\` Score: \`${sub.score}\``);
         }
         
-        interaction.reply(embed);
+        interaction.editReply(embed);
     }).catch(async (err: Error) => {
         Util.log('An error occurred while trying to fetch subtitles: ' + err);
-        return interaction.reply('There were no results for this episode on opensubtitles.org!\nTry another episode or another language !', { ephemeral: true });
+        return interaction.editReply('There were no results for this episode on opensubtitles.org!\nTry another episode or another language !');
     });
 };
 
