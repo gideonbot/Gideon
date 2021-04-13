@@ -13,7 +13,7 @@ export const config: Config;
 export const MsgHandler: Handler;
 export const Checks: CheckUtil;
 export const SQL: Database;
-export const Interactions: CheckUtil;
+export const Interactions: InteractionsInterface;
 export function delay(num: number): Promise<void>;
 export function GetUserTag(str: string | Discord.GuildMember | Discord.User): string;
 export function getIdFromString(str: string): string;
