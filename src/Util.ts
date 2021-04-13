@@ -16,6 +16,7 @@ import WSClient from './WSClient.js';
 import { EpisodeInfo, EmbedOpts, InfoInterface, Command } from './@types/Util.js';
 import { Collection } from 'discord.js';
 import { ApplicationCommandData } from 'discord.js';
+import  {Md5 } from 'ts-md5/dist/md5.js';
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -690,12 +691,12 @@ class Util {
 
         recursive('./cmds', async (err, files) => {
             if (err) {
-                Util.log('Error while reading commands:\n' + err);
+                return Util.log('Error while reading commands:\n' + err);
             }
     
             const jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
             if (jsfiles.length < 1) {
-                console.log('No commands to load!');
+                return Util.log('No commands to load!');
             }
 
             for (const file_path of jsfiles) {
@@ -708,8 +709,32 @@ class Util {
             const all = global.concat(guild);
 
             if (process.gideon.user?.id === '595328879397437463') {
-                await process.gideon.application?.commands.set(global.array());
-                await process.gideon.guilds.cache.get('595318490240385037')?.commands.set(guild.array());
+                const globalcmds = await process.gideon.application?.commands.fetch();
+                const guildcmds = await process.gideon.guilds.cache.get('595318490240385037')?.commands.fetch();
+
+                if (globalcmds?.size !== global.size || guildcmds?.size !== guild.size) {
+                    if (globalcmds?.size !== global.size) {
+                        await process.gideon.application?.commands.set(global.array());
+                    }
+    
+                    if (guildcmds?.size !== guild.size) {
+                        await process.gideon.guilds.cache.get('595318490240385037')?.commands.set(guild.array());
+                    }
+
+                    return console.log('Application Commands deployed!');
+                }
+
+                else {
+                    const globallocalhash = Md5.hashStr(JSON.stringify(all.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
+                    const guildlocalhash = Md5.hashStr(JSON.stringify(guild.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
+                    const globalhash = Md5.hashStr(JSON.stringify(globalcmds.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
+                    const guildhash = Md5.hashStr(JSON.stringify(guildcmds.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
+
+                    if (globallocalhash !== globalhash) await process.gideon.application?.commands.set(global.array());
+                    if (guildlocalhash !== guildhash) await process.gideon.guilds.cache.get('595318490240385037')?.commands.set(guild.array());
+                    
+                    return console.log('Application Commands deployed!');
+                }
             }
 
             else if (process.gideon.user?.id === '598132992874905600') await process.gideon.guilds.cache.get('709061970078335027')?.commands.set(all.array());
