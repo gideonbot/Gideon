@@ -139,7 +139,7 @@ class Util {
      * @param {Discord.CommandInteraction} interaction
      * @param {boolean} nsfw
      */
-    static async IMG(imgid: string, interaction: Discord.Interaction, nsfw: boolean): Promise<void> {
+    static async IMG(imgid: string, interaction: Discord.CommandInteraction, nsfw: boolean): Promise<void> {
         if (!interaction.guild) return;
         if (!process.env.IMG_CL) return;
 
@@ -161,14 +161,13 @@ class Util {
                     }]
                 };
 
-                return (interaction.channel as Discord.TextChannel)?.send(img); //there might be attachments for interactions now, check that sometime
+                return interaction.reply(img);
             }
-            // @ts-expect-error do this until interaction typings are done
+
             return interaction.reply(Util.Embed().setImage(rimg));
         })).catch(x => {
             Util.log(x);
-            // @ts-expect-error do this until interaction typings are done
-            return interaction.reply('An error occurred, please try again later!', { ephemeral: true, hideSource: true });
+            return interaction.reply('An error occurred, please try again later!', { ephemeral: true });
         });
     }
 
