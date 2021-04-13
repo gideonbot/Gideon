@@ -10,7 +10,8 @@ export default {
             Constants.APIErrors.UNKNOWN_MESSAGE,
             Constants.APIErrors.MISSING_ACCESS,
             Constants.APIErrors.CANNOT_MESSAGE_USER,
-            Constants.APIErrors.UNKNOWN_CHANNEL
+            Constants.APIErrors.UNKNOWN_CHANNEL,
+            Constants.APIErrors.INVALID_FORM_BODY
         ];
     
         if (ignore.includes(err.code)) return;
