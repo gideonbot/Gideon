@@ -11,7 +11,7 @@ class MsgHandler {
      * @param {Discord.VoiceConnection} connection 
      */
     static async Handle(message: Discord.Message, Util: any) {
-        if (!message || !message.guild || !message.author || message.partial || message.type != 'DEFAULT') return;
+        if (!message || !message.guild || !message.author || message.partial || message.type != 'DEFAULT' && message.type != 'APPLICATION_COMMAND') return;
         
         if (message.author.id == process.gideon.user?.id) Util.IncreaseStat('messages_sent');
         if (message.author.bot) return;
