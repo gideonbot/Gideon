@@ -1,5 +1,5 @@
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, TextChannel } from 'discord.js';
+import { CommandInteraction, CommandInteractionOption, TextChannel, Permissions } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
 /**
@@ -63,7 +63,7 @@ export const info: Command['info'] = {
     owner: false,
     nsfw: false,
     roles: [],
-    user_perms: [],
+    user_perms: [Permissions.FLAGS.MANAGE_MESSAGES],
     bot_perms: []
 };
 
