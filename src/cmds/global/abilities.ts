@@ -2,6 +2,7 @@ import gideonapi from 'gideon-api';
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, MessageEmbed, TextChannel, Message } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
+import { Permissions } from 'discord.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
@@ -154,7 +155,7 @@ export const info: Command['info'] = {
     nsfw: false,
     roles: [],
     user_perms: [],
-    bot_perms: ['MANAGE_MESSAGES', 'ADD_REACTIONS']
+    bot_perms: [Permissions.FLAGS.MANAGE_MESSAGES, Permissions.FLAGS.ADD_REACTIONS]
 };
 
 export const data: Command["data"] = {

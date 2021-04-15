@@ -1,4 +1,4 @@
-import { CommandInteraction, TextChannel, GuildMember } from "discord.js";
+import { CommandInteraction, TextChannel, GuildMember, Permissions } from "discord.js";
 
 class Interactions {
     constructor() {
@@ -72,7 +72,7 @@ class Interactions {
                 let missingperms = [];
 
                 for (let perm of cmd.info.user_perms) {
-                    if (!command.member?.permissions.has(perm)) missingperms.push(perm);
+                    if (!command.member?.permissions.has(perm)) missingperms.push(new Permissions(perm).toArray()[0]);
                 }
 
                 if (missingperms.length > 0) {
@@ -84,7 +84,7 @@ class Interactions {
             if (cmd.info?.bot_perms?.length > 0) {
                 let missingperms = [];
                 for (let perms of cmd.info.bot_perms) {
-                    if (!(command.channel as TextChannel).permissionsFor((command.guild?.me) as GuildMember).has(perms)) missingperms.push(perms);
+                    if (!(command.channel as TextChannel).permissionsFor((command.guild?.me) as GuildMember).has(perms)) missingperms.push(new Permissions(perms).toArray()[0]);
                 }
                 if (missingperms.length > 0) return command.reply('Sorry I can\'t do that without having the required permissions for this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '), { ephemeral: true });
             }
