@@ -32,6 +32,7 @@ export function IncreaseStat(stat: string, value?: number): void;
 export function UpdateStatus(): Promise<void>;
 export function InitStatus(): void;
 export function GenerateSnowflake(): string;
+export function GuildJoinReactions(reaction: Discord.MessageReaction, user: Discord.User): Promise<void>
 export function Chat(message: Discord.Message): Promise<void>;
 export function GetCleverBotResponse(text: string, context: string[]): Promise<string>;
 export function InitCache(): Promise<void>;
