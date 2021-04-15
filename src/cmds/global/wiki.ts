@@ -78,8 +78,8 @@ export async function run(interaction: CommandInteraction, options: CommandInter
             wikis.indexOf(wiki) == 6 ? 1 : 0 || 
             wikis.indexOf(wiki) == 8 ? 1 : 0];
 
-    if (!article) return interaction.reply(Util.Embed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki!`, undefined, interaction.member as GuildMember), { ephemeral: true });
-    if (Object.keys(body.items).length < 1) return interaction.reply(Util.Embed(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki!`, undefined, interaction.member as GuildMember), { ephemeral: true });
+    if (!article) return interaction.reply(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki!`, { ephemeral: true });
+    if (Object.keys(body.items).length < 1) return interaction.reply(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki!`, { ephemeral: true });
     const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
 
     let st = '';
