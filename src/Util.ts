@@ -635,6 +635,36 @@ class Util {
         return rv;
     }
 
+    static async GuildJoinReactions(reaction: Discord.MessageReaction, user: Discord.User): Promise<void> {
+        if (reaction.partial) {
+            await reaction.fetch();
+        }
+
+        if (!reaction.message) return;
+        if (reaction.message.deleted) return;
+        if (reaction.message.partial) await reaction.message.fetch();
+        if (!reaction.message.guild) return;
+
+        if (reaction.message.channel.id !== '622415301144870932') return;
+        if (![process.gideon.owner, '351871113346809860'].includes(user.id)) return;
+
+        if (reaction.message.embeds?.[0].title?.toLowerCase()?.includes('joined')) {
+            const id = reaction.message.embeds?.[0].description?.match(/\d{17,19}/)?.[0];
+            if (reaction.emoji.name === '❌') {
+                let gb = process.gideon.getGuild.get(id).blacklist = 1;
+                process.gideon.setGuild.run(gb);
+                Util.log(`Guild \`${id}\` has been blacklisted!`);
+            }
+            else if (reaction.emoji.name === '✅') {
+                let gb = process.gideon.getGuild.get(id).blacklist = 0;
+                process.gideon.setGuild.run(gb);
+                Util.log(`Guild \`${id}\` has been un-blacklisted!`);
+            }
+            else return;
+        }
+        else return;
+    }
+
     /**
      * Load cmds
      */

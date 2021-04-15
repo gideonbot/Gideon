@@ -5,5 +5,6 @@ export default {
     name: 'messageReactionAdd',
     async run(messageReaction: MessageReaction, user: User): Promise<void> {
         Util.Starboard(messageReaction, user);
+        Util.GuildJoinReactions(messageReaction, user);
     }
 };
