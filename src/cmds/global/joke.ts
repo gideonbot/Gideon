@@ -16,7 +16,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         Dark: ['dark'],
     };
 
-    if (options) {
+    if (options[0]) {
         let p_type = options[0].value;
         for (let key in types) {
             if ((types as any)[key].includes(p_type)) type = key;
