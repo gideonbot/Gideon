@@ -1,8 +1,7 @@
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
+import { CommandInteraction, CommandInteractionOption, GuildMember, Permissions } from 'discord.js';
 import { Command, SeEp } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
-import { Permissions } from 'discord.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction

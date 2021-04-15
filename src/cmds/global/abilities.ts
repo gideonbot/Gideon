@@ -1,8 +1,7 @@
 import gideonapi from 'gideon-api';
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, MessageEmbed, TextChannel, Message } from 'discord.js';
+import { CommandInteraction, CommandInteractionOption, MessageEmbed, Permissions, Message } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
-import { Permissions } from 'discord.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
