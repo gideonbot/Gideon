@@ -7,6 +7,7 @@ import { Command } from 'src/@types/Util.js';
 * @param {Discord.CommandInteraction} interaction
 */
 export async function run(interaction: CommandInteraction): Promise<void> {
+    return interaction.reply('Command is currently in maintenance, please wait.', { ephemeral: true });
     const quote = await gideonapi.quote();
     return interaction.reply(Util.Embed(undefined, {description: '**' + quote.text + '**', thumbnail: quote.img}, interaction.member as GuildMember));
 };
