@@ -1,15 +1,16 @@
 import Util from '../../Util.js';
 import moment from 'moment';
-import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
+import { CommandInteraction, CommandInteractionOption, GuildMember, Message } from 'discord.js';
 import { Command, SeEp, Show, TVMazeResponse } from 'src/@types/Util.js';
 
 /**
  * @param {Discord.CommandInteraction} interaction
  * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
-    if (interaction.user.guessing) return interaction.reply('No cheating while your guessing game is active!');
-
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void | Message | null> {
+    if (interaction.user.guessing) return interaction.editReply('No cheating while your guessing game is active!');
+    interaction.defer();
+    
     let info: SeEp = { season: options[0].options?.[1].value as number,
         episode: options[0].options?.[2].value as number
     };
@@ -119,7 +120,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     const body = await Util.fetchJSON(api) as TVMazeResponse;
 
-    if (body.status === 404) return interaction.reply(Util.Embed('There was no data for this episode!', undefined, interaction.member as GuildMember));
+    if (body.status === 404) return interaction.editReply(Util.Embed('There was no data for this episode!', undefined, interaction.member as GuildMember));
     
     let sp = '';
     let today = new Date();
@@ -139,7 +140,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     let am_pm = (H < 12 || H === 24) ? ' AM' : ' PM';
     timeString = h + ':' + timeString.split(':')[1] + am_pm;
 
-    return interaction.reply(Util.Embed(`${show?.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
+    return interaction.editReply(Util.Embed(`${show?.title} ${body.season}x${Util.normalize(body.number)} - ${body.name}`, {
         description: sp + desc + sp + `\n\nAirdate: \`${moment(airdate).isValid() ? airdate.toDateString() : 'No Airdate Available'}\`\nAirtime: \`${body.airtime === '' ? 'No Airtime Available' : timeString + ' ET'}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show?.channel}\`\n\n**[Full recap & trailer](${body.url} '${body.url}')**`,
         image: img
     }, interaction.member as GuildMember));
