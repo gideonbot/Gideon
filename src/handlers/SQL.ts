@@ -1,4 +1,5 @@
 import SQLite from 'better-sqlite3';
+import Util from '../Util.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -56,6 +57,8 @@ class SQL {
         process.gideon.setStat = sql.prepare('INSERT OR REPLACE INTO stats (id, value) VALUES (@id, @value);');
 
         process.gideon.db = sql;
+
+        Util.log(`Initialized database: \`${sql.name}\`!`);
     }
 
     static Close() {

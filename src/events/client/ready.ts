@@ -24,7 +24,7 @@ export default {
     
         for (const item of ['commands_ran', 'ai_chat_messages_processed', 'messages_sent']) {
             if (!gideon.getStat.get(item)) {
-                console.log('Initializing ' + item);
+                Util.log('Initializing ' + item);
                 Util.SetStat(item, 0);
             }
         }

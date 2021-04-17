@@ -178,7 +178,6 @@ class Util {
         }
 
         process.gideon.WSClient = new WSClient(`ws://localhost:${process.env.WS_PORT}/ws`, process.env.WS_TOKEN);
-
         process.gideon.WSClient.on('READY', () => console.log('WS Ready'));
         process.gideon.WSClient.on('DATA', (d: { type: string; }) => {
             if (d.type == 'REQUEST_STATS') {
@@ -195,6 +194,8 @@ class Util {
                 return process.gideon.WSClient.send(data);
             }
         });
+
+        Util.log('Initialized WSClient!');
     }
 
     static fetchJSON(url: string) : Promise<unknown> {
@@ -519,6 +520,8 @@ class Util {
         }});
 
         this.CheckEpisodes();
+
+        Util.log(`Initialized statuses with \`${process.gideon.statuses.length}\` entries!`);
     }
 
     static CheckEpisodes(): void {
@@ -701,7 +704,7 @@ class Util {
         
                 const end = process.hrtime.bigint();
                 const took = (end - start) / BigInt('1000000');
-                console.log(`All commands loaded in ${took}ms`);
+                Util.log(`All commands loaded in \`${took}ms\``);
 
                 resolve();
             });
@@ -747,7 +750,7 @@ class Util {
                         await process.gideon.guilds.cache.get('595318490240385037')?.commands.set(guild.array());
                     }
 
-                    return console.log('Application Commands deployed!');
+                    return Util.log('Application Commands deployed!');
                 }
 
                 else {
@@ -759,14 +762,14 @@ class Util {
                     if (globallocalhash !== globalhash) await process.gideon.application?.commands.set(global.array());
                     if (guildlocalhash !== guildhash) await process.gideon.guilds.cache.get('595318490240385037')?.commands.set(guild.array());
                     
-                    return console.log('Application Commands deployed!');
+                    return Util.log('Application Commands deployed!');
                 }
             }
 
             else if (process.gideon.user?.id === '598132992874905600') await process.gideon.guilds.cache.get('709061970078335027')?.commands.set(all.array());
             else if (process.gideon.user?.id === '621026307937140756') await process.gideon.guilds.cache.get('604426720216612894')?.commands.set(all.array());
 
-            console.log('Application Commands deployed!');
+            Util.log('Application Commands deployed!');
         });
     }
 
@@ -806,7 +809,7 @@ class Util {
             
                 const end = process.hrtime.bigint();
                 const took = (end - start) / BigInt('1000000');
-                console.log(`All events loaded in ${took}ms`);
+                Util.log(`All events loaded in \`${took}ms\``);
                 resolve();
             });
         });
@@ -830,7 +833,7 @@ class Util {
         process.gideon.cache.jokes = new Discord.Collection();
 
         for (const show in process.gideon.show_api_urls) {
-            try { await this.GetAndStoreEpisode(show); }
+            try { await this.GetAndStoreEpisode(show);}
             
             catch (ex) {
                 Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
@@ -844,6 +847,9 @@ class Util {
                 Util.log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
             }
         }
+
+        const cache = process.gideon.cache.nxeps.concat(process.gideon.cache.dceps);
+        Util.log(`Initialized GideonCache with \`${cache.size}\` entries!`);
     }
 
     /**
