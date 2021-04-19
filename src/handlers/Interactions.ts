@@ -100,6 +100,7 @@ class Interactions {
         Util.IncreaseStat('commands_ran');
         
         try {
+            if (process.env.CI) console.log('Handling interaction ' + command.commandName);
             await cmd.run(command, options);
         }
         catch (e) {
