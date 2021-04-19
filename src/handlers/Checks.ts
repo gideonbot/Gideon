@@ -1,5 +1,5 @@
 import Discord from 'discord.js';
-//@ts-ignore
+import Util from '../Util.js';
 import anyAscii from 'any-ascii';
 import Filter from 'bad-words';
 import { AbmTestValue } from '../@types/Util.js';
@@ -13,7 +13,7 @@ class Checks {
      * @param {Discord.Message} message
      * @returns {Promise<{match: boolean, content: string}>}
      */
-    static ABM_Test(message: Discord.Message, Util: any): Promise<AbmTestValue> {
+    static ABM_Test(message: Discord.Message): Promise<AbmTestValue> {
         // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
             const content = message.content.replace(/ /g, '').replace(/\n/g, '').toLowerCase().trim();
@@ -49,8 +49,16 @@ class Checks {
 
                 const api = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${result[3]}&key=${google_api_key}`;
 
+                interface YTResponse {
+                    items: {
+                        snippet: {
+                            channelId?: string
+                        }
+                    }[]
+                }
+
                 try {
-                    const body = await Util.fetchJSON(api);
+                    const body = await Util.fetchJSON(api) as YTResponse;
 
                     const channel_id = body?.items?.[0]?.snippet?.channelId ?? null;
                     if (!channel_id) return reject();
@@ -71,9 +79,9 @@ class Checks {
     /**
      * @param {Discord.Message} message 
      */
-    static ABM(message: Discord.Message, Util: any) {
-        if (!message.guild) return;
-        //@ts-expect-error
+    static ABM(message: Discord.Message): void {
+        if (!message.guild || !message.guild.me) return;
+
         if (!(message.channel as Discord.TextChannel).permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return;
 
         const abm = process.gideon.getGuild.get(message.guild.id);
@@ -82,12 +90,18 @@ class Checks {
         
         const siren = '<a:siren:669518972407775265>';
 
-        this.ABM_Test(message, Util).then(async res => {
+        this.ABM_Test(message).then(async res => {
             if (res.match) {
                 await Util.delay(200);
                 await message.delete();
                 Util.log('ABM triggered by: ' + message.author.tag + ' (' + res.content + ')\nABM triggered in: `' + (message.channel as Discord.TextChannel).name + '` at `' + message.guild?.name + '`');
-                const abmsg = await message.channel.send(Util.GetUserTag(message.author), { embed: Util.Embed(`${siren}Anti-BS-Mode is enabled!${siren}`, {description: 'You posted a link to a forbidden social media account!'}, message.member) });
+                
+                if (!message.member) return; //this will (SHOULD*) never happen but its just here so ts doesn't whine :justlol:
+
+                const abmsg = await message.channel.send(`<@${message.author.id}>`, {
+                    embed: Util.Embed(`${siren}Anti-BS-Mode is enabled!${siren}`, {
+                        description: 'You posted a link to a forbidden social media account!'
+                    }, message.member) });
                 await Util.delay(3500);
                 await abmsg.delete();
             }
@@ -99,7 +113,7 @@ class Checks {
     /**
      * @param {Discord.Message} message  
      */
-    static async CVM(message: Discord.Message, Util: any) {
+    static async CVM(message: Discord.Message): Promise<void | Discord.Message> {
         if (!message.guild) return;
         const cvm = process.gideon.getGuild.get(message.guild.id);
         if (!cvm) return;
@@ -111,19 +125,13 @@ class Checks {
 
         if (ids.includes(message.channel.id)) return; //exclude certain channels
 
-        let plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
+        const plainText = Discord.Util.escapeMarkdown(message.content); //remove Markdown to apply spoiler tags
 
         // eslint-disable-next-line no-useless-escape
         if (plainText.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i)) { //if URL is matched delete & return
             await Util.delay(200);
             await message.delete();
             return message.reply('Links are not allowed while the Crossover-Mode is active!');
-        }
-
-        const trmode = process.gideon.getUser.get(message.author.id);
-        if (trmode) if (trmode.trmodeval === 1) {
-            const tr = await Util.TR.Translate(plainText);
-            plainText = `(${tr[1]}) ${tr[0]}`;
         }
 
         const embed = new Discord.MessageEmbed()
@@ -148,7 +156,7 @@ class Checks {
      * Easter eggs
      * @param {Discord.Message} message 
      */
-    static async CSD(message: Discord.Message, Util: any) {
+    static async CSD(message: Discord.Message): Promise<void> {
         if (!message.guild) return;
         if (message.editedAt) return;
         if (message.content.match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)) return;
@@ -188,9 +196,12 @@ class Checks {
         const pregnant = 'https://cdn.discordapp.com/attachments/679864620864765983/705421182823825468/pregnant.mp4';
 
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
-        else if (message.content.match(/(?:deckerstar)/i)) Util.IMG('rJpbLQx', message);
+        else if (message.content.match(/(?:deckerstar)/i)) {
+            const img = await Util.IMG('rJpbLQx');
+            if (img) message.channel.send(Util.Embed(undefined, {image: img}));
+        }
         else if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
-        else if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.Embed(null, {image: ctm}));
+        else if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.Embed(undefined, {image: ctm}));
         else if (message.content.match(/(?:castle)/i)) message.channel.send(vid2);
         else if (message.content.match(/(?:magic)/i)) message.channel.send(yombo);
         else if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) message.channel.send(train);
@@ -218,7 +229,7 @@ class Checks {
      * Leaves a blacklisted guild
      * @param {Discord.Guild} guild 
      */
-    static async LBG(guild: Discord.Guild, Util: any) {
+    static async LBG(guild: Discord.Guild): Promise<void> {
         const ub = process.gideon.getUser.get(guild.ownerID);
         const gbl = process.gideon.getGuild.get(guild.id);
         const owner = await guild.members.fetch(guild.ownerID).catch(ex => console.log(ex)) as Discord.GuildMember;
@@ -262,8 +273,8 @@ class Checks {
      * Spam check 
      * @param {string} id 
      */
-    static Spamcounter(id: string) {
-        if (id === process.gideon.owner) return null;
+    static Spamcounter(id: string): void {
+        if (id === process.gideon.owner) return;
 
         let spamcount = process.gideon.spamcount.get(id);
         if (!spamcount) {
@@ -287,8 +298,8 @@ class Checks {
      * Invite check 
      * @param {Discord.Message} message 
      */
-    static async Ads(message: Discord.Message, Util: any) {
-        if (!message.guild) return;
+    static async Ads(message: Discord.Message): Promise<void | Discord.Message> {
+        if (!message.guild || !message.member) return;
         if (message.guild.id !== '595318490240385037') return;
         if (message.member?.permissions.has('MANAGE_MESSAGES')) return;
 
@@ -297,9 +308,10 @@ class Checks {
         const urlRegex = /https:\/\/((canary|ptb).)?discord.com\/channels\/(\d{18})\/(\d{18})\/(\d{18})/g;
         const admin = process.gideon.guilds.cache.get('595318490240385037')?.roles.cache.get('596402255066955783');
 
-        if (message.content.match(invregex) && !message.content.match(urlRegex)) {
-            //@ts-ignore
-            const invcode = message.content.match(invregex)[0];
+        const res = message.content.match(invregex);
+
+        if (res && res[0] && !message.content.match(urlRegex)) {
+            const invcode = res[0];
             const invite = await process.gideon.fetchInvite(invcode).catch(ex => console.log(ex));
           
             if (!invite || !invite.guild) {
@@ -307,9 +319,8 @@ class Checks {
             }
 
             else if (invite.guild.id !== '595318490240385037') {
-                const embed = Util.Embed(message.member)
-                //@ts-ignore
-                    .setDescription(`\`${message.author.tag}\` has been banned by ${process.gideon.user.tag} because of \`automated anti-ads ban\`.`)
+                const embed = Util.Embed(undefined, undefined, message.member)
+                    .setDescription(`\`${message.author.tag}\` has been banned by ${process.gideon.user?.tag} because of \`automated anti-ads ban\`.`)
                     .setImage('https://media.discordapp.net/attachments/715564004621418577/769212118464725002/Homelander_2.gif');
 
                 const ban = await message.guild.members.ban(message.author, { days: 7, reason: 'automated anti-ads ban' }).catch(() => {
@@ -324,7 +335,7 @@ class Checks {
      * Bot collection guild check 
      * @param {Discord.Guild} guild 
      */
-    static async BotCheck(guild: Discord.Guild, Util: any) {
+    static async BotCheck(guild: Discord.Guild): Promise<void> {
         if (['595318490240385037', '264445053596991498', '110373943822540800'].includes(guild.id)) return; 
         if (!guild.members || !guild.members.cache) await guild.members.fetch();
         const bots = guild.members.cache.filter((x: Discord.GuildMember) => x.user.bot).size;
@@ -359,7 +370,7 @@ class Checks {
      * @param {Discord.GuildMember} newMember 
      * @param {Discord.User} newUser 
      */
-    static async NameCheck(newMember: Discord.GuildMember | null, newUser: Discord.User | null) {
+    static async NameCheck(newMember: Discord.GuildMember | null, newUser: Discord.User | null): Promise<void> {
         if (!process.gideon.guilds.cache.get('595318490240385037')) return;
         
         if (newMember) {
@@ -423,7 +434,7 @@ class Checks {
      * Check for flagged users 
      * @param {Discord.GuildMember} member
      */
-    static async AccCheck(member: Discord.GuildMember, Util: any) {
+    static async AccCheck(member: Discord.GuildMember): Promise<void> {
         const flagged = process.gideon.getUser.get(member.id);
 
         if (flagged?.blacklist === 1) {
@@ -432,7 +443,7 @@ class Checks {
             const string = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of this guild!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisement\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n- Spamming NSFW media\n\`\`\`\nWe advise to notify the guild owner (<@${member.guild.ownerID}>).`;
             
             await guildowner.send(dmstring)
-                .then(Util.log(`Sent account warning about \`${member.user.tag}\` in \`${member.guild.name}\` to \`${guildowner.user.tag}\`!`))
+                .then(() => Util.log(`Sent account warning about \`${member.user.tag}\` in \`${member.guild.name}\` to \`${guildowner.user.tag}\`!`))
                 .catch(async () => {
                     const textchannels = member.guild.channels.cache.filter(c=> c.type == 'text');
                     const allowedchannels = textchannels.filter(c => c.permissionsFor((member.guild.me as Discord.GuildMember)).has('SEND_MESSAGES'));
@@ -447,7 +458,7 @@ class Checks {
      * Check for blacklisted mentions 
      * @param {Discord.Message} message
      */
-    static BadMention(message: Discord.Message) {
+    static BadMention(message: Discord.Message): boolean | null {
         const mention = message.mentions.users.first();
         if (mention) {
             const badmention = process.gideon.getUser.get(mention.id);
@@ -461,7 +472,7 @@ class Checks {
      * Ghost ping detector
      * @param {Discord.Message} message
      */
-    static GPD(message: Discord.Message, Util: any) {
+    static GPD(message: Discord.Message): void {
         const gd = process.gideon.getGuild?.get(message.guild?.id);
         if (message.author?.bot) return;
         if (!gd) return;

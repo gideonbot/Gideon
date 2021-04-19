@@ -20,7 +20,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
             }
         ]
     }, interaction.member as GuildMember));
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -30,7 +30,7 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'donate',
     description: 'Displays info to support maintainance and hosting of Gideon',
     defaultPermission: true

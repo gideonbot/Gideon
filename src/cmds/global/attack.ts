@@ -171,7 +171,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         description: `**${attack?.emote}${auth} ${attack?.text}${attack?.emote}**\n\n${attack?.desc}`,
         image: attack?.attackgif
     }, interaction.member as GuildMember));
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -181,108 +181,108 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'attack',
     description: 'Attack a user with a methuman ability',
     defaultPermission: true,
     options: [
-      {
-        type: 'STRING',
-        name: 'power',
-        description: 'The power to use',
-        required: true,
-        choices: [
-          {
-            name: 'Iceblast',
-            value: 'iceblast'
-          },
-          {
-            name: 'Lightning Throw',
-            value: 'lthrow'
-          },
-          {
-            name: 'Reverse-Flash',
-            value: 'rflash'
-          },
-          {
-            name: 'Vibeblast',
-            value: 'vblast'
-          },
-          {
-            name: 'Arrow',
-            value: 'arrow'
-          },
-          {
-            name: 'Heatvision',
-            value: 'hvision'
-          },
-          {
-            name: 'Stretchpunch',
-            value: 'spunch'
-          },
-          {
-            name: 'Canary-Cry',
-            value: 'ccry'
-          },
-          {
-            name: 'Batarang',
-            value: 'brang'
-          },
-          {
-            name: 'Send to Hell',
-            value: 'sthell'
-          },
-          {
-            name: 'Thunderclap',
-            value: 'tclap'
-          },
-          {
-            name: 'Electro-Blast',
-            value: 'elblast'
-          },
-          {
-            name: 'Fire-Blast',
-            value: 'fblast'
-          },
-          {
-            name: 'Shoot',
-            value: 'shoot'
-          },
-          {
-            name: 'Air-Blast',
-            value: 'ablast'
-          },
-          {
-            name: 'Force-Choke',
-            value: 'fchoke'
-          },
-          {
-            name: 'Devil Face',
-            value: 'devil'
-          },
-          {
-            name: 'Love Spell',
-            value: 'love'
-          },
-          {
-            name: 'Metal Words',
-            value: 'mwords'
-          },
-          {
-            name: 'Cosmic Staff',
-            value: 'staff'
-          },
-          {
-            name: 'Rocket Punch',
-            value: 'rpunch'
-          }
-        ]
-      },
-      {
-        type: 'USER',
-        name: 'user',
-        description: 'The user to attack',
-        required: true
-      }
+        {
+            type: 'STRING',
+            name: 'power',
+            description: 'The power to use',
+            required: true,
+            choices: [
+                {
+                    name: 'Iceblast',
+                    value: 'iceblast'
+                },
+                {
+                    name: 'Lightning Throw',
+                    value: 'lthrow'
+                },
+                {
+                    name: 'Reverse-Flash',
+                    value: 'rflash'
+                },
+                {
+                    name: 'Vibeblast',
+                    value: 'vblast'
+                },
+                {
+                    name: 'Arrow',
+                    value: 'arrow'
+                },
+                {
+                    name: 'Heatvision',
+                    value: 'hvision'
+                },
+                {
+                    name: 'Stretchpunch',
+                    value: 'spunch'
+                },
+                {
+                    name: 'Canary-Cry',
+                    value: 'ccry'
+                },
+                {
+                    name: 'Batarang',
+                    value: 'brang'
+                },
+                {
+                    name: 'Send to Hell',
+                    value: 'sthell'
+                },
+                {
+                    name: 'Thunderclap',
+                    value: 'tclap'
+                },
+                {
+                    name: 'Electro-Blast',
+                    value: 'elblast'
+                },
+                {
+                    name: 'Fire-Blast',
+                    value: 'fblast'
+                },
+                {
+                    name: 'Shoot',
+                    value: 'shoot'
+                },
+                {
+                    name: 'Air-Blast',
+                    value: 'ablast'
+                },
+                {
+                    name: 'Force-Choke',
+                    value: 'fchoke'
+                },
+                {
+                    name: 'Devil Face',
+                    value: 'devil'
+                },
+                {
+                    name: 'Love Spell',
+                    value: 'love'
+                },
+                {
+                    name: 'Metal Words',
+                    value: 'mwords'
+                },
+                {
+                    name: 'Cosmic Staff',
+                    value: 'staff'
+                },
+                {
+                    name: 'Rocket Punch',
+                    value: 'rpunch'
+                }
+            ]
+        },
+        {
+            type: 'USER',
+            name: 'user',
+            description: 'The user to attack',
+            required: true
+        }
     ]
 };

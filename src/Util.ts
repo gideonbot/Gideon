@@ -123,52 +123,26 @@ class Util {
 
         if (typeof message == 'string') {
             for (const msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
-                //@ts-ignore
                 client.send(msg, { avatarURL: Util.config.avatar, username: 'Gideon-Logs', files: files });
             }
         }
-        //@ts-ignore
         else client.send(null, { embeds: [message], avatarURL: Util.config.avatar, username: 'Gideon-Logs', files: files });
         
         return true;
     }
 
-    /**
-     * Get image from imgur album
-     * @param {string} imgid 
-     * @param {Discord.CommandInteraction} interaction
-     * @param {boolean} nsfw
-     */
-    static async IMG(imgid: string, interaction: Discord.CommandInteraction, nsfw: boolean): Promise<void> {
-        if (!interaction.guild) return;
-        if (!process.env.IMG_CL) return;
+    static async IMG(imgid: string): Promise<string | null> {
+        if (!process.env.IMG_CL) return null;
 
         const options = {headers: {authorization: 'Client-ID ' + process.env.IMG_CL}};
 
-        fetch('https://api.imgur.com/3/album/' + imgid, options).then(res => res.json().then(json => {
-            const res = json.data;
-
-            const min = 0;
-            const max = res.images.length - 1;
-            const ranum = Math.floor(Math.random() * (max - min + 1)) + min;
-            const rimg = res.images[ranum].link;
-
-            if (nsfw) {
-                const img = {
-                    files: [{
-                        attachment: rimg,
-                        name: 'SPOILER_NSFW.gif' 
-                    }]
-                };
-
-                return interaction.reply(img);
-            }
-
-            return interaction.reply(Util.Embed().setImage(rimg));
-        })).catch(x => {
-            Util.log(x);
-            return interaction.reply('An error occurred, please try again later!', { ephemeral: true });
-        });
+        const res = await fetch('https://api.imgur.com/3/album/' + imgid, options).then(res => res.json()).catch(console.log);
+        if (!res) return null;
+        
+        const min = 0;
+        const max = res.data.images.length - 1;
+        const ranum = Math.floor(Math.random() * (max - min + 1)) + min;
+        return res.data.images[ranum].link as string;
     }
 
     static InitWS(): void {
@@ -263,7 +237,8 @@ class Util {
     static async CITest(): Promise<void> {
         console.log('Starting CI test');
 
-        //@ts-expect-error undocumented properties
+        if (!process.gideon.options.http) return; //ts pepega
+        
         process.gideon.options.http.api = 'https://gideonbot.com/api/dump';
 
         const tests = await import('./tests.js');
@@ -290,7 +265,7 @@ class Util {
             mute: false
         };
 
-        const guild = process.gideon.guilds.add({
+        process.gideon.guilds.add({
             name: 'Test',
             region: 'US',
             member_count: 2,
@@ -654,12 +629,12 @@ class Util {
         if (reaction.message.embeds?.[0].title?.toLowerCase()?.includes('joined')) {
             const id = reaction.message.embeds?.[0].description?.match(/\d{17,19}/)?.[0];
             if (reaction.emoji.name === '❌') {
-                let gb = process.gideon.getGuild.get(id).blacklist = 1;
+                const gb = process.gideon.getGuild.get(id).blacklist = 1;
                 process.gideon.setGuild.run(gb);
                 Util.log(`Guild \`${id}\` has been blacklisted!`);
             }
             else if (reaction.emoji.name === '✅') {
-                let gb = process.gideon.getGuild.get(id).blacklist = 0;
+                const gb = process.gideon.getGuild.get(id).blacklist = 0;
                 process.gideon.setGuild.run(gb);
                 Util.log(`Guild \`${id}\` has been un-blacklisted!`);
             }
@@ -877,13 +852,9 @@ class Util {
 
         const obj = <EpisodeInfo>{ embed: {}, expires_at: new Date(Date.now() + 864e5) }; //1 day
 
-        interface JSONInterface {
-            name: string;
-        }
-
         if (show in names) {
             try {
-                const json = await Util.fetchJSON(process.gideon.show_api_urls[show]) as JSONInterface;
+                const json = await Util.fetchJSON(process.gideon.show_api_urls[show]) as InfoInterface;
                 if (!json) return;
 
                 let emote = '';
@@ -901,7 +872,7 @@ class Util {
 
                 process.gideon.cache.nxeps.set(show, obj);
 
-                Util.AddInfo(show, json as unknown as InfoInterface);
+                Util.AddInfo(show, json);
             }
             
             catch (ex) {
@@ -910,7 +881,7 @@ class Util {
         }
         else if (show in dcnames) {
             try {
-                const json = await Util.fetchJSON(process.gideon.dc_show_urls[show]) as JSONInterface;
+                const json = await Util.fetchJSON(process.gideon.dc_show_urls[show]) as InfoInterface;
                 if (!json) return;
 
                 obj.series_shortname = dcnames[show];
@@ -918,7 +889,7 @@ class Util {
 
                 process.gideon.cache.dceps.set(show, obj);
 
-                Util.AddInfo(show, json as unknown as InfoInterface);
+                Util.AddInfo(show, json);
             }
             
             catch (ex) {

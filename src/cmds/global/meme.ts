@@ -11,8 +11,11 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         return interaction.reply('This command is currently not available');
     }
 
-    return Util.IMG('NVHwdNg', interaction, false);
-};
+    const img = await Util.IMG('NVHwdNg');
+    if (!img) return interaction.reply('An error occurred, please try again later!', { ephemeral: true });
+
+    return interaction.reply(Util.Embed().setImage(img));
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -22,7 +25,7 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'meme',
     description: 'Fetches a random Arrowverse meme',
     defaultPermission: true

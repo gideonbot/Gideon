@@ -1,4 +1,5 @@
-import { CommandInteraction, TextChannel, GuildMember, Permissions } from "discord.js";
+import { CommandInteraction, TextChannel, GuildMember, Permissions } from 'discord.js';
+import Util from '../Util.js';
 
 class Interactions {
     constructor() {
@@ -9,13 +10,15 @@ class Interactions {
      * Handle Slash Commands
      * @param {Discord.CommandInteraction} command 
      */
-    static async SlashCommands(command: CommandInteraction, Util: any) {
+    static async SlashCommands(command: CommandInteraction): Promise<boolean | void> {
         if (Util.Checks.IBU(command.user.id)) {
             command.reply('You are banned from using this application.\nSincereley -the owner', { ephemeral: true }); //check if user is blacklisted, if yes, return
             return process.gideon.emit('commandRefused', command, 'BANNED_USER');
         }
 
-        Util.Checks.LBG(command?.guild, Util); //check if guild is blacklisted, if yes, leave
+        if (!command.guild) return;
+
+        Util.Checks.LBG(command.guild); //check if guild is blacklisted, if yes, leave
 
         const options = command.options;
     
@@ -69,9 +72,9 @@ class Interactions {
 
         if (![process.gideon.owner, '351871113346809860'].includes(command.user.id)) {
             if (cmd.info?.user_perms?.length > 0) {
-                let missingperms = [];
+                const missingperms = [];
 
-                for (let perm of cmd.info.user_perms) {
+                for (const perm of cmd.info.user_perms) {
                     if (!command.member?.permissions.has(perm)) missingperms.push(new Permissions(perm).toArray()[0]);
                 }
 
@@ -82,8 +85,8 @@ class Interactions {
             }   
 
             if (cmd.info?.bot_perms?.length > 0) {
-                let missingperms = [];
-                for (let perms of cmd.info.bot_perms) {
+                const missingperms = [];
+                for (const perms of cmd.info.bot_perms) {
                     if (!(command.channel as TextChannel).permissionsFor((command.guild?.me) as GuildMember).has(perms)) missingperms.push(new Permissions(perms).toArray()[0]);
                 }
                 if (missingperms.length > 0) return command.reply('Sorry I can\'t do that without having the required permissions for this command!\nRequired permissions: ' + missingperms.map(x => `\`${x}\``).join(' '), { ephemeral: true });

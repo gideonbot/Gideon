@@ -10,7 +10,7 @@ class SQL {
         throw new Error('This class cannot be instantiated!');
     }
 
-    static InitDB() {
+    static InitDB(): void {
         const scoresdb = sql.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'scores\';').get();
         if (!scoresdb['count(*)']) {
             sql.prepare('CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, points INTEGER);').run();
@@ -61,7 +61,7 @@ class SQL {
         Util.log(`Initialized database: \`${sql.name}\`!`);
     }
 
-    static Close() {
+    static Close(): void {
         sql.close();
     }
 }

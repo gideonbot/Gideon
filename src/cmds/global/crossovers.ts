@@ -17,7 +17,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         .addField('Crisis On Infinite Earths', 'Supergirl 5x09 - Crisis on Infinite Earths: Hour One\nBatwoman 1x09 - Crisis on Infinite Earths: Hour Two\nThe Flash 6x09 - Crisis on Infinite Earths: Hour Three\nArrow 8x09 - Crisis on Infinite Earths: Hour Four\nDC\'s Legends of Tomorrow 5x00 - Crisis on Infinite Earths: Hour Five');
 
     return interaction.reply(embed);
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -27,7 +27,7 @@ export const info: Command['info'] = {
     bot_perms: [Permissions.FLAGS.MANAGE_MESSAGES, Permissions.FLAGS.ADD_REACTIONS]
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'xovers',
     description: 'All Arrowverse crossovers',
     defaultPermission: true

@@ -1,11 +1,11 @@
-import { CommandInteraction, GuildMember } from 'discord.js';
+import { CommandInteraction, GuildMember, Message } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
 /**
 * @param {Discord.CommandInteraction} interaction
 */
-export async function run(interaction: CommandInteraction) {    
+export async function run(interaction: CommandInteraction): Promise<void | Message | null> {    
     interaction.reply('Booting up the Multiverse Holo Projector...');
     await Util.delay(1000);
     interaction.editReply('Calling...');
@@ -70,10 +70,10 @@ export async function run(interaction: CommandInteraction) {
         }
     ];
 
-    let result = arr[Math.floor(Math.random() * arr.length)];
+    const result = arr[Math.floor(Math.random() * arr.length)];
 
     return interaction.editReply(`You have reached out to Earth-${result.en}`, { embeds:[Util.Embed(result.title, {description: result.desc, image: result.gif}, interaction.member as GuildMember)] });  
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -83,7 +83,7 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'wells',
     description: 'Reaches out to a random Wells',
     defaultPermission: true

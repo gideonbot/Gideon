@@ -219,6 +219,7 @@ interface EmbedField {
 }
 
 interface InfoInterface {
+    name: string;
     _embedded: { nextepisode: { name: string, season: string, number: string, airstamp: string; } }
     _links: { self: { href: string; } }
     webChannel: { name: string; }

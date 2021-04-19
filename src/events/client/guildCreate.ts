@@ -22,7 +22,7 @@ export default {
             gideon.setGuild.run(currentguild);
         }
     
-        let ub = process.gideon.getUser.get(guild.ownerID);
+        const ub = process.gideon.getUser.get(guild.ownerID);
         if (ub) {
             if (ub.blacklist === 1) {
                 currentguild.blacklist = 1;
@@ -30,7 +30,7 @@ export default {
             }
         }
     
-        Util.Checks.LBG(guild, Util); //check if guild is blacklisted, if yes, leave
-        Util.Checks.BotCheck(guild, Util); //check if guild collects bots, if yes, leave
+        Util.Checks.LBG(guild); //check if guild is blacklisted, if yes, leave
+        Util.Checks.BotCheck(guild); //check if guild collects bots, if yes, leave
     }
 };

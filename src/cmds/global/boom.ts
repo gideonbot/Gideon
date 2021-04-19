@@ -41,7 +41,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
             }
         ];
         
-        let result = abilities[Math.floor(Math.random() * abilities.length)];
+        const result = abilities[Math.floor(Math.random() * abilities.length)];
     
         const pwrembed = Util.Embed(result.title, {
             description: result.desc,
@@ -55,7 +55,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         Util.log('Exception occurred while starting up the particle accelerator ' + ex.stack);
         return interaction.reply('An error occurred while trying to start the particle accelerator!', { ephemeral: true });
     } 
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -65,7 +65,7 @@ export const info: Command['info'] = {
     bot_perms: [Permissions.FLAGS.MANAGE_MESSAGES]
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'boom',
     description: 'Blows up the S.T.A.R. labs particle accelerator to gain a methuman ability',
     defaultPermission: true

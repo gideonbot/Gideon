@@ -1,5 +1,5 @@
 import Util from '../../Util.js';
-import exec from 'child_process';
+import { exec } from 'child_process';
 import { CommandInteraction, CommandInteractionOption } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
@@ -10,7 +10,7 @@ import { Command } from 'src/@types/Util.js';
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     if (options[0].value === 'i') {
         interaction.reply('running `npm install` please check <#622415301144870932> for console output!');
-        const install = exec.exec('npm install');
+        const install = exec('npm install');
 
         install.stdout?.on('data', data => Util.log('```\n' + data + '```'));
 
@@ -22,7 +22,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     if (options[0].value === 'u') {
         interaction.reply('running `npm update` please check <#622415301144870932> for console output!');
-        const update = exec.exec('npm update');
+        const update = exec('npm update');
 
         update.stdout?.on('data', data => Util.log('```\n' + data + '```'));
 
@@ -34,17 +34,16 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     if (options[0].value === 'af') {
         interaction.reply('running `npm audit fix` please check <#622415301144870932> for console output!');
-        //@ts-ignore
         const update = exec('npm audit fix');
 
-        update.stdout.on('data', (data: string) => Util.log('```\n' + data + '```'));
+        update.stdout?.on('data', (data: string) => Util.log('```\n' + data + '```'));
 
-        update.stdout.on('end', async () => {
+        update.stdout?.on('end', async () => {
             await interaction.editReply('`npm audit fix` ran succesfully!\nNow restarting... :white_check_mark:');
             process.exit();
         });
     }
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -80,4 +79,4 @@ export const data: Command['data'] = {
             ]
         }
     ]
-}
+};

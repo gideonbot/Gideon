@@ -1,25 +1,26 @@
+/* eslint-disable no-unused-vars */
 declare module 'opensubtitles-api' {
-	interface OSInterface {
+    interface OSInterface {
         useragent: string;
         username: string;
         password: string;
         ssl: boolean;
     }
 
-	interface SubResponse {
+    interface SubResponse {
         [key: string]: {
-			downloads: string;
-			encoding: string;
-			id: string;
-			lang: string;
-			langName: string;
-			score: number;
-			url: string;
-			filename: string;
-		}[]
-	}
+            downloads: string;
+            encoding: string;
+            id: string;
+            lang: string;
+            langName: string;
+            score: number;
+            url: string;
+            filename: string;
+        }[]
+    }
 
-	interface OSSearch {
+    interface OSSearch {
         sublanguageid: string;       
         season: number;
         episode: number;
@@ -27,10 +28,10 @@ declare module 'opensubtitles-api' {
         imdbid: string;           
     }
 
-	export class OS {
-		constructor(data: OSInterface);
-		search(data: OSSearch): Promise<SubResponse>;
-	}
+    export class OS {
+        constructor(data: OSInterface);
+        search(data: OSSearch): Promise<SubResponse>;
+    }
 
-	export default OS
+    export default OS;
 }

@@ -1,6 +1,6 @@
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, GuildMember, Permissions } from 'discord.js';
-import { Command, SeEp } from 'src/@types/Util.js';
+import { Command } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
 
 /**
@@ -8,35 +8,33 @@ import gideonapi from 'gideon-api';
  * @param {CommandInteractionOption[]} options
  */
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
-    const url: string = 'https://arrowverse.info';
-    let showtitle: string = undefined as unknown as string;
+    const url = 'https://arrowverse.info';
     let thimg: string;
-    
-    if (options[0].value === 'show_fl') showtitle = 'The Flash';
-    else if (options[0].value === 'show_ar') showtitle = 'Arrow';
-    else if (options[0].value === 'show_sg') showtitle = 'Supergirl';
-    else if (options[0].value === 'show_lot') showtitle = 'DC\'s Legends of Tomorrow';
-    else if (options[0].value === 'show_co') showtitle = 'Constantine';
-    else if (options[0].value === 'show_bw') showtitle = 'Batwoman';
+
+    const _shows: Record<string, string> = {
+        show_fl: 'The Flash',
+        show_ar: 'Arrow',
+        show_sg: 'Supergirl',
+        show_lot: 'DC\'s Legends of Tomorrow',
+        show_co: 'Constantine',
+        show_bw: 'Batwoman'
+    };
+
+    const showtitle = _shows[options[0].value as string];
 
     const body = await gideonapi.avi();
-
-    let fiep: SeEp = { season: options[1].value as number,
-        episode: options[2].value as number 
-    };
-    (fiep as unknown as string) = 'S' + Util.normalize(fiep.season as number) + 'E' + Util.normalize(fiep.episode as number);
-
-    let shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
+    const fiep = 'S' + Util.normalize(options[1].value as number) + 'E' + Util.normalize(options[2].value as number);
+    const shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
 
     /**
      * @param {string} show 
      * @param {*} season_and_episode 
      */
-    let GetNextEmbed = (show: string, season_and_episode: string) => {
-        let f = shows.find(x => x.series === show && x.episode_id === season_and_episode);
+    const GetNextEmbed = (show: string, season_and_episode: string) => {
+        const f = shows.find(x => x.series === show && x.episode_id === season_and_episode);
         if (!f) return `${show} ${season_and_episode} is not a valid episode!`;
 
-        let next = shows[shows.indexOf(f) + 1];
+        const next = shows[shows.indexOf(f) + 1];
         if (!next) return 'Couldn\'t find that episode. Try again.';
     
         const nxep = `${next.series} ${next.episode_id} - ${next.episode_name}`;
@@ -66,9 +64,9 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         return embed;
     };
 
-    let embed = GetNextEmbed(showtitle, fiep as unknown as string);
+    const embed = GetNextEmbed(showtitle, fiep);
     interaction.reply(embed);
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -78,54 +76,54 @@ export const info: Command['info'] = {
     bot_perms: [Permissions.FLAGS.MANAGE_MESSAGES]
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'next',
     description: 'Get next episode in watching order',
     defaultPermission: true,
     options: [
-      {
-        type: 'STRING',
-        name: 'show',
-        description: 'The Arrowverse show',
-        required: true,
-        choices: [
-          {
-            name: 'The Flash',
-            value: 'show_fl'
-          },
-          {
-            name: 'Arrow',
-            value: 'show_ar'
-          },
-          {
-            name: 'Supergirl',
-            value: 'show_sg'
-          },
-          {
-            name: 'DC\'s Legends of Tomorrow',
-            value: 'show_lot'
-          },
-          {
-            name: 'Batwoman',
-            value: 'show_bw'
-          },
-          {
-            name: 'Constantine',
-            value: 'show_co'
-          }
-        ]
-      },
-      {
-        type: 'INTEGER',
-        name: 'season',
-        description: 'Your current season',
-        required: true
-      },
-      {
-        type: 'INTEGER',
-        name: 'episode',
-        description: 'Your current episode',
-        required: true
-      }
+        {
+            type: 'STRING',
+            name: 'show',
+            description: 'The Arrowverse show',
+            required: true,
+            choices: [
+                {
+                    name: 'The Flash',
+                    value: 'show_fl'
+                },
+                {
+                    name: 'Arrow',
+                    value: 'show_ar'
+                },
+                {
+                    name: 'Supergirl',
+                    value: 'show_sg'
+                },
+                {
+                    name: 'DC\'s Legends of Tomorrow',
+                    value: 'show_lot'
+                },
+                {
+                    name: 'Batwoman',
+                    value: 'show_bw'
+                },
+                {
+                    name: 'Constantine',
+                    value: 'show_co'
+                }
+            ]
+        },
+        {
+            type: 'INTEGER',
+            name: 'season',
+            description: 'Your current season',
+            required: true
+        },
+        {
+            type: 'INTEGER',
+            name: 'episode',
+            description: 'Your current episode',
+            required: true
+        }
     ]
 };
