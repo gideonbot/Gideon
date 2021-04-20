@@ -987,7 +987,7 @@ class Util {
     static GetCleverBotResponse(text: string, context: string[]): Promise<string> {
         return new Promise((resolve, reject) => {
             cleverbot(text, context).then(response => {
-                if (text.includes('www.cleverbot.com')) reject('User Agent outdated');
+                if (response.includes('www.cleverbot.com')) reject('User Agent outdated');
                 this.IncreaseStat('ai_chat_messages_processed');
                 resolve(response);
             }, failed => reject(failed));
