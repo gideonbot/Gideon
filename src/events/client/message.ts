@@ -3,7 +3,7 @@ import { Message } from 'discord.js';
 
 export default {
     name: 'message',
-    async run(message: Message) {
-        Util.MsgHandler.Handle(message, Util);
+    run(message: Message): void {
+        Util.MsgHandler.Handle(message);
     }
 };

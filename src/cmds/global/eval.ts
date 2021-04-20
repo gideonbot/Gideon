@@ -1,8 +1,8 @@
 import Util from '../../Util.js';
-// eslint-disable-next-line no-unused-vars
 import Discord from 'discord.js';
-// eslint-disable-next-line no-unused-vars
 import moment from 'moment';
+moment.bind; // pepega fix to prevent errors
+Discord.GuildMember;
 import { CommandInteraction, CommandInteractionOption } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
@@ -28,7 +28,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     if (printValue == '{}') return;
 
     return interaction.reply(Util.truncate(printValue as string, 1900, true), {code: true});
-};
+}
 
 export const info: Command['info'] = {
     owner: true,
@@ -38,16 +38,16 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'eval',
     description: 'Evaluate JavaScript',
     defaultPermission: true,
     options: [
-      {
-        type: 'STRING',
-        name: 'code',
-        description: 'JavaScript code',
-        required: true
-      }
+        {
+            type: 'STRING',
+            name: 'code',
+            description: 'JavaScript code',
+            required: true
+        }
     ]
 };

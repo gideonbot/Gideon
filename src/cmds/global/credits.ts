@@ -17,7 +17,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     ];
 
     return interaction.reply(Util.Embed('Development Credits:', { fields: fields, thumbnail: process.gideon.user?.avatarURL() as string }, interaction.member as GuildMember));
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -27,7 +27,7 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'credits',
     description: 'Development credits',
     defaultPermission: true

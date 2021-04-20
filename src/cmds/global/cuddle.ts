@@ -17,7 +17,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         description: `**${auth} you have cuddled ${user}!**\n\nA Beebo-tastic cuddle always brightens the mood!`,
         image: 'https://i.imgur.com/IOpmt2j.gif'
     }, interaction.member as GuildMember));
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -27,16 +27,16 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'cuddle',
     description: 'Gives the selected user a Beebo-tastic cuddle',
     defaultPermission: true,
     options: [
-      {
-        type: 'USER',
-        name: 'user',
-        description: 'The user to cuddle',
-        required: true
-      }
+        {
+            type: 'USER',
+            name: 'user',
+            description: 'The user to cuddle',
+            required: true
+        }
     ]
 };

@@ -123,52 +123,26 @@ class Util {
 
         if (typeof message == 'string') {
             for (const msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
-                //@ts-ignore
                 client.send(msg, { avatarURL: Util.config.avatar, username: 'Gideon-Logs', files: files });
             }
         }
-        //@ts-ignore
         else client.send(null, { embeds: [message], avatarURL: Util.config.avatar, username: 'Gideon-Logs', files: files });
         
         return true;
     }
 
-    /**
-     * Get image from imgur album
-     * @param {string} imgid 
-     * @param {Discord.CommandInteraction} interaction
-     * @param {boolean} nsfw
-     */
-    static async IMG(imgid: string, interaction: Discord.CommandInteraction, nsfw: boolean): Promise<void> {
-        if (!interaction.guild) return;
-        if (!process.env.IMG_CL) return;
+    static async IMG(imgid: string): Promise<string | null> {
+        if (!process.env.IMG_CL) return null;
 
         const options = {headers: {authorization: 'Client-ID ' + process.env.IMG_CL}};
 
-        fetch('https://api.imgur.com/3/album/' + imgid, options).then(res => res.json().then(json => {
-            const res = json.data;
-
-            const min = 0;
-            const max = res.images.length - 1;
-            const ranum = Math.floor(Math.random() * (max - min + 1)) + min;
-            const rimg = res.images[ranum].link;
-
-            if (nsfw) {
-                const img = {
-                    files: [{
-                        attachment: rimg,
-                        name: 'SPOILER_NSFW.gif' 
-                    }]
-                };
-
-                return interaction.reply(img);
-            }
-
-            return interaction.reply(Util.Embed().setImage(rimg));
-        })).catch(x => {
-            Util.log(x);
-            return interaction.reply('An error occurred, please try again later!', { ephemeral: true });
-        });
+        const res = await fetch('https://api.imgur.com/3/album/' + imgid, options).then(res => res.json()).catch(console.log);
+        if (!res) return null;
+        
+        const min = 0;
+        const max = res.data.images.length - 1;
+        const ranum = Math.floor(Math.random() * (max - min + 1)) + min;
+        return res.data.images[ranum].link as string;
     }
 
     static InitWS(): void {
@@ -263,7 +237,8 @@ class Util {
     static async CITest(): Promise<void> {
         console.log('Starting CI test');
 
-        //@ts-expect-error undocumented properties
+        if (!process.gideon.options.http) return; //ts pepega
+        
         process.gideon.options.http.api = 'https://gideonbot.com/api/dump';
 
         const tests = await import('./tests.js');
@@ -281,7 +256,16 @@ class Util {
             flags: 64
         };
 
-        const guild = new Discord.Guild(process.gideon, {
+        const member = {
+            user: user,
+            nick: null,
+            roles: [],
+            joined_at: new Date().toISOString(),
+            deaf: false,
+            mute: false
+        };
+
+        process.gideon.guilds.add({
             name: 'Test',
             region: 'US',
             member_count: 2,
@@ -318,40 +302,31 @@ class Util {
                     deaf: false,
                     mute: false
                 },
-                {
-                    user: user,
-                    nick: null,
-                    roles: [],
-                    joined_at: new Date().toISOString(),
-                    deaf: false,
-                    mute: false
-                }
+                member
             ],
             owner_id: user.id
         });
 
-        const channel = new Discord.TextChannel(guild, {
+        process.gideon.channels.add({
             nsfw: false,
             name: 'test-channel',
             type: 0,
+            guild_id: guild_id,
             id: channel_id
         });
 
         for (const item of tests.commands) {
-            const data = {
+            const interaction = new Discord.CommandInteraction(process.gideon, {
+                type: 2,
+                token: 'lol',
                 id: Util.GenerateSnowflake(),
                 channel_id: channel_id,
-                type: 0,
-                content: item,
-                author: user,
-                pinned: false,
-                tts: false,
-                timestamp: new Date().toISOString(),
-                flags: 0,
-            };
+                guild_id: guild_id,
+                member: member,
+                data: item
+            });
 
-            const msg = new Discord.Message(process.gideon, data, channel);
-            process.gideon.emit('message', msg);
+            process.gideon.emit('interaction', interaction);
         }
 
         //We need to wait for all requests to go through
@@ -654,12 +629,12 @@ class Util {
         if (reaction.message.embeds?.[0].title?.toLowerCase()?.includes('joined')) {
             const id = reaction.message.embeds?.[0].description?.match(/\d{17,19}/)?.[0];
             if (reaction.emoji.name === '❌') {
-                let gb = process.gideon.getGuild.get(id).blacklist = 1;
+                const gb = process.gideon.getGuild.get(id).blacklist = 1;
                 process.gideon.setGuild.run(gb);
                 Util.log(`Guild \`${id}\` has been blacklisted!`);
             }
             else if (reaction.emoji.name === '✅') {
-                let gb = process.gideon.getGuild.get(id).blacklist = 0;
+                const gb = process.gideon.getGuild.get(id).blacklist = 0;
                 process.gideon.setGuild.run(gb);
                 Util.log(`Guild \`${id}\` has been un-blacklisted!`);
             }
@@ -714,63 +689,59 @@ class Util {
     /**
      * Deploy Application Commands
      */
-    static async DeployCommands(): Promise<void> {
+    static async DeployCommands(): Promise<void | boolean> {
         const global: Collection<string, ApplicationCommandData> = new Collection();
         const guild: Collection<string, ApplicationCommandData> = new Collection();
 
-        recursive('./cmds', async (err, files) => {
-            if (err) {
-                return Util.log('Error while reading commands:\n' + err);
-            }
-    
-            const jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
-            if (jsfiles.length < 1) {
-                return Util.log('No commands to load!');
-            }
+        const files = await recursive('./cmds').catch(err => Util.log('Error while reading commands:\n' + err));
+        if (!Array.isArray(files)) return; //in case it somehow fails the catch block will return a boolean
 
-            for (const file_path of jsfiles) {
-                const props: Command = await import(`./${file_path}`);
-                
-                if (file_path.includes('global')) global.set(props.data.name, props.data);
-                else if (file_path.includes('guild')) guild.set(props.data.name, props.data);
-            }
+        const jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
+        if (jsfiles.length < 1) {
+            return Util.log('No commands to load!');
+        }
 
-            const all = global.concat(guild);
+        for (const file_path of jsfiles) {
+            const props: Command = await import(`./${file_path}`);
+            
+            if (file_path.includes('global')) global.set(props.data.name, props.data);
+            else if (file_path.includes('guild')) guild.set(props.data.name, props.data);
+        }
 
-            if (process.gideon.user?.id === '595328879397437463') {
-                const globalcmds = await process.gideon.application?.commands.fetch();
-                const guildcmds = await process.gideon.guilds.cache.get('595318490240385037')?.commands.fetch();
+        const all = global.concat(guild);
 
-                if (globalcmds?.size !== global.size || guildcmds?.size !== guild.size) {
-                    if (globalcmds?.size !== global.size) {
-                        await process.gideon.application?.commands.set(global.array());
-                    }
-    
-                    if (guildcmds?.size !== guild.size) {
-                        await process.gideon.guilds.cache.get('595318490240385037')?.commands.set(guild.array());
-                    }
+        if (process.gideon.user?.id === '595328879397437463') {
+            const globalcmds = await process.gideon.application?.commands.fetch();
+            const guildcmds = await process.gideon.guilds.cache.get('595318490240385037')?.commands.fetch();
 
-                    return Util.log('Application Commands deployed!');
+            if (globalcmds?.size !== global.size || guildcmds?.size !== guild.size) {
+                if (globalcmds?.size !== global.size) {
+                    await process.gideon.application?.commands.set(global.array());
                 }
 
-                else {
-                    const globallocalhash = Md5.hashStr(JSON.stringify(all.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
-                    const guildlocalhash = Md5.hashStr(JSON.stringify(guild.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
-                    const globalhash = Md5.hashStr(JSON.stringify(globalcmds.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
-                    const guildhash = Md5.hashStr(JSON.stringify(guildcmds.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
-
-                    if (globallocalhash !== globalhash) await process.gideon.application?.commands.set(global.array());
-                    if (guildlocalhash !== guildhash) await process.gideon.guilds.cache.get('595318490240385037')?.commands.set(guild.array());
-                    
-                    return Util.log('Application Commands deployed!');
+                if (guildcmds?.size !== guild.size) {
+                    await process.gideon.guilds.cache.get('595318490240385037')?.commands.set(guild.array());
                 }
             }
 
-            else if (process.gideon.user?.id === '598132992874905600') await process.gideon.guilds.cache.get('709061970078335027')?.commands.set(all.array());
-            else if (process.gideon.user?.id === '621026307937140756') await process.gideon.guilds.cache.get('604426720216612894')?.commands.set(all.array());
+            else {
+                const globallocalhash = Md5.hashStr(JSON.stringify(all.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
+                const guildlocalhash = Md5.hashStr(JSON.stringify(guild.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
+                const globalhash = Md5.hashStr(JSON.stringify(globalcmds.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
+                const guildhash = Md5.hashStr(JSON.stringify(guildcmds.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
 
-            Util.log('Application Commands deployed!');
-        });
+                if (globallocalhash !== globalhash) await process.gideon.application?.commands.set(global.array());
+                if (guildlocalhash !== guildhash) await process.gideon.guilds.cache.get('595318490240385037')?.commands.set(guild.array());
+            
+            }
+
+            return Util.log('Application Commands deployed!');
+        }
+
+        else if (process.gideon.user?.id === '598132992874905600') await process.gideon.guilds.cache.get('709061970078335027')?.commands.set(all.array());
+        else if (process.gideon.user?.id === '621026307937140756') await process.gideon.guilds.cache.get('604426720216612894')?.commands.set(all.array());
+
+        Util.log('Application Commands deployed!');
     }
 
     /**
@@ -881,13 +852,9 @@ class Util {
 
         const obj = <EpisodeInfo>{ embed: {}, expires_at: new Date(Date.now() + 864e5) }; //1 day
 
-        interface JSONInterface {
-            name: string;
-        }
-
         if (show in names) {
             try {
-                const json = await Util.fetchJSON(process.gideon.show_api_urls[show]) as JSONInterface;
+                const json = await Util.fetchJSON(process.gideon.show_api_urls[show]) as InfoInterface;
                 if (!json) return;
 
                 let emote = '';
@@ -905,7 +872,7 @@ class Util {
 
                 process.gideon.cache.nxeps.set(show, obj);
 
-                Util.AddInfo(show, json as unknown as InfoInterface);
+                Util.AddInfo(show, json);
             }
             
             catch (ex) {
@@ -914,7 +881,7 @@ class Util {
         }
         else if (show in dcnames) {
             try {
-                const json = await Util.fetchJSON(process.gideon.dc_show_urls[show]) as JSONInterface;
+                const json = await Util.fetchJSON(process.gideon.dc_show_urls[show]) as InfoInterface;
                 if (!json) return;
 
                 obj.series_shortname = dcnames[show];
@@ -922,7 +889,7 @@ class Util {
 
                 process.gideon.cache.dceps.set(show, obj);
 
-                Util.AddInfo(show, json as unknown as InfoInterface);
+                Util.AddInfo(show, json);
             }
             
             catch (ex) {

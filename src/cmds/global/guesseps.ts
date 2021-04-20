@@ -12,8 +12,9 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     interaction.defer();
     const url = 'https://arrowverse.info';
     const emotes = ['▶️', '669309980209446912'];
-    let s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
-    let chosenfilter = undefined as unknown as (x: gideonapi.AviInfo) => boolean;
+    const s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
+    // eslint-disable-next-line no-unused-vars
+    let chosenfilter: (x: gideonapi.AviInfo) => boolean = () => { return true; };
     let tries = 3;
     let points = 0;
     let timerstart = new Date();
@@ -22,7 +23,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     
     interaction.user.guessing = true;
 
-    let filters = [
+    const filters = [
         ((x: gideonapi.AviInfo) => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray' && x.series !== 'Black Lightning'),
         ((x: gideonapi.AviInfo) => x.series == 'The Flash'),
         ((x: gideonapi.AviInfo) => x.series == 'Arrow'),
@@ -52,7 +53,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     else if (options[0].value === 'constantine') chosenfilter = filters[6];
 
     function Countdown() {
-        let timerdiff = (Date.now() - timerstart.getTime()) / 1000;
+        const timerdiff = (Date.now() - timerstart.getTime()) / 1000;
         return Math.round(30 - timerdiff);
     }
 
@@ -64,14 +65,11 @@ export async function run(interaction: CommandInteraction, options: CommandInter
      * @param {Date} airdate 
      */
     function CalculateAirDatePoints(airdate: Date) {
-        const difference = Math.floor(Math.floor(new Date() as any - (new Date(airdate) as any)) / (1000 * 60 * 60 * 24));
+        const difference = Math.floor(Math.floor(new Date().getTime() - new Date(airdate).getTime()) / (1000 * 60 * 60 * 24));
         return Math.round(difference / 100);
     }
 
-    /**
-     * @param {Function} showfilter 
-     * @returns {Promise<{embed: Discord.MessageEmbed, show: string, ep_and_s: string, airdate: Date, ep_name: string}>}
-     */
+    // eslint-disable-next-line no-unused-vars
     async function GetGame(showfilter: (x: gideonapi.AviInfo) => boolean) {
         const body = await gideonapi.avi();
 
@@ -106,9 +104,9 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         const f = (m: Message) => m.author.id === interaction.user.id;
         const collector = (interaction.channel as TextChannel)?.createMessageCollector(f, {time: 30 * 1000});
 
-        let sent = await interaction.editReply(game.embed);
+        const sent = await interaction.editReply(game.embed);
 
-        for (let emoji of emotes) {
+        for (const emoji of emotes) {
             await sent?.react(emoji).then(async () => { await Util.delay(2000); }, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
         }
 
@@ -166,7 +164,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
                 else if (tries === 2) points = 2;
                 else if (tries === 1) points = 1;
 
-                let airdate_bonus = CalculateAirDatePoints(game.airdate);
+                const airdate_bonus = CalculateAirDatePoints(game.airdate);
                 points += airdate_bonus;
                 IncreasePoints(points);
                 process.gideon.setScore.run(score);
@@ -192,8 +190,8 @@ export async function run(interaction: CommandInteraction, options: CommandInter
             }
 
             tries--;
-            let question = `\`${game.show} ${game.ep_and_s}\``;
-            let solution = `\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``;
+            const question = `\`${game.show} ${game.ep_and_s}\``;
+            const solution = `\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``;
 
             const incorrectembed = Util.Embed(`Guessing game for ${interaction.user.tag}:`, {
                 description: `That is incorrect! :x:\n${tries == 0 ? solution : question}`,
@@ -246,7 +244,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         Util.log('Caught an exception while running guesseps.js: ' + ex.stack);
         return interaction.reply('An error occurred while processing your request:```\n' + ex + '```', { ephemeral: true });
     }
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -256,41 +254,41 @@ export const info: Command['info'] = {
     bot_perms: [Permissions.FLAGS.MANAGE_MESSAGES]
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'guess',
     description: 'Arrowverse episode guessing game',
     defaultPermission: true,
     options: [
-      {
-        type: 'STRING',
-        name: 'show',
-        description: 'The show you want to guess for',
-        choices: [
-          {
-            name: 'The Flash',
-            value: 'flash'
-          },
-          {
-            name: 'Arrow',
-            value: 'arrow'
-          },
-          {
-            name: 'DC\'s Legends of Tomorrow',
-            value: 'legends'
-          },
-          {
-            name: 'Supergirl',
-            value: 'supergirl'
-          },
-          {
-            name: 'Batwoman',
-            value: 'batwoman'
-          },
-          {
-            name: 'Constantine',
-            value: 'constantine'
-          }
-        ]
-      }
+        {
+            type: 'STRING',
+            name: 'show',
+            description: 'The show you want to guess for',
+            choices: [
+                {
+                    name: 'The Flash',
+                    value: 'flash'
+                },
+                {
+                    name: 'Arrow',
+                    value: 'arrow'
+                },
+                {
+                    name: 'DC\'s Legends of Tomorrow',
+                    value: 'legends'
+                },
+                {
+                    name: 'Supergirl',
+                    value: 'supergirl'
+                },
+                {
+                    name: 'Batwoman',
+                    value: 'batwoman'
+                },
+                {
+                    name: 'Constantine',
+                    value: 'constantine'
+                }
+            ]
+        }
     ]
 };

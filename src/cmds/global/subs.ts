@@ -8,9 +8,9 @@ import { Command } from 'src/@types/Util.js';
  * @param {CommandInteractionOption[]} options
  */
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void | Message | null> {
-  interaction.defer();  
+    interaction.defer();  
   
-  if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
+    if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
         Util.log('Missing env variables for subs command!');
         return interaction.editReply(Util.Embed('This command is currently not available', undefined, interaction.member as GuildMember));
     }
@@ -117,7 +117,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     }).then(subtitles => {
         const embed = Util.Embed(`Subtitles for: ${show.title} ${options[0].options?.[2].value}x${Util.normalize(options[0].options?.[3].value as number)}`, {description: 'Here are the 5 best results from opensubtitles.org:'}, interaction.member as GuildMember);
 
-        for (let sub of Object.values(subtitles)[0]) {
+        for (const sub of Object.values(subtitles)[0]) {
             embed.addField(sub.filename, `**[Download SRT](${sub.url} '${sub.url}')** Lang: \`${sub.lang}\` Score: \`${sub.score}\``);
         }
         
@@ -126,7 +126,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         Util.log('An error occurred while trying to fetch subtitles: ' + err);
         return interaction.editReply('There were no results for this episode on opensubtitles.org!\nTry another episode or another language !');
     });
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -136,220 +136,220 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'subs',
     description: 'Fetch episode subtitles',
     defaultPermission: true,
     options: [
-      {
-        type: 'SUB_COMMAND',
-        name: 'cwtv',
-        description: 'Get CWTV subtitles',
-        options: [
-          {
-            type: 'STRING',
-            name: 'show',
-            description: 'The CW show',
-            required: true,
-            choices: [
-              {
-                name: 'The Flash',
-                value: 'show_fl'
-              },
-              {
-                name: 'Arrow',
-                value: 'show_ar'
-              },
-              {
-                name: 'Supergirl',
-                value: 'show_sg'
-              },
-              {
-                name: 'DC\'s Legends of Tomorrow',
-                value: 'show_lot'
-              },
-              {
-                name: 'Superman & Lois',
-                value: 'show_sl'
-              },
-              {
-                name: 'Stargirl',
-                value: 'show_stg'
-              },
-              {
-                name: 'Batwoman',
-                value: 'show_bw'
-              },
-              {
-                name: 'Black Lightning',
-                value: 'show_bl'
-              }
+        {
+            type: 'SUB_COMMAND',
+            name: 'cwtv',
+            description: 'Get CWTV subtitles',
+            options: [
+                {
+                    type: 'STRING',
+                    name: 'show',
+                    description: 'The CW show',
+                    required: true,
+                    choices: [
+                        {
+                            name: 'The Flash',
+                            value: 'show_fl'
+                        },
+                        {
+                            name: 'Arrow',
+                            value: 'show_ar'
+                        },
+                        {
+                            name: 'Supergirl',
+                            value: 'show_sg'
+                        },
+                        {
+                            name: 'DC\'s Legends of Tomorrow',
+                            value: 'show_lot'
+                        },
+                        {
+                            name: 'Superman & Lois',
+                            value: 'show_sl'
+                        },
+                        {
+                            name: 'Stargirl',
+                            value: 'show_stg'
+                        },
+                        {
+                            name: 'Batwoman',
+                            value: 'show_bw'
+                        },
+                        {
+                            name: 'Black Lightning',
+                            value: 'show_bl'
+                        }
+                    ]
+                },
+                {
+                    type: 'STRING',
+                    name: 'lang',
+                    description: 'The subtitles language',
+                    required: true,
+                    choices: [
+                        {
+                            name: 'English',
+                            value: 'eng'
+                        },
+                        {
+                            name: 'Spanish',
+                            value: 'spa'
+                        },
+                        {
+                            name: 'German',
+                            value: 'deu'
+                        },
+                        {
+                            name: 'Portuguese',
+                            value: 'por'
+                        },
+                        {
+                            name: 'Japanese',
+                            value: 'jpn'
+                        },
+                        {
+                            name: 'Chinese',
+                            value: 'zho'
+                        },
+                        {
+                            name: 'Russian',
+                            value: 'rus'
+                        },
+                        {
+                            name: 'Hindi',
+                            value: 'hin'
+                        },
+                        {
+                            name: 'Arabic',
+                            value: 'ara'
+                        },
+                        {
+                            name: 'French',
+                            value: 'fra'
+                        }
+                    ]
+                },
+                {
+                    type: 'INTEGER',
+                    name: 'season',
+                    description: 'The show\'s season',
+                    required: true
+                },
+                {
+                    type: 'INTEGER',
+                    name: 'episode',
+                    description: 'The season\'s episode',
+                    required: true
+                }
             ]
-          },
-          {
-            type: 'STRING',
-            name: 'lang',
-            description: 'The subtitles language',
-            required: true,
-            choices: [
-              {
-                name: 'English',
-                value: 'eng'
-              },
-              {
-                name: 'Spanish',
-                value: 'spa'
-              },
-              {
-                name: 'German',
-                value: 'deu'
-              },
-              {
-                name: 'Portuguese',
-                value: 'por'
-              },
-              {
-                name: 'Japanese',
-                value: 'jpn'
-              },
-              {
-                name: 'Chinese',
-                value: 'zho'
-              },
-              {
-                name: 'Russian',
-                value: 'rus'
-              },
-              {
-                name: 'Hindi',
-                value: 'hin'
-              },
-              {
-                name: 'Arabic',
-                value: 'ara'
-              },
-              {
-                name: 'French',
-                value: 'fra'
-              }
+        },
+        {
+            type: 'SUB_COMMAND',
+            name: 'dctv',
+            description: 'Get DCTV subtitles',
+            options: [
+                {
+                    type: 'STRING',
+                    name: 'show',
+                    description: 'The DC show',
+                    required: true,
+                    choices: [
+                        {
+                            name: 'Krypton',
+                            value: 'show_kr'
+                        },
+                        {
+                            name: 'Lucifer',
+                            value: 'show_lu'
+                        },
+                        {
+                            name: 'Doom Patrol',
+                            value: 'show_dp'
+                        },
+                        {
+                            name: 'Constantine',
+                            value: 'show_co'
+                        },
+                        {
+                            name: 'The Boys',
+                            value: 'show_tb'
+                        },
+                        {
+                            name: 'Titans',
+                            value: 'show_t'
+                        },
+                        {
+                            name: 'Smallville',
+                            value: 'show_sv'
+                        }
+                    ]
+                },
+                {
+                    type: 'STRING',
+                    name: 'lang',
+                    description: 'The subtitles language',
+                    required: true,
+                    choices: [
+                        {
+                            name: 'English',
+                            value: 'eng'
+                        },
+                        {
+                            name: 'Spanish',
+                            value: 'spa'
+                        },
+                        {
+                            name: 'German',
+                            value: 'deu'
+                        },
+                        {
+                            name: 'Portuguese',
+                            value: 'por'
+                        },
+                        {
+                            name: 'Japanese',
+                            value: 'jpn'
+                        },
+                        {
+                            name: 'Chinese',
+                            value: 'zho'
+                        },
+                        {
+                            name: 'Russian',
+                            value: 'rus'
+                        },
+                        {
+                            name: 'Hindi',
+                            value: 'hin'
+                        },
+                        {
+                            name: 'Arabic',
+                            value: 'ara'
+                        },
+                        {
+                            name: 'French',
+                            value: 'fra'
+                        }
+                    ]
+                },
+                {
+                    type: 'INTEGER',
+                    name: 'season',
+                    description: 'The show\'s season',
+                    required: true
+                },
+                {
+                    type: 'INTEGER',
+                    name: 'episode',
+                    description: 'The season\'s episode',
+                    required: true
+                }
             ]
-          },
-          {
-            type: 'INTEGER',
-            name: 'season',
-            description: 'The show\'s season',
-            required: true
-          },
-          {
-            type: 'INTEGER',
-            name: 'episode',
-            description: 'The season\'s episode',
-            required: true
-          }
-        ]
-      },
-      {
-        type: 'SUB_COMMAND',
-        name: 'dctv',
-        description: 'Get DCTV subtitles',
-        options: [
-          {
-            type: 'STRING',
-            name: 'show',
-            description: 'The DC show',
-            required: true,
-            choices: [
-              {
-                name: 'Krypton',
-                value: 'show_kr'
-              },
-              {
-                name: 'Lucifer',
-                value: 'show_lu'
-              },
-              {
-                name: 'Doom Patrol',
-                value: 'show_dp'
-              },
-              {
-                name: 'Constantine',
-                value: 'show_co'
-              },
-              {
-                name: 'The Boys',
-                value: 'show_tb'
-              },
-              {
-                name: 'Titans',
-                value: 'show_t'
-              },
-              {
-                name: 'Smallville',
-                value: 'show_sv'
-              }
-            ]
-          },
-          {
-            type: 'STRING',
-            name: 'lang',
-            description: 'The subtitles language',
-            required: true,
-            choices: [
-              {
-                name: 'English',
-                value: 'eng'
-              },
-              {
-                name: 'Spanish',
-                value: 'spa'
-              },
-              {
-                name: 'German',
-                value: 'deu'
-              },
-              {
-                name: 'Portuguese',
-                value: 'por'
-              },
-              {
-                name: 'Japanese',
-                value: 'jpn'
-              },
-              {
-                name: 'Chinese',
-                value: 'zho'
-              },
-              {
-                name: 'Russian',
-                value: 'rus'
-              },
-              {
-                name: 'Hindi',
-                value: 'hin'
-              },
-              {
-                name: 'Arabic',
-                value: 'ara'
-              },
-              {
-                name: 'French',
-                value: 'fra'
-              }
-            ]
-          },
-          {
-            type: 'INTEGER',
-            name: 'season',
-            description: 'The show\'s season',
-            required: true
-          },
-          {
-            type: 'INTEGER',
-            name: 'episode',
-            description: 'The season\'s episode',
-            required: true
-          }
-        ]
-      }
+        }
     ]
 };

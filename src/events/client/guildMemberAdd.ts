@@ -6,6 +6,6 @@ export default {
     async run(member: GuildMember): Promise<void> {
         Util.Welcome(member);
         Util.Checks.NameCheck(null, member.user);
-        Util.Checks.AccCheck(member, Util);
+        Util.Checks.AccCheck(member);
     }
 };

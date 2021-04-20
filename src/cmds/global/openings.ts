@@ -13,7 +13,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     if (options[0].value === 'flash') return interaction.reply(flashopening);
     else if (options[0].value === 'legends') return interaction.reply(lotopening);
     else if (options[0].value === 'lucifer') return interaction.reply(luciferopening);
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -23,30 +23,30 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'opening',
     description: 'Watch a show\'s opening sequence',
     defaultPermission: true,
     options: [
-      {
-        type: 'STRING',
-        name: 'show',
-        description: 'The show',
-        required: true,
-        choices: [
-          {
-            name: 'The Flash',
-            value: 'flash'
-          },
-          {
-            name: 'DC\'s Legends of Tomorrow',
-            value: 'legends'
-          },
-          {
-            name: 'Lucifer',
-            value: 'lucifer'
-          }
-        ]
-      }
+        {
+            type: 'STRING',
+            name: 'show',
+            description: 'The show',
+            required: true,
+            choices: [
+                {
+                    name: 'The Flash',
+                    value: 'flash'
+                },
+                {
+                    name: 'DC\'s Legends of Tomorrow',
+                    value: 'legends'
+                },
+                {
+                    name: 'Lucifer',
+                    value: 'lucifer'
+                }
+            ]
+        }
     ]
 };

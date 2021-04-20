@@ -1,4 +1,4 @@
-import { CommandInteraction, Collection, Guild, GuildMember } from 'discord.js';
+import { CommandInteraction, GuildMember } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
@@ -15,7 +15,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         {description: `Total guilds: \`${process.gideon.guilds.cache.size}\`\nTotal users: \`${users.toLocaleString('de-DE')}\`\nUsed commands: \`${cmds.toLocaleString('de-DE')}\`\nMessages sent: \`${msgs.toLocaleString('de-DE')}\`\nAI chat messages: \`${aimsgs.toLocaleString('de-DE')}\``
         }, interaction.member as GuildMember)
     );  
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -25,7 +25,7 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'stats',
     description: 'Displays Gideon\'s stats',
     defaultPermission: true

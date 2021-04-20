@@ -1,6 +1,6 @@
 import Canvas from 'canvas';
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, GuildMember, MessageAttachment } from 'discord.js';
+import { CommandInteraction, CommandInteractionOption, MessageAttachment } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
 /**
@@ -12,9 +12,8 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     function wrapText (ctx: Canvas.CanvasRenderingContext2D, text: string, x: number, y: number, maxWidth: number, lineHeight: number) {
     
-        let words = text.split(' '),
-            line = '',
-            lineCount = 0,
+        const words = text.split(' ');
+        let line = '',
             i,
             test,
             metrics;
@@ -39,8 +38,6 @@ export async function run(interaction: CommandInteraction, options: CommandInter
                 ctx.fillText(line, x, y);
                 line = words[i] + ' ';
                 y += lineHeight;
-                // eslint-disable-next-line no-unused-vars
-                lineCount++;
             }
             else {
                 line = test;
@@ -61,12 +58,12 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     ctx.font = '30px sans-serif';
     ctx.fillStyle = '#000000';
-    wrapText(ctx, (options[0].value as string).trim(), 300, 315, 260, 35);
+    wrapText(ctx, (options[1].value as string).trim(), 300, 315, 260, 35);
 
     const attachment = new MessageAttachment(canvas.toBuffer(), 'sgmeme.jpg');
 
     return interaction.reply(Util.Embed().attachFiles([attachment]).setImage('attachment://sgmeme.jpg'));
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -76,22 +73,22 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'custommeme',
     description: 'Make a custom Arrowverse meme',
     defaultPermission: true,
     options: [
-      {
-        type: 'STRING',
-        name: 'first',
-        description: 'The first phrase',
-        required: true
-      },
-      {
-        type: 'STRING',
-        name: 'second',
-        description: 'The second phrase',
-        required: true
-      }
+        {
+            type: 'STRING',
+            name: 'first',
+            description: 'The first phrase',
+            required: true
+        },
+        {
+            type: 'STRING',
+            name: 'second',
+            description: 'The second phrase',
+            required: true
+        }
     ]
 };

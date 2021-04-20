@@ -9,9 +9,9 @@ import Util from '../../Util.js';
 export async function run(interaction: CommandInteraction): Promise<void> {
     const embed = Util.Embed('__Upcoming Arrowverse episodes:__', undefined, interaction.member as GuildMember);
 
-    for (let show in process.gideon.show_api_urls) {
+    for (const show in process.gideon.show_api_urls) {
         try {
-            let ep_info = process.gideon.cache.nxeps.get(show);
+            const ep_info = process.gideon.cache.nxeps.get(show);
             if (!ep_info) {
                 Util.log('No ep_info for ' + show + ' when calling nxeps!');
                 continue;
@@ -28,7 +28,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     if (embed.fields.length < 1) return interaction.reply('Failed to fetch episode list, please try again later...');
     
     return interaction.reply(embed);
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -38,7 +38,7 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'nxeps',
     description: 'Upcoming Arrowverse episodes',
     defaultPermission: true

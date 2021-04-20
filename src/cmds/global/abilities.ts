@@ -147,7 +147,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         const krembeds = [kr1, kr2, kr3, kr4, kr5, kr6];
         return interaction.reply(krembeds);
     }
-};   
+}   
 
 export const info: Command['info'] = {
     owner: false,
@@ -157,30 +157,30 @@ export const info: Command['info'] = {
     bot_perms: [Permissions.FLAGS.MANAGE_MESSAGES, Permissions.FLAGS.ADD_REACTIONS]
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'abilities',
     description: 'Shows metahuman abilities',
     defaultPermission: true,
     options: [
-      {
-        type: 'STRING',
-        name: 'metahuman',
-        description: 'The type of metahuman',
-        required: true,
-        choices: [
-          {
-            name: 'Speedsters',
-            value: 'speedster'
-          },
-          {
-            name: 'Vibers',
-            value: 'viber'
-          },
-          {
-            name: 'Kryptonian',
-            value: 'kryptonian'
-          }
-        ]
-      }
+        {
+            type: 'STRING',
+            name: 'metahuman',
+            description: 'The type of metahuman',
+            required: true,
+            choices: [
+                {
+                    name: 'Speedsters',
+                    value: 'speedster'
+                },
+                {
+                    name: 'Vibers',
+                    value: 'viber'
+                },
+                {
+                    name: 'Kryptonian',
+                    value: 'kryptonian'
+                }
+            ]
+        }
     ]
 };

@@ -51,7 +51,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
             process.gideon.setGuild.run(gb);
             interaction.reply(`Guild \`${id}\` has been blacklisted!`);
             
-            let guild = process.gideon.guilds.cache.get(id as string);
+            const guild = process.gideon.guilds.cache.get(id as string);
             if (guild) {
                 const textchannels = guild.channels.cache.filter(c => c.type == 'text');
                 const channels = textchannels.filter(c => c.permissionsFor(guild?.me as GuildMember).has('SEND_MESSAGES'));
@@ -66,7 +66,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
             interaction.reply(`Guild \`${id}\` has been un-blacklisted!`); 
         }
     }
-};
+}
 
 export const info: Command['info'] = {
     owner: true,
@@ -76,36 +76,36 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'blacklist',
     description: 'Blacklist a user or a guild',
     defaultPermission: true,
     options: [
-      {
-        type: 'SUB_COMMAND',
-        name: 'user',
-        description: 'Blacklist a user',
-        options: [
-          {
-            type: 'USER',
-            name: 'userid',
-            description: 'The user',
-            required: true
-          }
-        ]
-      },
-      {
-        type: 'SUB_COMMAND',
-        name: 'guild',
-        description: 'Blacklist a guild',
-        options: [
-          {
-            type: 'STRING',
-            name: 'guildid',
-            description: 'The guild\'s id',
-            required: true
-          }
-        ]
-      }
+        {
+            type: 'SUB_COMMAND',
+            name: 'user',
+            description: 'Blacklist a user',
+            options: [
+                {
+                    type: 'USER',
+                    name: 'userid',
+                    description: 'The user',
+                    required: true
+                }
+            ]
+        },
+        {
+            type: 'SUB_COMMAND',
+            name: 'guild',
+            description: 'Blacklist a guild',
+            options: [
+                {
+                    type: 'STRING',
+                    name: 'guildid',
+                    description: 'The guild\'s id',
+                    required: true
+                }
+            ]
+        }
     ]
 };

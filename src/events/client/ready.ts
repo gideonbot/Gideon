@@ -1,6 +1,5 @@
 import { Client, ClientApplication, User, Team } from 'discord.js';
 import Util from '../../Util.js';
-//@ts-ignore
 import LCL from 'last-commit-log';
 
 export default {
@@ -37,7 +36,7 @@ export default {
         console.log('Ready!');
 
         const lcl = new LCL('../');
-        const commit = await lcl.getLastCommit()
+        const commit = await lcl.getLastCommit();
         if (commit) Util.log(`Logged in as \`${process.gideon.user?.tag}\`.\n[#${commit.shortHash}](<${commit.gitUrl}/commit/${commit.hash}>) - \`${commit.subject}\` by \`${commit.committer.name}\` on branch [${commit.gitBranch}](<${commit.gitUrl}/tree/${commit.gitBranch}>).`);
         if (process.env.CI) Util.CITest();
     }

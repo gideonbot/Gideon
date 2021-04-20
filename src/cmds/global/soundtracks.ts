@@ -18,7 +18,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         // eslint-disable-next-line quotes
         .addField('The Boys', `[Season 2](https://open.spotify.com/album/0sjtRdvzeB50b8UCaMbYzY)`, true);
     return interaction.reply(stracks);  
-};
+}
 
 export const info: Command['info'] = {
     owner: false,
@@ -28,7 +28,7 @@ export const info: Command['info'] = {
     bot_perms: []
 };
 
-export const data: Command["data"] = {
+export const data: Command['data'] = {
     name: 'tracks',
     description: 'Displays all soundtracks',
     defaultPermission: true
