@@ -987,10 +987,10 @@ class Util {
     static GetCleverBotResponse(text: string, context: string[]): Promise<string> {
         return new Promise((resolve, reject) => {
             cleverbot(text, context).then(response => {
-                if (response.includes('www.cleverbot.com')) reject('User Agent outdated');
+                if (!response || response.toLowerCase().includes('www.cleverbot.com')) reject('User Agent outdated');
                 this.IncreaseStat('ai_chat_messages_processed');
                 resolve(response);
-            }, failed => reject(failed));
+            }).catch(reject);
         });
     }
 
@@ -1029,7 +1029,11 @@ class Util {
         message.channel.startTyping().catch(console.log);
     
         try {
-            const response = await this.GetCleverBotResponse(text, arr);
+            const response = await this.GetCleverBotResponse(text, arr).catch(Util.log);
+            if (typeof response != "string") {
+                message.react("🚫");
+                return;
+            }
 
             const messages = await message.channel.messages.fetch({ limit: 3 });
             const lastmsg = messages.filter(x => !x.author.bot).find(x => x.author.id !== message.author.id);
