@@ -413,8 +413,8 @@ class Util {
      * DB Backup
      */
     static async SQLBkup(): Promise<void> {
-        const db = '../../data/SQL';
-        const arc = '../../data/SQL.zip';
+        const db = '../data/SQL';
+        const arc = '../data/SQL.zip';
         const date = new Date();
 
         try {
