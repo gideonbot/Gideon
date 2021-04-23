@@ -1,11 +1,12 @@
 import { CommandInteraction, Message } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
+import { APIMessage } from 'discord-api-types';
 
 /**
 * @param {Discord.CommandInteraction} interaction
 */
-export async function run(interaction: CommandInteraction): Promise<Message | null> {
+export async function run(interaction: CommandInteraction): Promise<Message | APIMessage | null> {
     interaction.reply('Performing database backup, please wait...');
     await Util.SQLBkup();
     return interaction.editReply('Database backup complete! Please check <#622415301144870932>! :white_check_mark:');

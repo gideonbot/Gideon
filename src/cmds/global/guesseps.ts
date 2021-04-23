@@ -3,12 +3,13 @@ import stringSimilarity from 'string-similarity';
 import { CommandInteraction, CommandInteractionOption, GuildMember, TextChannel, Message, User, MessageReaction, Permissions } from 'discord.js';
 import { Command, GuessingScore } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
+import { APIMessage } from 'discord-api-types';
 
 /**
  * @param {Discord.CommandInteraction} interaction
  * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void | Message | null> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void | Message | APIMessage | null> {
     interaction.defer();
     const url = 'https://arrowverse.info';
     const emotes = ['▶️', '669309980209446912'];
@@ -19,7 +20,9 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     let points = 0;
     let timerstart = new Date();
 
-    if (interaction.user.guessing) return interaction.editReply(Util.Embed('A guessing game is already running!', undefined, interaction.member as GuildMember));
+    if (interaction.user.guessing) {
+        return interaction.editReply(Util.Embed('A guessing game is already running!', undefined, interaction.member as GuildMember));
+    }
     
     interaction.user.guessing = true;
 
@@ -104,7 +107,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         const f = (m: Message) => m.author.id === interaction.user.id;
         const collector = (interaction.channel as TextChannel)?.createMessageCollector(f, {time: 30 * 1000});
 
-        const sent = await interaction.editReply(game.embed);
+        const sent = await interaction.editReply(game.embed) as Message;
 
         for (const emoji of emotes) {
             await sent?.react(emoji).then(async () => { await Util.delay(2000); }, failed => console.log('Failed to react with ' + emoji + ': ' + failed));

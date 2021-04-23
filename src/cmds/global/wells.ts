@@ -1,11 +1,12 @@
 import { CommandInteraction, GuildMember, Message } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
+import { APIMessage } from 'discord-api-types';
 
 /**
 * @param {Discord.CommandInteraction} interaction
 */
-export async function run(interaction: CommandInteraction): Promise<void | Message | null> {    
+export async function run(interaction: CommandInteraction): Promise<void | Message | APIMessage | null> {    
     interaction.reply('Booting up the Multiverse Holo Projector...');
     await Util.delay(1000);
     interaction.editReply('Calling...');

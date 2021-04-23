@@ -2,12 +2,13 @@ import OpenSubtitles from 'opensubtitles-api';
 import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, GuildMember, Message } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
+import { APIMessage } from 'discord-api-types';
 
 /**
  * @param {Discord.CommandInteraction} interaction
  * @param {CommandInteractionOption[]} options
  */
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void | Message | null> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void | Message | APIMessage | null> {
     interaction.defer();  
   
     if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {

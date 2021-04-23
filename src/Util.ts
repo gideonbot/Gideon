@@ -1030,8 +1030,8 @@ class Util {
     
         try {
             const response = await this.GetCleverBotResponse(text, arr).catch(Util.log);
-            if (typeof response != "string") {
-                message.react("🚫");
+            if (typeof response != 'string') {
+                message.react('🚫');
                 return;
             }
 

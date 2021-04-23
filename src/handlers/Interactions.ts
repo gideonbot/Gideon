@@ -75,7 +75,7 @@ class Interactions {
                 const missingperms = [];
 
                 for (const perm of cmd.info.user_perms) {
-                    if (!command.member?.permissions.has(perm)) missingperms.push(new Permissions(perm).toArray()[0]);
+                    if (!(command.member as GuildMember)?.permissions.has(perm)) missingperms.push(new Permissions(perm).toArray()[0]);
                 }
 
                 if (missingperms.length > 0) {
