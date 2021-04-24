@@ -3,9 +3,6 @@ import gideonapi from 'gideon-api';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
-/**
-* @param {Discord.CommandInteraction} interaction
-*/
 export async function run(interaction: CommandInteraction): Promise<void> {
     const soundtracks = await gideonapi.soundtracks();
 

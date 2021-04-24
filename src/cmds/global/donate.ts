@@ -2,9 +2,6 @@ import { CommandInteraction, GuildMember } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
-/**
-* @param {Discord.CommandInteraction} interaction
-*/
 export async function run(interaction: CommandInteraction): Promise<void> {
     return interaction.reply(Util.Embed('Donations', {
         description: 'Donations are gladly accepted. \nPlease send them to one of the options below. \nDonating supports the development, maintenance and hosting of this project. \nThank you!',

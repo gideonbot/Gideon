@@ -2,10 +2,6 @@ import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, TextChannel, Permissions } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
-/**
- * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} options
- */
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     const setting = options[0].options?.[0].value;
 

@@ -3,9 +3,6 @@ import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 import { APIMessage } from 'discord-api-types';
 
-/**
-* @param {Discord.CommandInteraction} interaction
-*/
 export async function run(interaction: CommandInteraction): Promise<Message | APIMessage | null> {
     interaction.reply('Performing database backup, please wait...');
     await Util.SQLBkup();

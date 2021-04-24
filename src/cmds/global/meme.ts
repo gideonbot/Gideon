@@ -2,9 +2,6 @@ import { CommandInteraction } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
-/**
-* @param {Discord.CommandInteraction} interaction
-*/
 export async function run(interaction: CommandInteraction): Promise<void> {
     if (!process.env.IMG_CL) {
         Util.log('Missing env variable for meme command!');

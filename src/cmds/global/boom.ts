@@ -1,11 +1,7 @@
-/* eslint-disable no-unreachable */
 import { CommandInteraction, GuildMember, Permissions } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
-/**
-* @param {Discord.CommandInteraction} interaction
-*/
 export async function run(interaction: CommandInteraction): Promise<void> {
     try {
         const acembed = Util.Embed('Blowing up S.T.A.R. Labs. Particle Accelerator...', {image: 'https://i.imgur.com/opCbZTn.gif'}, interaction.member as GuildMember);

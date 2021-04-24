@@ -2,10 +2,6 @@ import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
-/**
- * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} options
- */
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     const auth = interaction.user;
     const user = process.gideon.users.cache.get(options[0].value as string);

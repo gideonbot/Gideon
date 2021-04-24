@@ -2,9 +2,6 @@ import { CommandInteraction, GuildMember, Permissions } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
-/**
-* @param {Discord.CommandInteraction} interaction
- */
 export async function run(interaction: CommandInteraction): Promise<void> {
     const embed = Util.Embed('__All Arrowverse crossover episodes in their respective watching order:__', undefined, interaction.member as GuildMember)
         .addField('Flash vs. Arrow', 'The Flash 1x08 - Flash vs. Arrow\nArrow 3x08 - The Brave and the Bold')  

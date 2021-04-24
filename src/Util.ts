@@ -64,12 +64,6 @@ class Util {
         return new Promise(resolve => setTimeout(resolve, inputDelay));
     }
 
-    /**
-     * Convert a time in seconds to a time string
-     * @param {number} seconds_input 
-     * @param {boolean} seconds 
-     * @returns {string} The beautifully formatted string
-     */
     static secondsToDifferenceString(seconds_input : number, { enableSeconds = true } : {enableSeconds: boolean}) : string {
         if (!seconds_input || typeof seconds_input !== 'number') return 'Unknown';
 
@@ -102,11 +96,6 @@ class Util {
         return outputArray.join(', ') + ' and ' + last;
     }
 
-    /**
-     * Log to a webhook
-     * @param {string | Discord.MessageEmbed} message 
-     * @param {string[]} files 
-     */
     static log(message: string | Discord.MessageEmbed, files?: string[]) : boolean {
         if (!message) return false;
 
@@ -187,22 +176,6 @@ class Util {
         
     }
 
-    /**
-     * @param {string} title
-     * @param {string?} description
-     * @param {{
-        description?: string;
-        image?: string;
-        fields?: Discord.EmbedField[];
-        timestamp?: Date;
-        color?: string;
-        url?: string;
-        author?: {name: string, icon: string, url: string};
-        footer?: {text: string, icon: string};
-        thumbnail?: string;
-       }} options
-     * @param {Discord.GuildMember} member
-     */
     static Embed(title?: string, options?: EmbedOpts, member?: Discord.GuildMember): Discord.MessageEmbed {
         if (!options) options = {};
         
@@ -345,33 +318,18 @@ class Util {
         process.exit();
     }
 
-    /**
-     * Cuts string down to specified length
-     * @param {string} str 
-     * @param {number} length 
-     * @param {boolean} useWordBoundary 
-     */
     static truncate(str: string, length: number, useWordBoundary: boolean): string {
         if (str.length <= length) return str;
         const subString = str.substr(0, length - 1);
         return (useWordBoundary ? subString.substr(0, subString.lastIndexOf(' ')) : subString) + '...';
     }
 
-    /**
-     * Converts number to string & ensures it has at least 2 digits
-     * @param {number} num 
-     */
     static normalize(num: number): string {
         if (num == undefined || typeof num != 'number') return '';
 
         return num.toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping: false});
     }
 
-    /**
-     * Split Array into Arrays
-     * @param {any[]} arr
-     * @param {number} chunks
-     */
     static Split<T>(arr: T[], chunks: number): T[][] {
         const array_of_arrays = [];
 
@@ -382,10 +340,6 @@ class Util {
         return array_of_arrays;
     }
 
-    /**
-     * @param {string} stat 
-     * @param {number} value 
-     */
     static SetStat(stat: string, value: number): void {
         let s = process.gideon.getStat.get(stat);
 
@@ -395,10 +349,6 @@ class Util {
         process.gideon.setStat.run(s);
     }
 
-    /**
-     * @param {string} stat 
-     * @param {number} value
-     */
     static IncreaseStat(stat: string, value = 1): void {
         const s = process.gideon.getStat.get(stat);
         if (!s) {
@@ -409,9 +359,6 @@ class Util {
         this.SetStat(stat, s.value + value);
     }
 
-    /**
-     * DB Backup
-     */
     static async SQLBkup(): Promise<void> {
         const db = '../data/SQL';
         const arc = '../data/SQL.zip';
@@ -433,11 +380,6 @@ class Util {
         }      
     }
 
-    /**
-     * Starboard
-     * @param {Discord.MessageReaction} reaction 
-     * @param {Discord.User} user
-     */
     static async Starboard(reaction: Discord.MessageReaction, user: Discord.User): Promise<void> {
         if (reaction.partial) {
             await reaction.fetch();
@@ -590,10 +532,6 @@ class Util {
         }
     }
 
-    /**
-     * Welcome stuff
-     * @param {Discord.GuildMember} member
-     */
     static Welcome(member: Discord.GuildMember): void {
         if (member.guild.id !== '595318490240385037') return;
         const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
@@ -643,9 +581,6 @@ class Util {
         else return;
     }
 
-    /**
-     * Load cmds
-     */
     static LoadCommands(): Promise<void> {
         return new Promise((resolve, reject) => {
             const start = process.hrtime.bigint();
@@ -686,9 +621,6 @@ class Util {
         });
     }
 
-    /**
-     * Deploy Application Commands
-     */
     static async DeployCommands(): Promise<void | boolean> {
         const global: Collection<string, ApplicationCommandData> = new Collection();
         const guild: Collection<string, ApplicationCommandData> = new Collection();
@@ -744,9 +676,6 @@ class Util {
         Util.log('Application Commands deployed!');
     }
 
-    /**
-     * Load events
-     */
     static LoadEvents(): Promise<void> {
         return new Promise((resolve, reject) => {
             const start = process.hrtime.bigint();
@@ -786,18 +715,11 @@ class Util {
         });
     }
 
-    /**
-     * Parse Snowflakes
-     * @param {string} input
-     */
     static ValID(input: string): string | undefined {
         if (!input.match(/\d{17,19}/)) return undefined;
         else return input.match(/\d{17,19}/)?.[0];
     }
 
-    /**
-     * Init cache
-     */
     static async InitCache(): Promise<void> {
         process.gideon.cache.nxeps = new Discord.Collection();
         process.gideon.cache.dceps = new Discord.Collection();
@@ -823,9 +745,6 @@ class Util {
         Util.log(`Initialized GideonCache with \`${cache.size}\` entries!`);
     }
 
-    /**
-     * @param {string} show 
-     */
     static async GetAndStoreEpisode(show: string): Promise<void> {
         const names: { [index: string]: string; } = {
             batwoman: 'Batwoman',
@@ -898,10 +817,6 @@ class Util {
         }
     }
 
-    /**
-     * @param {string} show 
-     * @param {unknown} json 
-     */
     static async AddInfo(show: string, json: InfoInterface): Promise<void> {
         const obj = process.gideon.cache.dceps.get(show) ?? process.gideon.cache.nxeps.get(show);
         if (!obj) return;
@@ -969,21 +884,12 @@ class Util {
         }
     }
 
-    /**
-     * get closest date to now from array
-     * @param {string[]} dates
-     */
     static ClosestDate(dates: string[]): string {
         const temp = dates.map(d => Math.abs(Date.now() - new Date(d).getTime()));
         const idx = temp.indexOf(Math.min(...temp));
         return dates[idx];
     }
 
-    /**
-     * @returns {Promise<string>}
-     * @param {string} text 
-     * @param {string[]} context 
-     */
     static GetCleverBotResponse(text: string, context: string[]): Promise<string> {
         return new Promise((resolve, reject) => {
             cleverbot(text, context).then(response => {
@@ -994,10 +900,6 @@ class Util {
         });
     }
 
-    /**
-     * AI chat
-     * @param {Discord.Message} message
-     */
     static async Chat(message: Discord.Message): Promise<void> {
         const text = message.content;
 

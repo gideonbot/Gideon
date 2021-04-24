@@ -4,10 +4,6 @@ import { CommandInteraction, CommandInteractionOption, GuildMember, Message } fr
 import { Command } from 'src/@types/Util.js';
 import { APIMessage } from 'discord-api-types';
 
-/**
- * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} options
- */
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void | Message | APIMessage | null> {
     interaction.defer();  
   

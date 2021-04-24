@@ -3,10 +3,6 @@ import { exec } from 'child_process';
 import { CommandInteraction, CommandInteractionOption } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
-/**
- * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} options
- */
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     if (options[0].value === 'i') {
         interaction.reply('running `npm install` please check <#622415301144870932> for console output!');

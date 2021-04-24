@@ -9,10 +9,6 @@ class Checks {
         throw new Error('This class cannot be instantiated!');
     }
 
-    /**
-     * @param {Discord.Message} message
-     * @returns {Promise<{match: boolean, content: string}>}
-     */
     static ABM_Test(message: Discord.Message): Promise<AbmTestValue> {
         // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
@@ -76,9 +72,6 @@ class Checks {
         });
     }
 
-    /**
-     * @param {Discord.Message} message 
-     */
     static ABM(message: Discord.Message): void {
         if (!message.guild || !message.guild.me) return;
 
@@ -110,9 +103,6 @@ class Checks {
         });
     }
 
-    /**
-     * @param {Discord.Message} message  
-     */
     static async CVM(message: Discord.Message): Promise<void | Discord.Message> {
         if (!message.guild) return;
         const cvm = process.gideon.getGuild.get(message.guild.id);
@@ -152,10 +142,6 @@ class Checks {
         message.delete();
     }
 
-    /**
-     * Easter eggs
-     * @param {Discord.Message} message 
-     */
     static async CSD(message: Discord.Message): Promise<void> {
         if (!message.guild) return;
         if (message.editedAt) return;
@@ -225,10 +211,6 @@ class Checks {
         else if (message.content.match(/(?:fucking)/i) && message.content.match(/(?:fish)/i)) message.channel.send(fuckingfish);
     }
 
-    /**
-     * Leaves a blacklisted guild
-     * @param {Discord.Guild} guild 
-     */
     static async LBG(guild: Discord.Guild): Promise<void> {
         const ub = process.gideon.getUser.get(guild.ownerID);
         const gbl = process.gideon.getGuild.get(guild.id);
@@ -258,21 +240,12 @@ class Checks {
         }
     }
 
-    /**
-     * Ignore commands from blacklisted users
-     * @param {Discord.CommandInteraction} interaction 
-     * @returns {boolean}
-     */
     static IBU(id: string): boolean {
         const ubl = process.gideon.getUser.get(id);
         if (!ubl || !ubl.blacklist) return false;
         return ubl.blacklist === 1;
     }
 
-    /**
-     * Spam check 
-     * @param {string} id 
-     */
     static Spamcounter(id: string): void {
         if (id === process.gideon.owner) return;
 
@@ -294,10 +267,6 @@ class Checks {
         return spamcount;
     }
 
-    /**
-     * Invite check 
-     * @param {Discord.Message} message 
-     */
     static async Ads(message: Discord.Message): Promise<void | Discord.Message> {
         if (!message.guild || !message.member) return;
         if (message.guild.id !== '595318490240385037') return;
@@ -331,10 +300,6 @@ class Checks {
         }
     }
 
-    /**
-     * Bot collection guild check 
-     * @param {Discord.Guild} guild 
-     */
     static async BotCheck(guild: Discord.Guild): Promise<void> {
         if (['595318490240385037', '264445053596991498', '110373943822540800'].includes(guild.id)) return; 
         if (!guild.members || !guild.members.cache) await guild.members.fetch();
@@ -365,11 +330,6 @@ class Checks {
         }
     }
 
-    /**
-     * Check nickname & username 
-     * @param {Discord.GuildMember} newMember 
-     * @param {Discord.User} newUser 
-     */
     static async NameCheck(newMember: Discord.GuildMember | null, newUser: Discord.User | null): Promise<void> {
         if (!process.gideon.guilds.cache.get('595318490240385037')) return;
         
@@ -430,10 +390,6 @@ class Checks {
         }
     }
 
-    /**
-     * Check for flagged users 
-     * @param {Discord.GuildMember} member
-     */
     static async AccCheck(member: Discord.GuildMember): Promise<void> {
         const flagged = process.gideon.getUser.get(member.id);
 
@@ -454,10 +410,6 @@ class Checks {
         }
     }
 
-    /**
-     * Check for blacklisted mentions 
-     * @param {Discord.Message} message
-     */
     static BadMention(message: Discord.Message): boolean | null {
         const mention = message.mentions.users.first();
         if (mention) {
@@ -468,10 +420,6 @@ class Checks {
         else return null;
     }
 
-    /**
-     * Ghost ping detector
-     * @param {Discord.Message} message
-     */
     static GPD(message: Discord.Message): void {
         const gd = process.gideon.getGuild?.get(message.guild?.id);
         if (message.author?.bot) return;

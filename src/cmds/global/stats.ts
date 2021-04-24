@@ -2,9 +2,6 @@ import { CommandInteraction, GuildMember } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
-/**
-* @param {Discord.CommandInteraction} interaction
-*/
 export async function run(interaction: CommandInteraction): Promise<void> {
     const cmds = process.gideon.getStat.get('commands_ran').value + 1;
     const msgs = process.gideon.getStat.get('messages_sent').value + 1;

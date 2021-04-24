@@ -6,11 +6,6 @@ class MsgHandler {
         throw new Error('This class cannot be instantiated!');
     }
 
-    /**
-     * @param {Discord.Message} message 
-     * @param {*} Util 
-     * @param {Discord.VoiceConnection} connection 
-     */
     static async Handle(message: Discord.Message): Promise<void | Discord.Message> {
         if (!message || !message.guild || !message.author || message.partial || message.type != 'DEFAULT' && message.type != 'APPLICATION_COMMAND') return;
         

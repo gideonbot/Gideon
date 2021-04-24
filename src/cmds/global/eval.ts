@@ -6,10 +6,6 @@ Discord.GuildMember;
 import { CommandInteraction, CommandInteractionOption } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
-/**
- * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} options
- */
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     const code = options[0].value;
     const returnedValue = eval(code as string);

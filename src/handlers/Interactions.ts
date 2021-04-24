@@ -6,10 +6,6 @@ class Interactions {
         throw new Error('This class cannot be instantiated!');
     }
 
-    /**
-     * Handle Slash Commands
-     * @param {Discord.CommandInteraction} command 
-     */
     static async SlashCommands(command: CommandInteraction): Promise<boolean | void> {
         if (Util.Checks.IBU(command.user.id)) {
             command.reply('You are banned from using this application.\nSincereley -the owner', { ephemeral: true }); //check if user is blacklisted, if yes, return

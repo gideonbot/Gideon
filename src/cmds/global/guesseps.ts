@@ -5,10 +5,6 @@ import { Command, GuessingScore } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
 import { APIMessage } from 'discord-api-types';
 
-/**
- * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} options
- */
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void | Message | APIMessage | null> {
     interaction.defer();
     const url = 'https://arrowverse.info';
@@ -64,9 +60,6 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         score.points += points;
     }
 
-    /**
-     * @param {Date} airdate 
-     */
     function CalculateAirDatePoints(airdate: Date) {
         const difference = Math.floor(Math.floor(new Date().getTime() - new Date(airdate).getTime()) / (1000 * 60 * 60 * 24));
         return Math.round(difference / 100);

@@ -3,10 +3,6 @@ import { CommandInteraction, CommandInteractionOption, GuildMember, Permissions 
 import { Command } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
 
-/**
- * @param {Discord.CommandInteraction} interaction
- * @param {CommandInteractionOption[]} options
- */
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
     const url = 'https://arrowverse.info';
     let thimg: string;
@@ -26,10 +22,6 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     const fiep = 'S' + Util.normalize(options[1].value as number) + 'E' + Util.normalize(options[2].value as number);
     const shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
 
-    /**
-     * @param {string} show 
-     * @param {*} season_and_episode 
-     */
     const GetNextEmbed = (show: string, season_and_episode: string) => {
         const f = shows.find(x => x.series === show && x.episode_id === season_and_episode);
         if (!f) return `${show} ${season_and_episode} is not a valid episode!`;

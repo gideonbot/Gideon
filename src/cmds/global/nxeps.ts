@@ -2,10 +2,6 @@ import { CommandInteraction, GuildMember } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
-/**
- * @param {Discord.CommandInteraction} interaction
- * @param {object[]} options
- */
 export async function run(interaction: CommandInteraction): Promise<void> {
     const embed = Util.Embed('__Upcoming Arrowverse episodes:__', undefined, interaction.member as GuildMember);
 

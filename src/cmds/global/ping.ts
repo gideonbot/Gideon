@@ -2,9 +2,6 @@ import { CommandInteraction, GuildMember } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
-/**
- * @param {Discord.Intercation} interaction
- */
 export async function run(interaction: CommandInteraction): Promise<void> {
     const start = process.hrtime.bigint();
 

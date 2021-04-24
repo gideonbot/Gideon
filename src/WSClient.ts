@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import WebSocket from 'ws';
 import EventEmitter from 'events';
 
@@ -24,10 +23,7 @@ class WSClient extends EventEmitter {
     client: WebSocket | null;
     lastPing: Date;
     lastPong: Date;
-    /**
-     * @param {string} url 
-     * @param {string} token 
-     */
+
     constructor(url: string, token: string) {
         super();
 
@@ -47,7 +43,7 @@ class WSClient extends EventEmitter {
         }, 3e3);
     }
 
-    connect() {
+    connect():void {
         this.client = new WebSocket(this.url);
 
         this.client.on('open', () => {
@@ -89,25 +85,25 @@ class WSClient extends EventEmitter {
         this.client.on('error', e => console.log('WebSocket error: ' + e.message));
     }
 
-    _send(packet: Packet) {
+    _send(packet: Packet):void {
         if (this.connected) this.client?.send(JSON.stringify(packet));
     }
 
-    send(data: Data) {
+    send(data: Data):void {
         this._send({op: 1, d: data});
     }
 
-    disconnect() {
+    disconnect():void {
         this.shutdown = true;
         if (this.client) this.client.close();
         this.client = null;
     }
 
-    get connected() {
+    get connected():boolean {
         return this.client?.readyState == WebSocket.OPEN;
     }
 
-    get ping() {
+    get ping():number {
         return Math.abs(this.lastPing.getTime() - this.lastPong.getTime());
     }
 }
