@@ -1,12 +1,12 @@
 import Discord from 'discord.js';
 import fetch from 'node-fetch';
+import fs from 'fs';
 import config from './config/config.js';
 import SQL from './handlers/SQL.js';
 import Checks from './handlers/Checks.js';
 import MsgHandler from './handlers/MessageHandler.js';
 import Interactions from './handlers/Interactions.js';
 import zip from 'zip-promise';
-import del from 'del';
 import recursive from 'recursive-readdir';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -367,17 +367,16 @@ class Util {
         try {
             const channel = <Discord.TextChannel>process.gideon.guilds?.cache?.get?.('595318490240385037')?.channels?.cache?.get?.('622415301144870932');
             await zip.folder(path.resolve(__dirname, db), path.resolve(__dirname, arc));
-            channel.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
-            await del(arc);
-            const lastbkup = await channel.messages.fetchPinned();
-            if (lastbkup.first()) await lastbkup.first()?.unpin();
-            const msg = await channel.messages.fetch({ limit: 1 });
-            await msg.first()?.pin();
+            const msg = await channel?.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
+            fs.unlinkSync(arc);
+            const lastbkup = await channel?.messages.fetchPinned();
+            if (lastbkup?.first()) await lastbkup.first().unpin();
+            await msg?.pin();
         }
         
         catch (ex) {
             Util.log('Caught an exception while backing up!: ' + ex.stack);
-        }      
+        }
     }
 
     static async Starboard(reaction: Discord.MessageReaction, user: Discord.User): Promise<void> {
