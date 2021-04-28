@@ -370,7 +370,7 @@ class Util {
             const msg = await channel?.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
             fs.unlinkSync(arc);
             const lastbkup = await channel?.messages.fetchPinned();
-            if (lastbkup?.first()) await lastbkup.first().unpin();
+            if (lastbkup?.first()) await lastbkup.first()?.unpin();
             await msg?.pin();
         }
         
