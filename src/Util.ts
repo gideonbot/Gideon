@@ -927,12 +927,13 @@ class Util {
         }
     
         arr = arr.reverse();
-        message.channel.startTyping().catch(console.log);
+        message.channel.startTyping().catch(Util.log);
     
         try {
             const response = await this.GetCleverBotResponse(text, arr).catch(Util.log);
             if (typeof response != 'string') {
-                message.react('🚫');
+                message.react('🚫').catch(Util.log);
+                message.channel.stopTyping(true);
                 return;
             }
 
