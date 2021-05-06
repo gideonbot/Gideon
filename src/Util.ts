@@ -96,10 +96,12 @@ class Util {
         return outputArray.join(', ') + ' and ' + last;
     }
 
-    static log(message: string | Discord.MessageEmbed, files?: string[]) : boolean {
+    static log(message: string | Discord.MessageEmbed | Error, files?: string[]) : boolean {
         if (!message) return false;
 
-        if (!(message instanceof Discord.MessageEmbed)) console.log(String(message).replace(/`/g, '').trim());
+        if (!(message instanceof Discord.MessageEmbed)) {
+            console.log(String(message).replace(/`/g, '').trim());
+        }
 
         let url = process.env.LOG_WEBHOOK_URL;
         if (!url) return false;
@@ -109,6 +111,8 @@ class Util {
         if (split.length < 2) return false;
 
         const client = new Discord.WebhookClient(split[0], split[1]);
+
+        if (message instanceof Error) message = message.stack ?? message.message;
 
         if (typeof message == 'string') {
             for (const msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
