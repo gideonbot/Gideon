@@ -101,7 +101,7 @@ class Util {
 
         if (!(message instanceof Discord.MessageEmbed)) {
             console.log(String(message).replace(/`/g, '').trim());
-            if (message instanceof Error && message.message?.startsWith('Response timeout of')) return;
+            if (message instanceof Error && message.message?.startsWith('Response timeout of')) return true;
         }
 
         let url = process.env.LOG_WEBHOOK_URL;
