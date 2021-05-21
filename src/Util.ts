@@ -101,7 +101,6 @@ class Util {
 
         if (!(message instanceof Discord.MessageEmbed)) {
             console.log(String(message).replace(/`/g, '').trim());
-            if (message instanceof Error && message.message?.startsWith('Response timeout of')) return true;
         }
 
         let url = process.env.LOG_WEBHOOK_URL;
@@ -900,7 +899,14 @@ class Util {
                 if (!response || response.toLowerCase().includes('www.cleverbot.com')) reject('User Agent outdated');
                 this.IncreaseStat('ai_chat_messages_processed');
                 resolve(response);
-            }).catch(reject);
+            }).catch(err => {
+                if (err instanceof Error && (err.message?.startsWith('Response timeout of') || err.message?.startsWith('Service Unavailable'))) {
+                    console.log(err);
+                    return reject(); //reject with undefined to prevent logging
+                }
+                
+                reject(err);
+            });
         });
     }
 
