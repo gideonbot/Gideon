@@ -2,13 +2,13 @@ import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction): Promise<void> {
     const auth = interaction.user;
 
-    const user = await process.gideon.users.fetch(options[1].value as string);
+    const { user } = interaction.options?.get('user') as CommandInteractionOption;
 
-    if (user.id === auth.id || user.id === process.gideon.user?.id) return interaction.reply(Util.Embed().setTitle('My protocols forbid any kind of self-harm!'));
-    else if (user.bot) return interaction.reply(Util.Embed().setTitle('Please mention a human!'));
+    if (user?.id === auth.id || user?.id === process.gideon.user?.id) return interaction.reply({embeds: [Util.Embed().setTitle('My protocols forbid any kind of self-harm!')]});
+    else if (user?.bot) return interaction.reply({embeds: [Util.Embed().setTitle('Please mention a human!')]});
 
     const attacks = [
         {
@@ -141,32 +141,32 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     let attack;
 
-    if (options[0].value === 'iceblast') attack = attacks[0];
-    else if (options[0].value === 'lthrow') attack = attacks[1];
-    else if (options[0].value === 'rflash') attack = attacks[2];
-    else if (options[0].value === 'vblast') attack = attacks[3];
-    else if (options[0].value === 'arrow') attack = attacks[4];
-    else if (options[0].value === 'hvision') attack = attacks[5];
-    else if (options[0].value === 'spunch') attack = attacks[6];
-    else if (options[0].value === 'ccry') attack = attacks[7];
-    else if (options[0].value === 'brang') attack = attacks[8];
-    else if (options[0].value === 'sthell') attack = attacks[9];
-    else if (options[0].value === 'tclap') attack = attacks[10];
-    else if (options[0].value === 'elblast') attack = attacks[11];
-    else if (options[0].value === 'fblast') attack = attacks[12];
-    else if (options[0].value === 'shoot') attack = attacks[13];
-    else if (options[0].value === 'ablast') attack = attacks[14];
-    else if (options[0].value === 'fchoke') attack = attacks[15];
-    else if (options[0].value === 'devil') attack = attacks[16];
-    else if (options[0].value === 'love') attack = attacks[17];
-    else if (options[0].value === 'mwords') attack = attacks[18];
-    else if (options[0].value === 'staff') attack = attacks[19];
-    else if (options[0].value === 'rpunch') attack = attacks[20];
+    if (interaction.options.get('iceblast')) attack = attacks[0];
+    else if (interaction.options.get('lthrow')) attack = attacks[1];
+    else if (interaction.options.get('rflash')) attack = attacks[2];
+    else if (interaction.options.get('vblast')) attack = attacks[3];
+    else if (interaction.options.get('arrow')) attack = attacks[4];
+    else if (interaction.options.get('hvision')) attack = attacks[5];
+    else if (interaction.options.get('spunch')) attack = attacks[6];
+    else if (interaction.options.get('ccry')) attack = attacks[7];
+    else if (interaction.options.get('brang')) attack = attacks[8];
+    else if (interaction.options.get('sthell')) attack = attacks[9];
+    else if (interaction.options.get('tclap')) attack = attacks[10];
+    else if (interaction.options.get('elblast')) attack = attacks[11];
+    else if (interaction.options.get('fblast')) attack = attacks[12];
+    else if (interaction.options.get('shoot')) attack = attacks[13];
+    else if (interaction.options.get('ablast')) attack = attacks[14];
+    else if (interaction.options.get('fchoke')) attack = attacks[15];
+    else if (interaction.options.get('devil')) attack = attacks[16];
+    else if (interaction.options.get('love')) attack = attacks[17];
+    else if (interaction.options.get('mwords')) attack = attacks[18];
+    else if (interaction.options.get('staff')) attack = attacks[19];
+    else if (interaction.options.get('rpunch')) attack = attacks[20];
 
-    return interaction.reply(Util.Embed(undefined, {
+    return interaction.reply({embeds: [Util.Embed(undefined, {
         description: `**${attack?.emote}${auth} ${attack?.text}${attack?.emote}**\n\n${attack?.desc}`,
         image: attack?.attackgif
-    }, interaction.member as GuildMember));
+    }, interaction.member as GuildMember)]});
 }
 
 export const info: Command['info'] = {

@@ -91,10 +91,11 @@ class Checks {
                 
                 if (!message.member) return; //this will (SHOULD*) never happen but its just here so ts doesn't whine :justlol:
 
-                const abmsg = await message.channel.send(`<@${message.author.id}>`, {
-                    embed: Util.Embed(`${siren}Anti-BS-Mode is enabled!${siren}`, {
+                const abmsg = await message.channel.send({
+                    content: `<@${message.author.id}>`,
+                    embeds: [Util.Embed(`${siren}Anti-BS-Mode is enabled!${siren}`, {
                         description: 'You posted a link to a forbidden social media account!'
-                    }, message.member) });
+                    }, message.member)] });
                 await Util.delay(3500);
                 await abmsg.delete();
             }
@@ -127,7 +128,7 @@ class Checks {
         const embed = new Discord.MessageEmbed()
             .setDescription(`${plainText ? '||' + plainText + '||' : ''}`)
             .setAuthor(`${message.author.tag} ${plainText ? 'said' : 'sent file(s)'}:`, message.author.displayAvatarURL());
-        await message.channel.send(embed);
+        await message.channel.send({ embeds: [embed] });
 
         //we don't send the file in the same message because it shows it above the embed (bad)
         if (message.attachments.filter(x => x.size / 1024 <= 1000).size > 0) {
@@ -184,17 +185,17 @@ class Checks {
         if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
         else if (message.content.match(/(?:deckerstar)/i)) {
             const img = await Util.IMG('rJpbLQx');
-            if (img) message.channel.send(Util.Embed(undefined, {image: img}));
+            if (img) message.channel.send({ embeds: [Util.Embed(undefined, {image: img})] });
         }
         else if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
-        else if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send(Util.Embed(undefined, {image: ctm}));
+        else if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send({ embeds: [Util.Embed(undefined, {image: ctm})] });
         else if (message.content.match(/(?:castle)/i)) message.channel.send(vid2);
         else if (message.content.match(/(?:magic)/i)) message.channel.send(yombo);
         else if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) message.channel.send(train);
         else if (message.content.match(/(?:nuts)/i)) message.channel.send(nuts);
         else if (message.content.match(/(?:titanic)/i)) message.channel.send(titanic);
         else if (message.content.match(/(?:occupied)/i)) message.channel.send(occupied);
-        else if (message.content.match(/(?:rip)/i) && message.content.match(/(?:logan)/i)) message.channel.send(lw);
+        else if (message.content.match(/(?:rip)/i) && message.content.match(/(?:logan)/i)) message.channel.send({embeds: [lw]});
         else if (message.content.match(/(?:omelette)/i)) message.channel.send(omelette);
         else if (message.content.match(/(?:punching)/i)) message.channel.send(punching);
         else if (message.content.match(/(?:touch)/i)) message.channel.send(donttouchme);
@@ -295,7 +296,7 @@ class Checks {
                 const ban = await message.guild.members.ban(message.author, { days: 7, reason: 'automated anti-ads ban' }).catch(() => {
                     message.reply(`Auto-ban failed!\n${admin} please ban \`${message.author.tag} (${message.author.id})\`.\nPlease make sure that my role is higher then theirs and that they're not the guild owner.`);
                 });
-                if (ban) return message.channel.send(embed); 
+                if (ban) return message.channel.send({embeds: [embed]}); 
             }
         }
     }
@@ -437,7 +438,7 @@ class Checks {
                 .setTitle('Ghost Ping detected:')
                 .setDescription(`\`${message.author.tag}\` has ghost-pinged ${usermention ? '' : rolemention ? 'the role ' : ''}${usermention ?? rolemention}:\n\nMessage content:\n\`\`\`${message.cleanContent}\n\`\`\`${message.cleanContent.includes('@') ? '' : '\nThe ping was delivered via inline reply.'}`);
 
-            message.channel.send(embed);
+            message.channel.send({embeds: [embed]});
         }
         
     }

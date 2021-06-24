@@ -3,7 +3,7 @@ import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 import { APIMessage } from 'discord-api-types';
 
-export async function run(interaction: CommandInteraction): Promise<void | Message | APIMessage | null> {    
+export async function run(interaction: CommandInteraction): Promise<unknown> {    
     interaction.reply('Booting up the Multiverse Holo Projector...');
     await Util.delay(1000);
     interaction.editReply('Calling...');
@@ -70,7 +70,7 @@ export async function run(interaction: CommandInteraction): Promise<void | Messa
 
     const result = arr[Math.floor(Math.random() * arr.length)];
 
-    return interaction.editReply(`You have reached out to Earth-${result.en}`, { embeds:[Util.Embed(result.title, {description: result.desc, image: result.gif}, interaction.member as GuildMember)] });  
+    return interaction.editReply({ content:`You have reached out to Earth-${result.en}`, embeds:[Util.Embed(result.title, {description: result.desc, image: result.gif}, interaction.member as GuildMember)] });  
 }
 
 export const info: Command['info'] = {

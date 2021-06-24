@@ -1,12 +1,11 @@
-import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, GuildMember, TextChannel } from 'discord.js';
+import { CommandInteraction, GuildMember, Snowflake, TextChannel } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
-    const id = options[0].options?.[0].value;
-    if (!Util.ValID(id as string)) return interaction.reply('Please provide a valid id!');
+export async function run(interaction: CommandInteraction): Promise<void> {
+    const id = interaction.options?.get('user')?.options?.get('userid')?.value;
+    const guildid = interaction.options?.get('guild')?.options?.get('guildid')?.value;
 
-    if (options[0].options?.[0].name === 'userid') {
+    if (id) {
         let ub = process.gideon.getUser.get(id);
         if (!ub) {
             ub = {
@@ -29,10 +28,10 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         }
     }
     else {
-        let gb = process.gideon.getGuild.get(id);
+        let gb = process.gideon.getGuild.get(guildid);
         if (!gb) {
             gb = {
-                guild: id,
+                guild: guildid,
                 cvmval: 0,
                 abmval: 1,
                 eastereggs: 0,
@@ -45,9 +44,9 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         if (gb.blacklist === 0) {
             gb.blacklist = 1;
             process.gideon.setGuild.run(gb);
-            interaction.reply(`Guild \`${id}\` has been blacklisted!`);
+            interaction.reply(`Guild \`${guildid}\` has been blacklisted!`);
             
-            const guild = process.gideon.guilds.cache.get(id as string);
+            const guild = process.gideon.guilds.cache.get(id as Snowflake);
             if (guild) {
                 const textchannels = guild.channels.cache.filter(c => c.type == 'text');
                 const channels = textchannels.filter(c => c.permissionsFor(guild?.me as GuildMember).has('SEND_MESSAGES'));
@@ -59,7 +58,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         else if (gb.blacklist === 1) {
             gb.blacklist = 0;
             process.gideon.setGuild.run(gb);
-            interaction.reply(`Guild \`${id}\` has been un-blacklisted!`); 
+            interaction.reply(`Guild \`${guildid}\` has been un-blacklisted!`); 
         }
     }
 }

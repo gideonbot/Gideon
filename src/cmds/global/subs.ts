@@ -1,15 +1,14 @@
 import OpenSubtitles from 'opensubtitles-api';
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, GuildMember, Message } from 'discord.js';
+import { CommandInteraction, GuildMember } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
-import { APIMessage } from 'discord-api-types';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void | Message | APIMessage | null> {
+export async function run(interaction: CommandInteraction): Promise<unknown> {
     interaction.defer();  
   
     if (!process.env.OPS_UA || !process.env.OPS_USER || !process.env.OPS_PASS) {
         Util.log('Missing env variables for subs command!');
-        return interaction.editReply(Util.Embed('This command is currently not available', undefined, interaction.member as GuildMember));
+        return interaction.editReply({embeds: [Util.Embed('This command is currently not available', undefined, interaction.member as GuildMember)]});
     }
 
     const OS = new OpenSubtitles({
@@ -88,37 +87,37 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     let show = shows[-1];
 
-    if (options[0].options?.[0].value === 'show_fl') show = shows[0];
-    else if (options[0].options?.[0].value === 'show_ar') show = shows[1];
-    else if (options[0].options?.[0].value === 'show_sg') show = shows[2];
-    else if (options[0].options?.[0].value === 'show_lot') show = shows[3];
-    else if (options[0].options?.[0].value === 'show_co') show = shows[4];
-    else if (options[0].options?.[0].value === 'show_bw') show = shows[5];
-    else if (options[0].options?.[0].value === 'show_bl') show = shows[6];
-    else if (options[0].options?.[0].value === 'show_kr') show = shows[8];
-    else if (options[0].options?.[0].value === 'show_lu') show = shows[9];
-    else if (options[0].options?.[0].value === 'show_sl') show = shows[10];
-    else if (options[0].options?.[0].value === 'show_stg') show = shows[11];
-    else if (options[0].options?.[0].value === 'show_dp') show = shows[12];
-    else if (options[0].options?.[0].value === 'show_t') show = shows[13];
-    else if (options[0].options?.[0].value === 'show_sv') show = shows[14];
-    else if (options[0].options?.[0].value === 'show_tb') show = shows[15];
+    if (interaction.options.first()?.options?.get('show_fl')?.value) show = shows[0];
+    else if (interaction.options.first()?.options?.get('show_ar')?.value) show = shows[1];
+    else if (interaction.options.first()?.options?.get('show_sg')?.value) show = shows[2];
+    else if (interaction.options.first()?.options?.get('show_lot')?.value) show = shows[3];
+    else if (interaction.options.first()?.options?.get('show_co')?.value) show = shows[4];
+    else if (interaction.options.first()?.options?.get('show_bw')?.value) show = shows[5];
+    else if (interaction.options.first()?.options?.get('show_bl')?.value) show = shows[6];
+    else if (interaction.options.first()?.options?.get('show_kr')?.value) show = shows[8];
+    else if (interaction.options.first()?.options?.get('show_lu')?.value) show = shows[9];
+    else if (interaction.options.first()?.options?.get('show_sl')?.value) show = shows[10];
+    else if (interaction.options.first()?.options?.get('show_stg')?.value) show = shows[11];
+    else if (interaction.options.first()?.options?.get('show_dp')?.value) show = shows[12];
+    else if (interaction.options.first()?.options?.get('show_t')?.value) show = shows[13];
+    else if (interaction.options.first()?.options?.get('show_sv')?.value) show = shows[14];
+    else if (interaction.options.first()?.options?.get('show_tb')?.value) show = shows[15];
     
     OS.search({
-        sublanguageid: options[0].options?.[1].value as string,       
-        season: options[0].options?.[2].value as number,
-        episode: options[0].options?.[3].value as number,
+        sublanguageid: interaction.options.first()?.options?.get('lang')?.value as string,       
+        season: interaction.options.first()?.options?.get('season')?.value as number,
+        episode: interaction.options.first()?.options?.get('episode')?.value as number,
         limit: '5',                 
         imdbid: show.id,           
 
     }).then(subtitles => {
-        const embed = Util.Embed(`Subtitles for: ${show.title} ${options[0].options?.[2].value}x${Util.normalize(options[0].options?.[3].value as number)}`, {description: 'Here are the 5 best results from opensubtitles.org:'}, interaction.member as GuildMember);
+        const embed = Util.Embed(`Subtitles for: ${show.title} ${interaction.options.first()?.options?.get('season')?.value}x${Util.normalize(interaction.options.first()?.options?.get('episode')?.value as number)}`, {description: 'Here are the 5 best results from opensubtitles.org:'}, interaction.member as GuildMember);
 
         for (const sub of Object.values(subtitles)[0]) {
             embed.addField(sub.filename, `**[Download SRT](${sub.url} '${sub.url}')** Lang: \`${sub.lang}\` Score: \`${sub.score}\``);
         }
         
-        interaction.editReply(embed);
+        interaction.editReply({embeds: [embed]});
     }).catch(async (err: Error) => {
         Util.log('An error occurred while trying to fetch subtitles: ' + err);
         return interaction.editReply('There were no results for this episode on opensubtitles.org!\nTry another episode or another language !');

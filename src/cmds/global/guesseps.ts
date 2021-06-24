@@ -1,11 +1,10 @@
 import Util from '../../Util.js';
 import stringSimilarity from 'string-similarity';
-import { CommandInteraction, CommandInteractionOption, GuildMember, TextChannel, Message, User, MessageReaction, Permissions } from 'discord.js';
+import { CommandInteraction, GuildMember, TextChannel, Message, User, MessageReaction, Permissions } from 'discord.js';
 import { Command, GuessingScore } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
-import { APIMessage } from 'discord-api-types';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void | Message | APIMessage | null> {
+export async function run(interaction: CommandInteraction): Promise<unknown> {
     interaction.defer();
     const url = 'https://arrowverse.info';
     const emotes = ['▶️', '669309980209446912'];
@@ -17,7 +16,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     let timerstart = new Date();
 
     if (interaction.user.guessing) {
-        return interaction.editReply(Util.Embed('A guessing game is already running!', undefined, interaction.member as GuildMember));
+        return interaction.editReply({embeds: [Util.Embed('A guessing game is already running!', undefined, interaction.member as GuildMember)]});
     }
     
     interaction.user.guessing = true;
@@ -43,13 +42,13 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         process.gideon.setScore.run(score);
     }
 
-    if (!options[0]) chosenfilter = filters[0];
-    else if (options[0].value === 'flash') chosenfilter = filters[1];
-    else if (options[0].value === 'arrow') chosenfilter = filters[2];
-    else if (options[0].value === 'legends') chosenfilter = filters[3];
-    else if (options[0].value === 'supergirl') chosenfilter = filters[4];
-    else if (options[0].value === 'batwoman') chosenfilter = filters[5];
-    else if (options[0].value === 'constantine') chosenfilter = filters[6];
+    if (!interaction.options.first()) chosenfilter = filters[0];
+    else if (interaction.options.first()?.value === 'flash') chosenfilter = filters[1];
+    else if (interaction.options.first()?.value === 'arrow') chosenfilter = filters[2];
+    else if (interaction.options.first()?.value === 'legends') chosenfilter = filters[3];
+    else if (interaction.options.first()?.value === 'supergirl') chosenfilter = filters[4];
+    else if (interaction.options.first()?.value === 'batwoman') chosenfilter = filters[5];
+    else if (interaction.options.first()?.value === 'constantine') chosenfilter = filters[6];
 
     function Countdown() {
         const timerdiff = (Date.now() - timerstart.getTime()) / 1000;
@@ -100,7 +99,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         const f = (m: Message) => m.author.id === interaction.user.id;
         const collector = (interaction.channel as TextChannel)?.createMessageCollector(f, {time: 30 * 1000});
 
-        const sent = await interaction.editReply(game.embed) as Message;
+        const sent = await interaction.editReply({embeds: [game.embed]}) as Message;
 
         for (const emoji of emotes) {
             await sent?.react(emoji).then(async () => { await Util.delay(2000); }, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
@@ -124,7 +123,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
                 collector.resetTimer();
                 rcollector.resetTimer();
                 
-                await interaction.editReply(game.embed);
+                await interaction.editReply({embeds: [game.embed]});
                 
                 timerstart = new Date();
                 return;
@@ -149,10 +148,10 @@ export async function run(interaction: CommandInteraction, options: CommandInter
                 }, interaction.member as GuildMember);
 
                 interaction.user.guessing = false;
-                return interaction.editReply(stopembed);
+                return interaction.editReply({embeds: [stopembed]});
             }
         }); 
-
+ //@ts-ignore
         collector.on('collect', async message => {
             const similarity = stringSimilarity.compareTwoStrings(game.ep_name.toLowerCase().replace(/\s/g, ''), message.content.toLowerCase().replace(/\s/g, ''));
 
@@ -184,7 +183,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
                 }, interaction.member as GuildMember);
 
                 interaction.user.guessing = false;
-                await interaction.editReply(correctembed);
+                await interaction.editReply({embeds: [correctembed]});
                 return sent?.reactions.removeAll();
             }
 
@@ -210,12 +209,13 @@ export async function run(interaction: CommandInteraction, options: CommandInter
                 collector.stop();
                 interaction.user.guessing = false;
                 await sent?.reactions.removeAll();
-                return interaction.editReply(incorrectembed);
+                return interaction.editReply({embeds: [incorrectembed]});
             }
 
-            else await interaction.editReply(incorrectembed);
+            else await interaction.editReply({embeds: [incorrectembed]});
         });
     
+        //@ts-ignore
         collector.on('end', async (collected, reason) => {
             if (reason === 'time') {
                 const timeouttembed = Util.Embed(`Guessing game for ${interaction.user.tag}:`, {
@@ -234,14 +234,14 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
                 interaction.user.guessing = false;
                 await sent?.reactions.removeAll();
-                return interaction.editReply(timeouttembed);
+                return interaction.editReply({embeds: [timeouttembed]});
             }
         });
     }
 
     catch (ex) {
         Util.log('Caught an exception while running guesseps.js: ' + ex.stack);
-        return interaction.reply('An error occurred while processing your request:```\n' + ex + '```', { ephemeral: true });
+        return interaction.reply({ content: 'An error occurred while processing your request:```\n' + ex + '```', ephemeral: true });
     }
 }
 

@@ -1,4 +1,4 @@
-import Discord from 'discord.js';
+import Discord, { Snowflake } from 'discord.js';
 import fetch from 'node-fetch';
 import fs from 'fs';
 import config from './config/config.js';
@@ -110,16 +110,16 @@ class Util {
         const split = url.split('/');
         if (split.length < 2) return false;
 
-        const client = new Discord.WebhookClient(split[0], split[1]);
+        const client = new Discord.WebhookClient(split[0] as Snowflake, split[1]);
 
         if (message instanceof Error) message = message.stack ?? message.message;
 
         if (typeof message == 'string') {
             for (const msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
-                client.send(msg, { avatarURL: Util.config.avatar, username: 'Gideon-Logs', files: files });
+                client.send({ content: msg, avatarURL: Util.config.avatar, username: 'Gideon-Logs', files: files });
             }
         }
-        else client.send(null, { embeds: [message], avatarURL: Util.config.avatar, username: 'Gideon-Logs', files: files });
+        else client.send({ embeds: [message], avatarURL: Util.config.avatar, username: 'Gideon-Logs', files: files });
         
         return true;
     }
@@ -371,7 +371,7 @@ class Util {
         try {
             const channel = <Discord.TextChannel>process.gideon.guilds?.cache?.get?.('595318490240385037')?.channels?.cache?.get?.('622415301144870932');
             await zip.folder(path.resolve(__dirname, db), path.resolve(__dirname, arc));
-            const msg = await channel?.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
+            const msg = await channel?.send({ content: `SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, files: [arc] });
             fs.unlinkSync(arc);
             const lastbkup = await channel?.messages.fetchPinned();
             if (lastbkup?.first()) await lastbkup.first()?.unpin();
@@ -417,7 +417,7 @@ class Util {
             starmsg.setImage(reaction.message.attachments.first()?.proxyURL ?? '');
         }
 
-        await board?.send(starmsg);    
+        await board?.send({ embeds: [starmsg] });    
     }
 
     static InitStatus(): void {
@@ -429,7 +429,7 @@ class Util {
         process.gideon.statuses.push({name: 's1', fetch: async () => { return {type: 'WATCHING', value: 'DC Shows | gideonbot.com'}; }});
 
         process.gideon.statuses.push({name: 's2', fetch: async () => {
-            let mbc = process.gideon.shard ? await process.gideon.shard.broadcastEval('!this.guilds.cache.get(\'595318490240385037\') ? 0 : this.guilds.cache.get(\'595318490240385037\').members.cache.filter(x => !x.user.bot).size').catch(ex => console.log(ex)) : !process.gideon.guilds.cache.get('595318490240385037') ? [0] : [process.gideon.guilds.cache.get('595318490240385037')?.members.cache.filter(x => !x.user.bot).size];
+            let mbc = !process.gideon.guilds.cache.get('595318490240385037') ? [0] : [process.gideon.guilds.cache.get('595318490240385037')?.members.cache.filter(x => !x.user.bot).size];
     
             if (mbc) mbc = mbc.filter(x => x);
             return {type: 'WATCHING', value: `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`};
@@ -895,6 +895,7 @@ class Util {
 
     static GetCleverBotResponse(text: string, context: string[]): Promise<string> {
         return new Promise((resolve, reject) => {
+            //@ts-ignore
             cleverbot(text, context, undefined, 1e4).then(response => {
                 if (!response || response.toLowerCase().includes('www.cleverbot.com')) reject('User Agent outdated');
                 this.IncreaseStat('ai_chat_messages_processed');

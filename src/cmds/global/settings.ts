@@ -1,9 +1,9 @@
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, TextChannel, Permissions } from 'discord.js';
+import { CommandInteraction, TextChannel, Permissions, Snowflake } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
-    const setting = options[0].options?.[0].value;
+export async function run(interaction: CommandInteraction): Promise<void> {
+    const setting = interaction.options.first()?.options?.first()?.value;
 
     const guildsettings = process.gideon.getGuild.get(interaction.guild?.id);
 
@@ -48,7 +48,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         return interaction.reply('Ghost Ping Detector disabled! :white_check_mark:');
     }
     else if (Util.ValID(setting as string)) {
-        const channel = process.gideon.channels.cache.get(setting as string);
+        const channel = process.gideon.channels.cache.get(setting as Snowflake);
         guildsettings.chatchnl = setting;
         process.gideon.setGuild.run(guildsettings);
         interaction.reply(`Set AI chat channel for \`${interaction.guild?.name}\` to \`#${(channel as TextChannel)?.name}\`! :white_check_mark:\n\nAll messages in this channel will now be interpreted as AI chat and no commands will be usable!`);

@@ -13,7 +13,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         { name: '7coil', value: 'PR [#24](https://github.com/adrifcastr/Gideon/pull/24) and [#25](https://github.com/adrifcastr/Gideon/pull/25)' }
     ];
 
-    return interaction.reply(Util.Embed('Development Credits:', { fields: fields, thumbnail: process.gideon.user?.avatarURL() as string }, interaction.member as GuildMember));
+    return interaction.reply({embeds: [Util.Embed('Development Credits:', { fields: fields, thumbnail: process.gideon.user?.avatarURL() as string }, interaction.member as GuildMember)]});
 }
 
 export const info: Command['info'] = {

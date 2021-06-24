@@ -8,9 +8,9 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     const aimsgs =  process.gideon.getStat.get('ai_chat_messages_processed').value;
     const users = process.gideon.guilds.cache.reduce((r, d) => r + d.memberCount, 0);
 
-    return interaction.reply(Util.Embed('Gideon\'s stats:', 
+    return interaction.reply({embeds: [Util.Embed('Gideon\'s stats:', 
         {description: `Total guilds: \`${process.gideon.guilds.cache.size}\`\nTotal users: \`${users.toLocaleString('de-DE')}\`\nUsed commands: \`${cmds.toLocaleString('de-DE')}\`\nMessages sent: \`${msgs.toLocaleString('de-DE')}\`\nAI chat messages: \`${aimsgs.toLocaleString('de-DE')}\``
-        }, interaction.member as GuildMember)
+        }, interaction.member as GuildMember)]}
     );  
 }
 

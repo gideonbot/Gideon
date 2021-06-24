@@ -58,7 +58,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     const attachment = new MessageAttachment(canvas.toBuffer(), 'sgmeme.jpg');
 
-    return interaction.reply(Util.Embed().attachFiles([attachment]).setImage('attachment://sgmeme.jpg'));
+    return interaction.reply({embeds: [Util.Embed().setImage('attachment://sgmeme.jpg')], files: [attachment]});
 }
 
 export const info: Command['info'] = {

@@ -3,11 +3,11 @@ import Discord from 'discord.js';
 import moment from 'moment';
 moment.bind; // pepega fix to prevent errors
 Discord.GuildMember;
-import { CommandInteraction, CommandInteractionOption } from 'discord.js';
+import { CommandInteraction } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
-    const code = options[0].value;
+export async function run(interaction: CommandInteraction): Promise<void> {
+    const code = interaction.options.first()?.value;
     const returnedValue = eval(code as string);
 
     if (typeof returnedValue === 'undefined') {
@@ -23,7 +23,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     if (printValue == '{}') return;
 
-    return interaction.reply(Util.truncate(printValue as string, 1900, true), {code: true});
+    return interaction.reply({content: Util.truncate(printValue as string, 1900, true), code: true});
 }
 
 export const info: Command['info'] = {

@@ -1,12 +1,12 @@
 import Discord from 'discord.js';
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
+import { CommandInteraction, GuildMember } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction): Promise<void> {
     if (!interaction.guild) return;
     
-    const type = options.length > 0 ? options[0].value as string : 'any';
+    const type = interaction.options.size > 0 ? interaction.options.first()?.value as string : 'any';
     const url = 'https://sv443.net/jokeapi/v2/joke/' + type + '?type=single';
 
     interface ResponseBody {
@@ -62,7 +62,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     if (interaction.guild.last_jokes.length > 20) interaction.guild.last_jokes.shift();
 
-    return interaction.reply(Util.Embed('Category: ' + body.category, {description: body.joke}, interaction.member as GuildMember));       
+    return interaction.reply({embeds: [Util.Embed('Category: ' + body.category, {description: body.joke}, interaction.member as GuildMember)]});       
 }
 
 export const info: Command['info'] = {

@@ -1,4 +1,4 @@
-import Discord from 'discord.js';
+import Discord, { Snowflake } from 'discord.js';
 import Util from '../Util.js';
 
 class MsgHandler {
@@ -11,7 +11,7 @@ class MsgHandler {
         
         if (message.author.id == process.gideon.user?.id) Util.IncreaseStat('messages_sent');
         if (message.author.bot) return;
-        if (!message.guild.me) await message.guild.members.fetch((process.gideon.user?.id as string));
+        if (!message.guild.me) await message.guild.members.fetch(process.gideon.user?.id as Snowflake);
         if (message.channel.type !== 'text') return;
         if (!message.channel.permissionsFor((message.guild.me as Discord.GuildMember)).has(Discord.Permissions.FLAGS.SEND_MESSAGES)) return;
 

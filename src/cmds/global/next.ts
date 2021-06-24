@@ -3,7 +3,7 @@ import { CommandInteraction, CommandInteractionOption, GuildMember, Permissions 
 import { Command } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<unknown> {
     const url = 'https://arrowverse.info';
     let thimg: string;
 
@@ -24,10 +24,10 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     const GetNextEmbed = (show: string, season_and_episode: string) => {
         const f = shows.find(x => x.series === show && x.episode_id === season_and_episode);
-        if (!f) return `${show} ${season_and_episode} is not a valid episode!`;
+        if (!f) return Util.Embed(`${show} ${season_and_episode} is not a valid episode!`);
 
         const next = shows[shows.indexOf(f) + 1];
-        if (!next) return 'Couldn\'t find that episode. Try again.';
+        if (!next) return Util.Embed('Couldn\'t find that episode. Try again.');
     
         const nxep = `${next.series} ${next.episode_id} - ${next.episode_name}`;
         const nxepard = `Airdate: ${next.air_date}`;
@@ -57,7 +57,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     };
 
     const embed = GetNextEmbed(showtitle, fiep);
-    interaction.reply(embed);
+    return interaction.reply({embeds: [embed]});
 }
 
 export const info: Command['info'] = {

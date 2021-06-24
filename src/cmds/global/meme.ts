@@ -9,9 +9,9 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     }
 
     const img = await Util.IMG('NVHwdNg');
-    if (!img) return interaction.reply('An error occurred, please try again later!', { ephemeral: true });
+    if (!img) return interaction.reply({ content: 'An error occurred, please try again later!', ephemeral: true });
 
-    return interaction.reply(Util.Embed().setImage(img));
+    return interaction.reply({embeds: [Util.Embed().setImage(img)]});
 }
 
 export const info: Command['info'] = {

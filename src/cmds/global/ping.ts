@@ -7,10 +7,10 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 
     Util.fetchJSON('https://discord.com/api/v8/gateway').then(() => {
         const took = (process.hrtime.bigint() - start) / BigInt('1000000');
-        return interaction.reply(Util.Embed('The fastest bot alive!', { description: `WebSocket ping: ${process.gideon.ws.ping.toFixed(2)} ms\nREST ping: ${took} ms` }, interaction.member as GuildMember));
+        return interaction.reply({embeds: [Util.Embed('The fastest bot alive!', { description: `WebSocket ping: ${process.gideon.ws.ping.toFixed(2)} ms\nREST ping: ${took} ms` }, interaction.member as GuildMember)]});
     }, failed => {
         console.log(failed);
-        return interaction.reply('Failed to measure ping!', { ephemeral: true });
+        return interaction.reply({ content: 'Failed to measure ping!', ephemeral: true });
     });
 }
 

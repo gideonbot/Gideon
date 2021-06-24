@@ -14,7 +14,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         .addField('Crossovers', `[The Flash vs. Arrow: Music Selections from the Epic 2-Night Event](${soundtracks.crossovers.crossover1})\n[The Flash – Music From the Special Episode: Duet](${soundtracks.crossovers.crossover2})\n[Crisis on Earth-X (Original Television Score)](${soundtracks.crossovers.crossover3})`, true)
         // eslint-disable-next-line quotes
         .addField('The Boys', `[Season 2](https://open.spotify.com/album/0sjtRdvzeB50b8UCaMbYzY)`, true);
-    return interaction.reply(stracks);  
+    return interaction.reply({embeds: [stracks]});  
 }
 
 export const info: Command['info'] = {

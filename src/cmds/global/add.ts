@@ -1,9 +1,10 @@
-import { CommandInteraction } from 'discord.js';
+import { CommandInteraction, MessageButton } from 'discord.js';
 import { Command } from 'src/@types/Util';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
     const url = 'https://gideonbot.com/invite';
-    return interaction.reply(`[Invite me](<${url}>)`);       
+    const button = new MessageButton().setStyle('LINK').setURL(url).setLabel('Invite me');
+    return interaction.reply({ components: [[button]]});       
 }
 
 export const info: Command['info'] = {

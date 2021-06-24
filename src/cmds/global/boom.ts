@@ -5,7 +5,7 @@ import Util from '../../Util.js';
 export async function run(interaction: CommandInteraction): Promise<void> {
     try {
         const acembed = Util.Embed('Blowing up S.T.A.R. Labs. Particle Accelerator...', {image: 'https://i.imgur.com/opCbZTn.gif'}, interaction.member as GuildMember);
-        interaction.reply(acembed);
+        interaction.reply({embeds: [acembed]});
 
         await Util.delay(10000);
 
@@ -44,12 +44,12 @@ export async function run(interaction: CommandInteraction): Promise<void> {
             image: result.gif
         }, interaction.member as GuildMember);
 
-        await interaction.editReply(pwrembed);
+        await interaction.editReply({embeds: [pwrembed]});
     }
     
     catch (ex) {
         Util.log('Exception occurred while starting up the particle accelerator ' + ex.stack);
-        return interaction.reply('An error occurred while trying to start the particle accelerator!', { ephemeral: true });
+        return interaction.reply({ content: 'An error occurred while trying to start the particle accelerator!', ephemeral: true });
     } 
 }
 

@@ -23,7 +23,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 
     if (embed.fields.length < 1) return interaction.reply('Failed to fetch episode list, please try again later...');
     
-    return interaction.reply(embed);
+    return interaction.reply({embeds: [embed]});
 }
 
 export const info: Command['info'] = {

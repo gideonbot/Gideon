@@ -9,13 +9,6 @@ export default {
         const shard_index = process.gideon?.shard?.ids?.[0] ?? '0';
         Util.log('Shard `' + shard_index + '` shutting down...');
 
-        let guild: Guild;
-        for (guild of process.gideon.guilds.cache.values()) {
-            if (guild?.me?.voice?.connection) {
-                guild.me.voice.connection.disconnect();
-            }
-        }
-
         await Util.delay(2000); //wait 2 secs for all vcs
 
         process.gideon.destroy();

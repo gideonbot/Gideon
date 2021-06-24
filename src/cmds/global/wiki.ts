@@ -3,7 +3,7 @@ import Util from '../../Util.js';
 import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
 import { Command, Wiki, WikiQuery, WikiResult } from 'src/@types/Util.js';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction): Promise<void> {
     const wikis: Record<string, Wiki> = {
         wiki_av: {
             url: 'arrow.fandom.com',
@@ -43,9 +43,9 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         }
     };
 
-    const wiki = wikis[options[0].value as string];
+    const wiki = wikis[interaction.options.get('wiki')?.value as string];
 
-    let search_term = options[1].value;
+    let search_term = interaction.options.get('term')?.value;
 
     const search_api = encodeURI(`https://${wiki?.url}/api/v1/SearchSuggestions/List?query=${search_term}`);
 
@@ -61,8 +61,8 @@ export async function run(interaction: CommandInteraction, options: CommandInter
     const index = Object.values(wikis).indexOf(wiki);
     const article = Object.values(body.items)[index == 1 || index == 3 ? 1 : 0 || index == 5 ? 1 : 0 || index == 6 ? 1 : 0 || index == 8 ? 1 : 0];
 
-    if (!article) return interaction.reply(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki!`, { ephemeral: true });
-    if (Object.keys(body.items).length < 1) return interaction.reply(`There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki!`, { ephemeral: true });
+    if (!article) return interaction.reply({ content: `There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki!`, ephemeral: true });
+    if (Object.keys(body.items).length < 1) return interaction.reply({ content: `There was no result for ${search_term} on the ${wiki.title} Wiki!\nPay attention to capitalization and spelling or search a different wiki!`, ephemeral: true });
     const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
 
     let st = '';
@@ -71,10 +71,10 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         if (cvm.cvmval === 1) st = '||';
     }
 
-    return interaction.reply(Util.Embed(article.title, {
+    return interaction.reply({embeds: [Util.Embed(article.title, {
         description: `${st}${article.abstract}${st}\n\n**[Click here to read the full article](https://${wiki?.url}${url} 'https://${wiki?.url}${url}')**`,
         thumbnail: article.thumbnail
-    }, interaction.member as GuildMember));
+    }, interaction.member as GuildMember)]});
 }
 
 export const info: Command['info'] = {

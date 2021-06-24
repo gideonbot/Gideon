@@ -17,7 +17,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         }).join('\n'));
     }
 
-    return interaction.reply(leaderboard);
+    return interaction.reply({embeds: [leaderboard]});
 }
 
 export const info: Command['info'] = {
