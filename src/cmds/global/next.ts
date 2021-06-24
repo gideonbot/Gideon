@@ -1,9 +1,9 @@
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, GuildMember, Permissions } from 'discord.js';
+import { CommandInteraction, GuildMember, Permissions } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<unknown> {
+export async function run(interaction: CommandInteraction): Promise<unknown> {
     const url = 'https://arrowverse.info';
     let thimg: string;
 
@@ -16,10 +16,10 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         show_bw: 'Batwoman'
     };
 
-    const showtitle = _shows[options[0].value as string];
+    const showtitle = _shows[interaction.options.first()?.value as string];
 
     const body = await gideonapi.avi();
-    const fiep = 'S' + Util.normalize(options[1].value as number) + 'E' + Util.normalize(options[2].value as number);
+    const fiep = 'S' + Util.normalize(interaction.options.first()?.options?.get('season')?.value as number) + 'E' + Util.normalize(interaction.options.first()?.options?.get('episode')?.value as number);
     const shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
 
     const GetNextEmbed = (show: string, season_and_episode: string) => {
