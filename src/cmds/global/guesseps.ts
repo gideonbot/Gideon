@@ -1,14 +1,17 @@
 import Util from '../../Util.js';
 import stringSimilarity from 'string-similarity';
-import { CommandInteraction, GuildMember, TextChannel, Message, User, MessageReaction, Permissions } from 'discord.js';
+import { CommandInteraction, GuildMember, TextChannel, Message, MessageButton, Permissions, MessageComponentInteraction } from 'discord.js';
 import { Command, GuessingScore } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
     interaction.defer();
     const url = 'https://arrowverse.info';
-    const emotes = ['▶️', '669309980209446912'];
     const s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
+    const buttons = [
+        new MessageButton().setStyle('PRIMARY').setLabel('Skip').setCustomID('skip'),
+        new MessageButton().setStyle('DANGER').setLabel('Cancel').setCustomID('cancel'),
+    ]
     // eslint-disable-next-line no-unused-vars
     let chosenfilter: (x: gideonapi.AviInfo) => boolean = () => { return true; };
     let tries = 3;
@@ -77,7 +80,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
         const epairdate = new Date(randomep.air_date);
 
         const gameembed = Util.Embed(`Guessing game for ${interaction.user.tag}:`, {
-            description: `Please guess the following Arrowverse episode's name:\n\`${show} ${epnum}\`\n\n(Press :arrow_forward: to skip this episode or <:stop:669309980209446912> to end this round)`,
+            description: `Please guess the following Arrowverse episode's name:\n\`${show} ${epnum}\``,
             author: {
                 name: `You've got ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() != 1 ? s[1] + 's' : s[1]} left!`,
                 icon: interaction.user.displayAvatarURL()
@@ -99,39 +102,28 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
         const f = (m: Message) => m.author.id === interaction.user.id;
         const collector = (interaction.channel as TextChannel)?.createMessageCollector(f, {time: 30 * 1000});
 
-        const sent = await interaction.editReply({embeds: [game.embed]}) as Message;
+        await interaction.editReply({embeds: [game.embed], components: [buttons]});
+        const message = await interaction.fetchReply() as Message;
 
-        for (const emoji of emotes) {
-            //await sent?.react(emoji).then(async () => { await Util.delay(2000); }, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
-        }
-
-        const rfilter = (reaction: MessageReaction, user: User) => {
-            if (!reaction.emoji?.name) return false;
-            return (emotes.includes(reaction.emoji.name) || emotes.includes(reaction.emoji.id as string)) && user.id === interaction.user.id;
-        };
-        const rcollector = sent?.createReactionCollector(rfilter, {time: 30 * 1000});
-    
-        rcollector?.on('collect', async (reaction, user) => {
-            if (reaction.emoji.name == emotes[0]) {
+        const filter = (i: MessageComponentInteraction) => i.user.id === interaction.user.id;
+        const bcollector = message.createMessageComponentInteractionCollector(filter, { time: 840000 });
+ //@ts-ignore
+		bcollector.on('collect', async i => {
+            if (i.customID === 'skip') {
                 tries = 3;
                 points = 0;
 
                 game = await GetGame(chosenfilter);
 
-                sent?.reactions.cache.find(x => x.emoji.name == emotes[0])?.users.remove(user.id);
-
                 collector.resetTimer();
-                rcollector.resetTimer();
                 
-                await interaction.editReply({embeds: [game.embed]});
+                await interaction.editReply({embeds: [game.embed], components: [buttons]});
                 
                 timerstart = new Date();
                 return;
             }
-
-            if (reaction.emoji.id == emotes[1]) {
+            else if (i.customID === 'cancel') {
                 collector.stop();
-                await sent?.reactions.removeAll();
 
                 const stopembed = Util.Embed(`Guessing game for ${interaction.user.tag}:`, {
                     description: 'Your game round has been cancelled! :white_check_mark:',
@@ -148,9 +140,12 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
                 }, interaction.member as GuildMember);
 
                 interaction.user.guessing = false;
-                return interaction.editReply({embeds: [stopembed]});
+                return interaction.editReply({embeds: [stopembed], components: []});
             }
-        }); 
+        });
+        //@ts-ignore
+		bcollector.on('end', async () => await interaction.editReply('The game has ended. You can start a new one.'));
+    
  //@ts-ignore
         collector.on('collect', async message => {
             const similarity = stringSimilarity.compareTwoStrings(game.ep_name.toLowerCase().replace(/\s/g, ''), message.content.toLowerCase().replace(/\s/g, ''));
@@ -183,8 +178,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
                 }, interaction.member as GuildMember);
 
                 interaction.user.guessing = false;
-                await interaction.editReply({embeds: [correctembed]});
-                return sent?.reactions.removeAll();
+                await interaction.editReply({embeds: [correctembed], components: []});
             }
 
             tries--;
@@ -208,11 +202,10 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
             if (tries == 0) {
                 collector.stop();
                 interaction.user.guessing = false;
-                await sent?.reactions.removeAll();
-                return interaction.editReply({embeds: [incorrectembed]});
+                return interaction.editReply({embeds: [incorrectembed], components: []});
             }
 
-            else await interaction.editReply({embeds: [incorrectembed]});
+            else await interaction.editReply({embeds: [incorrectembed], components: [buttons]});
         });
     
         //@ts-ignore
@@ -233,8 +226,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
                 }, interaction.member as GuildMember);
 
                 interaction.user.guessing = false;
-                await sent?.reactions.removeAll();
-                return interaction.editReply({embeds: [timeouttembed]});
+                return interaction.editReply({embeds: [timeouttembed], components: []});
             }
         });
     }

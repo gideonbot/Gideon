@@ -1,6 +1,6 @@
 import OpenSubtitles from 'opensubtitles-api';
 import Util from '../../Util.js';
-import { CommandInteraction, GuildMember } from 'discord.js';
+import { CommandInteraction, GuildMember, MessageButton } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
@@ -86,23 +86,23 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
     ];
 
     let show = shows[-1];
+    console.log(interaction.options.first()?.options);
+    if (interaction.options.first()?.options?.first()?.value === 'show_fl') show = shows[0];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_ar') show = shows[1];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_sg') show = shows[2];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_lot') show = shows[3];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_co') show = shows[4];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_bw') show = shows[5];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_bl') show = shows[6];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_kr') show = shows[8];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_lu') show = shows[9];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_sl') show = shows[10];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_stg') show = shows[11];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_dp') show = shows[12];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_t') show = shows[13];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_sv') show = shows[14];
+    else if (interaction.options.first()?.options?.first()?.value === 'show_tb') show = shows[15];
 
-    if (interaction.options.first()?.options?.get('show_fl')?.value) show = shows[0];
-    else if (interaction.options.first()?.options?.get('show_ar')?.value) show = shows[1];
-    else if (interaction.options.first()?.options?.get('show_sg')?.value) show = shows[2];
-    else if (interaction.options.first()?.options?.get('show_lot')?.value) show = shows[3];
-    else if (interaction.options.first()?.options?.get('show_co')?.value) show = shows[4];
-    else if (interaction.options.first()?.options?.get('show_bw')?.value) show = shows[5];
-    else if (interaction.options.first()?.options?.get('show_bl')?.value) show = shows[6];
-    else if (interaction.options.first()?.options?.get('show_kr')?.value) show = shows[8];
-    else if (interaction.options.first()?.options?.get('show_lu')?.value) show = shows[9];
-    else if (interaction.options.first()?.options?.get('show_sl')?.value) show = shows[10];
-    else if (interaction.options.first()?.options?.get('show_stg')?.value) show = shows[11];
-    else if (interaction.options.first()?.options?.get('show_dp')?.value) show = shows[12];
-    else if (interaction.options.first()?.options?.get('show_t')?.value) show = shows[13];
-    else if (interaction.options.first()?.options?.get('show_sv')?.value) show = shows[14];
-    else if (interaction.options.first()?.options?.get('show_tb')?.value) show = shows[15];
-    
     OS.search({
         sublanguageid: interaction.options.first()?.options?.get('lang')?.value as string,       
         season: interaction.options.first()?.options?.get('season')?.value as number,
@@ -111,13 +111,12 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
         imdbid: show.id,           
 
     }).then(subtitles => {
-        const embed = Util.Embed(`Subtitles for: ${show.title} ${interaction.options.first()?.options?.get('season')?.value}x${Util.normalize(interaction.options.first()?.options?.get('episode')?.value as number)}`, {description: 'Here are the 5 best results from opensubtitles.org:'}, interaction.member as GuildMember);
-
+        let buttons = [];
         for (const sub of Object.values(subtitles)[0]) {
-            embed.addField(sub.filename, `**[Download SRT](${sub.url} '${sub.url}')** Lang: \`${sub.lang}\` Score: \`${sub.score}\``);
+            buttons.push(new MessageButton().setStyle('LINK').setLabel(`${Util.truncate(sub.filename, 30, false)} Lang: ${sub.lang} Score: ${sub.score}`).setURL(sub.url))
         }
         
-        interaction.editReply({embeds: [embed]});
+        interaction.editReply({content: 'Here are the 5 best results from opensubtitles.org:', components: [[buttons[0]],[buttons[1]],[buttons[2]],[buttons[3]],[buttons[4]]]});
     }).catch(async (err: Error) => {
         Util.log('An error occurred while trying to fetch subtitles: ' + err);
         return interaction.editReply('There were no results for this episode on opensubtitles.org!\nTry another episode or another language !');

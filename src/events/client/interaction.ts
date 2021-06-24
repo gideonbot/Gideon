@@ -4,9 +4,10 @@ import { Interaction } from 'discord.js';
 export default {
     name: 'interaction',
     async run(interaction: Interaction): Promise<void> {
-        console.log(interaction);
-        if (!interaction.isCommand()) return;
-        if (!interaction.guild) return interaction.reply({ content: 'DM commands are not supported!', ephemeral: true });
-        Util.Interactions.SlashCommands(interaction);
+        if (interaction.isCommand()) {
+            if (!interaction.guild) return interaction.reply({ content: 'DM commands are not supported!', ephemeral: true });
+            Util.Interactions.SlashCommands(interaction);
+        }
+        else if (interaction.isButton()) await interaction.deferUpdate();
     }
 };

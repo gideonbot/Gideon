@@ -4,7 +4,7 @@ import { Command } from 'src/@types/Util';
 export async function run(interaction: CommandInteraction): Promise<void> {
     const url = 'https://gideonbot.com/invite';
     const button = new MessageButton().setStyle('LINK').setURL(url).setLabel('Invite me');
-    return interaction.reply({ components: [[button]]});       
+    return interaction.reply({ content: 'Oauth2 Invite:', components: [[button]]});       
 }
 
 export const info: Command['info'] = {
