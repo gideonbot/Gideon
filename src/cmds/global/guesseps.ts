@@ -102,7 +102,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
         const sent = await interaction.editReply({embeds: [game.embed]}) as Message;
 
         for (const emoji of emotes) {
-            await sent?.react(emoji).then(async () => { await Util.delay(2000); }, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
+            //await sent?.react(emoji).then(async () => { await Util.delay(2000); }, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
         }
 
         const rfilter = (reaction: MessageReaction, user: User) => {

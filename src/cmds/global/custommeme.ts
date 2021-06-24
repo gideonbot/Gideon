@@ -1,9 +1,9 @@
 import Canvas from 'canvas';
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, MessageAttachment } from 'discord.js';
+import { CommandInteraction, MessageAttachment } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
+export async function run(interaction: CommandInteraction): Promise<void> {
     const canvas = Canvas.createCanvas(560, 560);
 
     function wrapText (ctx: Canvas.CanvasRenderingContext2D, text: string, x: number, y: number, maxWidth: number, lineHeight: number) {
@@ -50,11 +50,11 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 
     ctx.font = '30px sans-serif';
     ctx.fillStyle = '#000000';
-    wrapText(ctx, (options[0].value as string).trim(), 300, 40, 260, 35);
+    wrapText(ctx, (interaction.options.get('first')?.value as string).trim(), 300, 40, 260, 35);
 
     ctx.font = '30px sans-serif';
     ctx.fillStyle = '#000000';
-    wrapText(ctx, (options[1].value as string).trim(), 300, 315, 260, 35);
+    wrapText(ctx, (interaction.options.get('second')?.value as string).trim(), 300, 315, 260, 35);
 
     const attachment = new MessageAttachment(canvas.toBuffer(), 'sgmeme.jpg');
 
