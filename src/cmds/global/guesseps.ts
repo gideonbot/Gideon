@@ -5,7 +5,7 @@ import { Command, GuessingScore } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
-    interaction.defer();
+    await interaction.defer();
     const url = 'https://arrowverse.info';
     const s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
     const buttons = [
