@@ -106,7 +106,10 @@ export async function run(interaction: CommandInteraction, options: CommandInter
             await sent?.react(emoji).then(async () => { await Util.delay(2000); }, failed => console.log('Failed to react with ' + emoji + ': ' + failed));
         }
 
-        const rfilter = (reaction: MessageReaction, user: User) => (emotes.includes(reaction.emoji.name) || emotes.includes(reaction.emoji.id as string)) && user.id === interaction.user.id;
+        const rfilter = (reaction: MessageReaction, user: User) => {
+            if (!reaction.emoji?.name) return false;
+            return (emotes.includes(reaction.emoji.name) || emotes.includes(reaction.emoji.id as string)) && user.id === interaction.user.id;
+        };
         const rcollector = sent?.createReactionCollector(rfilter, {time: 30 * 1000});
     
         rcollector?.on('collect', async (reaction, user) => {

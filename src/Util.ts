@@ -1,12 +1,12 @@
 import Discord from 'discord.js';
 import fetch from 'node-fetch';
+import fs from 'fs';
 import config from './config/config.js';
 import SQL from './handlers/SQL.js';
 import Checks from './handlers/Checks.js';
 import MsgHandler from './handlers/MessageHandler.js';
 import Interactions from './handlers/Interactions.js';
 import zip from 'zip-promise';
-import del from 'del';
 import recursive from 'recursive-readdir';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -96,10 +96,12 @@ class Util {
         return outputArray.join(', ') + ' and ' + last;
     }
 
-    static log(message: string | Discord.MessageEmbed, files?: string[]) : boolean {
+    static log(message: string | Discord.MessageEmbed | Error, files?: string[]) : boolean {
         if (!message) return false;
 
-        if (!(message instanceof Discord.MessageEmbed)) console.log(message.replace(/`/g, '').trim());
+        if (!(message instanceof Discord.MessageEmbed)) {
+            console.log(String(message).replace(/`/g, '').trim());
+        }
 
         let url = process.env.LOG_WEBHOOK_URL;
         if (!url) return false;
@@ -109,6 +111,8 @@ class Util {
         if (split.length < 2) return false;
 
         const client = new Discord.WebhookClient(split[0], split[1]);
+
+        if (message instanceof Error) message = message.stack ?? message.message;
 
         if (typeof message == 'string') {
             for (const msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
@@ -367,17 +371,16 @@ class Util {
         try {
             const channel = <Discord.TextChannel>process.gideon.guilds?.cache?.get?.('595318490240385037')?.channels?.cache?.get?.('622415301144870932');
             await zip.folder(path.resolve(__dirname, db), path.resolve(__dirname, arc));
-            channel.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
-            await del(arc);
-            const lastbkup = await channel.messages.fetchPinned();
-            if (lastbkup.first()) await lastbkup.first()?.unpin();
-            const msg = await channel.messages.fetch({ limit: 1 });
-            await msg.first()?.pin();
+            const msg = await channel?.send(`SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, { files: [arc] });
+            fs.unlinkSync(arc);
+            const lastbkup = await channel?.messages.fetchPinned();
+            if (lastbkup?.first()) await lastbkup.first()?.unpin();
+            await msg?.pin();
         }
         
         catch (ex) {
             Util.log('Caught an exception while backing up!: ' + ex.stack);
-        }      
+        }
     }
 
     static async Starboard(reaction: Discord.MessageReaction, user: Discord.User): Promise<void> {
@@ -892,11 +895,18 @@ class Util {
 
     static GetCleverBotResponse(text: string, context: string[]): Promise<string> {
         return new Promise((resolve, reject) => {
-            cleverbot(text, context).then(response => {
+            cleverbot(text, context, undefined, 1e4).then(response => {
                 if (!response || response.toLowerCase().includes('www.cleverbot.com')) reject('User Agent outdated');
                 this.IncreaseStat('ai_chat_messages_processed');
                 resolve(response);
-            }).catch(reject);
+            }).catch(err => {
+                if (err instanceof Error && (err.message?.startsWith('Response timeout of') || err.message?.startsWith('Service Unavailable'))) {
+                    console.log(err);
+                    return reject(); //reject with undefined to prevent logging
+                }
+                
+                reject(err);
+            });
         });
     }
 
@@ -911,7 +921,7 @@ class Util {
     
             else {
                 //we ignore messages that were created 2+ mins ago
-                if (Math.abs(m.createdAt.getTime() - last.getTime()) < 1000 * 60 * 2 && !m.content.startsWith('^')) {
+                if (Math.abs(m.createdAt.getTime() - last.getTime()) < 1000 * 60 * 2 && !m.content?.startsWith('^')) {
                     const content = m.content;
     
                     if (m.cleverbot) {
@@ -928,12 +938,13 @@ class Util {
         }
     
         arr = arr.reverse();
-        message.channel.startTyping().catch(console.log);
+        message.channel.startTyping().catch(Util.log);
     
         try {
             const response = await this.GetCleverBotResponse(text, arr).catch(Util.log);
             if (typeof response != 'string') {
-                message.react('🚫');
+                message.react('🚫').catch(Util.log);
+                message.channel.stopTyping(true);
                 return;
             }
 
