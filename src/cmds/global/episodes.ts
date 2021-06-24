@@ -5,7 +5,7 @@ import { Command, SeEp, Show, TVMazeResponse } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<unknown> {
     if (interaction.user.guessing) return interaction.editReply('No cheating while your guessing game is active!');
-    interaction.defer();
+    await interaction.defer();
     
     const info: SeEp = {
         season: interaction.options.first()?.options?.get('season')?.value as number,
