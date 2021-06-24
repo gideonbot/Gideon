@@ -19,7 +19,7 @@ export const commands = [
     { name: 'timeline' },
     { name: 'wells' },
     { name: 'tracks' },
-    { name: 'quote' },
+    //{ name: 'quote' },
     { name: 'donate' },
     { name: 'stats' },
     { name: 'add' },
@@ -121,7 +121,7 @@ export const commands = [
         ]
     },
     { name: 'leaderboard' },
-    {
+  /*   {
         name: 'guess',
         options: [
             {
@@ -129,7 +129,7 @@ export const commands = [
                 value: 'flash'
             }
         ]
-    },
+    }, */
     {
         name: 'opening',
         options: [
