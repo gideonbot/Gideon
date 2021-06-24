@@ -1,12 +1,12 @@
 import gideonapi from 'gideon-api';
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, MessageEmbed, Permissions, Message } from 'discord.js';
+import { CommandInteraction, MessageEmbed, Permissions, Message } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<Message | void> {
+export async function run(interaction: CommandInteraction): Promise<Message | void> {
     const abilities = await gideonapi.abilities();
 
-    if (options[0].value === 'speedster') {
+    if (interaction.options.first()?.value === 'speedster') {
         const sp1 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Speedsters possess the following abilities:__')
@@ -67,7 +67,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
         const spembeds = [sp1, sp2, sp3, sp4, sp5, sp6];
         return interaction.reply({embeds: spembeds});
     
-    } else if (options[0].value === 'viber') {
+    } else if (interaction.options.first()?.value === 'viber') {
         const viber = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Vibers possess the following abilities:__') 
@@ -80,7 +80,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
             .setFooter(Util.config.footer, process.gideon.user?.displayAvatarURL());
 
         return interaction.reply({embeds: [viber]});
-    } else if (options[0].value === 'kryptonian') {
+    } else if (interaction.options.first()?.value === 'kryptonian') {
         const kr1 = new MessageEmbed()
             .setColor('#2791D3')
             .setTitle('__Kryptonians possess the following abilities:\n(Only when exposed to a yellow sun\'s energy)__')
