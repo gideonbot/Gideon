@@ -1,9 +1,9 @@
 import Util from '../../Util.js';
 import moment from 'moment';
-import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
+import { CommandInteraction, GuildMember } from 'discord.js';
 import { Command, SeEp, Show, TVMazeResponse } from 'src/@types/Util.js';
 
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<unknown> {
+export async function run(interaction: CommandInteraction): Promise<unknown> {
     if (interaction.user.guessing) return interaction.editReply('No cheating while your guessing game is active!');
     await interaction.defer();
     

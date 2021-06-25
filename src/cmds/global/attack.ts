@@ -26,7 +26,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         {
             text: `you reverse-flashed ${user}`,
             desc: 'I\'m sorry.',
-            emote: ':wave::skin-tone-2:',
+            emote: ':wave:',
             attackgif: 'https://i.imgur.com/h7orTAQ.gif'
         },
         {
@@ -137,6 +137,12 @@ export async function run(interaction: CommandInteraction): Promise<void> {
             emote: ':rocket:',
             attackgif: 'https://i.imgur.com/dYFWEMX.gif'
         },
+        {
+            text: `you hit ${user} with your supernova blast!`,
+            desc: 'FWOOOSHH!',
+            emote: ':high_brightness:',
+            attackgif: 'https://i.imgur.com/goPU6rT.gif'
+        },
     ];
 
     let attack;
@@ -162,6 +168,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     else if (interaction.options.first()?.value === 'mwords') attack = attacks[18];
     else if (interaction.options.first()?.value === 'staff') attack = attacks[19];
     else if (interaction.options.first()?.value === 'rpunch') attack = attacks[20];
+    else if (interaction.options.first()?.value === 'snova') attack = attacks[21];
 
     return interaction.reply({embeds: [Util.Embed(undefined, {
         description: `**${attack?.emote}${auth} ${attack?.text}${attack?.emote}**\n\n${attack?.desc}`,
@@ -271,7 +278,11 @@ export const data: Command['data'] = {
                 {
                     name: 'Rocket Punch',
                     value: 'rpunch'
-                }
+                },
+                {
+                    name: 'Supernova',
+                    value: 'snova'
+                },
             ]
         },
         {
