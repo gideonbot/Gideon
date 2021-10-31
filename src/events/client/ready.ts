@@ -31,6 +31,7 @@ export default {
         setInterval(Util.SQLBkup, twodays);
     
         console.log('Ready!');
+        if (process.env.CI) process.exit(0);
 
         const lcl = new LCL('../');
         const commit = await lcl.getLastCommit();
