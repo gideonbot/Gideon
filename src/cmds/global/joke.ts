@@ -6,7 +6,7 @@ import { Command } from 'src/@types/Util.js';
 export async function run(interaction: CommandInteraction): Promise<void> {
     if (!interaction.guild) return;
     
-    const type = interaction.options.size > 0 ? interaction.options.first()?.value as string : 'any';
+    const type = interaction.options.data.length > 0 ? interaction.options.data[0]?.value as string : 'any';
     const url = 'https://sv443.net/jokeapi/v2/joke/' + type + '?type=single';
 
     interface ResponseBody {
@@ -39,6 +39,8 @@ export async function run(interaction: CommandInteraction): Promise<void> {
             let attempts = 0;
 
             do {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-ignore
                 new_id = category.randomKey();
                 attempts++;
 

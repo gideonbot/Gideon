@@ -16,6 +16,7 @@ const gideon = new Discord.Client({
 
 process.gideon = gideon;
 gideon.commands = new Discord.Collection();
+gideon.auto = new Discord.Collection();
 gideon.events = new Discord.Collection();
 gideon.statuses = [];
 gideon.spamcount = new Map();

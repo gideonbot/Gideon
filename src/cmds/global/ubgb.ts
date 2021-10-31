@@ -2,8 +2,8 @@ import { CommandInteraction, GuildMember, Snowflake, TextChannel } from 'discord
 import { Command } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
-    const id = interaction.options?.get('user')?.options?.get('userid')?.value;
-    const guildid = interaction.options?.get('guild')?.options?.get('guildid')?.value;
+    const id = interaction.options?.get('user')?.options?.filter(x => x.name === 'userid')?.[0].value;
+    const guildid = interaction.options?.get('guild')?.options?.filter(x => x.name === 'guildid')?.[0].value;
 
     if (id) {
         let ub = process.gideon.getUser.get(id);
@@ -48,7 +48,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
             
             const guild = process.gideon.guilds.cache.get(id as Snowflake);
             if (guild) {
-                const textchannels = guild.channels.cache.filter(c => c.type == 'text');
+                const textchannels = guild.channels.cache.filter(c => c.type == 'GUILD_TEXT');
                 const channels = textchannels.filter(c => c.permissionsFor(guild?.me as GuildMember).has('SEND_MESSAGES'));
                 if (channels.size > 0) await (channels.first() as TextChannel)?.send('This guild or this guild\'s owner is banned by the bot owner!\nNow leaving this guild!').catch(ex => console.log(ex));
                 guild.leave();

@@ -1,4 +1,4 @@
-import { CommandInteraction, TextChannel, GuildMember, Permissions } from 'discord.js';
+import { CommandInteraction, TextChannel, GuildMember, Permissions, AutocompleteInteraction } from 'discord.js';
 import Util from '../Util.js';
 
 class Interactions {
@@ -15,17 +15,15 @@ class Interactions {
         if (!command.guild) return;
 
         Util.Checks.LBG(command.guild); //check if guild is blacklisted, if yes, leave
-
-        const options = command.options;
     
         const cmd = process.gideon.commands.get(command.commandName);
         if (!cmd) return;
 
-        let guildsettings = process.gideon.getGuild.get(command.guildID);
+        let guildsettings = process.gideon.getGuild.get(command.guildId);
 
         if (!guildsettings) {
             guildsettings = {
-                guild: command.guildID,
+                guild: command.guildId,
                 cvmval: 0,
                 abmval: 0,
                 eastereggs: 0,
@@ -54,7 +52,7 @@ class Interactions {
             else ub.blacklist = 1;
             
             process.gideon.setUser.run(ub);
-            Util.log(`${command.user.tag} had their access revoked due to command spam:\`\`\`\nUser: ${command.user.tag} - ${command.user.id}\nCommand: ${command.commandName} - ${command.commandID}\n\`\`\``);
+            Util.log(`${command.user.tag} had their access revoked due to command spam:\`\`\`\nUser: ${command.user.tag} - ${command.user.id}\nCommand: ${command.commandName} - ${command.commandId}\n\`\`\``);
             return command.reply('Your access to ' + process.gideon.user?.toString() + ' has been revoked due to `COMMAND_SPAM`!\nIf you wish to regain access please contact `adrifcastr#4530` or fill out the form below:\nhttps://forms.gle/PxYyJzsW9tKYiJpp7');
         }
 
@@ -102,12 +100,25 @@ class Interactions {
             if (process.env.CI) console.log('Handling interaction ' + command.commandName);
             await cmd.run(command);
         }
-        catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        catch (e: any) {
             if (cmd.data.name === 'eval') return command.reply({ content: 'An error occurred while processing your request:```\n' + e + '```', ephemeral: true });
             else if (cmd.data.name === 'wiki') return command.reply({ content: 'An error occurred while processing your request:```\n' + e + '```\nIf you see this error, this means that the Fandom Wiki API is still fucked and you should complain the shit out of their [support request form](<https://fandom.zendesk.com/hc/en-us/requests/new>) and their [twitter](<https://twitter.com/getfandom>) and tell them to fix their really really awful API endpoints.\nSorry lads, can\'t do more then tell you what\'s up.', ephemeral: true });
             Util.log(`An error occurred while running ${command.commandName}:\n\n\`\`\`\n${e.stack}\n\`\`\``);
             return command.reply({ content: 'An error occurred while processing your request:```\n' + e + '```', ephemeral: true });
         } 
+    }
+
+    static async Autocomplete(interaction: AutocompleteInteraction): Promise<void> {
+        const ac = process.gideon.auto.get(interaction.commandName);
+        if (!ac) return;
+
+        try {
+            await ac.run(interaction);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (e: any) {
+            Util.log(`An error occurred while running ${interaction.commandName}:\n\n\`\`\`\n${e.stack}\n\`\`\``);
+        }
     }
 }
 export default Interactions;

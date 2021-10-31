@@ -1,7 +1,6 @@
-import { CommandInteraction, GuildMember, Message } from 'discord.js';
+import { CommandInteraction, GuildMember } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
-import { APIMessage } from 'discord-api-types';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {    
     interaction.reply('Booting up the Multiverse Holo Projector...');

@@ -53,6 +53,7 @@ declare module 'discord.js' {
     interface Client {
         WSClient: WSClient;
         commands: Discord.Collection<string, Command>;
+        auto: Discord.Collection<string, AutoInt>;
         events: Discord.Collection<string, Event>;
         owner: string;
         listening: string[];
@@ -185,6 +186,11 @@ interface Command {
     },
     data: Discord.ApplicationCommandData;
     async run(interaction: Discord.CommandInteraction): Promise<void>;
+}
+
+interface AutoInt {
+	name: string,
+    async run(interaction: Discord.AutocompleteInteraction): Promise<void>;
 }
 
 interface Event {

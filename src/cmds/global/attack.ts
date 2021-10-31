@@ -147,28 +147,28 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 
     let attack;
 
-    if (interaction.options.first()?.value === 'iceblast') attack = attacks[0];
-    else if (interaction.options.first()?.value === 'lthrow') attack = attacks[1];
-    else if (interaction.options.first()?.value === 'rflash') attack = attacks[2];
-    else if (interaction.options.first()?.value === 'vblast') attack = attacks[3];
-    else if (interaction.options.first()?.value === 'arrow') attack = attacks[4];
-    else if (interaction.options.first()?.value === 'hvision') attack = attacks[5];
-    else if (interaction.options.first()?.value === 'spunch') attack = attacks[6];
-    else if (interaction.options.first()?.value === 'ccry') attack = attacks[7];
-    else if (interaction.options.first()?.value === 'brang') attack = attacks[8];
-    else if (interaction.options.first()?.value === 'sthell') attack = attacks[9];
-    else if (interaction.options.first()?.value === 'tclap') attack = attacks[10];
-    else if (interaction.options.first()?.value === 'elblast') attack = attacks[11];
-    else if (interaction.options.first()?.value === 'fblast') attack = attacks[12];
-    else if (interaction.options.first()?.value === 'shoot') attack = attacks[13];
-    else if (interaction.options.first()?.value === 'ablast') attack = attacks[14];
-    else if (interaction.options.first()?.value === 'fchoke') attack = attacks[15];
-    else if (interaction.options.first()?.value === 'devil') attack = attacks[16];
-    else if (interaction.options.first()?.value === 'love') attack = attacks[17];
-    else if (interaction.options.first()?.value === 'mwords') attack = attacks[18];
-    else if (interaction.options.first()?.value === 'staff') attack = attacks[19];
-    else if (interaction.options.first()?.value === 'rpunch') attack = attacks[20];
-    else if (interaction.options.first()?.value === 'snova') attack = attacks[21];
+    if (interaction.options.data[0]?.value === 'iceblast') attack = attacks[0];
+    else if (interaction.options.data[0]?.value === 'lthrow') attack = attacks[1];
+    else if (interaction.options.data[0]?.value === 'rflash') attack = attacks[2];
+    else if (interaction.options.data[0]?.value === 'vblast') attack = attacks[3];
+    else if (interaction.options.data[0]?.value === 'arrow') attack = attacks[4];
+    else if (interaction.options.data[0]?.value === 'hvision') attack = attacks[5];
+    else if (interaction.options.data[0]?.value === 'spunch') attack = attacks[6];
+    else if (interaction.options.data[0]?.value === 'ccry') attack = attacks[7];
+    else if (interaction.options.data[0]?.value === 'brang') attack = attacks[8];
+    else if (interaction.options.data[0]?.value === 'sthell') attack = attacks[9];
+    else if (interaction.options.data[0]?.value === 'tclap') attack = attacks[10];
+    else if (interaction.options.data[0]?.value === 'elblast') attack = attacks[11];
+    else if (interaction.options.data[0]?.value === 'fblast') attack = attacks[12];
+    else if (interaction.options.data[0]?.value === 'shoot') attack = attacks[13];
+    else if (interaction.options.data[0]?.value === 'ablast') attack = attacks[14];
+    else if (interaction.options.data[0]?.value === 'fchoke') attack = attacks[15];
+    else if (interaction.options.data[0]?.value === 'devil') attack = attacks[16];
+    else if (interaction.options.data[0]?.value === 'love') attack = attacks[17];
+    else if (interaction.options.data[0]?.value === 'mwords') attack = attacks[18];
+    else if (interaction.options.data[0]?.value === 'staff') attack = attacks[19];
+    else if (interaction.options.data[0]?.value === 'rpunch') attack = attacks[20];
+    else if (interaction.options.data[0]?.value === 'snova') attack = attacks[21];
 
     return interaction.reply({embeds: [Util.Embed(undefined, {
         description: `**${attack?.emote}${auth} ${attack?.text}${attack?.emote}**\n\n${attack?.desc}`,

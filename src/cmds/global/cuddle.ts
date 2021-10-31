@@ -4,7 +4,7 @@ import { Command } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
     const auth = interaction.user;
-    const user = process.gideon.users.cache.get(interaction.options.first()?.value as Snowflake);
+    const user = process.gideon.users.cache.get(interaction.options.data[0]?.value as Snowflake);
     
     if (user?.id === auth.id || user?.id === process.gideon.user?.id) return interaction.reply({embeds: [Util.Embed().setTitle('My protocols forbid any kind of self-harm!')]});
     else if (user?.bot) return interaction.reply({embeds: [Util.Embed().setTitle('Please mention a human!')]});

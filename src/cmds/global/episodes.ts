@@ -5,11 +5,11 @@ import { Command, SeEp, Show, TVMazeResponse } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
     if (interaction.user.guessing) return interaction.editReply('No cheating while your guessing game is active!');
-    await interaction.defer();
+    await interaction.deferReply();
     
     const info: SeEp = {
-        season: interaction.options.first()?.options?.get('season')?.value as number,
-        episode: interaction.options.first()?.options?.get('episode')?.value as number
+        season: interaction.options.data[0]?.options?.filter(x => x.name === 'season')?.[0].value as number,
+        episode: interaction.options.data[0]?.options?.filter(x => x.name === 'episode')?.[0].value as number
     };
 
     const shows: Record<string, Show> = {
@@ -95,7 +95,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
         }
     };
 
-    const show = shows[interaction.options.first()?.options?.first()?.value as string];
+    const show = shows[interaction.options.data[0]?.options?.[0]?.value as string];
 
     const api = `http://api.tvmaze.com/shows/${show?.id}/episodebynumber?season=${info.season}&number=${info.episode}`;
 

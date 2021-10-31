@@ -47,7 +47,8 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         await interaction.editReply({embeds: [pwrembed]});
     }
     
-    catch (ex) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (ex: any) {
         Util.log('Exception occurred while starting up the particle accelerator ' + ex.stack);
         return interaction.reply({ content: 'An error occurred while trying to start the particle accelerator!', ephemeral: true });
     } 

@@ -1,17 +1,18 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import Util from '../../Util.js';
 import stringSimilarity from 'string-similarity';
-import { CommandInteraction, GuildMember, TextChannel, Message, MessageButton, Permissions, MessageComponentInteraction } from 'discord.js';
+import { CommandInteraction, GuildMember, TextChannel, Message, MessageButton, Permissions, MessageComponentInteraction, MessageActionRow } from 'discord.js';
 import { Command, GuessingScore } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
-    await interaction.defer();
+    await interaction.deferReply();
     const url = 'https://arrowverse.info';
     const s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
     const buttons = [
-        new MessageButton().setStyle('PRIMARY').setLabel('Skip').setCustomID('skip'),
-        new MessageButton().setStyle('DANGER').setLabel('Cancel').setCustomID('cancel'),
-    ]
+        new MessageButton().setStyle('PRIMARY').setLabel('Skip').setCustomId('skip'),
+        new MessageButton().setStyle('DANGER').setLabel('Cancel').setCustomId('cancel'),
+    ];
     // eslint-disable-next-line no-unused-vars
     let chosenfilter: (x: gideonapi.AviInfo) => boolean = () => { return true; };
     let tries = 3;
@@ -45,13 +46,13 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
         process.gideon.setScore.run(score);
     }
 
-    if (!interaction.options.first()) chosenfilter = filters[0];
-    else if (interaction.options.first()?.value === 'flash') chosenfilter = filters[1];
-    else if (interaction.options.first()?.value === 'arrow') chosenfilter = filters[2];
-    else if (interaction.options.first()?.value === 'legends') chosenfilter = filters[3];
-    else if (interaction.options.first()?.value === 'supergirl') chosenfilter = filters[4];
-    else if (interaction.options.first()?.value === 'batwoman') chosenfilter = filters[5];
-    else if (interaction.options.first()?.value === 'constantine') chosenfilter = filters[6];
+    if (!interaction.options.data[0]) chosenfilter = filters[0];
+    else if (interaction.options.data[0]?.value === 'flash') chosenfilter = filters[1];
+    else if (interaction.options.data[0]?.value === 'arrow') chosenfilter = filters[2];
+    else if (interaction.options.data[0]?.value === 'legends') chosenfilter = filters[3];
+    else if (interaction.options.data[0]?.value === 'supergirl') chosenfilter = filters[4];
+    else if (interaction.options.data[0]?.value === 'batwoman') chosenfilter = filters[5];
+    else if (interaction.options.data[0]?.value === 'constantine') chosenfilter = filters[6];
 
     function Countdown() {
         const timerdiff = (Date.now() - timerstart.getTime()) / 1000;
@@ -100,16 +101,17 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
         let game = await GetGame(chosenfilter);
 
         const f = (m: Message) => m.author.id === interaction.user.id;
-        const collector = (interaction.channel as TextChannel)?.createMessageCollector(f, {time: 30 * 1000});
+        const collector = (interaction.channel as TextChannel)?.createMessageCollector({filter: f, time: 30 * 1000} );
 
-        await interaction.editReply({embeds: [game.embed], components: [buttons]});
+        await interaction.editReply({embeds: [game.embed], components: [new MessageActionRow().addComponents(buttons)]});
         const message = await interaction.fetchReply() as Message;
 
         const filter = (i: MessageComponentInteraction) => i.user.id === interaction.user.id;
-        const bcollector = message.createMessageComponentInteractionCollector(filter, { time: 840000 });
- //@ts-ignore
-		bcollector.on('collect', async i => {
-            if (i.customID === 'skip') {
+        const bcollector = message.createMessageComponentCollector({ filter, time: 840000 });
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        bcollector.on('collect', async i => {
+            if (i.customId === 'skip') {
                 tries = 3;
                 points = 0;
 
@@ -117,12 +119,12 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 
                 collector.resetTimer();
                 
-                await interaction.editReply({embeds: [game.embed], components: [buttons]});
+                await interaction.editReply({embeds: [game.embed], components: [new MessageActionRow().addComponents(buttons)]});
                 
                 timerstart = new Date();
                 return;
             }
-            else if (i.customID === 'cancel') {
+            else if (i.customId === 'cancel') {
                 collector.stop();
 
                 const stopembed = Util.Embed(`Guessing game for ${interaction.user.tag}:`, {
@@ -144,9 +146,9 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
             }
         });
         //@ts-ignore
-		bcollector.on('end', async () => await interaction.editReply('The game has ended. You can start a new one.'));
+        bcollector.on('end', async () => await interaction.editReply('The game has ended. You can start a new one.'));
     
- //@ts-ignore
+        //@ts-ignore
         collector.on('collect', async message => {
             const similarity = stringSimilarity.compareTwoStrings(game.ep_name.toLowerCase().replace(/\s/g, ''), message.content.toLowerCase().replace(/\s/g, ''));
 
@@ -205,7 +207,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
                 return interaction.editReply({embeds: [incorrectembed], components: []});
             }
 
-            else await interaction.editReply({embeds: [incorrectembed], components: [buttons]});
+            else await interaction.editReply({embeds: [incorrectembed], components: [new MessageActionRow().addComponents(buttons)]});
         });
     
         //@ts-ignore
@@ -231,7 +233,8 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
         });
     }
 
-    catch (ex) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (ex: any) {
         Util.log('Caught an exception while running guesseps.js: ' + ex.stack);
         return interaction.reply({ content: 'An error occurred while processing your request:```\n' + ex + '```', ephemeral: true });
     }

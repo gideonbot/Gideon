@@ -5,7 +5,7 @@ export default {
     name: 'guildCreate',
     async run(guild: Guild, gideon: Client): Promise<void> {
         await guild.members.fetch();
-        Util.log(Util.Embed('Joined a new guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.ownerID ?? 'Unknown'}\` (${guild.ownerID})`, thumbnail: (guild.iconURL() as string)}));
+        Util.log(Util.Embed('Joined a new guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.ownerId ?? 'Unknown'}\` (${guild.ownerId})`, thumbnail: (guild.iconURL() as string)}));
     
         let currentguild = gideon.getGuild.get(guild.id);
         if (!currentguild) {
@@ -22,7 +22,7 @@ export default {
             gideon.setGuild.run(currentguild);
         }
     
-        const ub = process.gideon.getUser.get(guild.ownerID);
+        const ub = process.gideon.getUser.get(guild.ownerId);
         if (ub) {
             if (ub.blacklist === 1) {
                 currentguild.blacklist = 1;

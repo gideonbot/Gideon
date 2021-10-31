@@ -16,10 +16,10 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
         show_bw: 'Batwoman'
     };
 
-    const showtitle = _shows[interaction.options.first()?.value as string];
+    const showtitle = _shows[interaction.options.data[0]?.value as string];
 
     const body = await gideonapi.avi();
-    const fiep = 'S' + Util.normalize(interaction.options.first()?.options?.get('season')?.value as number) + 'E' + Util.normalize(interaction.options.first()?.options?.get('episode')?.value as number);
+    const fiep = 'S' + Util.normalize(interaction.options.data[0]?.options?.filter(x => x.name === 'season')?.[0].value as number) + 'E' + Util.normalize(interaction.options.data[0]?.options?.filter(x => x.name === 'episode')?.[0].value as number);
     const shows = body.filter(x => x.series !== 'Vixen' && x.series !== 'Freedom Fighters: The Ray');
 
     const GetNextEmbed = (show: string, season_and_episode: string) => {

@@ -1,4 +1,5 @@
-import Discord, { Snowflake } from 'discord.js';
+/* eslint-disable no-mixed-spaces-and-tabs */
+import Discord, { ColorResolvable, Snowflake } from 'discord.js';
 import fetch from 'node-fetch';
 import fs from 'fs';
 import config from './config/config.js';
@@ -13,10 +14,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
 import WSClient from './WSClient.js';
-import { EpisodeInfo, EmbedOpts, InfoInterface, Command } from './@types/Util.js';
-import { Collection } from 'discord.js';
-import { ApplicationCommandData } from 'discord.js';
-import { Md5 } from 'ts-md5/dist/md5.js';
+import { EpisodeInfo, EmbedOpts, InfoInterface, Command, AutoInt } from './@types/Util.js';
 
 Array.prototype.remove = function(...item) {
     if (Array.isArray(item)) {
@@ -109,8 +107,7 @@ class Util {
         url = url.replace('https://discordapp.com/api/webhooks/', '').replace('https://discord.com/api/webhooks/', '');
         const split = url.split('/');
         if (split.length < 2) return false;
-
-        const client = new Discord.WebhookClient(split[0] as Snowflake, split[1]);
+        const client = new Discord.WebhookClient({ id: split[0], token: split[1] });
 
         if (message instanceof Error) message = message.stack ?? message.message;
 
@@ -195,7 +192,7 @@ class Util {
 
         if (title && typeof title == 'string') embed.setTitle(title);
         if (options.description && typeof options.description == 'string') embed.setDescription(options.description + `\n${logos}`);
-        if (options.color) embed.setColor(options.color);
+        if (options.color) embed.setColor(options.color as ColorResolvable);
         if (options.image && typeof options.image == 'string') embed.setImage(options.image);
         if (options.url && typeof options.url == 'string') embed.setURL(options.url);
         if (options.timestamp && (typeof options.timestamp == 'number' || options.timestamp instanceof Date)) embed.setTimestamp(options.timestamp);
@@ -209,117 +206,6 @@ class Util {
         }
 
         return embed;
-    }
-
-    static async CITest(): Promise<void> {
-        console.log('Starting CI test');
-
-        if (!process.gideon.options.http) return; //ts pepega
-        
-        process.gideon.options.http.api = 'https://gideonbot.com/api/dump';
-
-        const tests = await import('./tests.js');
-
-        const channel_id = Util.GenerateSnowflake();
-        const guild_id = Util.GenerateSnowflake();
-
-        const user = {
-            id: process.gideon.owner,
-            username: 'Test',
-            discriminator: '0001',
-            avatar: null,
-            bot: false,
-            system: false,
-            flags: 64
-        };
-
-        const member = {
-            user: user,
-            nick: null,
-            roles: [],
-            joined_at: new Date().toISOString(),
-            deaf: false,
-            mute: false
-        };
-
-        process.gideon.guilds.add({
-            name: 'Test',
-            region: 'US',
-            member_count: 2,
-            large: false,
-            features: [],
-            embed_enabled: true,
-            premium_tier: 0,
-            verification_level: 1,
-            explicit_content_filter: 1,
-            mfa_level: 0,
-            joined_at: new Date().toISOString(),
-            default_message_notifications: 0,
-            system_channel_flags: 0,
-            id: guild_id,
-            unavailable: false,
-            roles: [
-                {
-                    id: guild_id,
-                    name: '@everyone',
-                    color: 3447003,
-                    hoist: true,
-                    position: 1,
-                    permissions: 66321471,
-                    managed: false,
-                    mentionable: false
-                }
-            ],
-            members: [
-                {
-                    user: process.gideon.user?.toJSON(),
-                    nick: null,
-                    roles: [],
-                    joined_at: new Date().toISOString(),
-                    deaf: false,
-                    mute: false
-                },
-                member
-            ],
-            owner_id: user.id
-        });
-
-        process.gideon.channels.add({
-            nsfw: false,
-            name: 'test-channel',
-            type: 0,
-            guild_id: guild_id,
-            id: channel_id
-        });
-
-        for (const item of tests.commands) {
-            const interaction = new Discord.CommandInteraction(process.gideon, {
-                type: 2,
-                token: 'lol',
-                id: Util.GenerateSnowflake(),
-                channel_id: channel_id,
-                guild_id: guild_id,
-                member: member,
-                data: item
-            });
-
-            process.gideon.emit('interaction', interaction);
-        }
-
-        //We need to wait for all requests to go through
-        await Util.delay(5e3);
-
-        // eslint-disable-next-line no-constant-condition
-        while (true) {
-            console.log('Checking if all requests are over...');
-            // @ts-expect-error accessing a private property
-            if (!process.gideon.rest.handlers.array().map(x => x._inactive).some(x => !x)) break;
-            await Util.delay(2e3);
-        }
-
-        console.log('Run successful, exiting with code 0');
-        process.gideon.destroy();
-        process.exit();
     }
 
     static truncate(str: string, length: number, useWordBoundary: boolean): string {
@@ -378,70 +264,20 @@ class Util {
             await msg?.pin();
         }
         
-        catch (ex) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        catch (ex: any) {
             Util.log('Caught an exception while backing up!: ' + ex.stack);
         }
     }
 
-    static async Starboard(reaction: Discord.MessageReaction, user: Discord.User): Promise<void> {
-        if (reaction.partial) {
-            await reaction.fetch();
-            await reaction.users.fetch();
-        }
-        if (!reaction.message) return;
-        if (reaction.message.deleted) return;
-        if (reaction.message.partial) await reaction.message.fetch();
-        if (!reaction.message.guild) return;
-        if (reaction.message.guild.id !== '595318490240385037') return;
-        if (reaction.emoji.name !== '⭐') return;
-        if (reaction.message.embeds[0]) return;
-        if (reaction.users.cache.size > 1) return;
-
-        const board = <Discord.TextChannel>process.gideon.guilds?.cache?.get?.('595318490240385037')?.channels?.cache?.get?.('691639957835743292');
-
-        const starmsg = Util.Embed(undefined, {
-            author: {
-                name: reaction.message.author?.tag as string,
-                icon: reaction.message.author?.displayAvatarURL() as string
-            },
-            description: reaction.message.content as string,
-            fields: [
-                {
-                    name: 'Message Info:',
-                    value: 'Sent in: ' + reaction.message.channel.toString() + ' | Starred by: ' + user.tag + ` | [Jump](${reaction.message.url})`
-                }
-            ]
-        });
-
-        if (reaction.message.attachments.size > 0) {
-            starmsg.setImage(reaction.message.attachments.first()?.proxyURL ?? '');
-        }
-
-        await board?.send({ embeds: [starmsg] });    
-    }
-
-    static InitStatus(): void {
-        if (process.gideon.statuses.length > 0) {
-            Util.log('InitStatus called but statuses were not empty (called multiple times??)');
-            return;
-        }
-
-        process.gideon.statuses.push({name: 's1', fetch: async () => { return {type: 'WATCHING', value: 'DC Shows | gideonbot.com'}; }});
-
-        process.gideon.statuses.push({name: 's2', fetch: async () => {
-            let mbc = !process.gideon.guilds.cache.get('595318490240385037') ? [0] : [process.gideon.guilds.cache.get('595318490240385037')?.members.cache.filter(x => !x.user.bot).size];
-    
-            if (mbc) mbc = mbc.filter(x => x);
-            return {type: 'WATCHING', value: `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`};
-        }});
-
-        process.gideon.statuses.push({name: 's3', fetch: async () => {
-            return {type: 'WATCHING', value: `${process.gideon.guilds.cache.size} Guilds | gideonbot.com`};
-        }});
-
-        this.CheckEpisodes();
-
-        Util.log(`Initialized statuses with \`${process.gideon.statuses.length}\` entries!`);
+    static async InitStatus(): Promise<void> {
+        const mbc = !process.gideon.guilds.cache.get('595318490240385037') ? [0] : [process.gideon.guilds.cache.get('595318490240385037')?.members.cache.filter(x => !x.user.bot).size];
+        process.gideon.user?.setActivity({type: 'WATCHING', name: 'DC Shows | gideonbot.com'});
+        await this.delay(10000);
+        process.gideon.user?.setActivity({type: 'WATCHING', name: `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`});
+        await this.delay(10000);
+        process.gideon.user?.setActivity({type: 'WATCHING', name: `${process.gideon.guilds.cache.size} Guilds | gideonbot.com`});
+        await this.delay(10000);
     }
 
     static CheckEpisodes(): void {
@@ -510,31 +346,6 @@ class Util {
         }
     }
 
-    static async UpdateStatus(): Promise<void> {
-        if (process.gideon.statuses.length < 1) return;
-
-        const item = process.gideon.statuses[0];
-        
-        if (process.gideon.statuses.length > 1) {
-            //we move the item to the end of the array if it's not the only item
-            process.gideon.statuses.shift();
-            process.gideon.statuses.push(item);
-        }
-        
-        try {
-            const status = await item.fetch();
-            const current_activity = process.gideon.user?.presence.activities[0];
-
-            if (!current_activity || current_activity.name != status.value || current_activity.type != status.type) {
-                process.gideon.user?.setActivity(status.value, { type: status.type }); 
-            }
-        }
-        
-        catch (ex) {
-            Util.log('Exception when updating status!\n' + ex);
-        }
-    }
-
     static Welcome(member: Discord.GuildMember): void {
         if (member.guild.id !== '595318490240385037') return;
         const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
@@ -544,44 +355,6 @@ class Util {
 
         const welcome = `Greetings Earth-Prime-ling ${member}!\nWelcome to the Time Vault<:timevault:686676561298063361>!\nIf you want full server access make sure to read <#595935317631172608>!\n${logos}`;
         channel.send(welcome);
-    }
-
-    static GenerateSnowflake(): string {
-        let rv = '';
-        const possible = '1234567890';
-    
-        for (let i = 0; i < 19; i++) rv += possible.charAt(Math.floor(Math.random() * possible.length));
-        return rv;
-    }
-
-    static async GuildJoinReactions(reaction: Discord.MessageReaction, user: Discord.User): Promise<void> {
-        if (reaction.partial) {
-            await reaction.fetch();
-        }
-
-        if (!reaction.message) return;
-        if (reaction.message.deleted) return;
-        if (reaction.message.partial) await reaction.message.fetch();
-        if (!reaction.message.guild) return;
-
-        if (reaction.message.channel.id !== '622415301144870932') return;
-        if (![process.gideon.owner, '351871113346809860'].includes(user.id)) return;
-
-        if (reaction.message.embeds?.[0].title?.toLowerCase()?.includes('joined')) {
-            const id = reaction.message.embeds?.[0].description?.match(/\d{17,19}/)?.[0];
-            if (reaction.emoji.name === '❌') {
-                const gb = process.gideon.getGuild.get(id).blacklist = 1;
-                process.gideon.setGuild.run(gb);
-                Util.log(`Guild \`${id}\` has been blacklisted!`);
-            }
-            else if (reaction.emoji.name === '✅') {
-                const gb = process.gideon.getGuild.get(id).blacklist = 0;
-                process.gideon.setGuild.run(gb);
-                Util.log(`Guild \`${id}\` has been un-blacklisted!`);
-            }
-            else return;
-        }
-        else return;
     }
 
     static LoadCommands(): Promise<void> {
@@ -624,59 +397,57 @@ class Util {
         });
     }
 
+    static LoadAutoInt(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const start = process.hrtime.bigint();
+    
+            recursive('./interactions/autocomplete', async (err, files) => {
+                if (err) {
+                    Util.log('Error while reading files:\n' + err);
+                    return reject(err);
+                }
+        
+                const jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
+                if (jsfiles.length < 1) {
+                    console.log('No files to load!');
+                    return reject('No files');
+                }
+    
+                console.log(`Found ${jsfiles.length} files`);
+    
+                for (const file_path of jsfiles) {
+                    const cmd_start = process.hrtime.bigint();
+    
+                    const props: AutoInt = await import(`./${file_path}`);
+                    
+                    process.gideon.auto.set(props.name, props);
+            
+                    const cmd_end = process.hrtime.bigint();
+                    const took = (cmd_end - cmd_start) / BigInt('1000000');
+            
+                    console.log(`${Util.normalize(jsfiles.indexOf(file_path) + 1)} - ${file_path} loaded in ${took}ms`);
+                }
+        
+                const end = process.hrtime.bigint();
+                const took = (end - start) / BigInt('1000000');
+                Util.log(`All files loaded in \`${took}ms\``);
+
+                resolve();
+            });
+        });
+    }
+
     static async DeployCommands(): Promise<void | boolean> {
-        const global: Collection<string, ApplicationCommandData> = new Collection();
-        const guild: Collection<string, ApplicationCommandData> = new Collection();
+        const data = [];
+        // eslint-disable-next-line no-restricted-syntax
+        for (const item of process.gideon.commands.values()) data.push(item.data);
 
-        const files = await recursive('./cmds').catch(err => Util.log('Error while reading commands:\n' + err));
-        if (!Array.isArray(files)) return; //in case it somehow fails the catch block will return a boolean
-
-        const jsfiles = files.filter(fileName => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
-        if (jsfiles.length < 1) {
-            return Util.log('No commands to load!');
+        if (process.gideon.user?.id === process.env.DEV_CLIENT_ID) {
+		  await process.gideon.guilds.cache
+                .get(process.env.DEV_GUILD_ID as Snowflake)
+                ?.commands.set(data);
+		  return console.log('Application Commands deployed!');
         }
-
-        for (const file_path of jsfiles) {
-            const props: Command = await import(`./${file_path}`);
-            
-            if (file_path.includes('global')) global.set(props.data.name, props.data);
-            else if (file_path.includes('guild')) guild.set(props.data.name, props.data);
-        }
-
-        const all = global.concat(guild);
-
-        if (process.gideon.user?.id === '595328879397437463') {
-            const globalcmds = await process.gideon.application?.commands.fetch();
-            const guildcmds = await process.gideon.guilds.cache.get('595318490240385037')?.commands.fetch();
-
-            if (globalcmds?.size !== global.size || guildcmds?.size !== guild.size) {
-                if (globalcmds?.size !== global.size) {
-                    await process.gideon.application?.commands.set(global.array());
-                }
-
-                if (guildcmds?.size !== guild.size) {
-                    await process.gideon.guilds.cache.get('595318490240385037')?.commands.set(guild.array());
-                }
-            }
-
-            else {
-                const globallocalhash = Md5.hashStr(JSON.stringify(all.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
-                const guildlocalhash = Md5.hashStr(JSON.stringify(guild.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
-                const globalhash = Md5.hashStr(JSON.stringify(globalcmds.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
-                const guildhash = Md5.hashStr(JSON.stringify(guildcmds.map(x => x.options).filter(x => x !== undefined && (x as unknown as boolean) !== Array.isArray(x) && x.length)));
-
-                if (globallocalhash !== globalhash) await process.gideon.application?.commands.set(global.array());
-                if (guildlocalhash !== guildhash) await process.gideon.guilds.cache.get('595318490240385037')?.commands.set(guild.array());
-            
-            }
-
-            return Util.log('Application Commands deployed!');
-        }
-
-        else if (process.gideon.user?.id === '598132992874905600') await process.gideon.guilds.cache.get('709061970078335027')?.commands.set(all.array());
-        else if (process.gideon.user?.id === '621026307937140756') await process.gideon.guilds.cache.get('604426720216612894')?.commands.set(all.array());
-
-        Util.log('Application Commands deployed!');
     }
 
     static LoadEvents(): Promise<void> {
@@ -895,7 +666,6 @@ class Util {
 
     static GetCleverBotResponse(text: string, context: string[]): Promise<string> {
         return new Promise((resolve, reject) => {
-            //@ts-ignore
             cleverbot(text, context, undefined, 1e4).then(response => {
                 if (!response || response.toLowerCase().includes('www.cleverbot.com')) reject('User Agent outdated');
                 this.IncreaseStat('ai_chat_messages_processed');
@@ -917,7 +687,7 @@ class Util {
         let arr = [];
         let last = null;
     
-        for (const m of message.channel.messages.cache.array().reverse()) {
+        for (const m of [...message.channel.messages.cache.values()].reverse()) {
             if (!last) last = m.createdAt;
     
             else {
@@ -939,13 +709,12 @@ class Util {
         }
     
         arr = arr.reverse();
-        message.channel.startTyping().catch(Util.log);
+        message.channel.sendTyping().catch(Util.log);
     
         try {
             const response = await this.GetCleverBotResponse(text, arr).catch(Util.log);
             if (typeof response != 'string') {
                 message.react('🚫').catch(Util.log);
-                message.channel.stopTyping(true);
                 return;
             }
 
@@ -957,20 +726,20 @@ class Util {
                 message.reply(response).then(sent => {
                     if (sent) sent.cleverbot = true;
                     message.cleverbot = true;
-                }).finally(() => message.channel.stopTyping(true));
+                }).catch(Util.log);
             }
             else {
                 await Util.delay(2500);
                 message.channel.send(response).then(sent => {
                     if (sent) sent.cleverbot = true;
                     message.cleverbot = true;
-                }).finally(() => message.channel.stopTyping(true));
+                }).catch(Util.log);
             }
         }
 
         catch (e) {
             console.log(e);
-            message.channel.stopTyping(true);
+            message.react('🚫').catch(Util.log);
         }
     }
 }

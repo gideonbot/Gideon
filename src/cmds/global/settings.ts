@@ -3,7 +3,7 @@ import { CommandInteraction, TextChannel, Permissions, Snowflake } from 'discord
 import { Command } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
-    const setting = interaction.options.first()?.options?.first()?.value;
+    const setting = interaction.options.data[0]?.options?.[0]?.value;
 
     const guildsettings = process.gideon.getGuild.get(interaction.guild?.id);
 

@@ -1,4 +1,3 @@
-import { Guild } from 'discord.js';
 import Util from '../../Util.js';
 
 export default {

@@ -6,18 +6,16 @@ export default {
     name: 'ready',
     once: true,
     async run(gideon: Client): Promise<void> {
-        if (process.env.CI) gideon.owner = Util.GenerateSnowflake();
-        else {
-            const app = await gideon.application?.fetch().catch(x => Util.log('Failed to fetch owner: ' + x));
-            if (app && app instanceof ClientApplication && app.owner && app.owner instanceof User) gideon.owner = app.owner.id;
-            else if (app && app instanceof ClientApplication && app.owner && app.owner instanceof Team) gideon.owner = app.owner.ownerID as string;
-        }
+      
+        const app = await gideon.application?.fetch().catch(x => Util.log('Failed to fetch owner: ' + x));
+        if (app && app instanceof ClientApplication && app.owner && app.owner instanceof User) gideon.owner = app.owner.id;
+        else if (app && app instanceof ClientApplication && app.owner && app.owner instanceof Team) gideon.owner = app.owner.ownerId as string;
     
         Util.SQL.InitDB();
         await Util.InitCache();
         Util.InitStatus();
-        Util.UpdateStatus();
         await Util.LoadCommands();
+        await Util.LoadAutoInt();
         await Util.DeployCommands();
         Util.InitWS();
     
@@ -29,8 +27,7 @@ export default {
         }
         
         const twodays = 1000 * 60 * 60 * 48;
-        setInterval(Util.UpdateStatus, 10e3);
-        setInterval(() => Util.CheckEpisodes(), 30e3);
+        setInterval(() => Util.InitStatus(), 30e3);
         setInterval(Util.SQLBkup, twodays);
     
         console.log('Ready!');
@@ -38,6 +35,5 @@ export default {
         const lcl = new LCL('../');
         const commit = await lcl.getLastCommit();
         if (commit) Util.log(`Logged in as \`${process.gideon.user?.tag}\`.\n[#${commit.shortHash}](<${commit.gitUrl}/commit/${commit.hash}>) - \`${commit.subject}\` by \`${commit.committer.name}\` on branch [${commit.gitBranch}](<${commit.gitUrl}/tree/${commit.gitBranch}>).`);
-        if (process.env.CI) Util.CITest();
     }
 };

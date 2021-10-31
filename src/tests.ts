@@ -121,7 +121,7 @@ export const commands = [
         ]
     },
     { name: 'leaderboard' },
-  /*   {
+    /*   {
         name: 'guess',
         options: [
             {

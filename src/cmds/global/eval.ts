@@ -7,7 +7,7 @@ import { CommandInteraction } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
-    const code = interaction.options.first()?.value;
+    const code = interaction.options.data[0]?.value;
     const returnedValue = eval(code as string);
 
     if (typeof returnedValue === 'undefined') {
@@ -23,7 +23,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 
     if (printValue == '{}') return;
 
-    return interaction.reply({content: Util.truncate(printValue as string, 1900, true), code: true});
+    return interaction.reply({content: Util.truncate(printValue as string, 1900, true)});
 }
 
 export const info: Command['info'] = {

@@ -1,6 +1,5 @@
-
 import Util from '../../Util.js';
-import { CommandInteraction, CommandInteractionOption, GuildMember } from 'discord.js';
+import { CommandInteraction, GuildMember } from 'discord.js';
 import { Command, Wiki, WikiQuery, WikiResult } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {

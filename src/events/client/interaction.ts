@@ -9,5 +9,6 @@ export default {
             Util.Interactions.SlashCommands(interaction);
         }
         else if (interaction.isButton()) await interaction.deferUpdate();
+        else if (interaction.isAutocomplete()) Util.Interactions.Autocomplete(interaction);
     }
 };

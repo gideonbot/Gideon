@@ -6,9 +6,9 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     const lotopening = 'https://cdn.discordapp.com/attachments/595934804378386442/674611602577817621/YouCut_20200205_144514668.mp4';
     const luciferopening = 'https://cdn.discordapp.com/attachments/679864620864765983/705423144361656370/lucifer.mp4';
     
-    if (interaction.options.first()?.value === 'flash') return interaction.reply(flashopening);
-    else if (interaction.options.first()?.value === 'legends') return interaction.reply(lotopening);
-    else if (interaction.options.first()?.value === 'lucifer') return interaction.reply(luciferopening);
+    if (interaction.options.data[0]?.value === 'flash') return interaction.reply(flashopening);
+    else if (interaction.options.data[0]?.value === 'legends') return interaction.reply(lotopening);
+    else if (interaction.options.data[0]?.value === 'lucifer') return interaction.reply(luciferopening);
 }
 
 export const info: Command['info'] = {

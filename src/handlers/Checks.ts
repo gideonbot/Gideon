@@ -213,9 +213,9 @@ class Checks {
     }
 
     static async LBG(guild: Discord.Guild): Promise<void> {
-        const ub = process.gideon.getUser.get(guild.ownerID);
+        const ub = process.gideon.getUser.get(guild.ownerId);
         const gbl = process.gideon.getGuild.get(guild.id);
-        const owner = await guild.members.fetch(guild.ownerID).catch(ex => console.log(ex)) as Discord.GuildMember;
+        const owner = await guild.members.fetch(guild.ownerId).catch(ex => console.log(ex)) as Discord.GuildMember;
         
         if (ub) {
             if (ub.blacklist === 1 && gbl) {
@@ -227,7 +227,7 @@ class Checks {
         if (!gbl) return;
         if (gbl.blacklist === 0) return;
 
-        const textchannels = guild.channels.cache.filter(c=> c.type == 'text');
+        const textchannels = guild.channels.cache.filter(c=> c.type == 'GUILD_TEXT');
         const channels = textchannels.filter(c=> c.permissionsFor((guild.me as Discord.GuildMember)).has('SEND_MESSAGES')) as Discord.Collection<string, Discord.TextChannel>;
         if (!channels.size) {
             await guild.leave();
@@ -255,7 +255,7 @@ class Checks {
             spamcount = {
                 start: Date.now(),
                 usages: 1,
-                timeout: process.gideon.setTimeout(() => {
+                timeout: setTimeout(() => {
                     process.gideon.spamcount.delete(id);
                 }, 10 * 1000)
             };
@@ -319,8 +319,9 @@ class Checks {
 
             process.gideon.setGuild.run(gb);
             Util.log(`Guild \`${guild.name}\` has been blacklisted due to it being a bot collecting guild with \`${bots}\` bots!`);
-
-            const textchannels = guild.channels.cache.filter((c: Discord.GuildChannel) => c.type == 'text');
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
+            const textchannels = guild.channels.cache.filter((c: Discord.GuildChannel) => c.type == 'GUILD_TEXT');
             const channels = textchannels.filter(c => c.permissionsFor((guild.me as Discord.GuildMember)).has('SEND_MESSAGES'));
             
             if (channels.size) await (channels.first() as Discord.TextChannel)?.send(`This guild is banned for being a bot collecting guild (\`${bots}\` bots!)\nIf you believe this is an error please contact \`adrifcastr#0001\`.\nNow leaving this guild!\nhttps://discord.gg/h9SEQaU`).catch((ex: Error) => console.log(ex));
@@ -395,14 +396,14 @@ class Checks {
         const flagged = process.gideon.getUser.get(member.id);
 
         if (flagged?.blacklist === 1) {
-            const guildowner = await member.guild.members.fetch(member.guild.ownerID);
+            const guildowner = await member.guild.members.fetch(member.guild.ownerId);
             const dmstring = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of your guild \`(${member.guild.name})\`!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisement\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n- Spamming NSFW media\n\`\`\`\nWe advise to ban this user.`;
-            const string = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of this guild!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisement\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n- Spamming NSFW media\n\`\`\`\nWe advise to notify the guild owner (<@${member.guild.ownerID}>).`;
+            const string = `:warning:Warning, malicious account detected!:warning:\nWe have detected that \`${member.user.tag} (${member.id})\` is a member of this guild!\nThe mentioned user is known for one or more of the following actions in DC guilds:\n\`\`\`\n- DM advertisement\n- DM spam\n- Rude behaviour\n- Breaking rules\n- N-word swearing\n- Spamming NSFW media\n\`\`\`\nWe advise to notify the guild owner (<@${member.guild.ownerId}>).`;
             
             await guildowner.send(dmstring)
                 .then(() => Util.log(`Sent account warning about \`${member.user.tag}\` in \`${member.guild.name}\` to \`${guildowner.user.tag}\`!`))
                 .catch(async () => {
-                    const textchannels = member.guild.channels.cache.filter(c=> c.type == 'text');
+                    const textchannels = member.guild.channels.cache.filter(c=> c.type == 'GUILD_TEXT');
                     const allowedchannels = textchannels.filter(c => c.permissionsFor((member.guild.me as Discord.GuildMember)).has('SEND_MESSAGES'));
                     if (!allowedchannels.first()) return;
                     (allowedchannels.first() as Discord.TextChannel)?.send(string);
