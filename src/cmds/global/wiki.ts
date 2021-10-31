@@ -137,6 +137,7 @@ export const data: Command['data'] = {
             type: 'STRING',
             name: 'term',
             description: 'The search term',
+            autocomplete: true,
             required: true
         }
     ]
