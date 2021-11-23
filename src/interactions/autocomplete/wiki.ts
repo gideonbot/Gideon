@@ -1,5 +1,5 @@
 import type { AutocompleteInteraction } from 'discord.js';
-import { Wiki, WikiQuery } from 'src/@types/Util';
+import type { Wiki, WikiQuery } from 'src/@types/Util';
 import { fetchJSON } from 'src/Util';
 
 export const name = 'wiki';

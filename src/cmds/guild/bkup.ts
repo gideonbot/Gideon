@@ -1,5 +1,5 @@
-import { CommandInteraction } from 'discord.js';
-import { Command } from 'src/@types/Util.js';
+import type { CommandInteraction } from 'discord.js';
+import type { Command } from 'src/@types/Util.js';
 import { SQLBkup } from 'src/Util';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {

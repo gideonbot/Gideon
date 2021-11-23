@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
-import { CommandInteraction, CommandInteractionOption } from 'discord.js';
-import { Command } from 'src/@types/Util.js';
+import type { CommandInteraction, CommandInteractionOption } from 'discord.js';
+import type { Command } from 'src/@types/Util.js';
 import { log } from 'src/Util';
 
 export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {

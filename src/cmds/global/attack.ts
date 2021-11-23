@@ -1,5 +1,5 @@
 import { CommandInteraction, CommandInteractionOption, MessageEmbed } from 'discord.js';
-import { Command } from 'src/@types/Util.js';
+import type { Command } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
     const auth = interaction.user;

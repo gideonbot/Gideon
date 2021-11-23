@@ -1,6 +1,6 @@
 import gideonapi from 'gideon-api';
 import { CommandInteraction, MessageEmbed, Permissions, Message } from 'discord.js';
-import { Command } from 'src/@types/Util.js';
+import type { Command } from 'src/@types/Util.js';
 import { footer } from 'src/config/config';
 
 export async function run(interaction: CommandInteraction): Promise<Message | void> {

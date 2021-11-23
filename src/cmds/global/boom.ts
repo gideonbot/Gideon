@@ -1,5 +1,5 @@
 import { CommandInteraction, MessageEmbed, Permissions } from 'discord.js';
-import { Command } from 'src/@types/Util.js';
+import type { Command } from 'src/@types/Util.js';
 import { delay, log } from 'src/Util';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
