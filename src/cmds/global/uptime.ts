@@ -1,15 +1,9 @@
-import type { CommandInteraction, GuildMember } from 'discord.js';
+import { CommandInteraction, MessageEmbed } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
 	return interaction.reply({
-		embeds: [
-			Util.Embed(
-				'Enter Flashtime!',
-				{ description: Util.secondsToDifferenceString((interaction.client.uptime as number) / 1000, { enableSeconds: true }) },
-				interaction.member as GuildMember
-			)
-		]
+		embeds: [new MessageEmbed().setTitle('Enter Flashtime!').setDescription(`<t:${(interaction.client.uptime as number) / 1000}:R>`)]
 	});
 }
 

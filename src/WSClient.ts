@@ -75,7 +75,7 @@ class WSClient extends EventEmitter {
 					this._send({ op: 2 });
 					return;
 				}
-
+				// @ts-ignore whatever this is
 				case 3: {
 					this.lastPong = new Date();
 				}

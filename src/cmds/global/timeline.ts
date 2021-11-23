@@ -1,16 +1,15 @@
 import gideonapi from 'gideon-api';
-import type { CommandInteraction, GuildMember } from 'discord.js';
+import { CommandInteraction, MessageEmbed } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
 	const timeline = await gideonapi.timeline();
 	return interaction.reply({
 		embeds: [
-			Util.Embed(
-				'Timeline change detected!',
-				{ description: timeline as string, image: 'https://i.imgur.com/qWN3luc.gif' },
-				interaction.member as GuildMember
-			)
+			new MessageEmbed()
+				.setTitle('Timeline change detected!')
+				.setDescription(timeline as string)
+				.setImage('https://i.imgur.com/qWN3luc.gif')
 		]
 	});
 }

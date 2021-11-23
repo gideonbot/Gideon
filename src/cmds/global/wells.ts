@@ -1,4 +1,4 @@
-import type { CommandInteraction, GuildMember } from 'discord.js';
+import { CommandInteraction, MessageEmbed } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 import { delay } from 'src/Util';
 
@@ -71,7 +71,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 
 	return interaction.editReply({
 		content: `You have reached out to Earth-${result.en}`,
-		embeds: [Util.Embed(result.title, { description: result.desc, image: result.gif }, interaction.member as GuildMember)]
+		embeds: [new MessageEmbed().setTitle(result.title).setDescription(result.desc).setImage(result.gif)]
 	});
 }
 

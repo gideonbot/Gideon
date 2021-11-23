@@ -1,4 +1,4 @@
-import type { CommandInteraction, GuildMember } from 'discord.js';
+import { CommandInteraction, MessageEmbed } from 'discord.js';
 import type { Command, Wiki, WikiQuery, WikiResult } from 'src/@types/Util.js';
 import { fetchJSON } from 'src/Util';
 
@@ -82,14 +82,12 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 
 	return interaction.reply({
 		embeds: [
-			Util.Embed(
-				article.title,
-				{
-					description: `${st}${article.abstract}${st}\n\n**[Click here to read the full article](https://${wiki?.url}${url} 'https://${wiki?.url}${url}')**`,
-					thumbnail: article.thumbnail
-				},
-				interaction.member as GuildMember
-			)
+			new MessageEmbed()
+				.setTitle(article.title)
+				.setDescription(
+					`${st}${article.abstract}${st}\n\n**[Click here to read the full article](https://${wiki?.url}${url} 'https://${wiki?.url}${url}')**`
+				)
+				.setThumbnail(article.thumbnail)
 		]
 	});
 }

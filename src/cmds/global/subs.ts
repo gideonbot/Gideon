@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import OpenSubtitles from 'opensubtitles-api';
 import { CommandInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';

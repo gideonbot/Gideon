@@ -1,4 +1,4 @@
-import { CommandInteraction, GuildMember, MessageActionRow, MessageButton } from 'discord.js';
+import { CommandInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
@@ -14,17 +14,15 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 
 	return interaction.reply({
 		embeds: [
-			Util.Embed(
-				"Gideon's stats:",
-				{
-					description: `Total guilds: \`${interaction.client.guilds.cache.size}\`\nTotal users: \`${users.toLocaleString(
+			new MessageEmbed()
+				.setTitle("Gideon's stats:")
+				.setDescription(
+					`Total guilds: \`${interaction.client.guilds.cache.size}\`\nTotal users: \`${users.toLocaleString(
 						'de-DE'
 					)}\`\nUsed commands: \`${cmds.toLocaleString('de-DE')}\`\nMessages sent: \`${msgs.toLocaleString(
 						'de-DE'
 					)}\`\nAI chat messages: \`${aimsgs.toLocaleString('de-DE')}\``
-				},
-				interaction.member as GuildMember
-			)
+				)
 		],
 		components: [new MessageActionRow().addComponents(buttons)]
 	});
