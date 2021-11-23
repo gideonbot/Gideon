@@ -1,8 +1,8 @@
-import Discord, { Client, Guild, GuildMember, Message, TextChannel, Util } from 'discord.js';
+import Discord, { Client, Guild, GuildMember, Message, MessageEmbed, TextChannel, Util } from 'discord.js';
 import anyAscii from 'any-ascii';
 import Filter from 'bad-words';
 import type { AbmTestValue } from '../@types/Util.js';
-import { delay, fetchJSON, IMG, log } from 'src/Util.js';
+import { delay, fetchJSON, log } from 'src/Util.js';
 
 export function ABM_Test(message: Discord.Message): Promise<AbmTestValue> {
     // eslint-disable-next-line no-async-promise-executor
@@ -86,11 +86,11 @@ export function ABM(gideon: Client, message: Message): void {
                 
             if (!message.member) return; //this will (SHOULD*) never happen but its just here so ts doesn't whine :justlol:
 
-            const abmsg = await message.channel.send({
+            const abmsg: Message = await message.channel.send({
                 content: `<@${message.author.id}>`,
-                embeds: [Embed(`${siren}Anti-BS-Mode is enabled!${siren}`, {
-                    description: 'You posted a link to a forbidden social media account!'
-                }, message.member)] });
+                embeds: [new MessageEmbed().setTitle(`${siren}Anti-BS-Mode is enabled!${siren}`).setDescription(`**${message.author.tag}**, you have been warned for using **${res.content}** in **${(message.channel as Discord.TextChannel).name}**.`).setColor(0xFF0000).setFooter('Anti-BS-Mode is enabled.')]
+            });
+
             await delay(3500);
             await abmsg.delete();
         }
@@ -136,75 +136,6 @@ export async function CVM(gideon: Client, message: Message): Promise<void | Mess
     }
     await delay(200);
     message.delete();
-}
-
-export async function CSD(gideon: Client, message: Discord.Message): Promise<void> {
-    if (!message.guild) return;
-    if (message.editedAt) return;
-    if (message.content.match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)) return;
-
-    const eggs = gideon.getGuild.get(message.guild.id);
-    if (!eggs) return;
-    if (eggs.eastereggs === 0) return;
-
-    const vid = 'https://cdn.discordapp.com/attachments/525341082435715085/638782331791867930/Crime_Solving_Devil.mp4';
-    const tls = 'https://twitter.com/LaurenGerman/status/996886094305050627\nhttps://twitter.com/tomellis17/status/996889307506864128';
-    const ctm = 'https://media.discordapp.net/attachments/595318490240385043/643119052939853824/image0.jpg';
-    const vid2 = 'https://cdn.discordapp.com/attachments/679864620864765983/686589432501239899/Hi_Im_Richard_Castle.mp4';
-    const train = 'https://cdn.discordapp.com/attachments/679864620864765983/688677813934620725/Gary_the_unspeakable_train-abomination.mp4';
-    const yombo = 'https://cdn.discordapp.com/attachments/679864620864765983/692020740215537755/YomboBomboMomboJombo.mp4';
-    const nuts = 'https://cdn.discordapp.com/attachments/679864620864765983/694607537902715010/CANDEEZ_NUTS.mp4';
-    const titanic = 'https://cdn.discordapp.com/attachments/679864620864765983/694628170527408289/Murder_on_the_Titanic.mp4';
-    const occupied = 'https://cdn.discordapp.com/attachments/679864620864765983/694629142322216970/otherwise_occupied.mp4';
-    const lwimg = 'https://images.glaciermedia.ca/polopoly_fs/1.24112192.1585937959!/fileImage/httpImage/image.jpg_gen/derivatives/landscape_804/logan-williams-a-coquitlam-actor-who-played-young-flash-in-the-tv-series-died-suddenly.jpg';
-    const lwimg2 = 'https://pmctvline2.files.wordpress.com/2020/04/logan-williams-dies-the-flash.jpg';
-    const lwgif = 'https://i.imgur.com/LHdTBnw.gif';
-    const lwstring = '**Grant Gustin:**\n_"Just hearing the devastating news that Logan Williams has passed away suddenly. This picture was early in the filming of The Flash pilot episode back in 2014. I was so impressed by not only Logan’s talent but his professionalism on set. My thoughts and prayers will be with him and his family during what is I’m sure an unimaginably difficult time for them. Please keep Logan and his family in your thoughts and prayers during what has been a strange and trying time for us all. Sending love to everyone."_';
-    const lw = Embed('<a:flash360:686326039525326946>R.I.P. Logan Williams<a:flash360:686326039525326946>', 
-        {description: lwstring, thumbnail: lwimg2, image: lwgif, author: {name: '04/09/2003 - 04/02/2020', icon: lwimg}});
-    const omelette = 'https://cdn.discordapp.com/attachments/669243069878501385/696770901185921106/You_have_failed_this_omelette.mp4'; 
-    const punching = 'https://cdn.discordapp.com/attachments/669243069878501385/696774257279107293/why_the_punching.mp4';
-    const donttouchme = 'https://cdn.discordapp.com/attachments/669243069878501385/696774255131492443/If_you_touch_me_with_that_thing.mp4';
-    const justabitdead = 'https://cdn.discordapp.com/attachments/669243069878501385/696774250845175868/I_feel_like_I_was_dead_or_something.mp4';
-    const notorture = 'https://cdn.discordapp.com/attachments/669243069878501385/696774256473931886/thanks_for_explaining.mp4';
-    const skirt = 'https://cdn.discordapp.com/attachments/669243069878501385/696774255559442452/skirt.mp4';
-    const eternalahole = 'https://cdn.discordapp.com/attachments/669243069878501385/696774249897132052/eternal_asshole.mp4';
-    const surpressedanger = 'https://cdn.discordapp.com/attachments/669243069878501385/696828835525820507/were_gonna_need_the_icequeen.mp4';
-    const marshmallows = 'https://cdn.discordapp.com/attachments/669243069878501385/696787036304048229/the_marshmallows_are_talking.mp4';
-    const unclear = 'https://cdn.discordapp.com/attachments/595934699285905409/602631699083558933/unclear.mp4';
-    const kneel = 'https://cdn.discordapp.com/attachments/679864620864765983/697074511312322580/Kneel_before_Zod.mp4';
-    const flotationmode = 'https://cdn.discordapp.com/attachments/679864620864765983/699303222023684167/flotationmode.mp4';
-    const fuckingfish = 'https://cdn.discordapp.com/attachments/679864620864765983/705421182102405160/fucking_fish.mp4';
-    const pregnant = 'https://cdn.discordapp.com/attachments/679864620864765983/705421182823825468/pregnant.mp4';
-
-    if (message.content.match(/(?:devil)/i)) message.channel.send(vid);
-    else if (message.content.match(/(?:deckerstar)/i)) {
-        const img = await IMG('rJpbLQx');
-        if (img) message.channel.send({ embeds: [Embed(undefined, {image: img})] });
-    }
-    else if (message.content.match(/(?:muffin)/i) && message.content.match(/(?:top)/i)) message.channel.send(tls);
-    else if (message.content.match(/(?:typical)/i) && message.content.match(/(?:cheetah)/i)) message.channel.send({ embeds: [Embed(undefined, {image: ctm})] });
-    else if (message.content.match(/(?:castle)/i)) message.channel.send(vid2);
-    else if (message.content.match(/(?:magic)/i)) message.channel.send(yombo);
-    else if (message.content.match(/(?:gary)/i) || message.content.match(/(?:train)/i) || message.content.match(/(?:abomination)/i)) message.channel.send(train);
-    else if (message.content.match(/(?:nuts)/i)) message.channel.send(nuts);
-    else if (message.content.match(/(?:titanic)/i)) message.channel.send(titanic);
-    else if (message.content.match(/(?:occupied)/i)) message.channel.send(occupied);
-    else if (message.content.match(/(?:rip)/i) && message.content.match(/(?:logan)/i)) message.channel.send({embeds: [lw]});
-    else if (message.content.match(/(?:omelette)/i)) message.channel.send(omelette);
-    else if (message.content.match(/(?:punching)/i)) message.channel.send(punching);
-    else if (message.content.match(/(?:touch)/i)) message.channel.send(donttouchme);
-    else if (message.content.match(/(?:feel)/i) && message.content.match(/(?:dead)/i)) message.channel.send(justabitdead);
-    else if (message.content.match(/(?:torture)/i)) message.channel.send(notorture);
-    else if (message.content.match(/(?:skirt)/i)) message.channel.send(skirt);
-    else if (message.content.match(/(?:asshole)/i)) message.channel.send(eternalahole);
-    else if (message.content.match(/(?:lexi)/i) || message.content.match(/(?:icequeen)/i)) message.channel.send(surpressedanger);
-    else if (message.content.match(/(?:marshmallows)/i)) message.channel.send(marshmallows);
-    else if (message.content.match(/(?:unclear)/i) || message.content.match(/(?:kidnapped)/i)) message.channel.send(unclear);
-    else if (message.content.match(/(?:kneel)/i)) message.channel.send(kneel);
-    else if (message.content.match(/(?:flotation)/i) && message.content.match(/(?:mode)/i)) message.channel.send(flotationmode);
-    else if (message.content.match(/(?:pregnant)/i)) message.channel.send(pregnant);
-    else if (message.content.match(/(?:fucking)/i) && message.content.match(/(?:fish)/i)) message.channel.send(fuckingfish);
 }
 
 export async function LBG(gideon: Client, guild: Guild): Promise<void> {
@@ -284,7 +215,7 @@ export async function Ads(gideon: Client, message: Discord.Message): Promise<voi
         }
 
         else if (invite.guild.id !== '595318490240385037') {
-            const embed = Embed(undefined, undefined, message.member)
+            const embed = new MessageEmbed()
                 .setDescription(`\`${message.author.tag}\` has been banned by ${gideon.user?.tag} because of \`automated anti-ads ban\`.`)
                 .setImage('https://media.discordapp.net/attachments/715564004621418577/769212118464725002/Homelander_2.gif');
 
@@ -430,7 +361,7 @@ export function GPD(gideon: Client, message: Message): void {
         if (usermention?.bot) return;
         if (usermention?.id === message.author.id) return;
 
-        const embed = Embed()
+        const embed = new MessageEmbed()
             .setTitle('Ghost Ping detected:')
             .setDescription(`\`${message.author.tag}\` has ghost-pinged ${usermention ? '' : rolemention ? 'the role ' : ''}${usermention ?? rolemention}:\n\nMessage content:\n\`\`\`${message.cleanContent}\n\`\`\`${message.cleanContent.includes('@') ? '' : '\nThe ping was delivered via inline reply.'}`);
 
