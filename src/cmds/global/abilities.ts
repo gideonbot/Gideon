@@ -65,7 +65,7 @@ export async function run(interaction: CommandInteraction): Promise<Message | un
 			.setFooter(footer, interaction.client.user?.displayAvatarURL());
 
 		const spembeds = [sp1, sp2, sp3, sp4, sp5, sp6];
-		return interaction.reply({ embeds: spembeds });
+		return void interaction.reply({ embeds: spembeds });
 	} else if (interaction.options.data[0]?.value === 'viber') {
 		const viber = new MessageEmbed()
 			.setColor('#2791D3')
@@ -78,7 +78,7 @@ export async function run(interaction: CommandInteraction): Promise<Message | un
 			.addField(abilities.vibers.title6, abilities.vibers.ability6, true)
 			.setFooter(footer, interaction.client.user?.displayAvatarURL());
 
-		return interaction.reply({ embeds: [viber] });
+		return void interaction.reply({ embeds: [viber] });
 	} else if (interaction.options.data[0]?.value === 'kryptonian') {
 		const kr1 = new MessageEmbed()
 			.setColor('#2791D3')
@@ -140,7 +140,7 @@ export async function run(interaction: CommandInteraction): Promise<Message | un
 			.setFooter(footer, interaction.client.user?.displayAvatarURL());
 
 		const krembeds = [kr1, kr2, kr3, kr4, kr5, kr6];
-		return interaction.reply({ embeds: krembeds });
+		return void interaction.reply({ embeds: krembeds });
 	}
 }
 
