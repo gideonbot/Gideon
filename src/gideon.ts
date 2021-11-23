@@ -3,7 +3,7 @@ dotenv.config({ path: '../.env' });
 import PrettyError from 'pretty-error';
 PrettyError.start().withoutColors();
 import Discord from 'discord.js';
-import Util from './Util.js';
+import { LoadEvents } from './Util.js';
 import { GideonCache } from './@types/Util.js';
 
 const gideon = new Discord.Client({
@@ -14,7 +14,6 @@ const gideon = new Discord.Client({
     restRequestTimeout: 25000
 });
 
-process.gideon = gideon;
 gideon.commands = new Discord.Collection();
 gideon.auto = new Discord.Collection();
 gideon.events = new Discord.Collection();
@@ -44,7 +43,7 @@ gideon.dc_show_urls = {
     greenlantern: 'http://api.tvmaze.com/shows/44776?embed=nextepisode'
 };
 
-Util.LoadEvents().then(() => {
+LoadEvents(gideon).then(() => {
     for (const event of gideon.events.values()) {
         if (event.process) {
             if (event.once) {
