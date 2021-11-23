@@ -1,13 +1,13 @@
-import { CommandInteraction, GuildMember, Permissions } from 'discord.js';
+import { CommandInteraction, MessageEmbed, Permissions } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
-import Util from '../../Util.js';
+import { delay, log } from 'src/Util';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
     try {
-        const acembed = Util.Embed('Blowing up S.T.A.R. Labs. Particle Accelerator...', {image: 'https://i.imgur.com/opCbZTn.gif'}, interaction.member as GuildMember);
+        const acembed = new MessageEmbed().setDescription('Blowing up S.T.A.R. Labs. Particle Accelerator...').setImage('https://i.imgur.com/opCbZTn.gif');
         interaction.reply({embeds: [acembed]});
 
-        await Util.delay(10000);
+        await delay(10000);
 
         const abilities = [
             {
@@ -39,20 +39,15 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         
         const result = abilities[Math.floor(Math.random() * abilities.length)];
     
-        const pwrembed = Util.Embed(result.title, {
-            description: result.desc,
-            image: result.gif
-        }, interaction.member as GuildMember);
-
-        await interaction.editReply({embeds: [pwrembed]});
-    }
+        const pwrembed = new MessageEmbed().setTitle(result.title).setDescription(result.desc).setImage(result.gif); {
+            await interaction.editReply({embeds: [pwrembed]});
+        }}
     
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     catch (ex: any) {
-        Util.log('Exception occurred while starting up the particle accelerator ' + ex.stack);
+        log('Exception occurred while starting up the particle accelerator ' + ex.stack);
         return interaction.reply({ content: 'An error occurred while trying to start the particle accelerator!', ephemeral: true });
-    } 
-}
+    } }
 
 export const info: Command['info'] = {
     owner: false,

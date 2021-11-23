@@ -1,10 +1,10 @@
 import { CommandInteraction } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
-import Util from '../../Util.js';
+import { SQLBkup } from 'src/Util';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
     interaction.reply('Performing database backup, please wait...');
-    await Util.SQLBkup();
+    SQLBkup(interaction.client);
     return interaction.editReply('Database backup complete! Please check <#622415301144870932>! :white_check_mark:');
 }
 
