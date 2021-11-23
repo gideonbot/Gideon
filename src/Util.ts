@@ -1,6 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import Discord, { ColorResolvable, Snowflake } from 'discord.js';
-import { footer, avatar } from './config/config.js';
+import { Client, MessageEmbed, Message, Snowflake, Collection, WebhookClient, TextChannel, Util } from 'discord.js';
+import { avatar } from './config/config.js';
 import fetch from 'node-fetch';
 import fs from 'fs';
 import zip from 'zip-promise';
@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
 import WSClient from './WSClient.js';
-import { EpisodeInfo, EmbedOpts, InfoInterface, Command, AutoInt } from './@types/Util.js';
+import type { EpisodeInfo, InfoInterface, Command, AutoInt } from './@types/Util.js';
 
 export function delay(inputDelay: number) : Promise<void> {
     // If the input is not a number, instantly resolve
@@ -51,10 +51,10 @@ export function secondsToDifferenceString(seconds_input : number, { enableSecond
     return outputArray.join(', ') + ' and ' + last;
 }
 
-export function log(message: string | Discord.MessageEmbed | Error, files?: string[]) : boolean {
+export function log(message: string | MessageEmbed | Error, files?: string[]) : boolean {
     if (!message) return false;
 
-    if (!(message instanceof Discord.MessageEmbed)) {
+    if (!(message instanceof MessageEmbed)) {
         console.log(String(message).replace(/`/g, '').trim());
     }
 
@@ -64,12 +64,12 @@ export function log(message: string | Discord.MessageEmbed | Error, files?: stri
     url = url.replace('https://discordapp.com/api/webhooks/', '').replace('https://discord.com/api/webhooks/', '');
     const split = url.split('/');
     if (split.length < 2) return false;
-    const client = new Discord.WebhookClient({ id: split[0], token: split[1] });
+    const client = new WebhookClient({ id: split[0], token: split[1] });
 
     if (message instanceof Error) message = message.stack ?? message.message;
 
     if (typeof message == 'string') {
-        for (const msg of Discord.Util.splitMessage(message, { maxLength: 1980 })) {
+        for (const msg of Util.splitMessage(message, { maxLength: 1980 })) {
             client.send({ content: msg, avatarURL: avatar, username: 'Gideon-Logs', files: files });
         }
     }
@@ -92,27 +92,27 @@ export async function IMG(imgid: string): Promise<string | null> {
     return res.data.images[ranum].link as string;
 }
 
-export function InitWS(): void {
+export function InitWS(gideon: Client): void {
     if (!process.env.WS_PORT || !process.env.WS_TOKEN) {
         log('Could not init WS: missing port/token');
         return;
     }
 
-    process.gideon.WSClient = new WSClient(`ws://localhost:${process.env.WS_PORT}/ws`, process.env.WS_TOKEN);
-    process.gideon.WSClient.on('READY', () => console.log('WS Ready'));
-    process.gideon.WSClient.on('DATA', (d: { type: string; }) => {
+    gideon.WSClient = new WSClient(`ws://localhost:${process.env.WS_PORT}/ws`, process.env.WS_TOKEN);
+    gideon.WSClient.on('READY', () => console.log('WS Ready'));
+    gideon.WSClient.on('DATA', (d: { type: string; }) => {
         if (d.type == 'REQUEST_STATS') {
-            const guilds = process.gideon.guilds.cache;
+            const guilds = gideon.guilds.cache;
                 
             const data = {
                 type: 'STATS',
                 guilds: guilds.size,
                 users: guilds.reduce((a, b) => a + b.memberCount, 0),
-                commands: process.gideon.getStat.get('commands_ran').value,
-                ai_messages: process.gideon.getStat.get('ai_chat_messages_processed').value
+                commands: gideon.getStat.get('commands_ran').value,
+                ai_messages: gideon.getStat.get('ai_chat_messages_processed').value
             };
 
-            return process.gideon.WSClient.send(data);
+            return gideon.WSClient.send(data);
         }
     });
 
@@ -132,37 +132,6 @@ export function fetchJSON(url: string) : Promise<unknown> {
         catch (e) { reject(e); }
     });
         
-}
-
-export function Embed(title?: string, options?: EmbedOpts, member?: Discord.GuildMember): Discord.MessageEmbed {
-    if (!options) options = {};
-        
-    const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
-
-    const embed = new Discord.MessageEmbed();
-    if (member?.guild?.id === '595318490240385037' && member.premiumSince) {
-        embed.addField(`<:boost:678746359549132812>\`${member.user.tag}\` you're awesome!<:boost:678746359549132812>`, `<:boost:678746359549132812>Nitro boosting Time Vault<:timevault:686676561298063361> since \`${member.premiumSince.toDateString()}\`<:boost:678746359549132812>`);
-        embed.setColor('#CB45CC');
-    }
-    else embed.setColor('#2791D3');
-    embed.setFooter(footer, avatar);
-
-    if (title && typeof title == 'string') embed.setTitle(title);
-    if (options.description && typeof options.description == 'string') embed.setDescription(options.description + `\n${logos}`);
-    if (options.color) embed.setColor(options.color as ColorResolvable);
-    if (options.image && typeof options.image == 'string') embed.setImage(options.image);
-    if (options.url && typeof options.url == 'string') embed.setURL(options.url);
-    if (options.timestamp && (typeof options.timestamp == 'number' || options.timestamp instanceof Date)) embed.setTimestamp(options.timestamp);
-    if (options.thumbnail && typeof options.thumbnail == 'string') embed.setThumbnail(options.thumbnail);
-    if (options.footer?.text && !Object.values(options.footer).some(x => typeof x != 'string')) embed.setFooter(options.footer.text, options.footer.icon);
-    if (options.author?.name && !Object.values(options.author).some(x => typeof x != 'string')) embed.setAuthor(options.author.name, options.author.icon, options.author.url);
-    if (options.fields && Array.isArray(options.fields)) {
-        if (!options.fields.some(x => !x.name || !x.value)) {
-            embed.fields = options.fields.map(x => ({name: x.name, value: x.value, inline: Boolean(x.inline)}));
-        }
-    }
-
-    return embed;
 }
 
 export function truncate(str: string, length: number, useWordBoundary: boolean): string {
@@ -187,32 +156,32 @@ export function Split<T>(arr: T[], chunks: number): T[][] {
     return array_of_arrays;
 }
 
-export function SetStat(stat: string, value: number): void {
-    let s = process.gideon.getStat.get(stat);
+export function SetStat(gideon: Client, stat: string, value: number): void {
+    let s = gideon.getStat.get(stat);
 
     if (!s) s = {id: stat, value: 0};
 
     s.value = value;
-    process.gideon.setStat.run(s);
+    gideon.setStat.run(s);
 }
 
-export function IncreaseStat(stat: string, value = 1): void {
-    const s = process.gideon.getStat.get(stat);
+export function IncreaseStat(gideon: Client, stat: string, value = 1): void {
+    const s = gideon.getStat.get(stat);
     if (!s) {
         log('Stat ' + stat + ' was missing when increasing it');
         return;
     }
 
-    SetStat(stat, s.value + value);
+    SetStat(gideon, stat, s.value + value);
 }
 
-export async function SQLBkup(): Promise<void> {
+export async function SQLBkup(gideon: Client): Promise<void> {
     const db = '../data/SQL';
     const arc = '../data/SQL.zip';
     const date = new Date();
 
     try {
-        const channel = <Discord.TextChannel>process.gideon.guilds?.cache?.get?.('595318490240385037')?.channels?.cache?.get?.('622415301144870932');
+        const channel = <TextChannel>gideon.guilds?.cache?.get?.('595318490240385037')?.channels?.cache?.get?.('622415301144870932');
         await zip.folder(path.resolve(__dirname, db), path.resolve(__dirname, arc));
         const msg = await channel?.send({ content: `SQL Database Backup:\n\nCreated at: \`${date.toUTCString()}\``, files: [arc] });
         fs.unlinkSync(arc);
@@ -227,94 +196,17 @@ export async function SQLBkup(): Promise<void> {
     }
 }
 
-export async function InitStatus(): Promise<void> {
-    const mbc = !process.gideon.guilds.cache.get('595318490240385037') ? [0] : [process.gideon.guilds.cache.get('595318490240385037')?.members.cache.filter(x => !x.user.bot).size];
-    process.gideon.user?.setActivity({type: 'WATCHING', name: 'DC Shows | gideonbot.com'});
+export async function InitStatus(gideon: Client): Promise<void> {
+    const mbc = !gideon.guilds.cache.get('595318490240385037') ? [0] : [gideon.guilds.cache.get('595318490240385037')?.members.cache.filter(x => !x.user.bot).size];
+    gideon.user?.setActivity({type: 'WATCHING', name: 'DC Shows | gideonbot.com'});
     await delay(10000);
-    process.gideon.user?.setActivity({type: 'WATCHING', name: `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`});
+    gideon.user?.setActivity({type: 'WATCHING', name: `${mbc && mbc.length > 0 ? mbc[0] : 'Unknown'} Time Vault members`});
     await delay(10000);
-    process.gideon.user?.setActivity({type: 'WATCHING', name: `${process.gideon.guilds.cache.size} Guilds | gideonbot.com`});
+    gideon.user?.setActivity({type: 'WATCHING', name: `${gideon.guilds.cache.size} Guilds | gideonbot.com`});
     await delay(10000);
 }
 
-export function CheckEpisodes(): void {
-    for (const key in process.gideon.show_api_urls) {
-        const item = process.gideon.cache.nxeps.get(key);
-
-        if (!item || !item.airstamp || !item.expires_at) continue;
-
-        if (item.airstamp < new Date() || item.expires_at < new Date()) {
-            console.log('Air/expiration date passed, updating ' + key);
-
-            try {
-                GetAndStoreEpisode(key);
-
-                const status = process.gideon.statuses.find(x => x.name == key + '_countdown');
-                if (status) process.gideon.statuses.remove(status);
-
-                //this show will be handled in the next run (when the method gets called again) so no need to await
-                continue;
-            }
-                
-            catch (ex) {
-                log(`Error while fetching next episode @CheckEpisodes for "${key}": ${ex}`);
-            }
-        }
-
-        const difference = Math.abs(Date.now() - item.airstamp.getTime()) / 1000;
-
-        //6 hours
-        if (difference > 21600) {
-            const status = process.gideon.statuses.find(x => x.name == key + '_countdown');
-            if (status) process.gideon.statuses.remove(status);
-            continue;
-        }
-
-        if (process.gideon.statuses.map(x => x.name).includes(key + '_countdown')) continue;
-
-        console.log('Adding countdown for ' + key);
-        
-        process.gideon.statuses.push({name: key + '_countdown', fetch: async () => {
-            const ep = process.gideon.cache.nxeps.get(key);
-            if (!ep) return {type: 'WATCHING', value: 'Unknown'};
-
-            const difference = Math.abs(Date.now() - new Date(ep.airstamp).getTime()) / 1000;
-            const minutes = Math.floor(difference / 60);
-            const str = difference > 3600 ? (difference / 3600).toFixed(1) + 'h' : minutes < 1 ? 'NOW' : minutes + ' min' + (minutes == 1 ? '' : 's');
-
-            return {type: 'WATCHING', value: `${ep.series_shortname} ${ep.season}x${ep.number} in ${str}`};
-        }});
-    }
-
-    for (const key in process.gideon.dc_show_urls) {
-        const item = process.gideon.cache.dceps.get(key);
-
-        if (!item || !item.airstamp || !item.expires_at) continue;
-
-        if (item.airstamp < new Date() || item.expires_at < new Date()) {
-            console.log('Air/expiration date passed, updating ' + key);
-
-            try { GetAndStoreEpisode(key); }
-
-            catch (ex) {
-                log(`Error while fetching next episode @CheckEpisodes for "${key}": ${ex}`);
-            }
-        }
-    }
-}
-
-export function Welcome(member: Discord.GuildMember): void {
-    if (member.guild.id !== '595318490240385037') return;
-    const logos = '<a:flash360:686326039525326946> <a:arrow360:686326029719306261> <a:supergirl360:686326042687832123> <a:constantine360:686328072529903645> <a:lot360:686328072198160445> <a:batwoman360:686326033783193631>';
-    const channel = <Discord.TextChannel>process.gideon.guilds?.cache?.get?.('595318490240385037')?.channels?.cache.get('700815626972823572');
-
-    if (!channel) return;
-
-    const welcome = `Greetings Earth-Prime-ling ${member}!\nWelcome to the Time Vault<:timevault:686676561298063361>!\nIf you want full server access make sure to read <#595935317631172608>!\n${logos}`;
-    channel.send(welcome);
-}
-
-export function LoadCommands(): Promise<void> {
+export function LoadCommands(gideon: Client): Promise<void> {
     return new Promise((resolve, reject) => {
         const start = process.hrtime.bigint();
     
@@ -337,7 +229,7 @@ export function LoadCommands(): Promise<void> {
     
                 const props: Command = await import(`./${file_path}`);
                     
-                process.gideon.commands.set(props.data.name, props);
+                gideon.commands.set(props.data.name, props);
             
                 const cmd_end = process.hrtime.bigint();
                 const took = (cmd_end - cmd_start) / BigInt('1000000');
@@ -354,7 +246,7 @@ export function LoadCommands(): Promise<void> {
     });
 }
 
-export function LoadAutoInt(): Promise<void> {
+export function LoadAutoInt(gideon: Client): Promise<void> {
     return new Promise((resolve, reject) => {
         const start = process.hrtime.bigint();
     
@@ -377,7 +269,7 @@ export function LoadAutoInt(): Promise<void> {
     
                 const props: AutoInt = await import(`./${file_path}`);
                     
-                process.gideon.auto.set(props.name, props);
+                gideon.auto.set(props.name, props);
             
                 const cmd_end = process.hrtime.bigint();
                 const took = (cmd_end - cmd_start) / BigInt('1000000');
@@ -394,20 +286,20 @@ export function LoadAutoInt(): Promise<void> {
     });
 }
 
-export async function DeployCommands(): Promise<void | boolean> {
+export async function DeployCommands(gideon: Client): Promise<void | boolean> {
     const data = [];
     // eslint-disable-next-line no-restricted-syntax
-    for (const item of process.gideon.commands.values()) data.push(item.data);
+    for (const item of gideon.commands.values()) data.push(item.data);
 
-    if (process.gideon.user?.id === process.env.DEV_CLIENT_ID) {
-		  await process.gideon.guilds.cache
+    if (gideon.user?.id === process.env.DEV_CLIENT_ID) {
+		  await gideon.guilds.cache
             .get(process.env.DEV_GUILD_ID as Snowflake)
             ?.commands.set(data);
 		  return console.log('Application Commands deployed!');
     }
 }
 
-export function LoadEvents(): Promise<void> {
+export function LoadEvents(gideon: Client): Promise<void> {
     return new Promise((resolve, reject) => {
         const start = process.hrtime.bigint();
     
@@ -430,7 +322,7 @@ export function LoadEvents(): Promise<void> {
         
                 const props = await import(`./${file_path}`);
                         
-                process.gideon.events.set(props.default.name, props.default);
+                gideon.events.set(props.default.name, props.default);
                 
                 const end = process.hrtime.bigint();
                 const took = (end - start) / BigInt('1000000');
@@ -451,32 +343,32 @@ export function ValID(input: string): string | undefined {
     else return input.match(/\d{17,19}/)?.[0];
 }
 
-export async function InitCache(): Promise<void> {
-    process.gideon.cache.nxeps = new Discord.Collection();
-    process.gideon.cache.dceps = new Discord.Collection();
-    process.gideon.cache.jokes = new Discord.Collection();
+export async function InitCache(gideon: Client): Promise<void> {
+    gideon.cache.nxeps = new Collection();
+    gideon.cache.dceps = new Collection();
+    gideon.cache.jokes = new Collection();
 
-    for (const show in process.gideon.show_api_urls) {
-        try { await GetAndStoreEpisode(show);}
+    for (const show in gideon.show_api_urls) {
+        try { await GetAndStoreEpisode(gideon, show);}
             
         catch (ex) {
             log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
         }
     }
 
-    for (const show in process.gideon.dc_show_urls) {
-        try { await GetAndStoreEpisode(show); }
+    for (const show in gideon.dc_show_urls) {
+        try { await GetAndStoreEpisode(gideon, show); }
 
         catch (ex) {
             log(`Error while fetching next episode @InitCache for "${show}": ${ex}`);
         }
     }
 
-    const cache = process.gideon.cache.nxeps.concat(process.gideon.cache.dceps);
+    const cache = gideon.cache.nxeps.concat(gideon.cache.dceps);
     log(`Initialized GideonCache with \`${cache.size}\` entries!`);
 }
 
-export async function GetAndStoreEpisode(show: string): Promise<void> {
+export async function GetAndStoreEpisode(gideon: Client, show: string): Promise<void> {
     const names: { [index: string]: string; } = {
         batwoman: 'Batwoman',
         supergirl: 'Supergirl',
@@ -504,7 +396,7 @@ export async function GetAndStoreEpisode(show: string): Promise<void> {
 
     if (show in names) {
         try {
-            const json = await fetchJSON(process.gideon.show_api_urls[show]) as InfoInterface;
+            const json = await fetchJSON(gideon.show_api_urls[show]) as InfoInterface;
             if (!json) return;
 
             let emote = '';
@@ -520,9 +412,9 @@ export async function GetAndStoreEpisode(show: string): Promise<void> {
             obj.series_shortname = t;
             obj.series_name = emote + json.name;
 
-            process.gideon.cache.nxeps.set(show, obj);
+            gideon.cache.nxeps.set(show, obj);
 
-            AddInfo(show, json);
+            AddInfo(gideon, show, json);
         }
             
         catch (ex) {
@@ -531,15 +423,15 @@ export async function GetAndStoreEpisode(show: string): Promise<void> {
     }
     else if (show in dcnames) {
         try {
-            const json = await fetchJSON(process.gideon.dc_show_urls[show]) as InfoInterface;
+            const json = await fetchJSON(gideon.dc_show_urls[show]) as InfoInterface;
             if (!json) return;
 
             obj.series_shortname = dcnames[show];
             obj.series_name = json.name;
 
-            process.gideon.cache.dceps.set(show, obj);
+            gideon.cache.dceps.set(show, obj);
 
-            AddInfo(show, json);
+            AddInfo(gideon, show, json);
         }
             
         catch (ex) {
@@ -548,8 +440,8 @@ export async function GetAndStoreEpisode(show: string): Promise<void> {
     }
 }
 
-export async function AddInfo(show: string, json: InfoInterface): Promise<void> {
-    const obj = process.gideon.cache.dceps.get(show) ?? process.gideon.cache.nxeps.get(show);
+export async function AddInfo(gideon: Client, show: string, json: InfoInterface): Promise<void> {
+    const obj = gideon.cache.dceps.get(show) ?? gideon.cache.nxeps.get(show);
     if (!obj) return;
 
         interface SeasonInterface {
@@ -621,11 +513,11 @@ export function ClosestDate(dates: string[]): string {
     return dates[idx];
 }
 
-export function GetCleverBotResponse(text: string, context: string[]): Promise<string> {
+export function GetCleverBotResponse(gideon: Client, text: string, context: string[]): Promise<string> {
     return new Promise((resolve, reject) => {
         cleverbot(text, context, undefined, 1e4).then(response => {
             if (!response || response.toLowerCase().includes('www.cleverbot.com')) reject('User Agent outdated');
-            IncreaseStat('ai_chat_messages_processed');
+            IncreaseStat(gideon, 'ai_chat_messages_processed');
             resolve(response);
         }).catch(err => {
             if (err instanceof Error && (err.message?.startsWith('Response timeout of') || err.message?.startsWith('Service Unavailable'))) {
@@ -638,7 +530,7 @@ export function GetCleverBotResponse(text: string, context: string[]): Promise<s
     });
 }
 
-export async function Chat(message: Discord.Message): Promise<void> {
+export async function Chat(gideon: Client, message: Message): Promise<void> {
     const text = message.content;
 
     let arr = [];
@@ -669,7 +561,7 @@ export async function Chat(message: Discord.Message): Promise<void> {
     message.channel.sendTyping().catch(log);
     
     try {
-        const response = await GetCleverBotResponse(text, arr).catch(log);
+        const response = await GetCleverBotResponse(gideon, text, arr).catch(log);
         if (typeof response != 'string') {
             message.react('🚫').catch(log);
             return;
