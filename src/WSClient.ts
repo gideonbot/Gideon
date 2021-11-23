@@ -1,111 +1,113 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import WebSocket from 'ws';
 import EventEmitter from 'events';
 
 export interface Packet {
-    op: number;
-    d?: Data;
+	op: number;
+	d?: Data;
 }
 
 export interface Data {
-    type?: string;
-    guild_count?: number;
-    guilds?: number;
-    user_count?: number;
-    command_count?: number;
-    ai_count?: number;
-    token?: string;
+	type?: string;
+	guild_count?: number;
+	guilds?: number;
+	user_count?: number;
+	command_count?: number;
+	ai_count?: number;
+	token?: string;
 }
 
 class WSClient extends EventEmitter {
-    url: string;
-    token: string;
-    shutdown: boolean;
-    client: WebSocket | null;
-    lastPing: Date;
-    lastPong: Date;
+	url: string;
+	token: string;
+	shutdown: boolean;
+	client: WebSocket | null;
+	lastPing: Date;
+	lastPong: Date;
 
-    constructor(url: string, token: string) {
-        super();
+	constructor(url: string, token: string) {
+		super();
 
-        if (!url || !token) throw new Error('Invalid args');
+		if (!url || !token) throw new Error('Invalid args');
 
-        this.client = null;
-        this.url = url;
-        this.token = token;
-        this.shutdown = false;
-        this.lastPing = new Date();
-        this.lastPong = new Date();
+		this.client = null;
+		this.url = url;
+		this.token = token;
+		this.shutdown = false;
+		this.lastPing = new Date();
+		this.lastPong = new Date();
 
-        this.connect();
+		this.connect();
 
-        setInterval(() => {
-            if (!this.connected && !this.shutdown) this.connect();
-        }, 3e3);
-    }
+		setInterval(() => {
+			if (!this.connected && !this.shutdown) this.connect();
+		}, 3e3);
+	}
 
-    connect():void {
-        this.client = new WebSocket(this.url);
+	connect(): void {
+		this.client = new WebSocket(this.url);
 
-        this.client.on('open', () => {
-            this._send({op: 0, d: {token: this.token}});
-        });
+		this.client.on('open', () => {
+			this._send({ op: 0, d: { token: this.token } });
+		});
 
-        this.client.on('message', d => {
-            const json = JSON.parse(<string>d);
+		this.client.on('message', (d) => {
+			const json = JSON.parse(<string>d);
 
-            if (!json || json.op == undefined) return;
+			if (!json || json.op == undefined) return;
 
-            switch (json.op) {
-                case 0: {
-                    this.emit('READY');
-                    return;
-                }
+			switch (json.op) {
+				case 0: {
+					this.emit('READY');
+					return;
+				}
 
-                case 1: {
-                    if (!json.d) return;
-                    this.emit('DATA', json.d);
-                    return;
-                }
+				case 1: {
+					if (!json.d) return;
+					this.emit('DATA', json.d);
+					return;
+				}
 
-                case 2: {
-                    this.lastPing = new Date();
-                    this._send({op: 2});
-                    return;
-                }
+				case 2: {
+					this.lastPing = new Date();
+					this._send({ op: 2 });
+					return;
+				}
 
-                case 3: {
-                    this.lastPong = new Date();
-                    return;
-                }
+				case 3: {
+					this.lastPong = new Date();
+				}
 
-                default: return;
-            }
-        });
+				default:
+			}
+		});
 
-        this.client.on('error', e => console.log('WebSocket error: ' + e.message));
-    }
+		this.client.on('error', (e) => console.log(`WebSocket error: ${e.message}`));
+	}
 
-    _send(packet: Packet):void {
-        if (this.connected) this.client?.send(JSON.stringify(packet));
-    }
+	_send(packet: Packet): void {
+		if (this.connected) this.client?.send(JSON.stringify(packet));
+	}
 
-    send(data: Data):void {
-        this._send({op: 1, d: data});
-    }
+	send(data: Data): void {
+		this._send({ op: 1, d: data });
+	}
 
-    disconnect():void {
-        this.shutdown = true;
-        if (this.client) this.client.close();
-        this.client = null;
-    }
+	disconnect(): void {
+		this.shutdown = true;
+		if (this.client) this.client.close();
+		this.client = null;
+	}
 
-    get connected():boolean {
-        return this.client?.readyState == WebSocket.OPEN;
-    }
+	get connected(): boolean {
+		return this.client?.readyState == WebSocket.OPEN;
+	}
 
-    get ping():number {
-        return Math.abs(this.lastPing.getTime() - this.lastPong.getTime());
-    }
+	get ping(): number {
+		return Math.abs(this.lastPing.getTime() - this.lastPong.getTime());
+	}
 }
 
 export default WSClient;

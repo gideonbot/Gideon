@@ -1,8 +1,10 @@
 {
 	"extends": "@sapphire/ts-config",
     "compilerOptions": {
+		"module": "esnext",
         "outDir": "./dist",       
         "baseUrl": "./",
-        "typeRoots": ["node_modules/@types", "src/@types"]
+        "typeRoots": ["node_modules/@types", "src/@types"],
+		"noImplicitReturns": false
     }
 }

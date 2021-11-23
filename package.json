@@ -8,7 +8,11 @@
     "build": "npm i --no-audit && npx tsc -p ./ && npm run start",
     "start": "cd dist && node gideon.js"
   },
-  "author": "adrifcastr & MBR",
+  "author": "castdrian & MBR",
+  "eslintConfig": {
+	"extends": "@sapphire"
+},
+  "prettier": "@sapphire/prettier-config",
   "dependencies": {
     "@types/bad-words": "^3.0.0",
     "@types/better-sqlite3": "^5.4.1",
