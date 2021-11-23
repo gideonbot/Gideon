@@ -1,6 +1,6 @@
 import type { AutocompleteInteraction } from 'discord.js';
 import { Wiki, WikiQuery } from 'src/@types/Util';
-import Util from '../../Util.js';
+import { fetchJSON } from 'src/Util';
 
 export const name = 'wiki';
 export async function run(interaction: AutocompleteInteraction): Promise<void> {
@@ -49,7 +49,7 @@ export async function run(interaction: AutocompleteInteraction): Promise<void> {
     const value = interaction.options.getFocused();
 
     const search_api = encodeURI(`https://${wiki?.url}/api/v1/SearchSuggestions/List?query=${value}`);
-    const search = await Util.fetchJSON(search_api) as WikiQuery;
+    const search = await fetchJSON(search_api) as WikiQuery;
     if (!search.items || !search.items.length) return;
     
     const response = [];
