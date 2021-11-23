@@ -1,14 +1,9 @@
-import Util from '../../Util.js';
+import { log } from 'src/Util';
 
 export default {
     name: 'uncaughtException',
     process: true,
     async run(err: Error): Promise<void> {
-        Util.log('Uncaught Exception: ' + `\`\`\`\n${err.stack}\n\`\`\``);
-
-        if (process.env.CI) {
-            console.log('Exception detected, marking as failed');
-            process.exit(1);
-        }
+        log('Uncaught Exception: ' + `\`\`\`\n${err.stack}\n\`\`\``);
     }
 };
