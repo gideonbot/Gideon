@@ -1,19 +1,7 @@
-/* eslint-disable no-redeclare */
 /* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import Discord from 'discord.js';
-import MsgHandler from './handlers/MessageHandler';
-import Checks from './handlers/Checks';
-import SQL from './handlers/SQL';
-import Interactions from 'handlers/Interactions';
 import BetterSqlite3 from 'better-sqlite3';
 import WSClient from './WSClient';
-
-export const config: Config;
-export const MsgHandler: Handler;
-export const Checks: CheckUtil;
-export const SQL: Database;
-export const Interactions: InteractionsInterface;
 
 declare module 'discord.js' {
     interface Guild {
@@ -55,18 +43,6 @@ declare module 'discord.js' {
     }
 }
 
-interface Handler {
-    Handle(message: Discord.Message, Util: unknown): Promise<void>;
-}
-
-interface InteractionsInterface {
-    SlashCommands(interaction: Discord.CommandInteraction, Util: unknown): Promise<void>;
-}
-
-interface Database {
-    InitDB(): void;
-    Close(): void;
-}
 interface EpisodeInfo {
     title: string;
     
@@ -90,18 +66,6 @@ interface GideonCache {
     nxeps: Discord.Collection<string, EpisodeInfo>;
     dceps: Discord.Collection<string, EpisodeInfo>;
     jokes: Discord.Collection<string, Discord.Collection<number, string>>;
-}
-
-interface CheckUtil {
-    ABM_Test(message: Discord.Message): Promise<ABMResult>;
-    ABM(message: Discord.Message, Util: unknown): void;
-    CVM(message: Discord.Message, Util: unknown): Promise<Discord.Message>;
-    CSD(message: Discord.Message, Util: unknown): Promise<void>;
-    LBG(guild: Discord.Guild, Util: unknown): Promise<void>;
-    IBU(message: Discord.Message, Util: unknown): boolean;
-    BadMention(message: Discord.Message): boolean;
-    RulesCheck(message: Discord.Message): Promise<void>;
-    GPD(oldmessage: Discord.Message, newmessage?: Discord.Message, Util: unknown): void;
 }
 
 interface EmbedOptions {
