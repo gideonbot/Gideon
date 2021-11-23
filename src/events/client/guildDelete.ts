@@ -1,9 +1,9 @@
-import Util from '../../Util.js';
-import { Guild } from 'discord.js';
+import { Guild, MessageEmbed } from 'discord.js';
+import { log } from 'src/Util';
 
 export default {
     name: 'guildDelete',
     async run(guild: Guild): Promise<void> {
-        Util.log(Util.Embed('Left guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => x?.user && !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x?.user?.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.ownerId ?? 'Unknown'}\` (${guild.ownerId})`, thumbnail: (guild.iconURL() as string)}));
+        log(new MessageEmbed().setTitle('Left guild:').setDescription(`Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.ownerId ?? 'Unknown'}\` (${guild.ownerId})`).setThumbnail(guild.iconURL() ?? 'https://i.imgur.com/XqYQQ8l.png'));
     }
 };

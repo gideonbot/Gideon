@@ -1,11 +1,10 @@
-import Util from '../../Util.js';
 import { GuildMember } from 'discord.js';
+import { AccCheck, NameCheck } from 'src/handlers/Checks';
 
 export default {
     name: 'guildMemberAdd',
     async run(member: GuildMember): Promise<void> {
-        Util.Welcome(member);
-        Util.Checks.NameCheck(null, member.user);
-        Util.Checks.AccCheck(member);
+        NameCheck(member.client, null, member.user);
+        AccCheck(member.client, member);
     }
 };

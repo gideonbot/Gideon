@@ -1,8 +1,8 @@
-import Util from '../../Util.js';
+import { log } from 'src/Util';
 
 export default {
     name: 'error',
     async run(err: Error): Promise<void> {
-        Util.log('Bot error: ' + `\`\`\`\n${err.stack}\n\`\`\``);
+        log('Bot error: ' + `\`\`\`\n${err.stack}\n\`\`\``);
     }
 };

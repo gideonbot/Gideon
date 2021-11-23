@@ -1,9 +1,9 @@
-import Util from '../../Util.js';
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
+import { GPD } from 'src/handlers/Checks';
 
 export default {
     name: 'messageDelete',
     run(message: Message): void {
-        Util.Checks.GPD(message);
+        GPD(message.client, message);
     }
 };

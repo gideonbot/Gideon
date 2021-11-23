@@ -1,8 +1,8 @@
-import Util from '../../Util.js';
+import { log } from 'src/Util';
 
 export default {
     name: 'shardError',
     async run(error: Error, shardID: number): Promise<void> {
-        Util.log(`Shard \`${shardID}\` has encountered a connection error:\n\n\`\`\`\n${error}\n\`\`\``);
+        log(`Shard \`${shardID}\` has encountered a connection error:\n\n\`\`\`\n${error}\n\`\`\``);
     }
 };

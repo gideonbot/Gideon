@@ -1,9 +1,9 @@
-import Util from '../../Util.js';
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
+import { Handle } from 'src/handlers/MessageHandler';
 
 export default {
     name: 'messageCreate',
     run(message: Message): void {
-        Util.MsgHandler.Handle(message);
+        Handle(message);
     }
 };
