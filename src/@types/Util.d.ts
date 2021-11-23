@@ -14,36 +14,6 @@ export const MsgHandler: Handler;
 export const Checks: CheckUtil;
 export const SQL: Database;
 export const Interactions: InteractionsInterface;
-export function delay(num: number): Promise<void>;
-export function GetUserTag(str: string | Discord.GuildMember | Discord.User): string;
-export function getIdFromString(str: string): string;
-export function secondsToDifferenceString(seconds: number, settings: secondsToDifferenceSettings): string;
-export function log(message: string, files: string[]): boolean;
-export function LoadCommands(): Promise<void>;
-export function DeployCommands(): Promise<void>;
-export function fetchJSON(url: string): Promise<unknown>;
-export function ValID(input: string): string;
-export function IMG(image_id: string, message: Discord.Message, nsfw: boolean): Promise<void>;
-export function Split<T>(arr: T[], chunks: number): T[][];
-export function Starboard(reaction: Discord.MessageReaction, user: Discord.User): Promise<void>;
-export function SQLBkup(): Promise<void>;
-export function SetStat(stat: string, value: number): void;
-export function IncreaseStat(stat: string, value?: number): void;
-export function UpdateStatus(): Promise<void>;
-export function InitStatus(): void;
-export function GenerateSnowflake(): string;
-export function GuildJoinReactions(reaction: Discord.MessageReaction, user: Discord.User): Promise<void>
-export function Chat(message: Discord.Message): Promise<void>;
-export function GetCleverBotResponse(text: string, context: string[]): Promise<string>;
-export function InitCache(): Promise<void>;
-export function GetAndStoreEpisode(show: string): Promise<void>;
-export function CheckEpisodes(): void;
-export function ClosestDate(dates: string[]): Promise<string>;
-export function Welcome(member: Discord.GuildMember): Promise<void>;
-export function truncate(str: string, length: number, useWordBoundary: boolean): string;
-export function AddInfo(show: string, json: unknown): Promise<void>;
-export function normalize(num: number): string;
-export function Embed(title: string, options?: EmbedOptions, member?: Discord.GuildMember): Discord.MessageEmbed;
 
 declare module 'discord.js' {
     interface Guild {
