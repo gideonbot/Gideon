@@ -1,11 +1,12 @@
+import type { SapphireClient } from '@sapphire/framework';
 import { CommandInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 
-export async function run(interaction: CommandInteraction): Promise<void> {
-	const cmds = interaction.client.getStat.get('commands_ran').value + 1;
-	const msgs = interaction.client.getStat.get('messages_sent').value + 1;
-	const aimsgs = interaction.client.getStat.get('ai_chat_messages_processed').value;
-	const users = interaction.client.guilds.cache.reduce((r, d) => r + d.memberCount, 0);
+export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void> {
+	const cmds = gideon.getStat.get('commands_ran').value + 1;
+	const msgs = gideon.getStat.get('messages_sent').value + 1;
+	const aimsgs = gideon.getStat.get('ai_chat_messages_processed').value;
+	const users = gideon.guilds.cache.reduce((r, d) => r + d.memberCount, 0);
 
 	const buttons = [
 		new MessageButton().setStyle('LINK').setLabel('gideonbot.com').setURL('https://gideonbot.com'),
@@ -17,7 +18,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 			new MessageEmbed()
 				.setTitle("Gideon's stats:")
 				.setDescription(
-					`Total guilds: \`${interaction.client.guilds.cache.size}\`\nTotal users: \`${users.toLocaleString(
+					`Total guilds: \`${gideon.guilds.cache.size}\`\nTotal users: \`${users.toLocaleString(
 						'de-DE'
 					)}\`\nUsed commands: \`${cmds.toLocaleString('de-DE')}\`\nMessages sent: \`${msgs.toLocaleString(
 						'de-DE'

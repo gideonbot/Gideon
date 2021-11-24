@@ -1,17 +1,18 @@
+import type { SapphireClient } from '@sapphire/framework';
 import { CommandInteraction, MessageEmbed } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 
-export async function run(interaction: CommandInteraction): Promise<void> {
+export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void> {
 	const leaderboard = new MessageEmbed().setTitle('Top 10 Leaderboard:');
 
-	const top10 = interaction.client.getTop10.all().filter((x) => x.points > 0);
+	const top10 = gideon.getTop10.all().filter((x) => x.points > 0);
 
 	if (top10.length < 1) leaderboard.setDescription('No entries yet!');
 	else {
 		leaderboard.setDescription(
 			top10
 				.map((data, i) => {
-					const guild = interaction.client.guilds.cache.get(data.guild);
+					const guild = gideon.guilds.cache.get(data.guild);
 					const user = guild?.members?.cache?.get?.(data.user) ?? data.user;
 					return `**#${i + 1}** - ${user} in \`${guild ? guild.name : 'Unknown'}\`: **${data.points}** ${
 						// eslint-disable-next-line no-negated-condition

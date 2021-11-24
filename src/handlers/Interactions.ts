@@ -112,7 +112,7 @@ export async function SlashCommands(gideon: SapphireClient, command: CommandInte
 
 	try {
 		if (process.env.CI) console.log(`Handling interaction ${command.commandName}`);
-		await cmd.run(command);
+		await cmd.run(command, gideon);
 	} catch (e: any) {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		if (cmd.data.name === 'eval')

@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import { CommandInteraction, CommandInteractionOption, MessageEmbed } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 

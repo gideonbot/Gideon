@@ -1,4 +1,4 @@
-import type { CommandInteraction, GuildMember } from 'discord.js';
+import type { CommandInteraction } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 import { fetchJSON } from 'src/Util';
 
@@ -11,11 +11,10 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 			const took = (process.hrtime.bigint() - start) / BigInt('1000000');
 			return interaction.reply({
 				embeds: [
-					Util.Embed(
-						'The fastest bot alive!',
-						{ description: `WebSocket ping: ${interaction.client.ws.ping.toFixed(2)} ms\nREST ping: ${took} ms` },
-						interaction.member as GuildMember
-					)
+					{
+						title: 'The fastest bot alive!',
+						description: `WebSocket ping: ${interaction.client.ws.ping.toFixed(2)} ms\nREST ping: ${took} ms`
+					}
 				]
 			});
 		},

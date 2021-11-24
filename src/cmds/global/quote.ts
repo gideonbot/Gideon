@@ -1,18 +1,13 @@
 import gideonapi from 'gideon-api';
-import { CommandInteraction, MessageComponentInteraction, GuildMember, Message, MessageButton, MessageActionRow } from 'discord.js';
+import { CommandInteraction, MessageComponentInteraction, Message, MessageButton, MessageActionRow } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
 	let quote = await gideonapi.quote();
 	const button = new MessageButton().setStyle('PRIMARY').setLabel('Another one!').setCustomId('next');
 	await interaction.reply({
-		embeds: [
-			Util.Embed(
-				undefined,
-				{ description: `**_${quote.quote}_**\n\n** ~${quote.quotee}**`, thumbnail: quote.image },
-				interaction.member as GuildMember
-			)
-		],
+		// @ts-ignore some type fuckery, who knows
+		embeds: [{ description: `**_${quote.quote}_**\n\n** ~${quote.quotee}**`, thumbnail: quote.image }],
 		components: [new MessageActionRow().addComponents(button)]
 	});
 	const filter = (i: MessageComponentInteraction) => i.user.id === interaction.user.id;
@@ -24,11 +19,8 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 			quote = await gideonapi.quote();
 			await interaction.editReply({
 				embeds: [
-					Util.Embed(
-						undefined,
-						{ description: `**_${quote.quote}_**\n\n** ~${quote.quotee}**`, thumbnail: quote.image },
-						interaction.member as GuildMember
-					)
+					// @ts-ignore some type fuckery, who knows
+					{ description: `**_${quote.quote}_**\n\n** ~${quote.quotee}**`, thumbnail: quote.image }
 				],
 				components: [new MessageActionRow().addComponents(button)]
 			});
@@ -39,13 +31,8 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 	// @ts-ignore
 	collector.on('end', async () =>
 		interaction.editReply({
-			embeds: [
-				Util.Embed(
-					undefined,
-					{ description: `**_${quote.quote}_**\n\n** ~${quote.quotee}**`, thumbnail: quote.image },
-					interaction.member as GuildMember
-				)
-			],
+			// @ts-ignore some type fuckery, who knows
+			embeds: [{ description: `**_${quote.quote}_**\n\n** ~${quote.quotee}**`, thumbnail: quote.image }],
 			components: []
 		})
 	);

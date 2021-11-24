@@ -1,8 +1,9 @@
+import type { SapphireClient } from '@sapphire/framework';
 import { CommandInteraction, MessageEmbed } from 'discord.js';
 import type { Command, Wiki, WikiQuery, WikiResult } from 'src/@types/Util.js';
 import { fetchJSON } from 'src/Util';
 
-export async function run(interaction: CommandInteraction): Promise<void> {
+export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void> {
 	const wikis: Record<string, Wiki> = {
 		wiki_av: {
 			url: 'arrow.fandom.com',
@@ -75,7 +76,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 	const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
 
 	let st = '';
-	const cvm = interaction.client.getGuild.get(interaction.guild?.id);
+	const cvm = gideon.getGuild.get(interaction.guild?.id);
 	if (cvm) {
 		if (cvm.cvmval === 1) st = '||';
 	}

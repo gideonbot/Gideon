@@ -1,8 +1,8 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-negated-condition */
 import stringSimilarity from 'string-similarity';
 import {
 	CommandInteraction,
-	GuildMember,
 	TextChannel,
 	Message,
 	MessageButton,
@@ -13,8 +13,10 @@ import {
 } from 'discord.js';
 import type { Command, GuessingScore } from 'src/@types/Util.js';
 import gideonapi from 'gideon-api';
+import type { SapphireClient } from '@sapphire/framework';
+import { log } from 'src/Util';
 
-export async function run(interaction: CommandInteraction): Promise<unknown> {
+export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<unknown> {
 	await interaction.deferReply();
 	const url = 'https://arrowverse.info';
 	const s = ['guess', 'second', 'point', 'try', 'tries', 'got', 'had'];
@@ -46,7 +48,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 		(x: gideonapi.AviInfo) => x.series === 'Constantine'
 	];
 
-	let score: GuessingScore = interaction.client.getScore.get(interaction.user.id);
+	let score: GuessingScore = gideon.getScore.get(interaction.user.id);
 	if (!score) {
 		score = {
 			id: interaction.user.id,
@@ -54,7 +56,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 			guild: interaction.guild?.id as string,
 			points: 0
 		};
-		interaction.client.setScore.run(score);
+		gideon.setScore.run(score);
 	}
 
 	if (!interaction.options.data[0]) chosenfilter = filters[0];
@@ -91,23 +93,20 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 		const epname = randomep.episode_name;
 		const epairdate = new Date(randomep.air_date);
 
-		const gameembed = Util.Embed(
-			`Guessing game for ${interaction.user.tag}:`,
-			{
-				description: `Please guess the following Arrowverse episode's name:\n\`${show} ${epnum}\``,
-				author: {
-					name: `You've got ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() !== 1 ? `${s[1]}s` : s[1]} left!`,
-					icon: interaction.user.displayAvatarURL()
-				},
-				fields: [
-					{
-						name: 'Powered by:',
-						value: `**[arrowverse.info](${url} '${url}')**`
-					}
-				]
+		const gameembed = {
+			title: `Guessing game for ${interaction.user.tag}:`,
+			description: `Please guess the following Arrowverse episode's name:\n\`${show} ${epnum}\``,
+			author: {
+				name: `You've got ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() !== 1 ? `${s[1]}s` : s[1]} left!`,
+				icon: interaction.user.displayAvatarURL()
 			},
-			interaction.member as GuildMember
-		);
+			fields: [
+				{
+					name: 'Powered by:',
+					value: `**[arrowverse.info](${url} '${url}')**`
+				}
+			]
+		};
 
 		return { embed: gameembed, show, ep_and_s: epnum, ep_name: epname, airdate: epairdate };
 	}
@@ -140,24 +139,20 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 			} else if (i.customId === 'cancel') {
 				collector.stop();
 
-				const stopembed = Util.Embed(
-					`Guessing game for ${interaction.user.tag}:`,
-					{
-						description: 'Your game round has been cancelled! :white_check_mark:',
-						author: {
-							name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() > 1 ? `${s[1]}s` : s[1]} left!`,
-							icon: interaction.user.displayAvatarURL()
-						},
-						fields: [
-							{
-								name: 'Powered by:',
-								value: `**[arrowverse.info](${url} '${url}')**`
-							}
-						]
+				const stopembed = {
+					title: `Guessing game for ${interaction.user.tag}:`,
+					description: 'Your game round has been cancelled! :white_check_mark:',
+					author: {
+						name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() > 1 ? `${s[1]}s` : s[1]} left!`,
+						icon: interaction.user.displayAvatarURL()
 					},
-					interaction.member as GuildMember
-				);
-
+					fields: [
+						{
+							name: 'Powered by:',
+							value: `**[arrowverse.info](${url} '${url}')**`
+						}
+					]
+				};
 				interaction.user.guessing = false;
 				return interaction.editReply({ embeds: [stopembed], components: [] });
 			}
@@ -182,30 +177,25 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 				const airdate_bonus = CalculateAirDatePoints(game.airdate);
 				points += airdate_bonus;
 				IncreasePoints(points);
-				interaction.client.setScore.run(score);
+				gideon.setScore.run(score);
 				tries--;
 
-				const correctembed = Util.Embed(
-					`Guessing game for ${interaction.user.tag}:`,
-					{
-						description: `That is correct! :white_check_mark:\n\`${game.show} ${game.ep_and_s} - ${
-							game.ep_name
-						}\`\n\n**You have gained \`${points}\` ${points > 1 ? `${s[2]}s` : s[2]}!**\n(Airdate point bonus: \`+${airdate_bonus}\`)`,
-						author: {
-							name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${
-								Countdown() !== 1 ? `${s[1]}s` : s[1]
-							} left!`,
-							icon: interaction.user.displayAvatarURL()
-						},
-						fields: [
-							{
-								name: 'Powered by:',
-								value: `**[arrowverse.info](${url} '${url}')**`
-							}
-						]
+				const correctembed = {
+					title: `Guessing game for ${interaction.user.tag}:`,
+					description: `That is correct! :white_check_mark:\n\`${game.show} ${game.ep_and_s} - ${
+						game.ep_name
+					}\`\n\n**You have gained \`${points}\` ${points > 1 ? `${s[2]}s` : s[2]}!**\n(Airdate point bonus: \`+${airdate_bonus}\`)`,
+					author: {
+						name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${Countdown() !== 1 ? `${s[1]}s` : s[1]} left!`,
+						icon: interaction.user.displayAvatarURL()
 					},
-					interaction.member as GuildMember
-				);
+					fields: [
+						{
+							name: 'Powered by:',
+							value: `**[arrowverse.info](${url} '${url}')**`
+						}
+					]
+				};
 
 				interaction.user.guessing = false;
 				await interaction.editReply({ embeds: [correctembed], components: [] });
@@ -215,25 +205,22 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 			const question = `\`${game.show} ${game.ep_and_s}\``;
 			const solution = `\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``;
 
-			const incorrectembed = Util.Embed(
-				`Guessing game for ${interaction.user.tag}:`,
-				{
-					description: `That is incorrect! :x:\n${tries === 0 ? solution : question}`,
-					author: {
-						name: `You've ${tries === 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${
-							Countdown() !== 1 ? `${s[1]}s` : s[1]
-						} left!`,
-						icon: interaction.user.displayAvatarURL()
-					},
-					fields: [
-						{
-							name: 'Powered by:',
-							value: `**[arrowverse.info](${url} '${url}')**`
-						}
-					]
+			const incorrectembed = {
+				title: `Guessing game for ${interaction.user.tag}:`,
+				description: `That is incorrect! :x:\n${tries === 0 ? solution : question}`,
+				author: {
+					name: `You've ${tries === 0 ? s[6] : s[5]} ${tries} ${tries !== 1 ? s[4] : s[3]} and ${Countdown()} ${
+						Countdown() !== 1 ? `${s[1]}s` : s[1]
+					} left!`,
+					icon: interaction.user.displayAvatarURL()
 				},
-				interaction.member as GuildMember
-			);
+				fields: [
+					{
+						name: 'Powered by:',
+						value: `**[arrowverse.info](${url} '${url}')**`
+					}
+				]
+			};
 
 			if (tries === 0) {
 				collector.stop();
@@ -246,31 +233,27 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 		// @ts-ignore djs types fuckery
 		collector.on('end', async (collected, reason) => {
 			if (reason === 'time') {
-				const timeouttembed = Util.Embed(
-					`Guessing game for ${interaction.user.tag}:`,
-					{
-						description: `You ran out of time!\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``,
-						author: {
-							name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} left!`,
-							icon: interaction.user.displayAvatarURL()
-						},
-						fields: [
-							{
-								name: 'Powered by:',
-								value: `**[arrowverse.info](${url} '${url}')**`
-							}
-						]
+				const timeouttembed = {
+					title: `Guessing game for ${interaction.user.tag}:`,
+					description: `You ran out of time!\n\`${game.show} ${game.ep_and_s} - ${game.ep_name}\``,
+					author: {
+						name: `You've had ${tries} ${tries !== 1 ? s[4] : s[3]} left!`,
+						icon: interaction.user.displayAvatarURL()
 					},
-					interaction.member as GuildMember
-				);
-
+					fields: [
+						{
+							name: 'Powered by:',
+							value: `**[arrowverse.info](${url} '${url}')**`
+						}
+					]
+				};
 				interaction.user.guessing = false;
 				return interaction.editReply({ embeds: [timeouttembed], components: [] });
 			}
 		});
 	} catch (ex: any) {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		Util.log(`Caught an exception while running guesseps.js: ${ex.stack}`);
+		log(`Caught an exception while running guesseps.js: ${ex.stack}`);
 		return interaction.reply({ content: `An error occurred while processing your request:\`\`\`\n${ex}\`\`\``, ephemeral: true });
 	}
 }

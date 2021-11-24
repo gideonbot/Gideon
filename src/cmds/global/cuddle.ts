@@ -1,4 +1,4 @@
-import { CommandInteraction, GuildMember, MessageEmbed, Snowflake } from 'discord.js';
+import { CommandInteraction, MessageEmbed, Snowflake } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
@@ -11,14 +11,9 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 
 	return interaction.reply({
 		embeds: [
-			Util.Embed(
-				undefined,
-				{
-					description: `**${auth} you have cuddled ${user}!**\n\nA Beebo-tastic cuddle always brightens the mood!`,
-					image: 'https://i.imgur.com/IOpmt2j.gif'
-				},
-				interaction.member as GuildMember
-			)
+			new MessageEmbed()
+				.setDescription(`**${auth} you have cuddled ${user}!**\n\nA Beebo-tastic cuddle always brightens the mood!`)
+				.setImage('https://i.imgur.com/IOpmt2j.gif')
 		]
 	});
 }

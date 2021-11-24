@@ -1,11 +1,10 @@
 import { exec } from 'child_process';
-import type { CommandInteraction, CommandInteractionOption } from 'discord.js';
+import type { CommandInteraction } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 import { log } from 'src/Util';
 
-// eslint-disable-next-line @typescript-eslint/require-await
-export async function run(interaction: CommandInteraction, options: CommandInteractionOption[]): Promise<void> {
-	if (options[0].value === 'i') {
+export function run(interaction: CommandInteraction): void {
+	if (interaction.options.data[0].value === 'i') {
 		void interaction.reply('running `npm install` please check <#622415301144870932> for console output!');
 		const install = exec('npm install');
 
@@ -17,7 +16,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 		});
 	}
 
-	if (options[0].value === 'u') {
+	if (interaction.options.data[0].value === 'u') {
 		void interaction.reply('running `npm update` please check <#622415301144870932> for console output!');
 		const update = exec('npm update');
 
@@ -29,7 +28,7 @@ export async function run(interaction: CommandInteraction, options: CommandInter
 		});
 	}
 
-	if (options[0].value === 'af') {
+	if (interaction.options.data[0].value === 'af') {
 		void interaction.reply('running `npm audit fix` please check <#622415301144870932> for console output!');
 		const update = exec('npm audit fix');
 

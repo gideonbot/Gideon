@@ -4,6 +4,6 @@ import { Listener } from '@sapphire/framework';
 
 export class MessageListener extends Listener {
 	public async run(message: Message): Promise<void> {
-		await Handle(message);
+		await Handle(message, this.container.client);
 	}
 }

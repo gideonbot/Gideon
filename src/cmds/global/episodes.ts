@@ -1,7 +1,7 @@
-import moment from 'moment';
-import { CommandInteraction, GuildMember, MessageEmbed } from 'discord.js';
+import { CommandInteraction, MessageEmbed } from 'discord.js';
 import type { Command, SeEp, Show, TVMazeResponse } from 'src/@types/Util.js';
 import { fetchJSON, normalize } from 'src/Util';
+import dayjs from 'dayjs';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
 	if (interaction.user.guessing) return interaction.editReply('No cheating while your guessing game is active!');
@@ -106,7 +106,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 	let sp = '';
 	const today = new Date();
 	const airdate = new Date(body.airdate);
-	if (!moment(airdate).isValid()) sp = '||';
+	if (!dayjs(airdate).isValid()) sp = '||';
 	if (today < airdate) sp = '||';
 	const { airtime } = body;
 	// eslint-disable-next-line no-negated-condition
@@ -123,18 +123,14 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 
 	return interaction.editReply({
 		embeds: [
-			Util.Embed(
-				`${show?.title} ${body.season}x${normalize(body.number)} - ${body.name}`,
-				{
-					description: `${sp + desc + sp}\n\nAirdate: \`${
-						moment(airdate).isValid() ? airdate.toDateString() : 'No Airdate Available'
-					}\`\nAirtime: \`${body.airtime === '' ? 'No Airtime Available' : `${timeString} ET`}\`\nRuntime: \`${
-						body.runtime
-					} Minutes\`\nChannel: \`${show?.channel}\`\n\n**[Full recap & trailer](${body.url} '${body.url}')**`,
-					image: img
-				},
-				interaction.member as GuildMember
-			)
+			new MessageEmbed()
+				.setTitle(`${show?.title} ${body.season}x${normalize(body.number)} - ${body.name}`)
+				.setDescription(
+					`${sp + desc + sp}\n\nAirdate: \`${dayjs(airdate).isValid() ? airdate.toDateString() : 'No Airdate Available'}\`\nAirtime: \`${
+						body.airtime === '' ? 'No Airtime Available' : `${timeString} ET`
+					}\`\nRuntime: \`${body.runtime} Minutes\`\nChannel: \`${show?.channel}\`\n\n**[Full recap & trailer](${body.url} '${body.url}')**`
+				)
+				.setImage(img)
 		]
 	});
 }

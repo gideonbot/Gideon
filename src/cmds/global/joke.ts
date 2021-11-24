@@ -1,9 +1,10 @@
 import Discord from 'discord.js';
-import type { CommandInteraction, GuildMember } from 'discord.js';
+import type { CommandInteraction } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 import { fetchJSON } from 'src/Util';
+import type { SapphireClient } from '@sapphire/framework';
 
-export async function run(interaction: CommandInteraction): Promise<void> {
+export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void> {
 	if (!interaction.guild) return;
 
 	const type = interaction.options.data.length > 0 ? (interaction.options.data[0]?.value as string) : 'any';
@@ -17,11 +18,11 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 
 	const body = (await fetchJSON(url)) as ResponseBody;
 
-	let category = interaction.client.cache.jokes.get(body.category);
+	let category = gideon.cache.jokes.get(body.category);
 
 	if (!category) {
-		interaction.client.cache.jokes.set(body.category, new Discord.Collection([[body.id, body.joke]]));
-		category = interaction.client.cache.jokes.get(body.category);
+		gideon.cache.jokes.set(body.category, new Discord.Collection([[body.id, body.joke]]));
+		category = gideon.cache.jokes.get(body.category);
 	}
 
 	if (!category) return; // this will never happen but ts is pepega
@@ -62,7 +63,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 
 	if (interaction.guild.last_jokes.length > 20) interaction.guild.last_jokes.shift();
 
-	return interaction.reply({ embeds: [Util.Embed(`Category: ${body.category}`, { description: body.joke }, interaction.member as GuildMember)] });
+	return interaction.reply({ embeds: [{ title: `Category: ${body.category}`, description: body.joke }] });
 }
 
 export const info: Command['info'] = {

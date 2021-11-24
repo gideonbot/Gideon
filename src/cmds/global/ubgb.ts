@@ -1,12 +1,13 @@
+import type { SapphireClient } from '@sapphire/framework';
 import type { CommandInteraction, GuildMember, Snowflake, TextChannel } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 
-export async function run(interaction: CommandInteraction): Promise<void> {
+export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void> {
 	const id = interaction.options?.get('user')?.options?.filter((x) => x.name === 'userid')?.[0].value;
 	const guildid = interaction.options?.get('guild')?.options?.filter((x) => x.name === 'guildid')?.[0].value;
 
 	if (id) {
-		let ub = interaction.client.getUser.get(id);
+		let ub = gideon.getUser.get(id);
 		if (!ub) {
 			ub = {
 				id,
@@ -17,16 +18,16 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 
 		if (ub.blacklist === 0) {
 			ub.blacklist = 1;
-			interaction.client.setUser.run(ub);
+			gideon.setUser.run(ub);
 			return interaction.reply(`User \`${id}\` has been blacklisted!`);
 		}
 
 		ub.blacklist = 0;
-		interaction.client.setUser.run(ub);
+		gideon.setUser.run(ub);
 		return interaction.reply(`User \`${id}\` has been un-blacklisted!`);
 	}
 
-	let gb = interaction.client.getGuild.get(guildid);
+	let gb = gideon.getGuild.get(guildid);
 	if (!gb) {
 		gb = {
 			guild: guildid,
@@ -41,10 +42,10 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 
 	if (gb.blacklist === 0) {
 		gb.blacklist = 1;
-		interaction.client.setGuild.run(gb);
+		gideon.setGuild.run(gb);
 		await interaction.reply(`Guild \`${guildid}\` has been blacklisted!`);
 
-		const guild = interaction.client.guilds.cache.get(id as Snowflake);
+		const guild = gideon.guilds.cache.get(id as Snowflake);
 		if (guild) {
 			const textchannels = guild.channels.cache.filter((c) => c.type === 'GUILD_TEXT');
 			const channels = textchannels.filter((c) => c.permissionsFor(guild?.me as GuildMember).has('SEND_MESSAGES'));
@@ -56,7 +57,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
 		}
 	} else if (gb.blacklist === 1) {
 		gb.blacklist = 0;
-		interaction.client.setGuild.run(gb);
+		gideon.setGuild.run(gb);
 		await interaction.reply(`Guild \`${guildid}\` has been un-blacklisted!`);
 	}
 }

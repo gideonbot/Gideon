@@ -1,10 +1,11 @@
+import type { SapphireClient } from '@sapphire/framework';
 import type { CommandInteraction } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 import { SQLBkup } from 'src/Util';
 
-export async function run(interaction: CommandInteraction): Promise<unknown> {
+export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<unknown> {
 	void interaction.reply('Performing database backup, please wait...');
-	void SQLBkup(interaction.client);
+	void SQLBkup(gideon);
 	return interaction.editReply('Database backup complete! Please check <#622415301144870932>! :white_check_mark:');
 }
 

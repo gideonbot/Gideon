@@ -43,7 +43,8 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 		else if (next.series.match(/(?:constantine)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/b/b1/Constantine_TV_show_logo.jpg';
 		else if (next.series.match(/(?:batwoman)/i)) thimg = 'https://upload.wikimedia.org/wikipedia/en/c/c3/Batwoman_TV_series_logo.png';
 
-		const embed = Util.Embed(`Next episode for ${interaction.user.tag}:`, {
+		const embed = {
+			title: `Next episode for ${interaction.user.tag}:`,
 			thumbnail: thimg,
 			fields: [
 				{
@@ -55,13 +56,13 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 					value: `**[arrowverse.info](${url} '${url}')**`
 				}
 			]
-		});
+		};
 
 		return embed;
 	};
 
 	const embed = GetNextEmbed(showtitle, fiep);
-	return interaction.reply({ embeds: [embed] });
+	return interaction.reply({ embeds: [embed as MessageEmbed] });
 }
 
 export const info: Command['info'] = {

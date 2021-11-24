@@ -2,6 +2,7 @@
 import { ActivityType, ApplicationCommandData, AutocompleteInteraction, Collection, CommandInteraction, PermissionResolvable } from 'discord.js';
 import BetterSqlite3 from 'better-sqlite3';
 import type WSClient from 'src/WSClient';
+import type { SapphireClient } from '@sapphire/framework';
 
 declare module '@sapphire/framework' {
 	interface SapphireClient {
@@ -109,7 +110,7 @@ interface Command {
 		bot_perms: PermissionResolvable[];
 	};
 	data: ApplicationCommandData;
-	run(interaction: CommandInteraction): Promise<void>;
+	run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void>;
 }
 
 interface AutoInt {

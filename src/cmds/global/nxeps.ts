@@ -1,14 +1,15 @@
-import type { CommandInteraction, GuildMember } from 'discord.js';
+import type { SapphireClient } from '@sapphire/framework';
+import { CommandInteraction, MessageEmbed } from 'discord.js';
 import type { Command } from 'src/@types/Util.js';
 import { log } from 'src/Util';
 
-export async function run(interaction: CommandInteraction): Promise<void> {
-	const embed = Util.Embed('__Upcoming Arrowverse episodes:__', undefined, interaction.member as GuildMember);
+export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void> {
+	const embed = new MessageEmbed().setTitle('__Upcoming Arrowverse episodes:__');
 
 	// eslint-disable-next-line guard-for-in
-	for (const show in interaction.client.show_api_urls) {
+	for (const show in gideon.show_api_urls) {
 		try {
-			const ep_info = interaction.client.cache.nxeps.get(show);
+			const ep_info = gideon.cache.nxeps.get(show);
 			if (!ep_info) {
 				log(`No ep_info for ${show} when calling nxeps!`);
 				continue;
