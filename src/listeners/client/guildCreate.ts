@@ -1,10 +1,10 @@
-import { Guild, Client, MessageEmbed } from 'discord.js';
+import { Guild, MessageEmbed } from 'discord.js';
 import { BotCheck, LBG } from 'src/handlers/Checks';
 import { log } from 'src/Util';
+import { Listener } from '@sapphire/framework';
 
-export default {
-	name: 'guildCreate',
-	async run(guild: Guild, gideon: Client): Promise<void> {
+export class GuildListener extends Listener {
+	public async run(guild: Guild): Promise<void> {
 		await guild.members.fetch();
 		log(
 			new MessageEmbed()
@@ -17,7 +17,7 @@ export default {
 				.setThumbnail(guild.iconURL() ?? 'https://i.imgur.com/XqYQQ8l.png')
 		);
 
-		let currentguild = gideon.getGuild.get(guild.id);
+		let currentguild = this.container.client.getGuild.get(guild.id);
 		if (!currentguild) {
 			currentguild = {
 				guild: guild.id,
@@ -29,18 +29,18 @@ export default {
 				gpd: 0
 			};
 
-			gideon.setGuild.run(currentguild);
+			this.container.client.setGuild.run(currentguild);
 		}
 
-		const ub = guild.client.getUser.get(guild.ownerId);
+		const ub = this.container.client.getUser.get(guild.ownerId);
 		if (ub) {
 			if (ub.blacklist === 1) {
 				currentguild.blacklist = 1;
-				guild.client.setGuild.run(currentguild);
+				this.container.client.setGuild.run(currentguild);
 			}
 		}
 
 		await LBG(guild.client, guild); // check if guild is blacklisted, if yes, leave
 		await BotCheck(guild.client, guild); // check if guild collects bots, if yes, leave
 	}
-};
+}

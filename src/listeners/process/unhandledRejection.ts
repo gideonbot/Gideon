@@ -1,11 +1,9 @@
 import { DiscordAPIError, Constants } from 'discord.js';
 import { log } from 'src/Util';
+import { Listener } from '@sapphire/framework';
 
-export default {
-	name: 'unhandledRejection',
-	process: true,
-	// eslint-disable-next-line @typescript-eslint/require-await
-	async run(err: DiscordAPIError): Promise<void> {
+export class RejectionListener extends Listener {
+	public run(err: DiscordAPIError): void {
 		const ignore: number[] = [
 			Constants.APIErrors.MISSING_PERMISSIONS,
 			Constants.APIErrors.UNKNOWN_MESSAGE,
@@ -20,4 +18,4 @@ export default {
 
 		log(`Unhandled Rejection: \`\`\`\n${`${err.stack}\n\nJSON: ${JSON.stringify(err, null, 2)}`}\n\`\`\``);
 	}
-};
+}

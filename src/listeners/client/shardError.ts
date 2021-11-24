@@ -1,9 +1,8 @@
+import { Listener } from '@sapphire/framework';
 import { log } from 'src/Util';
 
-export default {
-	name: 'shardError',
-	// eslint-disable-next-line @typescript-eslint/require-await
-	async run(error: Error, shardID: number): Promise<void> {
+export class ShardListener extends Listener {
+	public run(error: Error, shardID: number): void {
 		log(`Shard \`${shardID}\` has encountered a connection error:\n\n\`\`\`\n${error.stack}\n\`\`\``);
 	}
-};
+}

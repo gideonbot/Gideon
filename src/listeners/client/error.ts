@@ -1,9 +1,8 @@
+import { Listener } from '@sapphire/framework';
 import { log } from 'src/Util';
 
-export default {
-	name: 'error',
-	// eslint-disable-next-line @typescript-eslint/require-await
-	async run(err: Error): Promise<void> {
+export class ErrorListener extends Listener {
+	public run(err: Error): void {
 		log(`Bot error: \`\`\`\n${err.stack}\n\`\`\``);
 	}
-};
+}

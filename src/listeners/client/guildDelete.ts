@@ -1,10 +1,9 @@
 import { Guild, MessageEmbed } from 'discord.js';
 import { log } from 'src/Util';
+import { Listener } from '@sapphire/framework';
 
-export default {
-	name: 'guildDelete',
-	// eslint-disable-next-line @typescript-eslint/require-await
-	async run(guild: Guild): Promise<void> {
+export class GuildListener extends Listener {
+	public run(guild: Guild): void {
 		log(
 			new MessageEmbed()
 				.setTitle('Left guild:')
@@ -16,4 +15,4 @@ export default {
 				.setThumbnail(guild.iconURL() ?? 'https://i.imgur.com/XqYQQ8l.png')
 		);
 	}
-};
+}

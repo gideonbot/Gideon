@@ -1,9 +1,9 @@
 import type { Message } from 'discord.js';
 import { Handle } from 'src/handlers/MessageHandler';
+import { Listener } from '@sapphire/framework';
 
-export default {
-	name: 'messageCreate',
-	async run(message: Message): Promise<void> {
+export class MessageListener extends Listener {
+	public async run(message: Message): Promise<void> {
 		await Handle(message);
 	}
-};
+}

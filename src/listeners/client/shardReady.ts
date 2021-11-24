@@ -1,10 +1,11 @@
-import type { Client } from 'discord.js';
+import { Listener } from '@sapphire/framework';
 import { log } from 'src/Util';
 
-export default {
-	name: 'shardReady',
-	async run(id: number, unavailableGuilds: Set<string>, gideon: Client): Promise<void> {
-		if (!process.env.CI) if (gideon.guilds.cache.get('595318490240385037')) await gideon.guilds.cache.get('595318490240385037')?.members.fetch(); // fetch timevault members on shardready
+export class ShardListener extends Listener {
+	public async run(id: number, unavailableGuilds: Set<string> | null) {
+		if (!process.env.CI)
+			if (this.container.client.guilds.cache.get('595318490240385037'))
+				await this.container.client.guilds.cache.get('595318490240385037')?.members.fetch(); // fetch timevault members on shardready
 		// eslint-disable-next-line no-negated-condition
 		if (!unavailableGuilds) log(`Shard \`${id}\` is connected!`);
 		else
@@ -14,4 +15,4 @@ export default {
 				)}`
 			);
 	}
-};
+}

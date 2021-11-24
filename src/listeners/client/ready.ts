@@ -5,10 +5,8 @@ import LCL from 'last-commit-log';
 import { InitDB } from 'src/handlers/SQL';
 import { DeployCommands, InitCache, InitStatus, InitWS, LoadAutoInt, LoadCommands, log, SetStat, SQLBkup } from 'src/Util';
 
-@ApplyOptions<ListenerOptions>({
-	once: true
-})
-export class Ready extends Listener {
+@ApplyOptions<ListenerOptions>({ once: true })
+export class ReadyListener extends Listener {
 	public async run() {
 		const app = await this.container.client.application?.fetch().catch((x) => log(`Failed to fetch owner: ${x}`));
 		if (app && app instanceof ClientApplication && app.owner && app.owner instanceof User) this.container.client.owner = app.owner.id;
