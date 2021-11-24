@@ -1,8 +1,9 @@
-import Discord, { Client, Guild, GuildMember, Message, MessageEmbed, TextChannel, Util } from 'discord.js';
+import Discord, { Guild, GuildMember, Message, MessageEmbed, TextChannel, Util } from 'discord.js';
 import anyAscii from 'any-ascii';
 import Filter from 'bad-words';
 import type { AbmTestValue } from '../@types/Util.js';
 import { delay, fetchJSON, log } from 'src/Util.js';
+import type { SapphireClient } from '@sapphire/framework';
 
 export function ABM_Test(message: Discord.Message): Promise<AbmTestValue> {
 	// eslint-disable-next-line no-async-promise-executor
@@ -63,7 +64,7 @@ export function ABM_Test(message: Discord.Message): Promise<AbmTestValue> {
 	});
 }
 
-export function ABM(gideon: Client, message: Message): void {
+export function ABM(gideon: SapphireClient, message: Message): void {
 	if (!message.guild || !message.guild.me) return;
 
 	if (!(message.channel as TextChannel).permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return;
@@ -112,7 +113,7 @@ export function ABM(gideon: Client, message: Message): void {
 	);
 }
 
-export async function CVM(gideon: Client, message: Message): Promise<undefined | Message> {
+export async function CVM(gideon: SapphireClient, message: Message): Promise<undefined | Message> {
 	if (!message.guild) return;
 	const cvm = gideon.getGuild.get(message.guild.id);
 	if (!cvm) return;
@@ -156,7 +157,7 @@ export async function CVM(gideon: Client, message: Message): Promise<undefined |
 	await message.delete();
 }
 
-export async function LBG(gideon: Client, guild: Guild): Promise<void> {
+export async function LBG(gideon: SapphireClient, guild: Guild): Promise<void> {
 	const ub = gideon.getUser.get(guild.ownerId);
 	const gbl = gideon.getGuild.get(guild.id);
 	const owner = (await guild.members.fetch(guild.ownerId).catch((ex) => console.log(ex))) as Discord.GuildMember;
@@ -190,13 +191,13 @@ export async function LBG(gideon: Client, guild: Guild): Promise<void> {
 	}
 }
 
-export function IBU(gideon: Client, id: string): boolean {
+export function IBU(gideon: SapphireClient, id: string): boolean {
 	const ubl = gideon.getUser.get(id);
 	if (!ubl || !ubl.blacklist) return false;
 	return ubl.blacklist === 1;
 }
 
-export function Spamcounter(gideon: Client, id: string): void {
+export function Spamcounter(gideon: SapphireClient, id: string): void {
 	if (id === gideon.owner) return;
 
 	let spamcount = gideon.spamcount.get(id);
@@ -217,7 +218,7 @@ export function Spamcounter(gideon: Client, id: string): void {
 	return spamcount;
 }
 
-export async function Ads(gideon: Client, message: Discord.Message): Promise<undefined | Message> {
+export async function Ads(gideon: SapphireClient, message: Discord.Message): Promise<undefined | Message> {
 	if (!message.guild || !message.member) return;
 	if (message.guild.id !== '595318490240385037') return;
 	if (message.member?.permissions.has('MANAGE_MESSAGES')) return;
@@ -252,7 +253,7 @@ export async function Ads(gideon: Client, message: Discord.Message): Promise<und
 	}
 }
 
-export async function BotCheck(gideon: Client, guild: Discord.Guild): Promise<void> {
+export async function BotCheck(gideon: SapphireClient, guild: Discord.Guild): Promise<void> {
 	if (['595318490240385037', '264445053596991498', '110373943822540800'].includes(guild.id)) return;
 	if (!guild.members || !guild.members.cache) await guild.members.fetch();
 	const bots = guild.members.cache.filter((x: Discord.GuildMember) => x.user.bot).size;
@@ -288,7 +289,7 @@ export async function BotCheck(gideon: Client, guild: Discord.Guild): Promise<vo
 	}
 }
 
-export async function NameCheck(gideon: Client, newMember: Discord.GuildMember | null, newUser: Discord.User | null): Promise<void> {
+export async function NameCheck(gideon: SapphireClient, newMember: Discord.GuildMember | null, newUser: Discord.User | null): Promise<void> {
 	if (!gideon.guilds.cache.get('595318490240385037')) return;
 
 	if (newMember) {
@@ -348,7 +349,7 @@ export async function NameCheck(gideon: Client, newMember: Discord.GuildMember |
 	}
 }
 
-export async function AccCheck(gideon: Client, member: GuildMember): Promise<void> {
+export async function AccCheck(gideon: SapphireClient, member: GuildMember): Promise<void> {
 	const flagged = gideon.getUser.get(member.id);
 
 	if (flagged?.blacklist === 1) {
@@ -370,7 +371,7 @@ export async function AccCheck(gideon: Client, member: GuildMember): Promise<voi
 	}
 }
 
-export function BadMention(gideon: Client, message: Message): boolean | null {
+export function BadMention(gideon: SapphireClient, message: Message): boolean | null {
 	const mention = message.mentions.users.first();
 	if (mention) {
 		const badmention = gideon.getUser.get(mention.id);
@@ -380,7 +381,7 @@ export function BadMention(gideon: Client, message: Message): boolean | null {
 	return null;
 }
 
-export function GPD(gideon: Client, message: Message): void {
+export function GPD(gideon: SapphireClient, message: Message): void {
 	const gd = gideon.getGuild?.get(message.guild?.id);
 	if (message.author?.bot) return;
 	if (!gd) return;

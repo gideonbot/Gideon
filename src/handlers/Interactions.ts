@@ -1,8 +1,9 @@
-import { Client, CommandInteraction, TextChannel, GuildMember, Permissions, AutocompleteInteraction } from 'discord.js';
+import type { SapphireClient } from '@sapphire/framework';
+import { CommandInteraction, TextChannel, GuildMember, Permissions, AutocompleteInteraction } from 'discord.js';
 import { IncreaseStat, log } from 'src/Util';
 import { IBU, LBG, Spamcounter } from './Checks';
 
-export async function SlashCommands(gideon: Client, command: CommandInteraction): Promise<boolean | undefined> {
+export async function SlashCommands(gideon: SapphireClient, command: CommandInteraction): Promise<boolean | undefined> {
 	if (IBU(gideon, command.user.id)) {
 		await command.reply({ content: 'You are banned from using this application.\nSincereley -the owner', ephemeral: true }); // check if user is blacklisted, if yes, return
 		return gideon.emit('commandRefused', command, 'BANNED_USER');
@@ -126,7 +127,7 @@ export async function SlashCommands(gideon: Client, command: CommandInteraction)
 	}
 }
 
-export async function Autocomplete(gideon: Client, interaction: AutocompleteInteraction): Promise<void> {
+export async function Autocomplete(gideon: SapphireClient, interaction: AutocompleteInteraction): Promise<void> {
 	const ac = gideon.auto.get(interaction.commandName);
 	if (!ac) return;
 

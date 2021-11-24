@@ -4,6 +4,6 @@ import { Listener } from '@sapphire/framework';
 
 export class MessageListener extends Listener {
 	public run(message: Message): void {
-		GPD(message.client, message);
+		GPD(this.container.client, message);
 	}
 }

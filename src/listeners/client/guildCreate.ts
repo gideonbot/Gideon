@@ -40,7 +40,7 @@ export class GuildListener extends Listener {
 			}
 		}
 
-		await LBG(guild.client, guild); // check if guild is blacklisted, if yes, leave
-		await BotCheck(guild.client, guild); // check if guild collects bots, if yes, leave
+		await LBG(this.container.client, guild); // check if guild is blacklisted, if yes, leave
+		await BotCheck(this.container.client, guild); // check if guild collects bots, if yes, leave
 	}
 }

@@ -4,7 +4,7 @@ import { Listener } from '@sapphire/framework';
 
 export class MemberListener extends Listener {
 	public async run(member: GuildMember): Promise<void> {
-		await NameCheck(member.client, null, member.user);
-		await AccCheck(member.client, member);
+		await NameCheck(this.container.client, null, member.user);
+		await AccCheck(this.container.client, member);
 	}
 }

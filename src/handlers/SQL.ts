@@ -1,12 +1,12 @@
+import type { SapphireClient } from '@sapphire/framework';
 import SQLite from 'better-sqlite3';
-import type { Client } from 'discord.js';
 import path from 'path';
 import { log } from 'src/Util';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const sql = new SQLite(path.join(__dirname, '../../data/SQL/gideon.sqlite'));
 
-export function InitDB(gideon: Client): void {
+export function InitDB(gideon: SapphireClient): void {
 	const scoresdb = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
 	if (!scoresdb['count(*)']) {
 		sql.prepare('CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, points INTEGER);').run();

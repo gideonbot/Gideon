@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import { Client, MessageEmbed, Message, Snowflake, Collection, WebhookClient, TextChannel, Util } from 'discord.js';
+import { MessageEmbed, Message, Snowflake, Collection, WebhookClient, TextChannel, Util } from 'discord.js';
 import { avatar } from './config/config.js';
 import fetch from 'node-fetch';
 import fs from 'fs';
@@ -11,6 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
 import WSClient from './WSClient.js';
 import type { EpisodeInfo, InfoInterface, Command, AutoInt } from './@types/Util.js';
+import type { SapphireClient } from '@sapphire/framework';
 
 export function delay(inputDelay: number): Promise<void> {
 	// If the input is not a number, instantly resolve
@@ -61,7 +62,7 @@ export async function IMG(imgid: string): Promise<string | null> {
 	return res.data.images[ranum].link as string;
 }
 
-export function InitWS(gideon: Client): void {
+export function InitWS(gideon: SapphireClient): void {
 	if (!process.env.WS_PORT || !process.env.WS_TOKEN) {
 		log('Could not init WS: missing port/token');
 		return;
@@ -124,7 +125,7 @@ export function Split<T>(arr: T[], chunks: number): T[][] {
 	return array_of_arrays;
 }
 
-export function SetStat(gideon: Client, stat: string, value: number): void {
+export function SetStat(gideon: SapphireClient, stat: string, value: number): void {
 	let s = gideon.getStat.get(stat);
 
 	if (!s) s = { id: stat, value: 0 };
@@ -133,7 +134,7 @@ export function SetStat(gideon: Client, stat: string, value: number): void {
 	gideon.setStat.run(s);
 }
 
-export function IncreaseStat(gideon: Client, stat: string, value = 1): void {
+export function IncreaseStat(gideon: SapphireClient, stat: string, value = 1): void {
 	const s = gideon.getStat.get(stat);
 	if (!s) {
 		log(`Stat ${stat} was missing when increasing it`);
@@ -143,7 +144,7 @@ export function IncreaseStat(gideon: Client, stat: string, value = 1): void {
 	SetStat(gideon, stat, s.value + value);
 }
 
-export async function SQLBkup(gideon: Client): Promise<void> {
+export async function SQLBkup(gideon: SapphireClient): Promise<void> {
 	const db = '../data/SQL';
 	const arc = '../data/SQL.zip';
 	const date = new Date();
@@ -162,7 +163,7 @@ export async function SQLBkup(gideon: Client): Promise<void> {
 	}
 }
 
-export async function InitStatus(gideon: Client): Promise<void> {
+export async function InitStatus(gideon: SapphireClient): Promise<void> {
 	// eslint-disable-next-line no-negated-condition
 	const mbc = !gideon.guilds.cache.get('595318490240385037')
 		? [0]
@@ -175,7 +176,7 @@ export async function InitStatus(gideon: Client): Promise<void> {
 	await delay(10000);
 }
 
-export function LoadCommands(gideon: Client): Promise<void> {
+export function LoadCommands(gideon: SapphireClient): Promise<void> {
 	return new Promise((resolve, reject) => {
 		const start = process.hrtime.bigint();
 
@@ -215,7 +216,7 @@ export function LoadCommands(gideon: Client): Promise<void> {
 	});
 }
 
-export function LoadAutoInt(gideon: Client): Promise<void> {
+export function LoadAutoInt(gideon: SapphireClient): Promise<void> {
 	return new Promise((resolve, reject) => {
 		const start = process.hrtime.bigint();
 
@@ -255,7 +256,7 @@ export function LoadAutoInt(gideon: Client): Promise<void> {
 	});
 }
 
-export async function DeployCommands(gideon: Client): Promise<undefined | boolean> {
+export async function DeployCommands(gideon: SapphireClient): Promise<undefined | boolean> {
 	const data = [];
 	for (const item of gideon.commands.values()) data.push(item.data);
 
@@ -265,7 +266,7 @@ export async function DeployCommands(gideon: Client): Promise<undefined | boolea
 	}
 }
 
-export function LoadEvents(gideon: Client): Promise<void> {
+export function LoadEvents(gideon: SapphireClient): Promise<void> {
 	return new Promise((resolve, reject) => {
 		const start = process.hrtime.bigint();
 
@@ -309,7 +310,7 @@ export function ValID(input: string): string | undefined {
 	return input.match(/\d{17,19}/)?.[0];
 }
 
-export async function InitCache(gideon: Client): Promise<void> {
+export async function InitCache(gideon: SapphireClient): Promise<void> {
 	gideon.cache.nxeps = new Collection();
 	gideon.cache.dceps = new Collection();
 	gideon.cache.jokes = new Collection();
@@ -336,7 +337,7 @@ export async function InitCache(gideon: Client): Promise<void> {
 	log(`Initialized GideonCache with \`${cache.size}\` entries!`);
 }
 
-export async function GetAndStoreEpisode(gideon: Client, show: string): Promise<void> {
+export async function GetAndStoreEpisode(gideon: SapphireClient, show: string): Promise<void> {
 	const names: { [index: string]: string } = {
 		batwoman: 'Batwoman',
 		supergirl: 'Supergirl',
@@ -403,7 +404,7 @@ export async function GetAndStoreEpisode(gideon: Client, show: string): Promise<
 	}
 }
 
-export async function AddInfo(gideon: Client, show: string, json: InfoInterface): Promise<void> {
+export async function AddInfo(gideon: SapphireClient, show: string, json: InfoInterface): Promise<void> {
 	const obj = gideon.cache.dceps.get(show) ?? gideon.cache.nxeps.get(show);
 	if (!obj) return;
 
@@ -452,7 +453,7 @@ export function ClosestDate(dates: string[]): string {
 	return dates[idx];
 }
 
-export function GetCleverBotResponse(gideon: Client, text: string, context: string[]): Promise<string> {
+export function GetCleverBotResponse(gideon: SapphireClient, text: string, context: string[]): Promise<string> {
 	return new Promise((resolve, reject) => {
 		cleverbot(text, context, undefined, 1e4)
 			.then((response) => {
@@ -472,7 +473,7 @@ export function GetCleverBotResponse(gideon: Client, text: string, context: stri
 	});
 }
 
-export async function Chat(gideon: Client, message: Message): Promise<void> {
+export async function Chat(gideon: SapphireClient, message: Message): Promise<void> {
 	const text = message.content;
 
 	let arr = [];
