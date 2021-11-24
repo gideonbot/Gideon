@@ -1,14 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { ApplicationCommandData, AutocompleteInteraction, Collection, CommandInteraction, PermissionResolvable } from 'discord.js';
+import { ActivityType, ApplicationCommandData, AutocompleteInteraction, Collection, CommandInteraction, PermissionResolvable } from 'discord.js';
 import BetterSqlite3 from 'better-sqlite3';
 import type WSClient from 'src/WSClient';
 
-declare module 'discord.js' {
-	interface Guild {
-		last_jokes: { category: string; id: number }[];
-	}
-
-	interface Client {
+declare module '@sapphire/framework' {
+	interface SapphireClient {
 		WSClient: WSClient;
 		commands: Collection<string, Command>;
 		auto: Collection<string, AutoInt>;
@@ -31,6 +27,12 @@ declare module 'discord.js' {
 		setStat: BetterSqlite3.Statement<unknown[]>;
 		db: BetterSqlite3.Database;
 		stats: string[];
+	}
+}
+
+declare module 'discord.js' {
+	interface Guild {
+		last_jokes: { category: string; id: number }[];
 	}
 
 	interface Message {

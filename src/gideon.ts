@@ -2,11 +2,12 @@ import dotenv from 'dotenv';
 dotenv.config({ path: '../.env' });
 import PrettyError from 'pretty-error';
 PrettyError.start().withoutColors();
-import Discord from 'discord.js';
+import { SapphireClient } from '@sapphire/framework';
 import { LoadEvents } from './Util.js';
 import type { GideonCache } from './@types/Util.js';
+import { Collection } from 'discord.js';
 
-const gideon = new Discord.Client({
+const gideon = new SapphireClient({
 	intents: 1543,
 	shards: 'auto',
 	allowedMentions: { parse: ['users', 'roles'], repliedUser: true },
@@ -14,9 +15,9 @@ const gideon = new Discord.Client({
 	restRequestTimeout: 25000
 });
 
-gideon.commands = new Discord.Collection();
-gideon.auto = new Discord.Collection();
-gideon.events = new Discord.Collection();
+gideon.commands = new Collection();
+gideon.auto = new Collection();
+gideon.events = new Collection();
 gideon.statuses = [];
 gideon.spamcount = new Map();
 gideon.cache = {} as GideonCache;
