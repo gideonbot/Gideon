@@ -3,7 +3,6 @@ dotenv.config({ path: '../.env' });
 import PrettyError from 'pretty-error';
 PrettyError.start().withoutColors();
 import { SapphireClient } from '@sapphire/framework';
-import { LoadEvents } from './Util.js';
 import type { GideonCache } from './@types/Util.js';
 import { Collection } from 'discord.js';
 
@@ -43,22 +42,3 @@ gideon.dc_show_urls = {
 	strangeadventures: 'http://api.tvmaze.com/shows/44777?embed=nextepisode',
 	greenlantern: 'http://api.tvmaze.com/shows/44776?embed=nextepisode'
 };
-
-void LoadEvents(gideon).then(() => {
-	for (const event of gideon.events.values()) {
-		if (event.process) {
-			if (event.once) {
-				// @ts-expect-error dis is valid bro
-				process.once(event.name, (...args) => event.run(...args));
-			} else process.on(event.name, (...args) => event.run(...args));
-		} else if (event.once) gideon.once(event.name, (...args: unknown[]) => event.run(...args, gideon));
-		else gideon.on(event.name, (...args: unknown[]) => event.run(...args, gideon));
-	}
-
-	if (process.env.CLIENT_TOKEN) {
-		void gideon.login(process.env.CLIENT_TOKEN);
-	} else {
-		console.log('No client token!');
-		process.exit(1);
-	}
-});

@@ -266,45 +266,6 @@ export async function DeployCommands(gideon: SapphireClient): Promise<undefined 
 	}
 }
 
-export function LoadEvents(gideon: SapphireClient): Promise<void> {
-	return new Promise((resolve, reject) => {
-		const start = process.hrtime.bigint();
-
-		recursive('./events', async (err, files) => {
-			if (err) {
-				log(`Error while reading events:\n${err.stack}`);
-				return reject(err);
-			}
-
-			const jsfiles = files.filter((fileName) => fileName.endsWith('.js') && !path.basename(fileName).startsWith('_'));
-			if (jsfiles.length < 1) {
-				console.log('No events to load!');
-				return reject(new Error('No events!'));
-			}
-
-			console.log(`Found ${jsfiles.length} events`);
-
-			for (const file_path of jsfiles) {
-				const start = process.hrtime.bigint();
-
-				const props = await import(`./${file_path}`);
-
-				gideon.events.set(props.default.name, props.default);
-
-				const end = process.hrtime.bigint();
-				const took = (end - start) / BigInt('1000000');
-
-				console.log(`${normalize(jsfiles.indexOf(file_path) + 1)} - ${file_path} loaded in ${took}ms`);
-			}
-
-			const end = process.hrtime.bigint();
-			const took = (end - start) / BigInt('1000000');
-			log(`All events loaded in \`${took}ms\``);
-			resolve();
-		});
-	});
-}
-
 export function ValID(input: string): string | undefined {
 	if (!input.match(/\d{17,19}/)) return undefined;
 	return input.match(/\d{17,19}/)?.[0];
