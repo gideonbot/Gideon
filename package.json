@@ -2,11 +2,11 @@
   "name": "gideon",
   "version": "2.0.0",
   "description": "The DC Discord Bot",
-  "main": "gideon.js",
+  "main": "dist/gideon.js",
   "type": "module",
   "scripts": {
     "build": "npm i --no-audit && npx tsc -p ./ && npm run start",
-    "start": "cd dist && node gideon.js"
+    "start": "node ."
   },
   "author": "castdrian & MBR",
   "eslintConfig": {
