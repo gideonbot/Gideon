@@ -42,3 +42,5 @@ gideon.dc_show_urls = {
 	strangeadventures: 'http://api.tvmaze.com/shows/44777?embed=nextepisode',
 	greenlantern: 'http://api.tvmaze.com/shows/44776?embed=nextepisode'
 };
+
+void gideon.login();
