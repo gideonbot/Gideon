@@ -2,7 +2,7 @@ import Discord, { Guild, GuildMember, Message, MessageEmbed, TextChannel, Util }
 import anyAscii from 'any-ascii';
 import Filter from 'bad-words';
 import type { AbmTestValue } from '#types/Util';
-import { delay, fetchJSON, log } from '#utils/Util.js';
+import { delay, fetchJSON, log } from '#utils/Util';
 import type { SapphireClient } from '@sapphire/framework';
 
 export function ABM_Test(message: Discord.Message): Promise<AbmTestValue> {

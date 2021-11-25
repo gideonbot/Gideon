@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: `${process.cwd()}/.env` });
 import PrettyError from 'pretty-error';
 PrettyError.start().withoutColors();
 import { SapphireClient } from '@sapphire/framework';

@@ -9,7 +9,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
-import WSClient from './WSClient.js';
+import WSClient from '#utils/WSClient';
 import type { EpisodeInfo, InfoInterface, Command, AutoInt } from '#types/Util';
 import type { SapphireClient } from '@sapphire/framework';
 
@@ -180,7 +180,7 @@ export function LoadCommands(gideon: SapphireClient): Promise<void> {
 	return new Promise((resolve, reject) => {
 		const start = process.hrtime.bigint();
 
-		recursive('./cmds', async (err, files) => {
+		recursive('dist/cmds', async (err, files) => {
 			if (err) {
 				log(`Error while reading commands:\n${err.message}`);
 				return reject(err);
@@ -196,8 +196,7 @@ export function LoadCommands(gideon: SapphireClient): Promise<void> {
 
 			for (const file_path of jsfiles) {
 				const cmd_start = process.hrtime.bigint();
-
-				const props: Command = await import(`./${file_path}`);
+				const props: Command = await import(`file:///${process.cwd()}/${file_path}`);
 
 				gideon.commands.set(props.data.name, props);
 
@@ -220,7 +219,7 @@ export function LoadAutoInt(gideon: SapphireClient): Promise<void> {
 	return new Promise((resolve, reject) => {
 		const start = process.hrtime.bigint();
 
-		recursive('./interactions/autocomplete', async (err, files) => {
+		recursive('dist/interactions/autocomplete', async (err, files) => {
 			if (err) {
 				log(`Error while reading files:\n${err.message}`);
 				return reject(err);
@@ -237,7 +236,7 @@ export function LoadAutoInt(gideon: SapphireClient): Promise<void> {
 			for (const file_path of jsfiles) {
 				const cmd_start = process.hrtime.bigint();
 
-				const props: AutoInt = await import(`./${file_path}`);
+				const props: AutoInt = await import(`file:///${process.cwd()}/${file_path}`);
 
 				gideon.auto.set(props.name, props);
 

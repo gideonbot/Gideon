@@ -1,7 +1,7 @@
 import type { SapphireClient } from '@sapphire/framework';
 import { GuildMember, Message, Snowflake, Permissions, ClientUser } from 'discord.js';
 import { Chat, IncreaseStat } from '#utils/Util';
-import { ABM, Ads, CVM, IBU, LBG, NameCheck } from './Checks';
+import { ABM, Ads, CVM, IBU, LBG, NameCheck } from '#utils/Checks';
 
 export async function Handle(message: Message, gideon: SapphireClient): Promise<undefined | Message> {
 	if (!message || !message.guild || !message.author || message.partial || (message.type !== 'DEFAULT' && message.type !== 'APPLICATION_COMMAND'))

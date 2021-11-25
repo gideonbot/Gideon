@@ -36,7 +36,7 @@ export class ReadyListener extends Listener {
 		console.log('Ready!');
 		if (process.env.CI) process.exit(0);
 
-		const lcl = new LCL('../');
+		const lcl = new LCL(process.cwd());
 		const commit = await lcl.getLastCommit();
 		if (commit)
 			log(

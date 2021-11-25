@@ -11,6 +11,7 @@
             "#utils/*": ["util/*"],
             "#types/*": ["@types/*"],
             "#config/*": ["config/*"],
+			"#root/*": ["*"],
         }
     }
 }
