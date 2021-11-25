@@ -2,7 +2,7 @@ import { ClientApplication, User, Team } from 'discord.js';
 import { ApplyOptions } from '@sapphire/decorators';
 import { ListenerOptions, Listener } from '@sapphire/framework';
 import LCL from 'last-commit-log';
-import { InitDB } from 'src/handlers/SQL';
+import { InitDB } from '#utils/SQL';
 import { DeployCommands, InitCache, InitStatus, InitWS, LoadAutoInt, LoadCommands, log, SetStat, SQLBkup } from '#utils/Util';
 
 @ApplyOptions<ListenerOptions>({ once: true })
@@ -30,6 +30,7 @@ export class ReadyListener extends Listener {
 
 		const twodays = 1000 * 60 * 60 * 48;
 		setInterval(() => InitStatus(this.container.client), 30e3);
+		// eslint-disable-next-line @typescript-eslint/no-implied-eval
 		setInterval(SQLBkup, twodays);
 
 		console.log('Ready!');

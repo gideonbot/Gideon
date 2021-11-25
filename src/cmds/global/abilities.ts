@@ -1,7 +1,7 @@
 import gideonapi from 'gideon-api';
 import { CommandInteraction, MessageEmbed, Permissions, Message } from 'discord.js';
 import type { Command } from '#types/Util.js';
-import { footer } from 'src/config/config';
+import { footer } from '#config/config';
 
 export async function run(interaction: CommandInteraction): Promise<Message | undefined> {
 	const abilities = await gideonapi.abilities();
