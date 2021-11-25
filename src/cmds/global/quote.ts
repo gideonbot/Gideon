@@ -1,6 +1,6 @@
 import gideonapi from 'gideon-api';
 import { CommandInteraction, MessageComponentInteraction, Message, MessageButton, MessageActionRow } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
+import type { Command } from '#types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
 	let quote = await gideonapi.quote();

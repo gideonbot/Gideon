@@ -1,6 +1,6 @@
 import { Guild, MessageEmbed } from 'discord.js';
-import { BotCheck, LBG } from 'src/handlers/Checks';
-import { log } from 'src/Util';
+import { BotCheck, LBG } from '#utils/Checks';
+import { log } from '#utils/Util';
 import { Listener } from '@sapphire/framework';
 
 export class GuildListener extends Listener {

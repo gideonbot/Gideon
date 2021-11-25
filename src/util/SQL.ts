@@ -1,7 +1,7 @@
 import type { SapphireClient } from '@sapphire/framework';
 import SQLite from 'better-sqlite3';
 import path from 'path';
-import { log } from 'src/Util';
+import { log } from '#utils/Util';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const sql = new SQLite(path.join(__dirname, '../../data/SQL/gideon.sqlite'));

@@ -1,5 +1,5 @@
-import { Close } from 'src/handlers/SQL';
-import { delay, log } from 'src/Util';
+import { Close } from '#utils/SQL';
+import { delay, log } from '#utils/Util';
 import { ListenerOptions, Listener } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
 

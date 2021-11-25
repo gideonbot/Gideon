@@ -1,7 +1,7 @@
 import { exec } from 'child_process';
 import type { CommandInteraction } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
-import { log } from 'src/Util';
+import type { Command } from '#types/Util.js';
+import { log } from '#utils/Util';
 
 export function run(interaction: CommandInteraction): void {
 	if (interaction.options.data[0].value === 'i') {

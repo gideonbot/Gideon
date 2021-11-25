@@ -1,6 +1,6 @@
 import type { CommandInteraction } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
-import { fetchJSON } from 'src/Util';
+import type { Command } from '#types/Util.js';
+import { fetchJSON } from '#utils/Util';
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function run(interaction: CommandInteraction): Promise<void> {

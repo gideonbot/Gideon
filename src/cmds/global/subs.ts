@@ -1,8 +1,8 @@
 /* eslint-disable prefer-destructuring */
 import OpenSubtitles from 'opensubtitles-api';
 import { CommandInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
-import { log, truncate } from 'src/Util';
+import type { Command } from '#types/Util.js';
+import { log, truncate } from '#utils/Util';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
 	await interaction.deferReply();

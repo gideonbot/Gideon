@@ -1,5 +1,5 @@
 import { DiscordAPIError, Constants } from 'discord.js';
-import { log } from 'src/Util';
+import { log } from '#utils/Util';
 import { Listener } from '@sapphire/framework';
 
 export class RejectionListener extends Listener {

@@ -4,11 +4,13 @@
 		"module": "ESnext",
 		"rootDir": "./src",
         "outDir": "./dist",       
-        "baseUrl": "./",
+        "baseUrl": "./src",
         "typeRoots": ["node_modules/@types", "src/@types"],
 		"noImplicitReturns": false,
 		"paths": {
             "#utils/*": ["util/*"],
+            "#types/*": ["@types/*"],
+            "#config/*": ["config/*"],
         }
     }
 }

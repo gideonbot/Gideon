@@ -3,7 +3,7 @@ dotenv.config({ path: '../.env' });
 import PrettyError from 'pretty-error';
 PrettyError.start().withoutColors();
 import { SapphireClient } from '@sapphire/framework';
-import type { GideonCache } from 'src/@types/Util';
+import type { GideonCache } from '#types/Util';
 import { Collection } from 'discord.js';
 
 const gideon = new SapphireClient({

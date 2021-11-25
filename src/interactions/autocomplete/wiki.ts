@@ -1,6 +1,6 @@
 import type { AutocompleteInteraction } from 'discord.js';
-import type { Wiki, WikiQuery } from 'src/@types/Util';
-import { fetchJSON } from 'src/Util';
+import type { Wiki, WikiQuery } from '#types/Util';
+import { fetchJSON } from '#utils/Util';
 
 export const name = 'wiki';
 export async function run(interaction: AutocompleteInteraction): Promise<void> {

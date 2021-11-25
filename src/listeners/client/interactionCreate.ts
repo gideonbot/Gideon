@@ -1,5 +1,5 @@
 import type { Interaction } from 'discord.js';
-import { Autocomplete, SlashCommands } from 'src/handlers/Interactions';
+import { Autocomplete, SlashCommands } from '#utils/Interactions';
 import { Listener } from '@sapphire/framework';
 
 export class InteractionListener extends Listener {

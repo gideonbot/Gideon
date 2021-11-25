@@ -1,5 +1,5 @@
 import { CommandInteraction, MessageActionRow, MessageButton } from 'discord.js';
-import type { Command } from 'src/@types/Util';
+import type { Command } from '#types/Util';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
 	const url = 'https://gideonbot.com/invite';

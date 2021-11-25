@@ -1,5 +1,5 @@
 import type { GuildMember } from 'discord.js';
-import { NameCheck } from 'src/handlers/Checks';
+import { NameCheck } from '#utils/Checks';
 import { Listener } from '@sapphire/framework';
 
 export class MemberListener extends Listener {

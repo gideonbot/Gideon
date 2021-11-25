@@ -1,5 +1,5 @@
 import type { Message } from 'discord.js';
-import { Handle } from 'src/handlers/MessageHandler';
+import { Handle } from '#utils/MessageHandler';
 import { Listener } from '@sapphire/framework';
 
 export class MessageListener extends Listener {

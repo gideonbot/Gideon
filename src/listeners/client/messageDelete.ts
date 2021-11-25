@@ -1,5 +1,5 @@
 import type { Message } from 'discord.js';
-import { GPD } from 'src/handlers/Checks';
+import { GPD } from '#utils/Checks';
 import { Listener } from '@sapphire/framework';
 
 export class MessageListener extends Listener {

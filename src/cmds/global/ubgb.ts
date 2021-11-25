@@ -1,6 +1,6 @@
 import type { SapphireClient } from '@sapphire/framework';
 import type { CommandInteraction, GuildMember, Snowflake, TextChannel } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
+import type { Command } from '#types/Util.js';
 
 export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void> {
 	const id = interaction.options?.get('user')?.options?.filter((x) => x.name === 'userid')?.[0].value;

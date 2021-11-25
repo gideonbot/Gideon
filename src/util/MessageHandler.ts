@@ -1,6 +1,6 @@
 import type { SapphireClient } from '@sapphire/framework';
 import { GuildMember, Message, Snowflake, Permissions, ClientUser } from 'discord.js';
-import { Chat, IncreaseStat } from 'src/Util';
+import { Chat, IncreaseStat } from '#utils/Util';
 import { ABM, Ads, CVM, IBU, LBG, NameCheck } from './Checks';
 
 export async function Handle(message: Message, gideon: SapphireClient): Promise<undefined | Message> {

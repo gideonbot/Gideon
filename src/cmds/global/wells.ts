@@ -1,6 +1,6 @@
 import { CommandInteraction, MessageEmbed } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
-import { delay } from 'src/Util';
+import type { Command } from '#types/Util.js';
+import { delay } from '#utils/Util';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
 	await interaction.reply('Booting up the Multiverse Holo Projector...');

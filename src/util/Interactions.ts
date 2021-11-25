@@ -1,6 +1,6 @@
 import type { SapphireClient } from '@sapphire/framework';
 import { CommandInteraction, TextChannel, GuildMember, Permissions, AutocompleteInteraction } from 'discord.js';
-import { IncreaseStat, log } from '#utils/Util.js';
+import { IncreaseStat, log } from '#utils/Util';
 import { IBU, LBG, Spamcounter } from './Checks';
 
 export async function SlashCommands(gideon: SapphireClient, command: CommandInteraction): Promise<boolean | undefined> {

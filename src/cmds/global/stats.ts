@@ -1,6 +1,6 @@
 import type { SapphireClient } from '@sapphire/framework';
 import { CommandInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
+import type { Command } from '#types/Util.js';
 
 export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void> {
 	const cmds = gideon.getStat.get('commands_ran').value + 1;

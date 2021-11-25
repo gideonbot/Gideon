@@ -1,6 +1,6 @@
 import { CommandInteraction, MessageEmbed } from 'discord.js';
 import gideonapi from 'gideon-api';
-import type { Command } from 'src/@types/Util.js';
+import type { Command } from '#types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
 	const soundtracks = await gideonapi.soundtracks();

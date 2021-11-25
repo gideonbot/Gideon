@@ -1,5 +1,5 @@
 import type { CommandInteraction } from 'discord.js';
-import type { Command } from 'src/@types/Util';
+import type { Command } from '#types/Util';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
 	const flashopening = 'https://cdn.discordapp.com/attachments/595934699285905409/674586782494621696/YouCut_20200205_130726276.mp4';

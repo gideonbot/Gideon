@@ -1,6 +1,6 @@
 import { CommandInteraction, MessageEmbed } from 'discord.js';
-import type { Command, SeEp, Show, TVMazeResponse } from 'src/@types/Util.js';
-import { fetchJSON, normalize } from 'src/Util';
+import type { Command, SeEp, Show, TVMazeResponse } from '#types/Util.js';
+import { fetchJSON, normalize } from '#utils/Util';
 import dayjs from 'dayjs';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {

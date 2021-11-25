@@ -3,7 +3,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { ListenerOptions, Listener } from '@sapphire/framework';
 import LCL from 'last-commit-log';
 import { InitDB } from 'src/handlers/SQL';
-import { DeployCommands, InitCache, InitStatus, InitWS, LoadAutoInt, LoadCommands, log, SetStat, SQLBkup } from 'src/Util';
+import { DeployCommands, InitCache, InitStatus, InitWS, LoadAutoInt, LoadCommands, log, SetStat, SQLBkup } from '#utils/Util';
 
 @ApplyOptions<ListenerOptions>({ once: true })
 export class ReadyListener extends Listener {

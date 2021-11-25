@@ -1,6 +1,6 @@
 import Canvas from 'canvas';
 import { CommandInteraction, MessageAttachment, MessageEmbed } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
+import type { Command } from '#types/Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
 	const canvas = Canvas.createCanvas(560, 560);

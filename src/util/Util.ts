@@ -1,6 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { MessageEmbed, Message, Snowflake, Collection, WebhookClient, TextChannel, Util } from 'discord.js';
-import { avatar } from './config/config.js';
+import { avatar } from '#config/config';
 import fetch from 'node-fetch';
 import fs from 'fs';
 import zip from 'zip-promise';
@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import cleverbot from 'cleverbot-free';
 import WSClient from './WSClient.js';
-import type { EpisodeInfo, InfoInterface, Command, AutoInt } from './@types/Util.js';
+import type { EpisodeInfo, InfoInterface, Command, AutoInt } from '#types/Util';
 import type { SapphireClient } from '@sapphire/framework';
 
 export function delay(inputDelay: number): Promise<void> {

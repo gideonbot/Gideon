@@ -1,7 +1,7 @@
 import type { SapphireClient } from '@sapphire/framework';
 import { CommandInteraction, MessageEmbed } from 'discord.js';
-import type { Command, Wiki, WikiQuery, WikiResult } from 'src/@types/Util.js';
-import { fetchJSON } from 'src/Util';
+import type { Command, Wiki, WikiQuery, WikiResult } from '#types/Util.js';
+import { fetchJSON } from '#utils/Util';
 
 export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void> {
 	const wikis: Record<string, Wiki> = {

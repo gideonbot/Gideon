@@ -1,7 +1,7 @@
 import { CommandInteraction, MessageEmbed, Permissions } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
+import type { Command } from '#types/Util.js';
 import gideonapi from 'gideon-api';
-import { normalize } from 'src/Util';
+import { normalize } from '#utils/Util';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
 	const url = 'https://arrowverse.info';

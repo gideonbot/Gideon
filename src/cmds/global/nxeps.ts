@@ -1,7 +1,7 @@
 import type { SapphireClient } from '@sapphire/framework';
 import { CommandInteraction, MessageEmbed } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
-import { log } from 'src/Util';
+import type { Command } from '#types/Util.js';
+import { log } from '#utils/Util';
 
 export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void> {
 	const embed = new MessageEmbed().setTitle('__Upcoming Arrowverse episodes:__');

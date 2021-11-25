@@ -1,7 +1,7 @@
 import Discord from 'discord.js';
 import type { CommandInteraction } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
-import { fetchJSON } from 'src/Util';
+import type { Command } from '#types/Util.js';
+import { fetchJSON } from '#utils/Util';
 import type { SapphireClient } from '@sapphire/framework';
 
 export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void> {

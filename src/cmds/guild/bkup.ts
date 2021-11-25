@@ -1,7 +1,7 @@
 import type { SapphireClient } from '@sapphire/framework';
 import type { CommandInteraction } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
-import { SQLBkup } from 'src/Util';
+import type { Command } from '#types/Util.js';
+import { SQLBkup } from '#utils/Util';
 
 export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<unknown> {
 	void interaction.reply('Performing database backup, please wait...');

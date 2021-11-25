@@ -1,5 +1,5 @@
 import type { CommandInteraction, TextChannel, User } from 'discord.js';
-import { log } from 'src/Util';
+import { log } from '#utils/Util';
 import { Listener } from '@sapphire/framework';
 
 export class CommandListener extends Listener {

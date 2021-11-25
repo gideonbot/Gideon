@@ -58,6 +58,8 @@
     "typescript": "^4.6.0-dev.20211124"
   },
   "imports": {
-	"#utils/*": "./dist/util/*.js"
+	"#utils/*": "./dist/util/*.js",
+	"#types/*": "./dist/types/*.d.ts",
+	"#config/*": "./dist/config/*.js"
   }
 }

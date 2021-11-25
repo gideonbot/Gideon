@@ -1,4 +1,4 @@
-import { log } from 'src/Util';
+import { log } from '#utils/Util';
 import { Listener } from '@sapphire/framework';
 
 export class ExceptionListener extends Listener {

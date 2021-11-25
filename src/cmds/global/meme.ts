@@ -1,7 +1,7 @@
 import { MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
 import type { CommandInteraction, MessageComponentInteraction, Message } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
-import { IMG, log } from 'src/Util';
+import type { Command } from '#types/Util.js';
+import { IMG, log } from '#utils/Util';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
 	if (!process.env.IMG_CL) {

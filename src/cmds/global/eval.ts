@@ -1,6 +1,6 @@
 import type { CommandInteraction } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
-import { truncate } from 'src/Util';
+import type { Command } from '#types/Util.js';
+import { truncate } from '#utils/Util';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
 	const code = interaction.options.data[0]?.value;

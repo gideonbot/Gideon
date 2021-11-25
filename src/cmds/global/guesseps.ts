@@ -11,10 +11,10 @@ import {
 	MessageActionRow,
 	MessageEmbed
 } from 'discord.js';
-import type { Command, GuessingScore } from 'src/@types/Util.js';
+import type { Command, GuessingScore } from '#types/Util.js';
 import gideonapi from 'gideon-api';
 import type { SapphireClient } from '@sapphire/framework';
-import { log } from 'src/Util';
+import { log } from '#utils/Util';
 
 export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<unknown> {
 	await interaction.deferReply();

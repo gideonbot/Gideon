@@ -1,5 +1,5 @@
 import { Listener } from '@sapphire/framework';
-import { log } from 'src/Util';
+import { log } from '#utils/Util';
 
 export class ShardListener extends Listener {
 	public run(error: Error, shardID: number): void {

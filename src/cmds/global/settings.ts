@@ -1,7 +1,7 @@
 import type { SapphireClient } from '@sapphire/framework';
 import { CommandInteraction, TextChannel, Permissions, Snowflake } from 'discord.js';
-import type { Command } from 'src/@types/Util.js';
-import { ValID } from 'src/Util';
+import type { Command } from '#types/Util.js';
+import { ValID } from '#utils/Util';
 
 export async function run(interaction: CommandInteraction, gideon: SapphireClient): Promise<void> {
 	const setting = interaction.options.data[0]?.options?.[0]?.value;
