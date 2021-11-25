@@ -1,12 +1,14 @@
 {
 	"extends": "@sapphire/ts-config",
     "compilerOptions": {
-		"module": "ESNext",
+		"module": "ESnext",
 		"rootDir": "./src",
         "outDir": "./dist",       
         "baseUrl": "./",
         "typeRoots": ["node_modules/@types", "src/@types"],
 		"noImplicitReturns": false,
-		"resolveJsonModule": true
-    },
+		"paths": {
+            "#utils/*": ["util/*"],
+        }
+    }
 }
