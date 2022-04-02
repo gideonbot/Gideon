@@ -48,7 +48,6 @@ Util.LoadEvents().then(() => {
     for (const event of gideon.events.values()) {
         if (event.process) {
             if (event.once) {
-                // @ts-expect-error dis is valid bro
                 process.once(event.name, (...args) => event.run(...args));
             } 
             else process.on(event.name, (...args) => event.run(...args));

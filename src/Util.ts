@@ -126,7 +126,7 @@ class Util {
 
         const options = {headers: {authorization: 'Client-ID ' + process.env.IMG_CL}};
 
-        const res = await fetch('https://api.imgur.com/3/album/' + imgid, options).then(res => res.json()).catch(console.log);
+        const res = <any>await fetch('https://api.imgur.com/3/album/' + imgid, options).then(res => res.json()).catch(console.log);
         if (!res) return null;
         
         const min = 0;
@@ -666,7 +666,7 @@ class Util {
 
     static GetCleverBotResponse(text: string, context: string[]): Promise<string> {
         return new Promise((resolve, reject) => {
-            cleverbot(text, context, undefined, 1e4).then(response => {
+            cleverbot(text, context, undefined).then(response => {
                 if (!response || response.toLowerCase().includes('www.cleverbot.com')) reject('User Agent outdated');
                 this.IncreaseStat('ai_chat_messages_processed');
                 resolve(response);

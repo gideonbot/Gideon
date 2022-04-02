@@ -51,7 +51,7 @@ class WSClient extends EventEmitter {
         });
 
         this.client.on('message', d => {
-            const json = JSON.parse(<string>d);
+            const json = JSON.parse(d.toString());
 
             if (!json || json.op == undefined) return;
 
