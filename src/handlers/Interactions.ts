@@ -35,7 +35,9 @@ class Interactions {
             process.gideon.setGuild.run(guildsettings);
         }
 
-        if (command.channel?.id === guildsettings.chatchnl) return;
+        if (command.channel?.id === guildsettings.chatchnl) {
+            return command.reply({ content: 'Slash commands cannot be used in the chat channel!', ephemeral: true });
+        }
 
         Util.Checks.Spamcounter(command.user.id);
 
