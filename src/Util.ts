@@ -151,8 +151,8 @@ class Util {
                     type: 'STATS',
                     guilds: guilds.size,
                     users: guilds.reduce((a, b) => a + b.memberCount, 0),
-                    commands: process.gideon.getStat.get('commands_ran').value,
-                    ai_messages: process.gideon.getStat.get('ai_chat_messages_processed').value
+                    commands: (process.gideon.getStat.get('commands_ran') as any).value,
+                    ai_messages: (process.gideon.getStat.get('ai_chat_messages_processed') as any).value
                 };
 
                 return process.gideon.WSClient.send(data);
@@ -231,7 +231,7 @@ class Util {
     }
 
     static SetStat(stat: string, value: number): void {
-        let s = process.gideon.getStat.get(stat);
+        let s = process.gideon.getStat.get(stat) as any;
 
         if (!s) s = {id: stat, value: 0};
 
@@ -240,7 +240,7 @@ class Util {
     }
 
     static IncreaseStat(stat: string, value = 1): void {
-        const s = process.gideon.getStat.get(stat);
+        const s = process.gideon.getStat.get(stat) as any;
         if (!s) {
             Util.log('Stat ' + stat + ' was missing when increasing it');
             return;

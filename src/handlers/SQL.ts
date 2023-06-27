@@ -11,7 +11,7 @@ class SQL {
     }
 
     static InitDB(): void {
-        const scoresdb = sql.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'scores\';').get();
+        const scoresdb = sql.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'scores\';').get() as any;
         if (!scoresdb['count(*)']) {
             sql.prepare('CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, points INTEGER);').run();
             sql.prepare('CREATE UNIQUE INDEX idx_scores_id ON scores (id);').run();
@@ -19,7 +19,7 @@ class SQL {
             sql.pragma('journal_mode = wal');
         }
     
-        const userdb = sql.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'users\';').get();
+        const userdb = sql.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'users\';').get() as any;
         if (!userdb['count(*)']) {
             sql.prepare('CREATE TABLE users (id TEXT PRIMARY KEY, trmodeval BIT, blacklist BIT);').run();
             sql.prepare('CREATE UNIQUE INDEX idx_users_id ON users (id);').run();
@@ -27,7 +27,7 @@ class SQL {
             sql.pragma('journal_mode = wal');
         }
 
-        const guilddb = sql.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'guilds\';').get();
+        const guilddb = sql.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'guilds\';').get() as any;
         if (!guilddb['count(*)']) {
             sql.prepare('CREATE TABLE guilds (guild TEXT PRIMARY KEY, cvmval BIT, abmval BIT, eastereggs BIT, blacklist BIT, chatchnl TEXT, gpd BIT);').run();
             sql.prepare('CREATE UNIQUE INDEX idx_guilds_id ON guilds (guild);').run();
@@ -35,7 +35,7 @@ class SQL {
             sql.pragma('journal_mode = wal');
         }
 
-        const statsdb = sql.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'stats\';').get();
+        const statsdb = sql.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'stats\';').get() as any;
         if (!statsdb['count(*)']) {
             sql.prepare('CREATE TABLE stats (id TEXT PRIMARY KEY, value INTEGER);').run();
             sql.prepare('CREATE UNIQUE INDEX idx_stats_id ON stats (id);').run();

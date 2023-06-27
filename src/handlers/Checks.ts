@@ -77,7 +77,7 @@ class Checks {
 
         if (!(message.channel as Discord.TextChannel).permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) return;
 
-        const abm = process.gideon.getGuild.get(message.guild.id);
+        const abm = process.gideon.getGuild.get(message.guild.id) as any;
         if (!abm) return;
         if (abm.abmval === 0) return;
         
@@ -106,7 +106,7 @@ class Checks {
 
     static async CVM(message: Discord.Message): Promise<void | Discord.Message> {
         if (!message.guild) return;
-        const cvm = process.gideon.getGuild.get(message.guild.id);
+        const cvm = process.gideon.getGuild.get(message.guild.id) as any;
         if (!cvm) return;
         if (cvm.cvmval === 0) return;
 
@@ -148,7 +148,7 @@ class Checks {
         if (message.editedAt) return;
         if (message.content.match(/<?(a)?:?(\w{2,32}):(\d{17,19})>?/)) return;
 
-        const eggs = process.gideon.getGuild.get(message.guild.id);
+        const eggs = process.gideon.getGuild.get(message.guild.id) as any;
         if (!eggs) return;
         if (eggs.eastereggs === 0) return;
 
@@ -213,8 +213,8 @@ class Checks {
     }
 
     static async LBG(guild: Discord.Guild): Promise<void> {
-        const ub = process.gideon.getUser.get(guild.ownerId);
-        const gbl = process.gideon.getGuild.get(guild.id);
+        const ub = process.gideon.getUser.get(guild.ownerId) as any;
+        const gbl = process.gideon.getGuild.get(guild.id) as any;
         const owner = await guild.members.fetch(guild.ownerId).catch(ex => console.log(ex)) as Discord.GuildMember;
         
         if (ub) {
@@ -242,7 +242,7 @@ class Checks {
     }
 
     static IBU(id: string): boolean {
-        const ubl = process.gideon.getUser.get(id);
+        const ubl = process.gideon.getUser.get(id) as any;
         if (!ubl || !ubl.blacklist) return false;
         return ubl.blacklist === 1;
     }
@@ -393,7 +393,7 @@ class Checks {
     }
 
     static async AccCheck(member: Discord.GuildMember): Promise<void> {
-        const flagged = process.gideon.getUser.get(member.id);
+        const flagged = process.gideon.getUser.get(member.id) as any;
 
         if (flagged?.blacklist === 1) {
             const guildowner = await member.guild.members.fetch(member.guild.ownerId);
@@ -415,7 +415,7 @@ class Checks {
     static BadMention(message: Discord.Message): boolean | null {
         const mention = message.mentions.users.first();
         if (mention) {
-            const badmention = process.gideon.getUser.get(mention.id);
+            const badmention = process.gideon.getUser.get(mention.id) as any;
             if (badmention?.blacklist === 1) return true;
             else return null;
         }
@@ -423,7 +423,7 @@ class Checks {
     }
 
     static GPD(message: Discord.Message): void {
-        const gd = process.gideon.getGuild?.get(message.guild?.id);
+        const gd = process.gideon.getGuild?.get(message.guild?.id) as any;
         if (message.author?.bot) return;
         if (!gd) return;
         if (gd.gpd === 0) return;

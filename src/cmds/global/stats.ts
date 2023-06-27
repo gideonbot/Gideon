@@ -3,9 +3,9 @@ import { Command } from 'src/@types/Util.js';
 import Util from '../../Util.js';
 
 export async function run(interaction: CommandInteraction): Promise<void> {
-    const cmds = process.gideon.getStat.get('commands_ran').value + 1;
-    const msgs = process.gideon.getStat.get('messages_sent').value + 1;
-    const aimsgs =  process.gideon.getStat.get('ai_chat_messages_processed').value;
+    const cmds = (process.gideon.getStat.get('commands_ran') as any).value + 1;
+    const msgs = (process.gideon.getStat.get('messages_sent') as any).value + 1;
+    const aimsgs =  (process.gideon.getStat.get('ai_chat_messages_processed') as any).value;
     const users = process.gideon.guilds.cache.reduce((r, d) => r + d.memberCount, 0);
 
     const buttons = [

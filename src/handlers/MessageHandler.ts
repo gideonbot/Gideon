@@ -16,7 +16,7 @@ class MsgHandler {
         if (!message.channel.permissionsFor((message.guild.me as Discord.GuildMember)).has(Discord.Permissions.FLAGS.SEND_MESSAGES)) return;
 
         if (!process.gideon.getGuild) return;
-        let currentguild = process.gideon.getGuild.get(message.guild.id);
+        let currentguild = process.gideon.getGuild.get(message.guild.id) as any;
         if (!currentguild) {
             currentguild = {
                 guild: message.guild.id,

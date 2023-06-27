@@ -65,7 +65,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     const url = article.url.replace(/\(/g, '%28').replace(/\)/g, '%29');
 
     let st = '';
-    const cvm = process.gideon.getGuild.get(interaction.guild?.id);
+    const cvm = process.gideon.getGuild.get(interaction.guild?.id) as any;
     if (cvm) {
         if (cvm.cvmval === 1) st = '||';
     }

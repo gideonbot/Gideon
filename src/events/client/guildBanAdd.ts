@@ -6,7 +6,7 @@ export default {
     async run(guild: Guild, user: User): Promise<void> {
         if (guild.id !== '595318490240385037') return;
         const id = user.id;
-        let ub = process.gideon.getUser.get(id);
+        let ub = process.gideon.getUser.get(id) as any;
     
         if (!ub) {
             ub = {

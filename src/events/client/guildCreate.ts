@@ -7,7 +7,7 @@ export default {
         await guild.members.fetch();
         Util.log(Util.Embed('Joined a new guild:', {description: `Guild: \`${guild.name}\` (${guild.id})\nMembers: \`${guild.members.cache.filter(x => !x.user.bot).size}\` Bots: \`${guild.members.cache.filter(x => x.user.bot).size}\`\nCreated at: \`${guild.createdAt.toDateString()}\`\nOwner: \`${guild.ownerId ?? 'Unknown'}\` (${guild.ownerId})`, thumbnail: (guild.iconURL() as string)}));
     
-        let currentguild = gideon.getGuild.get(guild.id);
+        let currentguild = gideon.getGuild.get(guild.id) as any;
         if (!currentguild) {
             currentguild = {
                 guild: guild.id,
@@ -22,7 +22,7 @@ export default {
             gideon.setGuild.run(currentguild);
         }
     
-        const ub = process.gideon.getUser.get(guild.ownerId);
+        const ub = process.gideon.getUser.get(guild.ownerId) as any;
         if (ub) {
             if (ub.blacklist === 1) {
                 currentguild.blacklist = 1;

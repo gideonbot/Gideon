@@ -5,12 +5,12 @@ import Util from '../../Util.js';
 export async function run(interaction: CommandInteraction): Promise<void> {
     const leaderboard = Util.Embed('Top 10 Leaderboard:', undefined, interaction.member as GuildMember);
 
-    const top10 = process.gideon.getTop10.all().filter(x => x.points > 0);
+    const top10 = (process.gideon.getTop10.all() as any).filter((x: any) => x.points > 0);
 
     if (top10.length < 1) leaderboard.setDescription('No entries yet!');
 
     else {
-        leaderboard.setDescription(top10.map((data, i) => {
+        leaderboard.setDescription(top10.map((data: any, i: any) => {
             const guild = process.gideon.guilds.cache.get(data.guild);
             const user = guild?.members?.cache?.get?.(data.user) ?? data.user;
             return '**#' + (i + 1) + '** - ' + user + ' in `' + (guild ? guild.name : 'Unknown') + '`: **' + data.points + '** ' + (data.points != 1 ? 'point' + 's' : 'point');

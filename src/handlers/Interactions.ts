@@ -19,7 +19,7 @@ class Interactions {
         const cmd = process.gideon.commands.get(command.commandName);
         if (!cmd) return;
 
-        let guildsettings = process.gideon.getGuild.get(command.guildId);
+        let guildsettings = process.gideon.getGuild.get(command.guildId) as any;
 
         if (!guildsettings) {
             guildsettings = {
@@ -44,7 +44,7 @@ class Interactions {
         const spamcount = process.gideon.spamcount.get(command.user.id);
    
         if (spamcount?.usages + 1 > 10 && !process.env.CI) {
-            let ub = process.gideon.getUser.get(command.user.id);
+            let ub = process.gideon.getUser.get(command.user.id) as any;
 
             if (!ub) ub = {
                 id: command.user.id,

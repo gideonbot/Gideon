@@ -5,7 +5,7 @@ import { Command } from 'src/@types/Util.js';
 export async function run(interaction: CommandInteraction): Promise<void> {
     const setting = interaction.options.data[0]?.options?.[0]?.value;
 
-    const guildsettings = process.gideon.getGuild.get(interaction.guild?.id);
+    const guildsettings = process.gideon.getGuild.get(interaction.guild?.id) as any;
 
     if (setting === 'cvm_on') {
         guildsettings.cvmval = 1;

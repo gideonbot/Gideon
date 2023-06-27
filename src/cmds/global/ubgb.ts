@@ -6,7 +6,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
     const guildid = interaction.options?.get('guild')?.options?.filter(x => x.name === 'guildid')?.[0].value;
 
     if (id) {
-        let ub = process.gideon.getUser.get(id);
+        let ub = process.gideon.getUser.get(id) as any;
         if (!ub) {
             ub = {
                 id: id,
@@ -28,7 +28,7 @@ export async function run(interaction: CommandInteraction): Promise<void> {
         }
     }
     else {
-        let gb = process.gideon.getGuild.get(guildid);
+        let gb = process.gideon.getGuild.get(guildid) as any;
         if (!gb) {
             gb = {
                 guild: guildid,

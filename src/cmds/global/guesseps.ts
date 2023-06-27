@@ -35,7 +35,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
         ((x: gideonapi.AviInfo) => x.series == 'Constantine')
     ];
 
-    let score: GuessingScore = process.gideon.getScore.get(interaction.user.id);
+    let score: GuessingScore = process.gideon.getScore.get(interaction.user.id) as any;
     if (!score) {
         score = {
             id: interaction.user.id,
