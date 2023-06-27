@@ -40,7 +40,7 @@ gideon.dc_show_urls = {
     y: 'http://api.tvmaze.com/shows/42668?embed=nextepisode',
     jld: 'http://api.tvmaze.com/shows/47261?embed=nextepisode',
     sandman: 'http://api.tvmaze.com/shows/42827?embed=nextepisode',
-    strangeadventures: 'http://api.tvmaze.com/shows/44777?embed=nextepisode',
+    // strangeadventures: 'http://api.tvmaze.com/shows/44777?embed=nextepisode',
     greenlantern: 'http://api.tvmaze.com/shows/44776?embed=nextepisode'
 };
 

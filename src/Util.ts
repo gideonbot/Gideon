@@ -539,7 +539,7 @@ class Util {
             y: 'Y',
             jld: 'Justice League Dark',
             sandman: 'The Sandman',
-            strangeadventures: 'Strange Adventures',
+            // strangeadventures: 'Strange Adventures',
             greenlantern: 'Green Lantern'
         };
 
