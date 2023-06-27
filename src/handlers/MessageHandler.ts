@@ -41,8 +41,8 @@ class MsgHandler {
         Util.Checks.CVM(message); //apply crossover mode if enabled
         Util.Checks.CSD(message); //eastereggs
  
-        const oldusage = message.mentions.has((process.gideon.user as Discord.ClientUser));
-        if (oldusage) return message.reply('This usage is deprecated.\nPlease use the slash commands that are built-in to the Discord client.\nType `/` in chat to get started.\nIf you do not see any slash commands please reauthorize with the `applications.commands` scope: <https://gideonbot.com/invite> \nAdditionally for slash commands to work please make sure to grant the necessary permission.\nIf you require assistance, please join the Time Vault\nhttps://discord.gg/h9SEQaU\nhttps://i.imgur.com/sBnNfkg.gif\nhttps://cdn.gideonbot.com/a2EiiyS.png');
+        // const oldusage = message.mentions.has((process.gideon.user as Discord.ClientUser));
+        // if (oldusage) return message.reply('This usage is deprecated.\nPlease use the slash commands that are built-in to the Discord client.\nType `/` in chat to get started.\nIf you do not see any slash commands please reauthorize with the `applications.commands` scope: <https://gideonbot.com/invite> \nAdditionally for slash commands to work please make sure to grant the necessary permission.\nIf you require assistance, please join the Time Vault\nhttps://discord.gg/h9SEQaU\nhttps://i.imgur.com/sBnNfkg.gif\nhttps://cdn.gideonbot.com/a2EiiyS.png');
     }
 }
 
